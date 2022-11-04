@@ -19,7 +19,7 @@ namespace spic {
              * @return true if active, false otherwise.
              * @spicapi
              */
-            bool Active() const { return active; }
+            bool Active() const { return this.active; }
 
             /**
              * @brief flag New active status.
