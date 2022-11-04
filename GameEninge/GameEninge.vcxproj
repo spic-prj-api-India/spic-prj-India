@@ -24,6 +24,7 @@
     <ProjectGuid>{a165f967-67ee-4270-9cdf-6db5b53f3e2d}</ProjectGuid>
     <RootNamespace>GameEninge</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>GameEngine</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -151,7 +152,7 @@
     <ClInclude Include="Color.hpp" />
     <ClInclude Include="Component.hpp" />
     <ClInclude Include="Debug.hpp" />
-    <ClInclude Include="GameEningeAPI.h" />
+    <ClInclude Include="GameEngineAPI.h" />
     <ClInclude Include="GameObject.hpp" />
     <ClInclude Include="IKeyListener.hpp" />
     <ClInclude Include="IMouseListener.hpp" />
