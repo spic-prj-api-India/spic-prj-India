@@ -1,0 +1,192 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\components">
+      <UniqueIdentifier>{e07d9a58-ce4b-408f-a5ee-12cf25e61e32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\extensions">
+      <UniqueIdentifier>{27b538ee-1333-4fc3-bad4-e214b80e2e6a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\scripts">
+      <UniqueIdentifier>{3132d654-17a3-40c8-a756-0ad31ec8878c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\systems">
+      <UniqueIdentifier>{71cbdc12-6865-4a76-9e01-e7d075e0f80f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\extensions">
+      <UniqueIdentifier>{5f2b74ef-32e2-4302-872c-3cc4f1767b9a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\scripts">
+      <UniqueIdentifier>{1733dbe5-3d6e-472e-85b1-ac97a3b7eed3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\systems">
+      <UniqueIdentifier>{fc457077-0a38-4bdb-a48e-b9c9cc86aee8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\scene">
+      <UniqueIdentifier>{60c6b850-e3eb-4fbf-a50c-336ab2b79318}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\scene">
+      <UniqueIdentifier>{6969fe89-2548-4beb-8e99-e0b8e4dfa1a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\input">
+      <UniqueIdentifier>{a6ee6687-ea54-4fa1-b22a-b348b5c48842}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\components\socket">
+      <UniqueIdentifier>{19abe4e7-27f0-478f-973a-28e9208b50db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\components\animator%255csprite">
+      <UniqueIdentifier>{5d4c2fc2-58e0-47b3-9e62-b2a29159db05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\components\behaviour">
+      <UniqueIdentifier>{0cbfd008-537c-48f9-9b3f-8e176beb08ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\components\collider">
+      <UniqueIdentifier>{367ac740-2dba-4e8a-93c3-f2de80e116e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\components\audio">
+      <UniqueIdentifier>{5dda8c88-6212-4d34-b9a7-5771dabbda0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\components\rigid_body">
+      <UniqueIdentifier>{b277d132-0241-4c1b-b096-30f71b81ce7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\systems\input">
+      <UniqueIdentifier>{51cd41fa-af0b-4dd1-af00-24f381b9a0ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\systems\networking">
+      <UniqueIdentifier>{d16d3029-f666-477c-9d01-c6dbefca1a47}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\systems\scripts">
+      <UniqueIdentifier>{d8655c86-e302-4ed1-bbf0-0c564114f111}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\systems\physics">
+      <UniqueIdentifier>{0faa61b9-0dfb-4284-a0d9-ffd8d1663372}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\systems\rendering">
+      <UniqueIdentifier>{62a5bcf7-c9bb-4bd0-bd29-23db3c3b4a1e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\game_engine">
+      <UniqueIdentifier>{f955f46c-f96e-4106-a3c0-4323b4ee353d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\components">
+      <UniqueIdentifier>{b633f94c-60ed-4507-880a-bc19892331e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\components\audio">
+      <UniqueIdentifier>{e0368a90-54e3-4f0a-858a-80c45417a954}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\components\collider">
+      <UniqueIdentifier>{7f871795-70f5-42f0-a6ce-f8fe885b32e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\components\behaviour">
+      <UniqueIdentifier>{d4dc80c2-b2ba-4d41-9f0c-da4af51f5615}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\components\animator%255csprite">
+      <UniqueIdentifier>{02c0a6dc-f80f-48f2-84c0-8e7ef25b3b44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\components\socket">
+      <UniqueIdentifier>{004f567e-6884-4e3f-b25f-b8b554093175}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\components\rigid_body">
+      <UniqueIdentifier>{546f0ceb-b157-40af-a18b-4d167b713813}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\input">
+      <UniqueIdentifier>{6a553d09-3975-49a3-99e6-c7d3bfd803b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\game_engine">
+      <UniqueIdentifier>{78c3b148-864e-4412-9ac9-ce54465640e0}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Color.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Debug.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Point.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Time.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioSource.hpp">
+      <Filter>Header Files\components\audio</Filter>
+    </ClInclude>
+    <ClInclude Include="BoxCollider.hpp">
+      <Filter>Header Files\components\collider</Filter>
+    </ClInclude>
+    <ClInclude Include="CircleCollider.hpp">
+      <Filter>Header Files\components\collider</Filter>
+    </ClInclude>
+    <ClInclude Include="Collider.hpp">
+      <Filter>Header Files\components\collider</Filter>
+    </ClInclude>
+    <ClInclude Include="RigidBody.hpp">
+      <Filter>Header Files\components\rigid_body</Filter>
+    </ClInclude>
+    <ClInclude Include="Component.hpp">
+      <Filter>Header Files\components</Filter>
+    </ClInclude>
+    <ClInclude Include="BehaviourScript.hpp">
+      <Filter>Header Files\components\behaviour</Filter>
+    </ClInclude>
+    <ClInclude Include="Animator.hpp">
+      <Filter>Header Files\components\animator%255csprite</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprite.hpp">
+      <Filter>Header Files\components\animator%255csprite</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.hpp">
+      <Filter>Header Files\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.hpp">
+      <Filter>Header Files\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.hpp">
+      <Filter>Header Files\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.hpp">
+      <Filter>Header Files\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Transform.hpp">
+      <Filter>Header Files\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Text.hpp">
+      <Filter>Header Files\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="IKeyListener.hpp">
+      <Filter>Header Files\input</Filter>
+    </ClInclude>
+    <ClInclude Include="IMouseListener.hpp">
+      <Filter>Header Files\input</Filter>
+    </ClInclude>
+    <ClInclude Include="Input.hpp">
+      <Filter>Header Files\input</Filter>
+    </ClInclude>
+    <ClInclude Include="UIObject.hpp">
+      <Filter>Header Files\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngineAPI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Time.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Color.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
