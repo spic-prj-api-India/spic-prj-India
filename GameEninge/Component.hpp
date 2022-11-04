@@ -27,11 +27,15 @@ namespace spic {
              */
             void Active(bool flag) { active = flag; }
 
+
+            bool IsChanged const{ return isChanged; }
+
         private:
             /**
              * @brief Active status.
              */
             bool active;
+            bool isChanged;
     };
 
 }
