@@ -106,9 +106,6 @@
     <Filter Include="Source Files\game_engine">
       <UniqueIdentifier>{78c3b148-864e-4412-9ac9-ce54465640e0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\map_parser">
-      <UniqueIdentifier>{a062a302-818a-4150-83f0-3a254b43ea34}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Color.hpp">
