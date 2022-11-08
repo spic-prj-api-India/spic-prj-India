@@ -10,8 +10,8 @@ namespace spic {
      */
     struct Transform {
         Point position; // Translation (shift)
-        double rotation; // Rotation, in radians
-        double scale; // Multiplication factor
+        float rotation; // Rotation, in radians
+        float scale; // Multiplication factor
     };
 }
 

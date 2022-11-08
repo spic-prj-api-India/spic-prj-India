@@ -15,32 +15,32 @@ namespace spic {
              * @return The current width
              * @spicapi
              */
-            double Width() const { return width; }
+            float Width() const;
 
             /**
              * @brief The collider's width
              * @param newWidth The desired width
              * @spicapi
              */
-            void Width(double newWidth) { width = newWidth; }
+            void Width(float newWidth);
 
             /**
              * @brief The collider's height
              * @return The current height
              * @spicapi
              */
-            double Height() const { return height; }
+            float Height() const;
 
             /**
              * @brief The collider's height
              * @param newHeight The desired height
              * @spicapi
              */
-            void Height(double newHeight) { height = newHeight; }
+            void Height(float newHeight);
 
         private:
-            double width;
-            double height;
+            float width;
+            float height;
     };
 
 }
