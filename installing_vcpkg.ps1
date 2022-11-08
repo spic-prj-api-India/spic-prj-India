@@ -52,10 +52,10 @@ catch [System.Management.Automation.CommandNotFoundException]
     .\vcpkg\vcpkg integrate install
 }
 finally{
-	.\vcpkg install sdl2:x64-windows sdl2-image:x64-windows sdl2-mixer:x64-windows sdl2-ttf:x64-windows
-	.\vcpkg install boost:x64windows 
-	.\vcpkg install boost-asio:x64windows
-	.\vcpkg install tinyxml::x64windows
+	.\vcpkg\vcpkg install sdl2:x64-windows sdl2-image:x64-windows sdl2-mixer:x64-windows sdl2-ttf:x64-windows
+	.\vcpkg\vcpkg install boost:x64-windows 
+	.\vcpkg\vcpkg install boost-asio:x64-windows
+	.\vcpkg\vcpkg install tinyxml:x64-windows
 }
 
 
