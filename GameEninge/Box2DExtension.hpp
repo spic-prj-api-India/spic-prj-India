@@ -9,6 +9,7 @@
 #include "IEngineExtension.hpp"
 #include "Point.hpp"
 #include "RigidBody.hpp"
+#include "Box2DCollisionListener.hpp"
 
 namespace extensions {
 	class Box2DExtension : public extensions::IEngineExtension {
@@ -16,7 +17,7 @@ namespace extensions {
 		Box2DExtension();
 		void Reset();
 		void Update(std::vector<std::shared_ptr<spic::GameObject>> entities);
-		void RegisterListener(std::unique_ptr<b2ContactListener> listener);
+		void RegisterListener(Box2DCollisionListener* listener);
 		void AddForce(std::shared_ptr<spic::GameObject> entity, const spic::Point& forceDirection);
 	private:
 		void CreateEntity(const std::shared_ptr<spic::GameObject>& entity);

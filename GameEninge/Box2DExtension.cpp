@@ -20,7 +20,7 @@ namespace extensions {
 
 	void Box2DExtension::Reset() {
 		world = std::make_unique<b2World>(b2Vec2(0.0f, GRAVITY));
-		bodies = std::map<std::string, b2Body*>();
+		Box2DCollisionListener myContactListenerInstance;
 	}
 
 	void Box2DExtension::Update(std::vector<std::shared_ptr<spic::GameObject>> entities) {
@@ -147,8 +147,8 @@ namespace extensions {
 		}
 	}
 
-	void Box2DExtension::RegisterListener(std::unique_ptr<b2ContactListener> listener) {
-		world->SetContactListener(listener.get());
+	void Box2DExtension::RegisterListener(Box2DCollisionListener* listener) {
+		world->SetContactListener(listener);
 	}
 
 	void Box2DExtension::AddForce(std::shared_ptr<spic::GameObject> entity, const spic::Point& forceDirection) {
