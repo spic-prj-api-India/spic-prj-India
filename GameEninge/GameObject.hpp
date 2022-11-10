@@ -17,18 +17,11 @@ namespace spic {
 	class GameObject {
 	public:
 		GameObject();
-		std::string GetTag() const;
-		std::unique_ptr<Transform>& GetTranform();
-		std::unique_ptr<RigidBody>& GetRigidBody();
-		template<class T>
-		T* GetCollider() {
-			return static_cast<T*>(collider);
-		}
+		std::string Tag() const;
+		std::shared_ptr<Transform>& Transform();
 
-		void SetTag(std::string& tag);
-		void SetTransform(std::unique_ptr<Transform> transform);
-		void SetRigidBody(std::unique_ptr<RigidBody> rigidBody);
-		void SetCollider(Collider* collider);
+		void Tag(std::string& tag);
+		void Transform(std::shared_ptr<spic::Transform> transform);
 
 		/**
 		 * @brief Finds a GameObject by name and returns it.
@@ -143,8 +136,9 @@ namespace spic {
 		 * @spicapi
 		 */
 		template<class T>
-		void AddComponent(std::shared_ptr<Component> component) {
-			// ... implementation here
+		void AddComponent(std::shared_ptr<Component> component) 
+		{
+			components.emplace_back(component);
 		}
 
 		/**
@@ -154,8 +148,15 @@ namespace spic {
 		 * @spicapi
 		 */
 		template<class T>
-		std::shared_ptr<Component> GetComponent() const {
-			// ... implementation here
+		std::shared_ptr<T> GetComponent() const 
+		{
+			for (auto component : components) {
+				std::shared_ptr<T> castedComponent = std::dynamic_pointer_cast<T>(component);
+				bool isComponent = castedComponent != nullptr;
+				if (isComponent)
+					return castedComponent;
+			}
+			return nullptr;
 		}
 
 		/**
@@ -189,12 +190,13 @@ namespace spic {
 		 * @spicapi
 		 */
 		template<class T>
-		std::vector<std::shared_ptr<Component>> GetComponents() const {
-			std::vector<std::shared_ptr<Component>> filteredComponents = std::vector<std::shared_ptr<Component>>();
+		std::vector<std::shared_ptr<T>> GetComponents() const {
+			std::vector<std::shared_ptr<T>> filteredComponents = std::vector<std::shared_ptr<T>>();
 			for (auto component : components) {
-				bool isComponent = std::dynamic_pointer_cast<T>(component) != nullptr;
+				std::shared_ptr<T> castedComponent = std::dynamic_pointer_cast<T>(component);
+				bool isComponent = castedComponent != nullptr;
 				if (isComponent)
-					filteredComponents.emplace_back(component);
+					filteredComponents.emplace_back(castedComponent);
 			}
 			return filteredComponents;
 		}
@@ -251,9 +253,7 @@ namespace spic {
 		std::string tag;
 		bool active;
 		int layer;
-		Collider* collider;
-		std::unique_ptr<Transform> transform;
-		std::unique_ptr<RigidBody> rigidBody;
+		std::shared_ptr<spic::Transform> transform;
 		std::vector<std::shared_ptr<Component>> components;
 	};
 

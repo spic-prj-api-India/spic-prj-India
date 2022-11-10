@@ -8,7 +8,7 @@
 namespace extensions {
 	inline float GRAVITY = 9.81f;
 
-	Box2DExtension::Box2DExtension() {
+	Box2DExtension::Box2DExtension() : IEngineExtension() {
 		bodyTypeConvertions = {
 			{spic::BodyType::staticBody, b2_staticBody},
 			{spic::BodyType::kinematicBody, b2_kinematicBody},
@@ -26,7 +26,7 @@ namespace extensions {
 	void Box2DExtension::Update(std::vector<std::shared_ptr<spic::GameObject>> entities) {
 		// Update or create entity bodiese
 		for (auto& entity : entities) {
-			bool exists = bodies.find(entity->GetTag()) != bodies.end();
+			bool exists = bodies.find(entity->Tag()) != bodies.end();
 			if (exists)
 				UpdateEntity(entity);
 			else
@@ -38,86 +38,89 @@ namespace extensions {
 		// Update entities
 		for (auto& entity : entities) {
 			// Get body
-			b2Body* body = bodies[entity->GetTag()];
+			b2Body* body = bodies[entity->Tag()];
 
 			// Get transform
 			b2Vec2 position = body->GetPosition();
 			float rotation = body->GetAngle();
 
 			// Update entity
-			entity->GetTranform()->position.x = position.x;
-			entity->GetTranform()->position.y = position.y;
-			entity->GetTranform()->rotation = rotation;
+			entity->Transform()->position.x = position.x;
+			entity->Transform()->position.y = position.y;
+			entity->Transform()->rotation = rotation;
 		}
 	}
 
 	void Box2DExtension::CreateEntity(const std::shared_ptr<spic::GameObject>& entity) {
 		// Create body
-		b2Body* body = CreateBody(entity);
+		std::shared_ptr<spic::RigidBody> rigidBody = entity->GetComponent<spic::RigidBody>();
+		b2Body* body = CreateBody(entity, rigidBody);
 
 		// Set velocity
 		b2Vec2 velocity;
-		velocity.Set(0, entity->GetRigidBody()->GetGravityScale());
+		velocity.Set(0, rigidBody->GetGravityScale());
 		body->SetLinearVelocity(velocity);
 
 		// Create fixture
-		b2FixtureDef* fixtureDef = CreateFixture(entity);
+		b2FixtureDef* fixtureDef = CreateFixture(entity, rigidBody);
 		body->CreateFixture(fixtureDef);
 
 		// Add to bodies
-		bodies[entity->GetTag()] = body;
+		bodies[entity->Tag()] = body;
 	}
 
-	b2Body* Box2DExtension::CreateBody(const std::shared_ptr<spic::GameObject>& entity) {
+	b2Body* Box2DExtension::CreateBody(const std::shared_ptr<spic::GameObject>& entity, const std::shared_ptr<spic::RigidBody>& rigidBody) {
 		// cartesian origin
-		float ground_x = entity->GetTranform()->position.x;
-		float ground_y = entity->GetTranform()->position.y;
+		float ground_x = entity->Transform()->position.x;
+		float ground_y = entity->Transform()->position.y;
 
 		b2BodyDef bodyDef;
-		bodyDef.type = bodyTypeConvertions[entity->GetRigidBody()->GetBodyType()];
+		bodyDef.type = bodyTypeConvertions[rigidBody->GetBodyType()];
 		bodyDef.position.Set(ground_x, ground_y); // set the starting position x and y cartesian
-		bodyDef.angle = entity->GetTranform()->rotation;
+		bodyDef.angle = entity->Transform()->rotation;
 
 		b2Body* body = world->CreateBody(&bodyDef);
 		return body;
 	}
 
-	b2FixtureDef* Box2DExtension::CreateFixture(const std::shared_ptr<spic::GameObject>& entity) {
+	b2FixtureDef* Box2DExtension::CreateFixture(const std::shared_ptr<spic::GameObject>& entity, const std::shared_ptr<spic::RigidBody>& rigidBody) {
 		b2FixtureDef* fixtureDef = new b2FixtureDef();
 		fixtureDef->shape = CreateShape(entity);
-		fixtureDef->density = entity->GetRigidBody()->GetMass();
+		fixtureDef->density = rigidBody->GetMass();
 		fixtureDef->friction = 0.3f;
 		fixtureDef->restitution = 0.5f;
 		return fixtureDef;
 	}
 
 	b2Shape* Box2DExtension::CreateShape(const std::shared_ptr<spic::GameObject>& entity) {
-		if (entity->GetCollider<spic::Collider>() == nullptr)
+		if (!entity->HasComponent<spic::Collider>())
 			return nullptr;
-		spic::BoxCollider* boxCollider = entity->GetCollider<spic::BoxCollider>();
+		std::shared_ptr<spic::BoxCollider> boxCollider = entity->GetComponent<spic::BoxCollider>();
 		if (boxCollider != nullptr) {
 			b2PolygonShape* boxShape = new b2PolygonShape();
 			boxShape->SetAsBox((boxCollider->Width() / 2.0f) - boxShape->m_radius, (boxCollider->Height() / 2.0f) - boxShape->m_radius); // will be 0.5 x 0.5
 			return boxShape;
 		}
-		spic::CircleCollider* circleCollider = entity->GetCollider<spic::CircleCollider>();
+		std::shared_ptr<spic::CircleCollider> circleCollider = entity->GetComponent<spic::CircleCollider>();
 		if (circleCollider != nullptr) {
-
+			b2CircleShape* circleShape = new b2CircleShape();
+			circleShape->m_radius = circleCollider->Radius();
 		}
 		return nullptr;
 	}
 
 	void Box2DExtension::UpdateEntity(const std::shared_ptr<spic::GameObject>& entity) {
 		// Get body
-		b2Body* body = bodies[entity->GetTag()];
+		std::shared_ptr<spic::RigidBody> rigidBody = entity->GetComponent<spic::RigidBody>();
+		b2Body* body = bodies[entity->Tag()];
 
 		// Get Box2D transform
 		b2Vec2 b2Position = body->GetPosition();
 		float b2Rotation = body->GetAngle();
 
 		// Get entity transform
-		spic::Point ePosition = entity->GetTranform()->position;
-		float eRotation = entity->GetTranform()->rotation;
+		spic::Point ePosition = entity->Transform()->position;
+		float eRotation = entity->Transform()->rotation;
 
 		// Update
 		bool updated = false;
@@ -136,13 +139,13 @@ namespace extensions {
 		if (updated) {
 			body->SetTransform(b2Position, b2Rotation);
 			b2Vec2 velocity;
-			velocity.Set(0, entity->GetRigidBody()->GetGravityScale());
+			velocity.Set(0, rigidBody->GetGravityScale());
 			body->SetLinearVelocity(velocity);
 		}
 	}
 
 	void Box2DExtension::AddForce(std::shared_ptr<spic::GameObject> entity, const spic::Point& forceDirection) {
-		b2Body* body = bodies[entity->GetTag()];
+		b2Body* body = bodies[entity->Tag()];
 
 		b2Vec2 velocity;
 		velocity.Set(forceDirection.x, forceDirection.y);

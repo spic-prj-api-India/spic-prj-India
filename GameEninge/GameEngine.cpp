@@ -4,7 +4,7 @@ GameEngine* GameEngine::pinstance_{ nullptr };
 std::mutex GameEngine::mutex_;
 
 GameEngine::GameEngine() {
-	_extensions = std::map<std::string, std::shared_ptr<IEngineExtension>>();
+	_extensions = std::map<std::string, std::shared_ptr<extensions::IEngineExtension>>();
 }
 
 GameEngine::~GameEngine() {

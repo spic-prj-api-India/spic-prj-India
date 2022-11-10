@@ -1,5 +1,5 @@
 #pragma once
-#include <box2d.h>
+#include <box2d/box2d.h>
 #include <iostream>
 #include <vector>
 #include <map>
@@ -9,7 +9,7 @@
 #include "RigidBody.hpp"
 
 namespace extensions {
-	class Box2DExtension : public IEngineExtension {
+	class Box2DExtension : public extensions::IEngineExtension {
 	public:
 		Box2DExtension();
 		void Reset();
@@ -17,8 +17,8 @@ namespace extensions {
 		void AddForce(std::shared_ptr<spic::GameObject> entity, const spic::Point& forceDirection);
 	private:
 		void CreateEntity(const std::shared_ptr<spic::GameObject>& entity);
-		b2Body* CreateBody(const std::shared_ptr<spic::GameObject>& entity);
-		b2FixtureDef* CreateFixture(const std::shared_ptr<spic::GameObject>& entity);
+		b2Body* CreateBody(const std::shared_ptr<spic::GameObject>& entity, const std::shared_ptr<spic::RigidBody>& rigidBody);
+		b2FixtureDef* CreateFixture(const std::shared_ptr<spic::GameObject>& entity, const std::shared_ptr<spic::RigidBody>& rigidBody);
 		b2Shape* CreateShape(const std::shared_ptr<spic::GameObject>& entity);
 		void UpdateEntity(const std::shared_ptr<spic::GameObject>& entity);
 	private:

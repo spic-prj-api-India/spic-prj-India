@@ -15,17 +15,17 @@ namespace spic {
              * @return The radius
              * @spicapi
              */
-            double Radius() const { return radius; }
+            float Radius() const { return radius; }
 
             /**
              * @brief Set the collider's radius
              * @param newRadius The desired radius
              * @spicapi
              */
-            void Radius(double newRadius) { radius = newRadius; }
+            void Radius(float newRadius) { radius = newRadius; }
 
         private:
-            double radius;
+            float radius;
     };
 
 }

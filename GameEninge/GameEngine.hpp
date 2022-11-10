@@ -13,7 +13,7 @@ protected:
 	GameEngine();
 	~GameEngine();
 
-	std::map<std::string, std::shared_ptr<IEngineExtension>> _extensions;
+	std::map<std::string, std::shared_ptr<extensions::IEngineExtension>> _extensions;
 public:
 	GameEngine(GameEngine& other) = delete;
 	GameEngine(GameEngine&& other) = delete;

@@ -4,26 +4,16 @@ namespace spic {
 	GameObject::GameObject() {
 
 	}
-	std::string GameObject::GetTag() const {
+	std::string GameObject::Tag() const {
 		return tag;
 	}
-	std::unique_ptr<Transform>& GameObject::GetTranform() {
+	std::shared_ptr<Transform>& GameObject::Transform() {
 		return transform;
 	}
-	std::unique_ptr<RigidBody>& GameObject::GetRigidBody() {
-		return rigidBody;
+	void GameObject::Tag(std::string& _tag) {
+		tag = _tag;
 	}
-
-	void GameObject::SetTag(std::string& tag) {
-		tag = tag;
-	}
-	void GameObject::SetTransform(std::unique_ptr<Transform> transform) {
-		transform = std::move(transform);
-	}
-	void GameObject::SetRigidBody(std::unique_ptr<RigidBody> rigidBody) {
-		rigidBody = std::move(rigidBody);
-	}
-	void GameObject::SetCollider(Collider* collider) {
-		collider = collider;
+	void GameObject::Transform(std::shared_ptr<spic::Transform> _transform) {
+		transform = _transform;
 	}
 }
