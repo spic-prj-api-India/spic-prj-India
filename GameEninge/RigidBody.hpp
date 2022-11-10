@@ -1,6 +1,8 @@
 #ifndef RIGIDBODY_H_
 #define RIGIDBODY_H_
 
+#include <iostream>
+#include "GameObject.hpp"
 #include "Component.hpp"
 #include "Point.hpp"
 
@@ -14,6 +16,8 @@ namespace spic {
         kinematicBody,
         dynamicBody
     };
+
+    class GameObject;
 
     /**
      * @brief A component representing a rigid body.
@@ -31,7 +35,7 @@ namespace spic {
              *        and magnitude of the force to be applied.
              * @spicapi
              */
-            void AddForce(const Point& forceDirection);
+            void AddForce(std::shared_ptr<spic::GameObject> entity, const Point& forceDirection);
 
         private:
             float mass;

@@ -103,6 +103,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <DisableSpecificWarnings>26455; 26440;</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -125,6 +126,7 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <DisableSpecificWarnings>26455; 26440;</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -147,6 +149,7 @@
       <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <DisableSpecificWarnings>26455; 26440;</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -166,6 +169,7 @@
       <PreprocessorDefinitions>NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <DisableSpecificWarnings>26455; 26440;</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -190,6 +194,7 @@
     <ClInclude Include="Camera.hpp" />
     <ClInclude Include="CircleCollider.hpp" />
     <ClInclude Include="Collider.hpp" />
+    <ClInclude Include="Box2DCollisionListener.hpp" />
     <ClInclude Include="Color.hpp" />
     <ClInclude Include="Component.hpp" />
     <ClInclude Include="Debug.hpp" />
@@ -206,6 +211,7 @@
     <ClInclude Include="Point.hpp" />
     <ClInclude Include="RigidBody.hpp" />
     <ClInclude Include="Scene.hpp" />
+    <ClInclude Include="ScriptSystem.hpp" />
     <ClInclude Include="Sprite.hpp" />
     <ClInclude Include="Text.hpp" />
     <ClInclude Include="Time.hpp" />
@@ -213,6 +219,8 @@
     <ClInclude Include="UIObject.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BehaviourScript.cpp" />
+    <ClCompile Include="Box2DCollisionListener.cpp" />
     <ClCompile Include="Box2DExtension.cpp" />
     <ClCompile Include="BoxCollider.cpp" />
     <ClCompile Include="Color.cpp" />
@@ -220,6 +228,7 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="PhysicsSystem.cpp" />
     <ClCompile Include="RigidBody.cpp" />
+    <ClCompile Include="ScriptSystem.cpp" />
     <ClCompile Include="Time.cpp" />
   </ItemGroup>
   <ItemGroup>

@@ -195,6 +195,12 @@
     <ClInclude Include="Box2DExtension.hpp">
       <Filter>Header Files\extensions</Filter>
     </ClInclude>
+    <ClInclude Include="ScriptSystem.hpp">
+      <Filter>Header Files\systems\scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="Box2DCollisionListener.hpp">
+      <Filter>Header Files\extensions</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Time.cpp">
@@ -220,6 +226,15 @@
     </ClCompile>
     <ClCompile Include="BoxCollider.cpp">
       <Filter>Source Files\components\collider</Filter>
+    </ClCompile>
+    <ClCompile Include="ScriptSystem.cpp">
+      <Filter>Source Files\systems</Filter>
+    </ClCompile>
+    <ClCompile Include="BehaviourScript.cpp">
+      <Filter>Source Files\components\behaviour</Filter>
+    </ClCompile>
+    <ClCompile Include="Box2DCollisionListener.cpp">
+      <Filter>Source Files\extensions</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

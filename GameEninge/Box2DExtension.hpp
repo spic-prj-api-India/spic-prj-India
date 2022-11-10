@@ -1,5 +1,7 @@
 #pragma once
-#include <box2d/box2d.h>
+#pragma warning(push, 0)
+#include "box2d/box2d.h"
+#pragma warning(pop)
 #include <iostream>
 #include <vector>
 #include <map>
@@ -14,6 +16,7 @@ namespace extensions {
 		Box2DExtension();
 		void Reset();
 		void Update(std::vector<std::shared_ptr<spic::GameObject>> entities);
+		void RegisterListener(std::unique_ptr<b2ContactListener> listener);
 		void AddForce(std::shared_ptr<spic::GameObject> entity, const spic::Point& forceDirection);
 	private:
 		void CreateEntity(const std::shared_ptr<spic::GameObject>& entity);

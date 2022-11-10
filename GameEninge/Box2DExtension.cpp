@@ -41,8 +41,8 @@ namespace extensions {
 			b2Body* body = bodies[entity->Tag()];
 
 			// Get transform
-			b2Vec2 position = body->GetPosition();
-			float rotation = body->GetAngle();
+			const b2Vec2 position = body->GetPosition();
+			const float rotation = body->GetAngle();
 
 			// Update entity
 			entity->Transform()->position.x = position.x;
@@ -65,14 +65,17 @@ namespace extensions {
 		b2FixtureDef* fixtureDef = CreateFixture(entity, rigidBody);
 		body->CreateFixture(fixtureDef);
 
+		// Set data
+		body->GetUserData().pointer = reinterpret_cast<uintptr_t>(entity.get());
+
 		// Add to bodies
 		bodies[entity->Tag()] = body;
 	}
 
 	b2Body* Box2DExtension::CreateBody(const std::shared_ptr<spic::GameObject>& entity, const std::shared_ptr<spic::RigidBody>& rigidBody) {
 		// cartesian origin
-		float ground_x = entity->Transform()->position.x;
-		float ground_y = entity->Transform()->position.y;
+		const float ground_x = entity->Transform()->position.x;
+		const float ground_y = entity->Transform()->position.y;
 
 		b2BodyDef bodyDef;
 		bodyDef.type = bodyTypeConvertions[rigidBody->GetBodyType()];
@@ -119,8 +122,8 @@ namespace extensions {
 		float b2Rotation = body->GetAngle();
 
 		// Get entity transform
-		spic::Point ePosition = entity->Transform()->position;
-		float eRotation = entity->Transform()->rotation;
+		const spic::Point ePosition = entity->Transform()->position;
+		const float eRotation = entity->Transform()->rotation;
 
 		// Update
 		bool updated = false;
@@ -142,6 +145,10 @@ namespace extensions {
 			velocity.Set(0, rigidBody->GetGravityScale());
 			body->SetLinearVelocity(velocity);
 		}
+	}
+
+	void Box2DExtension::RegisterListener(std::unique_ptr<b2ContactListener> listener) {
+		world->SetContactListener(listener.get());
 	}
 
 	void Box2DExtension::AddForce(std::shared_ptr<spic::GameObject> entity, const spic::Point& forceDirection) {
