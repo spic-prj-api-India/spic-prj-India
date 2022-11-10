@@ -1,4 +1,6 @@
-#pragma once
+#ifndef BOX2DEXTENSION_H_
+#define BOX2DEXTENSION_H_
+
 #pragma warning(push, 0)
 #include "box2d/box2d.h"
 #pragma warning(pop)
@@ -17,13 +19,15 @@ namespace extensions {
 		Box2DExtension();
 		void Reset();
 		void Update(std::vector<std::shared_ptr<spic::GameObject>> entities);
-		void RegisterListener(Box2DCollisionListener* listener);
+
+		void RegisterListener(Box2DCollisionListener* listener) const;
 		void AddForce(std::shared_ptr<spic::GameObject> entity, const spic::Point& forceDirection);
 	private:
 		void CreateEntity(const std::shared_ptr<spic::GameObject>& entity);
 		b2Body* CreateBody(const std::shared_ptr<spic::GameObject>& entity, const std::shared_ptr<spic::RigidBody>& rigidBody);
-		b2FixtureDef* CreateFixture(const std::shared_ptr<spic::GameObject>& entity, const std::shared_ptr<spic::RigidBody>& rigidBody);
-		b2Shape* CreateShape(const std::shared_ptr<spic::GameObject>& entity);
+		b2FixtureDef* CreateFixture(const std::shared_ptr<spic::GameObject>& entity, const std::shared_ptr<spic::RigidBody>& rigidBody) const;
+		b2Shape* CreateShape(const std::shared_ptr<spic::GameObject>& entity) const;
+
 		void UpdateEntity(const std::shared_ptr<spic::GameObject>& entity);
 	private:
 		std::unique_ptr<b2World> world;
@@ -31,3 +35,5 @@ namespace extensions {
 		std::map<spic::BodyType, b2BodyType> bodyTypeConvertions;
 	};
 }
+
+#endif // BOX2DEXTENSION_H_

@@ -8,22 +8,23 @@
 namespace extensions {
 	inline float GRAVITY = 9.81f;
 
-	Box2DExtension::Box2DExtension() : IEngineExtension() {
+	Box2DExtension::Box2DExtension() : IEngineExtension(), world{ nullptr }
+	{
 		bodyTypeConvertions = {
 			{spic::BodyType::staticBody, b2_staticBody},
 			{spic::BodyType::kinematicBody, b2_kinematicBody},
 			{spic::BodyType::dynamicBody, b2_dynamicBody},
 		};
-		world = nullptr;
 		Reset();
 	}
 
-	void Box2DExtension::Reset() {
+	void Box2DExtension::Reset()
+	{
 		world = std::make_unique<b2World>(b2Vec2(0.0f, GRAVITY));
 		Box2DCollisionListener myContactListenerInstance;
 	}
-
-	void Box2DExtension::Update(std::vector<std::shared_ptr<spic::GameObject>> entities) {
+	void Box2DExtension::Update(std::vector<std::shared_ptr<spic::GameObject>> entities)
+	{
 		// Update or create entity bodiese
 		for (auto& entity : entities) {
 			bool exists = bodies.find(entity->Tag()) != bodies.end();
@@ -51,7 +52,8 @@ namespace extensions {
 		}
 	}
 
-	void Box2DExtension::CreateEntity(const std::shared_ptr<spic::GameObject>& entity) {
+	void Box2DExtension::CreateEntity(const std::shared_ptr<spic::GameObject>& entity)
+	{
 		// Create body
 		std::shared_ptr<spic::RigidBody> rigidBody = entity->GetComponent<spic::RigidBody>();
 		b2Body* body = CreateBody(entity, rigidBody);
@@ -71,8 +73,8 @@ namespace extensions {
 		// Add to bodies
 		bodies[entity->Tag()] = body;
 	}
-
-	b2Body* Box2DExtension::CreateBody(const std::shared_ptr<spic::GameObject>& entity, const std::shared_ptr<spic::RigidBody>& rigidBody) {
+	b2Body* Box2DExtension::CreateBody(const std::shared_ptr<spic::GameObject>& entity, const std::shared_ptr<spic::RigidBody>& rigidBody)
+	{
 		// cartesian origin
 		const float ground_x = entity->Transform()->position.x;
 		const float ground_y = entity->Transform()->position.y;
@@ -85,8 +87,9 @@ namespace extensions {
 		b2Body* body = world->CreateBody(&bodyDef);
 		return body;
 	}
-
-	b2FixtureDef* Box2DExtension::CreateFixture(const std::shared_ptr<spic::GameObject>& entity, const std::shared_ptr<spic::RigidBody>& rigidBody) {
+	b2FixtureDef* Box2DExtension::CreateFixture(const std::shared_ptr<spic::GameObject>& entity,
+		const std::shared_ptr<spic::RigidBody>& rigidBody) const
+	{
 		b2FixtureDef* fixtureDef = new b2FixtureDef();
 		fixtureDef->shape = CreateShape(entity);
 		fixtureDef->density = rigidBody->GetMass();
@@ -94,8 +97,8 @@ namespace extensions {
 		fixtureDef->restitution = 0.5f;
 		return fixtureDef;
 	}
-
-	b2Shape* Box2DExtension::CreateShape(const std::shared_ptr<spic::GameObject>& entity) {
+	b2Shape* Box2DExtension::CreateShape(const std::shared_ptr<spic::GameObject>& entity) const
+	{
 		if (!entity->HasComponent<spic::Collider>())
 			return nullptr;
 		std::shared_ptr<spic::BoxCollider> boxCollider = entity->GetComponent<spic::BoxCollider>();
@@ -112,7 +115,8 @@ namespace extensions {
 		return nullptr;
 	}
 
-	void Box2DExtension::UpdateEntity(const std::shared_ptr<spic::GameObject>& entity) {
+	void Box2DExtension::UpdateEntity(const std::shared_ptr<spic::GameObject>& entity)
+	{
 		// Get body
 		std::shared_ptr<spic::RigidBody> rigidBody = entity->GetComponent<spic::RigidBody>();
 		b2Body* body = bodies[entity->Tag()];
@@ -147,11 +151,12 @@ namespace extensions {
 		}
 	}
 
-	void Box2DExtension::RegisterListener(Box2DCollisionListener* listener) {
+	void Box2DExtension::RegisterListener(Box2DCollisionListener* listener) const
+	{
 		world->SetContactListener(listener);
 	}
-
-	void Box2DExtension::AddForce(std::shared_ptr<spic::GameObject> entity, const spic::Point& forceDirection) {
+	void Box2DExtension::AddForce(std::shared_ptr<spic::GameObject> entity, const spic::Point& forceDirection)
+	{
 		b2Body* body = bodies[entity->Tag()];
 
 		b2Vec2 velocity;

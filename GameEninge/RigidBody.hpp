@@ -25,6 +25,7 @@ namespace spic {
     class RigidBody : public Component {
         public:
             RigidBody(float mass, float gravityScale, BodyType bodyType);
+
             float GetMass() const;
             float GetGravityScale() const;
             BodyType GetBodyType() const;
@@ -36,7 +37,6 @@ namespace spic {
              * @spicapi
              */
             void AddForce(std::shared_ptr<spic::GameObject> entity, const Point& forceDirection);
-
         private:
             float mass;
             float gravityScale;

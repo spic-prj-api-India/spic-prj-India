@@ -10,6 +10,8 @@ namespace spic {
      */
     class BoxCollider : public Collider {
         public:
+            BoxCollider();
+
             /**
              * @brief The collider's width
              * @return The current width

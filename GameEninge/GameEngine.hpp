@@ -1,4 +1,6 @@
-#pragma once
+#ifndef GAMEENGINE_H_
+#define GAMEENGINE_H_
+
 #include "IEngineExtension.hpp"
 #include <map>
 #include <regex>
@@ -22,22 +24,26 @@ public:
 	static GameEngine* GetInstance();
 
 	template <typename T>
-	void AddExtension(std::shared_ptr<T> extension) {
+	void AddExtension(std::shared_ptr<T> extension) 
+	{
 		_extensions[GetTypeName<T>()] = extension;
 	}
 
 	template <typename T>
-	std::weak_ptr<T> GetExtension() {
+	std::weak_ptr<T> GetExtension()
+	{
 		return std::dynamic_pointer_cast<T>(_extensions[GetTypeName<T>()]);
 	}
 
 	template <typename T>
-	bool HasExtension() {
+	bool HasExtension() 
+	{
 		return _extensions.count(GetTypeName<T>());
 	}
 
 	template <typename T>
-	void RemoveExtension() {
+	void RemoveExtension() 
+	{
 		std::string typeName = GetTypeName<T>();
 		std::shared_ptr<T> deletePtr = std::dynamic_pointer_cast<T>(_extensions[typeName]);
 		_extensions.erase(typeName);
@@ -47,9 +53,12 @@ public:
 	}
 private:
 	template <typename T>
-	std::string GetTypeName() {
+	std::string GetTypeName() const
+	{
 		std::string typeName = typeid(T).name();
 		std::string strippedName = std::regex_replace(typeName, std::regex("class "), "");
 		return strippedName;
 	}
 };
+
+#endif // GAMEENGINE_H_

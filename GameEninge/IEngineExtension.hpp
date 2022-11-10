@@ -1,4 +1,5 @@
-#pragma once
+#ifndef IENGINEEXTENSION_H_
+#define IENGINEEXTENSION_H_
 
 namespace extensions {
 	class IEngineExtension {
@@ -12,3 +13,5 @@ namespace extensions {
 	private:
 	};
 }
+
+#endif // IENGINEEXTENSION_H_

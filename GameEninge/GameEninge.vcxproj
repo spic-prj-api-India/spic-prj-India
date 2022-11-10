@@ -199,7 +199,7 @@
     <ClInclude Include="Component.hpp" />
     <ClInclude Include="Debug.hpp" />
     <ClInclude Include="GameEngine.hpp" />
-    <ClInclude Include="GameEngineAPI.h" />
+    <ClInclude Include="GameEngineAPI.hpp" />
     <ClInclude Include="GameObject.hpp" />
     <ClInclude Include="IEngineExtension.hpp" />
     <ClInclude Include="IKeyListener.hpp" />
@@ -223,6 +223,7 @@
     <ClCompile Include="Box2DCollisionListener.cpp" />
     <ClCompile Include="Box2DExtension.cpp" />
     <ClCompile Include="BoxCollider.cpp" />
+    <ClCompile Include="CircleCollider.cpp" />
     <ClCompile Include="Color.cpp" />
     <ClCompile Include="GameEngine.cpp" />
     <ClCompile Include="GameObject.cpp" />

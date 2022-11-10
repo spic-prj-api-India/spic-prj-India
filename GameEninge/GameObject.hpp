@@ -17,9 +17,9 @@ namespace spic {
 	class GameObject {
 	public:
 		GameObject();
+
 		std::string Tag() const;
 		std::shared_ptr<Transform>& Transform();
-
 		void Tag(std::string& tag);
 		void Transform(std::shared_ptr<spic::Transform> transform);
 

@@ -177,7 +177,7 @@
     <ClInclude Include="UIObject.hpp">
       <Filter>Header Files\scene</Filter>
     </ClInclude>
-    <ClInclude Include="GameEngineAPI.h">
+    <ClInclude Include="GameEngineAPI.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PhysicsSystem.hpp">
@@ -235,6 +235,9 @@
     </ClCompile>
     <ClCompile Include="Box2DCollisionListener.cpp">
       <Filter>Source Files\extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="CircleCollider.cpp">
+      <Filter>Source Files\components\collider</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
