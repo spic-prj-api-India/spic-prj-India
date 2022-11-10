@@ -17,7 +17,7 @@ protected:
 public:
 	GameEngine(GameEngine& other) = delete;
 	GameEngine(GameEngine&& other) = delete;
-	void operator=(const GameEngine&) = delete;
+	void operator=(const GameEngine& other) = delete;
 	GameEngine& operator=(GameEngine&& other) = delete;
 	static GameEngine* GetInstance();
 
