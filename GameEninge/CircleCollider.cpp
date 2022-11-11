@@ -1,4 +1,5 @@
 #include "CircleCollider.hpp"
+#include <stdexcept>
 
 namespace spic {
 	CircleCollider::CircleCollider() : radius{ 0.0f }
@@ -10,6 +11,8 @@ namespace spic {
 	}
 	void CircleCollider::Radius(float newRadius)
 	{
+		if (newRadius < 0.0f)
+			throw std::range_error("Radius can't be below zero");
 		radius = newRadius;
 	}
 }

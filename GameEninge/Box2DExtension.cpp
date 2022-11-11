@@ -60,7 +60,7 @@ namespace extensions {
 
 		// Set velocity
 		b2Vec2 velocity;
-		velocity.Set(0, rigidBody->GetGravityScale());
+		velocity.Set(0, rigidBody->GravityScale());
 		body->SetLinearVelocity(velocity);
 
 		// Create fixture
@@ -80,9 +80,10 @@ namespace extensions {
 		const float ground_y = entity->Transform()->position.y;
 
 		b2BodyDef bodyDef;
-		bodyDef.type = bodyTypeConvertions[rigidBody->GetBodyType()];
+		bodyDef.type = bodyTypeConvertions[rigidBody->BodyType()];
 		bodyDef.position.Set(ground_x, ground_y); // set the starting position x and y cartesian
 		bodyDef.angle = entity->Transform()->rotation;
+		bodyDef.gravityScale = rigidBody->GravityScale();
 
 		b2Body* body = world->CreateBody(&bodyDef);
 		return body;
@@ -92,7 +93,7 @@ namespace extensions {
 	{
 		b2FixtureDef* fixtureDef = new b2FixtureDef();
 		fixtureDef->shape = CreateShape(entity);
-		fixtureDef->density = rigidBody->GetMass();
+		fixtureDef->density = rigidBody->Mass();
 		fixtureDef->friction = 0.3f;
 		fixtureDef->restitution = 0.5f;
 		return fixtureDef;
@@ -146,7 +147,7 @@ namespace extensions {
 		if (updated) {
 			body->SetTransform(b2Position, b2Rotation);
 			b2Vec2 velocity;
-			velocity.Set(0, rigidBody->GetGravityScale());
+			velocity.Set(0, rigidBody->GravityScale());
 			body->SetLinearVelocity(velocity);
 		}
 	}

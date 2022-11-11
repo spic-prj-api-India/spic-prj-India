@@ -26,9 +26,13 @@ namespace spic {
         public:
             RigidBody(float mass, float gravityScale, BodyType bodyType);
 
-            float GetMass() const;
-            float GetGravityScale() const;
-            BodyType GetBodyType() const;
+            float Mass() const;
+            float GravityScale() const;
+            BodyType BodyType() const;
+
+            void Mass(float mass);
+            void GravityScale(float gravityScale);
+            void BodyType(spic::BodyType bodyType);
 
             /**
              * @brief Apply force to this rigid body.
@@ -40,7 +44,7 @@ namespace spic {
         private:
             float mass;
             float gravityScale;
-            BodyType bodyType;
+            spic::BodyType bodyType;
     };
 
 }
