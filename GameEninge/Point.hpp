@@ -8,8 +8,8 @@ namespace spic {
      * @spicapi
      */
     struct Point {
-        float x;
-        float y;
+        double x;
+        double y;
     };
 
 }

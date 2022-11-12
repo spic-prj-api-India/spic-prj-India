@@ -7,7 +7,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Game", "Game\Game.vcxproj",
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GameEngine", "GameEninge\GameEninge.vcxproj", "{A165F967-67EE-4270-9CDF-6DB5B53F3E2D}"
 EndProject
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UnitTests", "UnitTests\UnitTests.vcxproj", "{FAD135B9-0CBB-416F-B0F0-9C48BBB24285}"
 EndProject
 Global

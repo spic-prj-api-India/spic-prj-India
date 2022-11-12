@@ -10,39 +10,37 @@ namespace spic {
      */
     class BoxCollider : public Collider {
         public:
-            BoxCollider();
-
             /**
              * @brief The collider's width
              * @return The current width
              * @spicapi
              */
-            float Width() const;
+            double Width() const { return width; }
 
             /**
              * @brief The collider's width
              * @param newWidth The desired width
              * @spicapi
              */
-            void Width(float newWidth);
+            void Width(double newWidth) { width = newWidth; }
 
             /**
              * @brief The collider's height
              * @return The current height
              * @spicapi
              */
-            float Height() const;
+            double Height() const { return height; }
 
             /**
              * @brief The collider's height
              * @param newHeight The desired height
              * @spicapi
              */
-            void Height(float newHeight);
+            void Height(double newHeight) { height = newHeight; }
 
         private:
-            float width;
-            float height;
+            double width;
+            double height;
     };
 
 }
