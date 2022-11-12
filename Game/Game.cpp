@@ -10,9 +10,9 @@
 
 int main()
 {
-	GameEngine* engine = GameEngine::GetInstance();
+	spic::GameEngine* engine = spic::GameEngine::GetInstance();
 	std::shared_ptr<extensions::Box2DExtension> physicsExtension = std::make_shared<extensions::Box2DExtension>();
-	engine->AddExtension(physicsExtension);
+	engine->AddExtension(std::move(physicsExtension));
 	const systems::PhysicsSystem system = systems::PhysicsSystem();
 
 	std::shared_ptr<spic::GameObject> box = std::make_shared<spic::GameObject>();

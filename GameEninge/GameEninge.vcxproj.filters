@@ -106,6 +106,12 @@
     <Filter Include="Source Files\game_engine">
       <UniqueIdentifier>{78c3b148-864e-4412-9ac9-ce54465640e0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\exceptions">
+      <UniqueIdentifier>{de599c23-262d-4680-9f82-ad8d657e716a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\exceptions">
+      <UniqueIdentifier>{8a3bbec8-dd46-4c13-8451-0525a10f4563}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Color.hpp">
@@ -201,6 +207,9 @@
     <ClInclude Include="Box2DCollisionListener.hpp">
       <Filter>Header Files\extensions</Filter>
     </ClInclude>
+    <ClInclude Include="CastException.hpp">
+      <Filter>Header Files\exceptions</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Time.cpp">
@@ -238,6 +247,9 @@
     </ClCompile>
     <ClCompile Include="CircleCollider.cpp">
       <Filter>Source Files\components\collider</Filter>
+    </ClCompile>
+    <ClCompile Include="CastException.cpp">
+      <Filter>Source Files\exceptions</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

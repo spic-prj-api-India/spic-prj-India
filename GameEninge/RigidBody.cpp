@@ -3,10 +3,10 @@
 #include "Box2DExtension.hpp"
 
 namespace spic {
-	RigidBody::RigidBody(float _mass, float _gravityScale, spic::BodyType _bodyType) : bodyType{ _bodyType }
+	RigidBody::RigidBody(float mass, float gravityScale, spic::BodyType _bodyType) : bodyType{ _bodyType }
 	{
-		Mass(_mass);
-		GravityScale(_gravityScale);
+		Mass(mass);
+		GravityScale(gravityScale);
 	}
 
 	float RigidBody::Mass() const
@@ -22,18 +22,18 @@ namespace spic {
 		return bodyType;
 	}
 
-	void RigidBody::Mass(float _mass) {
-		if (_mass < 0.0f)
+	void RigidBody::Mass(float newMass) {
+		if (newMass < 0.0f)
 			throw std::range_error("Mass can't be below zero");
-		mass = _mass;
+		mass = newMass;
 	}
-	void RigidBody::GravityScale(float _gravityScale) {
-		if (_gravityScale < 0.0f)
+	void RigidBody::GravityScale(float newGravityScale) {
+		if (newGravityScale < 0.0f)
 			throw std::range_error("Gravity scale can't be below zero");
-		gravityScale = _gravityScale;
+		gravityScale = newGravityScale;
 	}
-	void RigidBody::BodyType(spic::BodyType _bodyType) {
-		bodyType = _bodyType;
+	void RigidBody::BodyType(spic::BodyType newBodyType) {
+		bodyType = newBodyType;
 	}
 
 	void RigidBody::AddForce(std::shared_ptr<spic::GameObject> entity, const Point& forceDirection)

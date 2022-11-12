@@ -168,7 +168,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpp20</LanguageStandard>
       <DisableSpecificWarnings>26455; 26440;</DisableSpecificWarnings>
     </ClCompile>
     <Link>
@@ -192,6 +192,7 @@
     <ClInclude Include="BoxCollider.hpp" />
     <ClInclude Include="Button.hpp" />
     <ClInclude Include="Camera.hpp" />
+    <ClInclude Include="CastException.hpp" />
     <ClInclude Include="CircleCollider.hpp" />
     <ClInclude Include="Collider.hpp" />
     <ClInclude Include="Box2DCollisionListener.hpp" />
@@ -223,6 +224,7 @@
     <ClCompile Include="Box2DCollisionListener.cpp" />
     <ClCompile Include="Box2DExtension.cpp" />
     <ClCompile Include="BoxCollider.cpp" />
+    <ClCompile Include="CastException.cpp" />
     <ClCompile Include="CircleCollider.cpp" />
     <ClCompile Include="Color.cpp" />
     <ClCompile Include="GameEngine.cpp" />

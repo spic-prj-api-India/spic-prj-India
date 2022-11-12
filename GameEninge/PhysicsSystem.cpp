@@ -14,7 +14,7 @@ namespace systems {
 
 	void PhysicsSystem::Reset() const
 	{
-		GameEngine* engine = GameEngine::GetInstance();
+		spic::GameEngine* engine = spic::GameEngine::GetInstance();
 		const bool exists = engine->HasExtension<extensions::Box2DExtension>();
 		if (!exists)
 			return;
@@ -31,7 +31,7 @@ namespace systems {
 	void PhysicsSystem::Update(std::vector<std::shared_ptr<spic::GameObject>> entities) const
 	{
 		// Check if Box2D extension exists and update entities
-		GameEngine* engine = GameEngine::GetInstance();
+		spic::GameEngine* engine = spic::GameEngine::GetInstance();
 		const bool exists = engine->HasExtension<extensions::Box2DExtension>();
 		if (!exists)
 			return;

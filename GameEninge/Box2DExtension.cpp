@@ -64,11 +64,13 @@ namespace extensions {
 		body->SetLinearVelocity(velocity);
 
 		// Create fixture
-		b2FixtureDef* fixtureDef = CreateFixture(entity, rigidBody);
-		body->CreateFixture(fixtureDef);
+		if (entity->HasComponent<spic::Collider>()) {
+			b2FixtureDef* fixtureDef = CreateFixture(entity, rigidBody);
+			body->CreateFixture(fixtureDef);
 
-		// Set data
-		body->GetUserData().pointer = reinterpret_cast<uintptr_t>(entity.get());
+			// Set data
+			body->GetUserData().pointer = reinterpret_cast<uintptr_t>(entity.get());
+		}
 
 		// Add to bodies
 		bodies[entity->Tag()] = body;
@@ -92,7 +94,9 @@ namespace extensions {
 		const std::shared_ptr<spic::RigidBody>& rigidBody) const
 	{
 		b2FixtureDef* fixtureDef = new b2FixtureDef();
-		fixtureDef->shape = CreateShape(entity);
+		b2Shape* shape = CreateShape(entity);
+		if(shape != nullptr)
+			fixtureDef->shape = shape;
 		fixtureDef->density = rigidBody->Mass();
 		fixtureDef->friction = 0.3f;
 		fixtureDef->restitution = 0.5f;
@@ -100,8 +104,6 @@ namespace extensions {
 	}
 	b2Shape* Box2DExtension::CreateShape(const std::shared_ptr<spic::GameObject>& entity) const
 	{
-		if (!entity->HasComponent<spic::Collider>())
-			return nullptr;
 		std::shared_ptr<spic::BoxCollider> boxCollider = entity->GetComponent<spic::BoxCollider>();
 		if (boxCollider != nullptr) {
 			b2PolygonShape* boxShape = new b2PolygonShape();
