@@ -2,19 +2,58 @@
 //
 
 #include <iostream>
+#include "GameEngine.hpp"
+#include <PhysicsSystem.hpp>
+#include <BoxCollider.hpp>
+#include <Box2DExtension.hpp>
+#include "CollisionDetectionScript.h"
 
 int main()
 {
-    std::cout << "Hello World!\n";
+	spic::GameEngine* engine = spic::GameEngine::GetInstance();
+	std::shared_ptr<extensions::Box2DExtension> physicsExtension = std::make_shared<extensions::Box2DExtension>();
+	engine->AddExtension(std::move(physicsExtension));
+	const systems::PhysicsSystem system = systems::PhysicsSystem();
+
+	std::shared_ptr<spic::GameObject> box = std::make_shared<spic::GameObject>();
+	std::string boxTag = "box";
+	std::shared_ptr<spic::Transform> boxTransform = std::make_shared<spic::Transform>();
+	boxTransform->position = { -2.5f, -2.5f };
+	boxTransform->rotation = 45.0f;
+	boxTransform->scale = 1.0f;
+	std::shared_ptr<spic::BoxCollider> boxCollider = std::make_shared<spic::BoxCollider>();
+	boxCollider->Width(0.3f);
+	boxCollider->Height(0.3f);
+	std::shared_ptr<spic::RigidBody> boxRigidBody = std::make_shared<spic::RigidBody>(1.0f, 0.2f, spic::BodyType::dynamicBody);
+	std::shared_ptr<CollisionDetectionScript> script = std::make_shared<CollisionDetectionScript>();
+
+	box->Tag(boxTag);
+	box->Transform(boxTransform);
+	box->AddComponent<spic::BoxCollider>(boxCollider);
+	box->AddComponent<spic::RigidBody>(boxRigidBody);
+	box->AddComponent<spic::BehaviourScript>(script);
+
+	std::shared_ptr<spic::GameObject> platform = std::make_shared<spic::GameObject>();
+	std::string platformTag = "platform";
+	std::shared_ptr<spic::Transform> platformTransform = std::make_shared<spic::Transform>();
+	platformTransform->position = { 0.0f,  2.0f };
+	platformTransform->rotation = 0.0f;
+	platformTransform->scale = 0.0f;
+	std::shared_ptr<spic::BoxCollider> platformCollider = std::make_shared<spic::BoxCollider>();
+	platformCollider->Width(8.75f);
+	platformCollider->Height(0.275f);
+	std::shared_ptr<spic::RigidBody> platformRigidBody = std::make_shared<spic::RigidBody>(1.0f, 0.0f, spic::BodyType::staticBody);
+
+	platform->Tag(platformTag);
+	platform->Transform(platformTransform);
+	platform->AddComponent<spic::BoxCollider>(platformCollider);
+	platform->AddComponent<spic::RigidBody>(platformRigidBody);
+
+	std::vector< std::shared_ptr<spic::GameObject>> entities = std::vector< std::shared_ptr<spic::GameObject>>();
+	entities.emplace_back(box);
+	entities.emplace_back(platform);
+	while (true) {
+		system.Update(entities);
+		//std::cout << "x: " << box->Transform()->position.x << ", y: " << box->Transform()->position.y << std::endl;
+	}
 }
-
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
-
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
