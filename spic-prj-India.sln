@@ -9,6 +9,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GameEngine", "GameEninge\Ga
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UnitTests", "UnitTests\UnitTests.vcxproj", "{FAD135B9-0CBB-416F-B0F0-9C48BBB24285}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GoogleUnitTests", "GoogleUnitTests\GoogleUnitTests.vcxproj", "{E7E26B0C-71C1-455F-B95A-206B880254C0}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestTests", "TestTests\TestTests.vcxproj", "{59CC9CAA-D177-417D-85B4-D6A8E1A11531}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
