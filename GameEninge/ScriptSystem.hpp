@@ -3,6 +3,9 @@
 
 #include "ISystem.hpp"
 
+/**
+* @brief A system that calls the Start and Update method in scripts of entities
+*/
 namespace systems {
 	class ScriptSystem :
 		public ISystem
@@ -10,7 +13,16 @@ namespace systems {
 	public:
 		ScriptSystem();
 
+		/**
+		* @brief Calls Start method in scripts of entities
+		* @spicapi
+		*/
 		void Start(std::vector < std::shared_ptr<spic::GameObject >> entities) const;
+
+		/**
+		* @brief Calls Update method in scripts of entities
+		* @spicapi
+		*/
 		void Update(std::vector<std::shared_ptr<spic::GameObject>> entities) const;
 	};
 }
