@@ -20,14 +20,14 @@ InputManager* InputManager::GetInstance()
 	return pinstance_;
 }
 
-void InputManager::Reset() 
+void InputManager::Reset() const
 {
 	keyEvents;
 	mouseEvents;
 	keyListeners;
 	mouseListeners;
 }
-void InputManager::Listen() 
+void InputManager::Listen()
 {
 	const spic::Point newMousePosition = spic::Input::MousePosition();
 	if (currentMousePosition.x != newMousePosition.x || currentMousePosition.y != newMousePosition.y) {
@@ -98,20 +98,20 @@ void InputManager::UnSubscribe(spic::Input::MouseButton mouseEvent, const std::s
 	}
 }
 
-void InputManager::TriggerKeyPressed(spic::Input::KeyCode key) 
+void InputManager::TriggerKeyPressed(spic::Input::KeyCode keyEvent)
 {
-	for (const std::shared_ptr<spic::IKeyListener>& keyListener : keyListeners[key]) {
+	for (const std::shared_ptr<spic::IKeyListener>& keyListener : keyListeners[keyEvent]) {
 		keyListener->OnKeyPressed();
 	}
 }
-void InputManager::TriggerKeyReleased(spic::Input::KeyCode key) 
+void InputManager::TriggerKeyReleased(spic::Input::KeyCode keyEvent)
 {
-	for (const std::shared_ptr<spic::IKeyListener>& keyListener : keyListeners[key]) {
+	for (const std::shared_ptr<spic::IKeyListener>& keyListener : keyListeners[keyEvent]) {
 		keyListener->OnKeyReleased();
 	}
 }
 
-void InputManager::TriggerMouseMoved() 
+void InputManager::TriggerMouseMoved() const
 {
 	for (const auto& mousePair : mouseListeners) {
 		for (const std::shared_ptr<spic::IMouseListener>& mouseListener : mousePair.second) {
@@ -125,13 +125,13 @@ void InputManager::TriggerMouseClicked(spic::Input::MouseButton mouseEvent)
 		mouseListener->OnMouseClicked();
 	}
 }
-void InputManager::TriggerMousePressed(spic::Input::MouseButton mouseEvent) 
+void InputManager::TriggerMousePressed(spic::Input::MouseButton mouseEvent)
 {
 	for (const std::shared_ptr<spic::IMouseListener>& mouseListener : mouseListeners[mouseEvent]) {
 		mouseListener->OnMousePressed();
 	}
 }
-void InputManager::TriggerMouseReleased(spic::Input::MouseButton mouseEvent) 
+void InputManager::TriggerMouseReleased(spic::Input::MouseButton mouseEvent)
 {
 	for (const std::shared_ptr<spic::IMouseListener>& mouseListener : mouseListeners[mouseEvent]) {
 		mouseListener->OnMouseReleased();
