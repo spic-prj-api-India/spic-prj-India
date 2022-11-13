@@ -3,7 +3,8 @@
 namespace InputImpl {
 	SDL_Event ev;
 
-	std::vector<SDL_Keycode> InputImpl::ToSDLKeyCode(spic::Input::KeyCode key) {
+	std::vector<SDL_Keycode> InputImpl::ToSDLKeyCodes(spic::Input::KeyCode key) 
+	{
 		switch (key) {
 		case spic::Input::KeyCode::ERROR_ROLLOVER:
 			return {};
@@ -264,51 +265,51 @@ namespace InputImpl {
 		case spic::Input::KeyCode::VOLUME_DOWN:
 			return { SDLK_VOLUMEDOWN };
 		case spic::Input::KeyCode::LOCKING_CAPS_LOCK:
-			return {};
+			return { SDLK_CAPSLOCK };
 		case spic::Input::KeyCode::LOCKING_NUM_LOCK:
-			return {};
+			return { SDLK_NUMLOCKCLEAR };
 		case spic::Input::KeyCode::LOCKING_SCROLL_LOCK:
-			return {};
+			return { SDLK_SCROLLLOCK };
 		case spic::Input::KeyCode::KEYPAD_COMMA:
 			return { SDLK_KP_COMMA };
 		case spic::Input::KeyCode::KEYPAD_EQUAL_SIGN_AS400:
 			return { SDLK_KP_EQUALSAS400 };
 		case spic::Input::KeyCode::INTERNATIONAL1:
-			return { SDLK_1 };
+			return { SDL_SCANCODE_TO_KEYCODE(SDL_SCANCODE_INTERNATIONAL1) };
 		case spic::Input::KeyCode::INTERNATIONAL2:
-			return { SDLK_2 };
+			return { SDL_SCANCODE_TO_KEYCODE(SDL_SCANCODE_INTERNATIONAL2) };
 		case spic::Input::KeyCode::INTERNATIONAL3:
-			return { SDLK_3 };
+			return { SDL_SCANCODE_TO_KEYCODE(SDL_SCANCODE_INTERNATIONAL3) };
 		case spic::Input::KeyCode::INTERNATIONAL4:
-			return { SDLK_4 };
+			return { SDL_SCANCODE_TO_KEYCODE(SDL_SCANCODE_INTERNATIONAL4) };
 		case spic::Input::KeyCode::INTERNATIONAL5:
-			return { SDLK_5 };
+			return { SDL_SCANCODE_TO_KEYCODE(SDL_SCANCODE_INTERNATIONAL5) };
 		case spic::Input::KeyCode::INTERNATIONAL6:
-			return { SDLK_6 };
+			return { SDL_SCANCODE_TO_KEYCODE(SDL_SCANCODE_INTERNATIONAL6) };
 		case spic::Input::KeyCode::INTERNATIONAL7:
-			return { SDLK_7 };
+			return { SDL_SCANCODE_TO_KEYCODE(SDL_SCANCODE_INTERNATIONAL7) };
 		case spic::Input::KeyCode::INTERNATIONAL8:
-			return { SDLK_8 };
+			return { SDL_SCANCODE_TO_KEYCODE(SDL_SCANCODE_INTERNATIONAL8) };
 		case spic::Input::KeyCode::INTERNATIONAL9:
-			return { SDLK_9 };
+			return { SDL_SCANCODE_TO_KEYCODE(SDL_SCANCODE_INTERNATIONAL9) };
 		case spic::Input::KeyCode::LANG1:
-			return {};
+			return { SDL_SCANCODE_TO_KEYCODE(SDL_SCANCODE_LANG1) };
 		case spic::Input::KeyCode::LANG2:
-			return {};
+			return { SDL_SCANCODE_TO_KEYCODE(SDL_SCANCODE_LANG2) };
 		case spic::Input::KeyCode::LANG3:
-			return {};
+			return { SDL_SCANCODE_TO_KEYCODE(SDL_SCANCODE_LANG3) };
 		case spic::Input::KeyCode::LANG4:
-			return {};
+			return { SDL_SCANCODE_TO_KEYCODE(SDL_SCANCODE_LANG4) };
 		case spic::Input::KeyCode::LANG5:
-			return {};
+			return { SDL_SCANCODE_TO_KEYCODE(SDL_SCANCODE_LANG5) };
 		case spic::Input::KeyCode::LANG6:
-			return {};
+			return { SDL_SCANCODE_TO_KEYCODE(SDL_SCANCODE_LANG6) };
 		case spic::Input::KeyCode::LANG7:
-			return {};
+			return { SDL_SCANCODE_TO_KEYCODE(SDL_SCANCODE_LANG7) };
 		case spic::Input::KeyCode::LANG8:
-			return {};
+			return { SDL_SCANCODE_TO_KEYCODE(SDL_SCANCODE_LANG8) };
 		case spic::Input::KeyCode::LANG9:
-			return {};
+			return { SDL_SCANCODE_TO_KEYCODE(SDL_SCANCODE_LANG9) };
 		case spic::Input::KeyCode::ALTERNATE_ERASE:
 			return { SDLK_ALTERASE };
 		case spic::Input::KeyCode::SYSREQ:
@@ -479,48 +480,58 @@ namespace InputImpl {
 		return { SDLK_UNKNOWN };
 	}
 
-	int InputImpl::Poll() {
+	int InputImpl::Poll() 
+	{
 		return SDL_PollEvent(&ev);
 	}
 
-	bool InputImpl::AnyKey() {
+	bool InputImpl::AnyKey() 
+	{
 		return ev.type == SDL_KEYDOWN || ev.type == SDL_KEYUP;
 	}
-	bool InputImpl::AnyKeyDown() {
+	bool InputImpl::AnyKeyDown() 
+	{
 		return ev.type == SDL_KEYDOWN;
 	}
 
-	spic::Point InputImpl::MousePosition() {
+	spic::Point InputImpl::MousePosition() 
+	{
 		int x, y;
 		SDL_GetMouseState(&x, &y);
 		return spic::Point{ static_cast<float>(x),static_cast<float>(y) };
 	}
 
-	double InputImpl::GetAxis() {
+	double InputImpl::GetAxis() 
+	{
 		return 2;
 	}
 
-	bool InputImpl::GetKey(spic::Input::KeyCode key) {
-		auto keyCodes = ToSDLKeyCode(key);
+	bool InputImpl::GetKey(spic::Input::KeyCode key) 
+	{
+		const std::vector<SDL_Keycode> keyCodes = ToSDLKeyCodes(key);
 		return std::find(keyCodes.begin(), keyCodes.end(), ev.key.keysym.sym) != keyCodes.end();
 	}
-	bool InputImpl::GetKeyDown(spic::Input::KeyCode key) {
-		auto keyCodes = ToSDLKeyCode(key);
+	bool InputImpl::GetKeyDown(spic::Input::KeyCode key) 
+	{
+		const std::vector<SDL_Keycode> keyCodes = ToSDLKeyCodes(key);
 		return ev.type == SDL_KEYDOWN && std::find(keyCodes.begin(), keyCodes.end(), ev.key.keysym.sym) != keyCodes.end();
 	}
-	bool InputImpl::GetKeyUp(spic::Input::KeyCode key) {
-		auto keyCodes = ToSDLKeyCode(key);
+	bool InputImpl::GetKeyUp(spic::Input::KeyCode key) 
+	{
+		const std::vector<SDL_Keycode> keyCodes = ToSDLKeyCodes(key);
 		return ev.type == SDL_KEYUP && std::find(keyCodes.begin(), keyCodes.end(), ev.key.keysym.sym) != keyCodes.end();
 	}
 
-	bool InputImpl::GetMouseButton(spic::Input::MouseButton which) {
+	bool InputImpl::GetMouseButton(spic::Input::MouseButton which) 
+	{
 		if (which == spic::Input::MouseButton::LEFT)
 			return ev.button.button == SDL_BUTTON_LEFT;
 		if (which == spic::Input::MouseButton::MIDDLE)
 			return ev.button.button == SDL_BUTTON_MIDDLE;
 		return ev.button.button == SDL_BUTTON_RIGHT;
 	}
-	bool InputImpl::GetMouseButtonDown(spic::Input::MouseButton which) {
+	bool InputImpl::GetMouseButtonDown(spic::Input::MouseButton which) 
+	{
 		if (ev.type != SDL_MOUSEBUTTONDOWN)
 			return false;
 		if (which == spic::Input::MouseButton::LEFT)
@@ -529,7 +540,8 @@ namespace InputImpl {
 			return ev.button.button == SDL_BUTTON_MIDDLE;
 		return ev.button.button == SDL_BUTTON_RIGHT;
 	}
-	bool InputImpl::GetMouseButtonUp(spic::Input::MouseButton which) {
+	bool InputImpl::GetMouseButtonUp(spic::Input::MouseButton which) 
+	{
 		if (ev.type != SDL_MOUSEBUTTONUP)
 			return false;
 		if (which == spic::Input::MouseButton::LEFT)

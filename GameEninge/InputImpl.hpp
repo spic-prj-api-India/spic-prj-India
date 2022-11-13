@@ -12,7 +12,7 @@ namespace InputImpl {
     * @brief Converts KeyCode to SDL_KeyCode
     * @spicapi
     */
-    std::vector<SDL_Keycode> ToSDLKeyCode(spic::Input::KeyCode key);
+    std::vector<SDL_Keycode> ToSDLKeyCodes(spic::Input::KeyCode key);
 
     /**
     * @brief Polls all input events, needs to be used to update input events
