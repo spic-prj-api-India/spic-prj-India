@@ -31,7 +31,7 @@ public:
 	* @brief Removes all listeners
 	* @spicapi
 	*/
-	void Reset() const;
+	void Reset();
 
 	/**
 	* @brief Listen to key and mouse listeners

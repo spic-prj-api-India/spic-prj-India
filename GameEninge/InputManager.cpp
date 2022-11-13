@@ -20,12 +20,12 @@ InputManager* InputManager::GetInstance()
 	return pinstance_;
 }
 
-void InputManager::Reset() const
+void InputManager::Reset()
 {
-	keyEvents;
-	mouseEvents;
-	keyListeners;
-	mouseListeners;
+	keyEvents = {};
+	mouseEvents = {};
+	keyListeners = {};
+	mouseListeners = {};
 }
 void InputManager::Listen()
 {

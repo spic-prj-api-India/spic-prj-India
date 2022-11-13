@@ -21,7 +21,6 @@ namespace extensions {
 	void Box2DExtension::Reset()
 	{
 		world = std::make_unique<b2World>(b2Vec2(0.0f, GRAVITY));
-		Box2DCollisionListener myContactListenerInstance;
 	}
 	void Box2DExtension::Update(std::vector<std::shared_ptr<spic::GameObject>> entities)
 	{

@@ -60,6 +60,7 @@
     <ClCompile Include="Collidertest.cpp" />
     <ClCompile Include="ComponentTest.cpp" />
     <ClCompile Include="ExtensionTest.cpp" />
+    <ClCompile Include="InputManagerTest.cpp" />
     <ClCompile Include="PhysicsTest.cpp" />
     <ClCompile Include="RigidBodyTest.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
