@@ -73,7 +73,7 @@ private:
 	* @brief Calls method OnKeyPressed of all key listeners for specific key event
 	* @spicapi
 	*/
-	void OnKeyReleased(spic::Input::KeyCode keyEvent);
+	void TriggerKeyReleased(spic::Input::KeyCode keyEvent);
 
 	/**
 	* @brief Calls method OnMouseMoved of all mouse listeners
