@@ -210,6 +210,15 @@
     <ClInclude Include="CastException.hpp">
       <Filter>Header Files\exceptions</Filter>
     </ClInclude>
+    <ClInclude Include="InputManager.hpp">
+      <Filter>Header Files\input</Filter>
+    </ClInclude>
+    <ClInclude Include="InputSystem.hpp">
+      <Filter>Header Files\systems\input</Filter>
+    </ClInclude>
+    <ClInclude Include="InputImpl.hpp">
+      <Filter>Header Files\input</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Time.cpp">
@@ -250,6 +259,18 @@
     </ClCompile>
     <ClCompile Include="CastException.cpp">
       <Filter>Source Files\exceptions</Filter>
+    </ClCompile>
+    <ClCompile Include="Input.cpp">
+      <Filter>Source Files\input</Filter>
+    </ClCompile>
+    <ClCompile Include="InputManager.cpp">
+      <Filter>Source Files\input</Filter>
+    </ClCompile>
+    <ClCompile Include="InputSystem.cpp">
+      <Filter>Source Files\systems</Filter>
+    </ClCompile>
+    <ClCompile Include="InputImpl.cpp">
+      <Filter>Source Files\input</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

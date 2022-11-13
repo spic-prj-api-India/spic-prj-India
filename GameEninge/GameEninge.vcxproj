@@ -205,6 +205,9 @@
     <ClInclude Include="IKeyListener.hpp" />
     <ClInclude Include="IMouseListener.hpp" />
     <ClInclude Include="Input.hpp" />
+    <ClInclude Include="InputImpl.hpp" />
+    <ClInclude Include="InputManager.hpp" />
+    <ClInclude Include="InputSystem.hpp" />
     <ClInclude Include="ISystem.hpp" />
     <ClInclude Include="Box2DExtension.hpp" />
     <ClInclude Include="PhysicsSystem.hpp" />
@@ -228,6 +231,10 @@
     <ClCompile Include="Color.cpp" />
     <ClCompile Include="GameEngine.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="Input.cpp" />
+    <ClCompile Include="InputImpl.cpp" />
+    <ClCompile Include="InputManager.cpp" />
+    <ClCompile Include="InputSystem.cpp" />
     <ClCompile Include="PhysicsSystem.cpp" />
     <ClCompile Include="RigidBody.cpp" />
     <ClCompile Include="ScriptSystem.cpp" />
