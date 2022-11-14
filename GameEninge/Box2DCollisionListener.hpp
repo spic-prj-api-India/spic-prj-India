@@ -38,6 +38,11 @@ namespace spic::internal::extensions {
         * @spicapi
         */
         virtual void PreSolve(b2Contact* contact, const b2Manifold* oldManifold);
+
+        /**
+        * @brief Is called when body has stopped colliding with another body
+        * @spicapi
+        */
         virtual void PostSolve(b2Contact* contact, const b2ContactImpulse* impulse);
     private:
         std::function<void(const std::shared_ptr<spic::GameObject>&, const std::shared_ptr<spic::Collider>&)> onEnterCallback;
