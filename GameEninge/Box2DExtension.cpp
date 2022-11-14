@@ -8,7 +8,7 @@
 namespace extensions {
 	inline float GRAVITY = 9.81f;
 
-	Box2DExtension::Box2DExtension() : IEngineExtension(), world{ nullptr }
+	Box2DExtension::Box2DExtension() : IPhysicsExtension(), world{ nullptr }
 	{
 		bodyTypeConvertions = {
 			{spic::BodyType::staticBody, b2_staticBody},
@@ -154,9 +154,10 @@ namespace extensions {
 		}
 	}
 
-	void Box2DExtension::RegisterListener(Box2DCollisionListener* listener) const
+	void Box2DExtension::RegisterListener(ICollisionListener* listener) const
 	{
-		world->SetContactListener(listener);
+		b2ContactListener* box2DListener = dynamic_cast<Box2DCollisionListener*>(listener);
+		world->SetContactListener(box2DListener);
 	}
 	void Box2DExtension::AddForce(std::shared_ptr<spic::GameObject> entity, const spic::Point& forceDirection)
 	{

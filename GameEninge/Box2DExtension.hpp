@@ -8,7 +8,7 @@
 #include <vector>
 #include <map>
 #include "GameObject.hpp"
-#include "IEngineExtension.hpp"
+#include "IPhysicsExtension.hpp"
 #include "Point.hpp"
 #include "RigidBody.hpp"
 #include "Box2DCollisionListener.hpp"
@@ -17,7 +17,7 @@ namespace extensions {
 	/**
 	 * @brief A extension that handles physics with Box2D 
 	 */
-	class Box2DExtension : public extensions::IEngineExtension {
+	class Box2DExtension : public IPhysicsExtension {
 	public:
 		Box2DExtension();
 		
@@ -25,23 +25,25 @@ namespace extensions {
 		* @brief Resets all physic bodies in world
 		* @spicapi
 		*/
-		void Reset();
+		void Reset() override;
+
 		/**
 		* @brief Add and updates physic bodies in world
 		* @spicapi
 		*/
-		void Update(std::vector<std::shared_ptr<spic::GameObject>> entities);
+		void Update(std::vector<std::shared_ptr<spic::GameObject>> entities) override;
 
 		/**
 		* @brief Registers collision listener in world
 		* @spicapi
 		*/
-		void RegisterListener(Box2DCollisionListener* listener) const;
+		void RegisterListener(ICollisionListener* listener) const override;
+
 		/**
 		* @brief Adds force to an entity
 		* @spicapi
 		*/
-		void AddForce(std::shared_ptr<spic::GameObject> entity, const spic::Point& forceDirection);
+		void AddForce(std::shared_ptr<spic::GameObject> entity, const spic::Point& forceDirection) override;
 	private:
 		void CreateEntity(const std::shared_ptr<spic::GameObject>& entity);
 		b2Body* CreateBody(const std::shared_ptr<spic::GameObject>& entity, const std::shared_ptr<spic::RigidBody>& rigidBody);

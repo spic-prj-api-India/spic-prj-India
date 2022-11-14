@@ -30,7 +30,7 @@ namespace spic {
 		/**
 		* @brief Adds extensions to engine.
 		* @param extension A IEngineExtension is used by the engine to
-		*        configure the base functionality of the engine 
+		*        configure the base functionality of the engine
 		* @spicapi
 		*/
 		template <typename T>
@@ -47,6 +47,23 @@ namespace spic {
 		std::weak_ptr<T> GetExtension()
 		{
 			return std::dynamic_pointer_cast<T>(_extensions[GetTypeName<T>()]);
+		}
+
+		/**
+		* @brief Gets extensions of type IEngineExtension.
+		* @spicapi
+		*/
+		template <typename T>
+		std::vector<std::weak_ptr<T>> GetExtensions()
+		{
+			std::vector<std::weak_ptr<T>> extensions;
+			for (const auto& extension : _extensions) {
+				std::weak_ptr<T> weakExtension = std::dynamic_pointer_cast<T>(extension.second);
+				bool isOfType = weakExtension.lock() != nullptr;
+				if (isOfType)
+					extensions.emplace_back(weakExtension);
+			}
+			return extensions;
 		}
 
 		/**
