@@ -2,6 +2,8 @@
 
 #include "Box2DExtension.hpp"
 
+using namespace spic;
+
 TEST(PhysicsTest, GravitySuccess) {
 	//1. Arrange
 	std::vector< std::shared_ptr<spic::GameObject>> entities = std::vector< std::shared_ptr<spic::GameObject>>();
