@@ -106,6 +106,9 @@
     <Filter Include="Source Files\game_engine">
       <UniqueIdentifier>{78c3b148-864e-4412-9ac9-ce54465640e0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\map_parser">
+      <UniqueIdentifier>{e009d138-09b9-4530-a65b-3c1377e13238}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Color.hpp">
@@ -180,6 +183,21 @@
     <ClInclude Include="GameEngineAPI.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="EntityManager.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ISystem.hpp">
+      <Filter>Source Files\systems</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.cpp">
+      <Filter>Source Files\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="MapParser.hpp">
+      <Filter>Header Files\map_parser</Filter>
+    </ClInclude>
+    <ClInclude Include="TileLayer.hpp">
+      <Filter>Header Files\map_parser</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Time.cpp">
@@ -187,6 +205,9 @@
     </ClCompile>
     <ClCompile Include="Color.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Source Files\scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
