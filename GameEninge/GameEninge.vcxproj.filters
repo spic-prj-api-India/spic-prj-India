@@ -106,6 +106,12 @@
     <Filter Include="Source Files\game_engine">
       <UniqueIdentifier>{78c3b148-864e-4412-9ac9-ce54465640e0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\components\audio\SDL2Audio">
+      <UniqueIdentifier>{c520e0e6-0b6a-42e5-b34c-5e67436a07d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\components\audio\SDL2Audio">
+      <UniqueIdentifier>{89edccbf-ad86-4f27-8ca0-cb8254accfed}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Color.hpp">
@@ -180,6 +186,18 @@
     <ClInclude Include="GameEngineAPI.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Sample.hpp">
+      <Filter>Header Files\components\audio\SDL2Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Chunk.hpp">
+      <Filter>Header Files\components\audio\SDL2Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioManager.hpp">
+      <Filter>Header Files\components\audio\SDL2Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioInfo.hpp">
+      <Filter>Header Files\components\audio\SDL2Audio</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Time.cpp">
@@ -187,6 +205,18 @@
     </ClCompile>
     <ClCompile Include="Color.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Sample.cpp">
+      <Filter>Source Files\components\audio\SDL2Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioSource.cpp">
+      <Filter>Source Files\components\audio</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioManager.cpp">
+      <Filter>Source Files\components\audio\SDL2Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="Chunk.cpp">
+      <Filter>Source Files\components\audio\SDL2Audio</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

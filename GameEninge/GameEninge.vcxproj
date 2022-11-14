@@ -131,6 +131,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -142,11 +143,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Animator.hpp" />
+    <ClInclude Include="AudioInfo.hpp" />
+    <ClInclude Include="AudioManager.hpp" />
     <ClInclude Include="AudioSource.hpp" />
     <ClInclude Include="BehaviourScript.hpp" />
     <ClInclude Include="BoxCollider.hpp" />
     <ClInclude Include="Button.hpp" />
     <ClInclude Include="Camera.hpp" />
+    <ClInclude Include="Chunk.hpp" />
     <ClInclude Include="CircleCollider.hpp" />
     <ClInclude Include="Collider.hpp" />
     <ClInclude Include="Color.hpp" />
@@ -159,6 +163,7 @@
     <ClInclude Include="Input.hpp" />
     <ClInclude Include="Point.hpp" />
     <ClInclude Include="RigidBody.hpp" />
+    <ClInclude Include="Sample.hpp" />
     <ClInclude Include="Scene.hpp" />
     <ClInclude Include="Sprite.hpp" />
     <ClInclude Include="Text.hpp" />
@@ -167,7 +172,11 @@
     <ClInclude Include="UIObject.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AudioManager.cpp" />
+    <ClCompile Include="AudioSource.cpp" />
+    <ClCompile Include="Chunk.cpp" />
     <ClCompile Include="Color.cpp" />
+    <ClCompile Include="Sample.cpp" />
     <ClCompile Include="Time.cpp" />
   </ItemGroup>
   <ItemGroup>
