@@ -19,16 +19,13 @@ namespace spic {
              * @return true if active, false otherwise.
              * @spicapi
              */
-            bool Active() const { return this.active; }
+            bool Active() const;
 
             /**
              * @brief flag New active status.
              * @spicapi
              */
-            void Active(bool flag) { active = flag; }
-
-
-            bool IsChanged const{ return isChanged; }
+            void Active(bool flag);
 
         private:
             /**
@@ -37,7 +34,5 @@ namespace spic {
             bool active;
             bool isChanged;
     };
-
 }
-
 #endif // COMPONENT_H_
