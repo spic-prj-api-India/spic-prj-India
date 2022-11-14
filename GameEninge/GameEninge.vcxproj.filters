@@ -105,7 +105,7 @@
     </Filter>
     <Filter Include="Source Files\game_engine">
       <UniqueIdentifier>{78c3b148-864e-4412-9ac9-ce54465640e0}</UniqueIdentifier>
-    </Filter
+    </Filter>
     <Filter Include="Header Files\components\audio\SDL2Audio">
       <UniqueIdentifier>{c520e0e6-0b6a-42e5-b34c-5e67436a07d7}</UniqueIdentifier>
     </Filter>
