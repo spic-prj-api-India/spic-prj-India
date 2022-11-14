@@ -105,12 +105,15 @@
     </Filter>
     <Filter Include="Source Files\game_engine">
       <UniqueIdentifier>{78c3b148-864e-4412-9ac9-ce54465640e0}</UniqueIdentifier>
-    </Filter>
+    </Filter
     <Filter Include="Header Files\components\audio\SDL2Audio">
       <UniqueIdentifier>{c520e0e6-0b6a-42e5-b34c-5e67436a07d7}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\components\audio\SDL2Audio">
       <UniqueIdentifier>{89edccbf-ad86-4f27-8ca0-cb8254accfed}</UniqueIdentifier>
+    </Filter>  
+    <Filter Include="Header Files\map_parser">
+      <UniqueIdentifier>{e009d138-09b9-4530-a65b-3c1377e13238}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -198,6 +201,21 @@
     <ClInclude Include="AudioInfo.hpp">
       <Filter>Header Files\components\audio\SDL2Audio</Filter>
     </ClInclude>
+    <ClInclude Include="EntityManager.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ISystem.hpp">
+      <Filter>Source Files\systems</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.cpp">
+      <Filter>Source Files\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="MapParser.hpp">
+      <Filter>Header Files\map_parser</Filter>
+    </ClInclude>
+    <ClInclude Include="TileLayer.hpp">
+      <Filter>Header Files\map_parser</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Time.cpp">
@@ -217,6 +235,9 @@
     </ClCompile>
     <ClCompile Include="Chunk.cpp">
       <Filter>Source Files\components\audio\SDL2Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Source Files\scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
