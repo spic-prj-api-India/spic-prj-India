@@ -187,7 +187,6 @@
     <ClInclude Include="GameObject.hpp" />
     <ClInclude Include="ICollisionListener.hpp" />
     <ClInclude Include="IEngineExtension.hpp" />
-    <ClInclude Include="GameObject.cpp" />
     <ClInclude Include="IKeyListener.hpp" />
     <ClInclude Include="IMouseListener.hpp" />
     <ClInclude Include="Input.hpp" />
@@ -208,6 +207,8 @@
     <ClInclude Include="Time.hpp" />
     <ClInclude Include="Transform.hpp" />
     <ClInclude Include="UIObject.hpp" />
+  </ItemGroup>
+  <ItemGroup>
     <ClCompile Include="AudioManager.cpp" />
     <ClCompile Include="AudioSource.cpp" />
     <ClCompile Include="Chunk.cpp" />
@@ -226,6 +227,7 @@
     <ClCompile Include="ScriptSystem.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Time.cpp" />
+	<ClCompile Include="GameObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

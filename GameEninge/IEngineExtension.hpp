@@ -7,12 +7,12 @@ namespace spic::internal::extensions {
 	 */
 	class IEngineExtension {
 	public:
-		IEngineExtension() {};
+		IEngineExtension() = default;
 		/**
 		 * @brief Needs to declare virtual destructor,
 		 *			otherwise can't be used as interface
 		 */
-		virtual ~IEngineExtension() {}
+		virtual ~IEngineExtension() = default;
 		IEngineExtension(const IEngineExtension& other) = delete;
 		IEngineExtension(IEngineExtension&& other) = delete;
 		IEngineExtension& operator=(const IEngineExtension& other) = delete;

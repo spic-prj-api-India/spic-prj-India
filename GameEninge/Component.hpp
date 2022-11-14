@@ -37,5 +37,7 @@ namespace spic {
             bool active;
             bool isChanged;
     };
+
 }
+
 #endif // COMPONENT_H_
