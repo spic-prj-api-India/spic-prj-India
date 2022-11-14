@@ -182,9 +182,12 @@
     <ClInclude Include="Debug.hpp" />
     <ClInclude Include="GameEngine.hpp" />
     <ClInclude Include="GameEngineAPI.hpp" />
+    <ClInclude Include="EntityManager.hpp" />
+    <ClInclude Include="GameEngineAPI.h" />
     <ClInclude Include="GameObject.hpp" />
     <ClInclude Include="ICollisionListener.hpp" />
     <ClInclude Include="IEngineExtension.hpp" />
+    <ClInclude Include="GameObject.cpp" />
     <ClInclude Include="IKeyListener.hpp" />
     <ClInclude Include="IMouseListener.hpp" />
     <ClInclude Include="Input.hpp" />
@@ -193,6 +196,8 @@
     <ClInclude Include="Box2DExtension.hpp" />
     <ClInclude Include="PhysicsInfo.hpp" />
     <ClInclude Include="PhysicsSystem.hpp" />
+    <ClInclude Include="ISystem.hpp" />
+    <ClInclude Include="MapParser.hpp" />
     <ClInclude Include="Point.hpp" />
     <ClInclude Include="RigidBody.hpp" />
     <ClInclude Include="Sample.hpp" />
@@ -200,6 +205,7 @@
     <ClInclude Include="ScriptSystem.hpp" />
     <ClInclude Include="Sprite.hpp" />
     <ClInclude Include="Text.hpp" />
+    <ClInclude Include="TileLayer.hpp" />
     <ClInclude Include="Time.hpp" />
     <ClInclude Include="Transform.hpp" />
     <ClInclude Include="UIObject.hpp" />
@@ -222,6 +228,7 @@
     <ClCompile Include="PhysicsSystem.cpp" />
     <ClCompile Include="RigidBody.cpp" />
     <ClCompile Include="ScriptSystem.cpp" />
+    <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Time.cpp" />
   </ItemGroup>
   <ItemGroup>
