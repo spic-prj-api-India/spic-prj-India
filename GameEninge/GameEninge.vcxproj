@@ -181,6 +181,7 @@
     <ClCompile Include="AudioSource.cpp" />
     <ClCompile Include="Chunk.cpp" />
     <ClCompile Include="Color.cpp" />
+    <ClCompile Include="EntityManager.cpp" />
     <ClCompile Include="Sample.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Time.cpp" />

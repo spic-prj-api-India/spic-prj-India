@@ -8,7 +8,8 @@
 class ISystem
 {
 public:
-	virtual void Update(std::vector<std::shared_ptr<spic::GameObject>> entities) const = 0;
+	virtual void Update(std::vector<std::shared_ptr<spic::GameObject>> entities) = 0;
+	virtual ~ISystem() = default;
 private:
 };
 

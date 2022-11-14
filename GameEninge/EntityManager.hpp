@@ -8,8 +8,8 @@
 #include <vector>
 #include <iostream>
 #include "ISystem.hpp"
-#include "Scene.hpp"
 #include "MapParser.hpp"
+#include "Scene.hpp"
 
 class EntityManager
 {
@@ -18,7 +18,7 @@ private:
 	static std::mutex mutex_;
 
 	std::vector<std::shared_ptr<spic::GameObject>> entities;
-	std::vector <std::pair<int, ISystem>> systems;
+	std::vector <std::pair<int, ISystem*>> systems;
 	std::weak_ptr<spic::Scene> currentScene;
 	std::unique_ptr<spic::MapParser> tileParser;
 protected:
@@ -30,6 +30,25 @@ public:
 	void operator=(const EntityManager& other) = delete;
 	EntityManager& operator=(EntityManager&& other) = delete;
 	static EntityManager* GetInstance();
+
+	void SetScene(spic::Scene* scene)
+	{}
+
+	void DestroyScene(bool forceDelete)
+	{}
+
+	void AddSystem(ISystem* system)
+	{}
+
+	void RemoveSystem(ISystem* system)
+	{}
+
+	void Update(int deltaTime)
+	{}
+
+	void Render()
+	{}
+
 };
 
 #endif // ENTITYMANAGER_H_

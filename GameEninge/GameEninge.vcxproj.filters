@@ -111,7 +111,7 @@
     </Filter>
     <Filter Include="Source Files\components\audio\SDL2Audio">
       <UniqueIdentifier>{89edccbf-ad86-4f27-8ca0-cb8254accfed}</UniqueIdentifier>
-    </Filter>  
+    </Filter>
     <Filter Include="Header Files\map_parser">
       <UniqueIdentifier>{e009d138-09b9-4530-a65b-3c1377e13238}</UniqueIdentifier>
     </Filter>
@@ -238,6 +238,9 @@
     </ClCompile>
     <ClCompile Include="Scene.cpp">
       <Filter>Source Files\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="EntityManager.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
