@@ -1,6 +1,7 @@
 #ifndef BOX2DEXTENSION_H_
 #define BOX2DEXTENSION_H_
 
+// Use to remove box2d warnings from error list
 #pragma warning(push, 0)
 #include "box2d/box2d.h"
 #pragma warning(pop)
@@ -11,9 +12,8 @@
 #include "IPhysicsExtension.hpp"
 #include "Point.hpp"
 #include "RigidBody.hpp"
-#include "Box2DCollisionListener.hpp"
 
-namespace extensions {
+namespace spic::extensions {
 	/**
 	 * @brief A extension that handles physics with Box2D 
 	 */
@@ -45,11 +45,35 @@ namespace extensions {
 		*/
 		void AddForce(std::shared_ptr<spic::GameObject> entity, const spic::Point& forceDirection) override;
 	private:
+		/**
+		* @brief Creates body, fixture and shape and adds body to box2d world
+		* @spicapi
+		*/
 		void CreateEntity(const std::shared_ptr<spic::GameObject>& entity);
+
+		/**
+		* @brief Creates box2d body with RigidBody of entity
+		* @spicapi
+		*/
 		b2Body* CreateBody(const std::shared_ptr<spic::GameObject>& entity, const std::shared_ptr<spic::RigidBody>& rigidBody);
+
+		/**
+		* @brief Creates box2d fixture with RigidBody of entity
+		* @spicapi
+		*/
 		b2FixtureDef* CreateFixture(const std::shared_ptr<spic::GameObject>& entity, const std::shared_ptr<spic::RigidBody>& rigidBody) const;
+
+		/**
+		* @brief Creates box2d shape with Colliders of entity
+		* @spicapi
+		*/
 		b2Shape* CreateShape(const std::shared_ptr<spic::GameObject>& entity) const;
 
+		/**
+		* @brief Updates position and rotation for box2d body if transform of entity has 
+		*		been changed outside extension
+		* @spicapi
+		*/
 		void UpdateEntity(const std::shared_ptr<spic::GameObject>& entity);
 	private:
 		std::unique_ptr<b2World> world;

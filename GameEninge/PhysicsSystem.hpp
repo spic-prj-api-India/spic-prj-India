@@ -8,9 +8,9 @@
 /**
 * @brief A system that calls all physics extensions and triggers collision script methods
 */
-namespace systems {
+namespace spic::internal::systems {
     class PhysicsSystem :
-        public ISystem
+        public spic::systems::ISystem
     {
     public:
         PhysicsSystem();
@@ -45,6 +45,10 @@ namespace systems {
         */
         void OnStay(const std::shared_ptr<spic::GameObject>& entity, const std::shared_ptr<spic::Collider>& collider) const;
     private:
+        /**
+        * @brief Filters all physics entities from entity list
+        * @spicapi
+        */
         std::vector<std::shared_ptr<spic::GameObject>> GetPhysicsEntities(std::vector<std::shared_ptr<spic::GameObject>> entities) const;
     };
 }

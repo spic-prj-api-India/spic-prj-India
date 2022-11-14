@@ -4,7 +4,7 @@
 namespace spic {
 	void BehaviourScript::OnStart() 
 	{
-
+		// TODO: Set Game object
 	}
 
 	void BehaviourScript::OnUpdate() 

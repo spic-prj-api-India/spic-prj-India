@@ -2,17 +2,18 @@
 #define BOX2DCOLLISIONLISTENER_H_
 
 #include <functional>
+// Use to remove box2d warnings from error list
 #pragma warning(push, 0)
 #include "box2d/box2d.h"
 #pragma warning(pop)
 #include "Collider.hpp"
 #include "ICollisionListener.hpp"
 
-namespace extensions {
+namespace spic::internal::extensions {
     /**
     * @brief A listener that listens if an Box2D collides with another Box2D body
     */
-    class Box2DCollisionListener : public b2ContactListener, public ICollisionListener
+    class Box2DCollisionListener : public b2ContactListener, public spic::extensions::ICollisionListener
     {
     public:
         Box2DCollisionListener();

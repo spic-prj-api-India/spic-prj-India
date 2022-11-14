@@ -1,8 +1,9 @@
 #include "Box2DCollisionListener.hpp"
 
-namespace extensions {
+namespace spic::internal::extensions {
 	Box2DCollisionListener::Box2DCollisionListener() : Box2DCollisionListener(nullptr, nullptr, nullptr)
 	{}
+
 	Box2DCollisionListener::Box2DCollisionListener(std::function<void(const std::shared_ptr<spic::GameObject>&, const std::shared_ptr<spic::Collider>&)> enterCallback,
 		std::function<void(const std::shared_ptr<spic::GameObject>&, const std::shared_ptr<spic::Collider>&)> exitCallback,
 		std::function<void(const std::shared_ptr<spic::GameObject>&, const std::shared_ptr<spic::Collider>&)> stayCallback) :
@@ -28,6 +29,7 @@ namespace extensions {
 			onEnterCallback(sharedPtr, collider);
 		}
 	}
+
 	void Box2DCollisionListener::EndContact(b2Contact* contact)
 	{
 		// Check if fixture A is a entity
@@ -47,6 +49,7 @@ namespace extensions {
 			onExitCallback(sharedPtr, collider);
 		}
 	}
+
 	void Box2DCollisionListener::PreSolve(b2Contact* contact, const b2Manifold* oldManifold)
 	{
 		// Check if fixture A is a entity

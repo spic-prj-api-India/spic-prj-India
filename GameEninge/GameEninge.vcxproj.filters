@@ -112,6 +112,12 @@
     <Filter Include="Source Files\exceptions">
       <UniqueIdentifier>{8a3bbec8-dd46-4c13-8451-0525a10f4563}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\extensions\physics">
+      <UniqueIdentifier>{a76d730a-9737-42b3-9e9d-e0a299a25b8a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\extensions\physics">
+      <UniqueIdentifier>{a6a2f6c3-033c-4580-a573-792b77f1f2d6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Color.hpp">
@@ -192,29 +198,32 @@
     <ClInclude Include="ISystem.hpp">
       <Filter>Header Files\systems</Filter>
     </ClInclude>
-    <ClInclude Include="IEngineExtension.hpp">
-      <Filter>Header Files\extensions</Filter>
-    </ClInclude>
     <ClInclude Include="GameEngine.hpp">
       <Filter>Header Files\game_engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Box2DExtension.hpp">
-      <Filter>Header Files\extensions</Filter>
     </ClInclude>
     <ClInclude Include="ScriptSystem.hpp">
       <Filter>Header Files\systems\scripts</Filter>
     </ClInclude>
-    <ClInclude Include="Box2DCollisionListener.hpp">
-      <Filter>Header Files\extensions</Filter>
-    </ClInclude>
     <ClInclude Include="CastException.hpp">
       <Filter>Header Files\exceptions</Filter>
     </ClInclude>
-    <ClInclude Include="IPhysicsExtension.hpp">
-      <Filter>Header Files\extensions</Filter>
+    <ClInclude Include="Box2DCollisionListener.hpp">
+      <Filter>Header Files\extensions\physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Box2DExtension.hpp">
+      <Filter>Header Files\extensions\physics</Filter>
     </ClInclude>
     <ClInclude Include="ICollisionListener.hpp">
-      <Filter>Header Files\extensions</Filter>
+      <Filter>Header Files\extensions\physics</Filter>
+    </ClInclude>
+    <ClInclude Include="IEngineExtension.hpp">
+      <Filter>Header Files\extensions\physics</Filter>
+    </ClInclude>
+    <ClInclude Include="IPhysicsExtension.hpp">
+      <Filter>Header Files\extensions\physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsInfo.hpp">
+      <Filter>Header Files\extensions\physics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -229,9 +238,6 @@
     </ClCompile>
     <ClCompile Include="GameEngine.cpp">
       <Filter>Source Files\game_engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Box2DExtension.cpp">
-      <Filter>Source Files\extensions</Filter>
     </ClCompile>
     <ClCompile Include="GameObject.cpp">
       <Filter>Source Files\scene</Filter>
@@ -248,29 +254,20 @@
     <ClCompile Include="BehaviourScript.cpp">
       <Filter>Source Files\components\behaviour</Filter>
     </ClCompile>
-    <ClCompile Include="Box2DCollisionListener.cpp">
-      <Filter>Source Files\extensions</Filter>
-    </ClCompile>
     <ClCompile Include="CircleCollider.cpp">
       <Filter>Source Files\components\collider</Filter>
     </ClCompile>
     <ClCompile Include="CastException.cpp">
       <Filter>Source Files\exceptions</Filter>
     </ClCompile>
-    <ClCompile Include="Input.cpp">
-      <Filter>Source Files\input</Filter>
+    <ClCompile Include="Box2DCollisionListener.cpp">
+      <Filter>Source Files\extensions\physics</Filter>
     </ClCompile>
-    <ClCompile Include="InputManager.cpp">
-      <Filter>Source Files\input</Filter>
-    </ClCompile>
-    <ClCompile Include="InputSystem.cpp">
-      <Filter>Source Files\systems</Filter>
-    </ClCompile>
-    <ClCompile Include="InputImpl.cpp">
-      <Filter>Source Files\input</Filter>
+    <ClCompile Include="Box2DExtension.cpp">
+      <Filter>Source Files\extensions\physics</Filter>
     </ClCompile>
     <ClCompile Include="ICollisionListener.cpp">
-      <Filter>Source Files\extensions</Filter>
+      <Filter>Source Files\extensions\physics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

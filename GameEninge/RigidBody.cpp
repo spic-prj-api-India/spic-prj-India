@@ -13,10 +13,12 @@ namespace spic {
 	{
 		return mass;
 	}
+
 	float RigidBody::GravityScale() const
 	{
 		return gravityScale;
 	}
+
 	BodyType RigidBody::BodyType() const
 	{
 		return bodyType;
@@ -27,11 +29,13 @@ namespace spic {
 			throw std::range_error("Mass can't be below zero");
 		mass = newMass;
 	}
+
 	void RigidBody::GravityScale(float newGravityScale) {
 		if (newGravityScale < 0.0f)
 			throw std::range_error("Gravity scale can't be below zero");
 		gravityScale = newGravityScale;
 	}
+
 	void RigidBody::BodyType(spic::BodyType newBodyType) {
 		bodyType = newBodyType;
 	}

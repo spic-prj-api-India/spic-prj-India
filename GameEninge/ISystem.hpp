@@ -4,11 +4,15 @@
 #include <iostream>
 #include <vector>
 #include "GameObject.hpp"
-class ISystem
+
+namespace spic::systems 
 {
-public:
-	virtual void Update(std::vector<std::shared_ptr<spic::GameObject>> entities) const = 0;
-private:
-};
+	class ISystem
+	{
+	public:
+		virtual void Update(std::vector<std::shared_ptr<spic::GameObject>> entities) const = 0;
+	private:
+	};
+}
 
 #endif // ISYSTEM_H_

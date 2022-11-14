@@ -1,8 +1,9 @@
 #include "ICollisionListener.hpp"
 
-namespace extensions {
+namespace spic::extensions {
 	ICollisionListener::ICollisionListener()
 	{}
+
 	ICollisionListener::~ICollisionListener()
 	{}
 }

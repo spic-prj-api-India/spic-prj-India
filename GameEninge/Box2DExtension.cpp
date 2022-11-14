@@ -4,10 +4,10 @@
 #include "Box2DExtension.hpp"
 #include "CircleCollider.hpp"
 #include "BoxCollider.hpp"
+#include "Box2DCollisionListener.hpp"
+#include "PhysicsInfo.hpp"
 
-namespace extensions {
-	inline float GRAVITY = 9.81f;
-
+namespace spic::extensions {
 	Box2DExtension::Box2DExtension() : IPhysicsExtension(), world{ nullptr }
 	{
 		bodyTypeConvertions = {
@@ -20,9 +20,9 @@ namespace extensions {
 
 	void Box2DExtension::Reset()
 	{
-		world = std::make_unique<b2World>(b2Vec2(0.0f, GRAVITY));
-		Box2DCollisionListener myContactListenerInstance;
+		world = std::make_unique<b2World>(b2Vec2(0.0f, spic::internal::extensions::GRAVITY));
 	}
+
 	void Box2DExtension::Update(std::vector<std::shared_ptr<spic::GameObject>> entities)
 	{
 		// Update or create entity bodiese
@@ -75,6 +75,7 @@ namespace extensions {
 		// Add to bodies
 		bodies[entity->Tag()] = body;
 	}
+
 	b2Body* Box2DExtension::CreateBody(const std::shared_ptr<spic::GameObject>& entity, const std::shared_ptr<spic::RigidBody>& rigidBody)
 	{
 		// cartesian origin
@@ -90,6 +91,7 @@ namespace extensions {
 		b2Body* body = world->CreateBody(&bodyDef);
 		return body;
 	}
+
 	b2FixtureDef* Box2DExtension::CreateFixture(const std::shared_ptr<spic::GameObject>& entity,
 		const std::shared_ptr<spic::RigidBody>& rigidBody) const
 	{
@@ -102,6 +104,7 @@ namespace extensions {
 		fixtureDef->restitution = 0.5f;
 		return fixtureDef;
 	}
+
 	b2Shape* Box2DExtension::CreateShape(const std::shared_ptr<spic::GameObject>& entity) const
 	{
 		std::shared_ptr<spic::BoxCollider> boxCollider = entity->GetComponent<spic::BoxCollider>();
@@ -156,9 +159,10 @@ namespace extensions {
 
 	void Box2DExtension::RegisterListener(ICollisionListener* listener) const
 	{
-		b2ContactListener* box2DListener = dynamic_cast<Box2DCollisionListener*>(listener);
+		b2ContactListener* box2DListener = dynamic_cast<spic::internal::extensions::Box2DCollisionListener*>(listener);
 		world->SetContactListener(box2DListener);
 	}
+
 	void Box2DExtension::AddForce(std::shared_ptr<spic::GameObject> entity, const spic::Point& forceDirection)
 	{
 		b2Body* body = bodies[entity->Tag()];

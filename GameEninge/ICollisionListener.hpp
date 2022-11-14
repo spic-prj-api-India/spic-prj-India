@@ -4,7 +4,7 @@
 #include <functional>
 #include "GameObject.hpp"
 
-namespace extensions {
+namespace spic::extensions {
 	/**
 	* @brief An interface for physic collision listeners
 	*/

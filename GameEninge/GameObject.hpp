@@ -118,7 +118,7 @@ namespace spic {
 
 		template<class T>
 		bool HasComponent() const {
-			for (auto component : components) {
+			for (const auto& component : components) {
 				bool isComponent = std::dynamic_pointer_cast<T>(component) != nullptr;
 				if (isComponent)
 					return true;
@@ -150,7 +150,7 @@ namespace spic {
 		template<class T>
 		std::shared_ptr<T> GetComponent() const 
 		{
-			for (auto component : components) {
+			for (const auto& component : components) {
 				std::shared_ptr<T> castedComponent = std::dynamic_pointer_cast<T>(component);
 				bool isComponent = castedComponent != nullptr;
 				if (isComponent)
@@ -192,7 +192,7 @@ namespace spic {
 		template<class T>
 		std::vector<std::shared_ptr<T>> GetComponents() const {
 			std::vector<std::shared_ptr<T>> filteredComponents = std::vector<std::shared_ptr<T>>();
-			for (auto component : components) {
+			for (const auto& component : components) {
 				std::shared_ptr<T> castedComponent = std::dynamic_pointer_cast<T>(component);
 				bool isComponent = castedComponent != nullptr;
 				if (isComponent)
@@ -256,7 +256,6 @@ namespace spic {
 		std::shared_ptr<spic::Transform> transform;
 		std::vector<std::shared_ptr<Component>> components;
 	};
-
 }
 
 #endif // GAMEOBJECT_H_

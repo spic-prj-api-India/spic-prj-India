@@ -8,12 +8,12 @@
 #include <Box2DExtension.hpp>
 #include "CollisionDetectionScript.h"
 
-int main()
-{
+std::vector< std::shared_ptr<spic::GameObject>> entities;
+
+void InitGame() {
 	spic::GameEngine* engine = spic::GameEngine::GetInstance();
-	std::shared_ptr<extensions::Box2DExtension> physicsExtension = std::make_shared<extensions::Box2DExtension>();
+	std::shared_ptr<spic::extensions::Box2DExtension> physicsExtension = std::make_shared<spic::extensions::Box2DExtension>();
 	engine->AddExtension(std::move(physicsExtension));
-	const systems::PhysicsSystem system = systems::PhysicsSystem();
 
 	std::shared_ptr<spic::GameObject> box = std::make_shared<spic::GameObject>();
 	std::string boxTag = "box";
@@ -49,11 +49,20 @@ int main()
 	platform->AddComponent<spic::BoxCollider>(platformCollider);
 	platform->AddComponent<spic::RigidBody>(platformRigidBody);
 
-	std::vector< std::shared_ptr<spic::GameObject>> entities = std::vector< std::shared_ptr<spic::GameObject>>();
 	entities.emplace_back(box);
 	entities.emplace_back(platform);
+}
+
+void StartGame() {
+	const spic::internal::systems::PhysicsSystem system = spic::internal::systems::PhysicsSystem();
 	while (true) {
 		system.Update(entities);
 		//std::cout << "x: " << box->Transform()->position.x << ", y: " << box->Transform()->position.y << std::endl;
 	}
+}
+
+int main()
+{
+	InitGame();
+	StartGame();
 }

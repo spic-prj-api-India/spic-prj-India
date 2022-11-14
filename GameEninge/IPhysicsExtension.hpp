@@ -6,11 +6,11 @@
 #include "IEngineExtension.hpp"
 #include "ICollisionListener.hpp"
 
-namespace extensions {
+namespace spic::extensions{
 	/**
 	 * @brief An interface for the physics extensions
 	 */
-	class IPhysicsExtension : public IEngineExtension {
+	class IPhysicsExtension : public internal::extensions::IEngineExtension {
 	public:
 		/**
 		* @brief Resets all physics and removes entities from extension
