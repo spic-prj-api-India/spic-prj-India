@@ -6,7 +6,7 @@
 #pragma warning(pop)
 
 namespace spic::internal::audio {
-
+	/// @brief Holds a loaded audio chunk
 	class Chunk
 	{
 	private:
@@ -19,5 +19,4 @@ namespace spic::internal::audio {
 		/// @param path Path to the sound file
 		Chunk(const std::string& path);
 	};
-
 }

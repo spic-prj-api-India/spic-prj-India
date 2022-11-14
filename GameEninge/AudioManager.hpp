@@ -16,9 +16,7 @@ namespace spic::internal::audio {
 
     /// @brief Manages the audio samples and loaded songs(chunks). Is an singelton
     class AudioManager
-    {
-
-        
+    {   
         /**
         * The Singleton's constructor/destructor should always be private to
         * prevent direct construction/desctruction calls with the `new`/`delete`
@@ -68,15 +66,8 @@ namespace spic::internal::audio {
             * object stored in the static field.
             */
 
-        static AudioManager* GetInstance()
-        {
-            std::lock_guard<std::mutex> lock(mutex_);
-            if (pinstance_ == nullptr)
-            {
-                pinstance_ = new AudioManager();
-            }
-            return pinstance_;
-        }
+        static AudioManager* GetInstance();
+
         /**
             * Finally, any singleton should define some business logic, which can be
             * executed on its instance.
@@ -116,7 +107,5 @@ namespace spic::internal::audio {
         /// @brief Clears the vector list samples and chunks
         void Reset();
     };
-    
 }
-
 #endif // AUDIOMANAGER_H_
