@@ -10,9 +10,7 @@
 
 
 namespace spic::internal::audio {
-
     class Chunk;
-
     class Sample {
     public:
 

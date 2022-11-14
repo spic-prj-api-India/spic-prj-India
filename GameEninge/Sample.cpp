@@ -1,9 +1,9 @@
 #include "Sample.hpp"
 #include "Chunk.hpp"
 #include <cmath>
+#include <iostream>
 
 using namespace spic::internal::audio;
-
 
 Sample* Sample::handlers[MAX_CHANNELS];
 
@@ -103,7 +103,6 @@ const bool Sample::IsRunning()
     return this->running;
 }
 
-
 void Sample::OnDone(const int chan)
 {
     mutex_.lock();
@@ -132,15 +131,14 @@ void Sample::CatchChannelDone(int chan)
     handlers[chan]->OnDone(chan);
 }
 
-
 Sample::~Sample()
 {
     try
     {
         StopPlaying();
     }
-    catch (const std::exception&)
+    catch (const std::exception& ex)
     {
-        //TODO trigger warning
+        std::cout << ex.what() << std::endl;
     }
 }

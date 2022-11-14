@@ -14,7 +14,7 @@ std::mutex AudioManager::mutex_;
 AudioManager::AudioManager()
 {
     if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 4096) < 0) {
-        // Error message if can't initialize
+        throw std::exception("Audiomanager could not be initialized");
     }
 
     // Amount of channels (Max amount of sounds playing at the same time)
@@ -26,6 +26,16 @@ AudioManager::AudioManager()
 AudioManager::~AudioManager()
 {
     Mix_CloseAudio();
+}
+
+AudioManager* AudioManager::GetInstance()
+{
+    std::lock_guard<std::mutex> lock(mutex_);
+    if (pinstance_ == nullptr)
+    {
+        pinstance_ = new AudioManager();
+    }
+    return pinstance_;
 }
 
 void AudioManager::AddChunk(const std::string& path)
@@ -64,7 +74,6 @@ void AudioManager::PlaySample(AudioSource* source, const bool looping)
     samples[source]->Play(looping, source->GetVolume());
 }
 
-
 void AudioManager::StopSample(AudioSource* source) const
 {
     auto it = samples.find(source);
@@ -73,6 +82,7 @@ void AudioManager::StopSample(AudioSource* source) const
         it->second->StopPlaying();
     }
 }
+
 void AudioManager::StopAllSamples() const
 {
     for (auto const& [key, val] : samples)
