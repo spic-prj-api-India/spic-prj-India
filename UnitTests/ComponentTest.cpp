@@ -4,6 +4,8 @@
 #include <BoxCollider.hpp>
 #include <CircleCollider.hpp>
 
+using namespace spic;
+
 TEST(ComponentTest, AddComponentSuccess) {
 	//1. Arrange
 	spic::GameObject gameObject = spic::GameObject();
