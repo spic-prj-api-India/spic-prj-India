@@ -22,7 +22,6 @@ AudioManager::AudioManager()
     Mix_ChannelFinished(Sample::CatchChannelDone);
 }
 
-
 AudioManager::~AudioManager()
 {
     Mix_CloseAudio();
@@ -110,7 +109,6 @@ void AudioManager::RemoveSample(AudioSource* source)
     samples.erase(source);
     TrimChunk(source->GetAudioClip());
 }
-
 
 void AudioManager::ChangeVolumn(AudioSource* source, float left, float right) const
 {

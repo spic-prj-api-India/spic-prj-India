@@ -16,6 +16,5 @@ namespace internal
 		catch (...) {
 			FAIL();
 		}
-
 	}
 }
