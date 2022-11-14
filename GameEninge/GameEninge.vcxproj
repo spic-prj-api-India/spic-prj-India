@@ -165,12 +165,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Animator.hpp" />
+    <ClInclude Include="AudioInfo.hpp" />
+    <ClInclude Include="AudioManager.hpp" />
     <ClInclude Include="AudioSource.hpp" />
     <ClInclude Include="BehaviourScript.hpp" />
     <ClInclude Include="BoxCollider.hpp" />
     <ClInclude Include="Button.hpp" />
     <ClInclude Include="Camera.hpp" />
     <ClInclude Include="CastException.hpp" />
+    <ClInclude Include="Chunk.hpp" />
     <ClInclude Include="CircleCollider.hpp" />
     <ClInclude Include="Collider.hpp" />
     <ClInclude Include="Box2DCollisionListener.hpp" />
@@ -192,6 +195,7 @@
     <ClInclude Include="PhysicsSystem.hpp" />
     <ClInclude Include="Point.hpp" />
     <ClInclude Include="RigidBody.hpp" />
+    <ClInclude Include="Sample.hpp" />
     <ClInclude Include="Scene.hpp" />
     <ClInclude Include="ScriptSystem.hpp" />
     <ClInclude Include="Sprite.hpp" />
@@ -201,6 +205,9 @@
     <ClInclude Include="UIObject.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AudioManager.cpp" />
+    <ClCompile Include="AudioSource.cpp" />
+    <ClCompile Include="Chunk.cpp" />
     <ClCompile Include="BehaviourScript.cpp" />
     <ClCompile Include="Box2DCollisionListener.cpp" />
     <ClCompile Include="Box2DExtension.cpp" />
@@ -208,6 +215,7 @@
     <ClCompile Include="CastException.cpp" />
     <ClCompile Include="CircleCollider.cpp" />
     <ClCompile Include="Color.cpp" />
+    <ClCompile Include="Sample.cpp" />
     <ClCompile Include="GameEngine.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="ICollisionListener.cpp" />
