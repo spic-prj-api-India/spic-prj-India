@@ -10,23 +10,22 @@ namespace spic {
      */
     class CircleCollider : public Collider {
         public:
-            CircleCollider();
-
             /**
              * @brief Get the collider's radius
              * @return The radius
              * @spicapi
              */
-            float Radius() const;
+            double Radius() const { return radius; }
 
             /**
              * @brief Set the collider's radius
              * @param newRadius The desired radius
              * @spicapi
              */
-            void Radius(float newRadius);
+            void Radius(double newRadius) { radius = newRadius; }
+
         private:
-            float radius;
+            double radius;
     };
 
 }

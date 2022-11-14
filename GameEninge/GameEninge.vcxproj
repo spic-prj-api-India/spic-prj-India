@@ -75,26 +75,6 @@
     <CodeAnalysisRuleSet>..\coreguide.ruleset</CodeAnalysisRuleSet>
     <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
     <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
-    <ExecutablePath>$(VC_ExecutablePath_x64);$(CommonExecutablePath);$(ExecutablePath)</ExecutablePath>
-    <ReferencePath>$(VC_ReferencesPath_x64);$(ReferencePath)</ReferencePath>
-    <ExcludePath>$(VC_ExecutablePath_x64);$(VC_LibraryPath_x64);$(ExcludePath)</ExcludePath>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <ExecutablePath>$(VC_ExecutablePath_x64);$(CommonExecutablePath);$(ExecutablePath)</ExecutablePath>
-    <ReferencePath>$(VC_ReferencesPath_x64);$(ReferencePath)</ReferencePath>
-    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
-    <ExcludePath>$(VC_ExecutablePath_x64);$(VC_LibraryPath_x64);$(ExcludePath)</ExcludePath>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <ExecutablePath>$(VC_ExecutablePath_x64);$(CommonExecutablePath);$(ExecutablePath)</ExecutablePath>
-    <ReferencePath>$(VC_ReferencesPath_x64);$(ReferencePath)</ReferencePath>
-    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
-    <ExcludePath>$(VC_ExecutablePath_x64);$(VC_LibraryPath_x64);$(ExcludePath)</ExcludePath>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <ExecutablePath>$(VC_ExecutablePath_x64);$(CommonExecutablePath);$(ExecutablePath)</ExecutablePath>
-    <ReferencePath>$(VC_ReferencesPath_x64);$(ReferencePath)</ReferencePath>
-    <ExcludePath>$(VC_ExecutablePath_x64);$(VC_LibraryPath_x64);$(ExcludePath)</ExcludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -170,15 +150,12 @@
     <ClInclude Include="BoxCollider.hpp" />
     <ClInclude Include="Button.hpp" />
     <ClInclude Include="Camera.hpp" />
-    <ClInclude Include="CastException.hpp" />
     <ClInclude Include="CircleCollider.hpp" />
     <ClInclude Include="Collider.hpp" />
-    <ClInclude Include="Box2DCollisionListener.hpp" />
     <ClInclude Include="Color.hpp" />
     <ClInclude Include="Component.hpp" />
     <ClInclude Include="Debug.hpp" />
-    <ClInclude Include="GameEngine.hpp" />
-    <ClInclude Include="GameEngineAPI.hpp" />
+    <ClInclude Include="GameEngineAPI.h" />
     <ClInclude Include="GameObject.hpp" />
     <ClInclude Include="ICollisionListener.hpp" />
     <ClInclude Include="IEngineExtension.hpp" />
@@ -193,7 +170,6 @@
     <ClInclude Include="Point.hpp" />
     <ClInclude Include="RigidBody.hpp" />
     <ClInclude Include="Scene.hpp" />
-    <ClInclude Include="ScriptSystem.hpp" />
     <ClInclude Include="Sprite.hpp" />
     <ClInclude Include="Text.hpp" />
     <ClInclude Include="Time.hpp" />
@@ -201,12 +177,6 @@
     <ClInclude Include="UIObject.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="BehaviourScript.cpp" />
-    <ClCompile Include="Box2DCollisionListener.cpp" />
-    <ClCompile Include="Box2DExtension.cpp" />
-    <ClCompile Include="BoxCollider.cpp" />
-    <ClCompile Include="CastException.cpp" />
-    <ClCompile Include="CircleCollider.cpp" />
     <ClCompile Include="Color.cpp" />
     <ClCompile Include="GameEngine.cpp" />
     <ClCompile Include="GameObject.cpp" />

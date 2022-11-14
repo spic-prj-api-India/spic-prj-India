@@ -189,7 +189,7 @@
     <ClInclude Include="UIObject.hpp">
       <Filter>Header Files\scene</Filter>
     </ClInclude>
-    <ClInclude Include="GameEngineAPI.hpp">
+    <ClInclude Include="GameEngineAPI.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PhysicsSystem.hpp">

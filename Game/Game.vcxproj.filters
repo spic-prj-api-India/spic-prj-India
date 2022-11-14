@@ -13,24 +13,10 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Header Files\scripts">
-      <UniqueIdentifier>{ae407631-ead0-46b5-86ae-554f2f8b33e1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\scripts">
-      <UniqueIdentifier>{0dc15951-691d-4f8e-9da7-15acd53ffd6b}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CollisionDetectionScript.cpp">
-      <Filter>Source Files\scripts</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="CollisionDetectionScript.h">
-      <Filter>Header Files\scripts</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>
