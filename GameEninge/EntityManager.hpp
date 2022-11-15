@@ -31,23 +31,17 @@ public:
 	EntityManager& operator=(EntityManager&& other) = delete;
 	static EntityManager* GetInstance();
 
-	void SetScene(spic::Scene* scene)
-	{}
+	void SetScene(spic::Scene* scene);
 
-	void DestroyScene(bool forceDelete)
-	{}
+	void DestroyScene(bool forceDelete);
 
-	void AddSystem(ISystem* system)
-	{}
+	void AddSystem(ISystem* system);
 
-	void RemoveSystem(ISystem* system)
-	{}
+	void RemoveSystem(ISystem* system);
 
-	void Update(int deltaTime)
-	{}
+	void Update(int deltaTime);
 
-	void Render()
-	{}
+	void Render();
 
 };
 

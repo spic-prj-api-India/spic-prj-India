@@ -216,6 +216,9 @@
     <ClInclude Include="TileLayer.hpp">
       <Filter>Header Files\map_parser</Filter>
     </ClInclude>
+    <ClInclude Include="GameEngine.hpp">
+      <Filter>Header Files\game_engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Time.cpp">
@@ -241,6 +244,9 @@
     </ClCompile>
     <ClCompile Include="EntityManager.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngine.cpp">
+      <Filter>Source Files\game_engine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
