@@ -28,7 +28,7 @@ namespace spic::internal::systems {
 		}
 	}
 
-	void PhysicsSystem::Update(std::vector<std::shared_ptr<spic::GameObject>> entities) const
+	void PhysicsSystem::Update(std::vector<std::shared_ptr<spic::GameObject>>& entities)
 	{
 		// Check if Box2D extension exists and update entities
 		spic::GameEngine* engine = spic::GameEngine::GetInstance();

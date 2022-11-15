@@ -7,6 +7,7 @@
 #include <BoxCollider.hpp>
 #include <Box2DExtension.hpp>
 #include "CollisionDetectionScript.h"
+#include <ScriptSystem.hpp>
 
 std::vector< std::shared_ptr<spic::GameObject>> entities;
 
@@ -54,9 +55,12 @@ void InitGame() {
 }
 
 void StartGame() {
-	const spic::internal::systems::PhysicsSystem system = spic::internal::systems::PhysicsSystem();
+	spic::internal::systems::PhysicsSystem physicsSystem = spic::internal::systems::PhysicsSystem();
+	spic::internal::systems::ScriptSystem scriptSystem = spic::internal::systems::ScriptSystem();
+	scriptSystem.Start(entities);
 	while (true) {
-		system.Update(entities);
+		physicsSystem.Update(entities);
+		scriptSystem.Update(entities);
 		//std::cout << "x: " << box->Transform()->position.x << ", y: " << box->Transform()->position.y << std::endl;
 	}
 }
