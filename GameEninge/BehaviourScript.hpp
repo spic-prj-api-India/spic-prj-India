@@ -48,6 +48,10 @@ namespace spic {
              */
             virtual void OnTriggerStay2D(const Collider& collider);
     public:
+        /**
+        * @brief Parent of script component
+        * @spicapi
+        */
         std::shared_ptr<spic::GameObject> gameObject;
     };
 }
