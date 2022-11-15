@@ -23,6 +23,36 @@ namespace spic {
              * @spicapi
              */
             void Stop();
+            
+            /**
+            * @brief Call this method to change te intial volumen and if playing, the current volumen.
+            * @param volume The value to change the current volumen.
+            * @spicapi
+            */
+            void ChangeVolume(float volume);
+
+            /**
+            * @brief overloaded method to change te intial volumen and if playing, the current volumen.
+            * @param volume The value to change the current volumen.
+            * @spicapi
+            */
+            void ChangeVolume(float left, float right);
+
+            /**
+            * @brief the audiosource constructor 
+            * @param audioClip Path to a locally stored audio file.
+            * @param playOnAwake When true, the component will start playing automatically.
+            * @param loop When true, the audio will play indefinitely.
+            * @param Audio volume, between 0.0 and 1.0.
+            * @spicapi
+            */
+            AudioSource(const std::string& audioClip, const bool playOnAwake, const bool loop, const float volume);
+
+            const std::string GetAudioClip() const;
+
+            const bool GetLoop() const;
+
+            const float GetVolume() const;
 
         private:
             /**
@@ -43,7 +73,7 @@ namespace spic {
             /**
              * @brief Audio volume, between 0.0 and 1.0.
              */
-            double volume;
+            float volume;
     };
 
 }

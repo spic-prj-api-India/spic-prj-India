@@ -2,6 +2,8 @@
 #include "BoxCollider.hpp"
 #include "CircleCollider.hpp"
 
+using namespace spic;
+
 TEST(BoxColliderTest, SetWidthSuccess) {
 	//1. Arrange
 	spic::BoxCollider boxCollider = spic::BoxCollider();

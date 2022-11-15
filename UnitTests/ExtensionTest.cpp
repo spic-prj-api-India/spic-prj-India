@@ -2,6 +2,8 @@
 
 #include "GameEngine.hpp"
 #include "Box2DExtension.hpp"
+
+using namespace spic;
 TEST(ExtensionTest, AddExtensionSuccess) {
 	//1. Arrange
 	spic::GameEngine* engine = spic::GameEngine::GetInstance();

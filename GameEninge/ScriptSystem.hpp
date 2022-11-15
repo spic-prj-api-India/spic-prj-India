@@ -6,9 +6,9 @@
 /**
 * @brief A system that calls the Start and Update method in scripts of entities
 */
-namespace systems {
+namespace spic::internal::systems {
 	class ScriptSystem :
-		public ISystem
+		public spic::systems::ISystem
 	{
 	public:
 		ScriptSystem();

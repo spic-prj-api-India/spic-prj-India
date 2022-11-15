@@ -1,6 +1,8 @@
 #include "gtest/gtest.h"
 #include "RigidBody.hpp"
 
+using namespace spic;
+
 TEST(RigidBodyTest, ConstructorSuccess) {
 	//1. Arrange
 	//2. Act

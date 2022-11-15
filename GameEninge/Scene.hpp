@@ -2,6 +2,8 @@
 #define SCENE_H_
 
 #include "GameObject.hpp"
+#include "Camera.hpp"
+#include <string>
 
 namespace spic {
 
@@ -10,12 +12,12 @@ namespace spic {
      */
     class Scene {
         public:
-            /**
-             * @brief This function is called by a Camera to render the scene on the engine.
-             * @spicapi
-             */
-            void RenderScene();
+            Scene();
 
+            enum UpdateSetting { ALWAYS, CAMERA_VIEW };
+            std::string tileMapPath = "";
+            std::unique_ptr<Camera> camera;
+            UpdateSetting setting;
             /**
              * @brief This property contains all the Game Object that are contained in this scene.
              * @spicapi

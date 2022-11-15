@@ -57,6 +57,7 @@
     <ExcludePath>$(VC_ExecutablePath_x64);$(VC_LibraryPath_x64);$(ExcludePath)</ExcludePath>
   </PropertyGroup>
   <ItemGroup>
+    <ClCompile Include="AudioTest.cpp" />
     <ClCompile Include="Collidertest.cpp" />
     <ClCompile Include="ComponentTest.cpp" />
     <ClCompile Include="ExtensionTest.cpp" />

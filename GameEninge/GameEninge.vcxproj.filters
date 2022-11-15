@@ -106,11 +106,26 @@
     <Filter Include="Source Files\game_engine">
       <UniqueIdentifier>{78c3b148-864e-4412-9ac9-ce54465640e0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\components\audio\SDL2Audio">
+      <UniqueIdentifier>{c520e0e6-0b6a-42e5-b34c-5e67436a07d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\components\audio\SDL2Audio">
+      <UniqueIdentifier>{89edccbf-ad86-4f27-8ca0-cb8254accfed}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Header Files\exceptions">
       <UniqueIdentifier>{de599c23-262d-4680-9f82-ad8d657e716a}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\exceptions">
       <UniqueIdentifier>{8a3bbec8-dd46-4c13-8451-0525a10f4563}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\extensions\physics">
+      <UniqueIdentifier>{a76d730a-9737-42b3-9e9d-e0a299a25b8a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\extensions\physics">
+      <UniqueIdentifier>{a6a2f6c3-033c-4580-a573-792b77f1f2d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\map_parser">
+      <UniqueIdentifier>{e009d138-09b9-4530-a65b-3c1377e13238}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -192,32 +207,68 @@
     <ClInclude Include="ISystem.hpp">
       <Filter>Header Files\systems</Filter>
     </ClInclude>
-    <ClInclude Include="IEngineExtension.hpp">
-      <Filter>Header Files\extensions</Filter>
-    </ClInclude>
     <ClInclude Include="GameEngine.hpp">
       <Filter>Header Files\game_engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Box2DExtension.hpp">
-      <Filter>Header Files\extensions</Filter>
     </ClInclude>
     <ClInclude Include="ScriptSystem.hpp">
       <Filter>Header Files\systems\scripts</Filter>
     </ClInclude>
-    <ClInclude Include="Box2DCollisionListener.hpp">
-      <Filter>Header Files\extensions</Filter>
-    </ClInclude>
     <ClInclude Include="CastException.hpp">
       <Filter>Header Files\exceptions</Filter>
     </ClInclude>
+    <ClInclude Include="Box2DCollisionListener.hpp">
+      <Filter>Header Files\extensions\physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Box2DExtension.hpp">
+      <Filter>Header Files\extensions\physics</Filter>
+    </ClInclude>
+    <ClInclude Include="ICollisionListener.hpp">
+      <Filter>Header Files\extensions\physics</Filter>
+    </ClInclude>
+    <ClInclude Include="IEngineExtension.hpp">
+      <Filter>Header Files\extensions\physics</Filter>
+    </ClInclude>
+    <ClInclude Include="IPhysicsExtension.hpp">
+      <Filter>Header Files\extensions\physics</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsInfo.hpp">
+      <Filter>Header Files\extensions\physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Sample.hpp">
+      <Filter>Header Files\components\audio\SDL2Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Chunk.hpp">
+      <Filter>Header Files\components\audio\SDL2Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioManager.hpp">
+      <Filter>Header Files\components\audio\SDL2Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioInfo.hpp">
+      <Filter>Header Files\components\audio\SDL2Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="EntityManager.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ISystem.hpp">
+      <Filter>Source Files\systems</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.cpp">
+      <Filter>Source Files\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="MapParser.hpp">
+      <Filter>Header Files\map_parser</Filter>
+    </ClInclude>
+    <ClInclude Include="TileLayer.hpp">
+      <Filter>Header Files\map_parser</Filter>
+    </ClInclude>
+    </ClInclude>
+      <Filter>Header Files\systems\input</Filter>
+    <ClInclude Include="InputSystem.hpp">
+      <Filter>Header Files\input</Filter>
     <ClInclude Include="InputManager.hpp">
       <Filter>Header Files\input</Filter>
-    </ClInclude>
-    <ClInclude Include="InputSystem.hpp">
-      <Filter>Header Files\systems\input</Filter>
-    </ClInclude>
     <ClInclude Include="InputImpl.hpp">
-      <Filter>Header Files\input</Filter>
+    </ClInclude>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -227,14 +278,26 @@
     <ClCompile Include="Color.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Source Files\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Sample.cpp">
+      <Filter>Source Files\components\audio\SDL2Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioSource.cpp">
+      <Filter>Source Files\components\audio</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioManager.cpp">
+      <Filter>Source Files\components\audio\SDL2Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="Chunk.cpp">
+      <Filter>Source Files\components\audio\SDL2Audio</Filter>
+    </ClCompile>
     <ClCompile Include="PhysicsSystem.cpp">
       <Filter>Source Files\systems</Filter>
     </ClCompile>
     <ClCompile Include="GameEngine.cpp">
       <Filter>Source Files\game_engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Box2DExtension.cpp">
-      <Filter>Source Files\extensions</Filter>
     </ClCompile>
     <ClCompile Include="GameObject.cpp">
       <Filter>Source Files\scene</Filter>
@@ -251,14 +314,20 @@
     <ClCompile Include="BehaviourScript.cpp">
       <Filter>Source Files\components\behaviour</Filter>
     </ClCompile>
-    <ClCompile Include="Box2DCollisionListener.cpp">
-      <Filter>Source Files\extensions</Filter>
-    </ClCompile>
     <ClCompile Include="CircleCollider.cpp">
       <Filter>Source Files\components\collider</Filter>
     </ClCompile>
     <ClCompile Include="CastException.cpp">
       <Filter>Source Files\exceptions</Filter>
+    </ClCompile>
+    <ClCompile Include="Box2DCollisionListener.cpp">
+      <Filter>Source Files\extensions\physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Box2DExtension.cpp">
+      <Filter>Source Files\extensions\physics</Filter>
+    </ClCompile>
+    <ClCompile Include="ICollisionListener.cpp">
+      <Filter>Source Files\extensions\physics</Filter>
     </ClCompile>
     <ClCompile Include="Input.cpp">
       <Filter>Source Files\input</Filter>

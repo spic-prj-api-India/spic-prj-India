@@ -10,6 +10,7 @@
 namespace spic {
 	/**
 	 * @brief The main class of the engine, has multiple functions to configure engine and load scenes.
+	 *				The GameEngine class implements a singleton pattern.
 	 */
 	class GameEngine {
 	private:
@@ -19,7 +20,7 @@ namespace spic {
 		GameEngine();
 		~GameEngine();
 
-		std::map<std::string, std::shared_ptr<extensions::IEngineExtension>> _extensions;
+		std::map<std::string, std::shared_ptr<spic::internal::extensions::IEngineExtension>> _extensions;
 	public:
 		GameEngine(GameEngine& other) = delete;
 		GameEngine(GameEngine&& other) = delete;
@@ -30,7 +31,7 @@ namespace spic {
 		/**
 		* @brief Adds extensions to engine.
 		* @param extension A IEngineExtension is used by the engine to
-		*        configure the base functionality of the engine 
+		*        configure the base functionality of the engine
 		* @spicapi
 		*/
 		template <typename T>
@@ -47,6 +48,23 @@ namespace spic {
 		std::weak_ptr<T> GetExtension()
 		{
 			return std::dynamic_pointer_cast<T>(_extensions[GetTypeName<T>()]);
+		}
+
+		/**
+		* @brief Gets extensions of type IEngineExtension.
+		* @spicapi
+		*/
+		template <typename T>
+		std::vector<std::weak_ptr<T>> GetExtensions()
+		{
+			std::vector<std::weak_ptr<T>> extensions;
+			for (const auto& extension : _extensions) {
+				std::weak_ptr<T> weakExtension = std::dynamic_pointer_cast<T>(extension.second);
+				bool isOfType = weakExtension.lock() != nullptr;
+				if (isOfType)
+					extensions.emplace_back(weakExtension);
+			}
+			return extensions;
 		}
 
 		/**
@@ -74,6 +92,10 @@ namespace spic {
 			} while (deletePtr.use_count() != 0);
 		}
 	private:
+		/**
+		* @brief Gets name of type
+		* @spicapi
+		*/
 		template <typename T>
 		std::string GetTypeName() const
 		{
@@ -81,10 +103,15 @@ namespace spic {
 			std::string strippedName = std::regex_replace(typeName, std::regex("class "), "");
 			return strippedName;
 		}
+
+		/**
+		* @brief Checks if type is of type IEngineExtension
+		* @spicapi
+		*/
 		template <typename T>
 		bool IsEngineExtension(std::shared_ptr<T> extension) const
 		{
-			std::shared_ptr<extensions::IEngineExtension> castedEngineExtension = std::dynamic_pointer_cast<extensions::IEngineExtension>(extension);
+			auto castedEngineExtension = std::dynamic_pointer_cast<spic::internal::extensions::IEngineExtension>(extension);
 			return castedEngineExtension != nullptr;
 		}
 	};

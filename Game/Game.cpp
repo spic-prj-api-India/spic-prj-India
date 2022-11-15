@@ -14,11 +14,12 @@
 #include "KeyListener.h"
 #undef main
 
-int main()
-{
+std::vector< std::shared_ptr<spic::GameObject>> entities;
+
+void InitGame() {
 	spic::GameEngine* engine = spic::GameEngine::GetInstance();
 	// Physics test
-	std::shared_ptr<extensions::Box2DExtension> physicsExtension = std::make_shared<extensions::Box2DExtension>();
+	std::shared_ptr<spic::extensions::Box2DExtension> physicsExtension = std::make_shared<spic::extensions::Box2DExtension>();
 	engine->AddExtension(std::move(physicsExtension));
 
 	std::shared_ptr<spic::GameObject> box = std::make_shared<spic::GameObject>();
@@ -55,7 +56,6 @@ int main()
 	platform->AddComponent<spic::BoxCollider>(platformCollider);
 	platform->AddComponent<spic::RigidBody>(platformRigidBody);
 
-	std::vector< std::shared_ptr<spic::GameObject>> entities = std::vector< std::shared_ptr<spic::GameObject>>();
 	entities.emplace_back(box);
 	entities.emplace_back(platform);
 
@@ -66,11 +66,15 @@ int main()
 	spic::Input::Subscribe(spic::Input::KeyCode::A, keyListener);
 
 	// Systems
-	const systems::PhysicsSystem physicsSystem = systems::PhysicsSystem();
 	const systems::InputSystem inputSystem = systems::InputSystem();
 
 	// Window
 	SDL_Window* window = SDL_CreateWindow("window", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 500, 500, SDL_WINDOW_RESIZABLE);
+}
+
+void StartGame() {
+	const spic::internal::systems::PhysicsSystem system = spic::internal::systems::PhysicsSystem();
+	const systems::PhysicsSystem physicsSystem = systems::PhysicsSystem();
 	while (true) {
 		//physicsSystem.Update(entities);
 		inputSystem.Update(entities);
@@ -78,4 +82,10 @@ int main()
 	}
 	SDL_DestroyWindow(window);
 	SDL_Quit();
+}
+
+int main()
+{
+	InitGame();
+	StartGame();
 }
