@@ -204,9 +204,6 @@
     <ClInclude Include="PhysicsSystem.hpp">
       <Filter>Header Files\systems\physics</Filter>
     </ClInclude>
-    <ClInclude Include="ISystem.hpp">
-      <Filter>Header Files\systems</Filter>
-    </ClInclude>
     <ClInclude Include="GameEngine.hpp">
       <Filter>Header Files\game_engine</Filter>
     </ClInclude>
@@ -252,23 +249,26 @@
     <ClInclude Include="ISystem.hpp">
       <Filter>Source Files\systems</Filter>
     </ClInclude>
-    <ClInclude Include="GameObject.cpp">
-      <Filter>Source Files\scene</Filter>
-    </ClInclude>
     <ClInclude Include="MapParser.hpp">
       <Filter>Header Files\map_parser</Filter>
     </ClInclude>
     <ClInclude Include="TileLayer.hpp">
       <Filter>Header Files\map_parser</Filter>
     </ClInclude>
-    </ClInclude>
-      <Filter>Header Files\systems\input</Filter>
     <ClInclude Include="InputSystem.hpp">
-      <Filter>Header Files\input</Filter>
+      <Filter>Header Files\systems\input</Filter>
+    </ClInclude>
     <ClInclude Include="InputManager.hpp">
       <Filter>Header Files\input</Filter>
+    </ClInclude>
     <ClInclude Include="InputImpl.hpp">
-	  <Filter>Header Files\input</Filter>
+      <Filter>Header Files\input</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngineAPI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ISystem.hpp">
+      <Filter>Header Files\systems</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
