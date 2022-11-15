@@ -8,11 +8,18 @@
 #include <Box2DExtension.hpp>
 #include "CollisionDetectionScript.h"
 #include <ScriptSystem.hpp>
+#include <InputSystem.hpp>
+#include <Input.hpp>
+#include "MouseListener.h"
+#include "SDL2/SDL.h"
+#include "KeyListener.h"
+#undef main
 
 std::vector< std::shared_ptr<spic::GameObject>> entities;
 
 void InitGame() {
 	spic::GameEngine* engine = spic::GameEngine::GetInstance();
+	// Physics test
 	std::shared_ptr<spic::extensions::Box2DExtension> physicsExtension = std::make_shared<spic::extensions::Box2DExtension>();
 	engine->AddExtension(std::move(physicsExtension));
 
@@ -52,17 +59,33 @@ void InitGame() {
 
 	entities.emplace_back(box);
 	entities.emplace_back(platform);
+
+	// Input test
+	std::shared_ptr<MouseListener> mouseListener = std::make_shared<MouseListener>();
+	std::shared_ptr<KeyListener> keyListener = std::make_shared<KeyListener>();
+	spic::Input::Subscribe(spic::Input::MouseButton::LEFT, mouseListener);
+	spic::Input::Subscribe(spic::Input::KeyCode::A, keyListener);
 }
 
 void StartGame() {
+	// Systems
+	spic::internal::systems::InputSystem inputSystem = spic::internal::systems::InputSystem();
 	spic::internal::systems::PhysicsSystem physicsSystem = spic::internal::systems::PhysicsSystem();
-	spic::internal::systems::ScriptSystem scriptSystem = spic::internal::systems::ScriptSystem();
+  spic::internal::systems::ScriptSystem scriptSystem = spic::internal::systems::ScriptSystem();
 	scriptSystem.Start(entities);
+
+	// Window
+	SDL_Window* window = SDL_CreateWindow("window", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 500, 500, SDL_WINDOW_RESIZABLE);
+
 	while (true) {
-		physicsSystem.Update(entities);
-		scriptSystem.Update(entities);
+		//physicsSystem.Update(entities);
+		inputSystem.Update(entities);
+    scriptSystem.Update(entities);
 		//std::cout << "x: " << box->Transform()->position.x << ", y: " << box->Transform()->position.y << std::endl;
 	}
+
+	SDL_DestroyWindow(window);
+	SDL_Quit();
 }
 
 int main()
