@@ -64,22 +64,22 @@ void InitGame() {
 	std::shared_ptr<KeyListener> keyListener = std::make_shared<KeyListener>();
 	spic::Input::Subscribe(spic::Input::MouseButton::LEFT, mouseListener);
 	spic::Input::Subscribe(spic::Input::KeyCode::A, keyListener);
-
-	// Systems
-	const systems::InputSystem inputSystem = systems::InputSystem();
-
-	// Window
-	SDL_Window* window = SDL_CreateWindow("window", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 500, 500, SDL_WINDOW_RESIZABLE);
 }
 
 void StartGame() {
-	const spic::internal::systems::PhysicsSystem system = spic::internal::systems::PhysicsSystem();
-	const systems::PhysicsSystem physicsSystem = systems::PhysicsSystem();
+	// Systems
+	const spic::internal::systems::InputSystem inputSystem = spic::internal::systems::InputSystem();
+	const spic::internal::systems::PhysicsSystem physicsSystem = spic::internal::systems::PhysicsSystem();
+
+	// Window
+	SDL_Window* window = SDL_CreateWindow("window", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 500, 500, SDL_WINDOW_RESIZABLE);
+
 	while (true) {
 		//physicsSystem.Update(entities);
 		inputSystem.Update(entities);
 		//std::cout << "x: " << box->Transform()->position.x << ", y: " << box->Transform()->position.y << std::endl;
 	}
+
 	SDL_DestroyWindow(window);
 	SDL_Quit();
 }

@@ -2,7 +2,7 @@
 #include "InputManager.hpp"
 #include "InputImpl.hpp"
 
-namespace systems {
+namespace spic::internal::systems {
 	InputSystem::InputSystem() {}
 
 	void InputSystem::Update(std::vector<std::shared_ptr<spic::GameObject>> entities) const
