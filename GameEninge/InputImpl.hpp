@@ -7,7 +7,7 @@
 #pragma warning(pop)
 #include <vector>
 
-namespace InputImpl {
+namespace spic::internal::InputImpl {
     /**
     * @brief Converts KeyCode to SDL_KeyCode
     * @spicapi

@@ -7,7 +7,8 @@ namespace spic::internal::systems {
 
 	void InputSystem::Update(std::vector<std::shared_ptr<spic::GameObject>> entities) const
 	{
-		while (InputImpl::Poll()) {
+		while (InputImpl::Poll()) 
+		{
 			InputManager::GetInstance()->Listen();
 		}
 	}

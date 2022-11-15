@@ -1,6 +1,6 @@
 #include "InputImpl.hpp"
 
-namespace InputImpl {
+namespace spic::internal::InputImpl {
 	SDL_Event ev;
 
 	std::vector<SDL_Keycode> InputImpl::ToSDLKeyCodes(spic::Input::KeyCode key) 
@@ -489,6 +489,7 @@ namespace InputImpl {
 	{
 		return ev.type == SDL_KEYDOWN || ev.type == SDL_KEYUP;
 	}
+
 	bool InputImpl::AnyKeyDown() 
 	{
 		return ev.type == SDL_KEYDOWN;
@@ -511,11 +512,13 @@ namespace InputImpl {
 		const std::vector<SDL_Keycode> keyCodes = ToSDLKeyCodes(key);
 		return std::find(keyCodes.begin(), keyCodes.end(), ev.key.keysym.sym) != keyCodes.end();
 	}
+
 	bool InputImpl::GetKeyDown(spic::Input::KeyCode key) 
 	{
 		const std::vector<SDL_Keycode> keyCodes = ToSDLKeyCodes(key);
 		return ev.type == SDL_KEYDOWN && std::find(keyCodes.begin(), keyCodes.end(), ev.key.keysym.sym) != keyCodes.end();
 	}
+
 	bool InputImpl::GetKeyUp(spic::Input::KeyCode key) 
 	{
 		const std::vector<SDL_Keycode> keyCodes = ToSDLKeyCodes(key);
@@ -530,6 +533,7 @@ namespace InputImpl {
 			return ev.button.button == SDL_BUTTON_MIDDLE;
 		return ev.button.button == SDL_BUTTON_RIGHT;
 	}
+
 	bool InputImpl::GetMouseButtonDown(spic::Input::MouseButton which) 
 	{
 		if (ev.type != SDL_MOUSEBUTTONDOWN)
@@ -540,6 +544,7 @@ namespace InputImpl {
 			return ev.button.button == SDL_BUTTON_MIDDLE;
 		return ev.button.button == SDL_BUTTON_RIGHT;
 	}
+
 	bool InputImpl::GetMouseButtonUp(spic::Input::MouseButton which) 
 	{
 		if (ev.type != SDL_MOUSEBUTTONUP)
