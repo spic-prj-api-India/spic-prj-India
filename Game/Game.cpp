@@ -68,8 +68,8 @@ void InitGame() {
 
 void StartGame() {
 	// Systems
-	const spic::internal::systems::InputSystem inputSystem = spic::internal::systems::InputSystem();
-	const spic::internal::systems::PhysicsSystem physicsSystem = spic::internal::systems::PhysicsSystem();
+	spic::internal::systems::InputSystem inputSystem = spic::internal::systems::InputSystem();
+	spic::internal::systems::PhysicsSystem physicsSystem = spic::internal::systems::PhysicsSystem();
 
 	// Window
 	SDL_Window* window = SDL_CreateWindow("window", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 500, 500, SDL_WINDOW_RESIZABLE);

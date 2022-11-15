@@ -5,7 +5,7 @@
 namespace spic::internal::systems {
 	InputSystem::InputSystem() {}
 
-	void InputSystem::Update(std::vector<std::shared_ptr<spic::GameObject>> entities) const
+	void InputSystem::Update(std::vector<std::shared_ptr<spic::GameObject>>& entities)
 	{
 		while (InputImpl::Poll()) 
 		{

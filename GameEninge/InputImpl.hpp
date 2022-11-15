@@ -2,6 +2,7 @@
 #define INPUTIMPL_H_
 
 #include "Input.hpp"
+// Use to remove SDL2 warnings from error list
 #pragma warning(push, 0)
 #include <SDL2/SDL_events.h>
 #pragma warning(pop)

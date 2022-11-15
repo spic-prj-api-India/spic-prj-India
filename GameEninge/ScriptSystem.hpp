@@ -17,13 +17,13 @@ namespace spic::internal::systems {
 		* @brief Calls Start method in scripts of entities
 		* @spicapi
 		*/
-		void Start(std::vector < std::shared_ptr<spic::GameObject >> entities) const;
+		void Start(std::vector < std::shared_ptr<spic::GameObject>>& entities) const;
 
 		/**
 		* @brief Calls Update method in scripts of entities
 		* @spicapi
 		*/
-		void Update(std::vector<std::shared_ptr<spic::GameObject>> entities) const;
+		virtual void Update(std::vector<std::shared_ptr<spic::GameObject>>& entities) override;
 	};
 }
 

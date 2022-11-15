@@ -25,7 +25,7 @@ namespace spic::internal::systems {
         * @brief Calls update method of physics extensions
         * @spicapi
         */
-        void Update(std::vector<std::shared_ptr<spic::GameObject>> entities) const;
+        virtual void Update(std::vector<std::shared_ptr<spic::GameObject>>& entities) override;
 
         /**
         * @brief Calls OnEnter method in the scripts of the entity

@@ -361,7 +361,6 @@ namespace spic {
         */
         void ResetSubscribedEvents();
     }
-
 }
 
 #endif // INPUT_H_

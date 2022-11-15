@@ -41,9 +41,9 @@ namespace spic::internal {
 		void Listen();
 
 		/**
-			* @brief Subscribes a key listener for a specific key event
-			* @spicapi
-			*/
+		* @brief Subscribes a key listener for a specific key event
+		* @spicapi
+		*/
 		void Subscribe(spic::Input::KeyCode keyEvent, const std::shared_ptr<spic::IKeyListener>& keyListener);
 
 		/**
