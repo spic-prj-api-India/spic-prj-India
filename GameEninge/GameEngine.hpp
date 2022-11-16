@@ -8,6 +8,8 @@
 #include "Scene.hpp"
 #include "EntityManager.hpp"
 
+using namespace spic::internal;
+
 namespace spic 
 {
 	/**
@@ -17,26 +19,37 @@ namespace spic
 		private:
 			static GameEngine* pinstance_;
 			static std::mutex mutex_;
+
+			EntityManager* entityManager = EntityManager::GetInstance();
+
 		protected:
 			GameEngine();
 			~GameEngine();
 
 		public:
 			GameEngine(GameEngine& other) = delete;
-			GameEngine(GameEngine&& other) noexcept = delete;
+			GameEngine(GameEngine&& other) = delete;
 			void operator=(const GameEngine& other) = delete;
-			GameEngine& operator=(GameEngine&& other) noexcept = delete;
+			GameEngine& operator=(GameEngine&& other) = delete;
 			static GameEngine* GetInstance();
 
-			internal::EntityManager* entityManager = internal::EntityManager::GetInstance();
 			std::map<std::string, std::shared_ptr<Scene>> scenes;
 
-			void SetActiveScene(std::string scene);
+			void SetActiveScene(std::string scene)
+			{
+				auto it = scenes.find(scene);
+				LoadScene(it->second);
+			}
 
-			std::weak_ptr<Scene> GetActiveScene();
+			std::weak_ptr<Scene> GetActiveScene()
+			{
+				return entityManager->currentScene;
+			}
 
-			void LoadScene(std::weak_ptr<Scene> scene);
-
+			void LoadScene(std::weak_ptr<Scene> scene)
+			{
+				entityManager->SetScene(scene);
+			}
 	};
 }
 

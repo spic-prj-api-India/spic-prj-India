@@ -28,20 +28,4 @@ namespace spic
 		}
 		return pinstance_;
 	}
-
-	void GameEngine::SetActiveScene(std::string scene)
-	{
-		auto it = scenes.find(scene);
-		LoadScene(it->second);
-	}
-
-	std::weak_ptr<Scene> GameEngine::GetActiveScene()
-	{
-		return entityManager->currentScene;
-	}
-
-	void GameEngine::LoadScene(std::weak_ptr<Scene> scene)
-	{
-		entityManager->SetScene(scene);
-	}
 }
