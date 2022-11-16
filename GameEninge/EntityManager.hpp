@@ -12,6 +12,9 @@
 
 namespace spic::internal {
 
+	/*
+	* @brief The main entity manager class. It has multiple functions to update the systems, scenes and entities.
+	*/
 	class EntityManager
 	{
 	private:
@@ -33,11 +36,18 @@ namespace spic::internal {
 		std::weak_ptr<Scene> currentScene;
 		std::unique_ptr<MapParser> tileParser;
 
+		/*
+		@brief Initialization of the class.
+		*/
 		void Init()
 		{
 			// Add required systems
 		}
 
+		/*
+		@brief Set the current scene with entities.
+		@param The scene to be set.
+		*/
 		void SetScene(std::shared_ptr<Scene> scene)
 		{
 			for (auto& entity : scene->contents)
@@ -46,6 +56,10 @@ namespace spic::internal {
 			}
 		}
 
+		/*
+		@brief Destroy the current scene.
+		@param forceDelete: Set to true to delete GameObjects with boolean "destroyOnLoad" as well.
+		*/
 		void DestroyScene(bool forceDelete)
 		{
 			if (forceDelete)
