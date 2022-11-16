@@ -33,16 +33,11 @@ namespace spic::internal {
 		std::weak_ptr<Scene> currentScene;
 		std::unique_ptr<MapParser> tileParser;
 
-		void SetScene(std::weak_ptr<Scene> scene)
+		void SetScene(std::shared_ptr<Scene> scene)
 		{
-			auto lock = scene.lock();
-
-			if (lock)
+			for (auto& entity : scene->contents)
 			{
-				for (auto& entity : lock->contents)
-				{
-					entities.push_back(entity);
-				}
+				entities.push_back(entity);
 			}
 		}
 
@@ -51,6 +46,16 @@ namespace spic::internal {
 			if (forceDelete)
 			{
 				entities.clear();
+			}
+			else
+			{
+				for (auto& entity : entities)
+				{
+					if (entity->destroyOnLoad)
+					{
+						entities.erase(std::remove(entities.begin(), entities.end(), entity), entities.end());
+					}
+				}
 			}
 		}
 

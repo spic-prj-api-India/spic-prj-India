@@ -9,12 +9,14 @@
 #include <memory>
 #include "Collider.hpp"
 
-namespace spic {
+namespace spic 
+{
 
 	/**
 	 * @brief Any object which should be represented on screen.
 	 */
-	class GameObject {
+	class GameObject 
+	{
 	public:
 		GameObject();
 
@@ -22,6 +24,17 @@ namespace spic {
 		std::shared_ptr<Transform>& Transform();
 		void Tag(std::string& tag);
 		void Transform(std::shared_ptr<spic::Transform> transform);
+		bool destroyOnLoad = true;
+
+		void DontDestroyOnLoad()
+		{
+			this->destroyOnLoad = false;
+		}
+
+		void DontDestroyOnLoad(bool destroyOnLoad)
+		{
+			this->destroyOnLoad = destroyOnLoad;
+		}
 
 		/**
 		 * @brief Finds a GameObject by name and returns it.

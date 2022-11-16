@@ -35,6 +35,11 @@ namespace spic
 
 			std::map<std::string, std::shared_ptr<Scene>> scenes;
 
+			void LoadScene(std::shared_ptr<Scene> scene)
+			{
+				entityManager->SetScene(scene);
+			}
+
 			void SetActiveScene(std::string scene)
 			{
 				auto it = scenes.find(scene);
@@ -46,10 +51,6 @@ namespace spic
 				return entityManager->currentScene;
 			}
 
-			void LoadScene(std::weak_ptr<Scene> scene)
-			{
-				entityManager->SetScene(scene);
-			}
 	};
 }
 
