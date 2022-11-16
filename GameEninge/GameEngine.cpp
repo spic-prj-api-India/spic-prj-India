@@ -1,6 +1,13 @@
 #include "GameEngine.hpp"
+#include "EntityManager.hpp"
+#include "Scene.hpp"
+#include <map>
+#include <regex>
+#include <memory>
+#include <mutex>
 
-namespace spic {
+namespace spic 
+{
 	GameEngine* GameEngine::pinstance_{ nullptr };
 	std::mutex GameEngine::mutex_;
 
@@ -20,5 +27,21 @@ namespace spic {
 			pinstance_ = new GameEngine();
 		}
 		return pinstance_;
+	}
+
+	void GameEngine::SetActiveScene(std::string scene)
+	{
+		auto it = scenes.find(scene);
+		LoadScene(it->second);
+	}
+
+	std::weak_ptr<Scene> GameEngine::GetActiveScene()
+	{
+		return entityManager->currentScene;
+	}
+
+	void GameEngine::LoadScene(std::weak_ptr<Scene> scene)
+	{
+		entityManager->SetScene(scene);
 	}
 }

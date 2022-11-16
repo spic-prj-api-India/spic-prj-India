@@ -11,38 +11,41 @@
 #include "MapParser.hpp"
 #include "Scene.hpp"
 
-class EntityManager
-{
-private:
-	static EntityManager* pinstance_;
-	static std::mutex mutex_;
+namespace spic::internal {
 
-	std::vector<std::shared_ptr<spic::GameObject>> entities;
-	std::vector <std::pair<int, ISystem*>> systems;
-	std::weak_ptr<spic::Scene> currentScene;
-	std::unique_ptr<spic::MapParser> tileParser;
-protected:
-	EntityManager();
-	~EntityManager();
-public:
-	EntityManager(EntityManager& other) = delete;
-	EntityManager(EntityManager&& other) = delete;
-	void operator=(const EntityManager& other) = delete;
-	EntityManager& operator=(EntityManager&& other) = delete;
-	static EntityManager* GetInstance();
+	class EntityManager
+	{
+	private:
+		static EntityManager* pinstance_;
+		static std::mutex mutex_;
 
-	void SetScene(spic::Scene* scene);
+	protected:
+		EntityManager();
+		~EntityManager();
+	public:
+		EntityManager(EntityManager& other) = delete;
+		EntityManager(EntityManager&& other) = delete;
+		void operator=(const EntityManager& other) = delete;
+		EntityManager& operator=(EntityManager&& other) = delete;
+		static EntityManager* GetInstance();
 
-	void DestroyScene(bool forceDelete);
+		std::vector<std::shared_ptr<spic::GameObject>> entities;
+		std::vector <std::pair<int, ISystem*>> systems;
+		std::weak_ptr<Scene> currentScene;
+		std::unique_ptr<MapParser> tileParser;
 
-	void AddSystem(ISystem* system);
+		void SetScene(std::weak_ptr<Scene> scene);
 
-	void RemoveSystem(ISystem* system);
+		void DestroyScene(bool forceDelete);
 
-	void Update(int deltaTime);
+		void AddSystem(ISystem* system);
 
-	void Render();
+		void RemoveSystem(ISystem* system);
 
-};
+		void Update(int deltaTime);
 
+		void Render();
+
+	};
+}
 #endif // ENTITYMANAGER_H_
