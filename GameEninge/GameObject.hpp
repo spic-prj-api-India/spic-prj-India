@@ -8,6 +8,7 @@
 #include <vector>
 #include <memory>
 #include "Collider.hpp"
+#include <functional>
 
 namespace spic 
 {
@@ -87,7 +88,10 @@ namespace spic
 		 * @exception A std::runtime_exception is thrown when the pointer is not valid.
 		 * @spicapi
 		 */
-		static void Destroy(std::shared_ptr<GameObject> obj);
+		static void Destroy(std::shared_ptr<GameObject> obj)
+		{
+			// Hiervoor moet GameEngine gebruikt worden?
+		}
 
 		/**
 		 * @brief Removes a Component.
@@ -243,14 +247,20 @@ namespace spic
 		 * @param active Desired value.
 		 * @spicapi
 		 */
-		void Active(bool flag);
+		void Active(bool flag)
+		{
+			active = flag;
+		}
 
 		/**
 		 * @brief Returns whether this game object is itself active.
 		 * @return true if active, false if not.
 		 * @spicapi
 		 */
-		bool Active() const;
+		bool Active() const
+		{
+			return active;
+		}
 
 		/**
 		 * @brief Returns whether this game component is active, taking its parents
@@ -260,6 +270,8 @@ namespace spic
 		 * @spicapi
 		 */
 		bool IsActiveInWorld() const;
+
+		void IsChanged(std::function<void(GameObject)>);
 
 	private:
 		std::string name;

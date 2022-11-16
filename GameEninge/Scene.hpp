@@ -16,7 +16,6 @@ namespace spic {
 
             enum UpdateSetting { ALWAYS, CAMERA_VIEW };
             std::string tileMapPath = "";
-            std::string contentsPath = "";
             std::unique_ptr<Camera> camera;
             UpdateSetting setting;
             /**

@@ -33,6 +33,11 @@ namespace spic::internal {
 		std::weak_ptr<Scene> currentScene;
 		std::unique_ptr<MapParser> tileParser;
 
+		void Init()
+		{
+			// Add required systems
+		}
+
 		void SetScene(std::shared_ptr<Scene> scene)
 		{
 			for (auto& entity : scene->contents)
@@ -66,6 +71,5 @@ namespace spic::internal {
 		void Update(int deltaTime);
 
 		void Render();
-
 	};
 }

@@ -40,6 +40,11 @@ namespace spic
 				entityManager->SetScene(scene);
 			}
 
+			void DestroyScene(bool forceDelete)
+			{
+				entityManager->DestroyScene(forceDelete);
+			}
+
 			void SetActiveScene(std::string scene)
 			{
 				auto it = scenes.find(scene);
@@ -51,6 +56,11 @@ namespace spic
 				return entityManager->currentScene;
 			}
 
+			std::shared_ptr<Scene> GetSceneByName(std::string sceneName)
+			{
+				auto it = scenes.find(sceneName);
+				return it->second;
+			}
 	};
 }
 
