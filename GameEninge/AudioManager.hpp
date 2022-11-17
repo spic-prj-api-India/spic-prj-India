@@ -97,12 +97,12 @@ namespace spic::internal::audio {
         /// @param source The key
         /// @param left Value from 0 to 1
         /// @param right Value from 0 to 1
-        void ChangeVolumn(AudioSource* source, float left, float right) const;
+        void ChangeVolume(AudioSource* source, float left, float right) const;
 
         /// @brief Change the volume of a song
         /// @param source The key
         /// @param volume Value from 0 to 1
-        void ChangeVolumn(AudioSource* source, float volume) const;
+        void ChangeVolume(AudioSource* source, float volume) const;
 
         /// @brief Clears the vector list samples and chunks
         void Reset();

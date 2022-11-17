@@ -5,50 +5,46 @@
 using namespace spic;
 using namespace spic::internal::audio;
 
-
 AudioSource::AudioSource(const std::string& audioClip, const bool playOnAwake, const bool loop, const float volume)
 	: audioClip{ audioClip }, playOnAwake{ playOnAwake }, loop{ loop }, volume{ std::lerp(0.0f, 1.0f, volume) }
 {
 }
-
 
 void AudioSource::Play(bool looping)
 {
 	AudioManager::GetInstance()->PlaySample(this, looping);
 }
 
-
 void AudioSource::Stop()
 {
 	AudioManager::GetInstance()->StopSample(this);
 }
 
-
-void AudioSource::ChangeVolume(float volume)
+void AudioSource::Volume(float volume)
 {
-	AudioManager::GetInstance()->ChangeVolumn(this, volume);
+	AudioManager::GetInstance()->ChangeVolume(this, volume);
 }
 
-
-void AudioSource::ChangeVolume(float left, float right)
+void AudioSource::Volume(float left, float right)
 {
-	AudioManager::GetInstance()->ChangeVolumn(this, left, right);
+	AudioManager::GetInstance()->ChangeVolume(this, left, right);
 }
 
-
-const std::string AudioSource::GetAudioClip() const
+const std::string AudioSource::AudioClip() const
 {
 	return this->audioClip;
 }
 
+const bool AudioSource::PlayOnAwake() const {
+	return playOnAwake;
+}
 
-const bool AudioSource::GetLoop() const
+const bool AudioSource::Loop() const
 {
 	return loop;
 }
 
-
-const float AudioSource::GetVolume() const
+const float AudioSource::Volume() const
 {
 	return volume;
 }
