@@ -36,12 +36,12 @@ EntityManager* EntityManager::GetInstance()
 	return pinstance_;
 }
 
-void Init()
+void EntityManager::Init()
 { 
 	// Add required systems 
 }
 
-void SetScene(std::shared_ptr<Scene> scene)
+void EntityManager::SetScene(std::shared_ptr<Scene> scene)
 {
 	for (auto& entity : scene->contents)
 	{
@@ -50,7 +50,7 @@ void SetScene(std::shared_ptr<Scene> scene)
 	currentScene = scene;
 }
 
-void DestroyScene(bool forceDelete)
+void EntityManager::DestroyScene(bool forceDelete)
 {
 	if (forceDelete)
 	{
@@ -60,7 +60,7 @@ void DestroyScene(bool forceDelete)
 	{
 		for (auto& entity : entities)
 		{
-			if (entity->destroyOnLoad)
+			if (entity->destroyOnLoad_)
 			{
 				entities.erase(std::remove(entities.begin(), entities.end(), entity), entities.end());
 			}
@@ -68,10 +68,14 @@ void DestroyScene(bool forceDelete)
 	}
 }
 
-void AddSystem(ISystem* system);
+void EntityManager::AddSystem(ISystem* system)
+{}
 
-void RemoveSystem(ISystem* system);
+void EntityManager::RemoveSystem(ISystem* system)
+{}
 
-void Update(int deltaTime);
+void EntityManager::Update(int deltaTime)
+{}
 
-void Render();
+void EntityManager::Render()
+{}

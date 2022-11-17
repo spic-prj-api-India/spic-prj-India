@@ -22,10 +22,10 @@ namespace spic
 		GameObject();
 
 		std::string Tag() const;
+		bool destroyOnLoad_;
 		std::shared_ptr<Transform>& Transform();
 		void Tag(std::string& tag);
 		void Transform(std::shared_ptr<spic::Transform> transform);
-		bool destroyOnLoad_ = true; // True by default.
 
 		/*
 		@brief Set this GameObject to get destroyed upon loading a new scene.

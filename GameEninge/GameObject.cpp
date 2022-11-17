@@ -11,7 +11,8 @@
 using namespace spic;
 
 GameObject::GameObject()
-{}
+{
+}
 
 std::string GameObject::Tag() const
 {
@@ -29,14 +30,12 @@ void GameObject::Transform(std::shared_ptr<spic::Transform> _transform)
 	transform = _transform;
 }
 
-bool destroyOnLoad_ = true; // True by default
-
-void DontDestroyOnLoad()
+void GameObject::DontDestroyOnLoad()
 {
 	destroyOnLoad_ = false;
 }
 
-void DontDestroyOnLoad(bool destroyOnLoad)
+void GameObject::DontDestroyOnLoad(bool destroyOnLoad)
 {
 	destroyOnLoad_ = destroyOnLoad;
 }

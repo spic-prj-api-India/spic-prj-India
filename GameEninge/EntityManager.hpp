@@ -39,10 +39,7 @@ namespace spic::internal {
 		/*
 		@brief Initialization of the class.
 		*/
-		void Init()
-		{
-			// Add required systems
-		}
+		void Init();
 
 		/*
 		@brief Set the current scene with entities.
