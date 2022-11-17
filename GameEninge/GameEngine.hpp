@@ -13,6 +13,7 @@ namespace spic
 {
 	/**
 	 * @brief The main class of the engine, has multiple functions to configure engine and load scenes.
+	 *				The GameEngine class implements a singleton pattern.
 	 */
 	class GameEngine {
 		private:
@@ -41,24 +42,70 @@ namespace spic
 			*/
 			void DestroyScene(bool forceDelete);
 
-			/*
-			@brief Set a scene as the current scene. Loads the specified scene.
-			@param scene: The scene you want to set.
-			*/
-			void SetActiveScene(std::string scene);
+		/**
+		* @brief Gets extensions of type IEngineExtension.
+		* @spicapi
+		*/
+		template <typename T>
+		std::vector<std::weak_ptr<T>> GetExtensions()
+		{
+			std::vector<std::weak_ptr<T>> extensions;
+			for (const auto& extension : _extensions) {
+				std::weak_ptr<T> weakExtension = std::dynamic_pointer_cast<T>(extension.second);
+				bool isOfType = weakExtension.lock() != nullptr;
+				if (isOfType)
+					extensions.emplace_back(weakExtension);
+			}
+			return extensions;
+		}
 
-			/*
-			@brief Get the current scene.
-			@return A weak_ptr to the current scene.
-			*/
-			std::weak_ptr<Scene> GetActiveScene();
+		/**
+		* @brief Checks if extension exists.
+		* @spicapi
+		*/
+		template <typename T>
+		bool HasExtension()
+		{
+			return _extensions.count(GetTypeName<T>());
+		}
 
-			/*
-			@brief Get the scene by its name.
-			@param sceneName: The name of the scene you want to get.
-			@return A shared_ptr to the scene.
-			*/
-			std::shared_ptr<Scene> GetSceneByName(std::string sceneName);
+		/**
+		* @brief removes extension from engine.
+		* @spicapi
+		*/
+		template <typename T>
+		void RemoveExtension()
+		{
+			std::string typeName = GetTypeName<T>();
+			std::shared_ptr<T> deletePtr = std::dynamic_pointer_cast<T>(_extensions[typeName]);
+			_extensions.erase(typeName);
+			do {
+				deletePtr.reset();
+			} while (deletePtr.use_count() != 0);
+		}
+	private:
+		/**
+		* @brief Gets name of type
+		* @spicapi
+		*/
+		template <typename T>
+		std::string GetTypeName() const
+		{
+			std::string typeName = typeid(T).name();
+			std::string strippedName = std::regex_replace(typeName, std::regex("class "), "");
+			return strippedName;
+		}
+
+		/**
+		* @brief Checks if type is of type IEngineExtension
+		* @spicapi
+		*/
+		template <typename T>
+		bool IsEngineExtension(std::shared_ptr<T> extension) const
+		{
+			auto castedEngineExtension = std::dynamic_pointer_cast<spic::internal::extensions::IEngineExtension>(extension);
+			return castedEngineExtension != nullptr;
+		}
 	};
 }
 

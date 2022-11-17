@@ -3,14 +3,16 @@
 
 #include <iostream>
 #include <vector>
-#include "GameObject.hpp"
+#include "Scene.hpp"
 
-class ISystem
+namespace spic::systems 
 {
-public:
-	virtual void Update(std::vector<std::shared_ptr<spic::GameObject>> entities) = 0;
-	virtual ~ISystem() = default;
-private:
-};
+	class ISystem
+	{
+	public:
+		virtual void Update(std::vector<std::shared_ptr<spic::GameObject>>& entities, Scene& currentScene) = 0;
+	private:
+	};
+}
 
 #endif // ISYSTEM_H_

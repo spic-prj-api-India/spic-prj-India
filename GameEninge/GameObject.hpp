@@ -8,7 +8,7 @@
 #include <vector>
 #include <memory>
 #include "Collider.hpp"
-#include <functional>
+#include "Sprite.hpp"
 
 namespace spic 
 {
@@ -130,9 +130,14 @@ namespace spic
 		 */
 		bool operator==(const GameObject& other);
 
+		/// @brief Compare two gameObjects (used for sort function)
+		/// @param other The other object to compare this one with
+		/// @return True if its less then other gameobject, false otherwise
+		bool operator<(const GameObject& other);
+
 		template<class T>
 		bool HasComponent() const {
-			for (auto component : components) {
+			for (const auto& component : components) {
 				bool isComponent = std::dynamic_pointer_cast<T>(component) != nullptr;
 				if (isComponent)
 					return true;
@@ -164,7 +169,7 @@ namespace spic
 		template<class T>
 		std::shared_ptr<T> GetComponent() const
 		{
-			for (auto component : components) {
+			for (const auto& component : components) {
 				std::shared_ptr<T> castedComponent = std::dynamic_pointer_cast<T>(component);
 				bool isComponent = castedComponent != nullptr;
 				if (isComponent)
@@ -206,7 +211,7 @@ namespace spic
 		template<class T>
 		std::vector<std::shared_ptr<T>> GetComponents() const {
 			std::vector<std::shared_ptr<T>> filteredComponents = std::vector<std::shared_ptr<T>>();
-			for (auto component : components) {
+			for (const auto& component : components) {
 				std::shared_ptr<T> castedComponent = std::dynamic_pointer_cast<T>(component);
 				bool isComponent = castedComponent != nullptr;
 				if (isComponent)
@@ -268,7 +273,15 @@ namespace spic
 		 */
 		bool IsActiveInWorld() const;
 
-		void IsChanged(std::function<void(GameObject)>);
+		/// @brief Gets all the children of this object
+		/// @param includeInactive If you want to include inactive children  
+		/// @return A vector of gameobjects
+		std::vector<std::shared_ptr<GameObject>> GetChildren(bool includeInactive = false) const;
+
+		/// @brief Gets all the children of this object
+		/// @param includeInactive If you want to include inactive children  
+		/// @return A vector of gameobjects
+		std::shared_ptr<GameObject> GetParent() const;
 
 	private:
 		std::string name;
@@ -277,8 +290,9 @@ namespace spic
 		int layer;
 		std::shared_ptr<spic::Transform> transform;
 		std::vector<std::shared_ptr<Component>> components;
+		std::vector<std::shared_ptr<GameObject>> children;
+		std::shared_ptr<GameObject> parent;
 	};
-
 }
 
 #endif // GAMEOBJECT_H_

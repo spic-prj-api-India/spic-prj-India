@@ -13,10 +13,42 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\scripts">
+      <UniqueIdentifier>{ae407631-ead0-46b5-86ae-554f2f8b33e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\scripts">
+      <UniqueIdentifier>{0dc15951-691d-4f8e-9da7-15acd53ffd6b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\listeners">
+      <UniqueIdentifier>{1b54c347-cd59-4913-ab8e-699a775dd70b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\listeners">
+      <UniqueIdentifier>{525cfa17-ca8c-48c7-9473-876d036c2661}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="CollisionDetectionScript.cpp">
+      <Filter>Source Files\scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="MouseListener.cpp">
+      <Filter>Source Files\listeners</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyListener.cpp">
+      <Filter>Source Files\listeners</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CollisionDetectionScript.h">
+      <Filter>Header Files\scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="MouseListener.h">
+      <Filter>Header Files\listeners</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyListener.h">
+      <Filter>Header Files\listeners</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

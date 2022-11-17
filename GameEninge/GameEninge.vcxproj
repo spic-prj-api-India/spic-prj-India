@@ -83,6 +83,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -98,6 +99,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -151,6 +153,7 @@
     <ClInclude Include="BoxCollider.hpp" />
     <ClInclude Include="Button.hpp" />
     <ClInclude Include="Camera.hpp" />
+    <ClInclude Include="CastException.hpp" />
     <ClInclude Include="Chunk.hpp" />
     <ClInclude Include="CircleCollider.hpp" />
     <ClInclude Include="Collider.hpp" />
@@ -159,12 +162,22 @@
     <ClInclude Include="Debug.hpp" />
     <ClInclude Include="EntityManager.hpp" />
     <ClInclude Include="GameEngine.hpp" />
+    <ClInclude Include="GameEngineAPI.hpp" />
+    <ClInclude Include="EntityManager.hpp" />
     <ClInclude Include="GameEngineAPI.h" />
     <ClInclude Include="GameObject.hpp" />
-    <ClInclude Include="GameObject.cpp" />
+    <ClInclude Include="ICollisionListener.hpp" />
+    <ClInclude Include="IEngineExtension.hpp" />
     <ClInclude Include="IKeyListener.hpp" />
     <ClInclude Include="IMouseListener.hpp" />
     <ClInclude Include="Input.hpp" />
+    <ClInclude Include="InputImpl.hpp" />
+    <ClInclude Include="InputManager.hpp" />
+    <ClInclude Include="InputSystem.hpp" />
+    <ClInclude Include="IPhysicsExtension.hpp" />
+    <ClInclude Include="Box2DExtension.hpp" />
+    <ClInclude Include="PhysicsInfo.hpp" />
+    <ClInclude Include="PhysicsSystem.hpp" />
     <ClInclude Include="ISystem.hpp" />
     <ClInclude Include="MapParser.hpp" />
     <ClInclude Include="Point.hpp" />
@@ -182,12 +195,26 @@
     <ClCompile Include="AudioManager.cpp" />
     <ClCompile Include="AudioSource.cpp" />
     <ClCompile Include="Chunk.cpp" />
+    <ClCompile Include="BehaviourScript.cpp" />
+    <ClCompile Include="Box2DCollisionListener.cpp" />
+    <ClCompile Include="Box2DExtension.cpp" />
+    <ClCompile Include="BoxCollider.cpp" />
+    <ClCompile Include="CastException.cpp" />
+    <ClCompile Include="CircleCollider.cpp" />
     <ClCompile Include="Color.cpp" />
-    <ClCompile Include="EntityManager.cpp" />
-    <ClCompile Include="GameEngine.cpp" />
     <ClCompile Include="Sample.cpp" />
+    <ClCompile Include="GameEngine.cpp" />
+    <ClCompile Include="ICollisionListener.cpp" />
+    <ClCompile Include="Input.cpp" />
+    <ClCompile Include="InputImpl.cpp" />
+    <ClCompile Include="InputManager.cpp" />
+    <ClCompile Include="InputSystem.cpp" />
+    <ClCompile Include="PhysicsSystem.cpp" />
+    <ClCompile Include="RigidBody.cpp" />
+    <ClCompile Include="ScriptSystem.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Time.cpp" />
+	<ClCompile Include="GameObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
