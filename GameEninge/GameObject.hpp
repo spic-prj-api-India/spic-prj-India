@@ -8,6 +8,7 @@
 #include <vector>
 #include <memory>
 #include "Collider.hpp"
+#include "Sprite.hpp"
 
 namespace spic {
 
@@ -115,6 +116,11 @@ namespace spic {
 		 * @spicapi
 		 */
 		bool operator==(const GameObject& other);
+
+		/// @brief Compare two gameObjects (used for sort function)
+		/// @param other The other object to compare this one with
+		/// @return True if its less then other gameobject, false otherwise
+		bool operator<(const GameObject& other);
 
 		template<class T>
 		bool HasComponent() const {
@@ -248,6 +254,16 @@ namespace spic {
 		 */
 		bool IsActiveInWorld() const;
 
+		/// @brief Gets all the children of this object
+		/// @param includeInactive If you want to include inactive children  
+		/// @return A vector of gameobjects
+		std::vector<std::shared_ptr<GameObject>> GetChildren(bool includeInactive = false) const;
+
+		/// @brief Gets all the children of this object
+		/// @param includeInactive If you want to include inactive children  
+		/// @return A vector of gameobjects
+		std::shared_ptr<GameObject> GetParent() const;
+
 	private:
 		std::string name;
 		std::string tag;
@@ -255,6 +271,8 @@ namespace spic {
 		int layer;
 		std::shared_ptr<spic::Transform> transform;
 		std::vector<std::shared_ptr<Component>> components;
+		std::vector<std::shared_ptr<GameObject>> children;
+		std::shared_ptr<GameObject> parent;
 	};
 }
 

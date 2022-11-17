@@ -15,7 +15,7 @@ namespace spic::internal::systems {
 		}
 	}
 
-	void ScriptSystem::Update(std::vector<std::shared_ptr<spic::GameObject>>& entities)
+	void ScriptSystem::Update(std::vector<std::shared_ptr<spic::GameObject>>& entities, Scene& currentScene)
 	{
 		for (auto& entity : entities) {
 			for (const auto& script : entity->GetComponents<spic::BehaviourScript>()) {

@@ -17,7 +17,7 @@ namespace spic::internal::systems {
 		* @brief Calls Listen method in InputManager
 		* @spicapi
 		*/
-		virtual void Update(std::vector<std::shared_ptr<spic::GameObject>>& entities) override;
+		virtual void Update(std::vector<std::shared_ptr<spic::GameObject>>& entities, Scene& currentScene) override;
 	};
 }
 

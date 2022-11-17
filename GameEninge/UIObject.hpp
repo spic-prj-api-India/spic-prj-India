@@ -11,8 +11,8 @@ namespace spic {
      */
     class UIObject : public GameObject {
         private:
-            double width;
-            double height;
+            float width;
+            float height;
     };
 
 }
