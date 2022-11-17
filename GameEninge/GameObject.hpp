@@ -25,24 +25,17 @@ namespace spic
 		std::shared_ptr<Transform>& Transform();
 		void Tag(std::string& tag);
 		void Transform(std::shared_ptr<spic::Transform> transform);
-		bool destroyOnLoad = true; // True by default.
+		bool destroyOnLoad_ = true; // True by default.
 
 		/*
 		@brief Set this GameObject to get destroyed upon loading a new scene.
 		*/
-		void DontDestroyOnLoad()
-		{
-			this->destroyOnLoad = false;
-		}
-
+		void DontDestroyOnLoad();
 		/*
 		@brief Set this GameObject to (not) get destroyed upon loading a new scene.
 		@param destroyOnLoad: Wether you want to set this GameObject to be destroyed or not upon loading a new scene.
 		*/
-		void DontDestroyOnLoad(bool destroyOnLoad)
-		{
-			this->destroyOnLoad = destroyOnLoad;
-		}
+		void DontDestroyOnLoad(bool destroyOnLoad);
 
 		/**
 		 * @brief Finds a GameObject by name and returns it.
@@ -95,10 +88,7 @@ namespace spic
 		 * @exception A std::runtime_exception is thrown when the pointer is not valid.
 		 * @spicapi
 		 */
-		static void Destroy(std::shared_ptr<GameObject> obj)
-		{
-			// Hiervoor moet GameEngine gebruikt worden?
-		}
+		static void Destroy(std::shared_ptr<GameObject> obj);
 
 		/**
 		 * @brief Removes a Component.

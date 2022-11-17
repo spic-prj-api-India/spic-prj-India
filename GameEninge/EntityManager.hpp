@@ -48,35 +48,13 @@ namespace spic::internal {
 		@brief Set the current scene with entities.
 		@param The scene to be set.
 		*/
-		void SetScene(std::shared_ptr<Scene> scene)
-		{
-			for (auto& entity : scene->contents)
-			{
-				entities.push_back(entity);
-			}
-		}
+		void SetScene(std::shared_ptr<Scene> scene);
 
 		/*
 		@brief Destroy the current scene.
 		@param forceDelete: Set to true to delete GameObjects with boolean "destroyOnLoad" as well.
 		*/
-		void DestroyScene(bool forceDelete)
-		{
-			if (forceDelete)
-			{
-				entities.clear();
-			}
-			else
-			{
-				for (auto& entity : entities)
-				{
-					if (entity->destroyOnLoad)
-					{
-						entities.erase(std::remove(entities.begin(), entities.end(), entity), entities.end());
-					}
-				}
-			}
-		}
+		void DestroyScene(bool forceDelete);
 
 		void AddSystem(ISystem* system);
 
