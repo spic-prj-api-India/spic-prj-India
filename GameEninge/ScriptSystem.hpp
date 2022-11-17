@@ -23,7 +23,7 @@ namespace spic::internal::systems {
 		* @brief Calls Update method in scripts of entities
 		* @spicapi
 		*/
-		virtual void Update(std::vector<std::shared_ptr<spic::GameObject>>& entities, Scene& currentScene) override;
+		void Update(std::vector<std::shared_ptr<spic::GameObject>>& entities, Scene& currentScene) override;
 	};
 }
 

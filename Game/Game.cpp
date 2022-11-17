@@ -7,6 +7,7 @@
 #include <BoxCollider.hpp>
 #include <Box2DExtension.hpp>
 #include "CollisionDetectionScript.h"
+#include <ScriptSystem.hpp>
 #include <InputSystem.hpp>
 #include <Input.hpp>
 #include "MouseListener.h"
@@ -70,6 +71,8 @@ void StartGame() {
 	// Systems
 	spic::internal::systems::InputSystem inputSystem = spic::internal::systems::InputSystem();
 	spic::internal::systems::PhysicsSystem physicsSystem = spic::internal::systems::PhysicsSystem();
+  spic::internal::systems::ScriptSystem scriptSystem = spic::internal::systems::ScriptSystem();
+	scriptSystem.Start(entities);
 
 	// Window
 	SDL_Window* window = SDL_CreateWindow("window", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 500, 500, SDL_WINDOW_RESIZABLE);
@@ -77,6 +80,7 @@ void StartGame() {
 	while (true) {
 		//physicsSystem.Update(entities);
 		inputSystem.Update(entities);
+    scriptSystem.Update(entities);
 		//std::cout << "x: " << box->Transform()->position.x << ", y: " << box->Transform()->position.y << std::endl;
 	}
 
