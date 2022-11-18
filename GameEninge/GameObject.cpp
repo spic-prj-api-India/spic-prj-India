@@ -4,6 +4,16 @@ namespace spic {
 	GameObject::GameObject() 
 	{}
 
+	void GameObject::DontDestroyOnLoad()
+	{
+		destroyOnLoad = false;
+	}
+
+	void GameObject::DontDestroyOnLoad(bool destroy)
+	{
+		destroyOnLoad = destroy;
+	}
+
 	std::string GameObject::Tag() const 
 	{
 		return tag;

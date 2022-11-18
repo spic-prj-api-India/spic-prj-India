@@ -24,6 +24,16 @@ namespace spic {
 		void Tag(std::string& tag);
 		void Transform(std::shared_ptr<spic::Transform> transform);
 
+		/*
+		@brief Set this GameObject to get destroyed upon loading a new scene.
+		*/
+		void DontDestroyOnLoad();
+		/*
+		@brief Set this GameObject to (not) get destroyed upon loading a new scene.
+		@param destroyOnLoad: Wether you want to set this GameObject to be destroyed or not upon loading a new scene.
+		*/
+		void DontDestroyOnLoad(bool destroyOnLoad);
+
 		/**
 		 * @brief Finds a GameObject by name and returns it.
 		 * @param name The name of the GameObject you want to find.
@@ -269,6 +279,7 @@ namespace spic {
 		std::string tag;
 		bool active;
 		int layer;
+		bool destroyOnLoad;
 		std::shared_ptr<spic::Transform> transform;
 		std::vector<std::shared_ptr<Component>> components;
 		std::vector<std::shared_ptr<GameObject>> children;

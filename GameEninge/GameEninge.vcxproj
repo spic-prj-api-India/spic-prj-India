@@ -222,6 +222,7 @@
     <ClCompile Include="CastException.cpp" />
     <ClCompile Include="CircleCollider.cpp" />
     <ClCompile Include="Color.cpp" />
+    <ClCompile Include="EntityManager.cpp" />
     <ClCompile Include="Sample.cpp" />
     <ClCompile Include="GameEngine.cpp" />
     <ClCompile Include="ICollisionListener.cpp" />
@@ -234,7 +235,7 @@
     <ClCompile Include="ScriptSystem.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Time.cpp" />
-	<ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="GameObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
