@@ -55,9 +55,9 @@ namespace spic {
 	}
 
 
-	void GameObject::DontDestroyOnLoad()
+	bool GameObject::DontDestroyOnLoad()
 	{
-		destroyOnLoad = false;
+		return false;
 	}
 
 	void GameObject::DontDestroyOnLoad(bool destroy)
