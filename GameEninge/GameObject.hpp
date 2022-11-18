@@ -19,9 +19,39 @@ namespace spic {
 	public:
 		GameObject();
 
+		/**
+		 * @brief Returns tag of GameObject.
+		 * @return string.
+		 * @spicapi
+		 */
 		std::string Tag() const;
+
+		/**
+		 * @brief Returns transform of GameObject.
+		 * @return nullptr or transform.
+		 * @spicapi
+		 */
 		std::shared_ptr<Transform>& Transform();
+
+		/**
+		 * @brief Returns whether this game object is itself active.
+		 * @return true if active, false if not.
+		 * @spicapi
+		 */
+		bool Active() const;
+
+		/**
+		 * @brief Sets tag of GameObject.
+		 * @param tag Desired value.
+		 * @spicapi
+		 */
 		void Tag(std::string& tag);
+
+		/**
+		 * @brief Sets tranform of GameObject.
+		 * @param transform Desired value.
+		 * @spicapi
+		 */
 		void Transform(std::shared_ptr<spic::Transform> transform);
 
 		/*
@@ -33,6 +63,23 @@ namespace spic {
 		@param destroyOnLoad: Wether you want to set this GameObject to be destroyed or not upon loading a new scene.
 		*/
 		void DontDestroyOnLoad(bool destroyOnLoad);
+
+		/**
+		 * @brief Activates/Deactivates the GameObject, depending on the given true or false value.
+		 *			If flag is true, audio clips are triggered.
+		 * @param active Desired value.
+		 * @spicapi
+		 */
+		void Active(bool flag);
+
+		/**
+		 * @brief Returns whether this game component is active, taking its parents
+		 *        into consideration as well.
+		 * @return true if game object and all of its parents are active,
+		 *        false otherwise.
+		 * @spicapi
+		 */
+		bool IsActiveInWorld() const;
 
 		/**
 		 * @brief Finds a GameObject by name and returns it.
@@ -64,8 +111,8 @@ namespace spic {
 		 * @spicapi
 		 */
 		template<class T>
-		static std::shared_ptr<GameObject> FindObjectOfType(bool includeInactive = false) {
-			// ... implementation here
+		static std::shared_ptr<T> FindObjectOfType(bool includeInactive = false) {
+			//TODO Met entity manager game object ophalen
 		}
 
 		/**
@@ -73,8 +120,8 @@ namespace spic {
 		 * @spicapi
 		 */
 		template<class T>
-		static std::vector<std::shared_ptr<GameObject>> FindObjectsOfType(bool includeInactive = false) {
-			// ...implementation here
+		static std::vector<std::shared_ptr<T>> FindObjectsOfType(bool includeInactive = false) {
+			//TODO Met entity manager game objects ophalen
 		}
 
 		/**
@@ -97,9 +144,7 @@ namespace spic {
 
 		/**
 		 * @brief Constructor.
-		 * @details The new GameObject will also be added to a statically
-		 *          available collection, the administration.  This makes the
-		 *          Find()-functions possible.
+		 * @details Object will be created with name
 		 * @param name The name for the game object.
 		 * @spicapi
 		 */
@@ -183,8 +228,13 @@ namespace spic {
 		 * @spicapi
 		 */
 		template<class T>
-		std::shared_ptr<Component> GetComponentInChildren() const {
-			// ... implementation here
+		std::shared_ptr<T> GetComponentInChildren() const {
+			for (const auto& child : GetChildren()) {
+				std::shared_ptr<T> component = child->GetComponent<T>();
+				if (component != nullptr)
+					return component;
+			}
+			return nullptr;
 		}
 
 		/**
@@ -196,7 +246,7 @@ namespace spic {
 		 */
 		template<class T>
 		std::shared_ptr<Component> GetComponentInParent() const {
-			// ... implementation here
+			return parent->GetComponent<T>();
 		}
 
 		/**
@@ -225,8 +275,13 @@ namespace spic {
 		 * @spicapi
 		 */
 		template<class T>
-		std::vector<std::shared_ptr<Component>> GetComponentsInChildren() const {
-			// ... implementation here
+		std::vector<std::shared_ptr<T>> GetComponentsInChildren() const {
+			for (const auto& child : GetChildren()) {
+				std::shared_ptr<T> component = child->GetComponents<T>();
+				if (component != nullptr)
+					return component;
+			}
+			return nullptr;
 		}
 
 		/**
@@ -237,32 +292,11 @@ namespace spic {
 		 * @spicapi
 		 */
 		template<class T>
-		std::vector<std::shared_ptr<Component>> GetComponentsInParent() const {
-			// ... implementation here
+		std::vector<std::shared_ptr<T>> GetComponentsInParent() const {
+			return parent->GetComponents<T>();
 		}
 
-		/**
-		 * @brief Activates/Deactivates the GameObject, depending on the given true or false value.
-		 * @param active Desired value.
-		 * @spicapi
-		 */
-		void Active(bool flag);
-
-		/**
-		 * @brief Returns whether this game object is itself active.
-		 * @return true if active, false if not.
-		 * @spicapi
-		 */
-		bool Active() const;
-
-		/**
-		 * @brief Returns whether this game component is active, taking its parents
-		 *        into consideration as well.
-		 * @return true if game object and all of its parents are active,
-		 *        false otherwise.
-		 * @spicapi
-		 */
-		bool IsActiveInWorld() const;
+		void AddChild(const std::shared_ptr<spic::GameObject>& gameObject);
 
 		/// @brief Gets all the children of this object
 		/// @param includeInactive If you want to include inactive children  
@@ -273,7 +307,8 @@ namespace spic {
 		/// @param includeInactive If you want to include inactive children  
 		/// @return A vector of gameobjects
 		std::shared_ptr<GameObject> GetParent() const;
-
+	private:
+		void PlayAudioClipsOnAwake();
 	private:
 		std::string name;
 		std::string tag;

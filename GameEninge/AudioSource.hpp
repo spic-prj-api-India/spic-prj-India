@@ -29,14 +29,14 @@ namespace spic {
             * @param volume The value to change the current volumen.
             * @spicapi
             */
-            void ChangeVolume(float volume);
+            void Volume(float volume);
 
             /**
             * @brief overloaded method to change te intial volumen and if playing, the current volumen.
             * @param volume The value to change the current volumen.
             * @spicapi
             */
-            void ChangeVolume(float left, float right);
+            void Volume(float left, float right);
 
             /**
             * @brief the audiosource constructor 
@@ -48,11 +48,13 @@ namespace spic {
             */
             AudioSource(const std::string& audioClip, const bool playOnAwake, const bool loop, const float volume);
 
-            const std::string GetAudioClip() const;
+            const std::string AudioClip() const;
 
-            const bool GetLoop() const;
+            const bool PlayOnAwake() const;
 
-            const float GetVolume() const;
+            const bool Loop() const;
+
+            const float Volume() const;
 
         private:
             /**

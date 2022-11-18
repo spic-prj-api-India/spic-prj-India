@@ -61,7 +61,7 @@ void EntityManager::DestroyScene(bool forceDelete)
 	{
 		for (auto& entity : entities)
 		{
-			if (entity->destroyOnLoad_)
+			if (!entity->DontDestroyOnLoad())
 			{
 				entities.erase(std::remove(entities.begin(), entities.end(), entity), entities.end());
 			}
