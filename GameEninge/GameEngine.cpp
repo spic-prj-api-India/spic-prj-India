@@ -32,21 +32,4 @@ namespace spic {
 	{
 		internal::EntityManager::GetInstance()->DestroyScene(forceDelete);
 	}
-
-	void GameEngine::SetActiveScene(std::string scene)
-	{
-		auto it = scenes.find(scene);
-		LoadScene(it->second);
-	}
-
-	std::weak_ptr<Scene> GameEngine::GetActiveScene()
-	{
-		return internal::EntityManager::GetInstance()->currentScene;
-	}
-
-	std::shared_ptr<Scene> GameEngine::GetSceneByName(std::string sceneName)
-	{
-		auto it = scenes.find(sceneName);
-		return it->second;
-	}
 }

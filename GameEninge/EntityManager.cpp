@@ -16,10 +16,8 @@ using namespace spic::systems;
 EntityManager* EntityManager::pinstance_{ nullptr };
 std::mutex EntityManager::mutex_;
 
-std::vector<std::shared_ptr<spic::GameObject>> entities;
-std::vector <std::pair<int, ISystem*>> systems;
-std::weak_ptr<Scene> currentScene;
-std::unique_ptr<MapParser> tileParser;
+std::vector<std::shared_ptr<GameObject>> entities;
+std::vector <std::pair<int, std::unique_ptr<ISystem>>> systems;
 
 EntityManager::EntityManager()
 {}
@@ -38,17 +36,15 @@ EntityManager* EntityManager::GetInstance()
 }
 
 void EntityManager::Init()
-{
-	// Add required systems 
-}
+{}
 
 void EntityManager::SetScene(std::shared_ptr<Scene> scene)
 {
+	entities.clear();
 	for (auto& entity : scene->contents)
 	{
 		entities.push_back(entity);
 	}
-	currentScene = scene;
 }
 
 void EntityManager::DestroyScene(bool forceDelete)
@@ -69,10 +65,10 @@ void EntityManager::DestroyScene(bool forceDelete)
 	}
 }
 
-void EntityManager::AddSystem(ISystem* system)
+void EntityManager::AddSystem(std::unique_ptr<systems::ISystem> system)
 {}
 
-void EntityManager::RemoveSystem(ISystem* system)
+void EntityManager::RemoveSystem(std::unique_ptr<systems::ISystem> system)
 {}
 
 void EntityManager::Update(int deltaTime)
