@@ -92,6 +92,18 @@ namespace spic {
 				deletePtr.reset();
 			} while (deletePtr.use_count() != 0);
 		}
+
+		/*
+		@brief Load the specified scene.
+		@param scene: The name of the scene you want to load.
+		*/
+		void LoadScene(std::shared_ptr<Scene> scene);
+		/*
+		@brief Destroy the current scene.
+		@param forceDelete: Whether you also want to delete all GameObjects in the scene which are set to not be destroyed on load.
+		*/
+		void DestroyScene(bool forceDelete);
+
 	private:
 		/**
 		* @brief Gets name of type
@@ -115,17 +127,6 @@ namespace spic {
 			auto castedEngineExtension = std::dynamic_pointer_cast<spic::internal::extensions::IEngineExtension>(extension);
 			return castedEngineExtension != nullptr;
 		}
-
-		/*
-		@brief Load the specified scene.
-		@param scene: The name of the scene you want to load.
-		*/
-		void LoadScene(std::shared_ptr<Scene> scene);
-		/*
-		@brief Destroy the current scene.
-		@param forceDelete: Whether you also want to delete all GameObjects in the scene which are set to not be destroyed on load.
-		*/
-		void DestroyScene(bool forceDelete);
 	};
 }
 
