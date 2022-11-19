@@ -29,7 +29,6 @@ namespace spic {
 
 
             bool IsChanged() const;
-
         private:
             /**
              * @brief Active status.
