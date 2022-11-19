@@ -485,6 +485,11 @@ namespace spic::internal::InputImpl {
 		return SDL_PollEvent(&ev);
 	}
 
+	bool InputImpl::Quit()
+	{
+		return ev.type == SDL_QUIT;
+	}
+
 	bool InputImpl::AnyKey() 
 	{
 		return ev.type == SDL_KEYDOWN || ev.type == SDL_KEYUP;

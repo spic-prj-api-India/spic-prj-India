@@ -22,6 +22,12 @@ namespace spic::internal::InputImpl {
     int Poll();
 
     /**
+    * @brief Has quited? (Read Only)
+    * @spicapi
+    */
+    bool Quit();
+
+    /**
      * @brief Is any key or mouse button currently held down? (Read Only)
      * @spicapi
      */

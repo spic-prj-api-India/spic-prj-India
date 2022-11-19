@@ -2,11 +2,11 @@
 #define GAMEENGINE_H_
 
 #include <map>
-#include <regex>
 #include <memory>
 #include <mutex>
 #include "IEngineExtension.hpp"
 #include "Scene.hpp"
+#include "TypeHelper.hpp"
 
 namespace spic {
 	/**
@@ -22,6 +22,7 @@ namespace spic {
 		~GameEngine();
 
 		std::map<std::string, std::shared_ptr<spic::internal::extensions::IEngineExtension>> _extensions;
+		bool quit;
 	public:
 		GameEngine(GameEngine& other) = delete;
 		GameEngine(GameEngine&& other) = delete;
@@ -38,7 +39,7 @@ namespace spic {
 		template <typename T>
 		void AddExtension(std::shared_ptr<T> extension)
 		{
-			_extensions[GetTypeName<T>()] = extension;
+			_extensions[spic::internal::GetTypeName<T>()] = extension;
 		}
 
 		/**
@@ -48,7 +49,7 @@ namespace spic {
 		template <typename T>
 		std::weak_ptr<T> GetExtension()
 		{
-			return std::dynamic_pointer_cast<T>(_extensions[GetTypeName<T>()]);
+			return std::dynamic_pointer_cast<T>(_extensions[spic::internal::GetTypeName<T>()]);
 		}
 
 		/**
@@ -75,7 +76,7 @@ namespace spic {
 		template <typename T>
 		bool HasExtension()
 		{
-			return _extensions.count(GetTypeName<T>());
+			return _extensions.count(spic::internal::GetTypeName<T>());
 		}
 
 		/**
@@ -85,7 +86,7 @@ namespace spic {
 		template <typename T>
 		void RemoveExtension()
 		{
-			std::string typeName = GetTypeName<T>();
+			std::string typeName = spic::internal::GetTypeName<T>();
 			std::shared_ptr<T> deletePtr = std::dynamic_pointer_cast<T>(_extensions[typeName]);
 			_extensions.erase(typeName);
 			do {
@@ -98,25 +99,25 @@ namespace spic {
 		@param scene: The name of the scene you want to load.
 		*/
 		void LoadScene(std::shared_ptr<Scene> scene);
+
 		/*
 		@brief Destroy the current scene.
 		@param forceDelete: Whether you also want to delete all GameObjects in the scene which are set to not be destroyed on load.
 		*/
 		void DestroyScene(bool forceDelete);
 
-	private:
-		/**
-		* @brief Gets name of type
+		/*
+		* @brief Start game loop
 		* @spicapi
 		*/
-		template <typename T>
-		std::string GetTypeName() const
-		{
-			std::string typeName = typeid(T).name();
-			std::string strippedName = std::regex_replace(typeName, std::regex("class "), "");
-			return strippedName;
-		}
+		void Start();
 
+		/*
+		* @brief Stop game loop
+		* @spicapi
+		*/
+		void Quit();
+	private:
 		/**
 		* @brief Checks if type is of type IEngineExtension
 		* @spicapi

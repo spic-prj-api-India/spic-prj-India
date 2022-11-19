@@ -2,13 +2,13 @@
 #define ENTITYMANAGER_H_
 
 #include <map>
-#include <regex>
 #include <memory>
 #include <mutex>
 #include <vector>
 #include <iostream>
 #include "ISystem.hpp"
 #include "Scene.hpp"
+#include "TypeHelper.hpp"
 
 namespace spic::internal 
 {
@@ -19,8 +19,8 @@ namespace spic::internal
 		static std::mutex mutex_;
 
 		std::vector<std::shared_ptr<spic::GameObject>> entities;
-		std::vector<std::pair<int, std::unique_ptr<systems::ISystem>>> systems;
-
+		std::vector<std::pair<int, std::unique_ptr<spic::systems::ISystem>>> systems;
+		std::shared_ptr<Scene> scene;
 	protected:
 		EntityManager();
 		~EntityManager();
@@ -52,25 +52,30 @@ namespace spic::internal
 		@brief Use this class to add a (custom) system to the systems list.
 		@param The (custom) system to be added.
 		*/
-		void AddSystem(std::unique_ptr<systems::ISystem> system);
+		void AddSystem(std::unique_ptr<spic::systems::ISystem> system, int priority = 0);
 
 		/*
 		@brief Use this class to remove a (custom) system to the systems list. 
 		@param The (custom) system to be removed.
 		*/
-		void RemoveSystem(std::unique_ptr<systems::ISystem> system);
+		template <typename T>
+		void RemoveSystem() {
+			std::string typeName = GetTypeName<T>();
+			systems.erase(std::remove_if(systems.begin(), systems.end(), [typeName](std::pair<int, std::unique_ptr<spic::systems::ISystem>> system) {
+				return typeName == GetTypeName(system.second);
+				}));
+		}
 
 		/*
 		@brief The update function which updates the systems according to the specified DeltaTime.
 		@param deltaTime: The Delta Time.
 		*/
-		void Update(int deltaTime);
+		void Update();
 
 		/*
 		@brief Calls the RendererSystem to render the entities and tilemap. 
 		*/
 		void Render();
-
 	};
 }
 

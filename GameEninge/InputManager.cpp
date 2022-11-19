@@ -1,5 +1,6 @@
 #include "InputManager.hpp"
 #include "Input.hpp"
+#include "GameEngine.hpp"
 
 namespace spic::internal {
 	InputManager* InputManager::pinstance_{ nullptr };
@@ -31,6 +32,8 @@ namespace spic::internal {
 
 	void InputManager::Listen()
 	{
+		if (spic::Input::Quit())
+			spic::GameEngine::GetInstance()->Quit();
 		const spic::Point newMousePosition = spic::Input::MousePosition();
 		if (currentMousePosition.x != newMousePosition.x || currentMousePosition.y != newMousePosition.y) {
 			currentMousePosition = newMousePosition;
