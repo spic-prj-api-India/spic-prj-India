@@ -194,7 +194,7 @@
     <ClInclude Include="InputManager.hpp" />
     <ClInclude Include="InputSystem.hpp" />
     <ClInclude Include="IPhysicsExtension.hpp" />
-    <ClInclude Include="Box2DExtension.hpp" />
+    <ClInclude Include="PhysicsExtension.hpp" />
     <ClInclude Include="PhysicsInfo.hpp" />
     <ClInclude Include="PhysicsSystem.hpp" />
     <ClInclude Include="ISystem.hpp" />
@@ -217,7 +217,8 @@
     <ClCompile Include="Chunk.cpp" />
     <ClCompile Include="BehaviourScript.cpp" />
     <ClCompile Include="Box2DCollisionListener.cpp" />
-    <ClCompile Include="Box2DExtension.cpp" />
+    <ClCompile Include="IPhysicsExtension.cpp" />
+    <ClCompile Include="PhysicsExtension.cpp" />
     <ClCompile Include="BoxCollider.cpp" />
     <ClCompile Include="CastException.cpp" />
     <ClCompile Include="CircleCollider.cpp" />
@@ -234,7 +235,7 @@
     <ClCompile Include="ScriptSystem.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Time.cpp" />
-	<ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="GameObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

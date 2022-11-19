@@ -5,7 +5,7 @@
 #include "GameEngine.hpp"
 #include <PhysicsSystem.hpp>
 #include <BoxCollider.hpp>
-#include <Box2DExtension.hpp>
+#include <PhysicsExtension.hpp>
 #include "CollisionDetectionScript.h"
 #include <ScriptSystem.hpp>
 #include <InputSystem.hpp>
@@ -20,7 +20,7 @@ std::vector< std::shared_ptr<spic::GameObject>> entities;
 void InitGame() {
 	spic::GameEngine* engine = spic::GameEngine::GetInstance();
 	// Physics test
-	std::shared_ptr<spic::extensions::Box2DExtension> physicsExtension = std::make_shared<spic::extensions::Box2DExtension>();
+	std::shared_ptr<spic::extensions::PhysicsExtension> physicsExtension = std::make_shared<spic::extensions::PhysicsExtension>();
 	engine->AddExtension(std::move(physicsExtension));
 
 	std::shared_ptr<spic::GameObject> box = std::make_shared<spic::GameObject>();
@@ -68,19 +68,21 @@ void InitGame() {
 }
 
 void StartGame() {
+	// Scene
+	spic::Scene* scene = new spic::Scene();
 	// Systems
 	spic::internal::systems::InputSystem inputSystem = spic::internal::systems::InputSystem();
 	spic::internal::systems::PhysicsSystem physicsSystem = spic::internal::systems::PhysicsSystem();
-  spic::internal::systems::ScriptSystem scriptSystem = spic::internal::systems::ScriptSystem();
+	spic::internal::systems::ScriptSystem scriptSystem = spic::internal::systems::ScriptSystem();
 	scriptSystem.Start(entities);
 
 	// Window
 	SDL_Window* window = SDL_CreateWindow("window", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 500, 500, SDL_WINDOW_RESIZABLE);
 
 	while (true) {
-		//physicsSystem.Update(entities);
-		inputSystem.Update(entities);
-    scriptSystem.Update(entities);
+		physicsSystem.Update(entities, *scene);
+		inputSystem.Update(entities, *scene);
+		scriptSystem.Update(entities, *scene);
 		//std::cout << "x: " << box->Transform()->position.x << ", y: " << box->Transform()->position.y << std::endl;
 	}
 
