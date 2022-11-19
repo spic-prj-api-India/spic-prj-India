@@ -68,6 +68,8 @@ void InitGame() {
 }
 
 void StartGame() {
+	// Scene
+	spic::Scene* scene = new spic::Scene();
 	// Systems
 	spic::internal::systems::InputSystem inputSystem = spic::internal::systems::InputSystem();
 	spic::internal::systems::PhysicsSystem physicsSystem = spic::internal::systems::PhysicsSystem();
@@ -79,8 +81,8 @@ void StartGame() {
 
 	while (true) {
 		//physicsSystem.Update(entities);
-		inputSystem.Update(entities);
-    scriptSystem.Update(entities);
+		inputSystem.Update(entities, *scene);
+		scriptSystem.Update(entities, *scene);
 		//std::cout << "x: " << box->Transform()->position.x << ", y: " << box->Transform()->position.y << std::endl;
 	}
 

@@ -23,7 +23,7 @@ class TestKeyListener : public spic::IKeyListener {
 
 TEST(InputManagerTest, SubscribeSuccess) {
 	//1. Arrange
-	InputManager* inputManager = InputManager::GetInstance();
+	spic::internal::InputManager* inputManager = spic::internal::InputManager::GetInstance();
 	inputManager->Reset();
 	std::shared_ptr<TestMouseListener> mouseListener = std::make_shared<TestMouseListener>();
 	std::shared_ptr<TestKeyListener> keyListener = std::make_shared<TestKeyListener>();
@@ -36,7 +36,7 @@ TEST(InputManagerTest, SubscribeSuccess) {
 
 TEST(InputManagerTest, UnSubscribeKeySuccess) {
 	//1. Arrange
-	InputManager* inputManager = InputManager::GetInstance();
+	spic::internal::InputManager* inputManager = spic::internal::InputManager::GetInstance();
 	inputManager->Reset();
 	std::shared_ptr<TestKeyListener> keyListener = std::make_shared<TestKeyListener>();
 	inputManager->Subscribe(spic::Input::KeyCode::A, keyListener);
@@ -47,7 +47,7 @@ TEST(InputManagerTest, UnSubscribeKeySuccess) {
 }
 TEST(InputManagerTest, UnSubscribeKeyFailed) {
 	//1. Arrange
-	InputManager* inputManager = InputManager::GetInstance();
+	spic::internal::InputManager* inputManager = spic::internal::InputManager::GetInstance();
 	inputManager->Reset();
 	std::shared_ptr<TestKeyListener> keyListener = std::make_shared<TestKeyListener>();
 
@@ -69,7 +69,7 @@ TEST(InputManagerTest, UnSubscribeKeyFailed) {
 
 TEST(InputManagerTest, UnSubscribeMouseSuccess) {
 	//1. Arrange
-	InputManager* inputManager = InputManager::GetInstance();
+	spic::internal::InputManager* inputManager = spic::internal::InputManager::GetInstance();
 	inputManager->Reset();
 	std::shared_ptr<TestMouseListener> mouseListener = std::make_shared<TestMouseListener>();
 	inputManager->Subscribe(spic::Input::MouseButton::LEFT, mouseListener);
@@ -80,7 +80,7 @@ TEST(InputManagerTest, UnSubscribeMouseSuccess) {
 }
 TEST(InputManagerTest, UnSubscribeMouseFailed) {
 	//1. Arrange
-	InputManager* inputManager = InputManager::GetInstance();
+	spic::internal::InputManager* inputManager = spic::internal::InputManager::GetInstance();
 	inputManager->Reset();
 	std::shared_ptr<TestMouseListener> mouseListener = std::make_shared<TestMouseListener>();
 

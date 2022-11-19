@@ -52,7 +52,7 @@ void AudioManager::ResetChunks()
 
 void AudioManager::TrimChunk(const std::string& path)
 {
-    auto temp = chunks[path];
+    const auto& temp = chunks[path];
     if (temp.use_count() == 1)
     {
         chunks.erase(path);
@@ -65,12 +65,12 @@ void AudioManager::PlaySample(AudioSource* source, const bool looping)
     
     if (it == samples.end())
     {
-        std::string audioClip = source->GetAudioClip();
+        std::string audioClip = source->AudioClip();
         AddChunk(audioClip);
-        auto temp = chunks[audioClip];
-        samples.emplace(source, std::make_unique<Sample>(temp, source->GetLoop()));
+        const auto& temp = chunks[audioClip];
+        samples.emplace(source, std::make_unique<Sample>(temp, source->Loop()));
     }
-    samples[source]->Play(looping, source->GetVolume());
+    samples[source]->Play(looping, source->Volume());
 }
 
 void AudioManager::StopSample(AudioSource* source) const
@@ -99,18 +99,18 @@ void AudioManager::AddSample(AudioSource* source)
     }
     else
     {
-        AddChunk(source->GetAudioClip());
-        samples.emplace(source, std::make_unique<Sample>(chunks[source->GetAudioClip()], source->GetLoop()));
+        AddChunk(source->AudioClip());
+        samples.emplace(source, std::make_unique<Sample>(chunks[source->AudioClip()], source->Loop()));
     }
 }
 
 void AudioManager::RemoveSample(AudioSource* source)
 {
     samples.erase(source);
-    TrimChunk(source->GetAudioClip());
+    TrimChunk(source->AudioClip());
 }
 
-void AudioManager::ChangeVolumn(AudioSource* source, float left, float right) const
+void AudioManager::ChangeVolume(AudioSource* source, float left, float right) const
 {
     auto it = samples.find(source);
     if (it != samples.end())
@@ -119,7 +119,7 @@ void AudioManager::ChangeVolumn(AudioSource* source, float left, float right) co
     }
 }
 
-void AudioManager::ChangeVolumn(AudioSource* source, float volume) const
+void AudioManager::ChangeVolume(AudioSource* source, float volume) const
 {
     auto it = samples.find(source);
     if (it != samples.end())
