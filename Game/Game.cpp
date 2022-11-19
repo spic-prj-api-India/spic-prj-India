@@ -70,6 +70,7 @@ void InitGame() {
 void StartGame() {
 	// Scene
 	spic::Scene* scene = new spic::Scene();
+
 	// Systems
 	spic::internal::systems::InputSystem inputSystem = spic::internal::systems::InputSystem();
 	spic::internal::systems::PhysicsSystem physicsSystem = spic::internal::systems::PhysicsSystem();

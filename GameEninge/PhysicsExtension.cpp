@@ -229,14 +229,17 @@ namespace spic::extensions {
 	{}
 
 	PhysicsExtension::~PhysicsExtension() = default;
+
 	PhysicsExtension::PhysicsExtension(PhysicsExtension&&) noexcept = default;
+
 	PhysicsExtension& PhysicsExtension::operator=(PhysicsExtension&&) noexcept = default;
 
 	PhysicsExtension::PhysicsExtension(const PhysicsExtension& rhs)
 		: physicsImpl(new PhysicsExtensionImpl(*rhs.physicsImpl))
 	{}
 
-	PhysicsExtension& PhysicsExtension::operator=(const PhysicsExtension& rhs) {
+	PhysicsExtension& PhysicsExtension::operator=(const PhysicsExtension& rhs) 
+	{
 		if (this != &rhs)
 			physicsImpl.reset(new PhysicsExtensionImpl(*rhs.physicsImpl));
 		return *this;
