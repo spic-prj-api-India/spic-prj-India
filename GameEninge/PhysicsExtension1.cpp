@@ -6,7 +6,7 @@
 #pragma warning(push, 0)
 #include "box2d/box2d.h"
 #pragma warning(pop)
-#include "PhysicsExtension.hpp"
+#include "PhysicsExtension1.hpp"
 #include "CircleCollider.hpp"
 #include "BoxCollider.hpp"
 #include "ICollisionListener.hpp"
@@ -18,9 +18,9 @@ namespace spic::extensions {
 	std::map<std::string, b2Body*> bodies;
 	std::map<spic::BodyType, b2BodyType> bodyTypeConvertions;
 
-	class PhysicsExtensionImpl {
+	class PhysicsExtensionImpl1 {
 	public:
-		PhysicsExtensionImpl()
+		PhysicsExtensionImpl1()
 		{
 			world = nullptr;
 			bodyTypeConvertions = {
@@ -31,7 +31,7 @@ namespace spic::extensions {
 			Reset();
 		}
 
-		~PhysicsExtensionImpl() = default;
+		~PhysicsExtensionImpl1() = default;
 
 		/**
 		* @brief Resets all physic bodies in world
@@ -225,42 +225,42 @@ namespace spic::extensions {
 		}
 	};
 
-	PhysicsExtension::PhysicsExtension() : physicsImpl(new PhysicsExtensionImpl())
+	PhysicsExtension1::PhysicsExtension1() : physicsImpl(new PhysicsExtensionImpl1())
 	{}
 
-	PhysicsExtension::~PhysicsExtension() = default;
+	PhysicsExtension1::~PhysicsExtension1() = default;
 
-	PhysicsExtension::PhysicsExtension(PhysicsExtension&&) noexcept = default;
+	PhysicsExtension1::PhysicsExtension1(PhysicsExtension1&&) noexcept = default;
 
-	PhysicsExtension& PhysicsExtension::operator=(PhysicsExtension&&) noexcept = default;
+	PhysicsExtension1& PhysicsExtension1::operator=(PhysicsExtension1&&) noexcept = default;
 
-	PhysicsExtension::PhysicsExtension(const PhysicsExtension& rhs)
-		: physicsImpl(new PhysicsExtensionImpl(*rhs.physicsImpl))
+	PhysicsExtension1::PhysicsExtension1(const PhysicsExtension1& rhs)
+		: physicsImpl(new PhysicsExtensionImpl1(*rhs.physicsImpl))
 	{}
 
-	PhysicsExtension& PhysicsExtension::operator=(const PhysicsExtension& rhs) 
+	PhysicsExtension1& PhysicsExtension1::operator=(const PhysicsExtension1& rhs) 
 	{
 		if (this != &rhs)
-			physicsImpl.reset(new PhysicsExtensionImpl(*rhs.physicsImpl));
+			physicsImpl.reset(new PhysicsExtensionImpl1(*rhs.physicsImpl));
 		return *this;
 	}
 
-	void spic::extensions::PhysicsExtension::Reset()
+	void spic::extensions::PhysicsExtension1::Reset()
 	{
 		physicsImpl->Reset();
 	}
 
-	void spic::extensions::PhysicsExtension::Update(std::vector<std::shared_ptr<spic::GameObject>> entities)
+	void spic::extensions::PhysicsExtension1::Update(std::vector<std::shared_ptr<spic::GameObject>> entities)
 	{
 		physicsImpl->Update(entities);
 	}
 
-	void spic::extensions::PhysicsExtension::RegisterListener(ICollisionListener* listener) const
+	void spic::extensions::PhysicsExtension1::RegisterListener(ICollisionListener* listener) const
 	{
 		physicsImpl->RegisterListener(listener);
 	}
 
-	void spic::extensions::PhysicsExtension::AddForce(std::shared_ptr<spic::GameObject> entity, const spic::Point& forceDirection)
+	void spic::extensions::PhysicsExtension1::AddForce(std::shared_ptr<spic::GameObject> entity, const spic::Point& forceDirection)
 	{
 		physicsImpl->AddForce(entity, forceDirection);
 	}

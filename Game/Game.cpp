@@ -5,7 +5,7 @@
 #include "GameEngine.hpp"
 #include <PhysicsSystem.hpp>
 #include <BoxCollider.hpp>
-#include <PhysicsExtension.hpp>
+#include <PhysicsExtension1.hpp>
 #include "CollisionDetectionScript.h"
 #include <ScriptSystem.hpp>
 #include <InputSystem.hpp>
@@ -20,7 +20,7 @@ std::vector< std::shared_ptr<spic::GameObject>> entities;
 void InitGame() {
 	spic::GameEngine* engine = spic::GameEngine::GetInstance();
 	// Physics test
-	std::shared_ptr<spic::extensions::PhysicsExtension> physicsExtension = std::make_shared<spic::extensions::PhysicsExtension>();
+	std::shared_ptr<spic::extensions::PhysicsExtension1> physicsExtension = std::make_shared<spic::extensions::PhysicsExtension1>();
 	engine->AddExtension(std::move(physicsExtension));
 
 	std::shared_ptr<spic::GameObject> box = std::make_shared<spic::GameObject>();

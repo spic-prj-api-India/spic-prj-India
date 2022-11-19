@@ -194,7 +194,7 @@
     <ClInclude Include="InputManager.hpp" />
     <ClInclude Include="InputSystem.hpp" />
     <ClInclude Include="IPhysicsExtension.hpp" />
-    <ClInclude Include="PhysicsExtension.hpp" />
+    <ClInclude Include="PhysicsExtension1.hpp" />
     <ClInclude Include="PhysicsInfo.hpp" />
     <ClInclude Include="PhysicsSystem.hpp" />
     <ClInclude Include="ISystem.hpp" />
@@ -218,7 +218,7 @@
     <ClCompile Include="BehaviourScript.cpp" />
     <ClCompile Include="Box2DCollisionListener.cpp" />
     <ClCompile Include="IPhysicsExtension.cpp" />
-    <ClCompile Include="PhysicsExtension.cpp" />
+    <ClCompile Include="PhysicsExtension1.cpp" />
     <ClCompile Include="BoxCollider.cpp" />
     <ClCompile Include="CastException.cpp" />
     <ClCompile Include="CircleCollider.cpp" />

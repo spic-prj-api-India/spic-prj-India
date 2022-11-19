@@ -219,7 +219,7 @@
     <ClInclude Include="Box2DCollisionListener.hpp">
       <Filter>Header Files\extensions\physics</Filter>
     </ClInclude>
-    <ClInclude Include="PhysicsExtension.hpp">
+    <ClInclude Include="PhysicsExtension1.hpp">
       <Filter>Header Files\extensions\physics</Filter>
     </ClInclude>
     <ClInclude Include="Sample.hpp">
@@ -326,7 +326,7 @@
     <ClCompile Include="Box2DCollisionListener.cpp">
       <Filter>Source Files\extensions\physics</Filter>
     </ClCompile>
-    <ClCompile Include="PhysicsExtension.cpp">
+    <ClCompile Include="PhysicsExtension1.cpp">
       <Filter>Source Files\extensions\physics</Filter>
     </ClCompile>
     <ClCompile Include="ICollisionListener.cpp">

@@ -8,19 +8,19 @@
 #include "Point.hpp"
 
 namespace spic::extensions {
-	class PhysicsExtensionImpl;
+	class PhysicsExtensionImpl1;
 
 	/**
 	 * @brief A extension that handles standard physics 
 	 */
-	class PhysicsExtension : public IPhysicsExtension {
+	class PhysicsExtension1 : public IPhysicsExtension {
 	public:
-		explicit PhysicsExtension();
-		~PhysicsExtension();
-		PhysicsExtension(PhysicsExtension&& rhs) noexcept;
-		PhysicsExtension& operator=(PhysicsExtension&& rhs) noexcept;
-		PhysicsExtension(const PhysicsExtension& rhs);
-		PhysicsExtension& operator=(const PhysicsExtension& rhs);
+		explicit PhysicsExtension1();
+		~PhysicsExtension1();
+		PhysicsExtension1(PhysicsExtension1&& rhs) noexcept;
+		PhysicsExtension1& operator=(PhysicsExtension1&& rhs) noexcept;
+		PhysicsExtension1(const PhysicsExtension1& rhs);
+		PhysicsExtension1& operator=(const PhysicsExtension1& rhs);
 
 		/**
 		* @brief Resets all physic bodies
@@ -46,7 +46,7 @@ namespace spic::extensions {
 		*/
 		void AddForce(std::shared_ptr<spic::GameObject> entity, const spic::Point& forceDirection) override;
 	private:
-        std::unique_ptr<PhysicsExtensionImpl> physicsImpl;
+        std::unique_ptr<PhysicsExtensionImpl1> physicsImpl;
 	};
 }
 

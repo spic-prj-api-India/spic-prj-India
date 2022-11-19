@@ -18,7 +18,7 @@ private:
 	static std::mutex mutex_;
 
 	std::vector<std::shared_ptr<spic::GameObject>> entities;
-	std::vector <std::pair<int, ISystem>> systems;
+	std::vector <std::pair<int, spic::systems::ISystem>> systems;
 	std::weak_ptr<spic::Scene> currentScene;
 	std::unique_ptr<spic::MapParser> tileParser;
 protected:
