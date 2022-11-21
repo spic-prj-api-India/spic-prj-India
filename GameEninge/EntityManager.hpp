@@ -38,6 +38,18 @@ namespace spic::internal
 		void Init();
 
 		/*
+		@brief Gets entities that are currently loaded.
+		@return The current entities
+		*/
+		std::vector<std::shared_ptr<spic::GameObject>> GetEntities();
+
+		/*
+		@brief Remove entity.
+		@param gameObject The game object that will be removed
+		*/
+		void RemoveEntity(const std::shared_ptr<spic::GameObject>& entity);
+
+		/*
 		@brief Sets the current scene with entities.
 		@param The scene to be set.
 		*/
