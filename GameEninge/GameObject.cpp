@@ -28,11 +28,29 @@ namespace spic {
 		}
 	};
 
-	GameObject::GameObject() : active{true}, layer{0}
+	GameObject::GameObject() : active{true}, layer{0}, gameObjectImpl(new GameObjectImpl())
 	{}
 
-	GameObject::GameObject(const std::string& name) : name{name}
+	GameObject::GameObject(const std::string& name) : name{name}, active{ true }, layer{ 0 }, 
+		gameObjectImpl(new GameObjectImpl())
 	{}
+
+	GameObject::~GameObject() = default;
+
+	GameObject::GameObject(GameObject&&) noexcept = default;
+
+	GameObject& GameObject::operator=(GameObject&&) noexcept = default;
+
+	GameObject::GameObject(const GameObject& rhs)
+		: gameObjectImpl(new GameObjectImpl(*rhs.gameObjectImpl))
+	{}
+
+	GameObject& GameObject::operator=(const GameObject& rhs)
+	{
+		if (this != &rhs)
+			gameObjectImpl.reset(new GameObjectImpl(*rhs.gameObjectImpl));
+		return *this;
+	}
 
 	std::shared_ptr<GameObject> GameObject::Find(const std::string& name)
 	{

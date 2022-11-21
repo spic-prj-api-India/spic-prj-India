@@ -18,6 +18,11 @@ namespace spic {
 	class GameObject {
 	public:
 		GameObject();
+		~GameObject();
+		GameObject(GameObject&& rhs) noexcept;
+		GameObject& operator=(GameObject&& rhs) noexcept;
+		GameObject(const GameObject& rhs);
+		GameObject& operator=(const GameObject& rhs);
 
 		/**
 		 * @brief Returns name of GameObject.
@@ -299,7 +304,7 @@ namespace spic {
 		std::vector<std::shared_ptr<GameObject>> children;
 		std::shared_ptr<GameObject> parent;
 		struct GameObjectImpl;
-		GameObjectImpl* gameObjectImpl;
+		std::unique_ptr<GameObjectImpl> gameObjectImpl;
 	};
 
 	template<class T>
