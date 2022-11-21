@@ -19,6 +19,7 @@ namespace spic::internal
 		static std::mutex mutex_;
 
 		std::vector<std::shared_ptr<spic::GameObject>> entities;
+		//std::map<int, std::vector<std::unique_ptr<spic::systems::ISystem>>> systems;
 		std::vector<std::pair<int, std::unique_ptr<spic::systems::ISystem>>> systems;
 		std::shared_ptr<Scene> scene;
 	protected:
@@ -49,13 +50,13 @@ namespace spic::internal
 		void DestroyScene(bool forceDelete);
 
 		/*
-		@brief Use this class to add a (custom) system to the systems list.
+		@brief Use this function to add a (custom) system to the systems list.
 		@param The (custom) system to be added.
 		*/
-		void AddSystem(std::unique_ptr<spic::systems::ISystem> system, int priority = 0);
+		void AddSystem(std::unique_ptr<spic::systems::ISystem> system);
 
 		/*
-		@brief Use this class to remove a (custom) system to the systems list. 
+		@brief Use this function to remove a (custom) system to the systems list. 
 		@param The (custom) system to be removed.
 		*/
 		template <typename T>
@@ -76,6 +77,12 @@ namespace spic::internal
 		@brief Calls the RendererSystem to render the entities and tilemap. 
 		*/
 		void Render();
+	private:
+		/*
+		@brief Use this function to add a internal system to the systems list.
+		@param The (custom) system to be added.
+		*/
+		void AddInternalSystem(std::unique_ptr<spic::systems::ISystem> system, int priority = 0);
 	};
 }
 

@@ -46,10 +46,10 @@ void EntityManager::Init()
 	std::unique_ptr<systems::PhysicsSystem> physicsSystem = std::make_unique<systems::PhysicsSystem>();
 	std::unique_ptr<systems::ScriptSystem> scriptSystem = std::make_unique<systems::ScriptSystem>();
 	std::unique_ptr<systems::RenderingSystem> renderingSystem = std::make_unique<systems::RenderingSystem>();
-	AddSystem(std::move(inputSystem));
-	AddSystem(std::move(physicsSystem));
-	AddSystem(std::move(scriptSystem));
-	AddSystem(std::move(renderingSystem));
+	AddInternalSystem(std::move(inputSystem));
+	AddInternalSystem(std::move(physicsSystem));
+	AddInternalSystem(std::move(scriptSystem));
+	AddInternalSystem(std::move(renderingSystem));
 }
 
 void EntityManager::SetScene(std::shared_ptr<Scene> newScene)
@@ -83,7 +83,13 @@ void EntityManager::DestroyScene(bool forceDelete)
 	}
 }
 
-void EntityManager::AddSystem(std::unique_ptr<spic::systems::ISystem> system, int priority)
+void EntityManager::AddSystem(std::unique_ptr<spic::systems::ISystem> system)
+{
+	auto prioritySystem = std::make_pair(1, std::move(system));
+	systems.emplace_back(std::move(prioritySystem));
+}
+
+void EntityManager::AddInternalSystem(std::unique_ptr<spic::systems::ISystem> system, int priority)
 {
 	auto prioritySystem = std::make_pair(priority, std::move(system));
 	systems.emplace_back(std::move(prioritySystem));
