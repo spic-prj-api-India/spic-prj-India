@@ -15,14 +15,12 @@
 
 using namespace spic;
 using namespace spic::internal;
+using namespace spic::systems;
 
 EntityManager* EntityManager::pinstance_{ nullptr };
 std::mutex EntityManager::mutex_;
 
-std::vector<std::shared_ptr<GameObject>> entities;
-std::vector <std::pair<int, std::unique_ptr<spic::systems::ISystem>>> systems;
-
-EntityManager::EntityManager()
+EntityManager::EntityManager() : CustomSystemDefaultPriority { 1 }
 {
 	Init();
 }
@@ -61,8 +59,13 @@ void EntityManager::SetScene(std::shared_ptr<Scene> newScene)
 	{
 		entities.push_back(entity);
 	}
-	for (const auto& system : systems)
-		system.second->Start(entities);
+	for (const auto& systemsMap : systems)
+	{
+		for (const auto& system : systemsMap.second)
+		{
+			system->Start(entities);
+		}
+	}
 }
 
 void EntityManager::DestroyScene(bool forceDelete)
@@ -85,21 +88,32 @@ void EntityManager::DestroyScene(bool forceDelete)
 }
 
 void EntityManager::AddSystem(std::unique_ptr<spic::systems::ISystem> system)
-{
-	auto prioritySystem = std::make_pair(1, std::move(system));
-	systems.emplace_back(std::move(prioritySystem));
+{	
+	if (!systems.count(CustomSystemDefaultPriority))
+	{
+		systems[CustomSystemDefaultPriority];
+	}
+	systems[CustomSystemDefaultPriority].emplace_back(system);
 }
 
 void EntityManager::AddInternalSystem(std::unique_ptr<spic::systems::ISystem> system, int priority)
 {
-	auto prioritySystem = std::make_pair(priority, std::move(system));
-	systems.emplace_back(std::move(prioritySystem));
+	if (!systems.count(priority))
+	{
+		systems[priority];
+	}
+	systems[priority].emplace_back(system);
 }
 
 void EntityManager::Update()
 {
-	for (const auto& system : systems)
-		system.second->Update(entities, *scene);
+	for (const auto& systemsMap : systems)
+	{
+		for (const auto& system : systemsMap.second)
+		{
+			system->Update(entities, *scene);
+		}
+	}
 }
 
 void EntityManager::Render()

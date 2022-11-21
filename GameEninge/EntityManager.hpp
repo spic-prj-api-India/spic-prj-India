@@ -18,13 +18,16 @@ namespace spic::internal
 		static EntityManager* pinstance_;
 		static std::mutex mutex_;
 
+		const int CustomSystemDefaultPriority;
+
 		std::vector<std::shared_ptr<spic::GameObject>> entities;
-		//std::map<int, std::vector<std::unique_ptr<spic::systems::ISystem>>> systems;
-		std::vector<std::pair<int, std::unique_ptr<spic::systems::ISystem>>> systems;
+		std::map<int, std::vector<std::unique_ptr<spic::systems::ISystem>>> systems;
 		std::shared_ptr<Scene> scene;
+
 	protected:
 		EntityManager();
 		~EntityManager();
+
 	public:
 		EntityManager(EntityManager& other) = delete;
 		EntityManager(EntityManager&& other) = delete;
