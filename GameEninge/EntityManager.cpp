@@ -54,6 +54,7 @@ void EntityManager::Init()
 
 void EntityManager::SetScene(std::shared_ptr<Scene> newScene)
 {
+	DestroyScene();
 	scene = newScene;
 	entities.clear();
 	for (auto& entity : newScene->Contents())

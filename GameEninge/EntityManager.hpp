@@ -47,7 +47,7 @@ namespace spic::internal
 		@brief Destroys the current scene.
 		@param forceDelete: Set to true to delete GameObjects with boolean "destroyOnLoad = false" as well.
 		*/
-		void DestroyScene(bool forceDelete);
+		void DestroyScene(bool forceDelete = false);
 
 		/*
 		@brief Use this function to add a (custom) system to the systems list.
