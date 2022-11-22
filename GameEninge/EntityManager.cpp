@@ -93,7 +93,7 @@ void EntityManager::AddSystem(std::unique_ptr<spic::systems::ISystem> system)
 	{
 		systems[CustomSystemDefaultPriority];
 	}
-	systems[CustomSystemDefaultPriority].emplace_back(system);
+	systems[CustomSystemDefaultPriority].emplace_back(std::move(system));
 }
 
 void EntityManager::AddInternalSystem(std::unique_ptr<spic::systems::ISystem> system, int priority)
@@ -102,7 +102,7 @@ void EntityManager::AddInternalSystem(std::unique_ptr<spic::systems::ISystem> sy
 	{
 		systems[priority];
 	}
-	systems[priority].emplace_back(system);
+	systems[priority].emplace_back(std::move(system));
 }
 
 void EntityManager::Update()
