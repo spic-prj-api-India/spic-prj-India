@@ -11,18 +11,21 @@
 #include "Sprite.hpp"
 
 namespace spic {
-
 	/**
 	 * @brief Any object which should be represented on screen.
 	 */
 	class GameObject {
 	public:
 		GameObject();
-		~GameObject();
-		GameObject(GameObject&& rhs) noexcept;
-		GameObject& operator=(GameObject&& rhs) noexcept;
-		GameObject(const GameObject& rhs);
-		GameObject& operator=(const GameObject& rhs);
+		/**
+		 * @brief Needs to declare virtual destructor,
+		 *			otherwise can't be casted to derived class
+		 */
+		virtual ~GameObject(){};
+		GameObject(const GameObject& other) = default;
+		GameObject(GameObject&& other) = default;
+		GameObject& operator=(const GameObject& other) = default;
+		GameObject& operator=(GameObject&& other) = default;
 
 		/**
 		 * @brief Returns name of GameObject.
@@ -86,7 +89,7 @@ namespace spic {
 		 * @return nullptr or transform.
 		 * @spicapi
 		 */
-		std::shared_ptr<Transform>& Transform();
+		std::shared_ptr<Transform> Transform();
 
 		/**
 		 * @brief Sets tranform of GameObject.
@@ -293,6 +296,7 @@ namespace spic {
 		std::shared_ptr<GameObject> GetParent() const;
 	private:
 		void PlayAudioClipsOnAwake();
+		static std::vector<std::shared_ptr<GameObject>> GetGameObjects();
 	private:
 		std::string name;
 		std::string tag;
@@ -303,18 +307,28 @@ namespace spic {
 		std::vector<std::shared_ptr<Component>> components;
 		std::vector<std::shared_ptr<GameObject>> children;
 		std::shared_ptr<GameObject> parent;
-		struct GameObjectImpl;
-		std::unique_ptr<GameObjectImpl> gameObjectImpl;
 	};
 
 	template<class T>
-	static std::shared_ptr<T> GameObject::FindObjectOfType(bool includeInactive) {
-		return gameObjectImpl->FindObjectOfType(includeInactive);
+	std::shared_ptr<T> GameObject::FindObjectOfType(bool includeInactive) {
+		for (const auto& gameObject : GetGameObjects()) {
+			std::shared_ptr<T> castedGameObject = std::dynamic_pointer_cast<T>(gameObject);
+			const bool isType = castedGameObject != nullptr;
+			if ((includeInactive || gameObject->active) && isType)
+				return castedGameObject;
+		}
+		return nullptr;
 	}
 
 	template<class T>
-	static std::vector<std::shared_ptr<T>> GameObject::FindObjectsOfType(bool includeInactive) {
-		return gameObjectImpl->FindObjectsOfType(includeInactive);
+	std::vector<std::shared_ptr<T>> GameObject::FindObjectsOfType(bool includeInactive) {
+		std::vector<std::shared_ptr<T>> gameObjects;
+		for (const auto& gameObject : GetGameObjects()) {
+			const bool isType = std::dynamic_pointer_cast<T>(gameObject) != nullptr;
+			if ((includeInactive || gameObject->active) && isType)
+				gameObjects.emplace_back(std::dynamic_pointer_cast<T>(gameObject));
+		}
+		return gameObjects;
 	}
 
 	template<class T>

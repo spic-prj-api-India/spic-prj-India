@@ -5,52 +5,15 @@
 #include "EntityManager.hpp"
 
 namespace spic {
-	struct GameObject::GameObjectImpl {
-		template<class T>
-		static std::vector<std::shared_ptr<T>> FindObjectsOfType(bool includeInactive) {
-			std::vector<std::shared_ptr<GameObject>> gameObjects;
-			for (const auto& gameObject : spic::internal::EntityManager::GetInstance()->GetEntities()) {
-				const bool isType = std::dynamic_pointer_cast<T>(this) != nullptr;
-				if ((includeInactive || gameObject->active) && isType)
-					gameObjects.emplace_back(gameObject);
-			}
-			return gameObjects;
-		}
-
-		template<class T>
-		static std::shared_ptr<T> FindObjectOfType(bool includeInactive) {
-			for (const auto& gameObject : spic::internal::EntityManager::GetInstance()->GetEntities()) {
-				const bool isType = std::dynamic_pointer_cast<T>(this) != nullptr;
-				if ((includeInactive || gameObject->active) && isType)
-					return gameObject;
-			}
-			return nullptr;
-		}
-	};
-
-	GameObject::GameObject() : active{true}, layer{0}, gameObjectImpl(new GameObjectImpl())
-	{}
-
-	GameObject::GameObject(const std::string& name) : name{name}, active{ true }, layer{ 0 }, 
-		gameObjectImpl(new GameObjectImpl())
-	{}
-
-	GameObject::~GameObject() = default;
-
-	GameObject::GameObject(GameObject&&) noexcept = default;
-
-	GameObject& GameObject::operator=(GameObject&&) noexcept = default;
-
-	GameObject::GameObject(const GameObject& rhs)
-		: gameObjectImpl(new GameObjectImpl(*rhs.gameObjectImpl))
-	{}
-
-	GameObject& GameObject::operator=(const GameObject& rhs)
-	{
-		if (this != &rhs)
-			gameObjectImpl.reset(new GameObjectImpl(*rhs.gameObjectImpl));
-		return *this;
+	std::vector<std::shared_ptr<GameObject>> GameObject::GetGameObjects() {
+		return spic::internal::EntityManager::GetInstance()->GetEntities();
 	}
+
+	GameObject::GameObject() : active{ true }, layer{ 0 }
+	{}
+
+	GameObject::GameObject(const std::string& name) : name{name}, active{ true }, layer{ 0 }
+	{}
 
 	std::shared_ptr<GameObject> GameObject::Find(const std::string& name)
 	{
@@ -163,7 +126,7 @@ namespace spic {
 		layer = newLayer;
 	}
 
-	std::shared_ptr<Transform>& GameObject::Transform() 
+	std::shared_ptr<Transform> GameObject::Transform() 
 	{
 		return transform;
 	}
