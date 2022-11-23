@@ -22,8 +22,8 @@ namespace spic::internal
 
 		std::vector<std::shared_ptr<spic::GameObject>> entities;
 		std::map<int, std::vector<std::unique_ptr<spic::systems::ISystem>>> systems;
+		std::map<std::string,std::shared_ptr<Scene>> scenes;
 		std::shared_ptr<Scene> scene;
-
 	protected:
 		EntityManager();
 		~EntityManager();
@@ -39,6 +39,32 @@ namespace spic::internal
 		@brief Initialization of the class.
 		*/
 		void Init();
+
+		/*
+		@brief Register scene.
+		@param The sceneName is the key in the scenes list.
+		@param The scene that will be registered in scenes list.
+		*/
+		void RegisterScene(const std::string& sceneName, std::shared_ptr<Scene> scene);
+
+		/*
+		@brief Gets current scene.
+		@returns The current scene.
+		*/
+		std::shared_ptr<Scene> GetScene();
+
+		/*
+		@brief Gets scene with name.
+		@param The sceneName of the scene.
+		@returns The scene with the given sceneName.
+		*/
+		std::shared_ptr<Scene> GetScene(const std::string& sceneName);
+
+		/*
+		@brief Sets the current scene with entities.
+		@param The sceneName of the scene that needs to be set.
+		*/
+		void SetScene(const std::string& sceneName);
 
 		/*
 		@brief Sets the current scene with entities.
