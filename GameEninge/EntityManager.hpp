@@ -72,8 +72,14 @@ namespace spic::internal
 		std::vector<std::shared_ptr<spic::GameObject>> GetEntities();
 
 		/*
+		@brief Add entity.
+		@param entity The entity that will be added
+		*/
+		void AddEntity(const std::shared_ptr<spic::GameObject>& entity);
+
+		/*
 		@brief Remove entity.
-		@param gameObject The game object that will be removed
+		@param entity The entity that will be removed
 		*/
 		void RemoveEntity(const std::shared_ptr<spic::GameObject>& entity);
 

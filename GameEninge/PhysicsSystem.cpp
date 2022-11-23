@@ -1,5 +1,5 @@
 #include "PhysicsSystem.hpp"
-#include "Box2DExtension.hpp"
+#include "IPhysicsExtension.hpp"
 #include "GameEngine.hpp"
 #include "Collider.hpp"
 #include <functional>
@@ -69,10 +69,18 @@ namespace spic::internal::systems {
 	{
 		std::vector<std::shared_ptr<spic::GameObject>> physicsEntities;
 		for (const auto& entity : entities) {
-			const bool isPhysicsEntity = entity->HasComponent<spic::RigidBody>() || entity->HasComponent<spic::Collider>();
-			if (isPhysicsEntity)
+			if (IsPhysicsEntity(entity))
 				physicsEntities.emplace_back(entity);
+			for (const auto& child : entity->GetChildren()){
+				if (IsPhysicsEntity(child))
+					physicsEntities.emplace_back(child);
+			}
 		}
 		return physicsEntities;
+	}
+
+	bool PhysicsSystem::IsPhysicsEntity(const std::shared_ptr<spic::GameObject>& entity) const
+	{
+		return entity->HasComponent<spic::RigidBody>() || entity->HasComponent<spic::Collider>();
 	}
 }

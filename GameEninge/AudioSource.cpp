@@ -20,12 +20,13 @@ void AudioSource::Stop()
 	AudioManager::GetInstance()->StopSample(this);
 }
 
-void AudioSource::Volume(float volume)
+void AudioSource::ChangeVolume(float _volume)
 {
-	AudioManager::GetInstance()->ChangeVolume(this, volume);
+	volume = _volume;
+	AudioManager::GetInstance()->ChangeVolume(this, _volume);
 }
 
-void AudioSource::Volume(float left, float right)
+void AudioSource::ChangeVolume(float left, float right)
 {
 	AudioManager::GetInstance()->ChangeVolume(this, left, right);
 }
