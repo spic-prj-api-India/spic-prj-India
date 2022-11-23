@@ -139,6 +139,9 @@
     <Filter Include="Header Files\helpers">
       <UniqueIdentifier>{7214b70e-62ae-4f63-89a5-a1f7f8c0d26e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\extensions\physics\base">
+      <UniqueIdentifier>{da3a5446-a445-4173-924f-94f1c238b4d5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Color.hpp">
@@ -228,19 +231,7 @@
     <ClInclude Include="Box2DCollisionListener.hpp">
       <Filter>Header Files\extensions\physics</Filter>
     </ClInclude>
-    <ClInclude Include="Box2DExtension.hpp">
-      <Filter>Header Files\extensions\physics</Filter>
-    </ClInclude>
-    <ClInclude Include="ICollisionListener.hpp">
-      <Filter>Header Files\extensions\physics</Filter>
-    </ClInclude>
-    <ClInclude Include="IEngineExtension.hpp">
-      <Filter>Header Files\extensions\physics</Filter>
-    </ClInclude>
-    <ClInclude Include="IPhysicsExtension.hpp">
-      <Filter>Header Files\extensions\physics</Filter>
-    </ClInclude>
-    <ClInclude Include="PhysicsInfo.hpp">
+    <ClInclude Include="PhysicsExtension1.hpp">
       <Filter>Header Files\extensions\physics</Filter>
     </ClInclude>
     <ClInclude Include="Sample.hpp">
@@ -297,6 +288,18 @@
     <ClInclude Include="TypeHelper.hpp">
       <Filter>Header Files\helpers</Filter>
     </ClInclude>
+    <ClInclude Include="ICollisionListener.hpp">
+      <Filter>Header Files\extensions\physics\base</Filter>
+    </ClInclude>
+    <ClInclude Include="IPhysicsExtension.hpp">
+      <Filter>Header Files\extensions\physics\base</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsInfo.hpp">
+      <Filter>Header Files\extensions\physics\base</Filter>
+    </ClInclude>
+    <ClInclude Include="IEngineExtension.hpp">
+      <Filter>Header Files\extensions</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Time.cpp">
@@ -344,7 +347,7 @@
     <ClCompile Include="Box2DCollisionListener.cpp">
       <Filter>Source Files\extensions\physics</Filter>
     </ClCompile>
-    <ClCompile Include="Box2DExtension.cpp">
+    <ClCompile Include="PhysicsExtension1.cpp">
       <Filter>Source Files\extensions\physics</Filter>
     </ClCompile>
     <ClCompile Include="ICollisionListener.cpp">
@@ -364,6 +367,9 @@
     </ClCompile>
     <ClCompile Include="RenderingSystem.cpp">
       <Filter>Source Files\systems</Filter>
+    </ClCompile>
+    <ClCompile Include="IPhysicsExtension.cpp">
+      <Filter>Source Files\extensions\physics</Filter>
     </ClCompile>
     <ClCompile Include="RendererImp.hpp">
       <Filter>Header Files\systems\rendering</Filter>

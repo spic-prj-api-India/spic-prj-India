@@ -56,6 +56,11 @@ std::vector<std::shared_ptr<spic::GameObject>> EntityManager::GetEntities() {
 	return entities;
 }
 
+void EntityManager::AddEntity(const std::shared_ptr<spic::GameObject>& entity)
+{
+	entities.push_back(entity);
+}
+
 void EntityManager::RemoveEntity(const std::shared_ptr<spic::GameObject>& entity) {
 	entities.erase(
 		std::remove(entities.begin(), entities.end(), entity),
