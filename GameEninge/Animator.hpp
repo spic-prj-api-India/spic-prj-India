@@ -35,12 +35,13 @@ namespace spic {
 
             void AddSprite(const std::shared_ptr<Sprite> sprite);
             const std::vector<std::shared_ptr<Sprite>> Sprites() const;
-
             const int Fps() const;
             const void Fps(const int fps);
             const bool Looping() const;
             const int Index() const;
             const void Index(const int index);
+            const void IncreaseIndex(const int index);
+
         private:
             /**
              * @brief frames per second (playing speed)
@@ -48,6 +49,7 @@ namespace spic {
              */
             int fps;
             bool freeze;
+            bool running;
             int index;
             bool looping;
             std::vector<std::shared_ptr<Sprite>> sprites;

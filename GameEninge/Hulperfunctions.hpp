@@ -22,4 +22,33 @@ namespace spic::HulperFunctions
 		RotatePoint(rotation, angle, pointX);
 		return Point{ pointX.x * scaling, pointX.y * height * scaling };
 	}
+
+	static bool SpriteSorting(const std::shared_ptr<Sprite> a, const std::shared_ptr<Sprite> b) noexcept
+	{
+		if (a->OrderInLayer() < b->OrderInLayer())
+			return true;
+
+		if (a->OrderInLayer() > b->OrderInLayer())
+			return false;
+
+		if (a->OrderInLayer() < b->OrderInLayer())
+			return true;
+
+		if (a->OrderInLayer() > b->OrderInLayer())
+			return true;
+
+		return false;
+	}
+
+	template <class T>
+	static void SpecialWrap(T& n, const T increment, const T min, const T max)
+	{
+		if (n + increment > max)
+			n = min;
+		else if (n + increment < min)
+			n = max;
+		else
+			n += increment;
+	}
+
 }

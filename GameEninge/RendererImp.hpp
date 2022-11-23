@@ -82,7 +82,7 @@ namespace spic::internal::rendering {
 
         SDL_Point GetTextureSize(SDL_Texture* texture);
 
-        void DrawUIText(GameObject* gameObject);
+        void DrawUI(UIObject* gameObject);
         void DrawAnimators(GameObject* gameObject, const bool isUiObject);
         void DrawAnimator(Animator* sprite, const bool isUiObject, const Transform* transform);
         void DrawSprite(Sprite* sprite, const bool isUiObject, const Transform* transform);
@@ -105,7 +105,7 @@ namespace spic::internal::rendering {
 
         * \note                         Create a new line by inserting the \n command in the string. The string needs to end with a \n command for the last line of text to be rendered
         */
-        void RenderMultiLineText(SDL_Renderer* _render, const TTF_Font* pFont, std::string& rText
+        void RenderMultiLineText(const TTF_Font* pFont, std::string& rText
             , const SDL_Color& rTextColor, int XPosition, int YPosition, const int Width
             , const int Height, const int DistanceBetweenLines, const Alignment Align = Alignment::left);
 

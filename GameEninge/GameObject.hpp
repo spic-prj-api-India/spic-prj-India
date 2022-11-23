@@ -224,7 +224,7 @@ namespace spic {
 		 * @spicapi
 		 */
 		template<class T>
-		void AddComponent(std::shared_ptr<Component> component);
+		void AddComponent(std::shared_ptr<T> component);
 
 		/**
 		 * @brief Get the first component of the specified type. Must be
@@ -284,7 +284,8 @@ namespace spic {
 		template<class T>
 		std::vector<std::shared_ptr<T>> GetComponentsInParent() const;
 
-		void AddChild(const std::shared_ptr<spic::GameObject>& gameObject);
+		template<class T>
+		void AddChild(const std::shared_ptr<T> gameObject);
 
 		/// @brief Gets all the children of this object
 		/// @param includeInactive If you want to include inactive children  
@@ -294,7 +295,7 @@ namespace spic {
 		/// @brief Gets all the children of this object
 		/// @param includeInactive If you want to include inactive children  
 		/// @return A vector of gameobjects
-		std::shared_ptr<GameObject> GetParent() const;
+		const GameObject* GetParent() const;
 	private:
 		void PlayAudioClipsOnAwake();
 		static std::vector<std::shared_ptr<GameObject>> GetGameObjects();
@@ -307,7 +308,7 @@ namespace spic {
 		std::shared_ptr<spic::Transform> transform;
 		std::vector<std::shared_ptr<Component>> components;
 		std::vector<std::shared_ptr<GameObject>> children;
-		std::shared_ptr<GameObject> parent;
+		GameObject* parent;
 	};
 
 	template<class T>
@@ -343,10 +344,11 @@ namespace spic {
 	}
 
 	template<class T>
-	void GameObject::AddComponent(std::shared_ptr<Component> component)
+	void GameObject::AddComponent(std::shared_ptr<T> component)
 	{
 		components.emplace_back(component);
 	}
+
 
 	template<class T>
 	std::shared_ptr<T> GameObject::GetComponent() const
@@ -400,6 +402,13 @@ namespace spic {
 	template<class T>
 	std::vector<std::shared_ptr<T>> GameObject::GetComponentsInParent() const {
 		return parent->GetComponents<T>();
+	}
+
+	template<class T>
+	void GameObject::AddChild(const std::shared_ptr<T> gameObject) {
+		if (gameObject->GetParent() != nullptr)
+			throw std::exception("Child can only have one parent");
+		children.emplace_back(gameObject);
 	}
 }
 

@@ -19,7 +19,7 @@ using namespace spic::HulperFunctions;
 RendererImp* RendererImp::pinstance_{ nullptr };
 std::mutex RendererImp::mutex_;
 
-RendererImp::RendererImp() noexcept(false) : camera{ 0, 0, 0, 0 }, backgroundColor {0,0,0,100}, scaling{1}
+RendererImp::RendererImp() noexcept(false) : camera{ 0, 0, 0, 0 }, backgroundColor {0,0,0,100}, scaling{1}, rotation{0}
 {
 }
 
@@ -138,9 +138,12 @@ TTF_Font* RendererImp::LoadFont(const std::string& font, const int size)
 }
 
 
-void RendererImp::DrawUIText(GameObject* gameObject)
+void RendererImp::DrawUI(UIObject* gameObject)
 {
-
+    auto* castedUiObject = dynamic_cast<Text*>(gameObject);
+    const bool thisIsTextObject = castedUiObject != nullptr;
+    if (thisIsTextObject)
+        DrawText(castedUiObject);
 }
 
 void RendererImp::NewScene()
@@ -170,7 +173,7 @@ void RendererImp::DrawAnimator(Animator* animator, const bool isUiObject, const 
 
     const int fps = 1000;
 
-    const auto frame = static_cast<uint64_t>(SDL_GetTicks() / ((fps / animator->Fps()) * Time::TimeScale())) % framesAmount;
+    const auto frame = static_cast<uint64_t>(SDL_GetTicks() / ((static_cast<double>(fps) / animator->Fps()) * Time::TimeScale())) % framesAmount;
 
     for (auto& sprite : sprites)
     {
@@ -236,7 +239,7 @@ void RendererImp::DrawGameObject(GameObject* gameObject, bool isUiOject)
         }
 
         if(isUiOject)
-            DrawUIText(gameObject);
+            DrawUI(castedUiObject);
     }
 }
 
@@ -246,7 +249,7 @@ void RendererImp::DrawLine(const Point* start, const Point* end, const Color* co
         , PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, colour->R()))
         , PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, colour->G()))
         , PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, colour->B()))
-        , std::lerp(UINT_8_BEGIN, UINT_8_END, colour->A()));
+        , PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, colour->A())));
     SDL_RenderDrawLine(renderer.get()
         , PrecisionRoundingoInt(start->x)
         , PrecisionRoundingoInt(start->y)
@@ -256,12 +259,14 @@ void RendererImp::DrawLine(const Point* start, const Point* end, const Color* co
 
 void RendererImp::DrawSprite(const Transform* transform, Sprite* sprite)
 {
-    DrawSprite(sprite, true, transform);
+    if(transform != nullptr)
+        DrawSprite(sprite, true, transform);
 }
 
-void RendererImp::DrawAnimator(const Transform* position, Animator* animator)
+void RendererImp::DrawAnimator(const Transform* transform, Animator* animator)
 {
-    DrawAnimator(animator,true, position);
+    if (transform != nullptr)
+        DrawAnimator(animator,true, transform);
 }
 
 void RendererImp::DrawText(Text* text)
@@ -276,11 +281,12 @@ void RendererImp::DrawText(Text* text)
         std::string texts{ text->_Text() };
         text->Alignment();
 
-        this->RenderMultiLineText(this->renderer.get(), font, texts, colour, transform->position.x, transform->position.y, text->Width(), text->Height(), 2, text->Alignment());
+        Wrap(font, texts, 2);
+
+        this->RenderMultiLineText(font, texts, colour, PrecisionRoundingoInt(transform->position.x), PrecisionRoundingoInt(transform->position.y), PrecisionRoundingoInt(text->Width()), PrecisionRoundingoInt(text->Height()), 2, text->Alignment());
 
         TTF_CloseFont(font);
     }
-   
 }
 
 void RendererImp::DrawSprite(Sprite* sprite, const bool isUiObject, const Transform* transform)
@@ -410,6 +416,8 @@ void RendererImp::UpdateWindow(const spic::window::WindowValues* values)
     int width, height = 0;
     SDL_GetWindowSize(window.get(), &width, &height);
     this->windowCamera = { 0, 0, width, height };
+    this->camera.w = width;
+    this->camera.h = height;
 }
 
 
@@ -446,13 +454,13 @@ void RendererImp::Wrap(const TTF_Font* pFont, std::string& input, const size_t&&
     {
 
     }
- 
+
     delete w;
     delete h;
     std::swap(output, input);
 }
 
-void RendererImp::RenderMultiLineText(SDL_Renderer* _render, const TTF_Font* pFont, std::string& rText
+void RendererImp::RenderMultiLineText(const TTF_Font* pFont, std::string& rText
     , const SDL_Color& rTextColor, int XPosition, int YPosition, const int Width
     , const int Height, const int DistanceBetweenLines, const Alignment Align)
 {
@@ -461,99 +469,87 @@ void RendererImp::RenderMultiLineText(SDL_Renderer* _render, const TTF_Font* pFo
     {
         try
         {
-            Wrap(pFont, rText, Width);
+
+            SurfacePtr pSurface;
+            TexturePtr pTexture;
+
+            int         CurrentLine = 0;
+            int         totalLength = 0;
+
+            // This string will contain one line of text
+            std::string TextLine = "";
+
+            for (int i = 0; i < rText.length(); ++i)
+            {
+                // Create the text line as long as the current character is not a \n command
+                if (rText[i] != '\n')
+                    TextLine += rText[i];
+
+                // Since the current character is now a \n command, it's time to create the texture containing the current text line, render it, clear the created text string and then start on a new line
+                else
+                {
+                    if (pFont)
+                        pSurface.reset(TTF_RenderText_Solid((TTF_Font*)pFont, TextLine.c_str(), rTextColor));
+
+                    if (pSurface.get())
+                    {
+                        pTexture.reset(SDL_CreateTextureFromSurface(this->renderer.get(), pSurface.get()));
+
+                        if (pTexture.get())
+                        {
+                            const int TextWidth = pSurface->w;
+                            const int TextHeight = pSurface->h;
+                            const int nextY = YPosition + ((TextHeight + DistanceBetweenLines) * CurrentLine);
+
+                            totalLength += nextY - YPosition + TextHeight;
+
+                            if (totalLength > Height)
+                            {
+                                pTexture.reset(NULL);
+                                break;
+                            }
+
+                            SDL_Rect PositionQuad = { 0, 0, 0, 0 };
+
+                            switch (Align) {
+                            case Alignment::center: // Position the quad centered (horizontal) in the window
+                                PositionQuad.x = (Width / 2) - (TextWidth / 2) + XPosition;
+                                break;
+                            case Alignment::right:
+                                PositionQuad.x = Width - TextWidth + XPosition;
+                                break;
+
+                            default: // Position the quad according to the XPosition parameter
+                                PositionQuad.x = XPosition;
+                            }
+
+                            PositionQuad.y = nextY;
+                            PositionQuad.w = TextWidth;
+                            PositionQuad.h = TextHeight;
+
+
+                            SDL_RenderCopy(this->renderer.get(), pTexture.get(), NULL, &PositionQuad);
+
+                            // Avoid memory leak
+                            pTexture.reset(NULL);
+                        }
+
+                        // Avoid memory leak
+                        pSurface.reset(NULL);
+                    }
+
+                    // The current line of text has now been rendered (if the texture was successfully created and so on) and the text line string now needs to be cleared
+                    TextLine = "";
+
+                    // Time for a new line
+                    ++CurrentLine;
+                }
+            }
         }
         catch (...)
         {
             return;
         }
-        SDL_Surface* pSurface = NULL;
-        SDL_Texture* pTexture = NULL;
-        SDL_Rect position;
-
-        const int   Length = rText.length();
-        int         CurrentLine = 0;
-        int         totalLength = 0;
-
-        position.x = XPosition;
-        position.y = YPosition;
-        position.w = Width;
-        position.h = Height;
-
-
-        //SDL_SetRenderDrawColor(_render, 255, 255, 255, 255);
-        //SDL_RenderDrawRect(_render, &position);
-
-        // This string will contain one line of text
-        std::string TextLine = "";
-
-        for (int i = 0; i < Length; ++i)
-        {
-            // Create the text line as long as the current character is not a \n command
-            if (rText[i] != '\n')
-                TextLine += rText[i];
-
-            // Since the current character is now a \n command, it's time to create the texture containing the current text line, render it, clear the created text string and then start on a new line
-            else
-            {
-                if (pFont)
-                    pSurface = TTF_RenderText_Solid((TTF_Font*)pFont, TextLine.c_str(), rTextColor);
-
-                if (pSurface)
-                {
-                    pTexture = SDL_CreateTextureFromSurface(_render, pSurface);
-
-                    if (pTexture)
-                    {
-                        const int TextWidth = pSurface->w;
-                        const int TextHeight = pSurface->h;
-                        const int nextY = YPosition + ((TextHeight + DistanceBetweenLines) * CurrentLine);;
-
-                        totalLength += nextY - YPosition + TextHeight;
-
-                        if (totalLength > Height)
-                        {
-                            SDL_DestroyTexture(pTexture);
-                            break;
-                        }
-
-                        SDL_Rect PositionQuad = { 0, 0, 0, 0 };
-
-                        switch (Align) {
-                        case Alignment::center: // Position the quad centered (horizontal) in the window
-                            PositionQuad.x = (Width / 2) - (TextWidth / 2) + XPosition;
-                            break;
-                        case Alignment::right:
-                            PositionQuad.x = Width - TextWidth + XPosition;
-                            break;
-
-                        default: // Position the quad according to the XPosition parameter
-                            PositionQuad.x = XPosition;
-                        }
-
-                        PositionQuad.y = nextY;
-                        PositionQuad.w = TextWidth;
-                        PositionQuad.h = TextHeight;
-
-
-                        SDL_RenderCopy(_render, pTexture, NULL, &PositionQuad);
-
-                        // Avoid memory leak
-                        SDL_DestroyTexture(pTexture);
-                        pTexture = NULL;
-                    }
-
-                    // Avoid memory leak
-                    SDL_FreeSurface(pSurface);
-                    pSurface = NULL;
-                }
-
-                // The current line of text has now been rendered (if the texture was successfully created and so on) and the text line string now needs to be cleared
-                TextLine = "";
-
-                // Time for a new line
-                ++CurrentLine;
-            }
-        }
+        
     }
 }
