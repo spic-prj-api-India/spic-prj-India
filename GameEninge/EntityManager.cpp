@@ -6,7 +6,6 @@
 #include <vector>
 #include <iostream>
 #include "ISystem.hpp"
-#include "MapParser.hpp"
 #include "Scene.hpp"
 #include "InputSystem.hpp"
 #include "PhysicsSystem.hpp"

@@ -60,6 +60,7 @@
     <ClCompile Include="AudioTest.cpp" />
     <ClCompile Include="Collidertest.cpp" />
     <ClCompile Include="ComponentTest.cpp" />
+    <ClCompile Include="EntityManagerTest.cpp" />
     <ClCompile Include="ExtensionTest.cpp" />
     <ClCompile Include="InputManagerTest.cpp" />
     <ClCompile Include="PhysicsTest.cpp" />
