@@ -12,6 +12,7 @@
     <ClCompile Include="AudioTest.cpp" />
     <ClCompile Include="EntityManagerTest.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="FindGameObjectTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

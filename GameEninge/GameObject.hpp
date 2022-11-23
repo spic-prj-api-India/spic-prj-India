@@ -11,13 +11,35 @@
 #include "Sprite.hpp"
 
 namespace spic {
-
 	/**
 	 * @brief Any object which should be represented on screen.
 	 */
 	class GameObject {
 	public:
 		GameObject();
+		/**
+		 * @brief Needs to declare virtual destructor,
+		 *			otherwise can't be casted to derived class
+		 */
+		virtual ~GameObject(){};
+		GameObject(const GameObject& other) = default;
+		GameObject(GameObject&& other) = default;
+		GameObject& operator=(const GameObject& other) = default;
+		GameObject& operator=(GameObject&& other) = default;
+
+		/**
+		 * @brief Returns name of GameObject.
+		 * @return string.
+		 * @spicapi
+		 */
+		std::string Name() const;
+
+		/**
+		 * @brief Sets name of GameObject.
+		 * @param newName Desired value.
+		 * @spicapi
+		 */
+		void Name(const std::string& newName);
 
 		/**
 		 * @brief Returns tag of GameObject.
@@ -27,11 +49,11 @@ namespace spic {
 		std::string Tag() const;
 
 		/**
-		 * @brief Returns transform of GameObject.
-		 * @return nullptr or transform.
+		 * @brief Sets tag of GameObject.
+		 * @param tag Desired value.
 		 * @spicapi
 		 */
-		std::shared_ptr<Transform>& Transform();
+		void Tag(std::string& newTag);
 
 		/**
 		 * @brief Returns whether this game object is itself active.
@@ -41,11 +63,33 @@ namespace spic {
 		bool Active() const;
 
 		/**
-		 * @brief Sets tag of GameObject.
-		 * @param tag Desired value.
+		 * @brief Activates/Deactivates the GameObject, depending on the given true or false value.
+		 *			If flag is true, audio clips are triggered.
+		 * @param active Desired value.
 		 * @spicapi
 		 */
-		void Tag(std::string& tag);
+		void Active(bool flag);
+
+		/**
+		 * @brief Returns layer of GameObject.
+		 * @return int.
+		 * @spicapi
+		 */
+		int Layer() const;
+
+		/**
+		 * @brief Sets layer of GameObject.
+		 * @param newLayer Desired value.
+		 * @spicapi
+		 */
+		void Layer(int newLayer);
+
+		/**
+		 * @brief Returns transform of GameObject.
+		 * @return nullptr or transform.
+		 * @spicapi
+		 */
+		std::shared_ptr<Transform> Transform();
 
 		/**
 		 * @brief Sets tranform of GameObject.
@@ -58,19 +102,12 @@ namespace spic {
 		@brief Set this GameObject to get destroyed upon loading a new scene.
 		*/
 		bool DontDestroyOnLoad();
+
 		/*
 		@brief Set this GameObject to (not) get destroyed upon loading a new scene.
 		@param destroyOnLoad: Wether you want to set this GameObject to be destroyed or not upon loading a new scene.
 		*/
 		void DontDestroyOnLoad(bool destroyOnLoad);
-
-		/**
-		 * @brief Activates/Deactivates the GameObject, depending on the given true or false value.
-		 *			If flag is true, audio clips are triggered.
-		 * @param active Desired value.
-		 * @spicapi
-		 */
-		void Active(bool flag);
 
 		/**
 		 * @brief Returns whether this game component is active, taking its parents
@@ -111,18 +148,14 @@ namespace spic {
 		 * @spicapi
 		 */
 		template<class T>
-		static std::shared_ptr<T> FindObjectOfType(bool includeInactive = false) {
-			//TODO Met entity manager game object ophalen
-		}
+		static std::shared_ptr<T> FindObjectOfType(bool includeInactive = false);
 
 		/**
 		 * @brief Gets a list of all loaded objects of type T.
 		 * @spicapi
 		 */
 		template<class T>
-		static std::vector<std::shared_ptr<T>> FindObjectsOfType(bool includeInactive = false) {
-			//TODO Met entity manager game objects ophalen
-		}
+		static std::vector<std::shared_ptr<T>> FindObjectsOfType(bool includeInactive = false);
 
 		/**
 		 * @brief Removes a GameObject from the administration.
@@ -178,14 +211,7 @@ namespace spic {
 		bool operator<(const GameObject& other);
 
 		template<class T>
-		bool HasComponent() const {
-			for (const auto& component : components) {
-				bool isComponent = std::dynamic_pointer_cast<T>(component) != nullptr;
-				if (isComponent)
-					return true;
-			}
-			return false;
-		}
+		bool HasComponent() const;
 
 		/**
 		 * @brief Add a Component of the specified type. Must be a valid
@@ -197,10 +223,7 @@ namespace spic {
 		 * @spicapi
 		 */
 		template<class T>
-		void AddComponent(std::shared_ptr<Component> component) 
-		{
-			components.emplace_back(component);
-		}
+		void AddComponent(std::shared_ptr<Component> component);
 
 		/**
 		 * @brief Get the first component of the specified type. Must be
@@ -209,16 +232,7 @@ namespace spic {
 		 * @spicapi
 		 */
 		template<class T>
-		std::shared_ptr<T> GetComponent() const 
-		{
-			for (const auto& component : components) {
-				std::shared_ptr<T> castedComponent = std::dynamic_pointer_cast<T>(component);
-				bool isComponent = castedComponent != nullptr;
-				if (isComponent)
-					return castedComponent;
-			}
-			return nullptr;
-		}
+		std::shared_ptr<T> GetComponent() const;
 
 		/**
 		 * @brief Get the first component of the specified type from
@@ -228,14 +242,7 @@ namespace spic {
 		 * @spicapi
 		 */
 		template<class T>
-		std::shared_ptr<T> GetComponentInChildren() const {
-			for (const auto& child : GetChildren()) {
-				std::shared_ptr<T> component = child->GetComponent<T>();
-				if (component != nullptr)
-					return component;
-			}
-			return nullptr;
-		}
+		std::shared_ptr<T> GetComponentInChildren() const;
 
 		/**
 		 * @brief Get the first component of the specified type from
@@ -245,9 +252,7 @@ namespace spic {
 		 * @spicapi
 		 */
 		template<class T>
-		std::shared_ptr<Component> GetComponentInParent() const {
-			return parent->GetComponent<T>();
-		}
+		std::shared_ptr<Component> GetComponentInParent() const;
 
 		/**
 		 * @brief Get all components of the specified type. Must be
@@ -256,16 +261,7 @@ namespace spic {
 		 * @spicapi
 		 */
 		template<class T>
-		std::vector<std::shared_ptr<T>> GetComponents() const {
-			std::vector<std::shared_ptr<T>> filteredComponents = std::vector<std::shared_ptr<T>>();
-			for (const auto& component : components) {
-				std::shared_ptr<T> castedComponent = std::dynamic_pointer_cast<T>(component);
-				bool isComponent = castedComponent != nullptr;
-				if (isComponent)
-					filteredComponents.emplace_back(castedComponent);
-			}
-			return filteredComponents;
-		}
+		std::vector<std::shared_ptr<T>> GetComponents() const;
 
 		/**
 		 * @brief Get all components of the specified type from
@@ -275,14 +271,7 @@ namespace spic {
 		 * @spicapi
 		 */
 		template<class T>
-		std::vector<std::shared_ptr<T>> GetComponentsInChildren() const {
-			for (const auto& child : GetChildren()) {
-				std::shared_ptr<T> component = child->GetComponents<T>();
-				if (component != nullptr)
-					return component;
-			}
-			return nullptr;
-		}
+		std::vector<std::shared_ptr<T>> GetComponentsInChildren() const;
 
 		/**
 		 * @brief Get all components op the specified type from
@@ -292,9 +281,7 @@ namespace spic {
 		 * @spicapi
 		 */
 		template<class T>
-		std::vector<std::shared_ptr<T>> GetComponentsInParent() const {
-			return parent->GetComponents<T>();
-		}
+		std::vector<std::shared_ptr<T>> GetComponentsInParent() const;
 
 		void AddChild(const std::shared_ptr<spic::GameObject>& gameObject);
 
@@ -309,6 +296,7 @@ namespace spic {
 		std::shared_ptr<GameObject> GetParent() const;
 	private:
 		void PlayAudioClipsOnAwake();
+		static std::vector<std::shared_ptr<GameObject>> GetGameObjects();
 	private:
 		std::string name;
 		std::string tag;
@@ -320,6 +308,98 @@ namespace spic {
 		std::vector<std::shared_ptr<GameObject>> children;
 		std::shared_ptr<GameObject> parent;
 	};
+
+	template<class T>
+	std::shared_ptr<T> GameObject::FindObjectOfType(bool includeInactive) {
+		for (const auto& gameObject : GetGameObjects()) {
+			std::shared_ptr<T> castedGameObject = std::dynamic_pointer_cast<T>(gameObject);
+			const bool isType = castedGameObject != nullptr;
+			if ((includeInactive || gameObject->active) && isType)
+				return castedGameObject;
+		}
+		return nullptr;
+	}
+
+	template<class T>
+	std::vector<std::shared_ptr<T>> GameObject::FindObjectsOfType(bool includeInactive) {
+		std::vector<std::shared_ptr<T>> gameObjects;
+		for (const auto& gameObject : GetGameObjects()) {
+			const bool isType = std::dynamic_pointer_cast<T>(gameObject) != nullptr;
+			if ((includeInactive || gameObject->active) && isType)
+				gameObjects.emplace_back(std::dynamic_pointer_cast<T>(gameObject));
+		}
+		return gameObjects;
+	}
+
+	template<class T>
+	bool GameObject::HasComponent() const {
+		for (const auto& component : components) {
+			bool isComponent = std::dynamic_pointer_cast<T>(component) != nullptr;
+			if (isComponent)
+				return true;
+		}
+		return false;
+	}
+
+	template<class T>
+	void GameObject::AddComponent(std::shared_ptr<Component> component)
+	{
+		components.emplace_back(component);
+	}
+
+	template<class T>
+	std::shared_ptr<T> GameObject::GetComponent() const
+	{
+		for (const auto& component : components) {
+			std::shared_ptr<T> castedComponent = std::dynamic_pointer_cast<T>(component);
+			bool isComponent = castedComponent != nullptr;
+			if (isComponent)
+				return castedComponent;
+		}
+		return nullptr;
+	}
+
+	template<class T>
+	std::shared_ptr<T> GameObject::GetComponentInChildren() const {
+		for (const auto& child : GetChildren()) {
+			std::shared_ptr<T> component = child->GetComponent<T>();
+			if (component != nullptr)
+				return component;
+		}
+		return nullptr;
+	}
+
+	template<class T>
+	std::shared_ptr<Component> GameObject::GetComponentInParent() const {
+		return parent->GetComponent<T>();
+	}
+
+	template<class T>
+	std::vector<std::shared_ptr<T>> GameObject::GetComponents() const {
+		std::vector<std::shared_ptr<T>> filteredComponents = std::vector<std::shared_ptr<T>>();
+		for (const auto& component : components) {
+			std::shared_ptr<T> castedComponent = std::dynamic_pointer_cast<T>(component);
+			bool isComponent = castedComponent != nullptr;
+			if (isComponent)
+				filteredComponents.emplace_back(castedComponent);
+		}
+		return filteredComponents;
+	}
+
+	template<class T>
+	std::vector<std::shared_ptr<T>> GameObject::GetComponentsInChildren() const {
+		for (const auto& child : GetChildren()) {
+			std::shared_ptr<T> component = child->GetComponents<T>();
+			if (component != nullptr)
+				return component;
+		}
+		return nullptr;
+	}
+
+	template<class T>
+	std::vector<std::shared_ptr<T>> GameObject::GetComponentsInParent() const {
+		return parent->GetComponents<T>();
+	}
 }
 
 #endif // GAMEOBJECT_H_

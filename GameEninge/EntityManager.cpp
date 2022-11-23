@@ -88,6 +88,16 @@ void EntityManager::SetScene(const std::string& sceneName)
 	}
 }
 
+std::vector<std::shared_ptr<spic::GameObject>> EntityManager::GetEntities() {
+	return entities;
+}
+
+void EntityManager::RemoveEntity(const std::shared_ptr<spic::GameObject>& entity) {
+	entities.erase(
+		std::remove(entities.begin(), entities.end(), entity),
+		entities.end());
+}
+
 void EntityManager::SetScene(std::shared_ptr<Scene> newScene)
 {
 	DestroyScene();
