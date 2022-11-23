@@ -50,7 +50,7 @@ namespace spic::extensions {
 		{
 			// Update or create entity bodiese
 			for (auto& entity : entities) {
-				bool exists = bodies.find(entity->Tag()) != bodies.end();
+				bool exists = bodies.find(entity->Name()) != bodies.end();
 				if (exists)
 					UpdateEntity(entity);
 				else
@@ -62,7 +62,7 @@ namespace spic::extensions {
 			// Update entities
 			for (auto& entity : entities) {
 				// Get body
-				b2Body* body = bodies[entity->Tag()];
+				b2Body* body = bodies[entity->Name()];
 
 				// Get transform
 				const b2Vec2 position = body->GetPosition();
@@ -91,7 +91,7 @@ namespace spic::extensions {
 		*/
 		void AddForce(std::shared_ptr<spic::GameObject> entity, const spic::Point& forceDirection)
 		{
-			b2Body* body = bodies[entity->Tag()];
+			b2Body* body = bodies[entity->Name()];
 
 			b2Vec2 velocity;
 			velocity.Set(forceDirection.x, forceDirection.y);
@@ -123,7 +123,7 @@ namespace spic::extensions {
 			}
 
 			// Add to bodies
-			bodies[entity->Tag()] = body;
+			bodies[entity->Name()] = body;
 		}
 
 		/**
@@ -192,7 +192,7 @@ namespace spic::extensions {
 		{
 			// Get body
 			std::shared_ptr<spic::RigidBody> rigidBody = entity->GetComponent<spic::RigidBody>();
-			b2Body* body = bodies[entity->Tag()];
+			b2Body* body = bodies[entity->Name()];
 
 			// Get Box2D transform
 			b2Vec2 b2Position = body->GetPosition();

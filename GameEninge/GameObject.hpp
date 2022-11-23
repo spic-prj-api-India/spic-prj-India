@@ -14,7 +14,7 @@ namespace spic {
 	/**
 	 * @brief Any object which should be represented on screen.
 	 */
-	class GameObject {
+	class GameObject : public std::enable_shared_from_this<GameObject> {
 	public:
 		GameObject();
 		/**
@@ -176,11 +176,13 @@ namespace spic {
 		static void Destroy(Component* obj);
 
 		/**
-		 * @brief Constructor.
-		 * @details Object will be created with name
-		 * @param name The name for the game object.
-		 * @spicapi
-		 */
+		* @brief Constructor.
+		* @details The new GameObject will also be added to a statically
+		*          available collection.  This makes the
+		*          Find()-functions possible.
+		* @param name The name for the game object.
+		* @spicapi
+		*/
 		GameObject(const std::string& name);
 
 		/**

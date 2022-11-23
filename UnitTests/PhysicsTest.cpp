@@ -1,13 +1,13 @@
 #include "gtest/gtest.h"
 
-#include "Box2DExtension.hpp"
+#include "PhysicsExtension1.hpp"
 
 using namespace spic;
 
 TEST(PhysicsTest, GravitySuccess) {
 	//1. Arrange
 	std::vector< std::shared_ptr<spic::GameObject>> entities = std::vector< std::shared_ptr<spic::GameObject>>();
-	std::shared_ptr<extensions::Box2DExtension> box2DExtension = std::make_shared<extensions::Box2DExtension>();
+	std::shared_ptr<extensions::PhysicsExtension1> PhysicsExtension1 = std::make_shared<extensions::PhysicsExtension1>();
 
 	std::shared_ptr<spic::GameObject> box = std::make_shared<spic::GameObject>();
 	std::string boxTag = "box";
@@ -22,7 +22,7 @@ TEST(PhysicsTest, GravitySuccess) {
 	entities.emplace_back(box);
 	
 	//2. Act
-	box2DExtension->Update(entities);
+	PhysicsExtension1->Update(entities);
 
 	//3. Assert
 	EXPECT_EQ(box->Transform()->position.y, -2.49666667f);
