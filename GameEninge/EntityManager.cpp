@@ -49,6 +49,14 @@ void EntityManager::Init()
 	AddInternalSystem(std::move(renderingSystem));
 }
 
+void EntityManager::Reset()
+{
+	entities.clear();
+	systems.clear();
+	scenes.clear();
+	scene = nullptr;
+}
+
 void EntityManager::RegisterScene(const std::string& sceneName, std::shared_ptr<Scene> scene)
 {
 	if (scenes.count(sceneName))

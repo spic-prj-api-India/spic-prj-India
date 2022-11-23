@@ -41,6 +41,11 @@ namespace spic::internal
 		void Init();
 
 		/*
+		@brief Clears all variable members.
+		*/
+		void Reset();
+
+		/*
 		@brief Register scene.
 		@param The sceneName is the key in the scenes list.
 		@param The scene that will be registered in scenes list.

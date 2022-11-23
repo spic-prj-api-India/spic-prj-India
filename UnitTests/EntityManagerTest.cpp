@@ -12,22 +12,98 @@ class EntityManagerTest : public::testing::Test
 		void SetUp() override
 		{
 			entityManager = EntityManager::GetInstance();
+		}
 
-			scene = std::make_shared<spic::Scene>();
-			gameObject1 = std::make_shared<spic::GameObject>();
-			gameObject2 = std::make_shared<spic::GameObject>();
-
-			scene->AddContent(gameObject1);
-			scene->AddContent(gameObject2);
+		void TearDown() override
+		{
+			entityManager->Reset();
 		}
 
 		EntityManager* entityManager;
-		std::vector<std::shared_ptr<spic::GameObject>> entities;
-
-		std::shared_ptr<spic::Scene> scene;
-		std::shared_ptr<spic::GameObject> gameObject1;
-		std::shared_ptr<spic::GameObject> gameObject2;
 };
+
+TEST_F(EntityManagerTest, RegisterSceneSuccess)
+{
+	// 1. Arrange
+	std::shared_ptr<spic::Scene> testScene = std::make_shared<spic::Scene>();
+	std::string testSceneName = "testScene";
+
+	// 2. Act
+
+	// 3. Assert
+	entityManager->RegisterScene(testSceneName, testScene);
+}
+
+TEST_F(EntityManagerTest, RegisterSceneFailed)
+{
+	// 1. Arrange
+	std::shared_ptr<spic::Scene> testScene = std::make_shared<spic::Scene>();
+	std::string testSceneName = "testScene";
+	std::shared_ptr<spic::Scene> extraTestScene = std::make_shared<spic::Scene>();
+
+	// 2. Act
+	// 3. Assert
+	EXPECT_THROW
+	({
+		try
+		{
+		entityManager->RegisterScene(testSceneName, testScene);
+		entityManager->RegisterScene(testSceneName, extraTestScene);
+		}
+		catch (std::exception e)
+		{
+			std::string errorMessage = e.what();
+			EXPECT_EQ(errorMessage, "Scene with this name already exists.");
+			throw;
+		}
+	}, std::exception);
+}
+
+TEST_F(EntityManagerTest, GetSceneSuccess)
+{
+	// 1. Arrange
+	std::shared_ptr<spic::Scene> testScene = std::make_shared<spic::Scene>();
+	std::string testSceneName = "testScene";
+
+	entityManager->RegisterScene(testSceneName, testScene);
+	entityManager->SetScene(testScene);
+
+	// 2. Act
+	
+	// 3. Assert
+	EXPECT_EQ(entityManager->GetScene(), testScene);
+}
+
+TEST_F(EntityManagerTest, GetSceneByNameSuccess)
+{
+	// 1. Arrange
+	std::shared_ptr<spic::Scene> testScene = std::make_shared<spic::Scene>();
+	std::string testSceneName = "testScene";
+	entityManager->RegisterScene(testSceneName, testScene);
+
+	// 2. Act
+
+	// 3. Assert
+	EXPECT_EQ(entityManager->GetScene(testSceneName), testScene);
+}
+
+TEST_F(EntityManagerTest, GetEntitiesSuccess)
+{
+	// 1. Arrange
+
+	// 2. Act
+
+	// 3. Assert
+}
+
+TEST_F(EntityManagerTest, RemoveEntitySuccess)
+{
+	// 1. Arrange
+
+	// 2. Act
+
+	// 3. Assert
+}
 
 TEST_F(EntityManagerTest, SetSceneSuccess)
 {
@@ -41,26 +117,8 @@ TEST_F(EntityManagerTest, SetSceneSuccess)
 TEST_F(EntityManagerTest, DestroySceneSucces)
 {
 	// 1. Arrange
-	std::shared_ptr<spic::Scene> newScene;
-	scene = newScene;
-	entities.clear();
-
-	// Continue here 
-
-	for (auto& entity : newScene->Contents())
-	{
-		entities.push_back(entity);
-	}
 
 	// 2. Act
-	scene = nullptr;
-	for (auto& entity : entities)
-	{
-		if (!entity->DontDestroyOnLoad())
-		{
-			entities.erase(std::remove(entities.begin(), entities.end(), entity), entities.end());
-		}
-	}
 
 	// 3. Assert
 }
@@ -68,3 +126,5 @@ TEST_F(EntityManagerTest, DestroySceneSucces)
 TEST_F(EntityManagerTest, ForceDestroySceneSucces){}
 
 TEST_F(EntityManagerTest, AddSystemSuccess) {}
+
+TEST_F(EntityManagerTest, RemoveSystemSuccess) {}
