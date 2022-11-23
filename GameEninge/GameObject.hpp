@@ -19,6 +19,8 @@ namespace spic {
 	public:
 		GameObject();
 
+		virtual ~GameObject() = default;
+
 		/**
 		 * @brief Returns tag of GameObject.
 		 * @return string.

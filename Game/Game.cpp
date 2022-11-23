@@ -11,9 +11,11 @@
 #include <InputSystem.hpp>
 #include <Input.hpp>
 #include "MouseListener.h"
-#include "SDL2/SDL.h"
 #include "KeyListener.h"
-#undef main
+#include "Renderer.hpp"
+#include <chrono>
+#include <thread>
+#include "WindowValues.hpp"
 
 std::vector< std::shared_ptr<spic::GameObject>> entities;
 
@@ -68,30 +70,84 @@ void InitGame() {
 }
 
 void StartGame() {
-	// Scene
-	spic::Scene* scene = new spic::Scene();
 	// Systems
-	spic::internal::systems::InputSystem inputSystem = spic::internal::systems::InputSystem();
-	spic::internal::systems::PhysicsSystem physicsSystem = spic::internal::systems::PhysicsSystem();
-  spic::internal::systems::ScriptSystem scriptSystem = spic::internal::systems::ScriptSystem();
-	scriptSystem.Start(entities);
+	//spic::internal::systems::InputSystem inputSystem = spic::internal::systems::InputSystem();
+	//spic::internal::systems::PhysicsSystem physicsSystem = spic::internal::systems::PhysicsSystem();
+ // spic::internal::systems::ScriptSystem scriptSystem = spic::internal::systems::ScriptSystem();
+	//scriptSystem.Start(entities);
 
 	// Window
-	SDL_Window* window = SDL_CreateWindow("window", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 500, 500, SDL_WINDOW_RESIZABLE);
+	//auto scene = spic::Scene{};
 
-	while (true) {
-		//physicsSystem.Update(entities);
-		inputSystem.Update(entities, *scene);
-		scriptSystem.Update(entities, *scene);
-		//std::cout << "x: " << box->Transform()->position.x << ", y: " << box->Transform()->position.y << std::endl;
-	}
+	//while (true) {
+	//	//physicsSystem.Update(entities);
+	//	//inputSystem.Update(entities, nullptr);
+	//	//scriptSystem.Update(entities);
+	//	//std::cout << "x: " << box->Transform()->position.x << ", y: " << box->Transform()->position.y << std::endl;
+	//}
+  
+  auto start = spic::Point{ 0,0 };
+  auto end = spic::Point{ 300,300 };
 
-	SDL_DestroyWindow(window);
-	SDL_Quit();
+  auto transform1 = spic::Transform{ spic::Point{80,80}, 10,0.5};
+  auto sprite = spic::Sprite{"D:/dev/Project/PNG/Postapocalypce1/Bright/clouds1.png", spic::Color::magenta(), false, false,0,0};
+  
+
+  auto transform2 = spic::Transform{ spic::Point{0,0}, 0.5,1.0f };
+  auto sprite1 = spic::Sprite{ "C:/dev/PNG/PNG/Explosion_9/Explosion_1.png", spic::Color::white(), false, false,0,1 };
+  auto sprite2 = spic::Sprite{ "C:/dev/PNG/PNG/Explosion_9/Explosion_2.png", spic::Color::white(), false, false,0,2 };
+  auto sprite3 = spic::Sprite{ "C:/dev/PNG/PNG/Explosion_9/Explosion_3.png", spic::Color::white(), false, false,0,3 };
+  auto sprite4 = spic::Sprite{ "C:/dev/PNG/PNG/Explosion_9/Explosion_4.png", spic::Color::white(), false, false,0,4 };
+  auto sprite5 = spic::Sprite{ "C:/dev/PNG/PNG/Explosion_9/Explosion_5.png", spic::Color::white(), false, false,0,5 };
+  auto sprite6 = spic::Sprite{ "C:/dev/PNG/PNG/Explosion_9/Explosion_6.png", spic::Color::white(), false, false,0,6 };
+  auto sprite7 = spic::Sprite{ "C:/dev/PNG/PNG/Explosion_9/Explosion_7.png", spic::Color::white(), false, false,0,7 };
+  auto sprite8 = spic::Sprite{ "C:/dev/PNG/PNG/Explosion_9/Explosion_8.png", spic::Color::white(), false, false,0,8 };
+  auto sprite9 = spic::Sprite{ "C:/dev/PNG/PNG/Explosion_9/Explosion_9.png", spic::Color::white(), false, false,0,9 };
+  auto sprite10 = spic::Sprite{ "C:/dev/PNG/PNG/Explosion_9/Explosion_10.png", spic::Color::white(), false, false,0,10 };
+
+  auto animator = spic::Animator{10};
+  animator.AddSprite(std::make_shared<spic::Sprite>(sprite1));
+  animator.AddSprite(std::make_shared<spic::Sprite>(sprite2));
+  animator.AddSprite(std::make_shared<spic::Sprite>(sprite3));
+  animator.AddSprite(std::make_shared<spic::Sprite>(sprite4));
+  animator.AddSprite(std::make_shared<spic::Sprite>(sprite5));
+  animator.AddSprite(std::make_shared<spic::Sprite>(sprite6));
+  animator.AddSprite(std::make_shared<spic::Sprite>(sprite7));
+  animator.AddSprite(std::make_shared<spic::Sprite>(sprite8));
+  animator.AddSprite(std::make_shared<spic::Sprite>(sprite9));
+  animator.AddSprite(std::make_shared<spic::Sprite>(sprite10));
+
+  
+
+  auto text = spic::Text("test"
+	  , "C:/dev/07558_CenturyGothic.ttf"
+	  , 20
+	  , spic::Alignment::left
+	  , spic::Color::white());
+
+  text.Width(50);
+  text.Height(50);
+
+  text.Transform(std::make_shared<spic::Transform>(spic::Point{ 10,0 }, 0.5, 2.0f));
+  auto values = spic::window::WindowValues{ "Forts 2", 1200, 800, false, spic::window::WINDOWED };
+
+  spic::internal::Rendering::Start(&values);
+
+  while (true)
+  {
+	  spic::internal::Rendering::Clean();
+	  spic::internal::Rendering::DrawSprite(&transform1, &sprite);
+	  spic::internal::Rendering::DrawAnimator(&transform2,&animator);
+	  spic::internal::Rendering::DrawText(&text);
+	  spic::internal::Rendering::Render();
+  }
 }
 
 int main()
 {
-	InitGame();
+	
+
+
+	//InitGame();
 	StartGame();
 }

@@ -49,7 +49,7 @@ void Sample::Play(const int times, float volume)
 
 constexpr int ConvertVolume(const float volume, const float begin, const float end)
 {
-    auto lerpValue = std::lerp(begin, VOLUME_END, volume);
+    auto lerpValue = std::lerp(begin, end, volume);
     return static_cast<int>(lerpValue < 0 ? lerpValue - 0.5 : lerpValue + 0.5);
 }
 
