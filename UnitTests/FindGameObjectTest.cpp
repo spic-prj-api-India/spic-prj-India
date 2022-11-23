@@ -5,6 +5,12 @@
 #include "GameEngine.hpp"
 
 class TestGameObject : public spic::GameObject {
+public:
+	TestGameObject() : GameObject()
+	{}
+
+	TestGameObject(const std::string& name) : GameObject(name)
+	{}
 };
 
 TEST(FindGameObjectTest, FindSuccess) {
@@ -116,7 +122,7 @@ TEST(FindGameObjectTest, FindGameObjectsWithTagFailed) {
 
 TEST(FindGameObjectTest, FindObjectOfTypeSuccess) {
 	//1. Arrange
-	std::shared_ptr<TestGameObject> gameObject1 = std::make_shared<TestGameObject>();
+	std::shared_ptr<TestGameObject> gameObject1 = std::make_shared<TestGameObject>("player1");
 	std::shared_ptr<spic::GameObject> gameObject2 = std::make_shared<spic::GameObject>("player2");
 	std::string tag = "player";
 	gameObject1->Tag(tag);
@@ -157,8 +163,8 @@ TEST(FindGameObjectTest, FindObjectOfTypeFailed) {
 
 TEST(FindGameObjectTest, FindObjectsOfTypeSuccess) {
 	//1. Arrange
-	std::shared_ptr<TestGameObject> gameObject1 = std::make_shared<TestGameObject>();
-	std::shared_ptr<TestGameObject> gameObject2 = std::make_shared<TestGameObject>();
+	std::shared_ptr<TestGameObject> gameObject1 = std::make_shared<TestGameObject>("player1");
+	std::shared_ptr<TestGameObject> gameObject2 = std::make_shared<TestGameObject>("player2");
 	std::string tag = "player";
 	gameObject1->Tag(tag);
 	gameObject2->Tag(tag);
@@ -178,7 +184,7 @@ TEST(FindGameObjectTest, FindObjectsOfTypeSuccess) {
 
 TEST(FindGameObjectTest, FindObjectsOfTypeFailed) {
 	//1. Arrange
-	std::shared_ptr<TestGameObject> gameObject1 = std::make_shared<TestGameObject>();
+	std::shared_ptr<TestGameObject> gameObject1 = std::make_shared<TestGameObject>("player1");
 	std::shared_ptr<spic::GameObject> gameObject2 = std::make_shared<spic::GameObject>("obstacle1");
 	std::string tag1 = "player";
 	std::string tag2 = "obstacle";
