@@ -15,5 +15,4 @@ void CollisionDetectionScript::OnTriggerExit2D(const spic::Collider& collider) {
 }
 
 void CollisionDetectionScript::OnTriggerStay2D(const spic::Collider& collider) {
-	std::cout << "Stay" << std::endl;
 }

@@ -29,14 +29,14 @@ namespace spic {
             * @param volume The value to change the current volumen.
             * @spicapi
             */
-            void Volume(float volume);
+            void ChangeVolume(float volume);
 
             /**
             * @brief overloaded method to change te intial volumen and if playing, the current volumen.
             * @param volume The value to change the current volumen.
             * @spicapi
             */
-            void Volume(float left, float right);
+            void ChangeVolume(float left, float right);
 
             /**
             * @brief the audiosource constructor 

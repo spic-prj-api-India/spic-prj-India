@@ -12,6 +12,13 @@ namespace spic::extensions{
 	 */
 	class IPhysicsExtension : public spic::internal::extensions::IEngineExtension{
 	public:
+		IPhysicsExtension();
+		~IPhysicsExtension();
+		IPhysicsExtension(IPhysicsExtension&& rhs) noexcept;
+		IPhysicsExtension& operator=(IPhysicsExtension&& rhs) noexcept;
+		IPhysicsExtension(const IPhysicsExtension& rhs);
+		IPhysicsExtension& operator=(const IPhysicsExtension& rhs);
+
 		/**
 		* @brief Resets all physics and removes entities from extension
 		* @spicapi
