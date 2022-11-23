@@ -282,7 +282,7 @@
     <ClInclude Include="ISystem.hpp">
       <Filter>Header Files\systems</Filter>
     </ClInclude>
-    <ClInclude Include="WindowValues.h">
+    <ClInclude Include="WindowValues.hpp">
       <Filter>Header Files\systems\rendering</Filter>
     </ClInclude>
     <ClInclude Include="Hulperfunctions.hpp">
@@ -387,9 +387,6 @@
       <Filter>Source Files\components\animator%255csprite</Filter>
     </ClCompile>
     <ClCompile Include="Animator.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Fonts.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Text.cpp">

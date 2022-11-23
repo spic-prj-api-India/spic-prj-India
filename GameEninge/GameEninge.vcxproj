@@ -214,7 +214,7 @@
     <ClInclude Include="Transform.hpp" />
     <ClInclude Include="TypeHelper.hpp" />
     <ClInclude Include="UIObject.hpp" />
-    <ClInclude Include="WindowValues.h" />
+    <ClInclude Include="WindowValues.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animator.cpp" />
@@ -229,7 +229,6 @@
     <ClCompile Include="CastException.cpp" />
     <ClCompile Include="CircleCollider.cpp" />
     <ClCompile Include="Color.cpp" />
-    <ClCompile Include="Fonts.cpp" />
     <ClCompile Include="Point.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Sprite.cpp" />

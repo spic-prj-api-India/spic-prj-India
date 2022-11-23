@@ -17,16 +17,15 @@ namespace spic {
 	class GameObject {
 	public:
 		GameObject();
-		/**
-		 * @brief Needs to declare virtual destructor,
-		 *			otherwise can't be casted to derived class
-		 */
-		virtual ~GameObject(){};
 		GameObject(const GameObject& other) = default;
 		GameObject(GameObject&& other) = default;
 		GameObject& operator=(const GameObject& other) = default;
 		GameObject& operator=(GameObject&& other) = default;
 
+		/**
+		 * @brief Needs to declare virtual destructor,
+		 *			otherwise can't be casted to derived class
+		 */
 		virtual ~GameObject() = default;
 
 		/**

@@ -13,6 +13,7 @@
 #include "MouseListener.h"
 #include "KeyListener.h"
 #include "EntityManager.hpp"
+#include <Renderer.hpp>
 
 std::shared_ptr<spic::Scene> scene;
 
@@ -69,25 +70,25 @@ void InitGame() {
 	spic::Input::Subscribe(spic::Input::KeyCode::A, keyListener);
 }
 
-void StartGame() {
-  auto start = spic::Point{ 0,0 };
-  auto end = spic::Point{ 300,300 };
+void StartGame() 
+{
 
+ ///** Code to show working (remove 2 slashes to get it working)
   auto transform1 = spic::Transform{ spic::Point{80,80}, 10,0.5};
-  auto sprite = spic::Sprite{"D:/dev/Project/PNG/Postapocalypce1/Bright/clouds1.png", spic::Color::magenta(), false, false,0,0};
-  
+  auto sprite = spic::Sprite{"assets/textures/post-apocalyptic-backgrounds/Postapocalypce1/Bright/clouds1.png", spic::Color::magenta(), false, false,0,0};
+
 
   auto transform2 = spic::Transform{ spic::Point{0,0}, 0.5,1.0f };
-  auto sprite1 = spic::Sprite{ "C:/dev/PNG/PNG/Explosion_9/Explosion_1.png", spic::Color::white(), false, false,0,1 };
-  auto sprite2 = spic::Sprite{ "C:/dev/PNG/PNG/Explosion_9/Explosion_2.png", spic::Color::white(), false, false,0,2 };
-  auto sprite3 = spic::Sprite{ "C:/dev/PNG/PNG/Explosion_9/Explosion_3.png", spic::Color::white(), false, false,0,3 };
-  auto sprite4 = spic::Sprite{ "C:/dev/PNG/PNG/Explosion_9/Explosion_4.png", spic::Color::white(), false, false,0,4 };
-  auto sprite5 = spic::Sprite{ "C:/dev/PNG/PNG/Explosion_9/Explosion_5.png", spic::Color::white(), false, false,0,5 };
-  auto sprite6 = spic::Sprite{ "C:/dev/PNG/PNG/Explosion_9/Explosion_6.png", spic::Color::white(), false, false,0,6 };
-  auto sprite7 = spic::Sprite{ "C:/dev/PNG/PNG/Explosion_9/Explosion_7.png", spic::Color::white(), false, false,0,7 };
-  auto sprite8 = spic::Sprite{ "C:/dev/PNG/PNG/Explosion_9/Explosion_8.png", spic::Color::white(), false, false,0,8 };
-  auto sprite9 = spic::Sprite{ "C:/dev/PNG/PNG/Explosion_9/Explosion_9.png", spic::Color::white(), false, false,0,9 };
-  auto sprite10 = spic::Sprite{ "C:/dev/PNG/PNG/Explosion_9/Explosion_10.png", spic::Color::white(), false, false,0,10 };
+  auto sprite1 = spic::Sprite{ "assets/textures/animated-explosion/Explosion_9/Explosion_1.png", spic::Color::white(), false, false,0,1 };
+  auto sprite2 = spic::Sprite{ "assets/textures/animated-explosion/Explosion_9/Explosion_2.png", spic::Color::white(), false, false,0,2 };
+  auto sprite3 = spic::Sprite{ "assets/textures/animated-explosion/Explosion_9/Explosion_3.png", spic::Color::white(), false, false,0,3 };
+  auto sprite4 = spic::Sprite{ "assets/textures/animated-explosion/Explosion_9/Explosion_4.png", spic::Color::white(), false, false,0,4 };
+  auto sprite5 = spic::Sprite{ "assets/textures/animated-explosion/Explosion_9/Explosion_5.png", spic::Color::white(), false, false,0,5 };
+  auto sprite6 = spic::Sprite{ "assets/textures/animated-explosion/Explosion_9/Explosion_6.png", spic::Color::white(), false, false,0,6 };
+  auto sprite7 = spic::Sprite{ "assets/textures/animated-explosion/PNG/Explosion_9/Explosion_7.png", spic::Color::white(), false, false,0,7 };
+  auto sprite8 = spic::Sprite{ "assets/textures/animated-explosion/PNG/Explosion_9/Explosion_8.png", spic::Color::white(), false, false,0,8 };
+  auto sprite9 = spic::Sprite{ "assets/textures/animated-explosion/PNG/Explosion_9/Explosion_9.png", spic::Color::white(), false, false,0,9 };
+  auto sprite10 = spic::Sprite{ "assets/textures/animated-explosion/PNG/Explosion_9/Explosion_10.png", spic::Color::white(), false, false,0,10 };
 
   auto animator = spic::Animator{10};
   animator.AddSprite(std::make_shared<spic::Sprite>(sprite1));
@@ -101,10 +102,10 @@ void StartGame() {
   animator.AddSprite(std::make_shared<spic::Sprite>(sprite9));
   animator.AddSprite(std::make_shared<spic::Sprite>(sprite10));
 
-  
+
 
   auto text = spic::Text("test"
-	  , "C:/dev/07558_CenturyGothic.ttf"
+	  , "assets/fonts/07558_CenturyGothic.ttf"
 	  , 20
 	  , spic::Alignment::left
 	  , spic::Color::white());
@@ -125,10 +126,14 @@ void StartGame() {
 	  spic::internal::Rendering::DrawText(&text);
 	  spic::internal::Rendering::Render();
   }
-	// Start
+
+  
+	/** GamEnigne code (remove 2 slashes to get it working)
+	// Start code gameEngine
 	spic::GameEngine* engine = spic::GameEngine::GetInstance();
 	engine->LoadScene(scene);
 	engine->Start();
+	//*/
 }
 
 int main()
