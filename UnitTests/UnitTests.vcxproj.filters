@@ -11,6 +11,7 @@
     <ClCompile Include="InputManagerTest.cpp" />
     <ClCompile Include="AudioTest.cpp" />
     <ClCompile Include="EntityManagerTest.cpp" />
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

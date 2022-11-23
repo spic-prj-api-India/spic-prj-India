@@ -78,7 +78,7 @@ namespace spic {
         * @spicapi
         */
         std::vector<std::shared_ptr<GameObject>> contents;
-        std::string tileMapPath = "";
+        std::string tileMapPath;
         std::unique_ptr<spic::Camera> camera;
         spic::UpdateSetting setting;
     };

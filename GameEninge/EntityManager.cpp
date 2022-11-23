@@ -1,10 +1,10 @@
-#include "EntityManager.hpp"
 #include <map>
 #include <regex>
 #include <memory>
 #include <mutex>
 #include <vector>
 #include <iostream>
+#include "EntityManager.hpp"
 #include "ISystem.hpp"
 #include "Scene.hpp"
 #include "InputSystem.hpp"
@@ -19,7 +19,7 @@ using namespace spic::systems;
 EntityManager* EntityManager::pinstance_{ nullptr };
 std::mutex EntityManager::mutex_;
 
-EntityManager::EntityManager() : CustomSystemDefaultPriority { 1 }
+EntityManager::EntityManager() : CustomSystemDefaultPriority{ 1 }, scene{ nullptr }
 {
 	Init();
 }
@@ -49,12 +49,51 @@ void EntityManager::Init()
 	AddInternalSystem(std::move(renderingSystem));
 }
 
+void EntityManager::RegisterScene(const std::string& sceneName, std::shared_ptr<Scene> scene)
+{
+	if (scenes.count(sceneName))
+		throw std::exception("Scene with this name already exists.");
+	scenes[sceneName] = scene;
+}
+
+std::shared_ptr<Scene> EntityManager::GetScene()
+{
+	return scene;
+}
+
+std::shared_ptr<Scene> EntityManager::GetScene(const std::string& sceneName)
+{
+	if (!scenes.count(sceneName))
+		throw std::exception("Scene does not exist.");
+	return scenes[sceneName];
+}
+
+void EntityManager::SetScene(const std::string& sceneName)
+{
+	if (!scenes.count(sceneName))
+		throw std::exception("Scene does not exist.");
+	DestroyScene();
+	scene = scenes[sceneName];
+	entities.clear();
+	for (auto& entity : scene->Contents())
+	{
+		entities.push_back(entity);
+	}
+	for (const auto& systemsMap : systems)
+	{
+		for (const auto& system : systemsMap.second)
+		{
+			system->Start(entities);
+		}
+	}
+}
+
 void EntityManager::SetScene(std::shared_ptr<Scene> newScene)
 {
 	DestroyScene();
 	scene = newScene;
 	entities.clear();
-	for (auto& entity : newScene->Contents())
+	for (auto& entity : scene->Contents())
 	{
 		entities.push_back(entity);
 	}
@@ -87,7 +126,7 @@ void EntityManager::DestroyScene(bool forceDelete)
 }
 
 void EntityManager::AddSystem(std::unique_ptr<spic::systems::ISystem> system)
-{	
+{
 	if (!systems.count(CustomSystemDefaultPriority))
 	{
 		systems[CustomSystemDefaultPriority];
