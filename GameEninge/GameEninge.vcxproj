@@ -202,6 +202,7 @@
     <ClInclude Include="MapParser.hpp" />
     <ClInclude Include="Point.hpp" />
     <ClInclude Include="Renderer.hpp" />
+    <ClInclude Include="RenderingSystem.hpp" />
     <ClInclude Include="RigidBody.hpp" />
     <ClInclude Include="Sample.hpp" />
     <ClInclude Include="Scene.hpp" />
@@ -211,6 +212,7 @@
     <ClInclude Include="TileLayer.hpp" />
     <ClInclude Include="Time.hpp" />
     <ClInclude Include="Transform.hpp" />
+    <ClInclude Include="TypeHelper.hpp" />
     <ClInclude Include="UIObject.hpp" />
     <ClInclude Include="WindowValues.h" />
   </ItemGroup>
@@ -235,6 +237,8 @@
     <ClCompile Include="UIObject.cpp" />
     <ClCompile Include="RendererImp.cpp" />
     <ClCompile Include="RendererImp.hpp" />
+    <ClCompile Include="EntityManager.cpp" />
+    <ClCompile Include="RenderingSystem.cpp" />
     <ClCompile Include="Sample.cpp" />
     <ClCompile Include="GameEngine.cpp" />
     <ClCompile Include="ICollisionListener.cpp" />

@@ -1,45 +1,70 @@
 #include "GameObject.hpp"
 #include <algorithm>
 #include "AudioSource.hpp"
+#include "TypeHelper.hpp"
+#include "EntityManager.hpp"
 
 namespace spic {
-	GameObject::GameObject() : active{true}, layer{0}
+	std::vector<std::shared_ptr<GameObject>> GameObject::GetGameObjects() {
+		return spic::internal::EntityManager::GetInstance()->GetEntities();
+	}
+
+	GameObject::GameObject() : active{ true }, layer{ 0 }
 	{}
 
-	GameObject::GameObject(const std::string& name) : name{name}
+	GameObject::GameObject(const std::string& name) : name{name}, active{ true }, layer{ 0 }
 	{}
 
 	std::shared_ptr<GameObject> GameObject::Find(const std::string& name)
 	{
-		//TODO Met entity manager game object ophalen
+		for (const auto& gameObject : spic::internal::EntityManager::GetInstance()->GetEntities()) {
+			if (gameObject->name == name)
+				return gameObject;
+		}
 		return nullptr;
 	}
 
 	std::vector<std::shared_ptr<GameObject>> GameObject::FindGameObjectsWithTag(const std::string& tag)
 	{
-		//TODO Met entity manager game object ophalen
-		return std::vector<std::shared_ptr<GameObject>>();
+		std::vector<std::shared_ptr<GameObject>> gameObjects;
+		for (const auto& gameObject : spic::internal::EntityManager::GetInstance()->GetEntities()) {
+			if (gameObject->active && gameObject->tag == tag)
+				gameObjects.emplace_back(gameObject);
+		}
+		return gameObjects;
 	}
 
 	std::shared_ptr<GameObject> GameObject::FindWithTag(const std::string& tag)
 	{
-		//TODO Met entity manager game object ophalen
+		for (const auto& gameObject : spic::internal::EntityManager::GetInstance()->GetEntities()) {
+			if (gameObject->tag == tag)
+				return gameObject;
+		}
 		return nullptr;
 	}
 
 	void GameObject::Destroy(std::shared_ptr<GameObject> obj)
 	{
-		//TODO Met entity manager game object verwijderen
+		spic::internal::EntityManager::GetInstance()->RemoveEntity(obj);
 	}
 
 	void GameObject::Destroy(Component* obj)
 	{
-		//TODO met entity manager de component verwijderen in alle game objects
+		std::string typeName = spic::internal::GetTypeName(obj);
+		for (const auto& gameObject : spic::internal::EntityManager::GetInstance()->GetEntities()) {
+			gameObject->components.erase(std::remove_if(gameObject->components.begin(), gameObject->components.end(), [typeName](std::shared_ptr<Component> component) {
+				return typeName == spic::internal::GetTypeName(component);
+				}));
+		}
 	}
 
 	GameObject::operator bool() {
-		//TODO check of game object bestaat in entity manager
-		return true;
+		std::vector<std::shared_ptr<GameObject>> gameObjects;
+		for (const auto& gameObject : spic::internal::EntityManager::GetInstance()->GetEntities()) {
+			if (typeid(gameObject).name() == typeid(this).name())
+				return true;
+		}
+		return false;
 	}
 
 	bool GameObject::operator!=(const GameObject& other) {
@@ -54,28 +79,24 @@ namespace spic {
 		return layer < other.layer;
 	}
 
+	std::string GameObject::Name() const {
+		return name;
+	}
 
-	std::string GameObject::Tag() const 
-	{
+	void GameObject::Name(const std::string& newName) {
+		name = newName;
+	}
+
+	std::string GameObject::Tag() const {
 		return tag;
 	}
 
-	std::shared_ptr<Transform>& GameObject::Transform() 
-	{
-		return transform;
+	void GameObject::Tag(std::string& newTag) {
+		tag = newTag;
 	}
 
 	bool GameObject::Active() const {
 		return active;
-	}
-
-	void GameObject::Tag(std::string& _tag) {
-		tag = _tag;
-	}
-
-	void GameObject::Transform(std::shared_ptr<spic::Transform> _transform) 
-	{
-		transform = _transform;
 	}
 
 	void GameObject::Active(bool flag) {
@@ -95,6 +116,34 @@ namespace spic {
 			if (audioSource->PlayOnAwake())
 				audioSource->Play(audioSource->Loop());
 		}
+	}
+
+	int GameObject::Layer() const {
+		return layer;
+	}
+
+	void GameObject::Layer(int newLayer) {
+		layer = newLayer;
+	}
+
+	std::shared_ptr<Transform> GameObject::Transform() 
+	{
+		return transform;
+	}
+
+	void GameObject::Transform(std::shared_ptr<spic::Transform> _transform) 
+	{
+		transform = _transform;
+	}
+
+	bool GameObject::DontDestroyOnLoad()
+	{
+		return false;
+	}
+
+	void GameObject::DontDestroyOnLoad(bool destroy)
+	{
+		destroyOnLoad = destroy;
 	}
 
 	bool GameObject::IsActiveInWorld() const {

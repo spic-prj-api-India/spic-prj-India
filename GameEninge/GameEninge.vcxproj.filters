@@ -136,6 +136,9 @@
     <Filter Include="Source Files\systems\rendering">
       <UniqueIdentifier>{f1a73fff-ed6a-452f-86f7-00a43417a997}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\helpers">
+      <UniqueIdentifier>{7214b70e-62ae-4f63-89a5-a1f7f8c0d26e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Color.hpp">
@@ -288,6 +291,12 @@
     <ClInclude Include="Renderer.hpp">
       <Filter>Header Files\systems\rendering</Filter>
     </ClInclude>
+    <ClInclude Include="RenderingSystem.hpp">
+      <Filter>Header Files\systems\rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="TypeHelper.hpp">
+      <Filter>Header Files\helpers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Time.cpp">
@@ -349,6 +358,12 @@
     </ClCompile>
     <ClCompile Include="InputImpl.cpp">
       <Filter>Source Files\input</Filter>
+    </ClCompile>
+    <ClCompile Include="EntityManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderingSystem.cpp">
+      <Filter>Source Files\systems</Filter>
     </ClCompile>
     <ClCompile Include="RendererImp.hpp">
       <Filter>Header Files\systems\rendering</Filter>

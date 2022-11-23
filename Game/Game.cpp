@@ -12,15 +12,15 @@
 #include <Input.hpp>
 #include "MouseListener.h"
 #include "KeyListener.h"
-#include "Renderer.hpp"
-#include <chrono>
-#include <thread>
-#include "WindowValues.hpp"
+#include "EntityManager.hpp"
 
-std::vector< std::shared_ptr<spic::GameObject>> entities;
+std::shared_ptr<spic::Scene> scene;
 
 void InitGame() {
+	// Init
 	spic::GameEngine* engine = spic::GameEngine::GetInstance();
+	scene = std::make_shared<spic::Scene>();
+
 	// Physics test
 	std::shared_ptr<spic::extensions::Box2DExtension> physicsExtension = std::make_shared<spic::extensions::Box2DExtension>();
 	engine->AddExtension(std::move(physicsExtension));
@@ -59,8 +59,8 @@ void InitGame() {
 	platform->AddComponent<spic::BoxCollider>(platformCollider);
 	platform->AddComponent<spic::RigidBody>(platformRigidBody);
 
-	entities.emplace_back(box);
-	entities.emplace_back(platform);
+	scene->AddContent(box);
+	scene->AddContent(platform);
 
 	// Input test
 	std::shared_ptr<MouseListener> mouseListener = std::make_shared<MouseListener>();
@@ -70,22 +70,6 @@ void InitGame() {
 }
 
 void StartGame() {
-	// Systems
-	//spic::internal::systems::InputSystem inputSystem = spic::internal::systems::InputSystem();
-	//spic::internal::systems::PhysicsSystem physicsSystem = spic::internal::systems::PhysicsSystem();
- // spic::internal::systems::ScriptSystem scriptSystem = spic::internal::systems::ScriptSystem();
-	//scriptSystem.Start(entities);
-
-	// Window
-	//auto scene = spic::Scene{};
-
-	//while (true) {
-	//	//physicsSystem.Update(entities);
-	//	//inputSystem.Update(entities, nullptr);
-	//	//scriptSystem.Update(entities);
-	//	//std::cout << "x: " << box->Transform()->position.x << ", y: " << box->Transform()->position.y << std::endl;
-	//}
-  
   auto start = spic::Point{ 0,0 };
   auto end = spic::Point{ 300,300 };
 
@@ -141,6 +125,10 @@ void StartGame() {
 	  spic::internal::Rendering::DrawText(&text);
 	  spic::internal::Rendering::Render();
   }
+	// Start
+	spic::GameEngine* engine = spic::GameEngine::GetInstance();
+	engine->LoadScene(scene);
+	engine->Start();
 }
 
 int main()
