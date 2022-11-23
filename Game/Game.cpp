@@ -1,6 +1,12 @@
 // Game.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
+// Use to remove SDL2 warnings from error list
+#include <codeanalysis\warnings.h>
+#pragma warning( push )
+#pragma warning ( disable : ALL_CODE_ANALYSIS_WARNINGS )
+#include "SDL2/SDL.h"
+#pragma warning( pop )
 #include <iostream>
 #include "GameEngine.hpp"
 #include <PhysicsSystem.hpp>
@@ -11,7 +17,6 @@
 #include <InputSystem.hpp>
 #include <Input.hpp>
 #include "MouseListener.h"
-#include "SDL2/SDL.h"
 #include "KeyListener.h"
 #undef main
 
@@ -73,7 +78,7 @@ void StartGame() {
 	// Systems
 	spic::internal::systems::InputSystem inputSystem = spic::internal::systems::InputSystem();
 	spic::internal::systems::PhysicsSystem physicsSystem = spic::internal::systems::PhysicsSystem();
-  spic::internal::systems::ScriptSystem scriptSystem = spic::internal::systems::ScriptSystem();
+	spic::internal::systems::ScriptSystem scriptSystem = spic::internal::systems::ScriptSystem();
 	scriptSystem.Start(entities);
 
 	// Window

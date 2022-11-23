@@ -1,4 +1,5 @@
-#pragma once
+#ifndef MAPPARSER_H_
+#define MAPPARSER_H_
 
 #include <vector>
 #include <string>
@@ -92,3 +93,5 @@ namespace spic
         int m_TileSize, m_NbrCol, m_NbrRow;
     };
 }
+
+#endif // MAPPARSER_H_

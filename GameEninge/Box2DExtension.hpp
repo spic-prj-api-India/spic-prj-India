@@ -2,9 +2,11 @@
 #define BOX2DEXTENSION_H_
 
 // Use to remove box2d warnings from error list
-#pragma warning(push, 0)
+#include <codeanalysis\warnings.h>
+#pragma warning( push )
+#pragma warning ( disable : ALL_CODE_ANALYSIS_WARNINGS )
 #include "box2d/box2d.h"
-#pragma warning(pop)
+#pragma warning( pop )
 #include <iostream>
 #include <vector>
 #include <map>

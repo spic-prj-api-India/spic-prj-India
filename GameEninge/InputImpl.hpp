@@ -1,12 +1,14 @@
 #ifndef INPUTIMPL_H_
 #define INPUTIMPL_H_
 
-#include "Input.hpp"
 // Use to remove SDL2 warnings from error list
-#pragma warning(push, 0)
+#include <codeanalysis\warnings.h>
+#pragma warning( push )
+#pragma warning ( disable : ALL_CODE_ANALYSIS_WARNINGS )
 #include <SDL2/SDL_events.h>
-#pragma warning(pop)
+#pragma warning( pop )
 #include <vector>
+#include "Input.hpp"
 
 namespace spic::internal::InputImpl {
     /**
