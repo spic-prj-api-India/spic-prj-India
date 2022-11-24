@@ -3,6 +3,7 @@
 #include "ISystem.hpp"
 #include "Scene.hpp"
 #include <InputSystem.hpp>
+#include <RenderingSystem.hpp>
 
 using namespace spic;
 using namespace spic::internal;
@@ -208,5 +209,5 @@ TEST_F(EntityManagerTest, RemoveSystemSuccess) {
 	// 2. Act
 
 	// 3. Assert
-	
+	entityManager->RemoveSystem<InputSystem>();
 }

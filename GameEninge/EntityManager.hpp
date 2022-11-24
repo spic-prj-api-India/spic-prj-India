@@ -9,8 +9,9 @@
 #include "ISystem.hpp"
 #include "Scene.hpp"
 #include "TypeHelper.hpp"
+#include "InputSystem.hpp"
 
-namespace spic::internal 
+namespace spic::internal
 {
 	class EntityManager
 	{
@@ -22,7 +23,7 @@ namespace spic::internal
 
 		std::vector<std::shared_ptr<spic::GameObject>> entities;
 		std::map<int, std::vector<std::unique_ptr<spic::systems::ISystem>>> systems;
-		std::map<std::string,std::shared_ptr<Scene>> scenes;
+		std::map<std::string, std::shared_ptr<Scene>> scenes;
 		std::shared_ptr<Scene> scene;
 	protected:
 		EntityManager();
@@ -108,15 +109,23 @@ namespace spic::internal
 		void AddSystem(std::unique_ptr<spic::systems::ISystem> system);
 
 		/*
-		@brief Use this function to remove a (custom) system to the systems list. 
+		@brief Use this function to remove a (custom) system to the systems list.
 		@param The (custom) system to be removed.
 		*/
 		template <typename T>
 		void RemoveSystem() {
 			std::string typeName = GetTypeName<T>();
-			systems.erase(std::remove_if(systems.begin(), systems.end(), [typeName](std::pair<int, std::unique_ptr<spic::systems::ISystem>> system) {
-				return typeName == GetTypeName(system.second);
-				}));
+			for (auto& systemPair : systems) {
+				auto& vec = systemPair.second;
+				auto start_junk = std::remove_if(
+					vec.begin(), vec.end(),
+					[typeName](const auto& system) {
+						std::string systemName = typeid(*system).name();
+						std::string strippedName = std::regex_replace(systemName, std::regex("class "), "");
+						return typeName == strippedName;
+					});
+				vec.erase(start_junk, vec.end());
+			}
 		}
 
 		/*
@@ -126,7 +135,7 @@ namespace spic::internal
 		void Update();
 
 		/*
-		@brief Calls the RendererSystem to render the entities and tilemap. 
+		@brief Calls the RendererSystem to render the entities and tilemap.
 		*/
 		void Render();
 	private:
