@@ -37,17 +37,17 @@ namespace spic::internal {
         /// @details Used for debugging
         /// @param position The coridatnes are for the UI 
         /// @param sprite The sprite to Draw
-        static void DrawSprite(const Transform* position, Sprite* sprite);
+        static void DrawSprite(const Transform* position,const bool isUi, Sprite* sprite);
 
         /// @brief Draws a animator as an ui object
         /// @details Used for debugging
         /// @param position The coridatnes are for the UI 
         /// @param animator The animator to Draw
-        static void DrawAnimator(const Transform* position, Animator* animator);
+        static void DrawAnimator(const Transform* position, const bool isUi, Animator* animator);
 
         /// @brief Draws only the text of the Text object
         /// @param text Text object needs to have a valid Transform
-        static void DrawText(Text* text);
+        static void DrawText(Text* text, const bool isUi);
 
         /// @brief Cleans the frame
         /// @details Needs to be called at the beginning of a frame

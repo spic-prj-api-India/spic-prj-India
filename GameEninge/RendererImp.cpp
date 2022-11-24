@@ -174,23 +174,22 @@ void RendererImp::DrawAnimator(Animator* animator, const bool isUiObject, const 
 
     const int fps = 1000;
 
-    const auto frame = static_cast<uint64_t>(SDL_GetTicks() / ((static_cast<double>(fps) / animator->Fps()) * Time::TimeScale())) % framesAmount;
+    //const auto frame = static_cast<uint64_t>(SDL_GetTicks() / ((static_cast<double>(fps) / animator->Fps()) * Time::TimeScale())) % framesAmount;
+
+    const auto frame = static_cast<uint64_t>(SDL_GetTicks() / (1000 /animator->Fps() * Time::TimeScale())) % framesAmount;
 
     for (auto& sprite : sprites)
     {
         if (sprite->OrderInLayer() == frame && !animator->IsFozen())
+        {
+            //animator->Index(frame);
             DrawSprite(sprite.get(), isUiObject, position);
+        }
+            
         else if (sprite->OrderInLayer() == animator->Index() && animator->IsFozen())
             DrawSprite(sprite.get(), isUiObject, position);
     }
 
-}
-
-
-
-void RendererImp::Draw(GameObject* gameObject)
-{
-    DrawGameObject(gameObject);
 }
 
 void RendererImp::SetBackgroundColor()
@@ -258,17 +257,6 @@ void RendererImp::DrawLine(const Point* start, const Point* end, const Color* co
         , PrecisionRoundingoInt(end->y));
 }
 
-void RendererImp::DrawSprite(const Transform* transform, Sprite* sprite)
-{
-    if(transform != nullptr)
-        DrawSprite(sprite, true, transform);
-}
-
-void RendererImp::DrawAnimator(const Transform* transform, Animator* animator)
-{
-    if (transform != nullptr)
-        DrawAnimator(animator,true, transform);
-}
 
 void RendererImp::DrawText(Text* text)
 {
@@ -292,6 +280,9 @@ void RendererImp::DrawText(Text* text)
 
 void RendererImp::DrawSprite(Sprite* sprite, const bool isUiObject, const Transform* transform)
 {
+    if (transform == nullptr)
+        return;
+
     SDL_Texture* texture = LoadTexture(sprite);
     auto textureSize = GetTextureSize(texture);
 
@@ -351,6 +342,7 @@ void RendererImp::DrawSprite(Sprite* sprite, const bool isUiObject, const Transf
 
     SDL_RenderCopyEx(renderer.get(), texture, &sourceRect, &dstRect, transform->rotation, &center, flip);
 }
+
 
 void RendererImp::UpdateCamera(Camera* camera)
 {

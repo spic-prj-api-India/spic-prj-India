@@ -86,12 +86,12 @@ void StartGame()
   auto sprite4 = std::make_shared<spic::Sprite>("assets/textures/animated-explosion/Explosion_9/Explosion_4.png", spic::Color::white(), false, false,0,4);
   auto sprite5 = std::make_shared<spic::Sprite>("assets/textures/animated-explosion/Explosion_9/Explosion_5.png", spic::Color::white(), false, false,0,5);
   auto sprite6 = std::make_shared<spic::Sprite>("assets/textures/animated-explosion/Explosion_9/Explosion_6.png", spic::Color::white(), false, false,0,6);
-  auto sprite7 = std::make_shared<spic::Sprite>("assets/textures/animated-explosion/PNG/Explosion_9/Explosion_7.png", spic::Color::white(), false, false,0,7);
-  auto sprite8 = std::make_shared<spic::Sprite>("assets/textures/animated-explosion/PNG/Explosion_9/Explosion_8.png", spic::Color::white(), false, false,0,8);
-  auto sprite9 = std::make_shared<spic::Sprite>("assets/textures/animated-explosion/PNG/Explosion_9/Explosion_9.png", spic::Color::white(), false, false,0,9);
-  auto sprite10 = std::make_shared<spic::Sprite>("assets/textures/animated-explosion/PNG/Explosion_9/Explosion_10.png", spic::Color::white(), false, false,0,10);
+  auto sprite7 = std::make_shared<spic::Sprite>("assets/textures/animated-explosion/Explosion_9/Explosion_7.png", spic::Color::white(), false, false,0,7);
+  auto sprite8 = std::make_shared<spic::Sprite>("assets/textures/animated-explosion/Explosion_9/Explosion_8.png", spic::Color::white(), false, false,0,8);
+  auto sprite9 = std::make_shared<spic::Sprite>("assets/textures/animated-explosion/Explosion_9/Explosion_9.png", spic::Color::white(), false, false,0,9);
+  auto sprite10 = std::make_shared<spic::Sprite>("assets/textures/animated-explosion/Explosion_9/Explosion_10.png", spic::Color::white(), false, false,0,10);
 
-  auto animator = std::make_shared<spic::Animator>(3);
+  auto animator = std::make_shared<spic::Animator>(50);
   animator->AddSprite(std::move(sprite1));
   animator->AddSprite(std::move(sprite2));
   animator->AddSprite(std::move(sprite3));
@@ -132,7 +132,7 @@ void StartGame()
   {
 	  spic::internal::Rendering::Clean();
 	  //spic::internal::Rendering::DrawSprite(&transform1, &sprite);
-	  //spic::internal::Rendering::DrawAnimator(&transform2,&animator);
+	  //spic::internal::Rendering::DrawAnimator(&transform2,animator.get());
 	  //spic::internal::Rendering::DrawText(&text);
 	  spic::internal::Rendering::Draw(&gameObjectTest);
 	  spic::internal::Rendering::Render();

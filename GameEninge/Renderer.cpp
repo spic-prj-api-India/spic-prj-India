@@ -13,7 +13,7 @@ void spic::internal::Rendering::Exit()
 
 void spic::internal::Rendering::Draw(GameObject* gameObject)
 {
-	spic::internal::rendering::RendererImp::GetInstance()->Draw(gameObject);
+	spic::internal::rendering::RendererImp::GetInstance()->DrawGameObject(gameObject);
 }
 
 void spic::internal::Rendering::UpdateCamera(Camera* camera)
@@ -31,17 +31,17 @@ void spic::internal::Rendering::DrawLine(const Point* start, const Point* end, c
 	spic::internal::rendering::RendererImp::GetInstance()->DrawLine(start,end, colour);
 }
 
-void spic::internal::Rendering::DrawSprite(const Transform* position, Sprite* sprite)
+void spic::internal::Rendering::DrawSprite(const Transform* position, const bool isUi, Sprite* sprite)
 {
-	spic::internal::rendering::RendererImp::GetInstance()->DrawSprite(position,sprite);
+	spic::internal::rendering::RendererImp::GetInstance()->DrawSprite(sprite, isUi, position );
 }
 
-void spic::internal::Rendering::DrawAnimator(const Transform* position, Animator* animator)
+void spic::internal::Rendering::DrawAnimator(const Transform* position, const bool isUi, Animator* animator)
 {
-	spic::internal::rendering::RendererImp::GetInstance()->DrawAnimator(position, animator);
+	spic::internal::rendering::RendererImp::GetInstance()->DrawAnimator(animator, isUi, position);
 }
 
-void spic::internal::Rendering::DrawText(Text* text)
+void spic::internal::Rendering::DrawText(Text* text, const bool isUi)
 {
 	spic::internal::rendering::RendererImp::GetInstance()->DrawText(text);
 }
