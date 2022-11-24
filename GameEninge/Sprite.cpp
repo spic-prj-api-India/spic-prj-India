@@ -15,6 +15,7 @@ spic::Sprite::Sprite()
 }
 
 spic::Sprite::Sprite(const std::string& sprite
+	, const spic::Color& color
 	, const bool flipX
 	, const bool flipY
 	, const int sortingLayer
@@ -31,27 +32,6 @@ spic::Sprite::Sprite(const std::string& sprite
 	, orderInLayer{ orderInLayer }
 	, x{x}
 	, y{y}
-	, height{ height }
-	, width{ width }
-{
-}
-
-spic::Sprite::Sprite(const spic::Color& color
-	, const bool flipX
-	, const bool flipY
-	, const int sortingLayer
-	, const int orderInLayer
-	, const int x
-	, const int y
-	, const int height
-	, const int width) :
-	  color{ color }
-	, flipX{ flipX }
-	, flipY{ flipY }
-	, sortingLayer{ sortingLayer }
-	, orderInLayer{ orderInLayer }
-	, x{ x }
-	, y{ y }
 	, height{ height }
 	, width{ width }
 {

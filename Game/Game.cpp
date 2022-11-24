@@ -23,6 +23,7 @@ void InitGame() {
 	// Init
 	spic::GameEngine* engine = spic::GameEngine::GetInstance();
 	std::unique_ptr<spic::Camera> camera = std::make_unique<spic::Camera>();
+	camera->Transform(std::make_shared<spic::Transform>(spic::Point(0.0, 0.0), 0.0f, 1.0f));
 	camera->BackgroundColor(spic::Color::blue());
 	scene = std::make_shared<spic::Scene>(std::move(camera));
 
@@ -41,7 +42,7 @@ void InitGame() {
 	boxCollider->Height(0.3f);
 	std::shared_ptr<spic::RigidBody> boxRigidBody = std::make_shared<spic::RigidBody>(1.0f, 0.2f, spic::BodyType::dynamicBody);
 	std::shared_ptr<CollisionDetectionScript> script = std::make_shared<CollisionDetectionScript>();
-	auto boxSprite = std::make_shared<spic::Sprite>("assets/textures/box.png", false, false, 1, 0);
+	auto boxSprite = std::make_shared<spic::Sprite>("assets/textures/box.png", spic::Color::white(), false, false, 1, 0);
 
 	box->Tag(boxTag);
 	box->Transform(boxTransform);
@@ -60,7 +61,7 @@ void InitGame() {
 	platformCollider->Width(8.75f);
 	platformCollider->Height(0.275f);
 	std::shared_ptr<spic::RigidBody> platformRigidBody = std::make_shared<spic::RigidBody>(1.0f, 0.0f, spic::BodyType::staticBody);
-	auto colorSprite = std::make_shared<spic::Sprite>(spic::Color::cyan(), false, false, 1, 0);
+	auto colorSprite = std::make_shared<spic::Sprite>("", spic::Color::cyan(), false, false, 1, 0);
 
 	platform->Tag(platformTag);
 	platform->Transform(platformTransform);

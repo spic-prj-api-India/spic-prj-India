@@ -9,9 +9,12 @@ namespace spic
 	Scene::Scene(std::unique_ptr<spic::Camera> newCamera, spic::UpdateSetting setting) :
 		setting{ setting }
 	{
-		if (newCamera != nullptr)
+		if (newCamera != nullptr) {
 			camera = std::move(newCamera);
+			return;
+		}
 		camera = std::make_unique<spic::Camera>();
+		camera->Transform(std::make_shared<spic::Transform>(spic::Point(0.0, 0.0), 0.0f, 1.0f));
 	}
 
 	std::vector<std::shared_ptr<GameObject>> Scene::Contents() const
