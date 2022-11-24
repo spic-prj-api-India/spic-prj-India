@@ -1,8 +1,8 @@
 #include "Sprite.hpp"
 
 spic::Sprite::Sprite()
-	: sprite{ ""}
-	, color{ spic::Color::white()}
+	: sprite{ "" }
+	, color{ spic::Color::white() }
 	, flipX{ false }
 	, flipY{ false }
 	, sortingLayer{ 0 }
@@ -15,23 +15,23 @@ spic::Sprite::Sprite()
 }
 
 spic::Sprite::Sprite(const std::string& sprite
+	, const int sortingLayer
+	, const int orderInLayer
 	, const spic::Color& color
 	, const bool flipX
 	, const bool flipY
-	, const int sortingLayer
-	, const int orderInLayer
 	, const int x
 	, const int y
 	, const int height
 	, const int width)
-	: sprite{sprite}
-	, color{color}
-	, flipX{flipX}
-	, flipY{flipY}
+	: sprite{ sprite }
+	, color{ color }
+	, flipX{ flipX }
+	, flipY{ flipY }
 	, sortingLayer{ sortingLayer }
 	, orderInLayer{ orderInLayer }
-	, x{x}
-	, y{y}
+	, x{ x }
+	, y{ y }
 	, height{ height }
 	, width{ width }
 {

@@ -17,11 +17,11 @@ namespace spic {
         
         Sprite();
         Sprite(const std::string& sprite
-            , const spic::Color& color
-            , const bool flipX
-            , const bool flipY
-            , const int sortingLayer
-            , const int orderInLayer
+            , const int sortingLayer = 0
+            , const int orderInLayer = 0
+            , const spic::Color& color = Color::white()
+            , const bool flipX = false
+            , const bool flipY = false
             , const int x = 0
             , const int y = 0
             , const int height = 0
