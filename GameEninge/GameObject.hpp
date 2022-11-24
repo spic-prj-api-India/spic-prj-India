@@ -99,6 +99,18 @@ namespace spic {
 		 */
 		void Transform(std::shared_ptr<spic::Transform> transform);
 
+		/// @brief const version of getting position
+		/// @return 
+		const Point Position() const;
+
+		/// @brief Const version of getting rotation
+		/// @return 
+		const float Rotation() const;
+
+		/// @brief Const version of scale
+		/// @return 
+		const float Scale() const;
+
 		/*
 		@brief Set this GameObject to get destroyed upon loading a new scene.
 		*/
@@ -284,8 +296,11 @@ namespace spic {
 		template<class T>
 		std::vector<std::shared_ptr<T>> GetComponentsInParent() const;
 
+		/// @brief Adds a gameobject to an gameobject
+		/// @tparam T Has to be of type gameobject 
+		/// @param gameObject 
 		template<class T>
-		void AddChild(const std::shared_ptr<T> gameObject);
+		void AddChild(std::shared_ptr<T> gameObject);
 
 		/// @brief Gets all the children of this object
 		/// @param includeInactive If you want to include inactive children  
@@ -405,10 +420,11 @@ namespace spic {
 	}
 
 	template<class T>
-	void GameObject::AddChild(const std::shared_ptr<T> gameObject) {
+	void GameObject::AddChild(std::shared_ptr<T> gameObject) {
 		if (gameObject->GetParent() != nullptr)
 			throw std::exception("Child can only have one parent");
 		children.emplace_back(gameObject);
+		gameObject->parent = this;
 	}
 }
 

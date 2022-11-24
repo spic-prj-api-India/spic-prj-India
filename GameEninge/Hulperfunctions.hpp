@@ -1,47 +1,68 @@
-#pragma once
+#ifndef HULPERFUNCTIONS_H_
+#define HULPERFUNCTIONS_H_
+
 #include "Point.hpp"
 #include <algorithm>
 #include <cmath>
+#include <array>
+#include "Sprite.hpp"
+#include <memory>
+
 
 namespace spic::HulperFunctions 
 {
+	/// @brief 
+	/// @param org 
+	/// @param angle 
+	/// @param p 
+	void RotatePoint(const Point& org, float angle, Point& p) noexcept;
+
+	/// @brief 
+	/// @param pointX 
+	/// @param rotation 
+	/// @param angle 
+	/// @param height 
+	/// @param width 
+	/// @param scaling 
+	/// @return 
+	Point GetsPointY(Point& pointX, const Point& rotation, const float angle, float height, float width, float scaling) noexcept;
+	
+	/// @brief 
+	/// @param a 
+	/// @param b 
+	/// @return 
+	bool SpriteSorting(const std::shared_ptr<Sprite> a, const std::shared_ptr<Sprite> b);
+
+	/// @brief 
+	/// @param orgin 
+	/// @param angle 
+	/// @param aspectWidth 
+	/// @param aspectHeight 
+	/// @return 
+	std::array<Point, 4> GetPoints(const Point& orgin, const float angle, const float aspectWidth, const float aspectHeight);
+
+	/// @brief Calculates if a point is within a square
+	/// @details https://math.stackexchange.com/a/190373
+	/// @param point 
+	/// @param square 
+	/// @return 
+	bool CalculateWithinSquare(const Point& point, std::array<Point, 4>& square);
+
+	/// @brief 
+	/// @param point 
+	/// @param aspectWidth 
+	/// @param aspectHeight 
+	/// @return 
+	Point GetCenter(const Point& point, const float aspectWidth, const float aspectHeight);
+
+	/// @brief 
+	/// @tparam T 
+	/// @param n 
+	/// @param increment 
+	/// @param min 
+	/// @param max 
 	template <class T>
-	static int PrecisionRoundingoInt(T t)
-	{
-		return static_cast<int>(t >= 0 ? t - 0.5 : t + 0.5);
-	}
-
-	static void RotatePoint(const Point& org, float angle, Point& p) noexcept
-	{
-		p = Point{ std::cos(angle) * (p.x - org.x) - std::sin(angle) * (p.y - org.y) + org.x,
-			std::sin(angle) * (p.x - org.x) + std::cos(angle) * (p.y - org.y) + org.y };
-	}
-
-	static Point GetsPointY(Point& pointX, const Point& rotation, const float angle, float height, float width, float scaling) noexcept
-	{
-		RotatePoint(rotation, angle, pointX);
-		return Point{ pointX.x * scaling, pointX.y * height * scaling };
-	}
-
-	static bool SpriteSorting(const std::shared_ptr<Sprite> a, const std::shared_ptr<Sprite> b) noexcept
-	{
-		if (a->OrderInLayer() < b->OrderInLayer())
-			return true;
-
-		if (a->OrderInLayer() > b->OrderInLayer())
-			return false;
-
-		if (a->OrderInLayer() < b->OrderInLayer())
-			return true;
-
-		if (a->OrderInLayer() > b->OrderInLayer())
-			return true;
-
-		return false;
-	}
-
-	template <class T>
-	static void SpecialWrap(T& n, const T increment, const T min, const T max)
+	void SpecialWrap(T& n, const T increment, const T min, const T max)
 	{
 		if (n + increment > max)
 			n = min;
@@ -51,4 +72,14 @@ namespace spic::HulperFunctions
 			n += increment;
 	}
 
+	/// @brief 
+	/// @tparam T 
+	/// @param t 
+	/// @return 
+	template <class T>
+	int PrecisionRoundingoInt(T t)
+	{
+		return static_cast<int>(t >= 0 ? t - 0.5 : t + 0.5);
+	}
 }
+#endif

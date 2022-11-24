@@ -30,6 +30,7 @@ namespace spic {
                 , const spic::Alignment alignment
                 , const spic::Color& color);
 
+
             const std::string _Text();
             const void _Text(const std::string& text);
 
@@ -44,8 +45,6 @@ namespace spic {
 
             const spic::Color Color();
             const void Color(const spic::Color color);
-
-
         private:
             std::string text;
             std::string font;

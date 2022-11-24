@@ -2,7 +2,6 @@
 #define RENDERINGSYSTEM_H_
 
 #include "ISystem.hpp"
-#include "SDL2/SDL.h"
 
 /**
 * @brief A system that calls the Start and Update method in scripts of entities
@@ -30,8 +29,7 @@ namespace spic::internal::systems {
 		* @spicapi
 		*/
 		void Update(std::vector<std::shared_ptr<spic::GameObject>>& entities, Scene& currentScene) override;
-	private:
-		SDL_Window* window;
+
 	};
 }
 

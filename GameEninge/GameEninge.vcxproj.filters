@@ -371,7 +371,7 @@
     <ClCompile Include="IPhysicsExtension.cpp">
       <Filter>Source Files\extensions\physics</Filter>
     </ClCompile>
-    <ClCompile Include="RendererImp.hpp">
+    <ClCompile Include="RendererImpl.hpp">
       <Filter>Header Files\systems\rendering</Filter>
     </ClCompile>
     <ClCompile Include="InputSystem.cpp">
@@ -401,11 +401,14 @@
     <ClCompile Include="UIObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Renderer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Camera.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer.cpp">
+      <Filter>Source Files\systems\rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Hulperfunctions.cpp">
+      <Filter>Source Files\systems\rendering</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

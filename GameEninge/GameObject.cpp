@@ -126,7 +126,7 @@ namespace spic {
 		layer = newLayer;
 	}
 
-	std::shared_ptr<Transform> GameObject::Transform() 
+	std::shared_ptr<Transform> GameObject::Transform()
 	{
 		return transform;
 	}
@@ -134,6 +134,21 @@ namespace spic {
 	void GameObject::Transform(std::shared_ptr<spic::Transform> _transform) 
 	{
 		transform = _transform;
+	}
+
+	const Point GameObject::Position() const
+	{
+		return transform->position;
+	}
+
+	const float GameObject::Rotation() const
+	{
+		return transform->rotation;
+	}
+
+	const float GameObject::Scale() const
+	{
+		return transform->scale;
 	}
 
 	bool GameObject::DontDestroyOnLoad()

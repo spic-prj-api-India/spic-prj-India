@@ -1,5 +1,4 @@
-#include "RendererImp.hpp"
-
+#include "RendererImpl.hpp"
 #include "UIObject.hpp"
 #include <algorithm>
 #include "Text.hpp"
@@ -16,14 +15,14 @@ using namespace spic::HulperFunctions;
 #define UINT_8_BEGIN 0
 #define UINT_8_END 255
 
-RendererImp* RendererImp::pinstance_{ nullptr };
-std::mutex RendererImp::mutex_;
+RendererImpl* RendererImpl::pinstance_{ nullptr };
+std::mutex RendererImpl::mutex_;
 
-RendererImp::RendererImp() noexcept(false) : camera{ 0, 0, 0, 0 }, backgroundColor {0,0,0,100}, scaling{1}, rotation{0}
+RendererImpl::RendererImpl() noexcept(false) : camera{ 0, 0, 0, 0 }, backgroundColor {0,0,0,1}, scaling{1}, rotation{0}
 {
 }
 
-RendererImp::~RendererImp()
+RendererImpl::~RendererImpl()
 {
     try
     {
@@ -35,16 +34,18 @@ RendererImp::~RendererImp()
     }
 }
 
-void RendererImp::Start(const spic::window::WindowValues* values)
+void RendererImpl::Start(const spic::window::WindowValues* values)
 {
-    Exit();
+    Exit(); // does nothing if it has not been called yet
 
+    // sets up video
     if (SDL_Init(SDL_INIT_VIDEO != 0))
     {
         std::cout << SDL_GetError() << std::endl;
         exit(-1);
     }
 
+    // for deltatime 
     lastTick = SDL_GetTicks();
     deltatime = 0;
 
@@ -67,54 +68,58 @@ void RendererImp::Start(const spic::window::WindowValues* values)
         exit(-1);
     }
 
+    //TODO: Zet in CreateTTF
     if (TTF_Init() == -1) {
         printf("Failed to TTF: %s", SDL_GetError());
         exit(-1);
     }
 
     this->UpdateWindow(values);
+
+
+    auto tmp_sprites = SurfacePtr(IMG_Load("assets/textures/missing_texture.png"));
+    if (!tmp_sprites.get())
+        return;
+
+    missingTexture = TexturePtr(SDL_CreateTextureFromSurface(renderer.get(), tmp_sprites.get()));
 }
 
-void RendererImp::Exit()
+void RendererImpl::Exit()
 {
     renderer.release();
     window.release();
     SDL_Quit();
 }
 
-SDL_Point RendererImp::GetTextureSize(SDL_Texture* texture) {
+SDL_Point RendererImpl::GetTextureSize(SDL_Texture* texture) const
+{
     SDL_Point size;
     SDL_QueryTexture(texture, NULL, NULL, &size.x, &size.y);
     return size;
 }
 
-void RendererImp::DrawSprites(GameObject* gameObject, const bool isUiObject)
+void RendererImpl::DrawSprites(GameObject* gameObject, const bool isUiObject)
 {
-    auto transform = gameObject->Transform();
-
-    const auto posX = transform->position;
-    const auto scaling = transform->scale;
-    const auto rotation = transform->rotation;
-
+    const auto transform = gameObject->Transform();
     auto _sprites = gameObject->GetComponents<Sprite>();
-
+    std::sort(_sprites.begin(), _sprites.end(), spic::HulperFunctions::SpriteSorting);
     for (auto& sprite : _sprites)
     {
         DrawSprite(sprite.get(), isUiObject, transform.get());
     }
 }
 
-SDL_Texture* RendererImp::LoadTexture(Sprite* sprite)
+SDL_Texture* RendererImpl::LoadTexture(const Sprite* sprite)
 {
-    if(sprite->_Sprite().empty())
-        return nullptr;
+    if (sprite->_Sprite().empty())
+        return missingTexture.get();
     bool exists = textures.find(sprite->_Sprite()) != textures.end();
     if (exists)
         return textures[sprite->_Sprite()].get();
 
     auto tmp_sprites = SurfacePtr(IMG_Load(sprite->_Sprite().c_str()));
     if (!tmp_sprites.get())
-        return nullptr;
+        return missingTexture.get();
 
     auto texture = TexturePtr(SDL_CreateTextureFromSurface(renderer.get(), tmp_sprites.get()));
     auto returnPntr = texture.get();
@@ -122,7 +127,7 @@ SDL_Texture* RendererImp::LoadTexture(Sprite* sprite)
     return returnPntr;
 }
 
-TTF_Font* RendererImp::LoadFont(const std::string& font, const int size)
+TTF_Font* RendererImpl::LoadFont(const std::string& font, const int size)
 {
     if (font.empty())
         return nullptr;
@@ -138,7 +143,7 @@ TTF_Font* RendererImp::LoadFont(const std::string& font, const int size)
 }
 
 
-void RendererImp::DrawUI(UIObject* gameObject)
+void RendererImpl::DrawUI(UIObject* gameObject)
 {
     auto* castedUiObject = dynamic_cast<Text*>(gameObject);
     const bool thisIsTextObject = castedUiObject != nullptr;
@@ -146,13 +151,13 @@ void RendererImp::DrawUI(UIObject* gameObject)
         DrawText(castedUiObject);
 }
 
-void RendererImp::NewScene()
+void RendererImpl::NewScene()
 {
     textures.clear();
     fonts.clear();
 }
 
-void RendererImp::DrawAnimators(GameObject* gameObject, const bool isUiObject)
+void RendererImpl::DrawAnimators(GameObject* gameObject, const bool isUiObject)
 {
     auto _animator = gameObject->GetComponents<Animator>();
     
@@ -163,7 +168,7 @@ void RendererImp::DrawAnimators(GameObject* gameObject, const bool isUiObject)
     }
 }
 
-void RendererImp::DrawAnimator(Animator* animator, const bool isUiObject, const Transform* position)
+void RendererImpl::DrawAnimator(Animator* animator, const bool isUiObject, const Transform* position)
 {
 
     auto sprites = animator->Sprites();
@@ -191,7 +196,7 @@ void RendererImp::DrawAnimator(Animator* animator, const bool isUiObject, const 
 
 }
 
-void RendererImp::SetBackgroundColor()
+void RendererImpl::SetBackgroundColor()
 {
     SDL_SetRenderDrawColor(renderer.get()
         , PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, this->backgroundColor.R()))
@@ -203,22 +208,20 @@ void RendererImp::SetBackgroundColor()
     SDL_RenderFillRect(renderer.get(), &this->windowCamera);
 }
 
-RendererImp* RendererImp::GetInstance()
+RendererImpl* RendererImpl::GetInstance()
 {
     std::lock_guard<std::mutex> lock(mutex_);
     if (pinstance_ == nullptr)
     {
-        pinstance_ = new RendererImp();
+        pinstance_ = new RendererImpl();
     }
     return pinstance_;
 }
 
-void RendererImp::DrawGameObject(GameObject* gameObject, bool isUiOject)
+void RendererImpl::DrawGameObject(GameObject* gameObject, bool isUiOject)
 {   
     if (gameObject->Active())
     {
-        auto transform = gameObject->Transform();
-
         auto* castedUiObject = dynamic_cast<UIObject*>(gameObject);
         const bool thisIsUIObject = castedUiObject != nullptr;
 
@@ -242,7 +245,7 @@ void RendererImp::DrawGameObject(GameObject* gameObject, bool isUiOject)
     }
 }
 
-void RendererImp::DrawLine(const Point* start, const Point* end, const Color* colour)
+void RendererImpl::DrawLine(const Point* start, const Point* end, const Color* colour)
 {
     SDL_SetRenderDrawColor(renderer.get()
         , PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, colour->R()))
@@ -257,7 +260,7 @@ void RendererImp::DrawLine(const Point* start, const Point* end, const Color* co
 }
 
 
-void RendererImp::DrawText(Text* text)
+void RendererImpl::DrawText(Text* text)
 {
     if (std::filesystem::exists(text->Font().c_str()))
     {
@@ -277,7 +280,7 @@ void RendererImp::DrawText(Text* text)
     }
 }
 
-void RendererImp::DrawSprite(Sprite* sprite, const bool isUiObject, const Transform* transform)
+void RendererImpl::DrawSprite(const Sprite* sprite, const bool isUiObject, const Transform* transform)
 {
     if (transform == nullptr)
         return;
@@ -342,8 +345,7 @@ void RendererImp::DrawSprite(Sprite* sprite, const bool isUiObject, const Transf
     SDL_RenderCopyEx(renderer.get(), texture, &sourceRect, &dstRect, transform->rotation, &center, flip);
 }
 
-
-void RendererImp::UpdateCamera(Camera* camera)
+void RendererImpl::UpdateCamera(Camera* camera)
 {
     auto transform = camera->Transform().get();
     const auto pos = transform->position;
@@ -361,7 +363,7 @@ void RendererImp::UpdateCamera(Camera* camera)
     this->backgroundColor = camera->BackgroundColor();
 }
 
-void RendererImp::Clean()
+void RendererImpl::Clean()
 {
     SDL_RenderClear(renderer.get());
     SDL_SetRenderDrawColor(renderer.get()
@@ -372,7 +374,7 @@ void RendererImp::Clean()
     );
 }
 
-void RendererImp::Render()
+void RendererImpl::Render()
 {
     SDL_SetRenderDrawColor(renderer.get()
         , PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, this->backgroundColor.R()))
@@ -384,7 +386,7 @@ void RendererImp::Render()
     SDL_RenderPresent(renderer.get());
 }
 
-void RendererImp::UpdateWindow(const spic::window::WindowValues* values)
+void RendererImpl::UpdateWindow(const spic::window::WindowValues* values)
 {
     Uint32 window_flags = -1;
 
@@ -413,7 +415,7 @@ void RendererImp::UpdateWindow(const spic::window::WindowValues* values)
 }
 
 
-void RendererImp::Wrap(const TTF_Font* pFont, std::string& input, const size_t&& width)
+void RendererImpl::Wrap(const TTF_Font* pFont, std::string& input, const size_t&& width)
 {
     std::istringstream in(input);
     std::string line;
@@ -452,7 +454,7 @@ void RendererImp::Wrap(const TTF_Font* pFont, std::string& input, const size_t&&
     std::swap(output, input);
 }
 
-void RendererImp::RenderMultiLineText(const TTF_Font* pFont, std::string& rText
+void RendererImpl::RenderMultiLineText(const TTF_Font* pFont, std::string& rText
     , const SDL_Color& rTextColor, int XPosition, int YPosition, const int Width
     , const int Height, const int DistanceBetweenLines, const Alignment Align)
 {

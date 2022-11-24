@@ -225,6 +225,7 @@
     <ClCompile Include="Chunk.cpp" />
     <ClCompile Include="BehaviourScript.cpp" />
     <ClCompile Include="Box2DCollisionListener.cpp" />
+    <ClCompile Include="Hulperfunctions.cpp" />
     <ClCompile Include="IPhysicsExtension.cpp" />
     <ClCompile Include="PhysicsExtension1.cpp" />
     <ClCompile Include="BoxCollider.cpp" />
@@ -237,7 +238,7 @@
     <ClCompile Include="Text.cpp" />
     <ClCompile Include="UIObject.cpp" />
     <ClCompile Include="RendererImp.cpp" />
-    <ClCompile Include="RendererImp.hpp" />
+    <ClCompile Include="RendererImpl.hpp" />
     <ClCompile Include="EntityManager.cpp" />
     <ClCompile Include="RenderingSystem.cpp" />
     <ClCompile Include="Sample.cpp" />

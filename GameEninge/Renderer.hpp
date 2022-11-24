@@ -1,4 +1,6 @@
-#pragma once
+#ifndef RENDERING_H_
+#define RENDERING_H_
+
 #include "Transform.hpp"
 #include "Animator.hpp"
 #include "Text.hpp"
@@ -13,6 +15,7 @@ namespace spic::internal {
         /// @param values 
         static void Start(const spic::window::WindowValues* values);
 
+        /// @brief Closes the window
         static void Exit();
 
         /// @brief Draws an gameobject
@@ -24,7 +27,7 @@ namespace spic::internal {
         /// @param camera 
         static void UpdateCamera(Camera* camera);
 
-        /// @brief Sets the background color to internal one
+        /// @brief Sets the background color to internal one (needs to be called every frame)
         static void SetBackgroundColor();
 
         /// @brief Draws a line from start to end
@@ -61,9 +64,9 @@ namespace spic::internal {
         static void Render();
 
         /// @brief Gets the aspect values from the window
+        /// @details TODO add functionality
         /// @return Width, Height
         static std::pair<float, float> GetAspects();
     };
-    
-
 }
+#endif

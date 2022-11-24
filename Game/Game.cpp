@@ -75,7 +75,7 @@ void StartGame()
 
  ///** Code to show working (remove 2 slashes to get it working)
   auto transform1 = std::make_shared<spic::Transform>(spic::Point{80,80}, 10,0.5);
-  auto sprite = std::make_shared<spic::Sprite>("assets/textures/post-apocalyptic-backgrounds/Postapocalypce1/Bright/clouds1.png", spic::Color::magenta(), false, false,0,0);
+  auto sprite = std::make_shared<spic::Sprite>("", spic::Color::magenta(), false, false,0,0);
 
 
   auto transform2 = spic::Transform{ spic::Point{0,0}, 0.5,1.0f };

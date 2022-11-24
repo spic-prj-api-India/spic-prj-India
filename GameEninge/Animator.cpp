@@ -46,7 +46,7 @@ const int spic::Animator::Fps() const
     return this->fps;
 }
 
-const void spic::Animator::Fps(const int fps)
+void spic::Animator::Fps(const int fps)
 {
     this->fps = fps;
 }
@@ -61,12 +61,12 @@ const int spic::Animator::Index() const
     return this->index;
 }
 
-const void spic::Animator::Index(const int index)
+void spic::Animator::Index(const int index)
 {
     this->index = index;
 }
 
-const void spic::Animator::IncreaseIndex(const int index)
+void spic::Animator::IncreaseIndex(const int index)
 {
     //const auto orderMax = sprites.back()->OrderInLayer();
     

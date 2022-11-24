@@ -11,7 +11,6 @@ namespace spic::window {
         BORDERLESS = 2
     };
 
-
     /// @brief Values needed to start rendering
     struct WindowValues
     {
@@ -30,8 +29,5 @@ namespace spic::window {
         /// @brief Which mode the window is
         FULLSCREENTYPE selector;
     };
-
-    
-
 }
 #endif // AUDIOINFO_H_

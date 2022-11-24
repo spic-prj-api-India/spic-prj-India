@@ -10,6 +10,11 @@ namespace spic {
     struct Point {
         float x;
         float y;
+
+        /// @brief Dotproduct
+        /// @param point 
+        /// @return 
+        float operator *(const Point& point);
     };
 
 }
