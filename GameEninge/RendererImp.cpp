@@ -173,12 +173,18 @@ void RendererImp::DrawAnimator(Animator* animator, const bool isUiObject, const 
 
     const int fps = 1000;
 
-    const auto frame = static_cast<uint64_t>(SDL_GetTicks() / ((static_cast<double>(fps) / animator->Fps()) * Time::TimeScale())) % framesAmount;
+    //const auto frame = static_cast<uint64_t>(SDL_GetTicks() / ((static_cast<double>(fps) / animator->Fps()) * Time::TimeScale())) % framesAmount;
+
+    const auto frame = static_cast<uint64_t>(SDL_GetTicks() / (1000 /animator->Fps() * Time::TimeScale())) % framesAmount;
 
     for (auto& sprite : sprites)
     {
         if (sprite->OrderInLayer() == frame && !animator->IsFozen())
+        {
+            //animator->Index(frame);
             DrawSprite(sprite.get(), isUiObject, position);
+        }
+            
         else if (sprite->OrderInLayer() == animator->Index() && animator->IsFozen())
             DrawSprite(sprite.get(), isUiObject, position);
     }
