@@ -61,7 +61,7 @@ namespace spic {
              * @return The current camera
              * @spicapi
              */
-            const spic::Camera& Camera() const;
+            spic::Camera& Camera() const;
 
             /**
              * @brief Set camera

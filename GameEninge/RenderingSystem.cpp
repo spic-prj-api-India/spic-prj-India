@@ -14,6 +14,7 @@ namespace spic::internal::systems {
 	void RenderingSystem::Update(std::vector<std::shared_ptr<spic::GameObject>>& entities, Scene& currentScene)
 	{
 		spic::internal::Rendering::Clean();
+		spic::internal::Rendering::UpdateCamera(&currentScene.Camera());
 		for (const auto& entity : entities) {
 			spic::internal::Rendering::Draw(entity.get());
 		}

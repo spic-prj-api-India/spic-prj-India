@@ -41,7 +41,7 @@ namespace spic
 		return *tileMap;
 	}
 
-	const spic::Camera& Scene::Camera() const
+	spic::Camera& Scene::Camera() const
 	{
 		return *camera;
 	}
