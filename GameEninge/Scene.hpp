@@ -1,13 +1,13 @@
 #ifndef SCENE_H_
 #define SCENE_H_
 
+#include <string>
 #include "GameObject.hpp"
 #include "Camera.hpp"
-#include <string>
 #include "TileMap.hpp"
 
 namespace spic {
-    enum UpdateSetting { ALWAYS, CAMERA_VIEW };
+    enum class UpdateSetting { ALWAYS, CAMERA_VIEW };
 
     /**
      * @brief Class representing a scene which can be rendered by the Camera.
@@ -54,7 +54,7 @@ namespace spic {
              * @return The current tile map
              * @spicapi
              */
-            const spic::internal::TileMap& TileMap() const;
+            spic::internal::TileMap& TileMap() const;
 
             /**
              * @brief The scene's camera

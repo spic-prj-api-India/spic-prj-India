@@ -36,7 +36,7 @@ namespace spic
 		tileMap = mapParser->Parse(newTileMapPath);
 	}
 
-	const spic::internal::TileMap& Scene::TileMap() const
+	spic::internal::TileMap& Scene::TileMap() const
 	{
 		return *tileMap;
 	}

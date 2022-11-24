@@ -1,9 +1,7 @@
 #ifndef TILELAYER_H_
 #define TILELAYER_H_
 
-#include <string>
 #include <vector>
-#include <tinyxml.h>
 #include <iostream>
 #include "TileSet.hpp"
 #include "Point.hpp"
@@ -20,7 +18,7 @@ namespace spic::internal
 
         virtual ~TileLayer();
 
-        inline void Render();
+        void Render();
 
         void SetMatrix(const Matrix& matrix);
 

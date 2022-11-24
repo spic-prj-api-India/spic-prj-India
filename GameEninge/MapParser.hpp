@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <string>
+#include <tinyxml.h>
 #include "TileMap.hpp"
 
 namespace spic::internal

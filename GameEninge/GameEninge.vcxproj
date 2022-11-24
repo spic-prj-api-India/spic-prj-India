@@ -217,6 +217,7 @@
     <ClInclude Include="Transform.hpp" />
     <ClInclude Include="TypeHelper.hpp" />
     <ClInclude Include="UIObject.hpp" />
+    <ClCompile Include="RendererImp.hpp" />
     <ClInclude Include="WindowValues.hpp" />
   </ItemGroup>
   <ItemGroup>
@@ -240,7 +241,6 @@
     <ClCompile Include="Text.cpp" />
     <ClCompile Include="UIObject.cpp" />
     <ClCompile Include="RendererImp.cpp" />
-    <ClCompile Include="RendererImp.hpp" />
     <ClCompile Include="EntityManager.cpp" />
     <ClCompile Include="RenderingSystem.cpp" />
     <ClCompile Include="Sample.cpp" />

@@ -13,8 +13,8 @@
 #include "MouseListener.h"
 #include "KeyListener.h"
 #include "EntityManager.hpp"
-#include <Renderer.hpp>
 #include "Scene.hpp"
+#include <Renderer.hpp>
 
 std::shared_ptr<spic::Scene> scene;
 

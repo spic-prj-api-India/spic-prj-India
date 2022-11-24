@@ -1,5 +1,4 @@
 #include "MapParser.hpp"
-#include <tinyxml.h>
 #include "TileLayer.hpp"
 
 namespace spic::internal

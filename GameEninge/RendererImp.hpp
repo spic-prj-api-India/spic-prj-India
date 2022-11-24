@@ -1,5 +1,5 @@
-#ifndef RENDERER_H_
-#define RENDERER_H_
+#ifndef RENDERERIMP_H_
+#define RENDERERIMP_H_
 
 #include <mutex>
 #include <string>
@@ -155,4 +155,4 @@ namespace spic::internal::rendering {
         
     };
 }
-#endif // AUDIOMANAGER_H_
+#endif // RENDERERIMP_H_
