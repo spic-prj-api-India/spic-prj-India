@@ -84,9 +84,7 @@ namespace spic::internal::rendering {
 
         void DrawUI(UIObject* gameObject);
         void DrawAnimators(GameObject* gameObject, const bool isUiObject);
-        void DrawAnimator(Animator* sprite, const bool isUiObject, const Transform* transform);
-        void DrawSprite(Sprite* sprite, const bool isUiObject, const Transform* transform);
-        void DrawGameObject(GameObject* gameObject, bool isUiOject = false);
+        
 
         void Wrap(const TTF_Font* pFont, std::string& input, const size_t&& width);
 
@@ -136,15 +134,15 @@ namespace spic::internal::rendering {
             * executed on its instance.
             */
 
-        void Draw(GameObject* gameObject);
+        void DrawGameObject(GameObject* gameObject, bool isUiOject = false);
 
         void UpdateWindow(const spic::window::WindowValues* values);
         void UpdateCamera(Camera* camera);
 
         void SetBackgroundColor();
         void DrawLine(const Point* start, const Point* end, const Color* colour);
-        void DrawSprite(const Transform* position, Sprite* sprite);
-        void DrawAnimator(const Transform* position, Animator* animator);
+        void DrawSprite(Sprite* sprite, const bool isUiObject, const Transform* transform);
+        void DrawAnimator(Animator* animator, const bool isUiObject, const Transform* position);
         void DrawText(Text* text);
         void Clean();
         void NewScene();

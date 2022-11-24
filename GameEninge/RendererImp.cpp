@@ -191,13 +191,6 @@ void RendererImp::DrawAnimator(Animator* animator, const bool isUiObject, const 
 
 }
 
-
-
-void RendererImp::Draw(GameObject* gameObject)
-{
-    DrawGameObject(gameObject);
-}
-
 void RendererImp::SetBackgroundColor()
 {
     SDL_SetRenderDrawColor(renderer.get()
@@ -263,17 +256,6 @@ void RendererImp::DrawLine(const Point* start, const Point* end, const Color* co
         , PrecisionRoundingoInt(end->y));
 }
 
-void RendererImp::DrawSprite(const Transform* transform, Sprite* sprite)
-{
-    if(transform != nullptr)
-        DrawSprite(sprite, true, transform);
-}
-
-void RendererImp::DrawAnimator(const Transform* transform, Animator* animator)
-{
-    if (transform != nullptr)
-        DrawAnimator(animator,true, transform);
-}
 
 void RendererImp::DrawText(Text* text)
 {
@@ -297,6 +279,9 @@ void RendererImp::DrawText(Text* text)
 
 void RendererImp::DrawSprite(Sprite* sprite, const bool isUiObject, const Transform* transform)
 {
+    if (transform == nullptr)
+        return;
+
     SDL_Texture* texture = LoadTexture(sprite);
     auto textureSize = GetTextureSize(texture);
 
@@ -356,6 +341,7 @@ void RendererImp::DrawSprite(Sprite* sprite, const bool isUiObject, const Transf
 
     SDL_RenderCopyEx(renderer.get(), texture, &sourceRect, &dstRect, transform->rotation, &center, flip);
 }
+
 
 void RendererImp::UpdateCamera(Camera* camera)
 {

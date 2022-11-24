@@ -131,7 +131,7 @@ void StartGame()
   {
 	  spic::internal::Rendering::Clean();
 	  //spic::internal::Rendering::DrawSprite(&transform1, &sprite);
-	  //spic::internal::Rendering::DrawAnimator(&transform2,&animator);
+	  //spic::internal::Rendering::DrawAnimator(&transform2,animator.get());
 	  //spic::internal::Rendering::DrawText(&text);
 	  spic::internal::Rendering::Draw(&gameObjectTest);
 	  spic::internal::Rendering::Render();
