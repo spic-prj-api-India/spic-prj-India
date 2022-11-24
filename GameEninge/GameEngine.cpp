@@ -2,6 +2,7 @@
 #include "EntityManager.hpp"
 #include "SDL2/SDL.h"
 #include "Input.hpp"
+#include "Renderer.hpp"
 
 namespace spic {
 	GameEngine* GameEngine::pinstance_{ nullptr };
@@ -35,13 +36,15 @@ namespace spic {
 		internal::EntityManager::GetInstance()->DestroyScene(forceDelete);
 	}
 
-	void GameEngine::Start()
+	void GameEngine::Start(const spic::window::WindowValues* values)
 	{
 		const int FPS = 60;
 		const int frameDelay = 1000 / FPS;
 
 		Uint32 frameStart;
 		int frameTime;
+
+		spic::internal::Rendering::Start(values);
 
 		while (!quit) {
 			frameStart = SDL_GetTicks();

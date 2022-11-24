@@ -59,6 +59,7 @@ namespace spic::extensions {
 			}
 			// Update world
 			world->Step(1.0f / 60.0f, int32(6), int32(2.0));
+			std::cout << "x: " << entities[0]->Transform()->position.x << ", y: " << entities[0]->Transform()->position.y << std::endl;
 			// Update entities
 			for (auto& entity : entities) {
 				// Get body

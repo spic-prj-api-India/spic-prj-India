@@ -57,7 +57,7 @@ namespace spic::internal
     {
         std::unique_ptr<Sprite> sprite = std::make_unique<Sprite>();
         sprite->_Sprite(tileSet.source);
-        sprite->SortingLayer(layerIndex);
+        sprite->OrderInLayer(layerIndex);
         sprite->X(x);
         sprite->Y(y);
         sprite->Height(tileSize);
