@@ -208,6 +208,8 @@
     <ClInclude Include="Sprite.hpp" />
     <ClInclude Include="Text.hpp" />
     <ClInclude Include="TileLayer.hpp" />
+    <ClInclude Include="TileMap.hpp" />
+    <ClInclude Include="TileSet.hpp" />
     <ClInclude Include="Time.hpp" />
     <ClInclude Include="Transform.hpp" />
     <ClInclude Include="TypeHelper.hpp" />
@@ -220,6 +222,7 @@
     <ClCompile Include="BehaviourScript.cpp" />
     <ClCompile Include="Box2DCollisionListener.cpp" />
     <ClCompile Include="IPhysicsExtension.cpp" />
+    <ClCompile Include="MapParser.cpp" />
     <ClCompile Include="PhysicsExtension1.cpp" />
     <ClCompile Include="BoxCollider.cpp" />
     <ClCompile Include="CastException.cpp" />
@@ -238,6 +241,8 @@
     <ClCompile Include="RigidBody.cpp" />
     <ClCompile Include="ScriptSystem.cpp" />
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="TileLayer.cpp" />
+    <ClCompile Include="TileMap.cpp" />
     <ClCompile Include="Time.cpp" />
     <ClCompile Include="GameObject.cpp" />
   </ItemGroup>

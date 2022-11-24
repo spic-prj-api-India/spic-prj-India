@@ -133,6 +133,9 @@
     <Filter Include="Header Files\extensions\physics\base">
       <UniqueIdentifier>{da3a5446-a445-4173-924f-94f1c238b4d5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\map_parser">
+      <UniqueIdentifier>{eac5dada-fe8f-4469-9c3f-fb4b8e4a4d67}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Color.hpp">
@@ -282,6 +285,12 @@
     <ClInclude Include="IEngineExtension.hpp">
       <Filter>Header Files\extensions</Filter>
     </ClInclude>
+    <ClInclude Include="TileSet.hpp">
+      <Filter>Header Files\map_parser</Filter>
+    </ClInclude>
+    <ClInclude Include="TileMap.hpp">
+      <Filter>Header Files\map_parser</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Time.cpp">
@@ -361,6 +370,15 @@
     </ClCompile>
     <ClCompile Include="IPhysicsExtension.cpp">
       <Filter>Source Files\extensions\physics</Filter>
+    </ClCompile>
+    <ClCompile Include="MapParser.cpp">
+      <Filter>Source Files\map_parser</Filter>
+    </ClCompile>
+    <ClCompile Include="TileMap.cpp">
+      <Filter>Source Files\map_parser</Filter>
+    </ClCompile>
+    <ClCompile Include="TileLayer.cpp">
+      <Filter>Source Files\map_parser</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

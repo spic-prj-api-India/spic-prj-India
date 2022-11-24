@@ -4,6 +4,7 @@
 #include "GameObject.hpp"
 #include "Camera.hpp"
 #include <string>
+#include "MapParser.hpp"
 
 namespace spic {
     enum UpdateSetting { ALWAYS, CAMERA_VIEW };
@@ -14,6 +15,7 @@ namespace spic {
     class Scene {
         public:
             Scene();
+            Scene(std::unique_ptr<Camera> camera = std::make_unique<spic::Camera>(), UpdateSetting setting = UpdateSetting::ALWAYS);
 
             /**
              * @brief The scene's contents
@@ -31,19 +33,28 @@ namespace spic {
              */
             void AddContent(std::shared_ptr<GameObject> content);
 
-            /**
-             * @brief The scene's tile map path
-             * @return The current tile map path
-             * @spicapi
-             */
-            std::string TileMapPath() const;
 
             /**
-             * @brief Set tile map path
+             * @brief Load tile map
+             * @param newCollisionLayerIndex The desired collision layer index
              * @param newTileMapPath The desired tile map path
              * @spicapi
              */
-            void TileMapPath(const std::string& newTileMapPath);
+            void LoadTileMap(const int newCollisionLayerIndex, const std::string& newTileMapPath);
+
+            /**
+            * @brief The scene's collision layer index
+            * @return The current collision layer index
+            * @spicapi
+            */
+            int CollisionLayerIndex() const;
+
+            /**
+             * @brief The scene's tile map
+             * @return The current tile map
+             * @spicapi
+             */
+            const MapParser& TileMap() const;
 
             /**
              * @brief The scene's camera
@@ -78,7 +89,8 @@ namespace spic {
         * @spicapi
         */
         std::vector<std::shared_ptr<GameObject>> contents;
-        std::string tileMapPath = "";
+        int collisionLayerIndex;
+        std::unique_ptr<MapParser> tileMap;
         std::unique_ptr<spic::Camera> camera;
         spic::UpdateSetting setting;
     };

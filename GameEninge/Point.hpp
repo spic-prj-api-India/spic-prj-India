@@ -11,7 +11,6 @@ namespace spic {
         float x;
         float y;
     };
-
 }
 
 #endif // POINT_H_

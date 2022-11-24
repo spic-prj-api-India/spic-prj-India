@@ -4,64 +4,33 @@
 #include <vector>
 #include <tinyxml.h>
 #include <iostream>
+#include "TileSet.hpp"
+#include "Point.hpp"
+#include "GameObject.hpp"
 
-namespace spic
+namespace spic::internal
 {
-
-    using Matrix = std::vector<std::vector<int> >;
-
-    struct Tileset
-    {
-        int rowCount, columnCount;
-        int firstId, lastId;
-        std::string textureId;
-        int tileCount, tileSize;
-    };
+    using Matrix = std::vector<std::vector<int>>;
 
     class TileLayer
     {
-
     public:
-        TileLayer(const int tilesize, const std::vector<Tileset> tilesets) : tileSize(tilesize), tilesets(tilesets) {}
+        TileLayer(const int tilesize, const std::vector<TileSet> tilesets);
 
-        virtual ~TileLayer()
-        {
-            tileMatrix.clear();
-            tileMatrix.shrink_to_fit();
-            tilesets.clear();
-            tilesets.shrink_to_fit();
-        }
+        virtual ~TileLayer();
 
-        inline void Render()
-        {
-        }
+        inline void Render();
 
-        inline void Update(float delta)
-        {
+        void SetMatrix(const Matrix& matrix);
 
-        }
+        inline Matrix GetMatrix() const;
 
-        inline void ParseTileMatrix(TiXmlElement* element, int rowCount, int columnCount)
-        {
-        }
+        inline int GetTilesize() const;
 
-        inline Matrix GetMatrix() const
-        {
-            return tileMatrix;
-        }
-
-        inline int GetTilesize() const
-        {
-            return tileSize;
-        }
-
-        inline int GetSize() const
-        {
-        }
-
+        inline Point GetSize() const;
     private:
         int tileSize;
         Matrix tileMatrix;
-        std::vector<Tileset> tilesets;
+        std::vector<TileSet> tilesets;
     };
 }
