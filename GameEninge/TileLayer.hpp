@@ -1,4 +1,5 @@
-#pragma once
+#ifndef TILELAYER_H_
+#define TILELAYER_H_
 
 #include <string>
 #include <vector>
@@ -65,3 +66,5 @@ namespace spic
         std::vector<Tileset> tilesets;
     };
 }
+
+#endif // TILELAYER_H_
