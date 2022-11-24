@@ -1,4 +1,5 @@
 #include "RenderingSystem.hpp"
+#include "Renderer.hpp"
 
 namespace spic::internal::systems {
 	RenderingSystem::RenderingSystem() 
@@ -16,5 +17,9 @@ namespace spic::internal::systems {
 	{}
 
 	void RenderingSystem::Update(std::vector<std::shared_ptr<spic::GameObject>>& entities, Scene& currentScene)
-	{}
+	{
+		spic::internal::Rendering::Clean();
+		currentScene.TileMap().Render();
+		spic::internal::Rendering::Render();
+	}
 }

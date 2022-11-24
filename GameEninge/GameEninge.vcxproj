@@ -204,6 +204,7 @@
     <ClInclude Include="Point.hpp" />
     <ClInclude Include="Renderer.hpp" />
     <ClInclude Include="RenderingSystem.hpp" />
+    <ClInclude Include="ReplaceHelper.hpp" />
     <ClInclude Include="RigidBody.hpp" />
     <ClInclude Include="Sample.hpp" />
     <ClInclude Include="Scene.hpp" />

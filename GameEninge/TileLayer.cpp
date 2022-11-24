@@ -46,8 +46,8 @@ namespace spic::internal
                     std::unique_ptr<Sprite> sprite = GetSprite(tilesets[tilesetIndex], tileCol * tileSize, tileRow * tileSize, tileSize);
                     const float x = static_cast<float>(j * tileSize);
                     const float y = static_cast<float>(i * tileSize);
-                    std::unique_ptr<Transform> transform = std::make_unique<Transform>(Point(x, y), 0.0f, 1.0f);
-                    Rendering::DrawSprite(transform.get(), sprite.get());
+                    Transform transform = Transform(Point(x, y), 0.0f, 1.0f);
+                    Rendering::DrawSprite(&transform, false, sprite.get());
                 }
             }
         }

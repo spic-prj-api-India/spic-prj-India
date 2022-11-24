@@ -2,8 +2,10 @@
 
 namespace spic::internal
 {
-	TileMap::TileMap() : tileLayers{}
-	{}
+	TileMap::TileMap()
+	{
+		tileLayers;
+	}
 
 	void TileMap::AddTileLayer(const int layerIndex, std::unique_ptr<TileLayer> tileLayer)
 	{

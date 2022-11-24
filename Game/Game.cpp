@@ -63,6 +63,7 @@ void InitGame() {
 
 	scene->AddContent(box);
 	scene->AddContent(platform);
+	scene->LoadTileMap(2, "assets/maps/Map.tmx");
 
 	// Input test
 	std::shared_ptr<MouseListener> mouseListener = std::make_shared<MouseListener>();
@@ -74,7 +75,7 @@ void InitGame() {
 void StartGame() 
 {
 
- ///** Code to show working (remove 2 slashes to get it working)
+ /** Code to show working (remove 2 slashes to get it working)
   auto transform1 = std::make_shared<spic::Transform>(spic::Point{80.0f,80.0f }, 10.0f,0.5f);
   auto sprite = std::make_shared<spic::Sprite>("assets/textures/post-apocalyptic-backgrounds/Postapocalypce1/Bright/clouds1.png", spic::Color::magenta(), false, false,0,0);
 
@@ -123,35 +124,32 @@ void StartGame()
   gameObjectTest.Transform(transform1);
   gameObjectTest.AddChild(text);
 
-
+  **/
   auto values = spic::window::WindowValues{ "Forts 2", 1200, 800, false, spic::window::WINDOWED };
 
   spic::internal::Rendering::Start(&values);
 
-  while (true)
-  {
-	  spic::internal::Rendering::Clean();
-	  //spic::internal::Rendering::DrawSprite(&transform1, &sprite);
-	  //spic::internal::Rendering::DrawAnimator(&transform2,animator.get());
-	  //spic::internal::Rendering::DrawText(&text);
-	  spic::internal::Rendering::Draw(&gameObjectTest);
-	  spic::internal::Rendering::Render();
-  }
+  //while (true)
+  //{
+	 // spic::internal::Rendering::Clean();
+	 // //spic::internal::Rendering::DrawSprite(&transform1, &sprite);
+	 // //spic::internal::Rendering::DrawAnimator(&transform2,animator.get());
+	 // //spic::internal::Rendering::DrawText(&text);
+	 // spic::internal::Rendering::Draw(&gameObjectTest);
+	 // spic::internal::Rendering::Render();
+  //}
 
   
-	/** GamEnigne code (remove 2 slashes to get it working)
+	//GamEnigne code (remove 2 slashes to get it working)
 	// Start code gameEngine
 	spic::GameEngine* engine = spic::GameEngine::GetInstance();
 	engine->LoadScene(scene);
 	engine->Start();
-	//*/
+	//
 }
 
 int main()
 {
-	
-
-
-	//InitGame();
+	InitGame();
 	StartGame();
 }

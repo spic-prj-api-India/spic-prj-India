@@ -46,16 +46,16 @@ namespace spic {
         const void OrderInLayer(const int orderInLayer);
 
         const int X() const;
-        const void X(int x);
+        const void X(int newX);
 
         const int Y() const;
-        const int Y(int x);
+        const void Y(int newY);
 
         const int Height() const;
-        const int Height(int x);
+        const void Height(int newHeight);
 
-        const int Width();
-        const int Width(int x) const;
+        const int Width() const;
+        const void Width(int newWidth);
 
         virtual bool operator <(Sprite const& a);
 

@@ -112,7 +112,6 @@ void EntityManager::AddInternalSystem(std::unique_ptr<spic::systems::ISystem> sy
 
 void EntityManager::Update()
 {
-	scene->TileMap().Render();
 	for (const auto& system : systems)
 		system.second->Update(entities, *scene);
 }

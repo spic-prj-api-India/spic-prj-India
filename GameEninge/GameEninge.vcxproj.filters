@@ -309,6 +309,9 @@
     <ClInclude Include="TileMap.hpp">
       <Filter>Header Files\map_parser</Filter>
     </ClInclude>
+    <ClInclude Include="ReplaceHelper.hpp">
+      <Filter>Header Files\helpers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Time.cpp">

@@ -5,8 +5,8 @@ spic::Sprite::Sprite()
 	, color{ spic::Color::white()}
 	, flipX{ false }
 	, flipY{ false }
-	, sortingLayer{ -1 }
-	, orderInLayer{ -1 }
+	, sortingLayer{ 0 }
+	, orderInLayer{ 0 }
 	, x{ 0 }
 	, y{ 0 }
 	, height{ 0 }
@@ -74,7 +74,7 @@ const bool spic::Sprite::FlipY() const
 
 const void spic::Sprite::FlipY(const bool flipy)
 {
-	return void();
+	flipY = flipy;
 }
 
 const int spic::Sprite::SortingLayer() const
@@ -99,42 +99,42 @@ const void spic::Sprite::OrderInLayer(const int orderInLayer)
 
 const int spic::Sprite::X() const
 {
-	return this->x;
+	return x;
 }
 
-const void spic::Sprite::X(int x)
+const void spic::Sprite::X(int newX)
 {
-	return void();
+	x = newX;
 }
 
 const int spic::Sprite::Y() const
 {
-	return 0;
+	return y;
 }
 
-const int spic::Sprite::Y(int x)
+const void spic::Sprite::Y(int newY)
 {
-	return 0;
+	y = newY;
 }
 
 const int spic::Sprite::Height() const
 {
-	return 0;
+	return height;
 }
 
-const int spic::Sprite::Height(int x)
+const void spic::Sprite::Height(int newHeight)
 {
-	return 0;
+	height = newHeight;
 }
 
-const int spic::Sprite::Width()
+const int spic::Sprite::Width() const
 {
-	return 0;
+	return width;
 }
 
-const int spic::Sprite::Width(int x) const
+const void spic::Sprite::Width(int newWidth)
 {
-	return 0;
+	width = newWidth;
 }
 
 bool spic::Sprite::operator<(Sprite const& a)
