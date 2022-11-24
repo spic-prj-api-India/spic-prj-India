@@ -22,6 +22,12 @@ namespace spic::internal::systems {
         void Reset() const;
 
         /**
+        * @brief Initiliazes system
+        * @spicapi
+        */
+        void Start(std::vector<std::shared_ptr<spic::GameObject>>& entities) override;
+
+        /**
         * @brief Calls update method of physics extensions
         * @spicapi
         */
@@ -50,6 +56,12 @@ namespace spic::internal::systems {
         * @spicapi
         */
         std::vector<std::shared_ptr<spic::GameObject>> GetPhysicsEntities(std::vector<std::shared_ptr<spic::GameObject>> entities) const;
+           
+        /**
+       * @brief Checks if entity has RigidBody or Collider
+       * @spicapi
+       */
+        bool IsPhysicsEntity(const std::shared_ptr<spic::GameObject>& entity) const;
     };
 }
 

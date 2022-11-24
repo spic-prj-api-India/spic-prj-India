@@ -8,8 +8,8 @@ namespace internal
 		try
 		{
 			auto temp = spic::AudioSource("", true, true, 1.0f);
-			temp.Volume(0, 0);
-			temp.Volume(0);
+			temp.ChangeVolume(0, 0);
+			temp.ChangeVolume(0);
 			temp.Stop();
 			temp.Play(false);
 		}

@@ -1,9 +1,9 @@
-#ifndef AUDIOINFO_H_
-#define AUDIOINFO_H_
+#ifndef PHYSICSINFO_H_
+#define PHYSICSINFO_H_
 
 namespace spic::internal::extensions {
 
     inline constexpr float GRAVITY = 9.81f;
 }
 
-#endif // AUDIOINFO_H_
+#endif // PHYSICSINFO_H_

@@ -1,6 +1,6 @@
 #include "RigidBody.hpp"
 #include "GameEngine.hpp"
-#include "Box2DExtension.hpp"
+#include "PhysicsExtension1.hpp"
 
 namespace spic {
 	RigidBody::RigidBody(float mass, float gravityScale, spic::BodyType _bodyType) : bodyType{ _bodyType }
@@ -43,10 +43,10 @@ namespace spic {
 	void RigidBody::AddForce(std::shared_ptr<spic::GameObject> entity, const Point& forceDirection)
 	{
 		GameEngine* engine = GameEngine::GetInstance();
-		bool exists = engine->HasExtension<extensions::Box2DExtension>();
+		bool exists = engine->HasExtension<extensions::PhysicsExtension1>();
 		if (!exists)
 			return;
-		std::weak_ptr<extensions::Box2DExtension> physicsExtension = engine->GetExtension<extensions::Box2DExtension>();
+		std::weak_ptr<extensions::PhysicsExtension1> physicsExtension = engine->GetExtension<extensions::PhysicsExtension1>();
 		if (auto box2DExtension = physicsExtension.lock())
 			box2DExtension->AddForce(entity, forceDirection);
 	}

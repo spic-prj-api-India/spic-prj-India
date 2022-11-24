@@ -3,7 +3,11 @@
 #include "InputImpl.hpp"
 
 namespace spic::internal::systems {
-	InputSystem::InputSystem() {}
+	InputSystem::InputSystem() 
+	{}
+
+	void InputSystem::Start(std::vector<std::shared_ptr<spic::GameObject>>& entities)
+	{}
 
 	void InputSystem::Update(std::vector<std::shared_ptr<spic::GameObject>>& entities, Scene& currentScene)
 	{
