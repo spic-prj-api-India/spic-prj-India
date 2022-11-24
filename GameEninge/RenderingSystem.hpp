@@ -1,8 +1,12 @@
 #ifndef RENDERINGSYSTEM_H_
 #define RENDERINGSYSTEM_H_
 
-#include "ISystem.hpp"
+#include <codeanalysis\warnings.h>
+#pragma warning( push )
+#pragma warning ( disable : ALL_CODE_ANALYSIS_WARNINGS )
 #include "SDL2/SDL.h"
+#pragma warning( pop )
+#include "ISystem.hpp"
 
 /**
 * @brief A system that calls the Start and Update method in scripts of entities

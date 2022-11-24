@@ -1,12 +1,6 @@
 // Game.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
-// Use to remove SDL2 warnings from error list
-#include <codeanalysis\warnings.h>
-#pragma warning( push )
-#pragma warning ( disable : ALL_CODE_ANALYSIS_WARNINGS )
-#include "SDL2/SDL.h"
-#pragma warning( pop )
 #include <iostream>
 #include "GameEngine.hpp"
 #include <PhysicsSystem.hpp>

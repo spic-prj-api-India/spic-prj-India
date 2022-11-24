@@ -1,7 +1,10 @@
-#include "AudioManager.hpp"
-#pragma warning(push, 0) // needed to resolve warnings
+// Use to remove SDL2 warnings from error list
+#include <codeanalysis\warnings.h>
+#pragma warning( push )
+#pragma warning ( disable : ALL_CODE_ANALYSIS_WARNINGS )
 #include <SDL2/SDL_mixer.h>
-#pragma warning(pop)
+#pragma warning( pop )
+#include "AudioManager.hpp"
 #include "Sample.hpp"
 #include "Chunk.hpp"
 #include "AudioSource.hpp"
