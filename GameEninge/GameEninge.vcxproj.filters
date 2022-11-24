@@ -19,17 +19,11 @@
     <Filter Include="Header Files\extensions">
       <UniqueIdentifier>{27b538ee-1333-4fc3-bad4-e214b80e2e6a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\scripts">
-      <UniqueIdentifier>{3132d654-17a3-40c8-a756-0ad31ec8878c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\systems">
       <UniqueIdentifier>{71cbdc12-6865-4a76-9e01-e7d075e0f80f}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\extensions">
       <UniqueIdentifier>{5f2b74ef-32e2-4302-872c-3cc4f1767b9a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\scripts">
-      <UniqueIdentifier>{1733dbe5-3d6e-472e-85b1-ac97a3b7eed3}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\systems">
       <UniqueIdentifier>{fc457077-0a38-4bdb-a48e-b9c9cc86aee8}</UniqueIdentifier>
@@ -126,6 +120,21 @@
     </Filter>
     <Filter Include="Header Files\map_parser">
       <UniqueIdentifier>{e009d138-09b9-4530-a65b-3c1377e13238}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="rendering">
+      <UniqueIdentifier>{029202fb-56d6-4763-bcbd-4f8160ab7891}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\systems\input">
+      <UniqueIdentifier>{9e719cb7-da19-4089-bd72-3942748e941d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\systems\physics">
+      <UniqueIdentifier>{a4c84af4-e6cc-4c91-bd83-1714dbc1fb98}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\systems\scripts">
+      <UniqueIdentifier>{4fc209ec-3065-487c-8d8d-65c7a84fbd8c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\systems\rendering">
+      <UniqueIdentifier>{f1a73fff-ed6a-452f-86f7-00a43417a997}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\helpers">
       <UniqueIdentifier>{7214b70e-62ae-4f63-89a5-a1f7f8c0d26e}</UniqueIdentifier>
@@ -267,6 +276,15 @@
     <ClInclude Include="ISystem.hpp">
       <Filter>Header Files\systems</Filter>
     </ClInclude>
+    <ClInclude Include="WindowValues.hpp">
+      <Filter>Header Files\systems\rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Hulperfunctions.hpp">
+      <Filter>Header Files\systems\rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer.hpp">
+      <Filter>Header Files\systems\rendering</Filter>
+    </ClInclude>
     <ClInclude Include="RenderingSystem.hpp">
       <Filter>Header Files\systems\rendering</Filter>
     </ClInclude>
@@ -314,9 +332,6 @@
     <ClCompile Include="Chunk.cpp">
       <Filter>Source Files\components\audio\SDL2Audio</Filter>
     </ClCompile>
-    <ClCompile Include="PhysicsSystem.cpp">
-      <Filter>Source Files\systems</Filter>
-    </ClCompile>
     <ClCompile Include="GameEngine.cpp">
       <Filter>Source Files\game_engine</Filter>
     </ClCompile>
@@ -328,9 +343,6 @@
     </ClCompile>
     <ClCompile Include="BoxCollider.cpp">
       <Filter>Source Files\components\collider</Filter>
-    </ClCompile>
-    <ClCompile Include="ScriptSystem.cpp">
-      <Filter>Source Files\systems</Filter>
     </ClCompile>
     <ClCompile Include="BehaviourScript.cpp">
       <Filter>Source Files\components\behaviour</Filter>
@@ -356,17 +368,11 @@
     <ClCompile Include="InputManager.cpp">
       <Filter>Source Files\input</Filter>
     </ClCompile>
-    <ClCompile Include="InputSystem.cpp">
-      <Filter>Source Files\systems</Filter>
-    </ClCompile>
     <ClCompile Include="InputImpl.cpp">
       <Filter>Source Files\input</Filter>
     </ClCompile>
     <ClCompile Include="EntityManager.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="RenderingSystem.cpp">
-      <Filter>Source Files\systems</Filter>
     </ClCompile>
     <ClCompile Include="IPhysicsExtension.cpp">
       <Filter>Source Files\extensions\physics</Filter>
@@ -379,6 +385,45 @@
     </ClCompile>
     <ClCompile Include="TileLayer.cpp">
       <Filter>Source Files\map_parser</Filter>
+    </ClCompile>
+    <ClCompile Include="RendererImp.hpp">
+      <Filter>Header Files\systems\rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="InputSystem.cpp">
+      <Filter>Source Files\systems\input</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicsSystem.cpp">
+      <Filter>Source Files\systems\physics</Filter>
+    </ClCompile>
+    <ClCompile Include="ScriptSystem.cpp">
+      <Filter>Source Files\systems\scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="RendererImp.cpp">
+      <Filter>Source Files\systems\rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Point.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprite.cpp">
+      <Filter>Source Files\components\animator%255csprite</Filter>
+    </ClCompile>
+    <ClCompile Include="Animator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Text.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UIObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderingSystem.cpp">
+      <Filter>Source Files\systems\rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer.cpp">
+      <Filter>Source Files\systems\rendering</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

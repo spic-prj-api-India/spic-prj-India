@@ -9,7 +9,7 @@ namespace spic {
 		return spic::internal::EntityManager::GetInstance()->GetEntities();
 	}
 
-	GameObject::GameObject() : active{ true }, layer{ 0 }
+	GameObject::GameObject() : active{ true }, layer{ 0 }, parent{nullptr}
 	{}
 
 	GameObject::GameObject(const std::string& name) : name{name}, active{ true }, layer{ 0 }
@@ -149,19 +149,7 @@ namespace spic {
 	bool GameObject::IsActiveInWorld() const {
 		if (!active)
 			return false;
-		std::shared_ptr<GameObject> parent = parent;
-		while (parent != nullptr) {
-			if (!parent->Active())
-				return false;
-			parent = parent->GetParent();
-		}
 		return true;
-	}
-
-	void GameObject::AddChild(const std::shared_ptr<spic::GameObject>& gameObject) {
-		if (gameObject->GetParent() != nullptr)
-			throw std::exception("Child can only have one parent");
-		children.emplace_back(gameObject);
 	}
 
 	std::vector<std::shared_ptr<GameObject>> GameObject::GetChildren(bool includeInactive) const {
@@ -174,7 +162,7 @@ namespace spic {
 		return filtered;
 	}
 
-	std::shared_ptr<GameObject> GameObject::GetParent() const {
+	const GameObject* GameObject::GetParent() const {
 		return parent;
 	};
 }

@@ -5,18 +5,18 @@ namespace spic::internal
 	TileMap::TileMap() : tileLayers{}
 	{}
 
-	void TileMap::AddTileLayer(const std::unique_ptr<TileLayer>& tileLayer)
+	void TileMap::AddTileLayer(const int layerIndex, std::unique_ptr<TileLayer> tileLayer)
 	{
-		tileLayers.emplace_back(std::move(tileLayer));
+		tileLayers[layerIndex] = std::move(tileLayer);
 	}
 
-	const TileLayer& TileMap::GetLayer(int index)
+	const TileLayer& TileMap::GetLayer(int layerIndex)
 	{
-		return *tileLayers[index];
+		return *tileLayers[layerIndex];
 	}
 
 	void TileMap::Render()
 	{
-		for (const auto& layer : tileLayers) layer->Render();
+		for (const auto& layer : tileLayers) layer.second->Render();
 	}
 }

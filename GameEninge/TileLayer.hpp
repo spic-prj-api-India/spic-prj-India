@@ -1,4 +1,5 @@
-#pragma once
+#ifndef TILELAYER_H_
+#define TILELAYER_H_
 
 #include <string>
 #include <vector>
@@ -15,7 +16,7 @@ namespace spic::internal
     class TileLayer
     {
     public:
-        TileLayer(const int tilesize, const std::vector<TileSet> tilesets);
+        TileLayer(const int layerIndex, const int tilesize, const std::vector<TileSet> tilesets);
 
         virtual ~TileLayer();
 
@@ -29,8 +30,13 @@ namespace spic::internal
 
         inline Point GetSize() const;
     private:
+        std::unique_ptr<Sprite> GetSprite(const TileSet& tileSet, const int x, const int y, const int tileSize);
+    private:
         int tileSize;
+        int layerIndex;
         Matrix tileMatrix;
         std::vector<TileSet> tilesets;
     };
 }
+
+#endif // TILELAYER_H_

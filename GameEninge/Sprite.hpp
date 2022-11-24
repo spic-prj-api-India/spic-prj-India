@@ -12,13 +12,64 @@ namespace spic {
      * @spicapi
      */
     class Sprite : public Component {
-        private:
-            std::string sprite;
-            Color color;
-            bool flipX;
-            bool flipY;
-            int sortingLayer;
-            int orderInLayer;
+
+    public:
+        
+        Sprite();
+        Sprite(const std::string& sprite
+            , const spic::Color& color
+            , const bool flipX
+            , const bool flipY
+            , const int sortingLayer
+            , const int orderInLayer
+            , const int x = 0
+            , const int y = 0
+            , const int height = 0
+            , const int width = 0);
+
+        const std::string _Sprite() const;
+        const void _Sprite(const std::string& sprite);
+
+        const spic::Color Color() const;
+        const void Color(const spic::Color& color);
+
+        const bool FlipX() const;
+        const void FlipX(const bool flipx);
+
+        const bool FlipY() const;
+        const void FlipY(const bool flipy);
+
+        const int SortingLayer() const;
+        const void SortingLayer(const int sortingLayer);
+
+        const int OrderInLayer() const;
+        const void OrderInLayer(const int orderInLayer);
+
+        const int X() const;
+        const void X(int x);
+
+        const int Y() const;
+        const int Y(int x);
+
+        const int Height() const;
+        const int Height(int x);
+
+        const int Width();
+        const int Width(int x) const;
+
+        virtual bool operator <(Sprite const& a);
+
+    private:
+        std::string sprite;
+        spic::Color color;
+        bool flipX;
+        bool flipY;
+        int sortingLayer;
+        int orderInLayer;
+        int x;
+        int y;
+        int height;
+        int width;
     };
 
 }

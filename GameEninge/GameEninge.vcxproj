@@ -135,6 +135,7 @@
       <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <DisableSpecificWarnings>26472;26446;</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -185,6 +186,7 @@
     <ClInclude Include="EntityManager.hpp" />
     <ClInclude Include="GameEngineAPI.h" />
     <ClInclude Include="GameObject.hpp" />
+    <ClInclude Include="Hulperfunctions.hpp" />
     <ClInclude Include="ICollisionListener.hpp" />
     <ClInclude Include="IEngineExtension.hpp" />
     <ClInclude Include="IKeyListener.hpp" />
@@ -200,6 +202,7 @@
     <ClInclude Include="ISystem.hpp" />
     <ClInclude Include="MapParser.hpp" />
     <ClInclude Include="Point.hpp" />
+    <ClInclude Include="Renderer.hpp" />
     <ClInclude Include="RenderingSystem.hpp" />
     <ClInclude Include="RigidBody.hpp" />
     <ClInclude Include="Sample.hpp" />
@@ -214,10 +217,13 @@
     <ClInclude Include="Transform.hpp" />
     <ClInclude Include="TypeHelper.hpp" />
     <ClInclude Include="UIObject.hpp" />
+    <ClInclude Include="WindowValues.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Animator.cpp" />
     <ClCompile Include="AudioManager.cpp" />
     <ClCompile Include="AudioSource.cpp" />
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Chunk.cpp" />
     <ClCompile Include="BehaviourScript.cpp" />
     <ClCompile Include="Box2DCollisionListener.cpp" />
@@ -228,6 +234,13 @@
     <ClCompile Include="CastException.cpp" />
     <ClCompile Include="CircleCollider.cpp" />
     <ClCompile Include="Color.cpp" />
+    <ClCompile Include="Point.cpp" />
+    <ClCompile Include="Renderer.cpp" />
+    <ClCompile Include="Sprite.cpp" />
+    <ClCompile Include="Text.cpp" />
+    <ClCompile Include="UIObject.cpp" />
+    <ClCompile Include="RendererImp.cpp" />
+    <ClCompile Include="RendererImp.hpp" />
     <ClCompile Include="EntityManager.cpp" />
     <ClCompile Include="RenderingSystem.cpp" />
     <ClCompile Include="Sample.cpp" />

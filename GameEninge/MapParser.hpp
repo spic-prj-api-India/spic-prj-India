@@ -1,9 +1,9 @@
-#pragma once
+#ifndef MAPPARSER_H_
+#define MAPPARSER_H_
 
 #include <vector>
 #include <string>
-#include <tinyxml.h>
-#include "TileLayer.hpp"
+#include "TileMap.hpp"
 
 namespace spic::internal
 {
@@ -13,9 +13,13 @@ namespace spic::internal
         MapParser();
         std::unique_ptr<TileMap> Parse(const std::string filename);
     private:
-        Matrix& ParseMatrix(TiXmlElement* element, int rowCount, int columnCount);
-        inline TileSet& ParseTileset(TiXmlElement* element);
+        void ParseLayer(TiXmlElement* tileLayerData, const std::vector<TileSet>& tilesets);
+        Matrix ParseMatrix(TiXmlElement* tileLayerData);
+        inline TileSet ParseTileSet(TiXmlElement* tileSetData);
     private:
-        int m_TileSize, m_NbrCol, m_NbrRow;
+        int tileSize, rowCount, colCount;
+        std::unique_ptr<TileMap> tileMap;
     };
 }
+
+#endif // MAPPARSER_H_

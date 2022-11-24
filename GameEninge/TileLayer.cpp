@@ -1,8 +1,10 @@
 #include "TileLayer.hpp"
+#include "Renderer.hpp"
 
 namespace spic::internal
 {
-    TileLayer::TileLayer(const int tilesize, const std::vector<TileSet> tilesets) : tileSize(tilesize), tilesets(tilesets) 
+    TileLayer::TileLayer(const  int layerIndex, const int tilesize, const std::vector<TileSet> tilesets) :
+        layerIndex{ layerIndex }, tileSize(tilesize), tilesets(tilesets)
     {}
 
     TileLayer::~TileLayer()
@@ -41,12 +43,26 @@ namespace spic::internal
                     const int tileRow = static_cast<int>(tileId / tilesets[tilesetIndex].columnCount);
                     const int tileCol = static_cast<int>(tileId - (tilesets[tilesetIndex].columnCount * tileRow));
 
-                   /* const Transform transform = Transform(tilesets[tilesetIndex].textureId, PointFloat(j * tileSize, i * tileSize));
-                    const SDL_Rect srcRect = { tileCol * tileSize, tileRow * tileSize, tileSize, tileSize };
-                    Renderer::Get()->DrawSprite(transform, srcRect);*/
+                    std::unique_ptr<Sprite> sprite = GetSprite(tilesets[tilesetIndex], tileCol * tileSize, tileRow * tileSize, tileSize);
+                    float x = static_cast<float>(j * tileSize);
+                    float y = static_cast<float>(i * tileSize);
+                    std::unique_ptr<Transform> transform = std::make_unique<Transform>(Point(x, y), 0.0f, 1.0f);
+                    Rendering::DrawSprite(transform.release(), sprite.release());
                 }
             }
         }
+    }
+
+    std::unique_ptr<Sprite> TileLayer::GetSprite(const TileSet& tileSet, const int x, const int y, const int tileSize)
+    {
+        std::unique_ptr<Sprite> sprite = std::make_unique<Sprite>();
+        sprite->_Sprite(tileSet.source);
+        sprite->SortingLayer(layerIndex);
+        sprite->X(x);
+        sprite->Y(y);
+        sprite->Height(tileSize);
+        sprite->Width(tileSize);
+        return std::move(sprite);
     }
 
     void TileLayer::SetMatrix(const Matrix& matrix)
@@ -66,6 +82,8 @@ namespace spic::internal
 
     inline Point TileLayer::GetSize() const
     {
-        return Point(tileMatrix.size(), tileMatrix[1].size());
+        float sizeX = static_cast<float>(tileMatrix.size());
+        float sizeY = static_cast<float>(tileMatrix[1].size());
+        return Point(sizeX, sizeY);
     }
 }

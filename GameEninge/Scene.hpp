@@ -4,7 +4,7 @@
 #include "GameObject.hpp"
 #include "Camera.hpp"
 #include <string>
-#include "MapParser.hpp"
+#include "TileMap.hpp"
 
 namespace spic {
     enum UpdateSetting { ALWAYS, CAMERA_VIEW };
@@ -15,7 +15,7 @@ namespace spic {
     class Scene {
         public:
             Scene();
-            Scene(std::unique_ptr<Camera> camera = std::make_unique<spic::Camera>(), UpdateSetting setting = UpdateSetting::ALWAYS);
+            Scene(std::unique_ptr<Camera> newCamera, UpdateSetting setting = UpdateSetting::ALWAYS);
 
             /**
              * @brief The scene's contents
@@ -54,7 +54,7 @@ namespace spic {
              * @return The current tile map
              * @spicapi
              */
-            const MapParser& TileMap() const;
+            const spic::internal::TileMap& TileMap() const;
 
             /**
              * @brief The scene's camera
@@ -90,7 +90,7 @@ namespace spic {
         */
         std::vector<std::shared_ptr<GameObject>> contents;
         int collisionLayerIndex;
-        std::unique_ptr<MapParser> tileMap;
+        std::unique_ptr<spic::internal::TileMap> tileMap;
         std::unique_ptr<spic::Camera> camera;
         spic::UpdateSetting setting;
     };

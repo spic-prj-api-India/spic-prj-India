@@ -2,8 +2,8 @@
 #define TILEMAP_H_
 
 #include <string>
-#include <vector>
 #include "TileLayer.hpp"
+#include <map>
 
 namespace spic::internal
 {
@@ -11,11 +11,11 @@ namespace spic::internal
 	{
 	public:
 		TileMap();
-		void AddTileLayer(const std::unique_ptr<TileLayer>& tileLayer);
+		void AddTileLayer(const int layer, const std::unique_ptr<TileLayer> tileLayer);
 		const TileLayer& GetLayer(int index);
 		inline void Render();
 	private:
-		std::vector<std::unique_ptr<TileLayer>> tileLayers;
+		std::map<int, std::unique_ptr<TileLayer>> tileLayers;
 	};
 }
 

@@ -9,7 +9,7 @@ namespace spic::internal
     {
         int rowCount, columnCount;
         int firstId, lastId;
-        std::string textureId;
+        std::string source;
         int tileCount, tileSize;
     };
 }
