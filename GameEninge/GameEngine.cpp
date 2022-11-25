@@ -1,6 +1,10 @@
+#include <codeanalysis\warnings.h>
+#pragma warning( push )
+#pragma warning ( disable : ALL_CODE_ANALYSIS_WARNINGS )
+#include "SDL2/SDL.h"
+#pragma warning( pop )
 #include "GameEngine.hpp"
 #include "EntityManager.hpp"
-#include "SDL2/SDL.h"
 #include "Input.hpp"
 
 namespace spic {
