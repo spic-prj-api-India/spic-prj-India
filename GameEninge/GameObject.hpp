@@ -98,17 +98,23 @@ namespace spic {
 		 * @spicapi
 		 */
 		void Transform(std::shared_ptr<spic::Transform> transform);
-
-		/// @brief const version of getting position
-		/// @return 
+		
+		/**
+		 * @brief const version of getting position
+		 * @return 
+		*/
 		const Point Position() const;
-
-		/// @brief Const version of getting rotation
-		/// @return 
+		
+		/**
+		 * @brief Const version of getting rotation
+		 * @return 
+		*/
 		const float Rotation() const;
-
-		/// @brief Const version of scale
-		/// @return 
+		
+		/**
+		 * @brief Const version of scale
+		 * @return 
+		*/
 		const float Scale() const;
 
 		/*
@@ -313,6 +319,7 @@ namespace spic {
 		 * @return A vector of gameobjects
 		*/
 		std::vector<std::shared_ptr<GameObject>> GetChildren(bool includeInactive = false) const;
+
 		/**
 		 * @brief Gets the current parent
 		 * @return A pointer to the current parent
@@ -370,7 +377,6 @@ namespace spic {
 	{
 		components.emplace_back(component);
 	}
-
 
 	template<class T>
 	std::shared_ptr<T> GameObject::GetComponent() const
@@ -434,5 +440,4 @@ namespace spic {
 		gameObject->parent = this;
 	}
 }
-
 #endif // GAMEOBJECT_H_

@@ -291,4 +291,4 @@ namespace spic::internal::rendering {
         void Start(const spic::window::WindowValues* values);
     };
 }
-#endif // AUDIOMANAGER_H_
+#endif // RENDERERIMPL_H_
