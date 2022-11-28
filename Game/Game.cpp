@@ -61,7 +61,7 @@ void InitGame() {
 	platformCollider->Width(8.75f);
 	platformCollider->Height(0.275f);
 	std::shared_ptr<spic::RigidBody> platformRigidBody = std::make_shared<spic::RigidBody>(1.0f, 0.0f, spic::BodyType::staticBody);
-	auto colorSprite = std::make_shared<spic::Sprite>("", spic::Color::cyan(), 1);
+	auto colorSprite = std::make_shared<spic::Sprite>("", 1, 0, spic::Color::cyan());
 
 	platform->Tag(platformTag);
 	platform->Transform(platformTransform);
