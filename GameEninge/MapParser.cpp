@@ -136,7 +136,7 @@ namespace spic::internal
 					const float x = static_cast<float>(j * tileSize);
 					const float y = static_cast<float>(i * tileSize);
 
-					CreateEntity(x, y, "tile" + std::to_string(tileRow) + std::to_string(tileCol), layer.GetTilesize());
+					CreateEntity(x, y, "tile" + std::to_string(j) + std::to_string(i), layer.GetTilesize());
 				}
 			}
 		}

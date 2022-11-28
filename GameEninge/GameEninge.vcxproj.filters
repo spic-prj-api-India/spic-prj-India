@@ -309,6 +309,9 @@
     <ClInclude Include="ReplaceHelper.hpp">
       <Filter>Header Files\helpers</Filter>
     </ClInclude>
+    <ClInclude Include="RendererImpl.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Time.cpp">
@@ -386,9 +389,6 @@
     <ClCompile Include="TileLayer.cpp">
       <Filter>Source Files\map_parser</Filter>
     </ClCompile>
-    <ClCompile Include="RendererImp.hpp">
-      <Filter>Header Files\systems\rendering</Filter>
-    </ClCompile>
     <ClCompile Include="InputSystem.cpp">
       <Filter>Source Files\systems\input</Filter>
     </ClCompile>
@@ -407,9 +407,6 @@
     <ClCompile Include="Sprite.cpp">
       <Filter>Source Files\components\animator%255csprite</Filter>
     </ClCompile>
-    <ClCompile Include="Animator.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Text.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -427,6 +424,9 @@
     </ClCompile>
     <ClCompile Include="RenderingSystem.cpp">
       <Filter>Source Files\systems\rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Animator.cpp">
+      <Filter>Source Files\components\animator%255csprite</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -69,7 +69,7 @@ namespace spic::internal::rendering {
         /**
          * @brief World camera settings
         */
-        SDL_Rect camera;
+        SDL_FRect camera;
         float scaling;
         float rotation;
         Color backgroundColor;
@@ -101,7 +101,7 @@ namespace spic::internal::rendering {
         /**
          * @brief Camera of the window
         */
-        SDL_Rect windowCamera;
+        SDL_FRect windowCamera;
 
         /**
          * @brief Mutex for making the private instance of this class thread safe

@@ -34,13 +34,13 @@ void InitGame() {
 	std::shared_ptr<spic::GameObject> box = std::make_shared<spic::GameObject>();
 	std::string boxName = "box";
 	std::shared_ptr<spic::Transform> boxTransform = std::make_shared<spic::Transform>();
-	boxTransform->position = { 25.0f, 24.0f };
+	boxTransform->position = { 75.0f, 24.0f };
 	boxTransform->rotation = 0.785f;
 	boxTransform->scale = 5.0f;
 	std::shared_ptr<spic::BoxCollider> boxCollider = std::make_shared<spic::BoxCollider>();
-	boxCollider->Width(1.0f);
-	boxCollider->Height(1.0f);
-	std::shared_ptr<spic::RigidBody> boxRigidBody = std::make_shared<spic::RigidBody>(1.0f, 0.2f, spic::BodyType::dynamicBody);
+	boxCollider->Width(50.0f);
+	boxCollider->Height(50.0f);
+	std::shared_ptr<spic::RigidBody> boxRigidBody = std::make_shared<spic::RigidBody>(1.0f, 1.0f, spic::BodyType::dynamicBody);
 	std::shared_ptr<CollisionDetectionScript> script = std::make_shared<CollisionDetectionScript>();
 	auto boxSprite = std::make_shared<spic::Sprite>("assets/textures/box.png", 1);
 

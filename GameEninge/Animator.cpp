@@ -16,7 +16,7 @@ const void spic::Animator::Freeze()
     freeze = true;
 }
 
-const bool spic::Animator::IsFozen() const
+const bool spic::Animator::IsFrozen() const
 {
     return this->freeze;
 }

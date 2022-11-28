@@ -14,6 +14,7 @@
 #include "ICollisionListener.hpp"
 #include "Box2DCollisionListener.hpp"
 #include "PhysicsInfo.hpp"
+#include "GeneralHelper.hpp"
 
 namespace spic::extensions {
 	std::unique_ptr<b2World> world;
@@ -57,11 +58,9 @@ namespace spic::extensions {
 					UpdateEntity(entity);
 				else
 					CreateEntity(entity);
-
 			}
 			// Update world
 			world->Step(1.0f / 60.0f, int32(6), int32(2.0));
-			std::cout << "x: " << entities[0]->Transform()->position.x << ", y: " << entities[0]->Transform()->position.y << std::endl;
 			// Update entities
 			for (auto& entity : entities) {
 				// Get body
@@ -72,8 +71,8 @@ namespace spic::extensions {
 				const float rotation = body->GetAngle();
 
 				// Update entity
-				entity->Transform()->position.x = position.x;
-				entity->Transform()->position.y = position.y;
+				entity->Transform()->position.x = position.x * spic::internal::extensions::MET2PIX;
+				entity->Transform()->position.y = position.y * spic::internal::extensions::MET2PIX;
 				entity->Transform()->rotation = rotation;
 			}
 		}
@@ -136,8 +135,8 @@ namespace spic::extensions {
 		b2Body* CreateBody(const std::shared_ptr<spic::GameObject>& entity, const std::shared_ptr<spic::RigidBody>& rigidBody)
 		{
 			// cartesian origin
-			const float ground_x = entity->Transform()->position.x;
-			const float ground_y = entity->Transform()->position.y;
+			const float ground_x = entity->Transform()->position.x / spic::internal::extensions::MET2PIX;
+			const float ground_y = entity->Transform()->position.y / spic::internal::extensions::MET2PIX;
 
 			b2BodyDef bodyDef;
 			bodyDef.type = bodyTypeConvertions[rigidBody->BodyType()];
@@ -172,9 +171,12 @@ namespace spic::extensions {
 		b2Shape* CreateShape(const std::shared_ptr<spic::GameObject>& entity) const
 		{
 			std::shared_ptr<spic::BoxCollider> boxCollider = entity->GetComponent<spic::BoxCollider>();
+			const float scale = entity->Transform()->scale;
 			if (boxCollider != nullptr) {
 				b2PolygonShape* boxShape = new b2PolygonShape();
-				boxShape->SetAsBox((boxCollider->Width() / 2.0f) - boxShape->m_radius, (boxCollider->Height() / 2.0f) - boxShape->m_radius); // will be 0.5 x 0.5
+				const float hx = (boxCollider->Width() / spic::internal::extensions::MET2PIX) / 2.0f;
+				const float hy = (boxCollider->Height() / spic::internal::extensions::MET2PIX) / 2.0f;
+				boxShape->SetAsBox(hx, hy); // will be 0.5 x 0.5
 				return boxShape;
 			}
 			std::shared_ptr<spic::CircleCollider> circleCollider = entity->GetComponent<spic::CircleCollider>();
@@ -202,7 +204,9 @@ namespace spic::extensions {
 			float b2Rotation = body->GetAngle();
 
 			// Get entity transform
-			const spic::Point ePosition = entity->Transform()->position;
+			spic::Point ePosition = entity->Transform()->position;
+			ePosition.x = ePosition.x / spic::internal::extensions::MET2PIX;
+			ePosition.y = ePosition.y / spic::internal::extensions::MET2PIX;
 			const float eRotation = entity->Transform()->rotation;
 
 			// Update
