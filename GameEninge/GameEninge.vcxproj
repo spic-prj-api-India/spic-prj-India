@@ -184,9 +184,8 @@
     <ClInclude Include="GameEngine.hpp" />
     <ClInclude Include="GameEngineAPI.hpp" />
     <ClInclude Include="EntityManager.hpp" />
-    <ClInclude Include="GameEngineAPI.h" />
     <ClInclude Include="GameObject.hpp" />
-    <ClInclude Include="Hulperfunctions.hpp" />
+    <ClInclude Include="GeneralHelper.hpp" />
     <ClInclude Include="ICollisionListener.hpp" />
     <ClInclude Include="IEngineExtension.hpp" />
     <ClInclude Include="IKeyListener.hpp" />
@@ -218,7 +217,7 @@
     <ClInclude Include="Transform.hpp" />
     <ClInclude Include="TypeHelper.hpp" />
     <ClInclude Include="UIObject.hpp" />
-    <ClCompile Include="RendererImp.hpp" />
+    <ClCompile Include="RendererImpl.hpp" />
     <ClInclude Include="WindowValues.hpp" />
   </ItemGroup>
   <ItemGroup>
@@ -229,6 +228,7 @@
     <ClCompile Include="Chunk.cpp" />
     <ClCompile Include="BehaviourScript.cpp" />
     <ClCompile Include="Box2DCollisionListener.cpp" />
+    <ClCompile Include="GeneralHelper.cpp" />
     <ClCompile Include="IPhysicsExtension.cpp" />
     <ClCompile Include="MapParser.cpp" />
     <ClCompile Include="PhysicsExtension1.cpp" />
@@ -241,7 +241,7 @@
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Text.cpp" />
     <ClCompile Include="UIObject.cpp" />
-    <ClCompile Include="RendererImp.cpp" />
+    <ClCompile Include="RendererImpl.cpp" />
     <ClCompile Include="EntityManager.cpp" />
     <ClCompile Include="RenderingSystem.cpp" />
     <ClCompile Include="Sample.cpp" />

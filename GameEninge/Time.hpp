@@ -10,6 +10,7 @@ namespace spic {
         public:
             /**
              * @brief The interval in seconds from the last frame to the current one (Read Only)
+             * TODO: no funtionality
              * @spicapi
              */
             static double DeltaTime();
@@ -32,7 +33,5 @@ namespace spic {
             static double deltaTime;
             static double timeScale;
     };
-
 }
-
 #endif // TIME_H_

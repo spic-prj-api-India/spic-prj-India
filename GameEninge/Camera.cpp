@@ -1,13 +1,13 @@
 #include "Camera.hpp"
 
-spic::Camera::Camera() : backgroundColor{Color::black()}, GameObject()
+spic::Camera::Camera() : backgroundColor{ Color::black() }, GameObject()
 {
 	//retrieve aspectWidth and aspectHeight
 }
 
 void spic::Camera::BackgroundColor(const Color& color)
 {
-	this->backgroundColor = {color};
+	this->backgroundColor = { color };
 }
 
 const spic::Color spic::Camera::BackgroundColor()

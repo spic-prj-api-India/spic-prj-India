@@ -15,3 +15,8 @@ double spic::Time::TimeScale()
 {
     return spic::Time::timeScale;
 }
+
+void spic::Time::TimeScale(double newTimeScale)
+{
+    Time::timeScale = newTimeScale;
+}

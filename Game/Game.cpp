@@ -35,7 +35,6 @@ void InitGame() {
 	std::string boxName = "box";
 	std::shared_ptr<spic::Transform> boxTransform = std::make_shared<spic::Transform>();
 	boxTransform->position = { 25.0f, 24.0f };
-	std::cout << std::to_string(0.785f * (180.0 / 3.141592653589793238463));
 	boxTransform->rotation = 0.785f;
 	boxTransform->scale = 5.0f;
 	std::shared_ptr<spic::BoxCollider> boxCollider = std::make_shared<spic::BoxCollider>();

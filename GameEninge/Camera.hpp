@@ -21,14 +21,10 @@ namespace spic {
 
             const float AspectWidth();
             const float AspectHeight();
-
         private:
             Color backgroundColor;
             float aspectWidth;
-            float aspectHeight;
-        
+            float aspectHeight;  
     };
-
 }
-
 #endif // CAMERA_H_

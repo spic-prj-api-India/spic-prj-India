@@ -270,16 +270,10 @@
     <ClInclude Include="InputImpl.hpp">
       <Filter>Header Files\input</Filter>
     </ClInclude>
-    <ClInclude Include="GameEngineAPI.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ISystem.hpp">
       <Filter>Header Files\systems</Filter>
     </ClInclude>
     <ClInclude Include="WindowValues.hpp">
-      <Filter>Header Files\systems\rendering</Filter>
-    </ClInclude>
-    <ClInclude Include="Hulperfunctions.hpp">
       <Filter>Header Files\systems\rendering</Filter>
     </ClInclude>
     <ClInclude Include="Renderer.hpp">
@@ -302,6 +296,9 @@
     </ClInclude>
     <ClInclude Include="IEngineExtension.hpp">
       <Filter>Header Files\extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneralHelper.hpp">
+      <Filter>Header Files\helpers</Filter>
     </ClInclude>
     <ClInclude Include="TileSet.hpp">
       <Filter>Header Files\map_parser</Filter>
@@ -401,7 +398,7 @@
     <ClCompile Include="ScriptSystem.cpp">
       <Filter>Source Files\systems\scripts</Filter>
     </ClCompile>
-    <ClCompile Include="RendererImp.cpp">
+    <ClCompile Include="RendererImpl.cpp">
       <Filter>Source Files\systems\rendering</Filter>
     </ClCompile>
     <ClCompile Include="Point.cpp">
@@ -422,10 +419,13 @@
     <ClCompile Include="Camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="RenderingSystem.cpp">
+    <ClCompile Include="Renderer.cpp">
       <Filter>Source Files\systems\rendering</Filter>
     </ClCompile>
-    <ClCompile Include="Renderer.cpp">
+    <ClCompile Include="GeneralHelper.cpp">
+      <Filter>Source Files\systems\rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderingSystem.cpp">
       <Filter>Source Files\systems\rendering</Filter>
     </ClCompile>
   </ItemGroup>

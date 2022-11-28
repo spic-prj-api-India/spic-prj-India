@@ -90,7 +90,7 @@ namespace spic {
 		 * @return nullptr or transform.
 		 * @spicapi
 		 */
-		std::shared_ptr<Transform>& Transform();
+		std::shared_ptr<Transform> Transform();
 
 		/**
 		 * @brief Sets tranform of GameObject.
@@ -98,6 +98,24 @@ namespace spic {
 		 * @spicapi
 		 */
 		void Transform(std::shared_ptr<spic::Transform> transform);
+		
+		/**
+		 * @brief const version of getting position
+		 * @return 
+		*/
+		const Point Position() const;
+		
+		/**
+		 * @brief Const version of getting rotation
+		 * @return 
+		*/
+		const float Rotation() const;
+		
+		/**
+		 * @brief Const version of scale
+		 * @return 
+		*/
+		const float Scale() const;
 
 		/*
 		@brief Set this GameObject to get destroyed upon loading a new scene.
@@ -206,9 +224,12 @@ namespace spic {
 		 */
 		bool operator==(const GameObject& other);
 
-		/// @brief Compare two gameObjects (used for sort function)
-		/// @param other The other object to compare this one with
-		/// @return True if its less then other gameobject, false otherwise
+		
+		/**
+		 * @brief Compare two gameObjects (used for sort function)
+		 * @param other The other object to compare this one with
+		 * @return True if its less then other gameobject, false otherwise
+		*/
 		bool operator<(const GameObject& other);
 
 		template<class T>
@@ -283,18 +304,26 @@ namespace spic {
 		 */
 		template<class T>
 		std::vector<std::shared_ptr<T>> GetComponentsInParent() const;
-
+		
+		/**
+		 * @brief Adds a gameobject to an gameobject
+		 * @tparam T Has to be of type gameobject 
+		 * @param gameObject 
+		*/
 		template<class T>
-		void AddChild(const std::shared_ptr<T> gameObject);
-
-		/// @brief Gets all the children of this object
-		/// @param includeInactive If you want to include inactive children  
-		/// @return A vector of gameobjects
+		void AddChild(std::shared_ptr<T> gameObject);
+		
+		/**
+		 * @brief Gets all the children of this object
+		 * @param includeInactive If you want to include inactive children  
+		 * @return A vector of gameobjects
+		*/
 		std::vector<std::shared_ptr<GameObject>> GetChildren(bool includeInactive = false) const;
 
-		/// @brief Gets all the children of this object
-		/// @param includeInactive If you want to include inactive children  
-		/// @return A vector of gameobjects
+		/**
+		 * @brief Gets the current parent
+		 * @return A pointer to the current parent
+		*/
 		const GameObject* GetParent() const;
 	private:
 		void PlayAudioClipsOnAwake();
@@ -348,7 +377,6 @@ namespace spic {
 	{
 		components.emplace_back(component);
 	}
-
 
 	template<class T>
 	std::shared_ptr<T> GameObject::GetComponent() const
@@ -405,11 +433,11 @@ namespace spic {
 	}
 
 	template<class T>
-	void GameObject::AddChild(const std::shared_ptr<T> gameObject) {
+	void GameObject::AddChild(std::shared_ptr<T> gameObject) {
 		if (gameObject->GetParent() != nullptr)
 			throw std::exception("Child can only have one parent");
 		children.emplace_back(gameObject);
+		gameObject->parent = this;
 	}
 }
-
 #endif // GAMEOBJECT_H_

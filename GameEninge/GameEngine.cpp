@@ -1,6 +1,10 @@
+#include <codeanalysis\warnings.h>
+#pragma warning( push )
+#pragma warning ( disable : ALL_CODE_ANALYSIS_WARNINGS )
+#include "SDL2/SDL.h"
+#pragma warning( pop )
 #include "GameEngine.hpp"
 #include "EntityManager.hpp"
-#include "SDL2/SDL.h"
 #include "Input.hpp"
 #include "Renderer.hpp"
 
@@ -26,6 +30,16 @@ namespace spic {
 		return pinstance_;
 	}
 
+	void RegisterScene(const std::string& sceneName, std::shared_ptr<Scene> scene)
+	{
+		internal::EntityManager::GetInstance()->RegisterScene(sceneName, scene);
+	}
+
+	void SetActiveScene(const std::string& sceneName)
+	{
+		internal::EntityManager::GetInstance()->SetScene(sceneName);
+	}
+
 	void GameEngine::LoadScene(std::shared_ptr<Scene> scene)
 	{
 		spic::internal::EntityManager::GetInstance()->SetScene(scene);
@@ -34,6 +48,16 @@ namespace spic {
 	void GameEngine::DestroyScene(bool forceDelete)
 	{
 		internal::EntityManager::GetInstance()->DestroyScene(forceDelete);
+	}
+
+	std::shared_ptr<Scene> GetActiveScene()
+	{
+		return internal::EntityManager::GetInstance()->GetScene();
+	}
+
+	std::shared_ptr<Scene> GetSceneByName(const std::string& sceneName)
+	{
+		return internal::EntityManager::GetInstance()->GetScene(sceneName);
 	}
 
 	void GameEngine::Start(const spic::window::WindowValues* values)

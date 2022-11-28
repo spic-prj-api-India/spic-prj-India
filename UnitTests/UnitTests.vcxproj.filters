@@ -10,6 +10,8 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\gmock\gmock-all.cc" />
     <ClCompile Include="InputManagerTest.cpp" />
     <ClCompile Include="AudioTest.cpp" />
+    <ClCompile Include="EntityManagerTest.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="FindGameObjectTest.cpp" />
   </ItemGroup>
   <ItemGroup>
