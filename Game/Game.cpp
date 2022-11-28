@@ -38,8 +38,8 @@ void InitGame() {
 	boxTransform->rotation = 0.785f;
 	boxTransform->scale = 5.0f;
 	std::shared_ptr<spic::BoxCollider> boxCollider = std::make_shared<spic::BoxCollider>();
-	boxCollider->Width(50.0f);
-	boxCollider->Height(50.0f);
+	boxCollider->Width(45.0f);
+	boxCollider->Height(45.0f);
 	std::shared_ptr<spic::RigidBody> boxRigidBody = std::make_shared<spic::RigidBody>(1.0f, 1.0f, spic::BodyType::dynamicBody);
 	std::shared_ptr<CollisionDetectionScript> script = std::make_shared<CollisionDetectionScript>();
 	auto boxSprite = std::make_shared<spic::Sprite>("assets/textures/box.png", 1);

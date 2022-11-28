@@ -236,6 +236,14 @@ namespace spic::internal::rendering {
          * @details should be called first after clean
         */
         void SetBackgroundColor();
+
+        /**
+         * @brief Draws an line in window space
+         * @param start The start point of an line
+         * @param end The end point of an line
+         * @param colour The colour of the line
+        */
+        void DrawRect(const SDL_FRect* rect, const Color* colour);
         
         /**
          * @brief Draws an line in window space

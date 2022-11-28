@@ -247,6 +247,16 @@ void RendererImpl::DrawGameObject(GameObject* gameObject, bool isUiOject)
 	}
 }
 
+void RendererImpl::DrawRect(const SDL_FRect* rect, const Color* colour)
+{
+	SDL_SetRenderDrawColor(renderer.get()
+		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, colour->R()))
+		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, colour->G()))
+		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, colour->B()))
+		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, colour->A())));
+	SDL_RenderDrawRectF(renderer.get(), rect);
+}
+
 void RendererImpl::DrawLine(const Point* start, const Point* end, const Color* colour)
 {
 	SDL_SetRenderDrawColor(renderer.get()
@@ -337,13 +347,18 @@ void RendererImpl::DrawSprite(const Sprite* sprite, const bool isUiObject, const
 	else
 		flip = (SDL_RendererFlip)(SDL_FLIP_NONE);
 
-
+	double angle = RAD2DEG(transform->rotation);
 	if (texture == nullptr) {
-		SDL_RenderCopyExF(renderer.get(), NULL, &sourceRect, &dstRect, RAD2DEG(transform->rotation), NULL, flip);
+		SDL_RenderCopyExF(renderer.get(), NULL, &sourceRect, &dstRect, angle, NULL, flip);
 		std::cout << SDL_GetError() << std::endl;
 		return;
 	}
-	SDL_RenderCopyExF(renderer.get(), texture, &sourceRect, &dstRect, RAD2DEG(transform->rotation), NULL, flip);
+	SDL_RenderCopyExF(renderer.get(), texture, &sourceRect, &dstRect, angle, NULL, flip);
+	SDL_Rect debugRect = { PrecisionRoundingoInt(dstRect.x)
+		, PrecisionRoundingoInt(dstRect.y)
+		, PrecisionRoundingoInt(dstRect.w)
+		, PrecisionRoundingoInt(dstRect.h) };
+	DrawRect(&dstRect, &Color::red());
 }
 
 void RendererImpl::UpdateCamera(Camera* camera)
