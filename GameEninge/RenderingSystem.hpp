@@ -34,8 +34,7 @@ namespace spic::internal::systems {
 		* @spicapi
 		*/
 		void Update(std::vector<std::shared_ptr<spic::GameObject>>& entities, Scene& currentScene) override;
-	private:
-		SDL_Window* window;
+
 	};
 }
 
