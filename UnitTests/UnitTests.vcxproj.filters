@@ -13,6 +13,7 @@
     <ClCompile Include="EntityManagerTest.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="FindGameObjectTest.cpp" />
+    <ClCompile Include="SceneTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
