@@ -267,16 +267,10 @@
     <ClInclude Include="InputImpl.hpp">
       <Filter>Header Files\input</Filter>
     </ClInclude>
-    <ClInclude Include="GameEngineAPI.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ISystem.hpp">
       <Filter>Header Files\systems</Filter>
     </ClInclude>
     <ClInclude Include="WindowValues.hpp">
-      <Filter>Header Files\systems\rendering</Filter>
-    </ClInclude>
-    <ClInclude Include="Hulperfunctions.hpp">
       <Filter>Header Files\systems\rendering</Filter>
     </ClInclude>
     <ClInclude Include="Renderer.hpp">
@@ -299,6 +293,9 @@
     </ClInclude>
     <ClInclude Include="IEngineExtension.hpp">
       <Filter>Header Files\extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneralHelper.hpp">
+      <Filter>Header Files\helpers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -407,7 +404,7 @@
     <ClCompile Include="Renderer.cpp">
       <Filter>Source Files\systems\rendering</Filter>
     </ClCompile>
-    <ClCompile Include="Hulperfunctions.cpp">
+    <ClCompile Include="GeneralHelper.cpp">
       <Filter>Source Files\systems\rendering</Filter>
     </ClCompile>
   </ItemGroup>

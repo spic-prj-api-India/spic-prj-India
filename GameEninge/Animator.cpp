@@ -1,6 +1,6 @@
 #include "Animator.hpp"
 #include <algorithm>
-#include "Hulperfunctions.hpp"
+#include "GeneralHelper.hpp"
 
 spic::Animator::Animator(const int fps) 
     : fps{fps}
@@ -33,7 +33,7 @@ void spic::Animator::AddSprite(const std::shared_ptr<Sprite> sprite)
 {
     this->sprites.push_back(sprite);
 
-    std::sort(sprites.begin(), sprites.end(), spic::HulperFunctions::SpriteSorting);
+    std::sort(sprites.begin(), sprites.end(), spic::GeneralHelper::SpriteSorting);
 }
 
 const std::vector<std::shared_ptr<spic::Sprite>> spic::Animator::Sprites() const

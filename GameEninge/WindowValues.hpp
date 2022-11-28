@@ -11,22 +11,34 @@ namespace spic::window {
         BORDERLESS = 2
     };
 
-    /// @brief Values needed to start rendering
+    /**
+     * @brief Values needed to start rendering
+    */
     struct WindowValues
     {
-        /// @brief Name of the window
+        /**
+         * @brief Name of the window
+        */
         std::string WindowName;
 
-        /// @brief Width of the window
+        /**
+         * @brief Width of the window
+        */
         int ScreenWidth;
 
-        /// @brief Height of the window
+        /**
+         * @brief Height of the window
+        */
         int ScreenHeight;
 
-        /// @brief If the window is always on Top
+        /**
+         * @brief If the window is always on Top
+        */
         bool SetOnTop;
 
-        /// @brief Which mode the window is
+        /**
+         * @brief Which mode the window is
+        */
         FULLSCREENTYPE selector;
     };
 }

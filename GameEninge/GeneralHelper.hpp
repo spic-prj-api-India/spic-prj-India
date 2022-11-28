@@ -1,5 +1,5 @@
-#ifndef HULPERFUNCTIONS_H_
-#define HULPERFUNCTIONS_H_
+#ifndef GENERALHELPER_H_
+#define GENERALHELPER_H_
 
 #include "Point.hpp"
 #include <algorithm>
@@ -9,7 +9,7 @@
 #include <memory>
 
 
-namespace spic::HulperFunctions 
+namespace spic::GeneralHelper 
 {	
 	/**
 	 * @brief 

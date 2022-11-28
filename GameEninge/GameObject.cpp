@@ -178,9 +178,9 @@ namespace spic {
 	}
 
 	const GameObject* GameObject::GetParent() const {
-		while (parent != nullptr) {
-			if (!parent->Active())
-				return false;
-			parent = parent->GetParent();
+		if(parent != nullptr)
+			return parent;
+
+		return NULL;
 	};
 }
