@@ -37,7 +37,5 @@ namespace spic {
              */
             std::function<void()> onClick;
     };
-
 }
-
 #endif // BUTTON_H_

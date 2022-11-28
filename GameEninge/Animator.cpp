@@ -68,15 +68,4 @@ void spic::Animator::Index(const int index)
 
 void spic::Animator::IncreaseIndex(const int index)
 {
-    //const auto orderMax = sprites.back()->OrderInLayer();
-    
-   /* int currindex = ;
-    int newIndex = 0;
-
-    if (index >= orderMax)
-    {
-        index = 1;
-        if (!looping)
-            running = false;
-    }*/
 }

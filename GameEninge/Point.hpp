@@ -11,12 +11,13 @@ namespace spic {
         float x;
         float y;
 
-        /// @brief Dotproduct
-        /// @param point 
-        /// @return 
-        float operator *(const Point& point);
+       /**
+        * @brief Dotproduct
+        * @param point 
+        * @return 
+       */
+       float operator *(const Point& point);
     };
-
 }
 
 #endif // POINT_H_
