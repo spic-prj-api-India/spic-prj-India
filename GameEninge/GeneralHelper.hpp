@@ -1,6 +1,10 @@
 #ifndef GENERALHELPER_H_
 #define GENERALHELPER_H_
 
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
+
 #include "Point.hpp"
 #include <algorithm>
 #include <cmath>
@@ -104,7 +108,7 @@ namespace spic::GeneralHelper
 	 * @return 
 	*/
 	template <class T>
-	float DEG2RAD(T DEG)
+	double DEG2RAD(T DEG)
 	{
 		return DEG * M_PI / 180.0;
 	}
@@ -116,7 +120,7 @@ namespace spic::GeneralHelper
 	 * @return 
 	*/
 	template <class T>
-	float RAD2DEG(T RAD) 
+	double RAD2DEG(T RAD) 
 	{
 		return RAD * 180.0 / M_PI;
 	}
