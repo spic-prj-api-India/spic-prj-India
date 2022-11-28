@@ -1,12 +1,11 @@
-#include "EntityManager.hpp"
 #include <map>
 #include <regex>
 #include <memory>
 #include <mutex>
 #include <vector>
 #include <iostream>
+#include "EntityManager.hpp"
 #include "ISystem.hpp"
-#include "MapParser.hpp"
 #include "Scene.hpp"
 #include "InputSystem.hpp"
 #include "PhysicsSystem.hpp"
@@ -15,14 +14,12 @@
 
 using namespace spic;
 using namespace spic::internal;
+using namespace spic::systems;
 
 EntityManager* EntityManager::pinstance_{ nullptr };
 std::mutex EntityManager::mutex_;
 
-std::vector<std::shared_ptr<GameObject>> entities;
-std::vector <std::pair<int, std::unique_ptr<spic::systems::ISystem>>> systems;
-
-EntityManager::EntityManager()
+EntityManager::EntityManager() : CustomSystemDefaultPriority{ 1 }, scene{ nullptr }
 {
 	Init();
 }
@@ -46,10 +43,57 @@ void EntityManager::Init()
 	std::unique_ptr<systems::PhysicsSystem> physicsSystem = std::make_unique<systems::PhysicsSystem>();
 	std::unique_ptr<systems::ScriptSystem> scriptSystem = std::make_unique<systems::ScriptSystem>();
 	std::unique_ptr<systems::RenderingSystem> renderingSystem = std::make_unique<systems::RenderingSystem>();
-	AddInternalSystem(std::move(inputSystem));
-	AddInternalSystem(std::move(physicsSystem));
-	AddInternalSystem(std::move(scriptSystem));
-	AddInternalSystem(std::move(renderingSystem));
+	AddInternalSystem(std::move(inputSystem), 0);
+	AddInternalSystem(std::move(physicsSystem), 1);
+	AddInternalSystem(std::move(scriptSystem), 1);
+	AddInternalSystem(std::move(renderingSystem), 2);
+}
+
+void EntityManager::Reset()
+{
+	entities.clear();
+	systems.clear();
+	scenes.clear();
+	scene = nullptr;
+}
+
+void EntityManager::RegisterScene(const std::string& sceneName, std::shared_ptr<Scene> scene)
+{
+	if (scenes.count(sceneName))
+		throw std::exception("Scene with this name already exists.");
+	scenes[sceneName] = scene;
+}
+
+std::shared_ptr<Scene> EntityManager::GetScene()
+{
+	return scene;
+}
+
+std::shared_ptr<Scene> EntityManager::GetScene(const std::string& sceneName)
+{
+	if (!scenes.count(sceneName))
+		return nullptr;
+	return scenes[sceneName];
+}
+
+void EntityManager::SetScene(const std::string& sceneName)
+{
+	if (!scenes.count(sceneName))
+		throw std::exception("Scene does not exist.");
+	DestroyScene();
+	scene = scenes[sceneName];
+	entities.clear();
+	for (auto& entity : scene->Contents())
+	{
+		entities.push_back(entity);
+	}
+	for (const auto& systemsMap : systems)
+	{
+		for (const auto& system : systemsMap.second)
+		{
+			system->Start(entities);
+		}
+	}
 }
 
 std::vector<std::shared_ptr<spic::GameObject>> EntityManager::GetEntities() {
@@ -72,12 +116,17 @@ void EntityManager::SetScene(std::shared_ptr<Scene> newScene)
 	DestroyScene();
 	scene = newScene;
 	entities.clear();
-	for (auto& entity : newScene->Contents())
+	for (auto& entity : scene->Contents())
 	{
 		entities.push_back(entity);
 	}
-	for (const auto& system : systems)
-		system.second->Start(entities);
+	for (const auto& systemsMap : systems)
+	{
+		for (const auto& system : systemsMap.second)
+		{
+			system->Start(entities);
+		}
+	}
 }
 
 void EntityManager::DestroyScene(bool forceDelete)
@@ -101,20 +150,31 @@ void EntityManager::DestroyScene(bool forceDelete)
 
 void EntityManager::AddSystem(std::unique_ptr<spic::systems::ISystem> system)
 {
-	auto prioritySystem = std::make_pair(1, std::move(system));
-	systems.emplace_back(std::move(prioritySystem));
+	if (!systems.count(CustomSystemDefaultPriority))
+	{
+		systems[CustomSystemDefaultPriority];
+	}
+	systems[CustomSystemDefaultPriority].emplace_back(std::move(system));
 }
 
 void EntityManager::AddInternalSystem(std::unique_ptr<spic::systems::ISystem> system, int priority)
 {
-	auto prioritySystem = std::make_pair(priority, std::move(system));
-	systems.emplace_back(std::move(prioritySystem));
+	if (!systems.count(priority))
+	{
+		systems[priority];
+	}
+	systems[priority].emplace_back(std::move(system));
 }
 
 void EntityManager::Update()
 {
-	for (const auto& system : systems)
-		system.second->Update(entities, *scene);
+	for (const auto& systemsMap : systems)
+	{
+		for (const auto& system : systemsMap.second)
+		{
+			system->Update(entities, *scene);
+		}
+	}
 }
 
 void EntityManager::Render()

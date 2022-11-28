@@ -95,8 +95,21 @@ namespace spic {
 		}
 
 		/*
+		@brief Register scene.
+		@param The sceneName is the key in the scenes list.
+		@param The scene that will be registered in scenes list.
+		*/
+		void RegisterScene(const std::string& sceneName, std::shared_ptr<Scene> scene);
+
+		/*
 		@brief Load the specified scene.
-		@param scene: The name of the scene you want to load.
+		@param sceneName: The name of the scene you want to load.
+		*/
+		void SetActiveScene(const std::string& sceneName);
+
+		/*
+		@brief Load the specified scene.
+		@param scene: The scene you want to load.
 		*/
 		void LoadScene(std::shared_ptr<Scene> scene);
 
@@ -105,6 +118,19 @@ namespace spic {
 		@param forceDelete: Whether you also want to delete all GameObjects in the scene which are set to not be destroyed on load.
 		*/
 		void DestroyScene(bool forceDelete);
+
+		/*
+		@brief Gets active scene.
+		@returns The current scene.
+		*/
+		std::shared_ptr<Scene> GetActiveScene();
+
+		/*
+		@brief Gets scene with name.
+		@param The sceneName of the scene.
+		@returns The scene with the given sceneName.
+		*/
+		std::shared_ptr<Scene> GetSceneByName(const std::string& sceneName);
 
 		/*
 		* @brief Start game loop
