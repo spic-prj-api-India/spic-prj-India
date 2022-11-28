@@ -9,7 +9,6 @@
 #include "ISystem.hpp"
 #include "Scene.hpp"
 #include "TypeHelper.hpp"
-#include "InputSystem.hpp"
 
 namespace spic::internal
 {

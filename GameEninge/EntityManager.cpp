@@ -43,10 +43,10 @@ void EntityManager::Init()
 	std::unique_ptr<systems::PhysicsSystem> physicsSystem = std::make_unique<systems::PhysicsSystem>();
 	std::unique_ptr<systems::ScriptSystem> scriptSystem = std::make_unique<systems::ScriptSystem>();
 	std::unique_ptr<systems::RenderingSystem> renderingSystem = std::make_unique<systems::RenderingSystem>();
-	AddInternalSystem(std::move(inputSystem));
-	AddInternalSystem(std::move(physicsSystem));
-	AddInternalSystem(std::move(scriptSystem));
-	AddInternalSystem(std::move(renderingSystem));
+	AddInternalSystem(std::move(inputSystem), 0);
+	AddInternalSystem(std::move(physicsSystem), 1);
+	AddInternalSystem(std::move(scriptSystem), 1);
+	AddInternalSystem(std::move(renderingSystem), 2);
 }
 
 void EntityManager::Reset()
@@ -72,7 +72,7 @@ std::shared_ptr<Scene> EntityManager::GetScene()
 std::shared_ptr<Scene> EntityManager::GetScene(const std::string& sceneName)
 {
 	if (!scenes.count(sceneName))
-		throw std::exception("Scene does not exist.");
+		return nullptr;
 	return scenes[sceneName];
 }
 
