@@ -199,10 +199,10 @@ void RendererImpl::DrawAnimator(Animator* animator, const bool isUiObject, const
 void RendererImpl::SetBackgroundColor()
 {
     SDL_SetRenderDrawColor(renderer.get()
-        , std::lround(std::lerp(UINT_8_BEGIN, UINT_8_END, this->backgroundColor.R()))
-        , std::lround(std::lerp(UINT_8_BEGIN, UINT_8_END, this->backgroundColor.G()))
-        , std::lround(std::lerp(UINT_8_BEGIN, UINT_8_END, this->backgroundColor.B()))
-        , std::lround(std::lerp(UINT_8_BEGIN, UINT_8_END, this->backgroundColor.A()))
+        , PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, this->backgroundColor.R()))
+        , PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, this->backgroundColor.G()))
+        , PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, this->backgroundColor.B()))
+        , PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, this->backgroundColor.A()))
     );
 
     SDL_RenderFillRect(renderer.get(), &this->windowCamera);
@@ -248,15 +248,15 @@ void RendererImpl::DrawGameObject(GameObject* gameObject, bool isUiOject)
 void RendererImpl::DrawLine(const Point* start, const Point* end, const Color* colour)
 {
     SDL_SetRenderDrawColor(renderer.get()
-        , std::lround(std::lerp(UINT_8_BEGIN, UINT_8_END, colour->R()))
-        , std::lround(std::lerp(UINT_8_BEGIN, UINT_8_END, colour->G()))
-        , std::lround(std::lerp(UINT_8_BEGIN, UINT_8_END, colour->B()))
-        , std::lround(std::lerp(UINT_8_BEGIN, UINT_8_END, colour->A())));
+        , PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, colour->R()))
+        , PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, colour->G()))
+        , PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, colour->B()))
+        , PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, colour->A())));
     SDL_RenderDrawLine(renderer.get()
-        , std::lround(start->x)
-        , std::lround(start->y)
-        , std::lround(end->x)
-        , std::lround(end->y));
+        , PrecisionRoundingoInt(start->x)
+        , PrecisionRoundingoInt(start->y)
+        , PrecisionRoundingoInt(end->x)
+        , PrecisionRoundingoInt(end->y));
 }
 
 
@@ -266,13 +266,13 @@ void RendererImpl::DrawText(Text* text)
     {
         auto font = TTF_OpenFont(text->Font().c_str(), text->Size());
         auto transform = text->Transform().get();
-        auto colour = SDL_Color{ static_cast<unsigned char>(std::lround(std::lerp(UINT_8_BEGIN, UINT_8_END, text->Color().R())))
-            , static_cast<unsigned char>(std::lround(std::lerp(UINT_8_BEGIN, UINT_8_END, text->Color().G())))
-            , static_cast<unsigned char>(std::lround(std::lerp(UINT_8_BEGIN, UINT_8_END, text->Color().B()))) };
+        auto colour = SDL_Color{ static_cast<unsigned char>(PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, text->Color().R())))
+            , static_cast<unsigned char>(PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, text->Color().G())))
+            , static_cast<unsigned char>(PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, text->Color().B()))) };
         std::string texts{ text->_Text() };
         text->Alignment();
 
-        this->RenderMultiLineText(font, texts, colour, std::lround(transform->position.x), std::lround(transform->position.y), std::lround(text->Width()), std::lround(text->Height()), 2, text->Alignment());
+        this->RenderMultiLineText(font, texts, colour, PrecisionRoundingoInt(transform->position.x), PrecisionRoundingoInt(transform->position.y), PrecisionRoundingoInt(text->Width()), PrecisionRoundingoInt(text->Height()), 2, text->Alignment());
 
         TTF_CloseFont(font);
     }
@@ -288,16 +288,16 @@ void RendererImpl::DrawSprite(const Sprite* sprite, const bool isUiObject, const
 
     const int width = (sprite->Width() == 0) ? textureSize.x : sprite->Width();
     const int height = (sprite->Height() == 0) ? textureSize.y : sprite->Height();
-    SDL_Rect dstRect = { std::lround(transform->position.x)
-        , std::lround(transform->position.y)
-        , std::lround(width * transform->scale * this->scaling)
-        , std::lround(height * transform->scale * this->scaling) };
+    SDL_Rect dstRect = { PrecisionRoundingoInt(transform->position.x)
+        , PrecisionRoundingoInt(transform->position.y)
+        , PrecisionRoundingoInt(width * transform->scale * this->scaling)
+        , PrecisionRoundingoInt(height * transform->scale * this->scaling) };
 
     
-    SDL_Rect sourceRect = { std::lround(sprite->X())
-        , std::lround(sprite->Y())
-        , std::lround(width)
-        , std::lround(height) };
+    SDL_Rect sourceRect = { PrecisionRoundingoInt(sprite->X())
+        , PrecisionRoundingoInt(sprite->Y())
+        , PrecisionRoundingoInt(width)
+        , PrecisionRoundingoInt(height) };
 
 
     if (SDL_HasIntersection(&dstRect, &this->camera) && !isUiObject)
@@ -316,15 +316,15 @@ void RendererImpl::DrawSprite(const Sprite* sprite, const bool isUiObject, const
     const auto color = sprite->Color();
 
     SDL_SetTextureColorMod(texture
-        , std::lround(std::lerp(UINT_8_BEGIN, UINT_8_END, color.R()))
-        , std::lround(std::lerp(UINT_8_BEGIN, UINT_8_END, color.G()))
-        , std::lround(std::lerp(UINT_8_BEGIN, UINT_8_END, color.B())));
+        , PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, color.R()))
+        , PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, color.G()))
+        , PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, color.B())));
 
     SDL_SetTextureAlphaMod(texture,
-        std::lround(std::lerp(UINT_8_BEGIN, UINT_8_END, color.A())));
+        PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, color.A())));
 
-    auto center = SDL_Point{ std::lround(dstRect.x + (dstRect.w/2))
-        ,std::lround(dstRect.y + (dstRect.h / 2)) };
+    auto center = SDL_Point{ PrecisionRoundingoInt(dstRect.x + (dstRect.w/2))
+        ,PrecisionRoundingoInt(dstRect.y + (dstRect.h / 2)) };
     
     SDL_RendererFlip flip; 
     
@@ -339,11 +339,11 @@ void RendererImpl::DrawSprite(const Sprite* sprite, const bool isUiObject, const
 
     if (texture == nullptr) {
         std::cout << SDL_GetError() << std::endl;
-        SDL_RenderCopyEx(renderer.get(), NULL, &sourceRect, &dstRect, transform->rotation, &center, flip);
+        SDL_RenderCopyEx(renderer.get(), NULL, &sourceRect, &dstRect, PrecisionRoundingoInt(RAD2DEG(transform->rotation)), &center, flip);
         return;
     }
 
-    SDL_RenderCopyEx(renderer.get(), texture, &sourceRect, &dstRect, transform->rotation, &center, flip);
+    SDL_RenderCopyEx(renderer.get(), texture, &sourceRect, &dstRect, PrecisionRoundingoInt(RAD2DEG(transform->rotation)), &center, flip);
 }
 
 void RendererImpl::UpdateCamera(Camera* camera)
@@ -356,8 +356,8 @@ void RendererImpl::UpdateCamera(Camera* camera)
     int width, height = 0;
     SDL_GetWindowSize(window.get(), &width, &height);
     this->camera = 
-        { std::lround(pos.x)
-        , std::lround(pos.y)
+        { PrecisionRoundingoInt(pos.x)
+        , PrecisionRoundingoInt(pos.y)
         , width
         , height };
 
@@ -368,20 +368,20 @@ void RendererImpl::Clean()
 {
     SDL_RenderClear(renderer.get());
     SDL_SetRenderDrawColor(renderer.get()
-        , std::lround(std::lerp(UINT_8_BEGIN, UINT_8_END, this->backgroundColor.R()))
-        , std::lround(std::lerp(UINT_8_BEGIN, UINT_8_END, this->backgroundColor.G()))
-        , std::lround(std::lerp(UINT_8_BEGIN, UINT_8_END, this->backgroundColor.B()))
-        , std::lround(std::lerp(UINT_8_BEGIN, UINT_8_END, this->backgroundColor.A()))
+        , PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, this->backgroundColor.R()))
+        , PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, this->backgroundColor.G()))
+        , PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, this->backgroundColor.B()))
+        , PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, this->backgroundColor.A()))
     );
 }
 
 void RendererImpl::Render()
 {
     SDL_SetRenderDrawColor(renderer.get()
-        , std::lround(std::lerp(UINT_8_BEGIN, UINT_8_END, this->backgroundColor.R()))
-        , std::lround(std::lerp(UINT_8_BEGIN, UINT_8_END, this->backgroundColor.G()))
-        , std::lround(std::lerp(UINT_8_BEGIN, UINT_8_END, this->backgroundColor.B()))
-        , std::lround(std::lerp(UINT_8_BEGIN, UINT_8_END, this->backgroundColor.A()))
+        , PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, this->backgroundColor.R()))
+        , PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, this->backgroundColor.G()))
+        , PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, this->backgroundColor.B()))
+        , PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, this->backgroundColor.A()))
     );
 
     SDL_RenderPresent(renderer.get());

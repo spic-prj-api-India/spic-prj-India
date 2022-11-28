@@ -94,7 +94,31 @@ namespace spic::GeneralHelper
 	template <class T>
 	int PrecisionRoundingoInt(T t)
 	{
-		return static_cast<int>(t >= 0 ? t - 0.5 : t + 0.5);
+		return static_cast<int>(std::lround(t));
+	}
+
+	/**
+	 * @brief Convert a degree to radians
+	 * @tparam T A floating type
+	 * @param DEG 
+	 * @return 
+	*/
+	template <class T>
+	float DEG2RAD(T DEG)
+	{
+		return DEG * M_PI / 180.0;
+	}
+
+	/**
+	 * @brief Convert radians to a degree
+	 * @tparam T A floating type
+	 * @param RAD 
+	 * @return 
+	*/
+	template <class T>
+	float RAD2DEG(T RAD) 
+	{
+		return RAD * 180.0 / M_PI;
 	}
 }
 #endif
