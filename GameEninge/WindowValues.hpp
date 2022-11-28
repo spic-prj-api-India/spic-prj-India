@@ -42,4 +42,4 @@ namespace spic::window {
         FULLSCREENTYPE selector;
     };
 }
-#endif // AUDIOINFO_H_
+#endif // WINDOWINFO_H_
