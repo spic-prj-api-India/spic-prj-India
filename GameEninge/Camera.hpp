@@ -21,7 +21,6 @@ namespace spic {
 
             const float AspectWidth();
             const float AspectHeight();
-
         private:
             Color backgroundColor;
             float aspectWidth;
