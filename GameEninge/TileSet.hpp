@@ -3,7 +3,7 @@
 
 #include <string>
 
-namespace spic::internal 
+namespace spic 
 {
     struct TileSet
     {

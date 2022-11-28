@@ -47,7 +47,7 @@ namespace spic {
              * @return The current tile map
              * @spicapi
              */
-            spic::internal::TileMap* TileMap() const;
+            TileMap* TileMap() const;
 
             /**
              * @brief The scene's camera
@@ -82,7 +82,7 @@ namespace spic {
         * @spicapi
         */
         std::vector<std::shared_ptr<GameObject>> contents;
-        std::unique_ptr<spic::internal::TileMap> tileMap;
+        std::unique_ptr<spic::TileMap> tileMap;
         std::unique_ptr<spic::Camera> camera;
         spic::UpdateSetting setting;
     };

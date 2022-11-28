@@ -1,6 +1,6 @@
 #include "TileMap.hpp"
 
-namespace spic::internal
+namespace spic
 {
 	TileMap::TileMap()
 	{
@@ -15,6 +15,14 @@ namespace spic::internal
 	const TileLayer& TileMap::GetLayer(int layerIndex)
 	{
 		return *tileLayers[layerIndex];
+	}
+
+	void TileMap::AddCollisionEntity(const std::shared_ptr<spic::GameObject> entity) {
+		collisionEntities.emplace_back(entity);
+	}
+
+	std::vector<std::shared_ptr<spic::GameObject>> TileMap::CollisionEntities() {
+		return collisionEntities;
 	}
 
 	void TileMap::Render()

@@ -51,27 +51,8 @@ void InitGame() {
 	box->AddComponent<spic::BehaviourScript>(script);
 	box->AddComponent<spic::Sprite>(boxSprite);
 
-	std::shared_ptr<spic::GameObject> platform = std::make_shared<spic::GameObject>();
-	std::string platformName = "platform";
-	std::shared_ptr<spic::Transform> platformTransform = std::make_shared<spic::Transform>();
-	platformTransform->position = { 0.0f, 2.0f };
-	platformTransform->rotation = 0.0f;
-	platformTransform->scale = 1.0f;
-	std::shared_ptr<spic::BoxCollider> platformCollider = std::make_shared<spic::BoxCollider>();
-	platformCollider->Width(8.75f);
-	platformCollider->Height(0.275f);
-	std::shared_ptr<spic::RigidBody> platformRigidBody = std::make_shared<spic::RigidBody>(1.0f, 0.0f, spic::BodyType::staticBody);
-	auto colorSprite = std::make_shared<spic::Sprite>("", 1, 0, spic::Color::cyan());
-
-	platform->Name(platformName);
-	platform->Transform(platformTransform);
-	platform->AddComponent<spic::BoxCollider>(platformCollider);
-	platform->AddComponent<spic::RigidBody>(platformRigidBody);
-	platform->AddComponent<spic::Sprite>(colorSprite);
-
 	scene->AddContent(box);
-	scene->AddContent(platform);
-	scene->LoadTileMap("assets/maps/Map.tmx", 2);
+	scene->LoadTileMap("assets/maps/Map.tmx", 3);
 
 	// Input test
 	std::shared_ptr<MouseListener> mouseListener = std::make_shared<MouseListener>();

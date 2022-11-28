@@ -33,7 +33,7 @@ namespace spic
 		tileMap = mapParser->Parse(newTileMapPath, newCollisionLayerIndex);
 	}
 
-	spic::internal::TileMap* Scene::TileMap() const
+	TileMap* Scene::TileMap() const
 	{
 		return tileMap.get();
 	}

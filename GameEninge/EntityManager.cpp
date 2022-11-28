@@ -116,6 +116,12 @@ void EntityManager::SetScene(std::shared_ptr<Scene> newScene)
 	DestroyScene();
 	scene = newScene;
 	entities.clear();
+	TileMap* tileMap = scene->TileMap();
+	if (tileMap != nullptr) {
+		for (auto& entity : scene->TileMap()->CollisionEntities()) {
+			entities.push_back(entity);
+		}
+	}
 	for (auto& entity : scene->Contents())
 	{
 		entities.push_back(entity);

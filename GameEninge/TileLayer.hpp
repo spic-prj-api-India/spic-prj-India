@@ -7,7 +7,7 @@
 #include "Point.hpp"
 #include "GameObject.hpp"
 
-namespace spic::internal
+namespace spic
 {
     using Matrix = std::vector<std::vector<int>>;
 
@@ -22,16 +22,13 @@ namespace spic::internal
 
         void SetMatrix(const Matrix& matrix);
 
-        void CreateEntities() const;
+        Matrix GetMatrix() const;
 
-        inline Matrix GetMatrix() const;
+        int GetTilesize() const;
 
-        inline int GetTilesize() const;
-
-        inline Point GetSize() const;
+        Point GetSize() const;
     private:
         std::unique_ptr<Sprite> GetSprite(const TileSet& tileSet, const int x, const int y, const int tileSize);
-        void CreateEntity(const float x, const float y, const std::string& name) const;
     private:
         int tileSize;
         int layerIndex;

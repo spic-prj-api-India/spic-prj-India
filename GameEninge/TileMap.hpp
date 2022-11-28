@@ -5,7 +5,7 @@
 #include "TileLayer.hpp"
 #include <map>
 
-namespace spic::internal
+namespace spic
 {
 	class TileMap
 	{
@@ -13,9 +13,12 @@ namespace spic::internal
 		TileMap();
 		void AddTileLayer(const int layer, const std::unique_ptr<TileLayer> tileLayer);
 		const TileLayer& GetLayer(int index);
+		void AddCollisionEntity(const std::shared_ptr<spic::GameObject> entity);
+		std::vector<std::shared_ptr<spic::GameObject>>  CollisionEntities();
 		void Render();
 	private:
 		std::map<int, std::unique_ptr<TileLayer>> tileLayers;
+		std::vector<std::shared_ptr<spic::GameObject>> collisionEntities;
 	};
 }
 
