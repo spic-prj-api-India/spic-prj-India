@@ -12,9 +12,9 @@ namespace spic::internal
     {
     public:
         MapParser();
-        std::unique_ptr<TileMap> Parse(const std::string filename);
+        std::unique_ptr<TileMap> Parse(const std::string filename, const int collisionLayerIndex);
     private:
-        void ParseLayer(const TiXmlElement& tileLayerData, const std::vector<TileSet>& tilesets);
+        int ParseLayer(const TiXmlElement& tileLayerData, const std::vector<TileSet>& tilesets);
         Matrix ParseMatrix(const TiXmlElement& tileLayerData);
         inline TileSet ParseTileSet(const TiXmlElement& tileSetData);
     private:

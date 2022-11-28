@@ -126,7 +126,7 @@ namespace spic {
 		layer = newLayer;
 	}
 
-	std::shared_ptr<Transform> GameObject::Transform() 
+	std::shared_ptr<Transform>& GameObject::Transform() 
 	{
 		return transform;
 	}

@@ -18,7 +18,9 @@ namespace spic::internal::systems {
 		for (const auto& entity : entities) {
 			spic::internal::Rendering::Draw(entity.get());
 		}
-		currentScene.TileMap().Render();
+		spic::internal::TileMap* tileMap = currentScene.TileMap();
+		if(tileMap != nullptr)
+			tileMap->Render();
 		spic::internal::Rendering::Render();
 	}
 }

@@ -3,7 +3,7 @@
 
 namespace spic
 {
-	Scene::Scene() : setting{ UpdateSetting::ALWAYS }, collisionLayerIndex{ -1 }
+	Scene::Scene() : setting{ UpdateSetting::ALWAYS }
 	{}
 
 	Scene::Scene(std::unique_ptr<spic::Camera> newCamera, spic::UpdateSetting setting) :
@@ -27,21 +27,15 @@ namespace spic
 		contents.emplace_back(content);
 	}
 
-	int Scene::CollisionLayerIndex() const
+	void Scene::LoadTileMap(const std::string& newTileMapPath, const int newCollisionLayerIndex)
 	{
-		return collisionLayerIndex;
-	}
-
-	void Scene::LoadTileMap(const int newCollisionLayerIndex, const std::string& newTileMapPath)
-	{
-		collisionLayerIndex = newCollisionLayerIndex;
 		std::unique_ptr<spic::internal::MapParser> mapParser = std::make_unique<spic::internal::MapParser>();
-		tileMap = mapParser->Parse(newTileMapPath);
+		tileMap = mapParser->Parse(newTileMapPath, newCollisionLayerIndex);
 	}
 
-	spic::internal::TileMap& Scene::TileMap() const
+	spic::internal::TileMap* Scene::TileMap() const
 	{
-		return *tileMap;
+		return tileMap.get();
 	}
 
 	spic::Camera& Scene::Camera() const

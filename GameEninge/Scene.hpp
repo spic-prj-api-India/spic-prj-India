@@ -40,21 +40,14 @@ namespace spic {
              * @param newTileMapPath The desired tile map path
              * @spicapi
              */
-            void LoadTileMap(const int newCollisionLayerIndex, const std::string& newTileMapPath);
-
-            /**
-            * @brief The scene's collision layer index
-            * @return The current collision layer index
-            * @spicapi
-            */
-            int CollisionLayerIndex() const;
+            void LoadTileMap(const std::string& newTileMapPath, const int newCollisionLayerIndex);
 
             /**
              * @brief The scene's tile map
              * @return The current tile map
              * @spicapi
              */
-            spic::internal::TileMap& TileMap() const;
+            spic::internal::TileMap* TileMap() const;
 
             /**
              * @brief The scene's camera
@@ -89,7 +82,6 @@ namespace spic {
         * @spicapi
         */
         std::vector<std::shared_ptr<GameObject>> contents;
-        int collisionLayerIndex;
         std::unique_ptr<spic::internal::TileMap> tileMap;
         std::unique_ptr<spic::Camera> camera;
         spic::UpdateSetting setting;

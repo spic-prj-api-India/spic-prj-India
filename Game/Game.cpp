@@ -23,7 +23,7 @@ void InitGame() {
 	// Init
 	spic::GameEngine* engine = spic::GameEngine::GetInstance();
 	std::unique_ptr<spic::Camera> camera = std::make_unique<spic::Camera>();
-	camera->Transform(std::make_shared<spic::Transform>(spic::Point(0.0, 0.0), 0.0f, 1.0f));
+	camera->Transform(std::make_shared<spic::Transform>(spic::Point(0.0f, 0.0f), 0.0f, 1.0f));
 	camera->BackgroundColor(spic::Color::blue());
 	scene = std::make_shared<spic::Scene>(std::move(camera));
 
@@ -32,19 +32,20 @@ void InitGame() {
 	engine->AddExtension(std::move(physicsExtension));
 
 	std::shared_ptr<spic::GameObject> box = std::make_shared<spic::GameObject>();
-	std::string boxTag = "box";
+	std::string boxName = "box";
 	std::shared_ptr<spic::Transform> boxTransform = std::make_shared<spic::Transform>();
-	boxTransform->position = { 2.0f, -2.5f };
-	boxTransform->rotation = 45.0f;
-	boxTransform->scale = 1.0f;
+	boxTransform->position = { 25.0f, 24.0f };
+	std::cout << std::to_string(0.785f * (180.0 / 3.141592653589793238463));
+	boxTransform->rotation = 0.785f;
+	boxTransform->scale = 5.0f;
 	std::shared_ptr<spic::BoxCollider> boxCollider = std::make_shared<spic::BoxCollider>();
-	boxCollider->Width(0.3f);
-	boxCollider->Height(0.3f);
+	boxCollider->Width(1.0f);
+	boxCollider->Height(1.0f);
 	std::shared_ptr<spic::RigidBody> boxRigidBody = std::make_shared<spic::RigidBody>(1.0f, 0.2f, spic::BodyType::dynamicBody);
 	std::shared_ptr<CollisionDetectionScript> script = std::make_shared<CollisionDetectionScript>();
 	auto boxSprite = std::make_shared<spic::Sprite>("assets/textures/box.png", 1);
 
-	box->Tag(boxTag);
+	box->Name(boxName);
 	box->Transform(boxTransform);
 	box->AddComponent<spic::BoxCollider>(boxCollider);
 	box->AddComponent<spic::RigidBody>(boxRigidBody);
@@ -52,7 +53,7 @@ void InitGame() {
 	box->AddComponent<spic::Sprite>(boxSprite);
 
 	std::shared_ptr<spic::GameObject> platform = std::make_shared<spic::GameObject>();
-	std::string platformTag = "platform";
+	std::string platformName = "platform";
 	std::shared_ptr<spic::Transform> platformTransform = std::make_shared<spic::Transform>();
 	platformTransform->position = { 0.0f, 2.0f };
 	platformTransform->rotation = 0.0f;
@@ -63,7 +64,7 @@ void InitGame() {
 	std::shared_ptr<spic::RigidBody> platformRigidBody = std::make_shared<spic::RigidBody>(1.0f, 0.0f, spic::BodyType::staticBody);
 	auto colorSprite = std::make_shared<spic::Sprite>("", 1, 0, spic::Color::cyan());
 
-	platform->Tag(platformTag);
+	platform->Name(platformName);
 	platform->Transform(platformTransform);
 	platform->AddComponent<spic::BoxCollider>(platformCollider);
 	platform->AddComponent<spic::RigidBody>(platformRigidBody);
@@ -71,7 +72,7 @@ void InitGame() {
 
 	scene->AddContent(box);
 	scene->AddContent(platform);
-	scene->LoadTileMap(2, "assets/maps/Map.tmx");
+	scene->LoadTileMap("assets/maps/Map.tmx", 2);
 
 	// Input test
 	std::shared_ptr<MouseListener> mouseListener = std::make_shared<MouseListener>();

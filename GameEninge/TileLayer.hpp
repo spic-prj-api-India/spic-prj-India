@@ -22,6 +22,8 @@ namespace spic::internal
 
         void SetMatrix(const Matrix& matrix);
 
+        void CreateEntities() const;
+
         inline Matrix GetMatrix() const;
 
         inline int GetTilesize() const;
@@ -29,6 +31,7 @@ namespace spic::internal
         inline Point GetSize() const;
     private:
         std::unique_ptr<Sprite> GetSprite(const TileSet& tileSet, const int x, const int y, const int tileSize);
+        void CreateEntity(const float x, const float y, const std::string& name) const;
     private:
         int tileSize;
         int layerIndex;

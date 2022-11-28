@@ -288,16 +288,16 @@ void RendererImp::DrawSprite(Sprite* sprite, const bool isUiObject, const Transf
 
     const int width = (sprite->Width() == 0) ? textureSize.x : sprite->Width();
     const int height = (sprite->Height() == 0) ? textureSize.y : sprite->Height();
-    SDL_Rect dstRect = { PrecisionRoundingoInt(transform->position.x)
-        , PrecisionRoundingoInt(transform->position.y)
-        , PrecisionRoundingoInt(width * transform->scale * this->scaling)
-        , PrecisionRoundingoInt(height * transform->scale * this->scaling) };
+    SDL_Rect dstRect = { SDL_round(transform->position.x)
+        , SDL_round(transform->position.y)
+        , SDL_round(width * transform->scale * this->scaling)
+        , SDL_round(height * transform->scale * this->scaling) };
 
     
-    SDL_Rect sourceRect = { PrecisionRoundingoInt(sprite->X())
-        , PrecisionRoundingoInt(sprite->Y())
-        , PrecisionRoundingoInt(width)
-        , PrecisionRoundingoInt(height) };
+    SDL_Rect sourceRect = { SDL_round(sprite->X())
+        , SDL_round(sprite->Y())
+        , SDL_round(width)
+        , SDL_round(height) };
 
 
     if (SDL_HasIntersection(&dstRect, &this->camera) && !isUiObject)
@@ -307,6 +307,8 @@ void RendererImp::DrawSprite(Sprite* sprite, const bool isUiObject, const Transf
             , dstRect.w
             , dstRect.h };
     }
+    else if (!isUiObject)
+        return;
     else if (!SDL_HasIntersection(&dstRect, &this->windowCamera))
         return;
 
@@ -335,12 +337,10 @@ void RendererImp::DrawSprite(Sprite* sprite, const bool isUiObject, const Transf
         flip = (SDL_RendererFlip)(SDL_FLIP_NONE);
 
     if (texture == nullptr) {
-        std::cout << SDL_GetError() << std::endl;
-        SDL_RenderCopyEx(renderer.get(), NULL, &sourceRect, &dstRect, transform->rotation, &center, flip);
+        SDL_RenderCopyEx(renderer.get(), NULL, &sourceRect, &dstRect, transform->rotation * (180.0 / M_PI), &center, flip);
         return;
     }
-
-    SDL_RenderCopyEx(renderer.get(), texture, &sourceRect, &dstRect, transform->rotation, &center, flip);
+    SDL_RenderCopyEx(renderer.get(), texture, &sourceRect, &dstRect, SDL_round(transform->rotation * (180.0 / M_PI)), &center, flip);
 }
 
 

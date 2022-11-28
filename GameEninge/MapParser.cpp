@@ -9,7 +9,7 @@ namespace spic::internal
         tileMap = std::make_unique<TileMap>();
     }
 
-    std::unique_ptr<TileMap> MapParser::Parse(const std::string filename)
+    std::unique_ptr<TileMap> MapParser::Parse(const std::string filename, const int collisionLayerIndex)
     {
         TiXmlDocument xml;
         xml.LoadFile(filename);
@@ -36,19 +36,22 @@ namespace spic::internal
         for (const TiXmlElement* element = root->FirstChildElement(); element != nullptr; element = element->NextSiblingElement())
         {
             if (element->Value() == std::string("layer")) {
-                ParseLayer(*element, tilesets);
+                if (ParseLayer(*element, tilesets) == collisionLayerIndex) {
+                    tileMap->GetLayer(collisionLayerIndex).CreateEntities();
+                }
             }
         }
         return std::move(tileMap);
     }
 
-    void MapParser::ParseLayer(const TiXmlElement& tileLayerData, const std::vector<TileSet>& tilesets) {
+    int MapParser::ParseLayer(const TiXmlElement& tileLayerData, const std::vector<TileSet>& tilesets) {
         int layerIndex;
         tileLayerData.Attribute("id", &layerIndex);
         std::unique_ptr<TileLayer> tileLayer = std::make_unique<TileLayer>(layerIndex, tileSize, tilesets);
         Matrix matrix = ParseMatrix(tileLayerData);
         tileLayer->SetMatrix(matrix);
         tileMap->AddTileLayer(layerIndex, std::move(tileLayer));
+        return layerIndex;
     }
 
     Matrix MapParser::ParseMatrix(const TiXmlElement& tileLayerData)
