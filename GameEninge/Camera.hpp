@@ -25,10 +25,7 @@ namespace spic {
         private:
             Color backgroundColor;
             float aspectWidth;
-            float aspectHeight;
-        
+            float aspectHeight;  
     };
-
 }
-
 #endif // CAMERA_H_

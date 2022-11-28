@@ -164,7 +164,7 @@ namespace spic {
 	bool GameObject::IsActiveInWorld() const {
 		if (!active)
 			return false;
-		return true;
+		return parent == nullptr || parent->IsActiveInWorld();
 	}
 
 	std::vector<std::shared_ptr<GameObject>> GameObject::GetChildren(bool includeInactive) const {
@@ -178,6 +178,9 @@ namespace spic {
 	}
 
 	const GameObject* GameObject::GetParent() const {
-		return parent;
+		while (parent != nullptr) {
+			if (!parent->Active())
+				return false;
+			parent = parent->GetParent();
 	};
 }

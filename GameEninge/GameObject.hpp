@@ -218,9 +218,12 @@ namespace spic {
 		 */
 		bool operator==(const GameObject& other);
 
-		/// @brief Compare two gameObjects (used for sort function)
-		/// @param other The other object to compare this one with
-		/// @return True if its less then other gameobject, false otherwise
+		
+		/**
+		 * @brief Compare two gameObjects (used for sort function)
+		 * @param other The other object to compare this one with
+		 * @return True if its less then other gameobject, false otherwise
+		*/
 		bool operator<(const GameObject& other);
 
 		template<class T>
@@ -295,21 +298,25 @@ namespace spic {
 		 */
 		template<class T>
 		std::vector<std::shared_ptr<T>> GetComponentsInParent() const;
-
-		/// @brief Adds a gameobject to an gameobject
-		/// @tparam T Has to be of type gameobject 
-		/// @param gameObject 
+		
+		/**
+		 * @brief Adds a gameobject to an gameobject
+		 * @tparam T Has to be of type gameobject 
+		 * @param gameObject 
+		*/
 		template<class T>
 		void AddChild(std::shared_ptr<T> gameObject);
-
-		/// @brief Gets all the children of this object
-		/// @param includeInactive If you want to include inactive children  
-		/// @return A vector of gameobjects
+		
+		/**
+		 * @brief Gets all the children of this object
+		 * @param includeInactive If you want to include inactive children  
+		 * @return A vector of gameobjects
+		*/
 		std::vector<std::shared_ptr<GameObject>> GetChildren(bool includeInactive = false) const;
-
-		/// @brief Gets all the children of this object
-		/// @param includeInactive If you want to include inactive children  
-		/// @return A vector of gameobjects
+		/**
+		 * @brief Gets the current parent
+		 * @return A pointer to the current parent
+		*/
 		const GameObject* GetParent() const;
 	private:
 		void PlayAudioClipsOnAwake();
