@@ -17,15 +17,16 @@ namespace spic {
 	class GameObject : public std::enable_shared_from_this<GameObject> {
 	public:
 		GameObject();
-		/**
-		 * @brief Needs to declare virtual destructor,
-		 *			otherwise can't be casted to derived class
-		 */
-		virtual ~GameObject(){};
 		GameObject(const GameObject& other) = default;
 		GameObject(GameObject&& other) = default;
 		GameObject& operator=(const GameObject& other) = default;
 		GameObject& operator=(GameObject&& other) = default;
+
+		/**
+		 * @brief Needs to declare virtual destructor,
+		 *			otherwise can't be casted to derived class
+		 */
+		virtual ~GameObject() = default;
 
 		/**
 		 * @brief Returns name of GameObject.
@@ -97,6 +98,24 @@ namespace spic {
 		 * @spicapi
 		 */
 		void Transform(std::shared_ptr<spic::Transform> transform);
+		
+		/**
+		 * @brief const version of getting position
+		 * @return 
+		*/
+		const Point Position() const;
+		
+		/**
+		 * @brief Const version of getting rotation
+		 * @return 
+		*/
+		const float Rotation() const;
+		
+		/**
+		 * @brief Const version of scale
+		 * @return 
+		*/
+		const float Scale() const;
 
 		/*
 		@brief Set this GameObject to get destroyed upon loading a new scene.
@@ -205,9 +224,12 @@ namespace spic {
 		 */
 		bool operator==(const GameObject& other);
 
-		/// @brief Compare two gameObjects (used for sort function)
-		/// @param other The other object to compare this one with
-		/// @return True if its less then other gameobject, false otherwise
+		
+		/**
+		 * @brief Compare two gameObjects (used for sort function)
+		 * @param other The other object to compare this one with
+		 * @return True if its less then other gameobject, false otherwise
+		*/
 		bool operator<(const GameObject& other);
 
 		template<class T>
@@ -223,7 +245,7 @@ namespace spic {
 		 * @spicapi
 		 */
 		template<class T>
-		void AddComponent(std::shared_ptr<Component> component);
+		void AddComponent(std::shared_ptr<T> component);
 
 		/**
 		 * @brief Get the first component of the specified type. Must be
@@ -282,18 +304,27 @@ namespace spic {
 		 */
 		template<class T>
 		std::vector<std::shared_ptr<T>> GetComponentsInParent() const;
-
-		void AddChild(const std::shared_ptr<spic::GameObject>& gameObject);
-
-		/// @brief Gets all the children of this object
-		/// @param includeInactive If you want to include inactive children  
-		/// @return A vector of gameobjects
+		
+		/**
+		 * @brief Adds a gameobject to an gameobject
+		 * @tparam T Has to be of type gameobject 
+		 * @param gameObject 
+		*/
+		template<class T>
+		void AddChild(std::shared_ptr<T> gameObject);
+		
+		/**
+		 * @brief Gets all the children of this object
+		 * @param includeInactive If you want to include inactive children  
+		 * @return A vector of gameobjects
+		*/
 		std::vector<std::shared_ptr<GameObject>> GetChildren(bool includeInactive = false) const;
 
-		/// @brief Gets all the children of this object
-		/// @param includeInactive If you want to include inactive children  
-		/// @return A vector of gameobjects
-		std::shared_ptr<GameObject> GetParent() const;
+		/**
+		 * @brief Gets the current parent
+		 * @return A pointer to the current parent
+		*/
+		const GameObject* GetParent() const;
 	private:
 		void PlayAudioClipsOnAwake();
 		static std::vector<std::shared_ptr<GameObject>> GetGameObjects();
@@ -306,7 +337,7 @@ namespace spic {
 		std::shared_ptr<spic::Transform> transform;
 		std::vector<std::shared_ptr<Component>> components;
 		std::vector<std::shared_ptr<GameObject>> children;
-		std::shared_ptr<GameObject> parent;
+		GameObject* parent;
 	};
 
 	template<class T>
@@ -342,7 +373,7 @@ namespace spic {
 	}
 
 	template<class T>
-	void GameObject::AddComponent(std::shared_ptr<Component> component)
+	void GameObject::AddComponent(std::shared_ptr<T> component)
 	{
 		components.emplace_back(component);
 	}
@@ -400,6 +431,13 @@ namespace spic {
 	std::vector<std::shared_ptr<T>> GameObject::GetComponentsInParent() const {
 		return parent->GetComponents<T>();
 	}
-}
 
+	template<class T>
+	void GameObject::AddChild(std::shared_ptr<T> gameObject) {
+		if (gameObject->GetParent() != nullptr)
+			throw std::exception("Child can only have one parent");
+		children.emplace_back(gameObject);
+		gameObject->parent = this;
+	}
+}
 #endif // GAMEOBJECT_H_

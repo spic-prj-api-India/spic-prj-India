@@ -16,7 +16,7 @@ namespace spic {
              * @param alpha The transparency component, 0 ≤ alpha ≤ 1.
              * @spicapi
              */
-            Color(double red, double green, double blue, double alpha);
+            Color(float red, float green, float blue, float alpha);
 
             /**
              * @brief One of the standard colors (read-only): white.
@@ -75,11 +75,16 @@ namespace spic {
             static const Color& black()   { return _black; }
             // ... more standard colors here
 
+            const float R() const { return r; };
+            const float G() const { return g; };
+            const float B() const { return b; };
+            const float A() const { return a; };
+
         private:
-            double r;
-            double g;
-            double b;
-            double a;
+            float r;
+            float g;
+            float b;
+            float a;
 
             static Color _white;
             static Color _red;
