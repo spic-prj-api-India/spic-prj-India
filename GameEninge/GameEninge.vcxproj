@@ -217,7 +217,7 @@
     <ClInclude Include="Transform.hpp" />
     <ClInclude Include="TypeHelper.hpp" />
     <ClInclude Include="UIObject.hpp" />
-    <ClCompile Include="RendererImpl.hpp" />
+    <ClInclude Include="RendererImpl.hpp" />
     <ClInclude Include="WindowValues.hpp" />
   </ItemGroup>
   <ItemGroup>
