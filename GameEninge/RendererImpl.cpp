@@ -38,7 +38,7 @@ RendererImpl::~RendererImpl()
 
 void RendererImpl::Start(const spic::window::WindowValues* values)
 {
-	Exit(); // does nothing if it has not been called yet
+	//Exit(); // does nothing if it has not been called yet
 
 	// sets up video
 	if (SDL_Init(SDL_INIT_VIDEO != 0))
@@ -358,7 +358,7 @@ void RendererImpl::DrawSprite(const Sprite* sprite, const bool isUiObject, const
 		, PrecisionRoundingoInt(dstRect.y)
 		, PrecisionRoundingoInt(dstRect.w)
 		, PrecisionRoundingoInt(dstRect.h) };
-	DrawRect(&dstRect, &Color::red());
+	//DrawRect(&dstRect, &Color::red());
 }
 
 void RendererImpl::UpdateCamera(Camera* camera)
