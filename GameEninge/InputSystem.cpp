@@ -9,7 +9,7 @@ namespace spic::internal::systems {
 	InputSystem::InputSystem() 
 	{}
 
-	void InputSystem::Start(std::vector<std::shared_ptr<spic::GameObject>>& entities)
+	void InputSystem::Start(std::vector<std::shared_ptr<spic::GameObject>>& entities, Scene& currentScene)
 	{
 		buttonClickListener = std::make_shared<ButtonClickListener>();
 		Input::Subscribe(spic::Input::MouseButton::LEFT, buttonClickListener);

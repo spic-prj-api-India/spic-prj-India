@@ -17,7 +17,7 @@ namespace spic::internal::systems {
 		* @brief Calls Start method in scripts of entities
 		* @spicapi
 		*/
-		void Start(std::vector<std::shared_ptr<spic::GameObject>>& entities) override;
+		void Start(std::vector<std::shared_ptr<spic::GameObject>>& entities, Scene& currentScene) override;
 
 		/**
 		* @brief Calls Update method in scripts of entities

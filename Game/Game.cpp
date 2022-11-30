@@ -16,6 +16,7 @@
 #include "Scene.hpp"
 #include <Renderer.hpp>
 #include "Color.hpp"
+#include "CameraMovementScript.h"
 
 std::shared_ptr<spic::Scene> scene;
 
@@ -23,8 +24,9 @@ void InitGame() {
 	// Init
 	spic::GameEngine* engine = spic::GameEngine::GetInstance();
 	std::unique_ptr<spic::Camera> camera = std::make_unique<spic::Camera>();
-	camera->Transform(std::make_shared<spic::Transform>(spic::Point(0.0f, 0.0f), 0.0f, 1.0f));
+	camera->Transform(std::make_shared<spic::Transform>(spic::Point(280.0f, 0.0f), 0.0f, 1.0f));
 	camera->BackgroundColor(spic::Color::blue());
+	camera->AddComponent(std::make_shared<CameraMovementScript>());
 	scene = std::make_shared<spic::Scene>(std::move(camera));
 
 	// Physics test
@@ -60,7 +62,7 @@ void InitGame() {
 
 	scene->AddContent(box);
 	scene->AddContent(button);
-	//scene->LoadTileMap("assets/maps/Map.tmx", 3);
+	scene->LoadTileMap("assets/maps/Map.tmx", 3);
 
 	// Input test
 	std::shared_ptr<MouseListener> mouseListener = std::make_shared<MouseListener>();

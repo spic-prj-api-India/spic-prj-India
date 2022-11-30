@@ -46,6 +46,24 @@ namespace spic::internal
 		void Reset();
 
 		/*
+		@brief Gets entities that are currently loaded.
+		@return The current entities
+		*/
+		std::vector<std::shared_ptr<spic::GameObject>> GetEntities();
+
+		/*
+		@brief Add entity.
+		@param entity The entity that will be added
+		*/
+		void AddEntity(const std::shared_ptr<spic::GameObject>& entity);
+
+		/*
+		@brief Remove entity.
+		@param entity The entity that will be removed
+		*/
+		void RemoveEntity(const std::shared_ptr<spic::GameObject>& entity);
+
+		/*
 		@brief Register scene.
 		@param The sceneName is the key in the scenes list.
 		@param The scene that will be registered in scenes list.
@@ -64,24 +82,6 @@ namespace spic::internal
 		@returns The scene with the given sceneName.
 		*/
 		std::shared_ptr<Scene> GetScene(const std::string& sceneName);
-
-		/*
-		@brief Gets entities that are currently loaded.
-		@return The current entities
-		*/
-		std::vector<std::shared_ptr<spic::GameObject>> GetEntities();
-
-		/*
-		@brief Add entity.
-		@param entity The entity that will be added
-		*/
-		void AddEntity(const std::shared_ptr<spic::GameObject>& entity);
-
-		/*
-		@brief Remove entity.
-		@param entity The entity that will be removed
-		*/
-		void RemoveEntity(const std::shared_ptr<spic::GameObject>& entity);
 
 		/*
 		@brief Sets the current scene with entities.

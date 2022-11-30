@@ -22,11 +22,6 @@ namespace spic
 		return contents;
 	}
 
-	void Scene::AddContent(std::shared_ptr<GameObject> content)
-	{
-		contents.emplace_back(content);
-	}
-
 	void Scene::LoadTileMap(const std::string& newTileMapPath, const int newCollisionLayerIndex)
 	{
 		std::unique_ptr<spic::internal::MapParser> mapParser = std::make_unique<spic::internal::MapParser>();

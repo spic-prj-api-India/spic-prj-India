@@ -14,7 +14,7 @@ namespace spic::systems
 		* @brief Is called when scene is loaded
 		* @spicapi
 		*/
-		virtual void Start(std::vector<std::shared_ptr<spic::GameObject>>& entities) = 0;
+		virtual void Start(std::vector<std::shared_ptr<spic::GameObject>>& entities, Scene& currentScene) = 0;
 
 		/**
 		* @brief Is called every tick

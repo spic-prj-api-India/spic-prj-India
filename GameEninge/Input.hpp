@@ -272,6 +272,12 @@ namespace spic {
         };
 
         /**
+        * @brief Polls all input events, needs to be used to update input events
+        * @spicapi
+        */
+        int Poll();
+
+        /**
          * @brief Has quited? (Read Only)
          * @spicapi
          */

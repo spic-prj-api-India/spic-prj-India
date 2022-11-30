@@ -38,6 +38,16 @@ RendererImpl::~RendererImpl()
 	}
 }
 
+RendererImpl* RendererImpl::GetInstance()
+{
+	std::lock_guard<std::mutex> lock(mutex_);
+	if (pinstance_ == nullptr)
+	{
+		pinstance_ = new RendererImpl();
+	}
+	return pinstance_;
+}
+
 void RendererImpl::Start(const spic::window::WindowValues* values)
 {
 	Exit(); // does nothing if it has not been called yet
@@ -95,134 +105,6 @@ void RendererImpl::Exit()
 	SDL_Quit();
 }
 
-SDL_Point RendererImpl::GetTextureSize(SDL_Texture* texture) const
-{
-	SDL_Point size;
-	SDL_QueryTexture(texture, NULL, NULL, &size.x, &size.y);
-	return size;
-}
-
-void RendererImpl::DrawSprites(GameObject* gameObject, const bool isUIObject)
-{
-	const auto transform = gameObject->Transform();
-	auto _sprites = gameObject->GetComponents<Sprite>();
-	std::sort(_sprites.begin(), _sprites.end(), spic::GeneralHelper::SpriteSorting);
-	for (auto& sprite : _sprites)
-	{
-		if (isUIObject)
-			DrawUISprite(TypeHelper::CastPtrToType<UIObject>(gameObject), sprite.get(), transform.get());
-		else
-			DrawSprite(sprite.get(), transform.get());
-	}
-}
-
-SDL_Texture* RendererImpl::LoadTexture(const std::string& sprite)
-{
-	if (sprite.empty())
-		return missingTexture.get();
-	bool exists = textures.find(sprite) != textures.end();
-	if (exists)
-		return textures[sprite].get();
-
-	auto tmp_sprites = SurfacePtr(IMG_Load(sprite.c_str()));
-	if (!tmp_sprites.get())
-		return missingTexture.get();
-
-	auto texture = TexturePtr(SDL_CreateTextureFromSurface(renderer.get(), tmp_sprites.get()));
-	auto returnPntr = texture.get();
-	textures.emplace(sprite, std::move(texture));
-	return returnPntr;
-}
-
-TTF_Font* RendererImpl::LoadFont(const std::string& font, const int size)
-{
-	if (font.empty())
-		return nullptr;
-	bool exists = fonts.find(font) != fonts.end();
-	if (exists)
-		return fonts[font].get();
-
-	auto tmp_font = FontPtr(TTF_OpenFont(font.c_str(), size));
-	if (!tmp_font.get())
-		return nullptr;
-
-	return tmp_font.get();
-}
-
-
-void RendererImpl::DrawUI(UIObject* gameObject)
-{
-	auto* castedUiObject = dynamic_cast<Text*>(gameObject);
-	const bool thisIsTextObject = castedUiObject != nullptr;
-	if (thisIsTextObject)
-		DrawText(castedUiObject);
-}
-
-void RendererImpl::NewScene()
-{
-	textures.clear();
-	fonts.clear();
-}
-
-void RendererImpl::DrawAnimators(GameObject* gameObject, const bool isUiObject)
-{
-	auto _animator = gameObject->GetComponents<Animator>();
-
-
-	for (auto& animator : _animator)
-	{
-		DrawAnimator(animator.get(), isUiObject, gameObject->Transform().get());
-	}
-}
-
-void RendererImpl::DrawAnimator(Animator* animator, const bool isUiObject, const Transform* position)
-{
-	auto sprites = animator->Sprites();
-	// sort sprites
-
-	const auto framesAmount = sprites.back()->OrderInLayer();
-
-	const int fps = 1000;
-
-	//const auto frame = static_cast<uint64_t>(SDL_GetTicks() / ((static_cast<double>(fps) / animator->Fps()) * Time::TimeScale())) % framesAmount;
-
-	const auto frame = static_cast<uint64_t>(SDL_GetTicks() / (1000 / animator->Fps() * Time::TimeScale())) % framesAmount;
-
-	for (auto& sprite : sprites)
-	{
-		if (sprite->OrderInLayer() == frame && !animator->IsFrozen())
-		{
-			//animator->Index(frame);
-			DrawSprite(sprite.get(), position);
-		}
-
-		else if (sprite->OrderInLayer() == animator->Index() && animator->IsFrozen())
-			DrawSprite(sprite.get(), position);
-	}
-}
-
-void RendererImpl::SetBackgroundColor()
-{
-	SDL_SetRenderDrawColor(renderer.get()
-		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, this->backgroundColor.R()))
-		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, this->backgroundColor.G()))
-		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, this->backgroundColor.B()))
-		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, this->backgroundColor.A()))
-	);
-
-	SDL_RenderFillRectF(renderer.get(), &this->windowCamera);
-}
-
-RendererImpl* RendererImpl::GetInstance()
-{
-	std::lock_guard<std::mutex> lock(mutex_);
-	if (pinstance_ == nullptr)
-	{
-		pinstance_ = new RendererImpl();
-	}
-	return pinstance_;
-}
-
 void RendererImpl::DrawGameObject(GameObject* gameObject, bool isUiOject)
 {
 	if (gameObject->Active())
@@ -250,50 +132,59 @@ void RendererImpl::DrawGameObject(GameObject* gameObject, bool isUiOject)
 	}
 }
 
-void RendererImpl::DrawRect(const SDL_FRect* rect, const double angle, const Color* colour)
+void RendererImpl::DrawSprites(GameObject* gameObject, const bool isUIObject)
 {
-	std::string defaultRectanglePath = StringHelper::GetBasePath() + "\\assets\\textures\\UISprite.png";
-	SDL_Texture* texture = LoadTexture(defaultRectanglePath);
-	SDL_SetRenderDrawColor(renderer.get()
-		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, colour->R()))
-		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, colour->G()))
-		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, colour->B()))
-		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, colour->A())));
-	SDL_RenderCopyExF(renderer.get(), NULL, NULL, rect, angle, NULL, SDL_FLIP_NONE);
-}
-
-void RendererImpl::DrawLine(const Point* start, const Point* end, const Color* colour)
-{
-	SDL_SetRenderDrawColor(renderer.get()
-		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, colour->R()))
-		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, colour->G()))
-		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, colour->B()))
-		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, colour->A())));
-	SDL_RenderDrawLine(renderer.get()
-		, PrecisionRoundingoInt(start->x)
-		, PrecisionRoundingoInt(start->y)
-		, PrecisionRoundingoInt(end->x)
-		, PrecisionRoundingoInt(end->y));
-}
-
-void RendererImpl::DrawText(Text* text)
-{
-	if (std::filesystem::exists(text->Font().c_str()))
+	const auto transform = gameObject->Transform();
+	auto _sprites = gameObject->GetComponents<Sprite>();
+	std::sort(_sprites.begin(), _sprites.end(), spic::GeneralHelper::SpriteSorting);
+	for (auto& sprite : _sprites)
 	{
-		auto font = TTF_OpenFont(text->Font().c_str(), text->Size());
-		auto transform = text->Transform().get();
-		auto colour = SDL_Color{ static_cast<unsigned char>(PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, text->Color().R())))
-			, static_cast<unsigned char>(PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, text->Color().G())))
-			, static_cast<unsigned char>(PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, text->Color().B()))) };
-		std::string texts{ text->_Text() };
-		text->Alignment();
+		if (isUIObject)
+			DrawUISprite(TypeHelper::CastPtrToType<UIObject>(gameObject), sprite.get(), transform.get());
+		else
+			DrawSprite(sprite.get(), transform.get());
+	}
+}
 
-		const spic::GameObject* parent = text->GetParent();
-		const float x = transform->position.x + (parent != nullptr ? parent->Transform()->position.x : 0);
-		const float y = transform->position.y + (parent != nullptr ? parent->Transform()->position.y : 0);
-		this->RenderMultiLineText(font, texts, colour, x, y, text->Width(), text->Height(), 2, text->Alignment());
+void RendererImpl::DrawAnimators(GameObject* gameObject, const bool isUiObject)
+{
+	auto _animator = gameObject->GetComponents<Animator>();
 
-		TTF_CloseFont(font);
+	for (auto& animator : _animator)
+	{
+		DrawAnimator(gameObject, animator.get(), isUiObject, gameObject->Transform().get());
+	}
+}
+
+void RendererImpl::DrawAnimator(GameObject* gameObject, Animator* animator, const bool isUIObject, const Transform* transform)
+{
+	auto sprites = animator->Sprites();
+	// sort sprites
+
+	const auto framesAmount = sprites.back()->OrderInLayer();
+
+	const int fps = 1000;
+
+	//const auto frame = static_cast<uint64_t>(SDL_GetTicks() / ((static_cast<double>(fps) / animator->Fps()) * Time::TimeScale())) % framesAmount;
+
+	const auto frame = static_cast<uint64_t>(SDL_GetTicks() / (1000 / animator->Fps() * Time::TimeScale())) % framesAmount;
+
+	for (auto& sprite : sprites)
+	{
+		if (sprite->OrderInLayer() == frame && !animator->IsFrozen())
+		{
+			//animator->Index(frame);
+			if (isUIObject)
+				DrawUISprite(TypeHelper::CastPtrToType<UIObject>(gameObject), sprite.get(), transform);
+			else
+				DrawSprite(sprite.get(), transform);
+		}
+		else if (sprite->OrderInLayer() == animator->Index() && animator->IsFrozen()) {
+			if (isUIObject)
+				DrawUISprite(TypeHelper::CastPtrToType<UIObject>(gameObject), sprite.get(), transform);
+			else
+				DrawSprite(sprite.get(), transform);
+		}
 	}
 }
 
@@ -391,6 +282,31 @@ void RendererImpl::DrawSprite(const Sprite* sprite, const Transform* transform)
 	SDL_RenderCopyExF(renderer.get(), texture, &sourceRect, &dstRect, angle, NULL, flip);
 }
 
+SDL_Texture* RendererImpl::LoadTexture(const std::string& sprite)
+{
+	if (sprite.empty())
+		return missingTexture.get();
+	bool exists = textures.find(sprite) != textures.end();
+	if (exists)
+		return textures[sprite].get();
+
+	auto tmp_sprites = SurfacePtr(IMG_Load(sprite.c_str()));
+	if (!tmp_sprites.get())
+		return missingTexture.get();
+
+	auto texture = TexturePtr(SDL_CreateTextureFromSurface(renderer.get(), tmp_sprites.get()));
+	auto returnPntr = texture.get();
+	textures.emplace(sprite, std::move(texture));
+	return returnPntr;
+}
+
+SDL_Point RendererImpl::GetTextureSize(SDL_Texture* texture) const
+{
+	SDL_Point size;
+	SDL_QueryTexture(texture, NULL, NULL, &size.x, &size.y);
+	return size;
+}
+
 SDL_RendererFlip RendererImpl::GetFlip(const bool flipX, const bool flipY)
 {
 	if (flipX && flipY)
@@ -400,6 +316,225 @@ SDL_RendererFlip RendererImpl::GetFlip(const bool flipX, const bool flipY)
 	else if (flipY)
 		return SDL_FLIP_VERTICAL;
 	return SDL_FLIP_NONE;
+}
+
+void RendererImpl::DrawUI(UIObject* gameObject)
+{
+	auto* castedUiObject = dynamic_cast<Text*>(gameObject);
+	const bool thisIsTextObject = castedUiObject != nullptr;
+	if (thisIsTextObject)
+		DrawText(castedUiObject);
+}
+
+void RendererImpl::DrawText(Text* text)
+{
+	if (std::filesystem::exists(text->Font().c_str()))
+	{
+		auto font = TTF_OpenFont(text->Font().c_str(), text->Size());
+		auto transform = text->Transform().get();
+		auto colour = SDL_Color{ static_cast<unsigned char>(PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, text->Color().R())))
+			, static_cast<unsigned char>(PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, text->Color().G())))
+			, static_cast<unsigned char>(PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, text->Color().B()))) };
+		std::string texts{ text->_Text() };
+		text->Alignment();
+
+		const spic::GameObject* parent = text->GetParent();
+		const float x = transform->position.x + (parent != nullptr ? parent->Transform()->position.x : 0);
+		const float y = transform->position.y + (parent != nullptr ? parent->Transform()->position.y : 0);
+		this->RenderMultiLineText(font, texts, colour, x, y, text->Width(), text->Height(), 2, text->Alignment());
+
+		TTF_CloseFont(font);
+	}
+}
+
+void RendererImpl::Wrap(const TTF_Font* pFont, std::string& input, const float width)
+{
+	std::istringstream in(input);
+	std::string line;
+	size_t current = 0;
+	std::string word;
+	std::string output = "";
+
+	int* w = new int{ 0 };
+	int* h = new int{ 0 };
+
+	try
+	{
+		while (std::getline(in, line))
+		{
+			std::istringstream linein(line);
+			while (linein >> word) {
+				*w = 0;
+				*h = 0;
+				TTF_SizeUTF8((TTF_Font*)pFont, word.c_str(), w, h);
+				if (current + *w + 1 > width)
+				{
+					output += "\n";
+				}
+				output += word + ' ';
+				current += *w + 1;
+			}
+			output += "\n";
+			current = 0;
+		}
+	}
+	catch (...)
+	{
+
+	}
+
+	delete w;
+	delete h;
+	std::swap(output, input);
+}
+
+void RendererImpl::RenderMultiLineText(const TTF_Font* pFont, std::string& rText
+	, const SDL_Color& rTextColor, float xPosition, float yPosition, const float width
+	, const float height, const int distanceBetweenLines, const Alignment align)
+{
+	// Make sure that the string contains at least 1 character
+	if (rText.empty())
+		return;
+	Wrap(pFont, rText, width);
+	try
+	{
+		SurfacePtr pSurface;
+		TexturePtr pTexture;
+
+		int currentLine = 0;
+		float totalLength = 0;
+
+		// This string will contain one line of text
+		std::string textLine = "";
+
+		for (int i = 0; i < rText.length(); ++i)
+		{
+			// Create the text line as long as the current character is not a \n command
+			if (rText.at(i) != '\n') {
+				textLine += rText.at(i);
+				continue;
+			}
+
+			// Since the current character is now a \n command, it's time to create the texture containing the current text line,
+			// render it, clear the created text string and then start on a new line
+			if (pFont)
+				pSurface.reset(TTF_RenderText_Solid((TTF_Font*)pFont, textLine.c_str(), rTextColor));
+
+			// The current line of text has now been rendered (if the texture was successfully created and so on) and the text line string now needs to be cleared
+			textLine = "";
+
+			// Time for a new line
+			++currentLine;
+
+			if (!pSurface.get())
+				continue;
+			pTexture.reset(SDL_CreateTextureFromSurface(this->renderer.get(), pSurface.get()));
+
+			if (pTexture.get())
+			{
+				const float textWidth = static_cast<float>(pSurface->w);
+				const float textHeight = static_cast<float>(pSurface->h);
+				const float nextY = yPosition + ((textHeight + distanceBetweenLines) * currentLine);
+
+				totalLength += nextY - yPosition;
+
+				if (totalLength > height)
+				{
+					pTexture.reset(NULL);
+					break;
+				}
+
+				SDL_FRect PositionQuad = { 0, 0, 0, 0 };
+
+				switch (align) {
+				case Alignment::center: // Position the quad centered (horizontal) in the window
+					PositionQuad.x = (width / 2) - (textWidth / 2) + xPosition;
+					break;
+				case Alignment::right:
+					PositionQuad.x = width - textWidth + xPosition;
+					break;
+				default: // Position the quad according to the XPosition parameter
+					PositionQuad.x = xPosition;
+				}
+
+				PositionQuad.y = nextY;
+				PositionQuad.w = textWidth;
+				PositionQuad.h = textHeight;
+
+
+				SDL_RenderCopyF(this->renderer.get(), pTexture.get(), NULL, &PositionQuad);
+
+				// Avoid memory leak
+				pTexture.reset(NULL);
+			}
+
+			// Avoid memory leak
+			pSurface.reset(NULL);
+		}
+	}
+	catch (...)
+	{
+		return;
+	}
+}
+
+TTF_Font* RendererImpl::LoadFont(const std::string& font, const int size)
+{
+	if (font.empty())
+		return nullptr;
+	bool exists = fonts.find(font) != fonts.end();
+	if (exists)
+		return fonts[font].get();
+
+	auto tmp_font = FontPtr(TTF_OpenFont(font.c_str(), size));
+	if (!tmp_font.get())
+		return nullptr;
+
+	return tmp_font.get();
+}
+
+void RendererImpl::NewScene()
+{
+	textures.clear();
+	fonts.clear();
+}
+
+void RendererImpl::SetBackgroundColor()
+{
+	SDL_SetRenderDrawColor(renderer.get()
+		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, this->backgroundColor.R()))
+		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, this->backgroundColor.G()))
+		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, this->backgroundColor.B()))
+		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, this->backgroundColor.A()))
+	);
+
+	SDL_RenderFillRectF(renderer.get(), &this->windowCamera);
+}
+
+void RendererImpl::DrawRect(const SDL_FRect* rect, const double angle, const Color* colour)
+{
+	std::string defaultRectanglePath = StringHelper::GetBasePath() + "\\assets\\textures\\UISprite.png";
+	SDL_Texture* texture = LoadTexture(defaultRectanglePath);
+	SDL_SetRenderDrawColor(renderer.get()
+		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, colour->R()))
+		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, colour->G()))
+		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, colour->B()))
+		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, colour->A())));
+	SDL_RenderCopyExF(renderer.get(), NULL, NULL, rect, angle, NULL, SDL_FLIP_NONE);
+}
+
+void RendererImpl::DrawLine(const Point* start, const Point* end, const Color* colour)
+{
+	SDL_SetRenderDrawColor(renderer.get()
+		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, colour->R()))
+		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, colour->G()))
+		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, colour->B()))
+		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, colour->A())));
+	SDL_RenderDrawLine(renderer.get()
+		, PrecisionRoundingoInt(start->x)
+		, PrecisionRoundingoInt(start->y)
+		, PrecisionRoundingoInt(end->x)
+		, PrecisionRoundingoInt(end->y));
 }
 
 void RendererImpl::UpdateCamera(Camera* camera)
@@ -469,140 +604,4 @@ void RendererImpl::UpdateWindow(const spic::window::WindowValues* values)
 	this->windowCamera = { 0, 0, static_cast<float>(width), static_cast<float>(height) };
 	this->camera.w = static_cast<float>(width);
 	this->camera.h = static_cast<float>(height);
-}
-
-
-void RendererImpl::Wrap(const TTF_Font* pFont, std::string& input, const float width)
-{
-	std::istringstream in(input);
-	std::string line;
-	size_t current = 0;
-	std::string word;
-	std::string output = "";
-
-	int* w = new int{ 0 };
-	int* h = new int{ 0 };
-
-	try
-	{
-		while (std::getline(in, line))
-		{
-			std::istringstream linein(line);
-			while (linein >> word) {
-				*w = 0;
-				*h = 0;
-				TTF_SizeUTF8((TTF_Font*)pFont, word.c_str(), w, h);
-				if (current + *w + 1 > width)
-				{
-					output += "\n";
-				}
-				output += word + ' ';
-				current += *w + 1;
-			}
-			output += "\n";
-			current = 0;
-		}
-	}
-	catch (...)
-	{
-
-	}
-
-	delete w;
-	delete h;
-	std::swap(output, input);
-}
-
-void RendererImpl::RenderMultiLineText(const TTF_Font* pFont, std::string& rText
-	, const SDL_Color& rTextColor, float xPosition, float yPosition, const float width
-	, const float height, const int distanceBetweenLines, const Alignment align)
-{
-	// Make sure that the string contains at least 1 character
-	if (!rText.empty())
-	{
-		Wrap(pFont, rText, width);
-		try
-		{
-			SurfacePtr pSurface;
-			TexturePtr pTexture;
-
-			int currentLine = 0;
-			float totalLength = 0;
-
-			// This string will contain one line of text
-			std::string textLine = "";
-
-			for (int i = 0; i < rText.length(); ++i)
-			{
-				// Create the text line as long as the current character is not a \n command
-				if (rText[i] != '\n')
-					textLine += rText[i];
-
-				// Since the current character is now a \n command, it's time to create the texture containing the current text line, render it, clear the created text string and then start on a new line
-				else
-				{
-					if (pFont)
-						pSurface.reset(TTF_RenderText_Solid((TTF_Font*)pFont, textLine.c_str(), rTextColor));
-
-					if (pSurface.get())
-					{
-						pTexture.reset(SDL_CreateTextureFromSurface(this->renderer.get(), pSurface.get()));
-
-						if (pTexture.get())
-						{
-							const float textWidth = static_cast<float>(pSurface->w);
-							const float textHeight = static_cast<float>(pSurface->h);
-							const float nextY = yPosition + ((textHeight + distanceBetweenLines) * currentLine);
-
-							totalLength += nextY - yPosition;
-
-							if (totalLength > height)
-							{
-								pTexture.reset(NULL);
-								break;
-							}
-
-							SDL_FRect PositionQuad = { 0, 0, 0, 0 };
-
-							switch (align) {
-							case Alignment::center: // Position the quad centered (horizontal) in the window
-								PositionQuad.x = (width / 2) - (textWidth / 2) + xPosition;
-								break;
-							case Alignment::right:
-								PositionQuad.x = width - textWidth + xPosition;
-								break;
-
-							default: // Position the quad according to the XPosition parameter
-								PositionQuad.x = xPosition;
-							}
-
-							PositionQuad.y = nextY;
-							PositionQuad.w = textWidth;
-							PositionQuad.h = textHeight;
-
-
-							SDL_RenderCopyF(this->renderer.get(), pTexture.get(), NULL, &PositionQuad);
-
-							// Avoid memory leak
-							pTexture.reset(NULL);
-						}
-
-						// Avoid memory leak
-						pSurface.reset(NULL);
-					}
-
-					// The current line of text has now been rendered (if the texture was successfully created and so on) and the text line string now needs to be cleared
-					textLine = "";
-
-					// Time for a new line
-					++currentLine;
-				}
-			}
-		}
-		catch (...)
-		{
-			return;
-		}
-
-	}
 }

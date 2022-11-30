@@ -18,7 +18,7 @@ namespace spic::internal::systems {
 		* @brief Initiliazes system
 		* @spicapi
 		*/
-		void Start(std::vector<std::shared_ptr<spic::GameObject>>& entities) override;
+		void Start(std::vector<std::shared_ptr<spic::GameObject>>& entities, Scene& currentScene) override;
 
 		/**
 		* @brief Calls Listen method in InputManager

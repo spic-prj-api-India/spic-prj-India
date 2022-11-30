@@ -36,9 +36,9 @@ void spic::internal::Rendering::DrawSprite(const Transform* position, Sprite* sp
 	spic::internal::rendering::RendererImpl::GetInstance()->DrawSprite(sprite, position );
 }
 
-void spic::internal::Rendering::DrawAnimator(const Transform* position, const bool isUi, Animator* animator)
+void spic::internal::Rendering::DrawAnimator(GameObject* gameObject, const Transform* position, const bool isUi, Animator* animator)
 {
-	spic::internal::rendering::RendererImpl::GetInstance()->DrawAnimator(animator, isUi, position);
+	spic::internal::rendering::RendererImpl::GetInstance()->DrawAnimator(gameObject, animator, isUi, position);
 }
 
 void spic::internal::Rendering::DrawText(Text* text, const bool isUi)

@@ -10,7 +10,7 @@ namespace spic::internal::systems {
 	{
 	}
 
-	void RenderingSystem::Start(std::vector<std::shared_ptr<spic::GameObject>>& entities)
+	void RenderingSystem::Start(std::vector<std::shared_ptr<spic::GameObject>>& entities, Scene& currentScene)
 	{}
 
 	void RenderingSystem::Update(std::vector<std::shared_ptr<spic::GameObject>>& entities, Scene& currentScene)

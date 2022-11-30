@@ -15,8 +15,6 @@ namespace spic::internal {
 
 	void ButtonClickListener::OnMouseClicked()
 	{
-		/*const auto scene = GameEngine::GetInstance()->GetActiveScene();
-		const auto& camera = scene->Camera();*/
 		spic::Point point = spic::Input::MousePosition();
 		SDL_FRect mouseRect = {
 			point.x,

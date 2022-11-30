@@ -57,6 +57,21 @@ void EntityManager::Reset()
 	scene = nullptr;
 }
 
+std::vector<std::shared_ptr<spic::GameObject>> EntityManager::GetEntities() {
+	return entities;
+}
+
+void EntityManager::AddEntity(const std::shared_ptr<spic::GameObject>& entity)
+{
+	entities.push_back(entity);
+}
+
+void EntityManager::RemoveEntity(const std::shared_ptr<spic::GameObject>& entity) {
+	entities.erase(
+		std::remove(entities.begin(), entities.end(), entity),
+		entities.end());
+}
+
 void EntityManager::RegisterScene(const std::string& sceneName, std::shared_ptr<Scene> scene)
 {
 	if (scenes.count(sceneName))
@@ -91,24 +106,9 @@ void EntityManager::SetScene(const std::string& sceneName)
 	{
 		for (const auto& system : systemsMap.second)
 		{
-			system->Start(entities);
+			system->Start(entities, *scene);
 		}
 	}
-}
-
-std::vector<std::shared_ptr<spic::GameObject>> EntityManager::GetEntities() {
-	return entities;
-}
-
-void EntityManager::AddEntity(const std::shared_ptr<spic::GameObject>& entity)
-{
-	entities.push_back(entity);
-}
-
-void EntityManager::RemoveEntity(const std::shared_ptr<spic::GameObject>& entity) {
-	entities.erase(
-		std::remove(entities.begin(), entities.end(), entity),
-		entities.end());
 }
 
 void EntityManager::SetScene(std::shared_ptr<Scene> newScene)
@@ -130,7 +130,7 @@ void EntityManager::SetScene(std::shared_ptr<Scene> newScene)
 	{
 		for (const auto& system : systemsMap.second)
 		{
-			system->Start(entities);
+			system->Start(entities, *scene);
 		}
 	}
 }

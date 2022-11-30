@@ -39,6 +39,9 @@
     <ClCompile Include="KeyListener.cpp">
       <Filter>Source Files\listeners</Filter>
     </ClCompile>
+    <ClCompile Include="CameraMovementScript.cpp">
+      <Filter>Source Files\scripts</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CollisionDetectionScript.h">
@@ -49,6 +52,9 @@
     </ClInclude>
     <ClInclude Include="KeyListener.h">
       <Filter>Header Files\listeners</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraMovementScript.h">
+      <Filter>Header Files\scripts</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
