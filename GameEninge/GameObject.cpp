@@ -10,7 +10,8 @@ namespace spic {
 	}
 
 	GameObject::GameObject() : active{ true }, layer{ 0 }, parent{nullptr}
-	{}
+	{
+	}
 
 	GameObject::GameObject(const std::string& name) : name{name}, active{ true }, layer{ 0 }
 	{}
