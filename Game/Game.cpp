@@ -51,8 +51,16 @@ void InitGame() {
 	box->AddComponent<spic::BehaviourScript>(script);
 	box->AddComponent<spic::Sprite>(boxSprite);
 
+	//UI test
+	std::shared_ptr<spic::Button> button = std::make_shared<spic::Button>(200.0f, 100.0f, "Text");
+	button->Transform(std::make_shared<spic::Transform>(spic::Point(20.0f, 20.0f), 0.0f, 1.0f));
+	button->OnClick([]() {
+		std::cout << "Button clicked" << std::endl;
+		});
+
 	scene->AddContent(box);
-	scene->LoadTileMap("assets/maps/Map.tmx", 3);
+	scene->AddContent(button);
+	//scene->LoadTileMap("assets/maps/Map.tmx", 3);
 
 	// Input test
 	std::shared_ptr<MouseListener> mouseListener = std::make_shared<MouseListener>();

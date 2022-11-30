@@ -11,6 +11,9 @@ namespace spic {
      */
     class Button : public UIObject {
         public:
+            Button();
+            Button(const float width, const float height, const std::string& text = "", Color color = Color::white());
+            
             /**
              * @brief This function is called when the button is clicked, which
              *        will trigger a call to the registered onClick member.
@@ -24,7 +27,7 @@ namespace spic {
              *        any kind of callable.
              * @spicapi
              */
-            void OnClick(std::function<void()> callback) { onClick = callback; }
+            void OnClick(std::function<void()> callback);
 
         private:
             /**

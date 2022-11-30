@@ -51,11 +51,10 @@ namespace spic::internal {
         /**
          * @brief Draws a sprite as an ui object
          * @details Used for debugging
-         * @param position The coridatnes are for the UI 
-         * @param isUi 
+         * @param position The coridatnes are for the UI
          * @param sprite The sprite to Draw
         */
-        static void DrawSprite(const Transform* position,const bool isUi, Sprite* sprite);
+        static void DrawSprite(const Transform* position, Sprite* sprite);
         
         /**
          * @brief Draws a animator as an ui object

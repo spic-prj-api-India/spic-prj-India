@@ -145,6 +145,15 @@
     <Filter Include="Source Files\map_parser">
       <UniqueIdentifier>{eac5dada-fe8f-4469-9c3f-fb4b8e4a4d67}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\input\listeners">
+      <UniqueIdentifier>{5a9ed2de-bf55-4e2f-b8ef-b06ca2c321ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\input\listeners">
+      <UniqueIdentifier>{4730134a-f32a-4be7-98de-2faef34f29ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\helpers">
+      <UniqueIdentifier>{9f084e52-f411-4ec3-a73b-4e96a26e3e9e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Color.hpp">
@@ -306,11 +315,14 @@
     <ClInclude Include="TileMap.hpp">
       <Filter>Header Files\map_parser</Filter>
     </ClInclude>
-    <ClInclude Include="ReplaceHelper.hpp">
+    <ClInclude Include="StringHelper.hpp">
       <Filter>Header Files\helpers</Filter>
     </ClInclude>
+    <ClInclude Include="ButtonClickListener.hpp">
+      <Filter>Header Files\input\listeners</Filter>
+    </ClInclude>
     <ClInclude Include="RendererImpl.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\systems\rendering</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -407,19 +419,7 @@
     <ClCompile Include="Sprite.cpp">
       <Filter>Source Files\components\animator%255csprite</Filter>
     </ClCompile>
-    <ClCompile Include="Text.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="UIObject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Camera.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Renderer.cpp">
-      <Filter>Source Files\systems\rendering</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneralHelper.cpp">
       <Filter>Source Files\systems\rendering</Filter>
     </ClCompile>
     <ClCompile Include="RenderingSystem.cpp">
@@ -427,6 +427,27 @@
     </ClCompile>
     <ClCompile Include="Animator.cpp">
       <Filter>Source Files\components\animator%255csprite</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>Source Files\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Text.cpp">
+      <Filter>Source Files\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Source Files\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="UIObject.cpp">
+      <Filter>Source Files\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="ButtonClickListener.cpp">
+      <Filter>Source Files\input\listeners</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneralHelper.cpp">
+      <Filter>Source Files\helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="StringHelper.cpp">
+      <Filter>Source Files\helpers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

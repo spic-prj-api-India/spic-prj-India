@@ -90,7 +90,7 @@ namespace spic {
 		 * @return nullptr or transform.
 		 * @spicapi
 		 */
-		std::shared_ptr<Transform> Transform();
+		std::shared_ptr<Transform> Transform() const;
 
 		/**
 		 * @brief Sets tranform of GameObject.

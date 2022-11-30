@@ -97,7 +97,6 @@ namespace spic {
             /// @brief sprites collection
             std::vector<std::shared_ptr<Sprite>> sprites;
     };
-
 }
 
 #endif // ANIMATOR_H_

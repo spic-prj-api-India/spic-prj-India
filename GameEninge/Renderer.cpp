@@ -31,9 +31,9 @@ void spic::internal::Rendering::DrawLine(const Point* start, const Point* end, c
 	spic::internal::rendering::RendererImpl::GetInstance()->DrawLine(start,end, colour);
 }
 
-void spic::internal::Rendering::DrawSprite(const Transform* position, const bool isUi, Sprite* sprite)
+void spic::internal::Rendering::DrawSprite(const Transform* position, Sprite* sprite)
 {
-	spic::internal::rendering::RendererImpl::GetInstance()->DrawSprite(sprite, isUi, position );
+	spic::internal::rendering::RendererImpl::GetInstance()->DrawSprite(sprite, position );
 }
 
 void spic::internal::Rendering::DrawAnimator(const Transform* position, const bool isUi, Animator* animator)

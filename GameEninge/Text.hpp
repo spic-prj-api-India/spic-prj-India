@@ -24,11 +24,12 @@ namespace spic {
     class Text : public UIObject {
         public:
             Text();
-            Text( const std::string& text
-                , const std::string& font
-                , const int size
-                , const spic::Alignment alignment
-                , const spic::Color& color);
+            Text(const float width, const float height
+                , const std::string& text = ""
+                , const std::string& font = "assets/fonts/07558_CenturyGothic.ttf"
+                , const int size = 20
+                , const Alignment alignment = Alignment::center
+                , const Color& color = Color::black());
 
 
             const std::string _Text();

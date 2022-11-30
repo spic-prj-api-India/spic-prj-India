@@ -16,11 +16,14 @@ namespace spic {
 
         public:
             UIObject();
-            float Width() const { return width; }
-            float Height() const { return height; }
+            UIObject(const float newWidth, const float newHeight);
+            virtual ~UIObject() = default;
 
-            void Width(const float widt) { width = widt; }
-            void Height(const float height) { this->height = height; }
+            float Width() const;
+            float Height() const;
+
+            void Width(const float newWidth);
+            void Height(const float newHeight);
     };
 
 }

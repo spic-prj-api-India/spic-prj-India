@@ -9,6 +9,8 @@
 #include <stdio.h>
 #include <filesystem>
 #include "PhysicsInfo.hpp"
+#include "TypeHelper.hpp"
+#include "StringHelper.hpp"
 
 using namespace spic;
 using namespace spic::window;
@@ -100,32 +102,35 @@ SDL_Point RendererImpl::GetTextureSize(SDL_Texture* texture) const
 	return size;
 }
 
-void RendererImpl::DrawSprites(GameObject* gameObject, const bool isUiObject)
+void RendererImpl::DrawSprites(GameObject* gameObject, const bool isUIObject)
 {
 	const auto transform = gameObject->Transform();
 	auto _sprites = gameObject->GetComponents<Sprite>();
 	std::sort(_sprites.begin(), _sprites.end(), spic::GeneralHelper::SpriteSorting);
 	for (auto& sprite : _sprites)
 	{
-		DrawSprite(sprite.get(), isUiObject, transform.get());
+		if (isUIObject)
+			DrawUISprite(TypeHelper::CastPtrToType<UIObject>(gameObject), sprite.get(), transform.get());
+		else
+			DrawSprite(sprite.get(), transform.get());
 	}
 }
 
-SDL_Texture* RendererImpl::LoadTexture(const Sprite* sprite)
+SDL_Texture* RendererImpl::LoadTexture(const std::string& sprite)
 {
-	if (sprite->_Sprite().empty())
+	if (sprite.empty())
 		return missingTexture.get();
-	bool exists = textures.find(sprite->_Sprite()) != textures.end();
+	bool exists = textures.find(sprite) != textures.end();
 	if (exists)
-		return textures[sprite->_Sprite()].get();
+		return textures[sprite].get();
 
-	auto tmp_sprites = SurfacePtr(IMG_Load(sprite->_Sprite().c_str()));
+	auto tmp_sprites = SurfacePtr(IMG_Load(sprite.c_str()));
 	if (!tmp_sprites.get())
 		return missingTexture.get();
 
 	auto texture = TexturePtr(SDL_CreateTextureFromSurface(renderer.get(), tmp_sprites.get()));
 	auto returnPntr = texture.get();
-	textures.emplace(sprite->_Sprite(), std::move(texture));
+	textures.emplace(sprite, std::move(texture));
 	return returnPntr;
 }
 
@@ -172,7 +177,6 @@ void RendererImpl::DrawAnimators(GameObject* gameObject, const bool isUiObject)
 
 void RendererImpl::DrawAnimator(Animator* animator, const bool isUiObject, const Transform* position)
 {
-
 	auto sprites = animator->Sprites();
 	// sort sprites
 
@@ -189,13 +193,12 @@ void RendererImpl::DrawAnimator(Animator* animator, const bool isUiObject, const
 		if (sprite->OrderInLayer() == frame && !animator->IsFrozen())
 		{
 			//animator->Index(frame);
-			DrawSprite(sprite.get(), isUiObject, position);
+			DrawSprite(sprite.get(), position);
 		}
 
 		else if (sprite->OrderInLayer() == animator->Index() && animator->IsFrozen())
-			DrawSprite(sprite.get(), isUiObject, position);
+			DrawSprite(sprite.get(), position);
 	}
-
 }
 
 void RendererImpl::SetBackgroundColor()
@@ -247,14 +250,16 @@ void RendererImpl::DrawGameObject(GameObject* gameObject, bool isUiOject)
 	}
 }
 
-void RendererImpl::DrawRect(const SDL_FRect* rect, const Color* colour)
+void RendererImpl::DrawRect(const SDL_FRect* rect, const double angle, const Color* colour)
 {
+	std::string defaultRectanglePath = StringHelper::GetBasePath() + "\\assets\\textures\\UISprite.png";
+	SDL_Texture* texture = LoadTexture(defaultRectanglePath);
 	SDL_SetRenderDrawColor(renderer.get()
 		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, colour->R()))
 		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, colour->G()))
 		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, colour->B()))
 		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, colour->A())));
-	SDL_RenderDrawRectF(renderer.get(), rect);
+	SDL_RenderCopyExF(renderer.get(), NULL, NULL, rect, angle, NULL, SDL_FLIP_NONE);
 }
 
 void RendererImpl::DrawLine(const Point* start, const Point* end, const Color* colour)
@@ -271,7 +276,6 @@ void RendererImpl::DrawLine(const Point* start, const Point* end, const Color* c
 		, PrecisionRoundingoInt(end->y));
 }
 
-
 void RendererImpl::DrawText(Text* text)
 {
 	if (std::filesystem::exists(text->Font().c_str()))
@@ -284,43 +288,29 @@ void RendererImpl::DrawText(Text* text)
 		std::string texts{ text->_Text() };
 		text->Alignment();
 
-		this->RenderMultiLineText(font, texts, colour, PrecisionRoundingoInt(transform->position.x), PrecisionRoundingoInt(transform->position.y), PrecisionRoundingoInt(text->Width()), PrecisionRoundingoInt(text->Height()), 2, text->Alignment());
+		const spic::GameObject* parent = text->GetParent();
+		const float x = transform->position.x + (parent != nullptr ? parent->Transform()->position.x : 0);
+		const float y = transform->position.y + (parent != nullptr ? parent->Transform()->position.y : 0);
+		this->RenderMultiLineText(font, texts, colour, x, y, text->Width(), text->Height(), 2, text->Alignment());
 
 		TTF_CloseFont(font);
 	}
 }
 
-void RendererImpl::DrawSprite(const Sprite* sprite, const bool isUiObject, const Transform* transform)
+void RendererImpl::DrawUISprite(UIObject* uiObject, const Sprite* sprite, const Transform* transform)
 {
 	if (transform == nullptr)
 		return;
 
-	SDL_Texture* texture = LoadTexture(sprite);
+	SDL_Texture* texture = LoadTexture(sprite->_Sprite());
 	auto textureSize = GetTextureSize(texture);
 
-	const int width = (sprite->Width() == 0) ? textureSize.x : sprite->Width();
-	const int height = (sprite->Height() == 0) ? textureSize.y : sprite->Height();
 	SDL_FRect dstRect = { transform->position.x
 		, transform->position.y
-		, width * transform->scale * this->scaling
-		, height * transform->scale * this->scaling };
+		, uiObject->Width() * transform->scale
+		, uiObject->Height() * transform->scale };
 
-	SDL_Rect sourceRect = { PrecisionRoundingoInt(sprite->X())
-		, PrecisionRoundingoInt(sprite->Y())
-		, PrecisionRoundingoInt(width)
-		, PrecisionRoundingoInt(height) };
-
-	if (SDL_HasIntersectionF(&dstRect, &this->camera) && !isUiObject)
-	{
-		dstRect = { dstRect.x - this->camera.x
-			, dstRect.y - this->camera.y
-			, dstRect.w
-			, dstRect.h };
-	}
-	else if (!isUiObject)
-		return;
-
-	else if (!SDL_HasIntersectionF(&dstRect, &this->windowCamera))
+	if (!SDL_HasIntersectionF(&dstRect, &this->windowCamera))
 		return;
 
 	const auto color = sprite->Color();
@@ -336,16 +326,61 @@ void RendererImpl::DrawSprite(const Sprite* sprite, const bool isUiObject, const
 	auto center = SDL_FPoint{ dstRect.x + (dstRect.w / 2)
 		,dstRect.y + (dstRect.h / 2) };
 
-	SDL_RendererFlip flip;
+	SDL_RendererFlip flip = GetFlip(sprite->FlipX(), sprite->FlipY());
 
-	if (sprite->FlipX() && sprite->FlipY())
-		flip = (SDL_RendererFlip)(SDL_FLIP_HORIZONTAL | SDL_FLIP_VERTICAL);
-	else if (sprite->FlipX())
-		flip = (SDL_RendererFlip)(SDL_FLIP_HORIZONTAL);
-	else if (sprite->FlipX())
-		flip = (SDL_RendererFlip)(SDL_FLIP_VERTICAL);
+	double angle = RAD2DEG(transform->rotation);
+	if (texture == nullptr) {
+		SDL_RenderCopyExF(renderer.get(), NULL, NULL, &dstRect, angle, NULL, flip);
+		std::cout << SDL_GetError() << std::endl;
+		return;
+	}
+	SDL_RenderCopyExF(renderer.get(), texture, NULL, &dstRect, angle, NULL, flip);
+}
+
+void RendererImpl::DrawSprite(const Sprite* sprite, const Transform* transform)
+{
+	if (transform == nullptr)
+		return;
+
+	SDL_Texture* texture = LoadTexture(sprite->_Sprite());
+	auto textureSize = GetTextureSize(texture);
+
+	const int width = (sprite->Width() == 0) ? textureSize.x : sprite->Width();
+	const int height = (sprite->Height() == 0) ? textureSize.y : sprite->Height();
+	SDL_FRect dstRect = { transform->position.x
+		, transform->position.y
+		, width * transform->scale * this->scaling
+		, height * transform->scale * this->scaling };
+
+	SDL_Rect sourceRect = { PrecisionRoundingoInt(sprite->X())
+		, PrecisionRoundingoInt(sprite->Y())
+		, PrecisionRoundingoInt(width)
+		, PrecisionRoundingoInt(height) };
+
+	if (SDL_HasIntersectionF(&dstRect, &this->camera))
+	{
+		dstRect = { dstRect.x - this->camera.x
+			, dstRect.y - this->camera.y
+			, dstRect.w
+			, dstRect.h };
+	}
 	else
-		flip = (SDL_RendererFlip)(SDL_FLIP_NONE);
+		return;
+
+	const auto color = sprite->Color();
+
+	SDL_SetTextureColorMod(texture
+		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, color.R()))
+		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, color.G()))
+		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, color.B())));
+
+	SDL_SetTextureAlphaMod(texture,
+		PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, color.A())));
+
+	auto center = SDL_FPoint{ dstRect.x + (dstRect.w / 2)
+		,dstRect.y + (dstRect.h / 2) };
+
+	SDL_RendererFlip flip = GetFlip(sprite->FlipX(), sprite->FlipY());
 
 	double angle = RAD2DEG(transform->rotation);
 	if (texture == nullptr) {
@@ -354,11 +389,17 @@ void RendererImpl::DrawSprite(const Sprite* sprite, const bool isUiObject, const
 		return;
 	}
 	SDL_RenderCopyExF(renderer.get(), texture, &sourceRect, &dstRect, angle, NULL, flip);
-	SDL_Rect debugRect = { PrecisionRoundingoInt(dstRect.x)
-		, PrecisionRoundingoInt(dstRect.y)
-		, PrecisionRoundingoInt(dstRect.w)
-		, PrecisionRoundingoInt(dstRect.h) };
-	DrawRect(&dstRect, &Color::red());
+}
+
+SDL_RendererFlip RendererImpl::GetFlip(const bool flipX, const bool flipY)
+{
+	if (flipX && flipY)
+		return (SDL_RendererFlip)(SDL_FLIP_HORIZONTAL | SDL_FLIP_VERTICAL);
+	else if (flipX)
+		return SDL_FLIP_HORIZONTAL;
+	else if (flipY)
+		return SDL_FLIP_VERTICAL;
+	return SDL_FLIP_NONE;
 }
 
 void RendererImpl::UpdateCamera(Camera* camera)
@@ -431,7 +472,7 @@ void RendererImpl::UpdateWindow(const spic::window::WindowValues* values)
 }
 
 
-void RendererImpl::Wrap(const TTF_Font* pFont, std::string& input, const size_t&& width)
+void RendererImpl::Wrap(const TTF_Font* pFont, std::string& input, const float width)
 {
 	std::istringstream in(input);
 	std::string line;
@@ -473,36 +514,35 @@ void RendererImpl::Wrap(const TTF_Font* pFont, std::string& input, const size_t&
 }
 
 void RendererImpl::RenderMultiLineText(const TTF_Font* pFont, std::string& rText
-	, const SDL_Color& rTextColor, int XPosition, int YPosition, const int Width
-	, const int Height, const int DistanceBetweenLines, const Alignment Align)
+	, const SDL_Color& rTextColor, float xPosition, float yPosition, const float width
+	, const float height, const int distanceBetweenLines, const Alignment align)
 {
 	// Make sure that the string contains at least 1 character
 	if (!rText.empty())
 	{
-		Wrap(pFont, rText, Width);
+		Wrap(pFont, rText, width);
 		try
 		{
-
 			SurfacePtr pSurface;
 			TexturePtr pTexture;
 
-			int         CurrentLine = 0;
-			int         totalLength = 0;
+			int currentLine = 0;
+			float totalLength = 0;
 
 			// This string will contain one line of text
-			std::string TextLine = "";
+			std::string textLine = "";
 
 			for (int i = 0; i < rText.length(); ++i)
 			{
 				// Create the text line as long as the current character is not a \n command
 				if (rText[i] != '\n')
-					TextLine += rText[i];
+					textLine += rText[i];
 
 				// Since the current character is now a \n command, it's time to create the texture containing the current text line, render it, clear the created text string and then start on a new line
 				else
 				{
 					if (pFont)
-						pSurface.reset(TTF_RenderText_Solid((TTF_Font*)pFont, TextLine.c_str(), rTextColor));
+						pSurface.reset(TTF_RenderText_Solid((TTF_Font*)pFont, textLine.c_str(), rTextColor));
 
 					if (pSurface.get())
 					{
@@ -510,38 +550,38 @@ void RendererImpl::RenderMultiLineText(const TTF_Font* pFont, std::string& rText
 
 						if (pTexture.get())
 						{
-							const int TextWidth = pSurface->w;
-							const int TextHeight = pSurface->h;
-							const int nextY = YPosition + ((TextHeight + DistanceBetweenLines) * CurrentLine);
+							const float textWidth = static_cast<float>(pSurface->w);
+							const float textHeight = static_cast<float>(pSurface->h);
+							const float nextY = yPosition + ((textHeight + distanceBetweenLines) * currentLine);
 
-							totalLength += nextY - YPosition;
+							totalLength += nextY - yPosition;
 
-							if (totalLength > Height)
+							if (totalLength > height)
 							{
 								pTexture.reset(NULL);
 								break;
 							}
 
-							SDL_Rect PositionQuad = { 0, 0, 0, 0 };
+							SDL_FRect PositionQuad = { 0, 0, 0, 0 };
 
-							switch (Align) {
+							switch (align) {
 							case Alignment::center: // Position the quad centered (horizontal) in the window
-								PositionQuad.x = (Width / 2) - (TextWidth / 2) + XPosition;
+								PositionQuad.x = (width / 2) - (textWidth / 2) + xPosition;
 								break;
 							case Alignment::right:
-								PositionQuad.x = Width - TextWidth + XPosition;
+								PositionQuad.x = width - textWidth + xPosition;
 								break;
 
 							default: // Position the quad according to the XPosition parameter
-								PositionQuad.x = XPosition;
+								PositionQuad.x = xPosition;
 							}
 
 							PositionQuad.y = nextY;
-							PositionQuad.w = TextWidth;
-							PositionQuad.h = TextHeight;
+							PositionQuad.w = textWidth;
+							PositionQuad.h = textHeight;
 
 
-							SDL_RenderCopy(this->renderer.get(), pTexture.get(), NULL, &PositionQuad);
+							SDL_RenderCopyF(this->renderer.get(), pTexture.get(), NULL, &PositionQuad);
 
 							// Avoid memory leak
 							pTexture.reset(NULL);
@@ -552,10 +592,10 @@ void RendererImpl::RenderMultiLineText(const TTF_Font* pFont, std::string& rText
 					}
 
 					// The current line of text has now been rendered (if the texture was successfully created and so on) and the text line string now needs to be cleared
-					TextLine = "";
+					textLine = "";
 
 					// Time for a new line
-					++CurrentLine;
+					++currentLine;
 				}
 			}
 		}

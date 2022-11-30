@@ -3,8 +3,9 @@
 
 #include <string>
 #include <regex>
+#include <memory>
 
-namespace spic::internal {
+namespace spic::TypeHelper {
 	/**
 	* @brief Gets name of type
 	* @spicapi
@@ -27,6 +28,36 @@ namespace spic::internal {
 		std::string typeName = typeid(object).name();
 		std::string strippedName = std::regex_replace(typeName, std::regex("class "), "");
 		return strippedName;
+	}
+
+	/**
+	* @brief Gets name of object
+	* @spicapi
+	*/
+	template <typename T, typename P>
+	bool SharedPtrIsOfType(std::shared_ptr<P> pointer)
+	{
+		return std::dynamic_pointer_cast<T>(pointer) != nullptr;
+	}
+
+	/**
+	* @brief Gets name of object
+	* @spicapi
+	*/
+	template <typename T, typename P>
+	std::shared_ptr<T> CastSharedPtrToType(std::shared_ptr<P> pointer)
+	{
+		return std::dynamic_pointer_cast<T>(pointer);
+	}
+
+	/**
+	* @brief Gets name of object
+	* @spicapi
+	*/
+	template <typename T, typename P>
+	T* CastPtrToType(P* pointer)
+	{
+		return static_cast<T*>(pointer);
 	}
 }
 
