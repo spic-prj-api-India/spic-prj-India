@@ -18,16 +18,45 @@ namespace spic
 
         virtual ~TileLayer();
 
+        /**
+        * @brief Renders tile layer with Renderer
+        * @spicapi
+        */
         void Render();
 
+        /**
+        * @brief Sets matrix of Tilelayer.
+        * @param matrix Desired value.
+        * @spicapi
+        */
         void SetMatrix(const Matrix& matrix);
 
+        /**
+         * @brief Returns matrix of Tilelayer.
+         * @return Matrix.
+         * @spicapi
+         */
         Matrix GetMatrix() const;
 
+        /**
+         * @brief Returns tile size of tile in tile layer.
+         * @return int.
+         * @spicapi
+         */
         int GetTilesize() const;
 
+        /**
+         * @brief Returns size of tile layer.
+         * @return spic::Point.
+         * @spicapi
+         */
         Point GetSize() const;
     private:
+        /**
+         * @brief Returns sprite with tile data.
+         * @return spic::Sprite.
+         * @spicapi
+         */
         std::unique_ptr<Sprite> GetSprite(const TileSet& tileSet, const int x, const int y, const int tileSize);
     private:
         int tileSize;
