@@ -5,7 +5,7 @@ spic::Text::Text()
 	, text{ "" }
 	, font{ "" }
 	, size{ 0 }
-	, alignment{ spic::Alignment::center }
+	, alignment{ spic::Alignment::CENTER }
 	, color{ spic::Color::black() }
 {
 }

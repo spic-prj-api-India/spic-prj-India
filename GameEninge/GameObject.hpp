@@ -320,6 +320,11 @@ namespace spic {
 		*/
 		std::vector<std::shared_ptr<GameObject>> GetChildren(bool includeInactive = false) const;
 
+		/**
+		 * @brief Gets first child with given type
+		 * @return GameObject of type T
+		 * @spicapi
+		*/
 		template<class T>
 		std::shared_ptr<T> GetChild() const;
 

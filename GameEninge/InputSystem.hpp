@@ -26,9 +26,12 @@ namespace spic::internal::systems {
 		*/
 		void Update(std::vector<std::shared_ptr<spic::GameObject>>& entities, Scene& currentScene) override;
 
+		/**
+		* @brief Filters all Buttons from entities list
+		* @param list with Buttons
+		* @spicapi
+		*/
 		std::vector<std::shared_ptr<spic::Button>> GetButtons(std::vector<std::shared_ptr<spic::GameObject>>& entities);
-
-		bool IsButton(const std::shared_ptr<spic::GameObject>& entity);
 	private:
 		std::shared_ptr<ButtonClickListener> buttonClickListener;
 	};

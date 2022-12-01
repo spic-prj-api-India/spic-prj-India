@@ -31,7 +31,7 @@ namespace spic::TypeHelper {
 	}
 
 	/**
-	* @brief Gets name of object
+	* @brief Checks if shared ptr is of type
 	* @spicapi
 	*/
 	template <typename T, typename P>
@@ -41,7 +41,7 @@ namespace spic::TypeHelper {
 	}
 
 	/**
-	* @brief Gets name of object
+	* @brief Casts shared ptr to certain type
 	* @spicapi
 	*/
 	template <typename T, typename P>
@@ -51,7 +51,7 @@ namespace spic::TypeHelper {
 	}
 
 	/**
-	* @brief Gets name of object
+	* @brief Casts ptr to certain type
 	* @spicapi
 	*/
 	template <typename T, typename P>

@@ -57,7 +57,7 @@ void StartGame()
 	 auto text = std::make_shared<spic::Text>("test"
 		 , "assets/fonts/07558_CenturyGothic.ttf"
 		 , 20
-		 , spic::Alignment::left
+		 , spic::Alignment::LEFT
 		 , spic::Color::white());
 
 	 text->Width(50);

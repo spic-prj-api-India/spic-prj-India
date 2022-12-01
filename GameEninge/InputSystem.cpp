@@ -49,18 +49,13 @@ namespace spic::internal::systems {
 	{
 		std::vector<std::shared_ptr<spic::Button>> buttons;
 		for (const auto& entity : entities) {
-			if (IsButton(entity))
+			if (spic::TypeHelper::SharedPtrIsOfType<spic::Button>(entity))
 				buttons.emplace_back(TypeHelper::CastSharedPtrToType<spic::Button>(entity));
 			for (const auto& child : entity->GetChildren()) {
-				if (IsButton(child))
+				if (spic::TypeHelper::SharedPtrIsOfType<spic::Button>(child))
 					buttons.emplace_back(TypeHelper::CastSharedPtrToType<spic::Button>(entity));
 			}
 		}
 		return buttons;
-	}
-
-	bool InputSystem::IsButton(const std::shared_ptr<spic::GameObject>& entity)
-	{
-		return TypeHelper::SharedPtrIsOfType<spic::Button>(entity);
 	}
 }

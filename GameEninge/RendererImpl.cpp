@@ -447,10 +447,10 @@ void RendererImpl::RenderMultiLineText(const TTF_Font* pFont, std::string& rText
 				SDL_FRect PositionQuad = { 0, 0, 0, 0 };
 
 				switch (align) {
-				case Alignment::center: // Position the quad centered (horizontal) in the window
+				case Alignment::CENTER: // Position the quad centered (horizontal) in the window
 					PositionQuad.x = (width / 2) - (textWidth / 2) + xPosition;
 					break;
-				case Alignment::right:
+				case Alignment::RIGHT:
 					PositionQuad.x = width - textWidth + xPosition;
 					break;
 				default: // Position the quad according to the XPosition parameter
