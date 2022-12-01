@@ -96,7 +96,7 @@ void StartGame()
 	   // Start code gameEngine
 	auto values = spic::window::WindowValues{ "Forts 2", 1200, 800, false, spic::window::FULLSCREENTYPE::WINDOWED };
 	spic::GameEngine* engine = spic::GameEngine::GetInstance();
-	engine->SetActiveScene("game");
+	engine->LoadSceneByName("menu");
 	engine->Start(&values);
 }
 

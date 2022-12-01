@@ -112,20 +112,7 @@ namespace spic::internal
 		@param The (custom) system to be removed.
 		*/
 		template <typename T>
-		void RemoveSystem() {
-			std::string typeName = GetTypeName<T>();
-			for (auto& systemPair : systems) {
-				auto& vec = systemPair.second;
-				auto start_junk = std::remove_if(
-					vec.begin(), vec.end(),
-					[typeName](const auto& system) {
-						std::string systemName = typeid(*system).name();
-						std::string strippedName = std::regex_replace(systemName, std::regex("class "), "");
-						return typeName == strippedName;
-					});
-				vec.erase(start_junk, vec.end());
-			}
-		}
+		void RemoveSystem();
 
 		/*
 		@brief The update function which updates the systems according to the specified DeltaTime.
@@ -144,6 +131,22 @@ namespace spic::internal
 		*/
 		void AddInternalSystem(std::unique_ptr<spic::systems::ISystem> system, int priority = 0);
 	};
+
+	template <typename T>
+	void EntityManager::RemoveSystem() {
+		std::string typeName = GetTypeName<T>();
+		for (auto& systemPair : systems) {
+			auto& vec = systemPair.second;
+			auto start_junk = std::remove_if(
+				vec.begin(), vec.end(),
+				[typeName](const auto& system) {
+					std::string systemName = typeid(*system).name();
+					std::string strippedName = std::regex_replace(systemName, std::regex("class "), "");
+					return typeName == strippedName;
+				});
+			vec.erase(start_junk, vec.end());
+		}
+	}
 }
 
 #endif // ENTITYMANAGER_H_

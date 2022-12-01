@@ -7,10 +7,16 @@ namespace spic {
 	{
 	}
 
-	Button::Button(const float width, const float height, const std::string& text, Color color) : UIObject(width, height)
+	Button::Button(const float width, const float height, const std::string& text, Color color, const std::string& texturePath) : UIObject(width, height)
 	{
-		std::string defaultSpritePath = StringHelper::GetBasePath() + "\\assets\\textures\\UISprite.png";
-		std::shared_ptr<Sprite> sprite = std::make_shared<Sprite>(defaultSpritePath, 0, 0, color);
+		std::shared_ptr<Sprite> sprite;
+		if (texturePath.empty()) {
+			std::string defaultSpritePath = StringHelper::GetBasePath() + "\\assets\\textures\\UISprite.png";
+			sprite = std::make_shared<Sprite>(defaultSpritePath, 0, 0, color);
+		}
+		else {
+			sprite = std::make_shared<Sprite>(texturePath, 0, 0, color);
+		}
 		AddComponent(sprite);
 		if (!text.empty()) {
 			const std::shared_ptr<Text> textObject = std::make_shared<Text>(width, height, text);

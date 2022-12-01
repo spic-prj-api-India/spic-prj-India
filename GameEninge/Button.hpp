@@ -12,7 +12,7 @@ namespace spic {
     class Button : public UIObject {
         public:
             Button();
-            Button(const float width, const float height, const std::string& text = "", Color color = Color::white());
+            Button(const float width, const float height, const std::string& text = "", Color color = Color::white(), const std::string& texturePath = "");
             
             /**
              * @brief This function is called when the button is clicked, which

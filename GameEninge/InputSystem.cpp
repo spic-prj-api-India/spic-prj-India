@@ -4,6 +4,7 @@
 #include "Input.hpp"
 #include "Button.hpp"
 #include "TypeHelper.hpp"
+#include "BehaviourScript.hpp"
 
 namespace spic::internal::systems {
 	InputSystem::InputSystem() 
@@ -13,6 +14,17 @@ namespace spic::internal::systems {
 	{
 		buttonClickListener = std::make_shared<ButtonClickListener>();
 		Input::Subscribe(spic::Input::MouseButton::LEFT, buttonClickListener);
+
+		for (const auto& script : currentScene.Camera().GetComponents<spic::BehaviourScript>()) {
+			script->GameObject(std::make_shared<GameObject>(currentScene.Camera()));
+			script->OnStart();
+		}
+		for (auto& entity : entities) {
+			for (const auto& script : entity->GetComponents<spic::BehaviourScript>()) {
+				script->GameObject(entity);
+				script->OnStart();
+			}
+		}
 	}
 
 	void InputSystem::Update(std::vector<std::shared_ptr<spic::GameObject>>& entities, Scene& currentScene)
@@ -21,6 +33,15 @@ namespace spic::internal::systems {
 		while (InputImpl::Poll()) 
 		{
 			InputManager::GetInstance()->Listen();
+
+			for (const auto& script : currentScene.Camera().GetComponents<spic::BehaviourScript>()) {
+				script->OnUpdate();
+			}
+			for (auto& entity : entities) {
+				for (const auto& script : entity->GetComponents<spic::BehaviourScript>()) {
+					script->OnUpdate();
+				}
+			}
 		}
 	}
 

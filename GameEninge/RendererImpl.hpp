@@ -73,6 +73,7 @@ namespace spic::internal::rendering {
 		float scaling;
 		float rotation;
 		Color backgroundColor;
+		std::string backgroundImage;
 		float aspectHeight;
 		float aspectWidth;
 

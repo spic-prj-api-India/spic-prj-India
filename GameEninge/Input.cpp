@@ -3,11 +3,6 @@
 #include "InputImpl.hpp"
 
 namespace spic {
-	int Input::Poll()
-	{
-		return spic::internal::InputImpl::Poll();
-	}
-
 	bool Input::Quit()
 	{
 		return spic::internal::InputImpl::Quit();

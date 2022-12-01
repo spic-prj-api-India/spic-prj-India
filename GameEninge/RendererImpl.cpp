@@ -22,7 +22,7 @@ using namespace spic::GeneralHelper;
 RendererImpl* RendererImpl::pinstance_{ nullptr };
 std::mutex RendererImpl::mutex_;
 
-RendererImpl::RendererImpl() noexcept(false) : camera{ 0, 0, 0, 0 }, backgroundColor{ 0,0,0,1 }, scaling{ 1 }, rotation{ 0 }
+RendererImpl::RendererImpl() noexcept(false) : camera{ 0, 0, 0, 0 }, backgroundColor{ 0,0,0,1 }, backgroundImage{""}, scaling{1}, rotation{0}
 {
 }
 
@@ -553,11 +553,17 @@ void RendererImpl::UpdateCamera(Camera* camera)
 	, static_cast<float>(height) };
 
 	this->backgroundColor = camera->BackgroundColor();
+	this->backgroundImage = camera->BackgroundImage();
 }
 
 void RendererImpl::Clean()
 {
 	SDL_RenderClear(renderer.get());
+
+	if (!backgroundImage.empty()) {
+		auto texture = LoadTexture(backgroundImage);
+		SDL_RenderCopy(renderer.get(), texture, NULL, NULL);
+	}
 	SDL_SetRenderDrawColor(renderer.get()
 		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, this->backgroundColor.R()))
 		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, this->backgroundColor.G()))

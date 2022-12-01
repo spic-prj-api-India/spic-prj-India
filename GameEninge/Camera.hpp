@@ -19,10 +19,14 @@ namespace spic {
             void BackgroundColor(const Color& color);
             const Color BackgroundColor();
 
+            void BackgroundImage(const std::string& imagePath);
+            const std::string BackgroundImage();
+
             const float AspectWidth();
             const float AspectHeight();
         private:
             Color backgroundColor;
+            std::string backgroundImage;
             float aspectWidth;
             float aspectHeight;  
     };

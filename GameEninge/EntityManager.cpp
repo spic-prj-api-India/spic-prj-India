@@ -45,7 +45,7 @@ void EntityManager::Init()
 	std::unique_ptr<systems::RenderingSystem> renderingSystem = std::make_unique<systems::RenderingSystem>();
 	AddInternalSystem(std::move(inputSystem), 0);
 	AddInternalSystem(std::move(physicsSystem), 1);
-	AddInternalSystem(std::move(scriptSystem), 1);
+	//AddInternalSystem(std::move(scriptSystem), 1);
 	AddInternalSystem(std::move(renderingSystem), 2);
 }
 
@@ -95,20 +95,8 @@ void EntityManager::SetScene(const std::string& sceneName)
 {
 	if (!scenes.count(sceneName))
 		throw std::exception("Scene does not exist.");
-	DestroyScene();
 	scene = scenes[sceneName];
-	entities.clear();
-	for (auto& entity : scene->Contents())
-	{
-		entities.push_back(entity);
-	}
-	for (const auto& systemsMap : systems)
-	{
-		for (const auto& system : systemsMap.second)
-		{
-			system->Start(entities, *scene);
-		}
-	}
+	SetScene(scene);
 }
 
 void EntityManager::SetScene(std::shared_ptr<Scene> newScene)

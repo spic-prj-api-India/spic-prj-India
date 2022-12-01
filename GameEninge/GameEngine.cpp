@@ -35,7 +35,7 @@ namespace spic {
 		internal::EntityManager::GetInstance()->RegisterScene(sceneName, scene);
 	}
 
-	void GameEngine::SetActiveScene(const std::string& sceneName)
+	void GameEngine::LoadSceneByName(const std::string& sceneName)
 	{
 		internal::EntityManager::GetInstance()->SetScene(sceneName);
 	}

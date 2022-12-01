@@ -320,6 +320,9 @@ namespace spic {
 		*/
 		std::vector<std::shared_ptr<GameObject>> GetChildren(bool includeInactive = false) const;
 
+		template<class T>
+		std::shared_ptr<T> GetChild() const;
+
 		/**
 		 * @brief Gets the current parent
 		 * @return A pointer to the current parent
@@ -438,6 +441,18 @@ namespace spic {
 			throw std::exception("Child can only have one parent");
 		children.emplace_back(gameObject);
 		gameObject->parent = this;
+	}
+
+	template<class T>
+	std::shared_ptr<T> GameObject::GetChild() const
+	{
+		for (const auto& child : GetChildren()) {
+			std::shared_ptr<T> castedChild = std::dynamic_pointer_cast<T>(child);
+			bool isChild = castedChild != nullptr;
+			if (isChild)
+				return castedChild;
+		}
+		return nullptr;
 	}
 }
 #endif // GAMEOBJECT_H_
