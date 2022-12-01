@@ -30,12 +30,12 @@ namespace spic {
 		return pinstance_;
 	}
 
-	void RegisterScene(const std::string& sceneName, std::shared_ptr<Scene> scene)
+	void GameEngine::RegisterScene(const std::string& sceneName, std::shared_ptr<Scene> scene)
 	{
 		internal::EntityManager::GetInstance()->RegisterScene(sceneName, scene);
 	}
 
-	void SetActiveScene(const std::string& sceneName)
+	void GameEngine::SetActiveScene(const std::string& sceneName)
 	{
 		internal::EntityManager::GetInstance()->SetScene(sceneName);
 	}
@@ -50,12 +50,12 @@ namespace spic {
 		internal::EntityManager::GetInstance()->DestroyScene(forceDelete);
 	}
 
-	std::shared_ptr<Scene> GetActiveScene()
+	std::shared_ptr<Scene> GameEngine::GetActiveScene()
 	{
 		return internal::EntityManager::GetInstance()->GetScene();
 	}
 
-	std::shared_ptr<Scene> GetSceneByName(const std::string& sceneName)
+	std::shared_ptr<Scene> GameEngine::GetSceneByName(const std::string& sceneName)
 	{
 		return internal::EntityManager::GetInstance()->GetScene(sceneName);
 	}
