@@ -181,6 +181,7 @@
     <ClInclude Include="Box2DCollisionListener.hpp" />
     <ClInclude Include="Color.hpp" />
     <ClInclude Include="Component.hpp" />
+    <ClInclude Include="ContainerHelper.hpp" />
     <ClInclude Include="Debug.hpp" />
     <ClInclude Include="GameEngine.hpp" />
     <ClInclude Include="GameEngineAPI.hpp" />

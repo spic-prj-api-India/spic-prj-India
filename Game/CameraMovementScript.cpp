@@ -4,14 +4,18 @@
 void CameraMovementScript::OnStart() {
 }
 void CameraMovementScript::OnUpdate() {
-	if (spic::Input::GetKeyDown(spic::Input::KeyCode::RIGHT_ARROW))
-		gameObject->Transform()->position.x = gameObject->Transform()->position.x + 10.0f;
-	if (spic::Input::GetKeyDown(spic::Input::KeyCode::LEFT_ARROW))
-		gameObject->Transform()->position.x = gameObject->Transform()->position.x - 10.0f;
+	auto transform = gameObject->Transform();
+	if (spic::Input::GetKeyDown(spic::Input::KeyCode::RIGHT_ARROW)
+		&& (transform->position.x + 10.0f) <= 2000.0f)
+		gameObject->Transform()->position.x = transform->position.x + 10.0f;
+	if (spic::Input::GetKeyDown(spic::Input::KeyCode::LEFT_ARROW) 
+		&& (transform->position.x - 10.0f) > 0)
+		transform->position.x = transform->position.x - 10.0f;
 	if (spic::Input::GetKeyDown(spic::Input::KeyCode::UP_ARROW))
-		gameObject->Transform()->position.y = gameObject->Transform()->position.y - 10.0f;
-	if (spic::Input::GetKeyDown(spic::Input::KeyCode::DOWN_ARROW))
-		gameObject->Transform()->position.y = gameObject->Transform()->position.y + 10.0f;
+		transform->position.y = transform->position.y - 10.0f;
+	if (spic::Input::GetKeyDown(spic::Input::KeyCode::DOWN_ARROW) 
+		&& (transform->position.y + 10.0f) < 0)
+		transform->position.y = transform->position.y + 10.0f;
 }
 void CameraMovementScript::OnTriggerEnter2D(const spic::Collider& collider) {
 }

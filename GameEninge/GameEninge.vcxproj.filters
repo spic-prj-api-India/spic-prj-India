@@ -324,6 +324,9 @@
     <ClInclude Include="RendererImpl.hpp">
       <Filter>Header Files\systems\rendering</Filter>
     </ClInclude>
+    <ClInclude Include="ContainerHelper.hpp">
+      <Filter>Header Files\helpers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Time.cpp">

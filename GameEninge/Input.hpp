@@ -356,10 +356,28 @@ namespace spic {
         void UnSubscribe(KeyCode keyEvent, const std::shared_ptr<spic::IKeyListener>& keyListener);
 
         /**
+        * @brief Unsubscribes all listeners for a specific key event
+        * @spicapi
+        */
+        void UnSubscribe(KeyCode keyEvent);
+
+        /**
         * @brief Unsubscribes a mouse listener for a specific mouse event
         * @spicapi
         */
         void UnSubscribe(MouseButton mouseEvent, const std::shared_ptr<spic::IMouseListener>& mouseListener);
+
+        /**
+        * @brief Unsubscribes all listeners for a specific mouse event
+        * @spicapi
+        */
+        void UnSubscribe(MouseButton mouseEvent);
+
+        /**
+        * @brief Unsubscribes all listeners
+        * @spicapi
+        */
+        void UnSubscribeAll();
 
         /**
         * @brief Unsubscribes all key and mouse events

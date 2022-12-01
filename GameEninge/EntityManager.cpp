@@ -11,6 +11,7 @@
 #include "PhysicsSystem.hpp"
 #include "ScriptSystem.hpp"
 #include "RenderingSystem.hpp"
+#include "Input.hpp"
 
 using namespace spic;
 using namespace spic::internal;

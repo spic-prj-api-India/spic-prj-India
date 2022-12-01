@@ -2,11 +2,15 @@
 #include <Button.hpp>
 #include "GameEngine.hpp"
 #include <Text.hpp>
+#include "MouseListener.h"
+#include "KeyListener.h"
+#include <Input.hpp>
 
 MenuScene::MenuScene() : Scene()
 {
 	SetCamera();
 	SetContents();
+	SetInputListeners();
 }
 
 void MenuScene::SetCamera()
@@ -25,7 +29,16 @@ void MenuScene::SetContents()
 	auto textTransform = button->GetChild<spic::Text>()->Transform();
 	textTransform->position.y = 10.0f;
 	button->OnClick([]() {
+		spic::Input::UnSubscribeAll();
 		spic::GameEngine::GetInstance()->LoadSceneByName("game");
 		});
 	AddContent(button);
+}
+
+void MenuScene::SetInputListeners()
+{
+	std::shared_ptr<MouseListener> mouseListener = std::make_shared<MouseListener>();
+	std::shared_ptr<KeyListener> keyListener = std::make_shared<KeyListener>();
+	spic::Input::Subscribe(spic::Input::MouseButton::LEFT, mouseListener);
+	spic::Input::Subscribe(spic::Input::KeyCode::A, keyListener);
 }

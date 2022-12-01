@@ -1,5 +1,5 @@
-#ifndef REPLACEHELPER_H_
-#define REPLACEHELPER_H_
+#ifndef STRINGHELPER_H_
+#define STRINGHELPER_H_
 
 #include <string>
 
@@ -9,4 +9,4 @@ namespace spic::StringHelper {
     std::string GetBasePath();
 }
 
-#endif // REPLACEHELPER_H_
+#endif // STRINGHELPER_H_

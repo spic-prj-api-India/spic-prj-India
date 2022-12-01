@@ -4,12 +4,9 @@
 #include <iostream>
 #include "GameEngine.hpp"
 #include <PhysicsExtension1.hpp>
-#include "MouseListener.h"
-#include "KeyListener.h"
 #include "Scene.hpp"
 #include "MenuScene.h"
 #include "GameScene.h"
-#include <Input.hpp>
 
 std::shared_ptr<spic::Scene> scene;
 
@@ -21,12 +18,6 @@ void InitGame() {
 
 	engine->RegisterScene("menu", std::make_shared<MenuScene>());
 	engine->RegisterScene("game", std::make_shared<GameScene>());
-
-	// Input test
-	std::shared_ptr<MouseListener> mouseListener = std::make_shared<MouseListener>();
-	std::shared_ptr<KeyListener> keyListener = std::make_shared<KeyListener>();
-	spic::Input::Subscribe(spic::Input::MouseButton::LEFT, mouseListener);
-	spic::Input::Subscribe(spic::Input::KeyCode::A, keyListener);
 }
 
 void StartGame()

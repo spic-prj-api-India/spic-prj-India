@@ -34,7 +34,12 @@ namespace spic::internal::systems {
 		* @spicapi
 		*/
 		void Update(std::vector<std::shared_ptr<spic::GameObject>>& entities, Scene& currentScene) override;
-
+	private:
+		/**
+		 * @brief Filters entities between UI and non UI
+		 * @spicapi
+		 */
+		std::vector<std::vector<std::shared_ptr<spic::GameObject>>> GetFilteredEntities(std::vector<std::shared_ptr<spic::GameObject>> entities) const;
 	};
 }
 

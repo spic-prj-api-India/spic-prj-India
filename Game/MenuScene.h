@@ -8,4 +8,5 @@ public:
 
 	void SetCamera();
 	void SetContents();
+	void SetInputListeners();
 };
