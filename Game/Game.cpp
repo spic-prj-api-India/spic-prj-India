@@ -16,6 +16,7 @@
 #include "Scene.hpp"
 #include <Renderer.hpp>
 #include "Color.hpp"
+#include <AudioSource.hpp>
 
 std::shared_ptr<spic::Scene> scene;
 
@@ -44,12 +45,15 @@ void InitGame() {
 	std::shared_ptr<CollisionDetectionScript> script = std::make_shared<CollisionDetectionScript>();
 	auto boxSprite = std::make_shared<spic::Sprite>("assets/textures/box.png", 1);
 
+	auto music = std::make_shared<spic::AudioSource>("assets/music/file_example_MP3_700KB.mp3", true, true, 1);
+
 	box->Name(boxName);
 	box->Transform(boxTransform);
 	box->AddComponent<spic::BoxCollider>(boxCollider);
 	box->AddComponent<spic::RigidBody>(boxRigidBody);
 	box->AddComponent<spic::BehaviourScript>(script);
 	box->AddComponent<spic::Sprite>(boxSprite);
+	box->AddComponent<spic::AudioSource>(music);
 
 	scene->AddContent(box);
 	scene->LoadTileMap("assets/maps/Map.tmx", 3);
