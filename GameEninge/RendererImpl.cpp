@@ -204,28 +204,7 @@ void RendererImpl::DrawUISprite(UIObject* uiObject, const Sprite* sprite, const 
 	if (!SDL_HasIntersectionF(&dstRect, &this->windowCamera))
 		return;
 
-	const auto color = sprite->Color();
-
-	SDL_SetTextureColorMod(texture
-		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, color.R()))
-		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, color.G()))
-		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, color.B())));
-
-	SDL_SetTextureAlphaMod(texture,
-		PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, color.A())));
-
-	auto center = SDL_FPoint{ dstRect.x + (dstRect.w / 2)
-		,dstRect.y + (dstRect.h / 2) };
-
-	SDL_RendererFlip flip = GetFlip(sprite->FlipX(), sprite->FlipY());
-
-	double angle = RAD2DEG(transform->rotation);
-	if (texture == nullptr) {
-		SDL_RenderCopyExF(renderer.get(), NULL, NULL, &dstRect, angle, NULL, flip);
-		std::cout << SDL_GetError() << std::endl;
-		return;
-	}
-	SDL_RenderCopyExF(renderer.get(), texture, NULL, &dstRect, angle, NULL, flip);
+	DrawSprite(sprite, transform, texture, &dstRect, NULL);
 }
 
 void RendererImpl::DrawSprite(const Sprite* sprite, const Transform* transform)
@@ -258,6 +237,10 @@ void RendererImpl::DrawSprite(const Sprite* sprite, const Transform* transform)
 	else
 		return;
 
+	DrawSprite(sprite, transform, texture, &dstRect, &sourceRect);
+}
+
+void RendererImpl::DrawSprite(const Sprite* sprite, const Transform* transform, SDL_Texture* texture, SDL_FRect* dstRect, SDL_Rect* sourceRect) {
 	const auto color = sprite->Color();
 
 	SDL_SetTextureColorMod(texture
@@ -268,18 +251,18 @@ void RendererImpl::DrawSprite(const Sprite* sprite, const Transform* transform)
 	SDL_SetTextureAlphaMod(texture,
 		PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, color.A())));
 
-	auto center = SDL_FPoint{ dstRect.x + (dstRect.w / 2)
-		,dstRect.y + (dstRect.h / 2) };
+	auto center = SDL_FPoint{ dstRect->x + (dstRect->w / 2)
+		,dstRect->y + (dstRect->h / 2) };
 
 	SDL_RendererFlip flip = GetFlip(sprite->FlipX(), sprite->FlipY());
 
 	double angle = RAD2DEG(transform->rotation);
 	if (texture == nullptr) {
-		SDL_RenderCopyExF(renderer.get(), NULL, &sourceRect, &dstRect, angle, NULL, flip);
+		SDL_RenderCopyExF(renderer.get(), NULL, sourceRect, dstRect, angle, NULL, flip);
 		std::cout << SDL_GetError() << std::endl;
 		return;
 	}
-	SDL_RenderCopyExF(renderer.get(), texture, &sourceRect, &dstRect, angle, NULL, flip);
+	SDL_RenderCopyExF(renderer.get(), texture, sourceRect, dstRect, angle, NULL, flip);
 }
 
 SDL_Texture* RendererImpl::LoadTexture(const std::string& sprite)

@@ -122,6 +122,17 @@ namespace spic::internal::rendering {
 		void DrawSprites(GameObject* gameObject, const bool isUiObject);
 
 		/**
+		 * @brief Draws an sprite
+		 * @param sprite The sprite to draw
+		 * @param transform Contains position and rotation
+		 * @param texture Texture that will be drawn
+		 * @param dstRect Coordinates of sprite in texture
+		 * @param sourceRect Coordinates of sprite in window
+		*/
+		void DrawSprite(const Sprite* sprite, const Transform* transform, SDL_Texture* texture, 
+			SDL_FRect* dstRect, SDL_Rect* sourceRect = NULL);
+
+		/**
 		 * @brief Loads textures in
 		 * @param sprite The sprite to load
 		 * @return an texture ptr
@@ -255,13 +266,17 @@ namespace spic::internal::rendering {
 		*/
 		void DrawLine(const Point* start, const Point* end, const Color* colour);
 
+		/**
+		 * @brief Draws an ui sprite
+		 * @param uiObject The UIObject to draw
+		 * @param sprite The sprite to draw
+		 * @param transform Contains position and rotation
+		*/
 		void DrawUISprite(UIObject* uiObject, const Sprite* sprite, const Transform* transform);
 
 		/**
 		 * @brief Draws an sprite
-		 * @details TODO: split into diffrent functions
 		 * @param sprite The sprite to draw
-		 * @param isUiObject Defines if the object has to be drawn on world space or window space. Is false by default.
 		 * @param transform Contains position and rotation
 		*/
 		void DrawSprite(const Sprite* sprite, const Transform* transform);
