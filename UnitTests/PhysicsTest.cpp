@@ -10,13 +10,13 @@ TEST(PhysicsTest, GravitySuccess) {
 	std::shared_ptr<extensions::PhysicsExtension1> PhysicsExtension1 = std::make_shared<extensions::PhysicsExtension1>();
 
 	std::shared_ptr<spic::GameObject> box = std::make_shared<spic::GameObject>();
-	std::string boxTag = "box";
+	std::string boxName = "box";
 	std::shared_ptr<spic::Transform> boxTransform = std::make_shared<spic::Transform>();
-	boxTransform->position = { -2.5f, -2.5f };
-	boxTransform->rotation = 45.0f;
-	boxTransform->scale = 1.0f;
-	std::shared_ptr<spic::RigidBody> boxRigidBody = std::make_shared<spic::RigidBody>(1.0f, 0.2f, spic::BodyType::dynamicBody);
-	box->Tag(boxTag);
+	boxTransform->position = { 75.0f, 24.0f };
+	boxTransform->rotation = 0.785f;
+	boxTransform->scale = 5.0f;
+	std::shared_ptr<spic::RigidBody> boxRigidBody = std::make_shared<spic::RigidBody>(1.0f, 1.0f, spic::BodyType::dynamicBody);
+	box->Name(boxName);
 	box->Transform(boxTransform);
 	box->AddComponent<spic::RigidBody>(boxRigidBody);
 	entities.emplace_back(box);
@@ -25,5 +25,5 @@ TEST(PhysicsTest, GravitySuccess) {
 	PhysicsExtension1->Update(entities);
 
 	//3. Assert
-	EXPECT_EQ(box->Transform()->position.y, -2.49666667f);
+	EXPECT_EQ(box->Transform()->position.y, 34.0f);
 }
