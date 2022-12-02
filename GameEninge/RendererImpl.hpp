@@ -69,7 +69,7 @@ namespace spic::internal::rendering {
         /**
          * @brief World camera settings
         */
-        SDL_Rect camera;
+        SDL_FRect camera;
         float scaling;
         float rotation;
         Color backgroundColor;
@@ -101,7 +101,7 @@ namespace spic::internal::rendering {
         /**
          * @brief Camera of the window
         */
-        SDL_Rect windowCamera;
+        SDL_FRect windowCamera;
 
         /**
          * @brief Mutex for making the private instance of this class thread safe
@@ -236,6 +236,14 @@ namespace spic::internal::rendering {
          * @details should be called first after clean
         */
         void SetBackgroundColor();
+
+        /**
+         * @brief Draws an line in window space
+         * @param start The start point of an line
+         * @param end The end point of an line
+         * @param colour The colour of the line
+        */
+        void DrawRect(const SDL_FRect* rect, const Color* colour);
         
         /**
          * @brief Draws an line in window space

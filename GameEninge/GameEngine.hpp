@@ -7,6 +7,7 @@
 #include "IEngineExtension.hpp"
 #include "Scene.hpp"
 #include "TypeHelper.hpp"
+#include "WindowValues.hpp"
 
 namespace spic {
 	/**
@@ -136,7 +137,7 @@ namespace spic {
 		* @brief Start game loop
 		* @spicapi
 		*/
-		void Start();
+		void Start(const spic::window::WindowValues* values);
 
 		/*
 		* @brief Stop game loop

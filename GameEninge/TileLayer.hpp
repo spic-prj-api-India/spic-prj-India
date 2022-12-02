@@ -1,69 +1,72 @@
 #ifndef TILELAYER_H_
 #define TILELAYER_H_
 
-#include <string>
 #include <vector>
-#include <tinyxml.h>
 #include <iostream>
+#include "TileSet.hpp"
+#include "Point.hpp"
+#include "GameObject.hpp"
 
 namespace spic
 {
-
-    using Matrix = std::vector<std::vector<int> >;
-
-    struct Tileset
-    {
-        int rowCount, columnCount;
-        int firstId, lastId;
-        std::string textureId;
-        int tileCount, tileSize;
-    };
+    /**
+    * @brief Using mask named Matrix for vector with vector<int>
+    * @spicapi
+    */
+    using Matrix = std::vector<std::vector<int>>;
 
     class TileLayer
     {
-
     public:
-        TileLayer(const int tilesize, const std::vector<Tileset> tilesets) : tileSize(tilesize), tilesets(tilesets) {}
+        TileLayer(const int layerIndex, const int tilesize, const std::vector<TileSet> tilesets);
 
-        virtual ~TileLayer()
-        {
-            tileMatrix.clear();
-            tileMatrix.shrink_to_fit();
-            tilesets.clear();
-            tilesets.shrink_to_fit();
-        }
+        virtual ~TileLayer();
 
-        inline void Render()
-        {
-        }
+        /**
+        * @brief Renders tile layer with Renderer
+        * @spicapi
+        */
+        void Render();
 
-        inline void Update(float delta)
-        {
+        /**
+        * @brief Sets matrix of Tilelayer.
+        * @param matrix Desired value.
+        * @spicapi
+        */
+        void SetMatrix(const Matrix& matrix);
 
-        }
+        /**
+         * @brief Returns matrix of Tilelayer.
+         * @return Matrix.
+         * @spicapi
+         */
+        Matrix GetMatrix() const;
 
-        inline void ParseTileMatrix(TiXmlElement* element, int rowCount, int columnCount)
-        {
-        }
+        /**
+         * @brief Returns tile size of tile in tile layer.
+         * @return int.
+         * @spicapi
+         */
+        int GetTilesize() const;
 
-        inline Matrix GetMatrix() const
-        {
-            return tileMatrix;
-        }
-
-        inline int GetTilesize() const
-        {
-            return tileSize;
-        }
-
-        inline int GetSize() const
-        {
-        }
-
+        /**
+         * @brief Returns size of tile layer.
+         * @return spic::Point.
+         * @spicapi
+         */
+        Point GetSize() const;
+    private:
+        /**
+         * @brief Returns sprite with tile data.
+         * @return spic::Sprite.
+         * @spicapi
+         */
+        std::unique_ptr<Sprite> GetSprite(const TileSet& tileSet, const int x, const int y, const int tileSize);
     private:
         int tileSize;
+        int layerIndex;
         Matrix tileMatrix;
-        std::vector<Tileset> tilesets;
+        std::vector<TileSet> tilesets;
     };
 }
 

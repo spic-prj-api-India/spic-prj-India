@@ -35,7 +35,7 @@ namespace spic {
 
             /// @brief If the frame is frozen
             /// @return 
-            const bool IsFozen() const;
+            const bool IsFrozen() const;
 
             /// @brief Stops the animator frow drawing frames
             void Stop();

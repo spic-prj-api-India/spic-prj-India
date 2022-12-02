@@ -6,11 +6,12 @@
 #include <iostream>
 #include "EntityManager.hpp"
 #include "ISystem.hpp"
-#include "Scene.hpp"
+#include "MapParser.hpp"
 #include "InputSystem.hpp"
 #include "PhysicsSystem.hpp"
 #include "ScriptSystem.hpp"
 #include "RenderingSystem.hpp"
+#include "AudioManager.hpp"
 
 using namespace spic;
 using namespace spic::internal;
@@ -116,6 +117,12 @@ void EntityManager::SetScene(std::shared_ptr<Scene> newScene)
 	DestroyScene();
 	scene = newScene;
 	entities.clear();
+	TileMap* tileMap = scene->TileMap();
+	if (tileMap != nullptr) {
+		for (auto& entity : scene->TileMap()->CollisionEntities()) {
+			entities.push_back(entity);
+		}
+	}
 	for (auto& entity : scene->Contents())
 	{
 		entities.push_back(entity);
@@ -126,6 +133,14 @@ void EntityManager::SetScene(std::shared_ptr<Scene> newScene)
 		{
 			system->Start(entities);
 		}
+	}
+
+	spic::internal::audio::AudioManager::GetInstance()->Reset();
+
+	for (auto& entity : entities)
+	{
+		if (entity->Active())
+			entity->Active(true);
 	}
 }
 

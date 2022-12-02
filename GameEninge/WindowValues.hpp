@@ -4,7 +4,7 @@
 
 namespace spic::window {
 
-    enum FULLSCREENTYPE
+    enum class FULLSCREENTYPE
     {
         WINDOWED = 0,
         FULLSCREEN = 1,

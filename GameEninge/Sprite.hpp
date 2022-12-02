@@ -29,11 +29,11 @@ namespace spic {
         /// @param height 
         /// @param width 
         Sprite(const std::string& sprite
-            , const spic::Color& color
-            , const bool flipX
-            , const bool flipY
-            , const int sortingLayer
-            , const int orderInLayer
+            , const int sortingLayer = 0
+            , const int orderInLayer = 0
+            , const spic::Color& color = Color::white()
+            , const bool flipX = false
+            , const bool flipY = false
             , const int x = 0
             , const int y = 0
             , const int height = 0
@@ -58,16 +58,16 @@ namespace spic {
         void OrderInLayer(const int orderInLayer);
 
         const int X() const;
-        void X(int x);
+        const void X(int newX);
 
         const int Y() const;
-        void Y(int y);
+        const void Y(int newY);
 
         const int Height() const;
-        void Height(int height);
+        const void Height(int newHeight);
 
         const int Width() const;
-        void Width(int width);
+        const void Width(int newWidth);
 
     private:
         std::string sprite;
