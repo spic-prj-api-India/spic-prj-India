@@ -196,7 +196,6 @@
     <ClInclude Include="InputSystem.hpp" />
     <ClInclude Include="IPhysicsExtension.hpp" />
     <ClInclude Include="PhysicsExtension1.hpp" />
-    <ClInclude Include="PhysicsInfo.hpp" />
     <ClInclude Include="PhysicsSystem.hpp" />
     <ClInclude Include="ISystem.hpp" />
     <ClInclude Include="MapParser.hpp" />

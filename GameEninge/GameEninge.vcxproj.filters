@@ -252,9 +252,6 @@
     <ClInclude Include="TileMap.hpp">
       <Filter>Header Files\core\tilemap</Filter>
     </ClInclude>
-    <ClInclude Include="StringHelper.hpp">
-      <Filter>Header Files\helpers</Filter>
-    </ClInclude>
     <ClInclude Include="RendererImpl.hpp">
       <Filter>Header Files\core\systems\rendering</Filter>
     </ClInclude>
@@ -285,9 +282,6 @@
     <ClInclude Include="IPhysicsExtension.hpp">
       <Filter>Header Files\core\interfaces</Filter>
     </ClInclude>
-    <ClInclude Include="PhysicsInfo.hpp">
-      <Filter>Header Files\extensions\physics</Filter>
-    </ClInclude>
     <ClInclude Include="GameObject.hpp">
       <Filter>Header Files\objects</Filter>
     </ClInclude>
@@ -305,9 +299,6 @@
     </ClInclude>
     <ClInclude Include="UIObject.hpp">
       <Filter>Header Files\objects</Filter>
-    </ClInclude>
-    <ClInclude Include="ButtonClickListener.hpp">
-      <Filter>Header Files\core\systems\input</Filter>
     </ClInclude>
     <ClInclude Include="Scene.hpp">
       <Filter>Header Files</Filter>
@@ -395,9 +386,6 @@
     <ClCompile Include="GeneralHelper.cpp">
       <Filter>Source Files\helpers</Filter>
     </ClCompile>
-    <ClCompile Include="StringHelper.cpp">
-      <Filter>Source Files\helpers</Filter>
-    </ClCompile>
     <ClCompile Include="MapParser.cpp">
       <Filter>Source Files\core\tilemap</Filter>
     </ClCompile>
@@ -416,9 +404,6 @@
     <ClCompile Include="EntityManager.cpp">
       <Filter>Source Files\core\managers</Filter>
     </ClCompile>
-    <ClCompile Include="ButtonClickListener.cpp">
-      <Filter>Source Files\core\systems\input</Filter>
-    </ClCompile>
     <ClCompile Include="Color.cpp">
       <Filter>Source Files\models</Filter>
     </ClCompile>
@@ -427,9 +412,6 @@
     </ClCompile>
     <ClCompile Include="Time.cpp">
       <Filter>Source Files\models</Filter>
-    </ClCompile>
-    <ClCompile Include="Button.cpp">
-      <Filter>Source Files\objects</Filter>
     </ClCompile>
     <ClCompile Include="Camera.cpp">
       <Filter>Source Files\objects</Filter>
