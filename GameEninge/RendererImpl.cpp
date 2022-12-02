@@ -8,7 +8,6 @@
 #include <string_view>
 #include <stdio.h>
 #include <filesystem>
-#include "PhysicsInfo.hpp"
 #include "TypeHelper.hpp"
 #include "StringHelper.hpp"
 
@@ -50,7 +49,7 @@ RendererImpl* RendererImpl::GetInstance()
 
 void RendererImpl::Start(const spic::window::WindowValues* values)
 {
-	Exit(); // does nothing if it has not been called yet
+	//Exit(); // does nothing if it has not been called yet
 
 	// sets up video
 	if (SDL_Init(SDL_INIT_VIDEO != 0))
@@ -256,7 +255,7 @@ void RendererImpl::DrawSprite(const Sprite* sprite, const Transform* transform, 
 
 	SDL_RendererFlip flip = GetFlip(sprite->FlipX(), sprite->FlipY());
 
-	double angle = RAD2DEG(transform->rotation);
+	double angle = RAD2DEG<double>(transform->rotation);
 	if (texture == nullptr) {
 		SDL_RenderCopyExF(renderer.get(), NULL, sourceRect, dstRect, angle, NULL, flip);
 		std::cout << SDL_GetError() << std::endl;

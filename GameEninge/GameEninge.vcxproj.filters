@@ -19,23 +19,8 @@
     <Filter Include="Header Files\extensions">
       <UniqueIdentifier>{27b538ee-1333-4fc3-bad4-e214b80e2e6a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\systems">
-      <UniqueIdentifier>{71cbdc12-6865-4a76-9e01-e7d075e0f80f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\extensions">
       <UniqueIdentifier>{5f2b74ef-32e2-4302-872c-3cc4f1767b9a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\systems">
-      <UniqueIdentifier>{fc457077-0a38-4bdb-a48e-b9c9cc86aee8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\scene">
-      <UniqueIdentifier>{60c6b850-e3eb-4fbf-a50c-336ab2b79318}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\scene">
-      <UniqueIdentifier>{6969fe89-2548-4beb-8e99-e0b8e4dfa1a8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\input">
-      <UniqueIdentifier>{a6ee6687-ea54-4fa1-b22a-b348b5c48842}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\components\socket">
       <UniqueIdentifier>{19abe4e7-27f0-478f-973a-28e9208b50db}</UniqueIdentifier>
@@ -54,24 +39,6 @@
     </Filter>
     <Filter Include="Header Files\components\rigid_body">
       <UniqueIdentifier>{b277d132-0241-4c1b-b096-30f71b81ce7e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\systems\input">
-      <UniqueIdentifier>{51cd41fa-af0b-4dd1-af00-24f381b9a0ec}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\systems\networking">
-      <UniqueIdentifier>{d16d3029-f666-477c-9d01-c6dbefca1a47}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\systems\scripts">
-      <UniqueIdentifier>{d8655c86-e302-4ed1-bbf0-0c564114f111}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\systems\physics">
-      <UniqueIdentifier>{0faa61b9-0dfb-4284-a0d9-ffd8d1663372}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\systems\rendering">
-      <UniqueIdentifier>{62a5bcf7-c9bb-4bd0-bd29-23db3c3b4a1e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\game_engine">
-      <UniqueIdentifier>{f955f46c-f96e-4106-a3c0-4323b4ee353d}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\components">
       <UniqueIdentifier>{b633f94c-60ed-4507-880a-bc19892331e4}</UniqueIdentifier>
@@ -94,12 +61,6 @@
     <Filter Include="Source Files\components\rigid_body">
       <UniqueIdentifier>{546f0ceb-b157-40af-a18b-4d167b713813}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\input">
-      <UniqueIdentifier>{6a553d09-3975-49a3-99e6-c7d3bfd803b7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\game_engine">
-      <UniqueIdentifier>{78c3b148-864e-4412-9ac9-ce54465640e0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\components\audio\SDL2Audio">
       <UniqueIdentifier>{c520e0e6-0b6a-42e5-b34c-5e67436a07d7}</UniqueIdentifier>
     </Filter>
@@ -118,56 +79,92 @@
     <Filter Include="Source Files\extensions\physics">
       <UniqueIdentifier>{a6a2f6c3-033c-4580-a573-792b77f1f2d6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\map_parser">
-      <UniqueIdentifier>{e009d138-09b9-4530-a65b-3c1377e13238}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="rendering">
-      <UniqueIdentifier>{029202fb-56d6-4763-bcbd-4f8160ab7891}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\systems\input">
-      <UniqueIdentifier>{9e719cb7-da19-4089-bd72-3942748e941d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\systems\physics">
-      <UniqueIdentifier>{a4c84af4-e6cc-4c91-bd83-1714dbc1fb98}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\systems\scripts">
-      <UniqueIdentifier>{4fc209ec-3065-487c-8d8d-65c7a84fbd8c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\systems\rendering">
-      <UniqueIdentifier>{f1a73fff-ed6a-452f-86f7-00a43417a997}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\helpers">
       <UniqueIdentifier>{7214b70e-62ae-4f63-89a5-a1f7f8c0d26e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\extensions\physics\base">
-      <UniqueIdentifier>{da3a5446-a445-4173-924f-94f1c238b4d5}</UniqueIdentifier>
+    <Filter Include="Header Files\objects">
+      <UniqueIdentifier>{caff1ba6-f11d-4405-b903-d68e86fe2d19}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\map_parser">
-      <UniqueIdentifier>{eac5dada-fe8f-4469-9c3f-fb4b8e4a4d67}</UniqueIdentifier>
+    <Filter Include="Header Files\models">
+      <UniqueIdentifier>{9bf9628d-c118-4ac0-b582-d5ec952ce0f0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\input\listeners">
-      <UniqueIdentifier>{5a9ed2de-bf55-4e2f-b8ef-b06ca2c321ec}</UniqueIdentifier>
+    <Filter Include="Header Files\core">
+      <UniqueIdentifier>{d25db99c-d29a-47e0-bc3d-6513a992dd49}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\input\listeners">
-      <UniqueIdentifier>{4730134a-f32a-4be7-98de-2faef34f29ae}</UniqueIdentifier>
+    <Filter Include="Header Files\core\managers">
+      <UniqueIdentifier>{61211d5d-905d-49dd-a864-a1c462886ee6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\core\interfaces">
+      <UniqueIdentifier>{7a03a6e0-3536-41c9-abbd-ec66c125791c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\core\tilemap">
+      <UniqueIdentifier>{e009d138-09b9-4530-a65b-3c1377e13238}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\core\systems">
+      <UniqueIdentifier>{71cbdc12-6865-4a76-9e01-e7d075e0f80f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\core\systems\input">
+      <UniqueIdentifier>{51cd41fa-af0b-4dd1-af00-24f381b9a0ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\core\systems\networking">
+      <UniqueIdentifier>{d16d3029-f666-477c-9d01-c6dbefca1a47}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\core\systems\scripts">
+      <UniqueIdentifier>{d8655c86-e302-4ed1-bbf0-0c564114f111}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\core\systems\physics">
+      <UniqueIdentifier>{0faa61b9-0dfb-4284-a0d9-ffd8d1663372}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\core\systems\rendering">
+      <UniqueIdentifier>{62a5bcf7-c9bb-4bd0-bd29-23db3c3b4a1e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\core\models">
+      <UniqueIdentifier>{73043da7-4a20-44b1-9c93-9ccb7ccbff1f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\core">
+      <UniqueIdentifier>{bf3796de-47cc-4997-b622-09fa44743962}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\core\managers">
+      <UniqueIdentifier>{06286413-b925-4b21-ac33-4ec9baf000b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\core\interfaces">
+      <UniqueIdentifier>{a1edff19-e3c8-4439-96a5-b6356d454227}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\core\models">
+      <UniqueIdentifier>{8bc7c788-4c58-45ce-a118-f9ba265a2c87}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\core\tilemap">
+      <UniqueIdentifier>{7aaad23c-4d32-4a6b-b12e-84fafd5ddc58}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\core\systems">
+      <UniqueIdentifier>{fc457077-0a38-4bdb-a48e-b9c9cc86aee8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\core\systems\input">
+      <UniqueIdentifier>{9e719cb7-da19-4089-bd72-3942748e941d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\core\systems\physics">
+      <UniqueIdentifier>{a4c84af4-e6cc-4c91-bd83-1714dbc1fb98}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\core\systems\scripts">
+      <UniqueIdentifier>{4fc209ec-3065-487c-8d8d-65c7a84fbd8c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\core\systems\rendering">
+      <UniqueIdentifier>{f1a73fff-ed6a-452f-86f7-00a43417a997}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\models">
+      <UniqueIdentifier>{4bbe9e37-f7c2-4bd5-960f-30dfc3ed3439}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\objects">
+      <UniqueIdentifier>{abbb5347-f64c-4ce3-8d2b-e0da1790c076}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\helpers">
+      <UniqueIdentifier>{9f084e52-f411-4ec3-a73b-4e96a26e3e9e}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\helpers">
       <UniqueIdentifier>{9f084e52-f411-4ec3-a73b-4e96a26e3e9e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Color.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Debug.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Point.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Time.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="AudioSource.hpp">
       <Filter>Header Files\components\audio</Filter>
     </ClInclude>
@@ -195,47 +192,11 @@
     <ClInclude Include="Sprite.hpp">
       <Filter>Header Files\components\animator%255csprite</Filter>
     </ClInclude>
-    <ClInclude Include="GameObject.hpp">
-      <Filter>Header Files\scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Camera.hpp">
-      <Filter>Header Files\scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene.hpp">
-      <Filter>Header Files\scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Button.hpp">
-      <Filter>Header Files\scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Transform.hpp">
-      <Filter>Header Files\scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Text.hpp">
-      <Filter>Header Files\scene</Filter>
-    </ClInclude>
-    <ClInclude Include="IKeyListener.hpp">
-      <Filter>Header Files\input</Filter>
-    </ClInclude>
-    <ClInclude Include="IMouseListener.hpp">
-      <Filter>Header Files\input</Filter>
-    </ClInclude>
-    <ClInclude Include="Input.hpp">
-      <Filter>Header Files\input</Filter>
-    </ClInclude>
-    <ClInclude Include="UIObject.hpp">
-      <Filter>Header Files\scene</Filter>
-    </ClInclude>
-    <ClInclude Include="GameEngineAPI.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="PhysicsSystem.hpp">
-      <Filter>Header Files\systems\physics</Filter>
-    </ClInclude>
-    <ClInclude Include="GameEngine.hpp">
-      <Filter>Header Files\game_engine</Filter>
+      <Filter>Header Files\core\systems\physics</Filter>
     </ClInclude>
     <ClInclude Include="ScriptSystem.hpp">
-      <Filter>Header Files\systems\scripts</Filter>
+      <Filter>Header Files\core\systems\scripts</Filter>
     </ClInclude>
     <ClInclude Include="CastException.hpp">
       <Filter>Header Files\exceptions</Filter>
@@ -258,86 +219,125 @@
     <ClInclude Include="AudioInfo.hpp">
       <Filter>Header Files\components\audio\SDL2Audio</Filter>
     </ClInclude>
-    <ClInclude Include="EntityManager.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ISystem.hpp">
-      <Filter>Source Files\systems</Filter>
-    </ClInclude>
     <ClInclude Include="MapParser.hpp">
-      <Filter>Header Files\map_parser</Filter>
+      <Filter>Header Files\core\tilemap</Filter>
     </ClInclude>
     <ClInclude Include="TileLayer.hpp">
-      <Filter>Header Files\map_parser</Filter>
+      <Filter>Header Files\core\tilemap</Filter>
     </ClInclude>
     <ClInclude Include="InputSystem.hpp">
-      <Filter>Header Files\systems\input</Filter>
-    </ClInclude>
-    <ClInclude Include="InputManager.hpp">
-      <Filter>Header Files\input</Filter>
-    </ClInclude>
-    <ClInclude Include="InputImpl.hpp">
-      <Filter>Header Files\input</Filter>
+      <Filter>Header Files\core\systems\input</Filter>
     </ClInclude>
     <ClInclude Include="ISystem.hpp">
       <Filter>Header Files\systems</Filter>
     </ClInclude>
     <ClInclude Include="WindowValues.hpp">
-      <Filter>Header Files\systems\rendering</Filter>
+      <Filter>Header Files\core\systems\rendering</Filter>
     </ClInclude>
     <ClInclude Include="Renderer.hpp">
-      <Filter>Header Files\systems\rendering</Filter>
+      <Filter>Header Files\core\systems\rendering</Filter>
     </ClInclude>
     <ClInclude Include="RenderingSystem.hpp">
-      <Filter>Header Files\systems\rendering</Filter>
+      <Filter>Header Files\core\systems\rendering</Filter>
     </ClInclude>
     <ClInclude Include="TypeHelper.hpp">
       <Filter>Header Files\helpers</Filter>
-    </ClInclude>
-    <ClInclude Include="ICollisionListener.hpp">
-      <Filter>Header Files\extensions\physics\base</Filter>
-    </ClInclude>
-    <ClInclude Include="IPhysicsExtension.hpp">
-      <Filter>Header Files\extensions\physics\base</Filter>
-    </ClInclude>
-    <ClInclude Include="PhysicsInfo.hpp">
-      <Filter>Header Files\extensions\physics\base</Filter>
-    </ClInclude>
-    <ClInclude Include="IEngineExtension.hpp">
-      <Filter>Header Files\extensions</Filter>
     </ClInclude>
     <ClInclude Include="GeneralHelper.hpp">
       <Filter>Header Files\helpers</Filter>
     </ClInclude>
     <ClInclude Include="TileSet.hpp">
-      <Filter>Header Files\map_parser</Filter>
+      <Filter>Header Files\core\tilemap</Filter>
     </ClInclude>
     <ClInclude Include="TileMap.hpp">
-      <Filter>Header Files\map_parser</Filter>
-    </ClInclude>
-    <ClInclude Include="StringHelper.hpp">
-      <Filter>Header Files\helpers</Filter>
-    </ClInclude>
-    <ClInclude Include="ButtonClickListener.hpp">
-      <Filter>Header Files\input\listeners</Filter>
+      <Filter>Header Files\core\tilemap</Filter>
     </ClInclude>
     <ClInclude Include="RendererImpl.hpp">
-      <Filter>Header Files\systems\rendering</Filter>
+      <Filter>Header Files\core\systems\rendering</Filter>
     </ClInclude>
     <ClInclude Include="ContainerHelper.hpp">
       <Filter>Header Files\helpers</Filter>
     </ClInclude>
+    <ClInclude Include="GameEngine.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EntityManager.hpp">
+      <Filter>Header Files\core\managers</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManager.hpp">
+      <Filter>Header Files\core\managers</Filter>
+    </ClInclude>
+    <ClInclude Include="IKeyListener.hpp">
+      <Filter>Header Files\core\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="IMouseListener.hpp">
+      <Filter>Header Files\core\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="IEngineExtension.hpp">
+      <Filter>Header Files\core\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="ICollisionListener.hpp">
+      <Filter>Header Files\core\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="IPhysicsExtension.hpp">
+      <Filter>Header Files\core\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.hpp">
+      <Filter>Header Files\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.hpp">
+      <Filter>Header Files\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.hpp">
+      <Filter>Header Files\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Text.hpp">
+      <Filter>Header Files\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Transform.hpp">
+      <Filter>Header Files\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="StringHelper.hpp">
+      <Filter>Header Files\helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="UIObject.hpp">
+      <Filter>Header Files\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Input.hpp">
+      <Filter>Header Files\models</Filter>
+    </ClInclude>
+    <ClInclude Include="InputImpl.hpp">
+      <Filter>Header Files\core\models</Filter>
+    </ClInclude>
+    <ClInclude Include="Point.hpp">
+      <Filter>Header Files\models</Filter>
+    </ClInclude>
+    <ClInclude Include="Time.hpp">
+      <Filter>Header Files\models</Filter>
+    </ClInclude>
+    <ClInclude Include="Debug.hpp">
+      <Filter>Header Files\models</Filter>
+    </ClInclude>
+    <ClInclude Include="Color.hpp">
+      <Filter>Header Files\models</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsValues.hpp">
+      <Filter>Header Files\extensions\physics</Filter>
+    </ClInclude>
+    <ClInclude Include="ContainerHelper.hpp">
+      <Filter>Header Files\helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="ISystem.hpp">
+      <Filter>Header Files\core\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="ButtonClickListener.hpp">
+      <Filter>Header Files\core\systems\input</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Time.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Color.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene.cpp">
-      <Filter>Source Files\scene</Filter>
-    </ClCompile>
     <ClCompile Include="Sample.cpp">
       <Filter>Source Files\components\audio\SDL2Audio</Filter>
     </ClCompile>
@@ -349,12 +349,6 @@
     </ClCompile>
     <ClCompile Include="Chunk.cpp">
       <Filter>Source Files\components\audio\SDL2Audio</Filter>
-    </ClCompile>
-    <ClCompile Include="GameEngine.cpp">
-      <Filter>Source Files\game_engine</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObject.cpp">
-      <Filter>Source Files\scene</Filter>
     </ClCompile>
     <ClCompile Include="RigidBody.cpp">
       <Filter>Source Files\components\rigid_body</Filter>
@@ -377,80 +371,95 @@
     <ClCompile Include="PhysicsExtension1.cpp">
       <Filter>Source Files\extensions\physics</Filter>
     </ClCompile>
-    <ClCompile Include="ICollisionListener.cpp">
-      <Filter>Source Files\extensions\physics</Filter>
-    </ClCompile>
-    <ClCompile Include="Input.cpp">
-      <Filter>Source Files\input</Filter>
-    </ClCompile>
-    <ClCompile Include="InputManager.cpp">
-      <Filter>Source Files\input</Filter>
-    </ClCompile>
-    <ClCompile Include="InputImpl.cpp">
-      <Filter>Source Files\input</Filter>
-    </ClCompile>
-    <ClCompile Include="EntityManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="IPhysicsExtension.cpp">
-      <Filter>Source Files\extensions\physics</Filter>
-    </ClCompile>
-    <ClCompile Include="MapParser.cpp">
-      <Filter>Source Files\map_parser</Filter>
-    </ClCompile>
-    <ClCompile Include="TileMap.cpp">
-      <Filter>Source Files\map_parser</Filter>
-    </ClCompile>
-    <ClCompile Include="TileLayer.cpp">
-      <Filter>Source Files\map_parser</Filter>
-    </ClCompile>
     <ClCompile Include="InputSystem.cpp">
-      <Filter>Source Files\systems\input</Filter>
+      <Filter>Source Files\core\systems\input</Filter>
     </ClCompile>
     <ClCompile Include="PhysicsSystem.cpp">
-      <Filter>Source Files\systems\physics</Filter>
+      <Filter>Source Files\core\systems\physics</Filter>
     </ClCompile>
     <ClCompile Include="ScriptSystem.cpp">
-      <Filter>Source Files\systems\scripts</Filter>
+      <Filter>Source Files\core\systems\scripts</Filter>
     </ClCompile>
     <ClCompile Include="RendererImpl.cpp">
-      <Filter>Source Files\systems\rendering</Filter>
-    </ClCompile>
-    <ClCompile Include="Point.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\core\systems\rendering</Filter>
     </ClCompile>
     <ClCompile Include="Sprite.cpp">
       <Filter>Source Files\components\animator%255csprite</Filter>
     </ClCompile>
     <ClCompile Include="Renderer.cpp">
-      <Filter>Source Files\systems\rendering</Filter>
+      <Filter>Source Files\core\systems\rendering</Filter>
     </ClCompile>
     <ClCompile Include="RenderingSystem.cpp">
-      <Filter>Source Files\systems\rendering</Filter>
+      <Filter>Source Files\core\systems\rendering</Filter>
     </ClCompile>
     <ClCompile Include="Animator.cpp">
       <Filter>Source Files\components\animator%255csprite</Filter>
     </ClCompile>
-    <ClCompile Include="Button.cpp">
-      <Filter>Source Files\scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Text.cpp">
-      <Filter>Source Files\scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Camera.cpp">
-      <Filter>Source Files\scene</Filter>
-    </ClCompile>
-    <ClCompile Include="UIObject.cpp">
-      <Filter>Source Files\scene</Filter>
-    </ClCompile>
-    <ClCompile Include="ButtonClickListener.cpp">
-      <Filter>Source Files\input\listeners</Filter>
-    </ClCompile>
     <ClCompile Include="GeneralHelper.cpp">
       <Filter>Source Files\helpers</Filter>
     </ClCompile>
+    <ClCompile Include="MapParser.cpp">
+      <Filter>Source Files\core\tilemap</Filter>
+    </ClCompile>
+    <ClCompile Include="TileLayer.cpp">
+      <Filter>Source Files\core\tilemap</Filter>
+    </ClCompile>
+    <ClCompile Include="TileMap.cpp">
+      <Filter>Source Files\core\tilemap</Filter>
+    </ClCompile>
+    <ClCompile Include="InputImpl.cpp">
+      <Filter>Source Files\core\models</Filter>
+    </ClCompile>
+    <ClCompile Include="InputManager.cpp">
+      <Filter>Source Files\core\managers</Filter>
+    </ClCompile>
+    <ClCompile Include="EntityManager.cpp">
+      <Filter>Source Files\core\managers</Filter>
+    </ClCompile>
+    <ClCompile Include="Color.cpp">
+      <Filter>Source Files\models</Filter>
+    </ClCompile>
+    <ClCompile Include="Point.cpp">
+      <Filter>Source Files\models</Filter>
+    </ClCompile>
+    <ClCompile Include="Time.cpp">
+      <Filter>Source Files\models</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Source Files\objects</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Source Files\objects</Filter>
+    </ClCompile>
+    <ClCompile Include="UIObject.cpp">
+      <Filter>Source Files\objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Text.cpp">
+      <Filter>Source Files\objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ICollisionListener.cpp">
+      <Filter>Source Files\core\interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="IPhysicsExtension.cpp">
+      <Filter>Source Files\core\interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="Input.cpp">
+      <Filter>Source Files\models</Filter>
+    </ClCompile>
     <ClCompile Include="StringHelper.cpp">
       <Filter>Source Files\helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="ButtonClickListener.cpp">
+      <Filter>Source Files\core\systems\input</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>Source Files\objects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

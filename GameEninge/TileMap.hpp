@@ -11,10 +11,41 @@ namespace spic
 	{
 	public:
 		TileMap();
+
+		/**
+		 * @brief Adds tile layer
+		 * @param layer Layer index.
+		 * @param tileLayer TileLayer.
+		 * @spicapi
+		 */
 		void AddTileLayer(const int layer, const std::unique_ptr<TileLayer> tileLayer);
+
+		/**
+		 * @brief Returns layer from list of layers using index.
+		 * @param index Layer index.
+		 * @return TileLayer.
+		 * @spicapi
+		 */
 		const TileLayer& GetLayer(int index);
+
+		/**
+		 * @brief Adds collision entity.
+		 * @param entity Collision entity.
+		 * @spicapi
+		 */
 		void AddCollisionEntity(const std::shared_ptr<spic::GameObject> entity);
-		std::vector<std::shared_ptr<spic::GameObject>>  CollisionEntities() const;
+
+		/**
+		 * @brief Returns collision entities.
+		 * @return list with collision entities.
+		 * @spicapi
+		 */
+		std::vector<std::shared_ptr<spic::GameObject>> CollisionEntities() const;
+
+		/**
+		 * @brief Renders all tile layers.
+		 * @spicapi
+		 */
 		void Render() const;
 	private:
 		std::map<int, std::unique_ptr<TileLayer>> tileLayers;

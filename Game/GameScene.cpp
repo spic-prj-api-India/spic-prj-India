@@ -3,6 +3,7 @@
 #include "CameraMovementScript.h"
 #include "CollisionDetectionScript.h"
 #include <BoxCollider.hpp>
+#include "AudioSource.hpp"
 
 GameScene::GameScene() : Scene()
 {
@@ -34,6 +35,7 @@ void GameScene::SetContents()
 	std::shared_ptr<spic::RigidBody> boxRigidBody = std::make_shared<spic::RigidBody>(1.0f, 1.0f, spic::BodyType::dynamicBody);
 	std::shared_ptr<CollisionDetectionScript> script = std::make_shared<CollisionDetectionScript>();
 	auto boxSprite = std::make_shared<spic::Sprite>("assets/textures/box.png", 1);
+	auto music = std::make_shared<spic::AudioSource>("assets/music/file_example_MP3_700KB.mp3", true, true, 1);
 
 	box->Name(boxName);
 	box->Transform(boxTransform);
@@ -41,6 +43,7 @@ void GameScene::SetContents()
 	box->AddComponent<spic::RigidBody>(boxRigidBody);
 	box->AddComponent<spic::BehaviourScript>(script);
 	box->AddComponent<spic::Sprite>(boxSprite);
+	box->AddComponent<spic::AudioSource>(music);
 
 	//UI test
 	std::shared_ptr<spic::Button> button = std::make_shared<spic::Button>(200.0f, 100.0f, "Click me");

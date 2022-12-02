@@ -4,15 +4,15 @@
 #include <iostream>
 #include "GameEngine.hpp"
 #include <PhysicsExtension1.hpp>
-#include "Scene.hpp"
 #include "MenuScene.h"
 #include "GameScene.h"
+#include "PhysicsValues.hpp"
 
 std::shared_ptr<spic::Scene> scene;
 
 void InitGame() {
-	// Physics test
 	spic::GameEngine* engine = spic::GameEngine::GetInstance();
+	spic::extensions::PhysicsValues::SCALING_FACTOR = 0.0017f;
 	std::shared_ptr<spic::extensions::PhysicsExtension1> physicsExtension = std::make_shared<spic::extensions::PhysicsExtension1>();
 	engine->AddExtension(std::move(physicsExtension));
 
@@ -22,7 +22,6 @@ void InitGame() {
 
 void StartGame()
 {
-
 	/** Code to show working (remove 2 slashes to get it working)
 	 auto transform1 = std::make_shared<spic::Transform>(spic::Point{80.0f,80.0f }, 10.0f,0.5f);
 	 auto sprite = std::make_shared<spic::Sprite>("assets/textures/post-apocalyptic-backgrounds/Postapocalypce1/Bright/clouds1.png", spic::Color::magenta(), false, false,0,0);

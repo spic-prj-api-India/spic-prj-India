@@ -184,7 +184,6 @@
     <ClInclude Include="ContainerHelper.hpp" />
     <ClInclude Include="Debug.hpp" />
     <ClInclude Include="GameEngine.hpp" />
-    <ClInclude Include="GameEngineAPI.hpp" />
     <ClInclude Include="EntityManager.hpp" />
     <ClInclude Include="GameObject.hpp" />
     <ClInclude Include="GeneralHelper.hpp" />
@@ -198,7 +197,6 @@
     <ClInclude Include="InputSystem.hpp" />
     <ClInclude Include="IPhysicsExtension.hpp" />
     <ClInclude Include="PhysicsExtension1.hpp" />
-    <ClInclude Include="PhysicsInfo.hpp" />
     <ClInclude Include="PhysicsSystem.hpp" />
     <ClInclude Include="ISystem.hpp" />
     <ClInclude Include="MapParser.hpp" />
@@ -220,6 +218,7 @@
     <ClInclude Include="TypeHelper.hpp" />
     <ClInclude Include="UIObject.hpp" />
     <ClInclude Include="RendererImpl.hpp" />
+    <ClInclude Include="PhysicsValues.hpp" />
     <ClInclude Include="WindowValues.hpp" />
   </ItemGroup>
   <ItemGroup>

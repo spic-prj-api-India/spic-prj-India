@@ -11,7 +11,7 @@
 #include "PhysicsSystem.hpp"
 #include "ScriptSystem.hpp"
 #include "RenderingSystem.hpp"
-#include "Input.hpp"
+#include "AudioManager.hpp"
 
 using namespace spic;
 using namespace spic::internal;
@@ -121,6 +121,14 @@ void EntityManager::SetScene(std::shared_ptr<Scene> newScene)
 		{
 			system->Start(entities, *scene);
 		}
+	}
+
+	spic::internal::audio::AudioManager::GetInstance()->Reset();
+
+	for (auto& entity : entities)
+	{
+		if (entity->Active())
+			entity->Active(true);
 	}
 }
 
