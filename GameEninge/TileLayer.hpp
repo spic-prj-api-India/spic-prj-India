@@ -9,6 +9,10 @@
 
 namespace spic
 {
+    /**
+    * @brief Using mask named Matrix for vector with vector<int>
+    * @spicapi
+    */
     using Matrix = std::vector<std::vector<int>>;
 
     class TileLayer

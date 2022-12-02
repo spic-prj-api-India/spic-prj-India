@@ -17,6 +17,7 @@
 #include <Renderer.hpp>
 #include "Color.hpp"
 #include <AudioSource.hpp>
+#include "PhysicsValues.hpp"
 
 std::shared_ptr<spic::Scene> scene;
 
@@ -29,6 +30,7 @@ void InitGame() {
 	scene = std::make_shared<spic::Scene>(std::move(camera));
 
 	// Physics test
+	spic::extensions::PhysicsValues::SCALING_FACTOR = 0.0017f;
 	std::shared_ptr<spic::extensions::PhysicsExtension1> physicsExtension = std::make_shared<spic::extensions::PhysicsExtension1>();
 	engine->AddExtension(std::move(physicsExtension));
 

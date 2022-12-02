@@ -21,7 +21,7 @@ namespace spic
 		void AddTileLayer(const int layer, const std::unique_ptr<TileLayer> tileLayer);
 
 		/**
-		 * @brief Returns layer with index.
+		 * @brief Returns layer from list of layers using index.
 		 * @param index Layer index.
 		 * @return TileLayer.
 		 * @spicapi

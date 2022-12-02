@@ -172,7 +172,6 @@
     <ClInclude Include="BehaviourScript.hpp" />
     <ClInclude Include="BoxCollider.hpp" />
     <ClInclude Include="Button.hpp" />
-    <ClInclude Include="ButtonClickListener.hpp" />
     <ClInclude Include="Camera.hpp" />
     <ClInclude Include="CastException.hpp" />
     <ClInclude Include="Chunk.hpp" />
@@ -204,7 +203,6 @@
     <ClInclude Include="Point.hpp" />
     <ClInclude Include="Renderer.hpp" />
     <ClInclude Include="RenderingSystem.hpp" />
-    <ClInclude Include="StringHelper.hpp" />
     <ClInclude Include="RigidBody.hpp" />
     <ClInclude Include="Sample.hpp" />
     <ClInclude Include="Scene.hpp" />
@@ -219,14 +217,13 @@
     <ClInclude Include="TypeHelper.hpp" />
     <ClInclude Include="UIObject.hpp" />
     <ClInclude Include="RendererImpl.hpp" />
+    <ClInclude Include="PhysicsValues.hpp" />
     <ClInclude Include="WindowValues.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animator.cpp" />
     <ClCompile Include="AudioManager.cpp" />
     <ClCompile Include="AudioSource.cpp" />
-    <ClCompile Include="Button.cpp" />
-    <ClCompile Include="ButtonClickListener.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Chunk.cpp" />
     <ClCompile Include="BehaviourScript.cpp" />
@@ -242,7 +239,6 @@
     <ClCompile Include="Point.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Sprite.cpp" />
-    <ClCompile Include="StringHelper.cpp" />
     <ClCompile Include="Text.cpp" />
     <ClCompile Include="UIObject.cpp" />
     <ClCompile Include="RendererImpl.cpp" />

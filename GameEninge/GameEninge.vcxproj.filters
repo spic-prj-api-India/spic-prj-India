@@ -330,6 +330,9 @@
     <ClInclude Include="Color.hpp">
       <Filter>Header Files\models</Filter>
     </ClInclude>
+    <ClInclude Include="PhysicsValues.hpp">
+      <Filter>Header Files\extensions\physics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sample.cpp">

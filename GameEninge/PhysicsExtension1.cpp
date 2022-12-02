@@ -13,7 +13,7 @@
 #include "BoxCollider.hpp"
 #include "ICollisionListener.hpp"
 #include "Box2DCollisionListener.hpp"
-#include "PhysicsInfo.hpp"
+#include "PhysicsValues.hpp"
 #include "GeneralHelper.hpp"
 
 namespace spic::extensions {
@@ -42,7 +42,7 @@ namespace spic::extensions {
 		*/
 		void Reset()
 		{
-			world = std::make_unique<b2World>(b2Vec2(0.0f, spic::internal::extensions::GRAVITY));
+			world = std::make_unique<b2World>(b2Vec2(0.0f, PhysicsValues::GRAVITY));
 		}
 
 		/**
@@ -71,8 +71,8 @@ namespace spic::extensions {
 				const float rotation = body->GetAngle();
 
 				// Update entity
-				entity->Transform()->position.x = position.x * spic::internal::extensions::MET2PIX;
-				entity->Transform()->position.y = position.y * spic::internal::extensions::MET2PIX;
+				entity->Transform()->position.x = position.x / PhysicsValues::SCALING_FACTOR;
+				entity->Transform()->position.y = position.y / PhysicsValues::SCALING_FACTOR;
 				entity->Transform()->rotation = rotation;
 			}
 		}
@@ -135,8 +135,8 @@ namespace spic::extensions {
 		b2Body* CreateBody(const std::shared_ptr<spic::GameObject>& entity, const std::shared_ptr<spic::RigidBody>& rigidBody)
 		{
 			// cartesian origin
-			const float ground_x = entity->Transform()->position.x / spic::internal::extensions::MET2PIX;
-			const float ground_y = entity->Transform()->position.y / spic::internal::extensions::MET2PIX;
+			const float ground_x = entity->Transform()->position.x * PhysicsValues::SCALING_FACTOR;
+			const float ground_y = entity->Transform()->position.y * PhysicsValues::SCALING_FACTOR;
 
 			b2BodyDef bodyDef;
 			bodyDef.type = bodyTypeConvertions[rigidBody->BodyType()];
@@ -174,8 +174,8 @@ namespace spic::extensions {
 			const float scale = entity->Transform()->scale;
 			if (boxCollider != nullptr) {
 				b2PolygonShape* boxShape = new b2PolygonShape();
-				const float hx = (boxCollider->Width() / spic::internal::extensions::MET2PIX) / 2.0f;
-				const float hy = (boxCollider->Height() / spic::internal::extensions::MET2PIX) / 2.0f;
+				const float hx = (boxCollider->Width() * PhysicsValues::SCALING_FACTOR) / 2.0f;
+				const float hy = (boxCollider->Height() * PhysicsValues::SCALING_FACTOR) / 2.0f;
 				boxShape->SetAsBox(hx, hy); // will be 0.5 x 0.5
 				return boxShape;
 			}
@@ -205,8 +205,8 @@ namespace spic::extensions {
 
 			// Get entity transform
 			spic::Point ePosition = entity->Transform()->position;
-			ePosition.x = ePosition.x / spic::internal::extensions::MET2PIX;
-			ePosition.y = ePosition.y / spic::internal::extensions::MET2PIX;
+			ePosition.x = ePosition.x * PhysicsValues::SCALING_FACTOR;
+			ePosition.y = ePosition.y * PhysicsValues::SCALING_FACTOR;
 			const float eRotation = entity->Transform()->rotation;
 
 			// Update

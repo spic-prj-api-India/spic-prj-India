@@ -347,18 +347,13 @@ void RendererImpl::DrawSprite(const Sprite* sprite, const bool isUiObject, const
 	else
 		flip = (SDL_RendererFlip)(SDL_FLIP_NONE);
 
-	double angle = RAD2DEG(transform->rotation);
+	double angle = RAD2DEG<double>(transform->rotation);
 	if (texture == nullptr) {
 		SDL_RenderCopyExF(renderer.get(), NULL, &sourceRect, &dstRect, angle, NULL, flip);
 		std::cout << SDL_GetError() << std::endl;
 		return;
 	}
 	SDL_RenderCopyExF(renderer.get(), texture, &sourceRect, &dstRect, angle, NULL, flip);
-	SDL_Rect debugRect = { PrecisionRoundingoInt(dstRect.x)
-		, PrecisionRoundingoInt(dstRect.y)
-		, PrecisionRoundingoInt(dstRect.w)
-		, PrecisionRoundingoInt(dstRect.h) };
-	//DrawRect(&dstRect, &Color::red());
 }
 
 void RendererImpl::UpdateCamera(Camera* camera)
