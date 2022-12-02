@@ -38,10 +38,16 @@ namespace spic::extensions{
 		virtual void RegisterListener(ICollisionListener* listener) const = 0;
 
 		/**
-		* @brief Adds force to an entity
+		* @brief Adds force to an entity with name
 		* @spicapi
 		*/
-		virtual void AddForce(std::shared_ptr<spic::GameObject> entity, const spic::Point& forceDirection) = 0;
+		virtual void AddForce(const std::string& entityName, const spic::Point& forceDirection) = 0;
+
+		/**
+		* @brief Gets linear velocity of entity with name
+		* @spicapi
+		*/
+		virtual Point GetLinearVelocity(const std::string& entityName) = 0;
 	};
 }
 

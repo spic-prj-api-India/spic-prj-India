@@ -121,9 +121,6 @@
     <Filter Include="Header Files\map_parser">
       <UniqueIdentifier>{e009d138-09b9-4530-a65b-3c1377e13238}</UniqueIdentifier>
     </Filter>
-    <Filter Include="rendering">
-      <UniqueIdentifier>{029202fb-56d6-4763-bcbd-4f8160ab7891}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\systems\input">
       <UniqueIdentifier>{9e719cb7-da19-4089-bd72-3942748e941d}</UniqueIdentifier>
     </Filter>
@@ -141,6 +138,12 @@
     </Filter>
     <Filter Include="Header Files\extensions\physics\base">
       <UniqueIdentifier>{da3a5446-a445-4173-924f-94f1c238b4d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\components\pathfinding">
+      <UniqueIdentifier>{6e3d1d22-429d-415a-8caa-c4dd32f2d90e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\components\pathfinding">
+      <UniqueIdentifier>{50fddb0d-c79a-4aa8-8e17-3b7867622469}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -297,6 +300,12 @@
     <ClInclude Include="GeneralHelper.hpp">
       <Filter>Header Files\helpers</Filter>
     </ClInclude>
+    <ClInclude Include="Pathfinding.hpp">
+      <Filter>Header Files\components\pathfinding</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngineInfo.hpp">
+      <Filter>Header Files\game_engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Time.cpp">
@@ -406,6 +415,12 @@
     </ClCompile>
     <ClCompile Include="GeneralHelper.cpp">
       <Filter>Source Files\systems\rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Pathfinding.cpp">
+      <Filter>Source Files\components\pathfinding</Filter>
+    </ClCompile>
+    <ClCompile Include="Component.cpp">
+      <Filter>Source Files\components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

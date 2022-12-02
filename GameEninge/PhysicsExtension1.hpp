@@ -41,10 +41,16 @@ namespace spic::extensions {
 		void RegisterListener(ICollisionListener* listener) const override;
 
 		/**
-		* @brief Adds force to an entity
+		* @brief Adds force to an entity with name
 		* @spicapi
 		*/
-		void AddForce(std::shared_ptr<spic::GameObject> entity, const spic::Point& forceDirection) override;
+		void AddForce(const std::string& entityName, const spic::Point& forceDirection) override;
+
+		/**
+		* @brief Gets linear velocity of entity with name
+		* @spicapi
+		*/
+		Point GetLinearVelocity(const std::string& entityName);
 	private:
         std::unique_ptr<PhysicsExtensionImpl1> physicsImpl;
 	};

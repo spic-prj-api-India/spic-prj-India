@@ -39,7 +39,7 @@ namespace spic {
 		template <typename T>
 		void AddExtension(std::shared_ptr<T> extension)
 		{
-			_extensions[spic::internal::GetTypeName<T>()] = extension;
+			_extensions[spic::GetTypeName<T>()] = extension;
 		}
 
 		/**
@@ -49,7 +49,7 @@ namespace spic {
 		template <typename T>
 		std::weak_ptr<T> GetExtension()
 		{
-			return std::dynamic_pointer_cast<T>(_extensions[spic::internal::GetTypeName<T>()]);
+			return std::dynamic_pointer_cast<T>(_extensions[spic::GetTypeName<T>()]);
 		}
 
 		/**
@@ -76,7 +76,7 @@ namespace spic {
 		template <typename T>
 		bool HasExtension()
 		{
-			return _extensions.count(spic::internal::GetTypeName<T>());
+			return _extensions.count(spic::GetTypeName<T>());
 		}
 
 		/**
@@ -86,7 +86,7 @@ namespace spic {
 		template <typename T>
 		void RemoveExtension()
 		{
-			std::string typeName = spic::internal::GetTypeName<T>();
+			std::string typeName = spic::GetTypeName<T>();
 			std::shared_ptr<T> deletePtr = std::dynamic_pointer_cast<T>(_extensions[typeName]);
 			_extensions.erase(typeName);
 			do {

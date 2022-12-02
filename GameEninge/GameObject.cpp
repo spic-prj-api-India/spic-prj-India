@@ -50,10 +50,10 @@ namespace spic {
 
 	void GameObject::Destroy(Component* obj)
 	{
-		std::string typeName = spic::internal::GetTypeName(obj);
+		std::string typeName = spic::GetTypeName(obj);
 		for (const auto& gameObject : spic::internal::EntityManager::GetInstance()->GetEntities()) {
 			gameObject->components.erase(std::remove_if(gameObject->components.begin(), gameObject->components.end(), [typeName](std::shared_ptr<Component> component) {
-				return typeName == spic::internal::GetTypeName(component);
+				return typeName == spic::GetTypeName(component);
 				}));
 		}
 	}

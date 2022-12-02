@@ -6,6 +6,7 @@
 #include "GameEngine.hpp"
 #include "EntityManager.hpp"
 #include "Input.hpp"
+#include "GameEngineInfo.hpp"
 
 namespace spic {
 	GameEngine* GameEngine::pinstance_{ nullptr };
@@ -61,8 +62,7 @@ namespace spic {
 
 	void GameEngine::Start()
 	{
-		const int FPS = 60;
-		const int frameDelay = 1000 / FPS;
+		const float frameDelay = 1000 / FPS;
 
 		Uint32 frameStart;
 		int frameTime;
@@ -76,7 +76,7 @@ namespace spic {
 			frameTime = SDL_GetTicks() - frameStart;
 			if (frameDelay > frameTime)
 			{
-				SDL_Delay(frameDelay - frameTime);
+				SDL_Delay(static_cast<Uint32>(frameDelay - frameTime));
 			}
 		}
 	}

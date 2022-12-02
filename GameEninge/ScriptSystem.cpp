@@ -10,7 +10,6 @@ namespace spic::internal::systems {
 	{
 		for (auto& entity : entities) {
 			for(const auto& script : entity->GetComponents<spic::BehaviourScript>()){
-				script->GameObject(entity);
 				script->OnStart();
 			}
 		}

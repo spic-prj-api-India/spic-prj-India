@@ -184,6 +184,7 @@
     <ClInclude Include="GameEngine.hpp" />
     <ClInclude Include="GameEngineAPI.hpp" />
     <ClInclude Include="EntityManager.hpp" />
+    <ClInclude Include="GameEngineInfo.hpp" />
     <ClInclude Include="GameObject.hpp" />
     <ClInclude Include="GeneralHelper.hpp" />
     <ClInclude Include="ICollisionListener.hpp" />
@@ -195,6 +196,7 @@
     <ClInclude Include="InputManager.hpp" />
     <ClInclude Include="InputSystem.hpp" />
     <ClInclude Include="IPhysicsExtension.hpp" />
+    <ClInclude Include="Pathfinding.hpp" />
     <ClInclude Include="PhysicsExtension1.hpp" />
     <ClInclude Include="PhysicsInfo.hpp" />
     <ClInclude Include="PhysicsSystem.hpp" />
@@ -224,8 +226,10 @@
     <ClCompile Include="Chunk.cpp" />
     <ClCompile Include="BehaviourScript.cpp" />
     <ClCompile Include="Box2DCollisionListener.cpp" />
+    <ClCompile Include="Component.cpp" />
     <ClCompile Include="GeneralHelper.cpp" />
     <ClCompile Include="IPhysicsExtension.cpp" />
+    <ClCompile Include="Pathfinding.cpp" />
     <ClCompile Include="PhysicsExtension1.cpp" />
     <ClCompile Include="BoxCollider.cpp" />
     <ClCompile Include="CastException.cpp" />

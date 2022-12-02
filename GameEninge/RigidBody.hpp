@@ -41,6 +41,13 @@ namespace spic {
             float GravityScale() const;
 
             /**
+             * @brief Get rigid body's velocity
+             * @return The current velocity
+             * @spicapi
+             */
+            Point Velocity() const;
+
+            /**
              * @brief Get rigid body's body type
              * @return The current body type
              * @spicapi
@@ -74,7 +81,7 @@ namespace spic {
              *        and magnitude of the force to be applied.
              * @spicapi
              */
-            void AddForce(std::shared_ptr<spic::GameObject> entity, const Point& forceDirection);
+            void AddForce(const Point& forceDirection);
         private:
             float mass;
             float gravityScale;

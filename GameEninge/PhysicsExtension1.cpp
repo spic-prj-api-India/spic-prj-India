@@ -91,13 +91,17 @@ namespace spic::extensions {
 		* @brief Adds force to an entity
 		* @spicapi
 		*/
-		void AddForce(std::shared_ptr<spic::GameObject> entity, const spic::Point& forceDirection)
+		void AddForce(const std::string& name, const spic::Point& forceDirection)
 		{
-			b2Body* body = bodies[entity->Name()];
+			b2Body* body = bodies[name];
+			const b2Vec2 force = { forceDirection.x, forceDirection.y };
 
-			b2Vec2 velocity;
-			velocity.Set(forceDirection.x, forceDirection.y);
-			body->SetLinearVelocity(velocity);
+			body->ApplyForce(force, body->GetWorldCenter(), true);
+		}
+
+		Point GetLinearVelocity(const std::string& name) {
+			const b2Vec2 linearVelocity = bodies[name]->GetLinearVelocity();
+			return { linearVelocity.x, linearVelocity.y };
 		}
 	private:
 		/**
@@ -220,9 +224,7 @@ namespace spic::extensions {
 			}
 			if (updated) {
 				body->SetTransform(b2Position, b2Rotation);
-				b2Vec2 velocity;
-				velocity.Set(0, rigidBody->GravityScale());
-				body->SetLinearVelocity(velocity);
+				body->SetGravityScale(rigidBody->GravityScale());
 			}
 		}
 	};
@@ -240,7 +242,7 @@ namespace spic::extensions {
 		: physicsImpl(new PhysicsExtensionImpl1(*rhs.physicsImpl))
 	{}
 
-	PhysicsExtension1& PhysicsExtension1::operator=(const PhysicsExtension1& rhs) 
+	PhysicsExtension1& PhysicsExtension1::operator=(const PhysicsExtension1& rhs)
 	{
 		if (this != &rhs)
 			physicsImpl.reset(new PhysicsExtensionImpl1(*rhs.physicsImpl));
@@ -262,8 +264,13 @@ namespace spic::extensions {
 		physicsImpl->RegisterListener(listener);
 	}
 
-	void spic::extensions::PhysicsExtension1::AddForce(std::shared_ptr<spic::GameObject> entity, const spic::Point& forceDirection)
+	void spic::extensions::PhysicsExtension1::AddForce(const std::string& entityName, const spic::Point& forceDirection)
 	{
-		physicsImpl->AddForce(entity, forceDirection);
+		physicsImpl->AddForce(entityName, forceDirection);
+	}
+
+	Point spic::extensions::PhysicsExtension1::GetLinearVelocity(const std::string& entityName)
+	{
+		return physicsImpl->GetLinearVelocity(entityName);
 	}
 }

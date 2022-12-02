@@ -44,9 +44,9 @@ std::array<Point, 4> spic::GeneralHelper::GetPoints(const Point& orgin, const fl
 
 bool spic::GeneralHelper::CalculateWithinSquare(const Point& point, std::array<Point, 4>& square)
 {
-	auto am = (square[0] * point);
-	auto ab = (square[0] * square[1]);
-	auto ad = (square[0] * square[4]);
+	auto am = square[0].DotProduct(point);
+	auto ab = square[0].DotProduct(square[1]);
+	auto ad = square[0].DotProduct(square[4]);
 
 	auto calc1 = am * ab;
 	auto calc2 = am * ad;

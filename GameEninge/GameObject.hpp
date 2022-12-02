@@ -9,12 +9,15 @@
 #include <memory>
 #include "Collider.hpp"
 #include "Sprite.hpp"
+#include "TypeHelper.hpp"
 
 namespace spic {
+	class Component;
+
 	/**
 	 * @brief Any object which should be represented on screen.
 	 */
-	class GameObject : public std::enable_shared_from_this<GameObject> {
+	class GameObject {
 	public:
 		GameObject();
 		GameObject(const GameObject& other) = default;
@@ -375,6 +378,7 @@ namespace spic {
 	template<class T>
 	void GameObject::AddComponent(std::shared_ptr<T> component)
 	{
+		spic::CastSharedPtrToType<Component>(component)->GameObject(this);
 		components.emplace_back(component);
 	}
 
