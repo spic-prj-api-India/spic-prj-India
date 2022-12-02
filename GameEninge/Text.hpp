@@ -38,7 +38,7 @@ namespace spic {
              */
             Text(const float width, const float height
                 , const std::string& text = ""
-                , const std::string& font = "assets/fonts/07558_CenturyGothic.ttf"
+                , const std::string& font = ""
                 , const int size = 20
                 , const Alignment alignment = Alignment::CENTER
                 , const Color& color = Color::black());

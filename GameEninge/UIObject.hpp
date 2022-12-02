@@ -16,7 +16,6 @@ namespace spic {
         public:
             UIObject();
             UIObject(const float newWidth, const float newHeight);
-            virtual ~UIObject() = default;
 
             /**
              * @brief Gets width of UIObject.

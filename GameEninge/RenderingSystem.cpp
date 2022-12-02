@@ -19,7 +19,7 @@ namespace spic::internal::systems {
 		spic::internal::Rendering::Clean();
 		spic::internal::Rendering::UpdateCamera(&currentScene.Camera());
 		auto filteredEntities = GetFilteredEntities(entities);
-		spic::TileMap* tileMap = currentScene.TileMap();
+		const spic::TileMap* tileMap = currentScene.TileMap();
 		if (tileMap != nullptr)
 			tileMap->Render();
 		for (const auto& entity : filteredEntities[0]) {

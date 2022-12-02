@@ -58,11 +58,12 @@ namespace spic::internal {
         
         /**
          * @brief Draws a animator as an ui object
+         * @param gameObject GameObject of animator
          * @param position Used for debugging
          * @param isUi The coridatnes are for the UI 
          * @param animator The animator to Draw
         */
-        static void DrawAnimator(GameObject* gameObject, const Transform* position, const bool isUi, Animator* animator);
+        static void DrawAnimator(GameObject* gameObject, Animator* animator, const Transform* position, const bool isUi);
         
         /**
          * @brief Draws only the text of the Text object

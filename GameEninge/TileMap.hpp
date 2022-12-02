@@ -14,8 +14,8 @@ namespace spic
 		void AddTileLayer(const int layer, const std::unique_ptr<TileLayer> tileLayer);
 		const TileLayer& GetLayer(int index);
 		void AddCollisionEntity(const std::shared_ptr<spic::GameObject> entity);
-		std::vector<std::shared_ptr<spic::GameObject>>  CollisionEntities();
-		void Render();
+		std::vector<std::shared_ptr<spic::GameObject>>  CollisionEntities() const;
+		void Render() const;
 	private:
 		std::map<int, std::unique_ptr<TileLayer>> tileLayers;
 		std::vector<std::shared_ptr<spic::GameObject>> collisionEntities;

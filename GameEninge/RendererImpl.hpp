@@ -251,10 +251,10 @@ namespace spic::internal::rendering {
 		void SetBackgroundColor();
 
 		/**
-		 * @brief Draws an line in window space
-		 * @param start The start point of an line
-		 * @param end The end point of an line
-		 * @param colour The colour of the line
+		 * @brief Draws an rectangle in window space
+		 * @param rect The x, y, width, height of rectangle
+		 * @param angle The angle of the square
+		 * @param colour The colour of the square
 		*/
 		void DrawRect(const SDL_FRect* rect, const double angle, const Color* colour);
 
@@ -283,11 +283,12 @@ namespace spic::internal::rendering {
 
 		/**
 		 * @brief Draws animation
+		 * @param gameObject GameObject of animator
 		 * @param animator Defines if the object has to be drawn on world space or window space. Is false by default.
 		 * @param isUiObject
-		 * @param position Contains position and rotation
+		 * @param transform Contains position and rotation
 		*/
-		void DrawAnimator(GameObject* gameObject, Animator* animator, const bool isUiObject, const Transform* position);
+		void DrawAnimator(GameObject* gameObject, Animator* animator, const Transform* transform, const bool isUiObject);
 
 		/**
 		 * @brief Draws text on window space

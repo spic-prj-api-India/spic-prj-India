@@ -1,4 +1,5 @@
 #include "Text.hpp"
+#include "StringHelper.hpp"
 
 spic::Text::Text()
 	: UIObject()
@@ -23,6 +24,9 @@ spic::Text::Text(const float width, const float height
 	, alignment{ alignment }
 	, color{ color }
 {
+	if (font.empty()) {
+		this->font = StringHelper::GetBasePath() + "\\assets\\fonts\\07558_CenturyGothic.ttf";
+	}
 }
 
 const std::string spic::Text::_Text()

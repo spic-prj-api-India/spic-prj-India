@@ -152,11 +152,11 @@ void RendererImpl::DrawAnimators(GameObject* gameObject, const bool isUiObject)
 
 	for (auto& animator : _animator)
 	{
-		DrawAnimator(gameObject, animator.get(), isUiObject, gameObject->Transform().get());
+		DrawAnimator(gameObject, animator.get(), gameObject->Transform().get(), isUiObject);
 	}
 }
 
-void RendererImpl::DrawAnimator(GameObject* gameObject, Animator* animator, const bool isUIObject, const Transform* transform)
+void RendererImpl::DrawAnimator(GameObject* gameObject, Animator* animator, const Transform* transform, const bool isUIObject)
 {
 	auto sprites = animator->Sprites();
 	// sort sprites

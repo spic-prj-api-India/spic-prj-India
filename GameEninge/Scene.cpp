@@ -24,7 +24,7 @@ namespace spic
 		tileMap = mapParser->Parse(newTileMapPath, newCollisionLayerIndex);
 	}
 
-	TileMap* Scene::TileMap() const
+	const TileMap* Scene::TileMap() const
 	{
 		return tileMap.get();
 	}
