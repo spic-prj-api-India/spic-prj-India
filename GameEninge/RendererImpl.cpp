@@ -193,7 +193,7 @@ void RendererImpl::DrawAnimator(GameObject* gameObject, Animator* animator, cons
 	}
 }
 
-void RendererImpl::DrawUISprite(const int width, const int height, const Sprite* sprite, const Transform* transform)
+void RendererImpl::DrawUISprite(const float width, const float height, const Sprite* sprite, const Transform* transform)
 {
 	if (transform == nullptr)
 		return;

@@ -115,6 +115,12 @@ namespace spic::internal::rendering {
 
 	private:
 		/**
+		 * @brief Sets the backgroundColour
+		 * @details should be called first after clean
+		*/
+		void SetBackgroundColor();
+
+		/**
 		 * @brief Draws all static sprites of a gameObject
 		 * @param gameObject The gameobject
 		 * @param isUiObject If it is an Uiobject
@@ -129,7 +135,7 @@ namespace spic::internal::rendering {
 		 * @param dstRect Coordinates of sprite in texture
 		 * @param sourceRect Coordinates of sprite in window
 		*/
-		void DrawSprite(const Sprite* sprite, const Transform* transform, SDL_Texture* texture, 
+		void DrawSprite(const Sprite* sprite, const Transform* transform, SDL_Texture* texture,
 			SDL_FRect* dstRect, SDL_Rect* sourceRect = NULL);
 
 		/**
@@ -168,6 +174,22 @@ namespace spic::internal::rendering {
 		 * @param isUiObject
 		*/
 		void DrawAnimators(GameObject* gameObject, const bool isUiObject);
+
+		/**
+		 * @brief Draws animation
+		 * @param gameObject GameObject of animator
+		 * @param animator Defines if the object has to be drawn on world space or window space. Is false by default.
+		 * @param isUiObject
+		 * @param transform Contains position and rotation
+		*/
+		void DrawAnimator(GameObject* gameObject, Animator* animator, const Transform* transform, const bool isUiObject);
+
+		/**
+		 * @brief Draws text on window space
+		 * @details Text is always un UI object which means its bound to windowSpace
+		 * @param text The text object
+		*/
+		void DrawText(Text* text);
 
 		/**
 		 * @brief Wraps text in string depending on font and size of font
@@ -245,12 +267,6 @@ namespace spic::internal::rendering {
 		void UpdateCamera(Camera* camera);
 
 		/**
-		 * @brief Sets the backgroundColour
-		 * @details should be called first after clean
-		*/
-		void SetBackgroundColor();
-
-		/**
 		 * @brief Draws an rectangle in window space
 		 * @param rect The x, y, width, height of rectangle
 		 * @param angle The angle of the square
@@ -268,11 +284,12 @@ namespace spic::internal::rendering {
 
 		/**
 		 * @brief Draws an ui sprite
-		 * @param uiObject The UIObject to draw
+		 * @param width The width of the ui object
+		 * @param height The height of the ui object
 		 * @param sprite The sprite to draw
 		 * @param transform Contains position and rotation
 		*/
-		void DrawUISprite(const int width, const int height, const Sprite* sprite, const Transform* transform);
+		void DrawUISprite(const float width, const float height, const Sprite* sprite, const Transform* transform);
 
 		/**
 		 * @brief Draws an sprite
@@ -280,22 +297,6 @@ namespace spic::internal::rendering {
 		 * @param transform Contains position and rotation
 		*/
 		void DrawSprite(const Sprite* sprite, const Transform* transform);
-
-		/**
-		 * @brief Draws animation
-		 * @param gameObject GameObject of animator
-		 * @param animator Defines if the object has to be drawn on world space or window space. Is false by default.
-		 * @param isUiObject
-		 * @param transform Contains position and rotation
-		*/
-		void DrawAnimator(GameObject* gameObject, Animator* animator, const Transform* transform, const bool isUiObject);
-
-		/**
-		 * @brief Draws text on window space
-		 * @details Text is always un UI object which means its bound to windowSpace
-		 * @param text The text object
-		*/
-		void DrawText(Text* text);
 
 		/**
 		 * @brief Cleans the render class before drawing it.

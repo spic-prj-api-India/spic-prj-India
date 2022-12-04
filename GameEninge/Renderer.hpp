@@ -8,7 +8,6 @@
 #include "WindowValues.hpp"
 
 namespace spic::internal {
-
     struct Rendering
     {        
         /**
@@ -36,11 +35,6 @@ namespace spic::internal {
         static void UpdateCamera(Camera* camera);
 
         /**
-         * @brief Sets the background color to internal one (needs to be called every frame)
-        */
-        static void SetBackgroundColor();
-
-        /**
          * @brief Draws a line from start to end
          * @param start Start point of the line
          * @param end End point of the line
@@ -51,26 +45,10 @@ namespace spic::internal {
         /**
          * @brief Draws a sprite as an ui object
          * @details Used for debugging
-         * @param position The coridatnes are for the UI
+         * @param position The coordinates of the UI
          * @param sprite The sprite to Draw
         */
         static void DrawSprite(const Transform* position, Sprite* sprite);
-        
-        /**
-         * @brief Draws a animator as an ui object
-         * @param gameObject GameObject of animator
-         * @param position Used for debugging
-         * @param isUi The coridatnes are for the UI 
-         * @param animator The animator to Draw
-        */
-        static void DrawAnimator(GameObject* gameObject, Animator* animator, const Transform* position, const bool isUi);
-        
-        /**
-         * @brief Draws only the text of the Text object
-         * @param text Text object needs to have a valid Transform
-         * @param isUi 
-        */
-        static void DrawText(Text* text, const bool isUi);
         
         /**
          * @brief Cleans the frame
