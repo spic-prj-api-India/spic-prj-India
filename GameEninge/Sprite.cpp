@@ -1,39 +1,39 @@
 #include "Sprite.hpp"
 
 spic::Sprite::Sprite()
-	: sprite{ ""}
-	, color{ spic::Color::white()}
+	: sprite{ "" }
+	, color{ spic::Color::white() }
 	, flipX{ false }
 	, flipY{ false }
-	, sortingLayer{ -1 }
-	, orderInLayer{ -1 }
+	, sortingLayer{ 0 }
+	, orderInLayer{ 0 }
 	, x{ 0 }
 	, y{ 0 }
-	, height{ 0 }
 	, width{ 0 }
+	, height{ 0 }
 {
 }
 
 spic::Sprite::Sprite(const std::string& sprite
+	, const int sortingLayer
+	, const int orderInLayer
 	, const spic::Color& color
 	, const bool flipX
 	, const bool flipY
-	, const int sortingLayer
-	, const int orderInLayer
 	, const int x
 	, const int y
-	, const int height
-	, const int width)
-	: sprite{sprite}
-	, color{color}
-	, flipX{flipX}
-	, flipY{flipY}
+	, const int width
+	, const int height)
+	: sprite{ sprite }
+	, color{ color }
+	, flipX{ flipX }
+	, flipY{ flipY }
 	, sortingLayer{ sortingLayer }
 	, orderInLayer{ orderInLayer }
-	, x{x}
-	, y{y}
-	, height{ height }
+	, x{ x }
+	, y{ y }
 	, width{ width }
+	, height{ height }
 {
 }
 
@@ -74,7 +74,7 @@ const bool spic::Sprite::FlipY() const
 
 void spic::Sprite::FlipY(const bool flipy)
 {
-	return void();
+	flipY = flipy;
 }
 
 const int spic::Sprite::SortingLayer() const
@@ -102,9 +102,9 @@ const int spic::Sprite::X() const
 	return this->x;
 }
 
-void spic::Sprite::X(int x)
+const void spic::Sprite::X(int newX)
 {
-	this->x = x;
+	this->x = newX;
 }
 
 const int spic::Sprite::Y() const
@@ -112,19 +112,19 @@ const int spic::Sprite::Y() const
 	return this->y;
 }
 
-void spic::Sprite::Y(int y)
+const void spic::Sprite::Y(int newY)
 {
-	this->y = y;
+	this->y = newY;
 }
 
 const int spic::Sprite::Height() const
 {
-	return height;
+	return this->height;
 }
 
-void spic::Sprite::Height(int height)
+const void spic::Sprite::Height(int newHeight)
 {
-	this->height = height;
+	this->height = newHeight;
 }
 
 const int spic::Sprite::Width() const
@@ -132,7 +132,7 @@ const int spic::Sprite::Width() const
 	return this->width;
 }
 
-void spic::Sprite::Width(int width)
+const void spic::Sprite::Width(int newWidth)
 {
-	this->width = width;
+	this->width = newWidth;
 }

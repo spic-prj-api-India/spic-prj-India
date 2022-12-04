@@ -180,9 +180,9 @@
     <ClInclude Include="Box2DCollisionListener.hpp" />
     <ClInclude Include="Color.hpp" />
     <ClInclude Include="Component.hpp" />
+    <ClInclude Include="ContainerHelper.hpp" />
     <ClInclude Include="Debug.hpp" />
     <ClInclude Include="GameEngine.hpp" />
-    <ClInclude Include="GameEngineAPI.hpp" />
     <ClInclude Include="EntityManager.hpp" />
     <ClInclude Include="GameEngineInfo.hpp" />
     <ClInclude Include="GameObject.hpp" />
@@ -198,7 +198,6 @@
     <ClInclude Include="IPhysicsExtension.hpp" />
     <ClInclude Include="Pathfinding.hpp" />
     <ClInclude Include="PhysicsExtension1.hpp" />
-    <ClInclude Include="PhysicsInfo.hpp" />
     <ClInclude Include="PhysicsSystem.hpp" />
     <ClInclude Include="ISystem.hpp" />
     <ClInclude Include="MapParser.hpp" />
@@ -212,10 +211,14 @@
     <ClInclude Include="Sprite.hpp" />
     <ClInclude Include="Text.hpp" />
     <ClInclude Include="TileLayer.hpp" />
+    <ClInclude Include="TileMap.hpp" />
+    <ClInclude Include="TileSet.hpp" />
     <ClInclude Include="Time.hpp" />
     <ClInclude Include="Transform.hpp" />
     <ClInclude Include="TypeHelper.hpp" />
     <ClInclude Include="UIObject.hpp" />
+    <ClInclude Include="RendererImpl.hpp" />
+    <ClInclude Include="PhysicsValues.hpp" />
     <ClInclude Include="WindowValues.hpp" />
   </ItemGroup>
   <ItemGroup>
@@ -229,6 +232,7 @@
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="GeneralHelper.cpp" />
     <ClCompile Include="IPhysicsExtension.cpp" />
+    <ClCompile Include="MapParser.cpp" />
     <ClCompile Include="Pathfinding.cpp" />
     <ClCompile Include="PhysicsExtension1.cpp" />
     <ClCompile Include="BoxCollider.cpp" />
@@ -240,8 +244,7 @@
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Text.cpp" />
     <ClCompile Include="UIObject.cpp" />
-    <ClCompile Include="RendererImp.cpp" />
-    <ClCompile Include="RendererImpl.hpp" />
+    <ClCompile Include="RendererImpl.cpp" />
     <ClCompile Include="EntityManager.cpp" />
     <ClCompile Include="RenderingSystem.cpp" />
     <ClCompile Include="Sample.cpp" />
@@ -255,6 +258,8 @@
     <ClCompile Include="RigidBody.cpp" />
     <ClCompile Include="ScriptSystem.cpp" />
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="TileLayer.cpp" />
+    <ClCompile Include="TileMap.cpp" />
     <ClCompile Include="Time.cpp" />
     <ClCompile Include="GameObject.cpp" />
   </ItemGroup>

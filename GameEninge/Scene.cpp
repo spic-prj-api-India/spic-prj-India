@@ -1,9 +1,21 @@
 #include "Scene.hpp"
+#include "MapParser.hpp"
 
 namespace spic
 {
-	Scene::Scene() : tileMapPath{ "" }, setting{ UpdateSetting::ALWAYS }
+	Scene::Scene() : setting{ UpdateSetting::ALWAYS }
 	{}
+
+	Scene::Scene(std::unique_ptr<spic::Camera> newCamera, spic::UpdateSetting setting) :
+		setting{ setting }
+	{
+		if (newCamera != nullptr) {
+			camera = std::move(newCamera);
+			return;
+		}
+		camera = std::make_unique<spic::Camera>();
+		camera->Transform(std::make_shared<spic::Transform>(spic::Point(0.0, 0.0), 0.0f, 1.0f));
+	}
 
 	std::vector<std::shared_ptr<GameObject>> Scene::Contents() const
 	{
@@ -15,17 +27,18 @@ namespace spic
 		contents.emplace_back(content);
 	}
 
-	std::string Scene::TileMapPath() const
+	void Scene::LoadTileMap(const std::string& newTileMapPath, const int newCollisionLayerIndex)
 	{
-		return tileMapPath;
+		std::unique_ptr<spic::internal::MapParser> mapParser = std::make_unique<spic::internal::MapParser>();
+		tileMap = mapParser->Parse(newTileMapPath, newCollisionLayerIndex);
 	}
 
-	void Scene::TileMapPath(const std::string& newTileMapPath)
+	TileMap* Scene::TileMap() const
 	{
-		tileMapPath = newTileMapPath;
+		return tileMap.get();
 	}
 
-	const spic::Camera& Scene::Camera() const
+	spic::Camera& Scene::Camera() const
 	{
 		return *camera;
 	}

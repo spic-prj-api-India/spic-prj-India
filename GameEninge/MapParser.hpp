@@ -4,93 +4,66 @@
 #include <vector>
 #include <string>
 #include <tinyxml.h>
-#include "TileLayer.hpp"
+#include "TileMap.hpp"
 
-namespace spic
+namespace spic::internal
 {
-
     class MapParser
     {
-
     public:
-        MapParser() {}
+        MapParser();
 
-        virtual ~MapParser()
-        {
-            m_Layers.clear();
-            m_Layers.shrink_to_fit();
-        }
-
-        void Render()
-        {
-            for (auto layer : m_Layers) layer->Render();
-        }
-
-        void Update(float delta)
-        {
-            for (auto layer : m_Layers) layer->Update(delta);
-        }
-
-        void Parse(const std::string filename)
-        {
-            TiXmlDocument xml;
-            xml.LoadFile(filename);
-            if (xml.Error()) {
-                std::cout << xml.ErrorDesc() << std::endl;
-                return;
-            }
-
-            TiXmlElement* root = xml.RootElement();
-            root->Attribute("width", &m_NbrCol);
-            root->Attribute("height", &m_NbrRow);
-            root->Attribute("tilewidth", &m_TileSize);
-
-            // Parse Tilesets
-            std::vector<Tileset> tilesets;
-            for (TiXmlElement* element = root->FirstChildElement(); element != nullptr; element = element->NextSiblingElement())
-            {
-                if (element->Value() == std::string("tileset")) {
-                    tilesets.push_back(ParseTileset(element));
-                    std::cout << element->Attribute("name") << " <-- Parsed!" << std::endl;
-                }
-            }
-
-            // Parse Layers
-            for (TiXmlElement* element = root->FirstChildElement(); element != nullptr; element = element->NextSiblingElement())
-            {
-                if (element->Value() == std::string("layer")) {
-                    TileLayer* layer = new TileLayer(m_TileSize, tilesets);
-                    layer->ParseTileMatrix(element, m_NbrRow, m_NbrCol);
-                    m_Layers.push_back(layer);
-                    std::cout << element->Attribute("name") << " <-- Parsed!" << std::endl;
-                }
-            }
-
-            std::cout << filename << " <-- Parsed!\n" << std::endl;
-        }
-
-        TileLayer* GetLayer(int index) {
-            return m_Layers[index];
-        }
-
+        /**
+         * @brief Parse tmx file to Tilemap.
+         * @param fileName File name of tmx file.
+         * @param collisionLayerIndex Index of layer where collision tiles are.
+         * @spicapi
+         */
+        std::unique_ptr<spic::TileMap> Parse(const std::string fileName, const int collisionLayerIndex);
     private:
-        inline Tileset ParseTileset(TiXmlElement* element)
-        {
-            Tileset tileset;
-            tileset.textureId = element->Attribute("name");
-            element->Attribute("firstgid", &tileset.firstId);
-            element->Attribute("tilecount", &tileset.tileCount);
-            tileset.lastId = (tileset.firstId + tileset.tileCount) - 1;
-            element->Attribute("tilewidth", &tileset.tileSize);
+        /**
+         * @brief Parse tile layer and add layer to tile map.
+         * @param tileLayerData Tile layer data from tmx file.
+         * @param tilesets Converted tilesets from tmx file.
+         * @return layer index.
+         * @spicapi
+         */
+        int ParseLayer(const TiXmlElement& tileLayerData, const std::vector<spic::TileSet>& tilesets);
 
-            element->Attribute("columns", &tileset.columnCount);
-            tileset.rowCount = static_cast<int>(tileset.tileCount / tileset.columnCount);
-            return tileset;
-        }
+        /**
+         * @brief Parse tile matrix.
+         * @param tileLayerData Tile layer data from tmx file.
+         * @return Matrix
+         * @spicapi
+         */
+        spic::Matrix ParseMatrix(const TiXmlElement& tileLayerData);
 
+        /**
+         * @brief Parse tile set.
+         * @param tileSetData Tile set data from tmx file.
+         * @return TileSet
+         * @spicapi
+         */
+        spic::TileSet ParseTileSet(const TiXmlElement& tileSetData);
+
+        /**
+         * @brief Creates collision entities with layer and tilesets.
+         * @param collisionLayerIndex Collision layer index.
+         * @param tilesets Tilesets.
+         * @spicapi
+         */
+        void CreateCollisionEntities(const int collisionLayerIndex, const std::vector<TileSet>& tilesets);
+
+        /**
+         * @brief Creates entity with tile data and adds to tile map.
+         * @param collisionLayerIndex Collision layer index.
+         * @param tilesets Tilesets.
+         * @spicapi
+         */
+        void CreateEntity(const float x, const float y, const std::string& name, int tileSize) const;
     private:
-        std::vector<TileLayer*> m_Layers;
-        int m_TileSize, m_NbrCol, m_NbrRow;
+        int tileSize, rowCount, colCount;
+        std::unique_ptr<spic::TileMap> tileMap;
     };
 }
 

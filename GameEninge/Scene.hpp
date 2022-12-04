@@ -1,12 +1,13 @@
 #ifndef SCENE_H_
 #define SCENE_H_
 
+#include <string>
 #include "GameObject.hpp"
 #include "Camera.hpp"
-#include <string>
+#include "TileMap.hpp"
 
 namespace spic {
-    enum UpdateSetting { ALWAYS, CAMERA_VIEW };
+    enum class UpdateSetting { ALWAYS, CAMERA_VIEW };
 
     /**
      * @brief Class representing a scene which can be rendered by the Camera.
@@ -14,6 +15,7 @@ namespace spic {
     class Scene {
         public:
             Scene();
+            Scene(std::unique_ptr<Camera> newCamera, UpdateSetting setting = UpdateSetting::ALWAYS);
 
             /**
              * @brief The scene's contents
@@ -31,26 +33,28 @@ namespace spic {
              */
             void AddContent(std::shared_ptr<GameObject> content);
 
-            /**
-             * @brief The scene's tile map path
-             * @return The current tile map path
-             * @spicapi
-             */
-            std::string TileMapPath() const;
 
             /**
-             * @brief Set tile map path
+             * @brief Load tile map
+             * @param newCollisionLayerIndex The desired collision layer index
              * @param newTileMapPath The desired tile map path
              * @spicapi
              */
-            void TileMapPath(const std::string& newTileMapPath);
+            void LoadTileMap(const std::string& newTileMapPath, const int newCollisionLayerIndex);
+
+            /**
+             * @brief The scene's tile map
+             * @return The current tile map
+             * @spicapi
+             */
+            TileMap* TileMap() const;
 
             /**
              * @brief The scene's camera
              * @return The current camera
              * @spicapi
              */
-            const spic::Camera& Camera() const;
+            spic::Camera& Camera() const;
 
             /**
              * @brief Set camera
@@ -78,7 +82,7 @@ namespace spic {
         * @spicapi
         */
         std::vector<std::shared_ptr<GameObject>> contents;
-        std::string tileMapPath;
+        std::unique_ptr<spic::TileMap> tileMap;
         std::unique_ptr<spic::Camera> camera;
         spic::UpdateSetting setting;
     };

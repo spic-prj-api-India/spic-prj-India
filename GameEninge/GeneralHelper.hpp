@@ -107,10 +107,10 @@ namespace spic::GeneralHelper
 	 * @param DEG 
 	 * @return 
 	*/
-	template <class T>
-	double DEG2RAD(T DEG)
+	template <typename T, typename R>
+	T DEG2RAD(R DEG)
 	{
-		return DEG * M_PI / 180.0;
+		return static_cast<T>(DEG * M_PI / 180.0);
 	}
 
 	/**
@@ -119,10 +119,10 @@ namespace spic::GeneralHelper
 	 * @param RAD 
 	 * @return 
 	*/
-	template <class T>
-	double RAD2DEG(T RAD) 
+	template <typename T, typename R>
+	T RAD2DEG(R RAD)
 	{
-		return RAD * 180.0 / M_PI;
+		return static_cast<T>(RAD * 180.0 / M_PI);
 	}
 }
 #endif
