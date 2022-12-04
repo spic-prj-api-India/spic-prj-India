@@ -272,7 +272,7 @@ namespace spic::internal::rendering {
 		 * @param sprite The sprite to draw
 		 * @param transform Contains position and rotation
 		*/
-		void DrawUISprite(UIObject* uiObject, const Sprite* sprite, const Transform* transform);
+		void DrawUISprite(const int width, const int height, const Sprite* sprite, const Transform* transform);
 
 		/**
 		 * @brief Draws an sprite

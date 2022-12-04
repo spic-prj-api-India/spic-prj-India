@@ -136,10 +136,13 @@ void RendererImpl::DrawSprites(GameObject* gameObject, const bool isUIObject)
 	const auto transform = gameObject->Transform();
 	auto _sprites = gameObject->GetComponents<Sprite>();
 	std::sort(_sprites.begin(), _sprites.end(), spic::GeneralHelper::SpriteSorting);
+	UIObject* uiObject = nullptr;
+	if (isUIObject)
+		uiObject = TypeHelper::CastPtrToType<UIObject>(gameObject);
 	for (auto& sprite : _sprites)
 	{
 		if (isUIObject)
-			DrawUISprite(TypeHelper::CastPtrToType<UIObject>(gameObject), sprite.get(), transform.get());
+			DrawUISprite(uiObject->Width(), uiObject->Height(), sprite.get(), transform.get());
 		else
 			DrawSprite(sprite.get(), transform.get());
 	}
@@ -168,26 +171,29 @@ void RendererImpl::DrawAnimator(GameObject* gameObject, Animator* animator, cons
 
 	const auto frame = static_cast<uint64_t>(SDL_GetTicks() / (1000 / animator->Fps() * Time::TimeScale())) % framesAmount;
 
+	UIObject* uiObject = nullptr;
+	if (isUIObject)
+		uiObject = TypeHelper::CastPtrToType<UIObject>(gameObject);
 	for (auto& sprite : sprites)
 	{
 		if (sprite->OrderInLayer() == frame && !animator->IsFrozen())
 		{
 			//animator->Index(frame);
 			if (isUIObject)
-				DrawUISprite(TypeHelper::CastPtrToType<UIObject>(gameObject), sprite.get(), transform);
+				DrawUISprite(uiObject->Width(), uiObject->Height(), sprite.get(), transform);
 			else
 				DrawSprite(sprite.get(), transform);
 		}
 		else if (sprite->OrderInLayer() == animator->Index() && animator->IsFrozen()) {
 			if (isUIObject)
-				DrawUISprite(TypeHelper::CastPtrToType<UIObject>(gameObject), sprite.get(), transform);
+				DrawUISprite(uiObject->Width(), uiObject->Height(), sprite.get(), transform);
 			else
 				DrawSprite(sprite.get(), transform);
 		}
 	}
 }
 
-void RendererImpl::DrawUISprite(UIObject* uiObject, const Sprite* sprite, const Transform* transform)
+void RendererImpl::DrawUISprite(const int width, const int height, const Sprite* sprite, const Transform* transform)
 {
 	if (transform == nullptr)
 		return;
@@ -197,8 +203,8 @@ void RendererImpl::DrawUISprite(UIObject* uiObject, const Sprite* sprite, const 
 
 	SDL_FRect dstRect = { transform->position.x
 		, transform->position.y
-		, uiObject->Width() * transform->scale
-		, uiObject->Height() * transform->scale };
+		, width * transform->scale
+		, height * transform->scale };
 
 	if (!SDL_HasIntersectionF(&dstRect, &this->windowCamera))
 		return;
