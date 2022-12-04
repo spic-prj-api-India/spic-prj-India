@@ -28,7 +28,7 @@ namespace spic {
 	{
 		if (paused)
 			return;
-		Point steeringForce;
+		Point steeringForce = { 0.0f, 0.0f };
 		steeringForce += Path() * pathFindingWeight;
 		steeringForce += ObstacleAvoidance() * obstacleAvoidanceWeight;
 		ApplyForce(steeringForce);
@@ -47,7 +47,7 @@ namespace spic {
 
 		// Target info
 		Point targetPosition = target->Transform()->position;
-		const float targetSpeed = 0.0f;
+		const float targetSpeed = 1.0f;
 
 		Point direction = targetPosition - gameObject->Transform()->position;
 		const float distanceToTravel = direction.Normalize();

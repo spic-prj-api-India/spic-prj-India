@@ -47,8 +47,8 @@ void EntityManager::Init()
 	std::unique_ptr<systems::RenderingSystem> renderingSystem = std::make_unique<systems::RenderingSystem>();
 	std::unique_ptr<systems::AISystem> aiSystem = std::make_unique<systems::AISystem>();
 	AddInternalSystem(std::move(inputSystem), 0);
-	AddInternalSystem(std::move(aiSystem), 1);
 	AddInternalSystem(std::move(physicsSystem), 1);
+	AddInternalSystem(std::move(aiSystem), 1);
 	AddInternalSystem(std::move(scriptSystem), 1);
 	AddInternalSystem(std::move(renderingSystem), 2);
 }

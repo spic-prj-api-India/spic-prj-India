@@ -102,6 +102,8 @@ namespace spic::extensions {
 		}
 
 		Point GetLinearVelocity(const std::string& name) {
+			if (bodies.count(name) == 0)
+				return { 0.0f, 0.0f };
 			const b2Vec2 linearVelocity = bodies[name]->GetLinearVelocity();
 			return { linearVelocity.x, linearVelocity.y };
 		}
