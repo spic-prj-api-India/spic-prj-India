@@ -3,6 +3,7 @@
 
 #include <functional>
 #include "GameObject.hpp"
+#include "Collider.hpp"
 
 namespace spic::extensions {
 	/**

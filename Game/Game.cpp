@@ -14,6 +14,7 @@
 #include "KeyListener.h"
 #include "EntityManager.hpp"
 #include <Renderer.hpp>
+#include "RigidBody.hpp"
 
 std::shared_ptr<spic::Scene> scene;
 
@@ -123,7 +124,7 @@ void StartGame()
   gameObjectTest.AddChild(text);
 
 
-  auto values = spic::window::WindowValues{ "Forts 2", 1200, 800, false, spic::window::WINDOWED };
+  auto values = spic::window::WindowValues{ "Forts 2", 1200, 800, false, spic::window::FULLSCREENTYPE::WINDOWED };
 
   spic::internal::Rendering::Start(&values);
 

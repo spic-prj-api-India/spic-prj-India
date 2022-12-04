@@ -8,7 +8,6 @@
 
 
 namespace spic {
-
     /**
      * @brief A component which can play animated sequences of sprites.
      */

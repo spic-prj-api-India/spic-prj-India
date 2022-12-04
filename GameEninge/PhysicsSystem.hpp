@@ -4,6 +4,7 @@
 #include <map>
 #include "ISystem.hpp"
 #include "IEngineExtension.hpp"
+#include "Collider.hpp"
 
 /**
 * @brief A system that calls all physics extensions and triggers collision script methods

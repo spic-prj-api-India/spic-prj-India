@@ -2,12 +2,10 @@
 #define RIGIDBODY_H_
 
 #include <iostream>
-#include "GameObject.hpp"
 #include "Component.hpp"
 #include "Point.hpp"
 
 namespace spic {
-
     /**
      * @brief Enumeration for different rigid body types
      */
@@ -16,8 +14,6 @@ namespace spic {
         kinematicBody,
         dynamicBody
     };
-
-    class GameObject;
 
     /**
      * @brief A component representing a rigid body.

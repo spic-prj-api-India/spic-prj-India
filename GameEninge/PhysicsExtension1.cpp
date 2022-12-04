@@ -14,6 +14,8 @@
 #include "ICollisionListener.hpp"
 #include "Box2DCollisionListener.hpp"
 #include "PhysicsInfo.hpp"
+#include "RigidBody.hpp"
+#include "GameObject.hpp"
 
 namespace spic::extensions {
 	std::unique_ptr<b2World> world;

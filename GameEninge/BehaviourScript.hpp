@@ -4,7 +4,6 @@
 #include <iostream>
 #include "Component.hpp"
 #include "Collider.hpp"
-#include "GameObject.hpp"
 
 namespace spic {
     class BehaviourScript : public Component {

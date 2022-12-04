@@ -6,7 +6,6 @@
 #include <vector>
 #include <memory>
 #include "Point.hpp"
-#include "GameObject.hpp"
 
 namespace spic {
     /**

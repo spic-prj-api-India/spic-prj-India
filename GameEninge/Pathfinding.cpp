@@ -2,6 +2,7 @@
 #include "GameEngine.hpp"
 #include "PhysicsExtension1.hpp"
 #include "GameEngineInfo.hpp"
+#include "RigidBody.hpp"
 
 namespace spic {
 	Pathfinding::Pathfinding(const std::shared_ptr<spic::GameObject> target,

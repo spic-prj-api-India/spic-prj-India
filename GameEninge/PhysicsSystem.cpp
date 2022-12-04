@@ -5,6 +5,7 @@
 #include <functional>
 #include "Box2DCollisionListener.hpp"
 #include "BehaviourScript.hpp"
+#include "RigidBody.hpp"
 
 namespace spic::internal::systems {
 	PhysicsSystem::PhysicsSystem() 

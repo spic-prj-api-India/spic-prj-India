@@ -3,7 +3,6 @@
 
 #include <iostream>
 #include <vector>
-#include "GameObject.hpp"
 #include "IPhysicsExtension.hpp"
 #include "Point.hpp"
 

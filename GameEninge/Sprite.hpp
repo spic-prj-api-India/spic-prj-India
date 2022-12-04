@@ -6,7 +6,6 @@
 #include <string>
 
 namespace spic {
-
     /**
      * @brief A component representing a sprite (small image)
      * @spicapi

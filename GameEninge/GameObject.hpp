@@ -3,12 +3,9 @@
 
 #include "Component.hpp"
 #include "Transform.hpp"
-#include "RigidBody.hpp"
 #include <string>
 #include <vector>
 #include <memory>
-#include "Collider.hpp"
-#include "Sprite.hpp"
 #include "TypeHelper.hpp"
 
 namespace spic {
@@ -378,7 +375,7 @@ namespace spic {
 	template<class T>
 	void GameObject::AddComponent(std::shared_ptr<T> component)
 	{
-		spic::CastSharedPtrToType<Component>(component)->GameObject(this);
+		spic::CastSharedPtrToType<Component>(component)->GameObject(*this);
 		components.emplace_back(component);
 	}
 
