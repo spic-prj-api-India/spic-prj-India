@@ -166,6 +166,12 @@
     <Filter Include="Source Files\helpers">
       <UniqueIdentifier>{9f084e52-f411-4ec3-a73b-4e96a26e3e9e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\core\systems\ai">
+      <UniqueIdentifier>{6a12e60f-5e05-4fec-8a96-dc412db56dad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\core\systems\ai">
+      <UniqueIdentifier>{0c28b002-89f0-4a80-a68c-13864a8e5604}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AudioSource.hpp">
@@ -214,9 +220,6 @@
       <Filter>Header Files\components\audio\SDL2Audio</Filter>
     </ClInclude>
     <ClInclude Include="Chunk.hpp">
-      <Filter>Header Files\components\audio\SDL2Audio</Filter>
-    </ClInclude>
-    <ClInclude Include="AudioManager.hpp">
       <Filter>Header Files\components\audio\SDL2Audio</Filter>
     </ClInclude>
     <ClInclude Include="AudioInfo.hpp">
@@ -336,6 +339,12 @@
     <ClInclude Include="ISystem.hpp">
       <Filter>Header Files\core\interfaces</Filter>
     </ClInclude>
+    <ClInclude Include="AISystem.hpp">
+      <Filter>Header Files\core\systems\ai</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioManager.hpp">
+      <Filter>Header Files\core\managers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sample.cpp">
@@ -343,9 +352,6 @@
     </ClCompile>
     <ClCompile Include="AudioSource.cpp">
       <Filter>Source Files\components\audio</Filter>
-    </ClCompile>
-    <ClCompile Include="AudioManager.cpp">
-      <Filter>Source Files\components\audio\SDL2Audio</Filter>
     </ClCompile>
     <ClCompile Include="Chunk.cpp">
       <Filter>Source Files\components\audio\SDL2Audio</Filter>
@@ -457,6 +463,12 @@
     </ClCompile>
     <ClCompile Include="Component.cpp">
       <Filter>Source Files\components</Filter>
+    </ClCompile>
+    <ClCompile Include="AISystem.cpp">
+      <Filter>Source Files\core\systems\ai</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioManager.cpp">
+      <Filter>Source Files\core\managers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

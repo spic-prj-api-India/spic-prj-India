@@ -165,6 +165,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AISystem.hpp" />
     <ClInclude Include="Animator.hpp" />
     <ClInclude Include="AudioInfo.hpp" />
     <ClInclude Include="AudioManager.hpp" />
@@ -222,6 +223,7 @@
     <ClInclude Include="WindowValues.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AISystem.cpp" />
     <ClCompile Include="Animator.cpp" />
     <ClCompile Include="AudioManager.cpp" />
     <ClCompile Include="AudioSource.cpp" />
