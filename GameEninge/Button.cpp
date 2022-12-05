@@ -1,6 +1,7 @@
 #include "Button.hpp"
 #include "Text.hpp"
 #include "StringHelper.hpp"
+#include "Defaults.hpp"
 
 namespace spic {
 	Button::Button() : Button(0.0f, 0.0f)
@@ -11,7 +12,7 @@ namespace spic {
 	{
 		std::shared_ptr<Sprite> sprite;
 		if (texturePath.empty()) {
-			std::string defaultSpritePath = "defaults/textures/UISprite.png";
+			std::string defaultSpritePath = spic::internal::Defaults::BUTTON_TEXTURE;
 			sprite = std::make_shared<Sprite>(defaultSpritePath, 0, 0, color);
 		}
 		else {
