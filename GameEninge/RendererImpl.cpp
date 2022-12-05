@@ -8,7 +8,6 @@
 #include <string_view>
 #include <stdio.h>
 #include <filesystem>
-#include "PhysicsInfo.hpp"
 
 using namespace spic;
 using namespace spic::window;

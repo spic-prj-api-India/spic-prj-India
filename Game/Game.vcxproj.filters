@@ -25,6 +25,9 @@
     <Filter Include="Header Files\listeners">
       <UniqueIdentifier>{525cfa17-ca8c-48c7-9473-876d036c2661}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\objects">
+      <UniqueIdentifier>{436a4bed-7e7f-44af-b9cc-556a341301cb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -49,6 +52,9 @@
     </ClInclude>
     <ClInclude Include="KeyListener.h">
       <Filter>Header Files\listeners</Filter>
+    </ClInclude>
+    <ClInclude Include="Box.h">
+      <Filter>Header Files\objects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

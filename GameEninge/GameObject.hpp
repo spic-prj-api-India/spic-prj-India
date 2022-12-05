@@ -28,6 +28,12 @@ namespace spic {
 		 */
 		virtual ~GameObject() = default;
 
+		template<typename T>
+		static std::shared_ptr<T>CreateInstance()
+		{
+			return std::make_shared<T>();
+		}
+
 		/**
 		 * @brief Returns name of GameObject.
 		 * @return string.
@@ -98,22 +104,22 @@ namespace spic {
 		 * @spicapi
 		 */
 		void Transform(std::shared_ptr<spic::Transform> transform);
-		
+
 		/**
 		 * @brief const version of getting position
-		 * @return 
+		 * @return
 		*/
 		const Point Position() const;
-		
+
 		/**
 		 * @brief Const version of getting rotation
-		 * @return 
+		 * @return
 		*/
 		const float Rotation() const;
-		
+
 		/**
 		 * @brief Const version of scale
-		 * @return 
+		 * @return
 		*/
 		const float Scale() const;
 
@@ -224,7 +230,7 @@ namespace spic {
 		 */
 		bool operator==(const GameObject& other);
 
-		
+
 		/**
 		 * @brief Compare two gameObjects (used for sort function)
 		 * @param other The other object to compare this one with
@@ -304,18 +310,18 @@ namespace spic {
 		 */
 		template<class T>
 		std::vector<std::shared_ptr<T>> GetComponentsInParent() const;
-		
+
 		/**
 		 * @brief Adds a gameobject to an gameobject
-		 * @tparam T Has to be of type gameobject 
-		 * @param gameObject 
+		 * @tparam T Has to be of type gameobject
+		 * @param gameObject
 		*/
 		template<class T>
 		void AddChild(std::shared_ptr<T> gameObject);
-		
+
 		/**
 		 * @brief Gets all the children of this object
-		 * @param includeInactive If you want to include inactive children  
+		 * @param includeInactive If you want to include inactive children
 		 * @return A vector of gameobjects
 		*/
 		std::vector<std::shared_ptr<GameObject>> GetChildren(bool includeInactive = false) const;
