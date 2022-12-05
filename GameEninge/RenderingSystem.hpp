@@ -39,7 +39,7 @@ namespace spic::internal::systems {
 		 * @brief Filters entities between UI and non UI
 		 * @spicapi
 		 */
-		std::vector<std::vector<std::shared_ptr<spic::GameObject>>> GetFilteredEntities(std::vector<std::shared_ptr<spic::GameObject>> entities) const;
+		std::vector<std::vector<std::shared_ptr<spic::GameObject>>> GetFilteredEntities(const std::vector<std::shared_ptr<spic::GameObject>>& entities) const;
 	};
 }
 
