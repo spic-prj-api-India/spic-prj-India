@@ -228,9 +228,6 @@
     <ClInclude Include="InputSystem.hpp">
       <Filter>Header Files\core\systems\input</Filter>
     </ClInclude>
-    <ClInclude Include="ISystem.hpp">
-      <Filter>Header Files\systems</Filter>
-    </ClInclude>
     <ClInclude Include="WindowValues.hpp">
       <Filter>Header Files\core\systems\rendering</Filter>
     </ClInclude>
@@ -335,6 +332,9 @@
     </ClInclude>
     <ClInclude Include="ButtonClickListener.hpp">
       <Filter>Header Files\core\systems\input</Filter>
+    </ClInclude>
+    <ClInclude Include="ISystem.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

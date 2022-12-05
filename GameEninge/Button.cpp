@@ -11,7 +11,7 @@ namespace spic {
 	{
 		std::shared_ptr<Sprite> sprite;
 		if (texturePath.empty()) {
-			std::string defaultSpritePath = StringHelper::GetBasePath() + "\\assets\\textures\\UISprite.png";
+			std::string defaultSpritePath = "defaults/textures/UISprite.png";
 			sprite = std::make_shared<Sprite>(defaultSpritePath, 0, 0, color);
 		}
 		else {

@@ -25,7 +25,7 @@ spic::Text::Text(const float width, const float height
 	, color{ color }
 {
 	if (font.empty()) {
-		this->font = StringHelper::GetBasePath() + "\\assets\\fonts\\07558_CenturyGothic.ttf";
+		this->font = "defaults\\fonts\\07558_CenturyGothic.ttf";
 	}
 }
 

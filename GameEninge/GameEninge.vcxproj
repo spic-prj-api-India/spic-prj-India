@@ -266,8 +266,17 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="UISprite.qrc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="UISprite.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
+  <ItemGroup>
+    <Content Include="defaults\**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
 </Project>
