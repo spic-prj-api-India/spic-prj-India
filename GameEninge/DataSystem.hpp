@@ -27,7 +27,7 @@ namespace spic::internal::systems {
 		void Update(std::vector<std::shared_ptr<spic::GameObject>>& entities, Scene& currentScene) override;
 	private:
 		/**
-	    * @brief Filters all physics entities from entity list
+	    * @brief Filters all persistable entities from entity list
 	    * @spicapi
 	    */
 		std::vector<std::shared_ptr<spic::Persistable>> GetPersistableEntities(const std::vector<std::shared_ptr<spic::GameObject>>& entities) const;
