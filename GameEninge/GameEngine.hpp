@@ -97,6 +97,9 @@ namespace spic {
 			} while (deletePtr.use_count() != 0);
 		}
 
+		/*
+		@brief Registers GameObject type in engine.
+		*/
 		template<typename T>
 		void RegisterType() 
 		{
@@ -107,12 +110,11 @@ namespace spic {
 			_types[typeName] = createInstance;
 		}
 
-		std::shared_ptr<spic::GameObject> CreateType(const std::string& typeName)
-		{
-			if(_types.count(typeName) == 0)
-				throw std::exception("Type not registered.");
-			return _types[typeName]();
-		}
+		/*
+		@brief Creates GameObject of type.
+		@param The typeName is the key in the types list.
+		*/
+		std::shared_ptr<spic::GameObject> CreateType(const std::string& typeName);
 
 		/*
 		@brief Register scene.

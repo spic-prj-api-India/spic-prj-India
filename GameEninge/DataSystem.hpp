@@ -14,13 +14,13 @@ namespace spic::internal::systems {
 		DataSystem();
 
 		/**
-		* @brief Initiliazes system
+		* @brief Loads data in game object
 		* @spicapi
 		*/
 		void Start(std::vector<std::shared_ptr<spic::GameObject>>& entities) override;
 
 		/**
-		* @brief Calls Listen method in InputManager
+		* @brief Saves data in game object
 		* @spicapi
 		*/
 		void Update(std::vector<std::shared_ptr<spic::GameObject>>& entities, Scene& currentScene) override;

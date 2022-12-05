@@ -38,7 +38,6 @@ void InitGame() {
 	// Register types
 	engine->RegisterType<Box>();
 
-
 	std::shared_ptr<spic::GameObject> box = std::make_shared<spic::GameObject>();
 	std::string boxName = "box";
 	std::shared_ptr<spic::Transform> boxTransform = std::make_shared<spic::Transform>();

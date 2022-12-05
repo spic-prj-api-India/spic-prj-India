@@ -28,8 +28,12 @@ namespace spic {
 		 */
 		virtual ~GameObject() = default;
 
+		/**
+		 * @brief Create instance function is used to 
+		 *			create derived classes of the game object in the engine.
+		 */
 		template<typename T>
-		static std::shared_ptr<T>CreateInstance()
+		static std::shared_ptr<T> CreateInstance()
 		{
 			return std::make_shared<T>();
 		}
