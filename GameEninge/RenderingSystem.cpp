@@ -31,7 +31,7 @@ namespace spic::internal::systems {
 		spic::internal::Rendering::Render();
 	}
 
-	std::vector<std::vector<std::shared_ptr<spic::GameObject>>> RenderingSystem::GetFilteredEntities(std::vector<std::shared_ptr<spic::GameObject>> entities) const
+	std::vector<std::vector<std::shared_ptr<spic::GameObject>>> RenderingSystem::GetFilteredEntities(const std::vector<std::shared_ptr<spic::GameObject>>& entities) const
 	{
 		std::vector<std::shared_ptr<spic::GameObject>> nonUIEntities;
 		std::vector<std::shared_ptr<spic::GameObject>> uiEntities;

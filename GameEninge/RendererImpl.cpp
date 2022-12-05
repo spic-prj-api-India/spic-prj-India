@@ -316,9 +316,11 @@ void RendererImpl::DrawUI(UIObject* gameObject)
 
 void RendererImpl::DrawText(Text* text)
 {
-	if (std::filesystem::exists(text->Font().c_str()))
+	const std::string  font = text->Font();
+	const char* filePath = font.c_str();
+	if (std::filesystem::exists(filePath))
 	{
-		auto font = TTF_OpenFont(text->Font().c_str(), text->Size());
+		auto font = TTF_OpenFont(filePath, text->Size());
 		auto transform = text->Transform().get();
 		auto colour = SDL_Color{ static_cast<unsigned char>(PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, text->Color().R())))
 			, static_cast<unsigned char>(PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, text->Color().G())))
