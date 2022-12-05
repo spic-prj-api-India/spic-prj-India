@@ -62,6 +62,7 @@ void InitGame() {
 	box->AddComponent<spic::AudioSource>(music);
 
 	scene->AddContent(box);
+	scene->AddContent(std::make_shared<Box>());
 	scene->LoadTileMap("assets/maps/Map.tmx", 3);
 
 	// Input test

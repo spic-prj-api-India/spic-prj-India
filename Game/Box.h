@@ -1,11 +1,22 @@
 #pragma once
 #include <GameObject.hpp>
+#include "Persistable.hpp"
 
-class Box : public spic::GameObject
+class Box : public spic::Persistable
 {
 public:
-	Box() : GameObject()
+	Box() : Persistable()
 	{
 		Name("Box");
+	}
+
+	void Load() override
+	{
+
+	}
+
+	void Save() override
+	{
+
 	}
 };

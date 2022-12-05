@@ -333,6 +333,9 @@
     <ClInclude Include="DataSystem.hpp">
       <Filter>Header Files\core\systems\data</Filter>
     </ClInclude>
+    <ClInclude Include="Persistable.hpp">
+      <Filter>Header Files\objects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sample.cpp">

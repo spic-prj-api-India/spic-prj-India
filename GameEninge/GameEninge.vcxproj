@@ -196,6 +196,7 @@
     <ClInclude Include="InputManager.hpp" />
     <ClInclude Include="InputSystem.hpp" />
     <ClInclude Include="IPhysicsExtension.hpp" />
+    <ClInclude Include="Persistable.hpp" />
     <ClInclude Include="PhysicsExtension1.hpp" />
     <ClInclude Include="PhysicsSystem.hpp" />
     <ClInclude Include="ISystem.hpp" />
