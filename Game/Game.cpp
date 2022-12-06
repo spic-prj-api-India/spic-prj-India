@@ -19,7 +19,7 @@
 #include <AudioSource.hpp>
 #include "PhysicsValues.hpp"
 #include "RigidBody.hpp"
-#include <Pathfinding.hpp>
+#include <Flock.hpp>
 #include <GeneralHelper.hpp>
 
 std::shared_ptr<spic::Scene> scene;
@@ -50,7 +50,7 @@ void InitGame() {
 	std::shared_ptr<CollisionDetectionScript> script = std::make_shared<CollisionDetectionScript>();
 	auto boxSprite = std::make_shared<spic::Sprite>("assets/textures/box.png", 1);
 
-	auto music = std::make_shared<spic::AudioSource>("assets/music/file_example_MP3_700KB.mp3", true, true, 1);
+	auto music = std::make_shared<spic::AudioSource>("assets/music/file_example_MP3_700KB.mp3", true, true, 1.0f);
 
 	box->Name(boxName);
 	box->Transform(boxTransform);
@@ -71,15 +71,12 @@ void InitGame() {
 	rocketCollider->Height(25.5f);
 	std::shared_ptr<spic::RigidBody> rocketRigidBody = std::make_shared<spic::RigidBody>(1.0f, 1.0f, spic::BodyType::dynamicBody);
 	auto rocketSprite = std::make_shared<spic::Sprite>("assets/textures/missile.png", 1);
-	std::shared_ptr<spic::Pathfinding> rocketpathfinding = std::make_shared<spic::Pathfinding>(box, 1.0f, 1.0f, 1.0f);
 
 	rocket->Name(rocketName);
 	rocket->Transform(rocketTransform);
 	rocket->AddComponent<spic::BoxCollider>(rocketCollider);
 	rocket->AddComponent<spic::RigidBody>(rocketRigidBody);
 	rocket->AddComponent<spic::Sprite>(rocketSprite);
-	rocket->AddComponent<spic::Pathfinding>(rocketpathfinding);
-	rocketpathfinding->Start();
 
 	scene->AddContent(box);
 	scene->AddContent(rocket);

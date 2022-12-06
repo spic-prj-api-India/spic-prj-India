@@ -12,6 +12,10 @@ namespace spic {
 
 		float Normalize();
 
+		float Length() const;
+
+		bool Accumulate(Point& point, const float maxForce);
+
 		/**
 		 * @brief operator for adding Point
 		 * @param point Point that will be added
