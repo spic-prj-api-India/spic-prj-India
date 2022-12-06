@@ -3,8 +3,10 @@
 #include <corecrt_math.h>
 
 namespace spic {
-	#define self (*this)
-
+	Point::Point() : x { 0.0f }, y { 0.0f } 
+	{
+	}
+	
 	float Point::Normalize()
 	{
 		float length = sqrtf(x * x + y * y);
