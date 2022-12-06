@@ -30,6 +30,13 @@ namespace spic {
 		return pinstance_;
 	}
 
+	std::shared_ptr<spic::GameObject> GameEngine::CreateType(const std::string& typeName)
+	{
+		if (_types.count(typeName) == 0)
+			throw std::exception("Type not registered.");
+		return _types[typeName]();
+	}
+
 	void RegisterScene(const std::string& sceneName, std::shared_ptr<Scene> scene)
 	{
 		internal::EntityManager::GetInstance()->RegisterScene(sceneName, scene);

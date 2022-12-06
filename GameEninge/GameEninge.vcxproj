@@ -181,6 +181,7 @@
     <ClInclude Include="Color.hpp" />
     <ClInclude Include="Component.hpp" />
     <ClInclude Include="ContainerHelper.hpp" />
+    <ClInclude Include="DataSystem.hpp" />
     <ClInclude Include="Debug.hpp" />
     <ClInclude Include="GameEngine.hpp" />
     <ClInclude Include="EntityManager.hpp" />
@@ -195,6 +196,7 @@
     <ClInclude Include="InputManager.hpp" />
     <ClInclude Include="InputSystem.hpp" />
     <ClInclude Include="IPhysicsExtension.hpp" />
+    <ClInclude Include="Persistable.hpp" />
     <ClInclude Include="PhysicsExtension1.hpp" />
     <ClInclude Include="PhysicsSystem.hpp" />
     <ClInclude Include="ISystem.hpp" />
@@ -227,6 +229,7 @@
     <ClCompile Include="Chunk.cpp" />
     <ClCompile Include="BehaviourScript.cpp" />
     <ClCompile Include="Box2DCollisionListener.cpp" />
+    <ClCompile Include="DataSystem.cpp" />
     <ClCompile Include="GeneralHelper.cpp" />
     <ClCompile Include="IPhysicsExtension.cpp" />
     <ClCompile Include="MapParser.cpp" />

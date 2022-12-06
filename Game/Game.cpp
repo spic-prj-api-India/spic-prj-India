@@ -18,6 +18,7 @@
 #include "Color.hpp"
 #include <AudioSource.hpp>
 #include "PhysicsValues.hpp"
+#include "Box.h"
 
 std::shared_ptr<spic::Scene> scene;
 
@@ -33,6 +34,9 @@ void InitGame() {
 	spic::extensions::PhysicsValues::SCALING_FACTOR = 0.0017f;
 	std::shared_ptr<spic::extensions::PhysicsExtension1> physicsExtension = std::make_shared<spic::extensions::PhysicsExtension1>();
 	engine->AddExtension(std::move(physicsExtension));
+
+	// Register types
+	engine->RegisterType<Box>();
 
 	std::shared_ptr<spic::GameObject> box = std::make_shared<spic::GameObject>();
 	std::string boxName = "box";
@@ -58,6 +62,7 @@ void InitGame() {
 	box->AddComponent<spic::AudioSource>(music);
 
 	scene->AddContent(box);
+	scene->AddContent(std::make_shared<Box>());
 	scene->LoadTileMap("assets/maps/Map.tmx", 3);
 
 	// Input test
