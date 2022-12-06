@@ -160,6 +160,12 @@
     <Filter Include="Source Files\helpers">
       <UniqueIdentifier>{9f084e52-f411-4ec3-a73b-4e96a26e3e9e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\core\systems\data">
+      <UniqueIdentifier>{142c002f-9e09-48f6-9a0b-b0238a85b97c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\core\systems\data">
+      <UniqueIdentifier>{27aeaf8d-a913-428a-b880-8759f42deda0}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Source Files\helpers">
       <UniqueIdentifier>{9f084e52-f411-4ec3-a73b-4e96a26e3e9e}</UniqueIdentifier>
     </Filter>
@@ -324,11 +330,14 @@
     <ClInclude Include="PhysicsValues.hpp">
       <Filter>Header Files\extensions\physics</Filter>
     </ClInclude>
+    <ClInclude Include="DataSystem.hpp">
+      <Filter>Header Files\core\systems\data</Filter>
+    </ClInclude>
+    <ClInclude Include="Persistable.hpp">
+      <Filter>Header Files\objects</Filter>
+    </ClInclude>
     <ClInclude Include="ContainerHelper.hpp">
       <Filter>Header Files\helpers</Filter>
-    </ClInclude>
-    <ClInclude Include="ISystem.hpp">
-      <Filter>Header Files\core\interfaces</Filter>
     </ClInclude>
     <ClInclude Include="ButtonClickListener.hpp">
       <Filter>Header Files\core\systems\input</Filter>
@@ -338,6 +347,9 @@
     </ClInclude>
     <ClInclude Include="Defaults.hpp">
       <Filter>Header Files\core</Filter>
+    </ClInclude>
+    <ClInclude Include="ISystem.hpp">
+      <Filter>Header Files\core\interfaces</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -464,14 +476,12 @@
     <ClCompile Include="Button.cpp">
       <Filter>Source Files\objects</Filter>
     </ClCompile>
+    <ClCompile Include="DataSystem.cpp">
+      <Filter>Source Files\core\systems\data</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="UISprite.qrc" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="UISprite.png">
-      <Filter>Resource Files</Filter>
-    </Image>
   </ItemGroup>
 </Project>

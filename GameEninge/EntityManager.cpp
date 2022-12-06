@@ -11,6 +11,7 @@
 #include "PhysicsSystem.hpp"
 #include "ScriptSystem.hpp"
 #include "RenderingSystem.hpp"
+#include "DataSystem.hpp"
 #include "AudioManager.hpp"
 
 using namespace spic;
@@ -44,9 +45,11 @@ void EntityManager::Init()
 	std::unique_ptr<systems::PhysicsSystem> physicsSystem = std::make_unique<systems::PhysicsSystem>();
 	std::unique_ptr<systems::ScriptSystem> scriptSystem = std::make_unique<systems::ScriptSystem>();
 	std::unique_ptr<systems::RenderingSystem> renderingSystem = std::make_unique<systems::RenderingSystem>();
+	std::unique_ptr<systems::DataSystem> dataSystem = std::make_unique<systems::DataSystem>();
 	AddInternalSystem(std::move(inputSystem), 0);
 	AddInternalSystem(std::move(physicsSystem), 1);
 	//AddInternalSystem(std::move(scriptSystem), 1);
+	AddInternalSystem(std::move(dataSystem), 1);
 	AddInternalSystem(std::move(renderingSystem), 2);
 }
 

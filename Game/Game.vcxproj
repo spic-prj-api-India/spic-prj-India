@@ -155,6 +155,7 @@
     <ClCompile Include="MenuScene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Box.h" />
     <ClInclude Include="CameraMovementScript.h" />
     <ClInclude Include="CollisionDetectionScript.h" />
     <ClInclude Include="GameScene.h" />

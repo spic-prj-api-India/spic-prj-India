@@ -4,6 +4,7 @@
 #include "CollisionDetectionScript.h"
 #include <BoxCollider.hpp>
 #include "AudioSource.hpp"
+#include "Box.h"
 
 GameScene::GameScene() : Scene()
 {
@@ -54,4 +55,5 @@ void GameScene::SetContents()
 
 	AddContent(box);
 	AddContent(button);
+	AddContent(std::make_shared<Box>());
 }

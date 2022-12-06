@@ -7,6 +7,7 @@
 #include "MenuScene.h"
 #include "GameScene.h"
 #include "PhysicsValues.hpp"
+#include "Box.h"
 
 std::shared_ptr<spic::Scene> scene;
 
@@ -16,6 +17,10 @@ void InitGame() {
 	std::shared_ptr<spic::extensions::PhysicsExtension1> physicsExtension = std::make_shared<spic::extensions::PhysicsExtension1>();
 	engine->AddExtension(std::move(physicsExtension));
 
+	// Register types
+	engine->RegisterType<Box>();
+
+	// Register scenes
 	engine->RegisterScene("menu", std::make_shared<MenuScene>());
 	engine->RegisterScene("game", std::make_shared<GameScene>());
 }

@@ -8,6 +8,7 @@
 #include "Scene.hpp"
 #include "TypeHelper.hpp"
 #include "WindowValues.hpp"
+#include <functional>
 
 namespace spic {
 	/**
@@ -23,6 +24,7 @@ namespace spic {
 		~GameEngine();
 
 		std::map<std::string, std::shared_ptr<spic::internal::extensions::IEngineExtension>> _extensions;
+		std::map<std::string, std::function<std::shared_ptr<spic::GameObject>()>> _types;
 		bool quit;
 	public:
 		GameEngine(GameEngine& other) = delete;
@@ -67,6 +69,25 @@ namespace spic {
 		*/
 		template <typename T>
 		void RemoveExtension();
+
+		/*
+		@brief Registers GameObject type in engine.
+		*/
+		template<typename T>
+		void RegisterType() 
+		{
+			const std::string typeName = TypeHelper::GetTypeName<T>();
+			if (_types.count(typeName) != 0)
+				throw std::exception("Type is already registered.");
+			const std::function createInstance = GameObject::CreateInstance<T>;
+			_types[typeName] = createInstance;
+		}
+
+		/*
+		@brief Creates GameObject of type.
+		@param The typeName is the key in the types list.
+		*/
+		std::shared_ptr<spic::GameObject> CreateType(const std::string& typeName);
 
 		/*
 		@brief Register scene.
