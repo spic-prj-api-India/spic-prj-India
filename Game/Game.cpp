@@ -10,7 +10,6 @@
 #include <ScriptSystem.hpp>
 #include <InputSystem.hpp>
 #include <Input.hpp>
-#include "MouseListener.h"
 #include "KeyListener.h"
 #include "EntityManager.hpp"
 #include "Scene.hpp"
@@ -21,6 +20,8 @@
 #include "RigidBody.hpp"
 #include <Flock.hpp>
 #include <GeneralHelper.hpp>
+#include "FollowMouseListener.h"
+#include "AimListener.h"
 
 std::shared_ptr<spic::Scene> scene;
 
@@ -58,35 +59,29 @@ void InitGame() {
 	box->AddComponent<spic::RigidBody>(boxRigidBody);
 	box->AddComponent<spic::BehaviourScript>(script);
 	box->AddComponent<spic::Sprite>(boxSprite);
-	box->AddComponent<spic::AudioSource>(music);
+	//box->AddComponent<spic::AudioSource>(music);
 
-	std::shared_ptr<spic::GameObject> rocket = std::make_shared<spic::GameObject>();
-	std::string rocketName = "rocket";
-	std::shared_ptr<spic::Transform> rocketTransform = std::make_shared<spic::Transform>();
-	rocketTransform->position = { 600.0f, 24.0f };
-	rocketTransform->rotation = spic::GeneralHelper::DEG2RAD<float>(180.0f);
-	rocketTransform->scale = 0.125f;
-	std::shared_ptr<spic::BoxCollider> rocketCollider = std::make_shared<spic::BoxCollider>();
-	rocketCollider->Width(75.0f);
-	rocketCollider->Height(25.5f);
-	std::shared_ptr<spic::RigidBody> rocketRigidBody = std::make_shared<spic::RigidBody>(1.0f, 1.0f, spic::BodyType::dynamicBody);
-	auto rocketSprite = std::make_shared<spic::Sprite>("assets/textures/missile.png", 1);
+	std::shared_ptr<spic::GameObject> rocketLauncher = std::make_shared<spic::GameObject>();
+	std::string rocketLauncherName = "rocketLauncher";
+	std::shared_ptr<spic::Transform> rocketLauncherTransform = std::make_shared<spic::Transform>();
+	rocketLauncherTransform->position = { 700.0f, 375.0f };
+	rocketLauncherTransform->rotation = 0.0f;
+	rocketLauncherTransform->scale = 0.5f;
+	auto rocketLauncherSprite = std::make_shared<spic::Sprite>("assets/textures/rocket-launcher.png", 1);
 
-	rocket->Name(rocketName);
-	rocket->Transform(rocketTransform);
-	rocket->AddComponent<spic::BoxCollider>(rocketCollider);
-	rocket->AddComponent<spic::RigidBody>(rocketRigidBody);
-	rocket->AddComponent<spic::Sprite>(rocketSprite);
+	rocketLauncher->Name(rocketLauncherName);
+	rocketLauncher->Transform(rocketLauncherTransform);
+	rocketLauncher->AddComponent<spic::Sprite>(rocketLauncherSprite);
 
 	scene->AddContent(box);
-	scene->AddContent(rocket);
+	scene->AddContent(rocketLauncher);
 	scene->LoadTileMap("assets/maps/Map.tmx", 3);
 
 	// Input test
-	std::shared_ptr<MouseListener> mouseListener = std::make_shared<MouseListener>();
+	std::shared_ptr<AimListener> aimListener = std::make_shared<AimListener>(rocketLauncher);
 	std::shared_ptr<KeyListener> keyListener = std::make_shared<KeyListener>();
-	spic::Input::Subscribe(spic::Input::MouseButton::LEFT, mouseListener);
 	spic::Input::Subscribe(spic::Input::KeyCode::A, keyListener);
+	spic::Input::Subscribe(spic::Input::MouseButton::LEFT, aimListener);
 }
 
 void StartGame()

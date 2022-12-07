@@ -13,8 +13,19 @@ namespace spic {
 	{
 	}
 
-	GameObject::GameObject(const std::string& name) : name{name}, active{ true }, layer{ 0 }
-	{}
+	void GameObject::Create(const std::shared_ptr<GameObject>& gameObject)
+	{
+		internal::EntityManager::GetInstance()->AddEntity(gameObject);
+	}
+
+	const std::shared_ptr<GameObject> GameObject::GetByName(const std::string& name)
+	{
+		for (const auto& entity : internal::EntityManager::GetInstance()->GetEntities()) {
+			if (entity->Name() == name)
+				return entity;
+		}
+		return nullptr;
+	}
 
 	std::shared_ptr<GameObject> GameObject::Find(const std::string& name)
 	{

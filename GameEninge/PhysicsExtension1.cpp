@@ -93,8 +93,11 @@ namespace spic::extensions {
 		* @brief Adds force to an entity
 		* @spicapi
 		*/
-		void AddForce(const std::string& name, const spic::Point& forceDirection)
+		void AddForce(const std::shared_ptr<GameObject>& entity, const spic::Point& forceDirection)
 		{
+			const std::string& name = entity->Name();
+			if (bodies.count(name) == 0)
+				CreateEntity(entity);
 			b2Body* body = bodies[name];
 			const b2Vec2 force = { forceDirection.x, forceDirection.y };
 
@@ -273,9 +276,9 @@ namespace spic::extensions {
 		physicsImpl->RegisterListener(listener);
 	}
 
-	void spic::extensions::PhysicsExtension1::AddForce(const std::string& entityName, const spic::Point& forceDirection)
+	void spic::extensions::PhysicsExtension1::AddForce(const std::shared_ptr<GameObject>& entity, const spic::Point& forceDirection)
 	{
-		physicsImpl->AddForce(entityName, forceDirection);
+		physicsImpl->AddForce(entity, forceDirection);
 	}
 
 	Point spic::extensions::PhysicsExtension1::GetLinearVelocity(const std::string& entityName)

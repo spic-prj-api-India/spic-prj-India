@@ -33,10 +33,13 @@
     <ClCompile Include="CollisionDetectionScript.cpp">
       <Filter>Source Files\scripts</Filter>
     </ClCompile>
-    <ClCompile Include="MouseListener.cpp">
+    <ClCompile Include="KeyListener.cpp">
       <Filter>Source Files\listeners</Filter>
     </ClCompile>
-    <ClCompile Include="KeyListener.cpp">
+    <ClCompile Include="MouseMoveListener.cpp">
+      <Filter>Source Files\listeners</Filter>
+    </ClCompile>
+    <ClCompile Include="AimListener.cpp">
       <Filter>Source Files\listeners</Filter>
     </ClCompile>
   </ItemGroup>
@@ -44,10 +47,13 @@
     <ClInclude Include="CollisionDetectionScript.h">
       <Filter>Header Files\scripts</Filter>
     </ClInclude>
-    <ClInclude Include="MouseListener.h">
+    <ClInclude Include="KeyListener.h">
       <Filter>Header Files\listeners</Filter>
     </ClInclude>
-    <ClInclude Include="KeyListener.h">
+    <ClInclude Include="FollowMouseListener.h">
+      <Filter>Header Files\listeners</Filter>
+    </ClInclude>
+    <ClInclude Include="AimListener.h">
       <Filter>Header Files\listeners</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,22 +1,33 @@
 #include "Flock.hpp"
-#include "GameEngine.hpp"
-#include "PhysicsExtension1.hpp"
-#include "GameEngineInfo.hpp"
 #include "RigidBody.hpp"
 
 namespace spic {
-	Flock::Flock(const spic::FlockBehaviour flockBehaviour, const std::shared_ptr<spic::GameObject> target, const float maxSteeringForce,
-		const float maxSpeed, const float flockWeight) : GameObject(),
-		flockBehaviour{ flockBehaviour }, target{ target }, maxSteeringForce{ maxSteeringForce },
-		maxSpeed{ maxSpeed }, flockBehaviourWeight{ flockBehaviourWeight }, paused{ true },
-		useWallAvoidance{ false }, useObstacleAvoidance{ false }, useSeperation{ false },
-		useAlignment{ false }, useCohesion{ false }
+	Flock::Flock(const spic::FlockBehaviour flockBehaviour, const float maxSteeringForce, const float maxSpeed) : GameObject(),
+		flockBehaviour{ flockBehaviour }, maxSteeringForce{ maxSteeringForce }, maxSpeed{ maxSpeed },
+		paused{ true }, useWallAvoidance{ false }, useObstacleAvoidance{ false },
+		useSeperation{ false }, useAlignment{ false }, useCohesion{ false }, useTarget{ false }
 	{
 	}
 
-	void Flock::Target(const std::shared_ptr<spic::GameObject> newTarget)
+	float Flock::Heading()
 	{
-		this->target = newTarget;
+		std::shared_ptr<RigidBody> body = this->GetComponent<RigidBody>();
+		Point velocity = body->Velocity();
+		return velocity.Normalize();
+	}
+
+	void Flock::Target(std::unique_ptr<Point> newTarget, const float targetWeight)
+	{
+		this->useTarget = true;
+		this->target = std::move(newTarget);
+		this->targetWeight = targetWeight;
+	}
+
+	void Flock::Target(std::unique_ptr<Point> newTarget)
+	{
+		this->useTarget = true;
+		this->target = std::move(newTarget);
+		this->targetWeight = 1.0f;
 	}
 
 	void Flock::WallAvoidance(const float wallAvoidanceWeight, const float width, const float height)
@@ -54,8 +65,6 @@ namespace spic {
 
 	void Flock::StartFlock()
 	{
-		if (target == nullptr)
-			throw std::exception("Target needs to be defined");
 		paused = false;
 	}
 
@@ -102,65 +111,55 @@ namespace spic {
 			force = Cohere(flocks) * cohesionWeight;
 			if (!steeringForce.Accumulate(force, maxSteeringForce)) return steeringForce;
 		}
-		switch (flockBehaviour) {
-		case FlockBehaviour::ARRIVAL:
-			force = Arrival() * flockBehaviourWeight;
-			break;
-		case FlockBehaviour::FLEE:
-			force = Flee() * flockBehaviourWeight;
-			break;
-		case FlockBehaviour::SEEK:
-			force = Seek() * flockBehaviourWeight;
-			break;
-		case FlockBehaviour::WANDER:
-			force = Wander() * flockBehaviourWeight;
-			break;
+		if (useTarget)
+		{
+			switch (flockBehaviour) {
+			case FlockBehaviour::ARRIVAL:
+				force = Arrival(*target.get()) * targetWeight;
+				break;
+			case FlockBehaviour::FLEE:
+				force = Flee(*target.get()) * targetWeight;
+				break;
+			case FlockBehaviour::SEEK:
+				force = Seek(*target.get()) * targetWeight;
+				break;
+			case FlockBehaviour::WANDER:
+				force = Wander(*target.get()) * targetWeight;
+				break;
+			}
+			if (!steeringForce.Accumulate(force, maxSteeringForce)) return steeringForce;
 		}
-		if (!steeringForce.Accumulate(force, maxSteeringForce)) return steeringForce;
 		return steeringForce;
 	}
 
-	Point Flock::Seek()
+	Point Flock::Seek(Point& target)
 	{
 		// Game object info
-		Point position = this->Transform()->position;
+		Point location = this->Transform()->position;
 		std::shared_ptr<RigidBody> body = this->GetComponent<RigidBody>();
 
-		// Target info
-		Point targetPosition = target->Transform()->position;
-		const float targetSpeed = 1.0f;
+		Point desired = target - location;
 
-		Point direction = targetPosition - position;
-		const float distanceToTravel = direction.Normalize();
+		if (desired.Length() == 0.0f) return Point(0.0f, 0.0f);
 
-		// For most of the movement, the target speed is ok
-		float speedToUse = targetSpeed;
+		desired.Normalize();
+		desired *= maxSpeed;
 
-		// Check if this speed will cause overshoot in the next time step.
-		// If so, we need to scale the speed down to just enough to reach
-		// the target point. (Assuming here a step length based on 60 fps)
-		const float distancePerTimestep = speedToUse / FPS;
-		if (distancePerTimestep > distanceToTravel)
-			speedToUse *= (distanceToTravel / distancePerTimestep);
-
-		// The rest is pretty much what you had already:
-		Point desiredVelocity = direction * speedToUse;
-		Point changeInVelocity = desiredVelocity - body->Velocity();
-
-		return changeInVelocity * body->Mass() * FPS;
+		Point steeringForce = desired - body->Velocity();
+		return steeringForce * body->Mass();
 	}
 
-	Point Flock::Flee()
+	Point Flock::Flee(Point& target)
 	{
 		return {};
 	}
 
-	Point Flock::Arrival()
+	Point Flock::Arrival(Point& target)
 	{
 		return {};
 	}
 
-	Point Flock::Wander()
+	Point Flock::Wander(Point& target)
 	{
 		return {};
 	}
@@ -177,24 +176,57 @@ namespace spic {
 
 	Point Flock::Seperate(const std::vector<std::shared_ptr<Flock>>& flocks)
 	{
-		return {};
+		Point steeringForce;
+		for (const auto& flock : flocks) {
+			if (flock.get() != this) {
+				Point toAgent = Transform()->position - flock->Transform()->position;
+
+				toAgent.Normalize();
+				steeringForce += toAgent / toAgent.Length();
+
+			}
+		}
+		return steeringForce;
 	}
+
 	Point Flock::Align(const std::vector<std::shared_ptr<Flock>>& flocks)
 	{
-		return {};
+		Point averageHeading;
+		float neighborCount = 0.0f;
+		for (const auto& flock : flocks) {
+			if (flock.get() != this) {
+				averageHeading += flock->Heading();
+				neighborCount++;
+			}
+		}
+		if (neighborCount > 0.0f)
+		{
+			averageHeading /= neighborCount;
+			averageHeading -= Heading();
+		}
+		return averageHeading;
 	}
+
 	Point Flock::Cohere(const std::vector<std::shared_ptr<Flock>>& flocks)
 	{
-		return {};
+		Point centerOfMass, steeringForce;
+		float neighborCount = 0.0f;
+
+		for (const auto& flock : flocks) {
+			if (flock.get() != this) {
+				centerOfMass += flock->Transform()->position;
+				++neighborCount;
+			}
+		}
+		if (neighborCount > 0.0f)
+		{
+			centerOfMass /= neighborCount;
+			steeringForce = Seek(centerOfMass);
+		}
+		return steeringForce;
 	}
 
 	void Flock::ApplyForce(const Point& force) {
-		GameEngine* engine = GameEngine::GetInstance();
-		const bool exists = engine->HasExtension<extensions::PhysicsExtension1>();
-		if (!exists)
-			return;
-		std::weak_ptr<extensions::PhysicsExtension1> physicsExtension = engine->GetExtension<extensions::PhysicsExtension1>();
-		if (const auto& box2DExtension = physicsExtension.lock())
-			box2DExtension->AddForce(this->Name(), force);
+		this->GetComponent<RigidBody>()->AddForce(force);
 	}
 }

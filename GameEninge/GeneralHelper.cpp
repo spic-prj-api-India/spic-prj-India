@@ -56,6 +56,29 @@ bool spic::GeneralHelper::CalculateWithinSquare(const Point& point, std::array<P
 
 	return false;
 }
+
+bool spic::GeneralHelper::LineIntersection(const Point& sPoint1, const Point& ePoint1, const Point& sPoint2, const Point& ePoint2, Point& intersectPoint, float& distance)
+{
+	const float a1 = ePoint1.y - sPoint1.y;
+	const float b1 = sPoint1.x - ePoint1.x;
+	const float c1 = a1 * (sPoint1.x) + b1 * (sPoint1.y);
+
+	const float a2 = ePoint2.y - sPoint2.y;
+	const float b2 = sPoint2.x - ePoint2.x;
+	const float c2 = a2 * (sPoint2.x) + b2 * (sPoint2.y);
+
+	const float determinant = a1 * b2 - a2 * b1;
+
+	if (determinant != 0) {
+		const float x = (b2 * c1 - b1 * c2) / determinant;
+		const float y = (a1 * c2 - a2 * c1) / determinant;
+		intersectPoint = Point(x, y);
+		distance = sPoint1.Distance(intersectPoint);
+		return true;
+	}
+	return false;
+}
+
 Point spic::GeneralHelper::GetCenter(const Point& point, const float aspectWidth, const float aspectHeight)
 {
 	return Point{ (point.x + aspectWidth) / 2, (point.y + aspectHeight) / 2 };

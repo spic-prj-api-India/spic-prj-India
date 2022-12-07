@@ -3,10 +3,11 @@
 #include <corecrt_math.h>
 
 namespace spic {
-	Point::Point() : x { 0.0f }, y { 0.0f } 
+	float Point::Length() const
 	{
+		return sqrtf(x * x + y * y);
 	}
-	
+
 	float Point::Normalize()
 	{
 		float length = sqrtf(x * x + y * y);
@@ -21,20 +22,20 @@ namespace spic {
 		return length;
 	}
 
-	float Point::Length() const
+	float Point::Distance(const Point& point) const
 	{
-		return sqrtf(x * x + y * y);
+		return sqrtf(powf(this->x - point.x, 2) + powf(this->y - point.y, 2));
 	}
 
 	bool Point::Accumulate(Point& point, const float maxForce)
 	{
-		float MagnitudeSoFar = self.Length();
+		const float MagnitudeSoFar = Length();
 		//calculate how much steering force remains to be used by this vehicle
-		float MagnitudeRemaining = maxForce - MagnitudeSoFar;
+		const float MagnitudeRemaining = maxForce - MagnitudeSoFar;
 		//return false if there is no more force left to use
 		if (MagnitudeRemaining <= 0.0) return false;
 		//calculate the magnitude of the force we want to add
-		float MagnitudeToAdd = point.Length();
+		const float MagnitudeToAdd = point.Length();
 		//if the magnitude of the sum of ForceToAdd and the running total
 		//does not exceed the maximum force available to this vehicle, just
 		//add together. Otherwise add as much of the ForceToAdd vector as
@@ -47,9 +48,10 @@ namespace spic {
 		else
 		{
 			//add it to the steering force
-			const float force = MagnitudeRemaining * point.Normalize();
-			this->x += force;
-			this->y += force;
+			point.Normalize();
+			const Point force = point * MagnitudeRemaining;
+			this->x += force.x;
+			this->y += force.y;
 		}
 		return true;
 	}
@@ -81,9 +83,21 @@ namespace spic {
 		return Point(this->x * point.x, this->y * point.y);
 	}
 
+	void Point::operator *=(const Point& point)
+	{
+		this->x *= point.x;
+		this->y *= point.y;
+	}
+
 	Point Point::operator /(const Point& point)
 	{
 		return Point(this->x / point.x, this->y / point.y);
+	}
+
+	void Point::operator /=(const Point& point)
+	{
+		this->x /= point.x;
+		this->y /= point.y;
 	}
 
 	Point Point::operator +(const float value)
@@ -113,9 +127,21 @@ namespace spic {
 		return Point(this->x * value, this->y * value);
 	}
 
+	void Point::operator *=(const float value)
+	{
+		this->x *= value;
+		this->y *= value;
+	}
+
 	Point Point::operator /(const float value)
 	{
 		return Point(this->x / value, this->y / value);
+	}
+
+	void Point::operator /=(const float value)
+	{
+		this->x /= value;
+		this->y /= value;
 	}
 
 	float Point::DotProduct(const Point& point)

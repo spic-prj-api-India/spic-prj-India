@@ -146,15 +146,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AimListener.cpp" />
     <ClCompile Include="CollisionDetectionScript.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="KeyListener.cpp" />
-    <ClCompile Include="MouseListener.cpp" />
+    <ClCompile Include="MouseMoveListener.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AimListener.h" />
     <ClInclude Include="CollisionDetectionScript.h" />
     <ClInclude Include="KeyListener.h" />
-    <ClInclude Include="MouseListener.h" />
+    <ClInclude Include="FollowMouseListener.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GameEninge\GameEninge.vcxproj">
@@ -166,7 +168,7 @@
   </ImportGroup>
   <ItemGroup>
     <Content Include="assets\**">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-</ItemGroup>
+  </ItemGroup>
 </Project>

@@ -41,7 +41,7 @@ namespace spic::extensions{
 		* @brief Adds force to an entity with name
 		* @spicapi
 		*/
-		virtual void AddForce(const std::string& entityName, const spic::Point& forceDirection) = 0;
+		virtual void AddForce(const std::shared_ptr<GameObject>& entity, const spic::Point& forceDirection) = 0;
 
 		/**
 		* @brief Gets linear velocity of entity with name

@@ -106,6 +106,8 @@ std::vector<std::shared_ptr<spic::GameObject>> EntityManager::GetEntities() {
 
 void EntityManager::AddEntity(const std::shared_ptr<spic::GameObject>& entity)
 {
+	if (entity->Name().empty())
+		throw std::exception("Entity requires a name.");
 	entities.push_back(entity);
 }
 

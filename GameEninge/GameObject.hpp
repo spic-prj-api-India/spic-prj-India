@@ -195,12 +195,21 @@ namespace spic {
 		static void Destroy(Component* obj);
 
 		/**
-		 * @brief Constructor.
-		 * @details Object will be created with name
-		 * @param name The name for the game object.
-		 * @spicapi
-		 */
-		GameObject(const std::string& name);
+		* @brief Create function.
+		* @details The new GameObject will be added to a statically
+		*          available collection.  This makes the
+		*          Find()-functions possible.
+		* @param gameObject The game object.
+		* @spicapi
+		*/
+		static void Create(const std::shared_ptr<GameObject>& gameObject);
+
+		/**
+		 * @brief Gets game object by name
+		 * @param name Name of game object
+		 * @return A shared pointer to the game object
+		*/
+		static const std::shared_ptr<GameObject> GetByName(const std::string& name);
 
 		/**
 		 * @brief Does the object exist? TODO wat wordt hiermee bedoeld?

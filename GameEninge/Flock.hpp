@@ -20,8 +20,9 @@ namespace spic {
      */
     class Flock : public spic::GameObject {  
     public:
-        Flock(const spic::FlockBehaviour flockBehaviour, const std::shared_ptr<spic::GameObject> target, const float maxSteeringForce,
-            const float maxSpeed, const float flockBehaviourWeight);
+        Flock(const spic::FlockBehaviour flockBehaviour, const float maxSteeringForce, const float maxSpeed);
+
+        float Heading();
 
         void FlockBehaviour(const spic::FlockBehaviour flockBehaviour);
 
@@ -31,7 +32,8 @@ namespace spic {
         void Alignment(const float alignmentWeight);
         void Cohesion(const float cohesionWeight);
 
-        void Target(const std::shared_ptr<spic::GameObject> target);
+        void Target(std::unique_ptr<Point> newTarget, const float targetWeight);
+        void Target(std::unique_ptr<Point> newTarget);
 
         void StartFlock();
         void UpdateFlock(const std::vector<std::shared_ptr<Flock>>& flocks);
@@ -39,10 +41,10 @@ namespace spic {
     private:
         Point Calculate(const std::vector<std::shared_ptr<Flock>>& flocks);
 
-        Point Seek();
-        Point Flee();
-        Point Arrival();
-        Point Wander();
+        Point Seek(Point& target);
+        Point Flee(Point& target);
+        Point Arrival(Point& target);
+        Point Wander(Point& target);
 
         Point WallAvoidance();
         Point ObstacleAvoidance();
@@ -53,12 +55,14 @@ namespace spic {
 
         void ApplyForce(const Point& force);
     private:
-        std::shared_ptr<spic::GameObject> target;
         spic::FlockBehaviour flockBehaviour;
-        float flockBehaviourWeight;
         float maxSteeringForce;
         float maxSpeed;
         bool paused;
+
+        // Target
+        std::unique_ptr<Point> target;
+        float targetWeight;
 
         // Seperation
         float seperationWeight;
@@ -85,6 +89,7 @@ namespace spic {
         bool useSeperation;
         bool useAlignment;
         bool useCohesion;
+        bool useTarget;
     };
 
 }

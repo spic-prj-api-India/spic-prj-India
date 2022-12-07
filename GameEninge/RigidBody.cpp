@@ -60,6 +60,6 @@ namespace spic {
 			return;
 		std::weak_ptr<extensions::PhysicsExtension1> physicsExtension = engine->GetExtension<extensions::PhysicsExtension1>();
 		if (const auto& box2DExtension = physicsExtension.lock())
-			box2DExtension->AddForce(this->gameObject->Name(), forceDirection);
+			box2DExtension->AddForce(GameObject::GetByName(this->gameObject->Name()), forceDirection);
 	}
 }
