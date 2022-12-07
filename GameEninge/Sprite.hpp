@@ -18,16 +18,16 @@ namespace spic {
 		Sprite();
 
 		/// @brief 
-		/// @param sprite 
-		/// @param color 
-		/// @param flipX 
-		/// @param flipY 
-		/// @param sortingLayer 
-		/// @param orderInLayer 
-		/// @param x 
-		/// @param y 
-		/// @param height 
-		/// @param width 
+		/// @param sprite
+		/// @param sortingLayer Default 0 
+		/// @param orderInLayer Default 0 
+		/// @param color Default white 
+		/// @param flipX Default false 
+		/// @param flipY Default false
+		/// @param x Default 0 
+		/// @param y Default 0 
+		/// @param height Default 0 
+		/// @param width Default 0 
 		Sprite(const std::string& sprite
 			, const int sortingLayer = 0
 			, const int orderInLayer = 0
