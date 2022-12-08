@@ -172,6 +172,7 @@
     <ClInclude Include="BehaviourScript.hpp" />
     <ClInclude Include="BoxCollider.hpp" />
     <ClInclude Include="Button.hpp" />
+    <ClInclude Include="ButtonClickListener.hpp" />
     <ClInclude Include="Camera.hpp" />
     <ClInclude Include="CastException.hpp" />
     <ClInclude Include="Chunk.hpp" />
@@ -183,6 +184,7 @@
     <ClInclude Include="ContainerHelper.hpp" />
     <ClInclude Include="DataSystem.hpp" />
     <ClInclude Include="Debug.hpp" />
+    <ClInclude Include="Defaults.hpp" />
     <ClInclude Include="GameEngine.hpp" />
     <ClInclude Include="EntityManager.hpp" />
     <ClInclude Include="GameObject.hpp" />
@@ -204,6 +206,7 @@
     <ClInclude Include="Point.hpp" />
     <ClInclude Include="Renderer.hpp" />
     <ClInclude Include="RenderingSystem.hpp" />
+    <ClInclude Include="StringHelper.hpp" />
     <ClInclude Include="RigidBody.hpp" />
     <ClInclude Include="Sample.hpp" />
     <ClInclude Include="Scene.hpp" />
@@ -225,6 +228,8 @@
     <ClCompile Include="Animator.cpp" />
     <ClCompile Include="AudioManager.cpp" />
     <ClCompile Include="AudioSource.cpp" />
+    <ClCompile Include="Button.cpp" />
+    <ClCompile Include="ButtonClickListener.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Chunk.cpp" />
     <ClCompile Include="BehaviourScript.cpp" />
@@ -241,6 +246,7 @@
     <ClCompile Include="Point.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Sprite.cpp" />
+    <ClCompile Include="StringHelper.cpp" />
     <ClCompile Include="Text.cpp" />
     <ClCompile Include="UIObject.cpp" />
     <ClCompile Include="RendererImpl.cpp" />
@@ -264,8 +270,14 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="UISprite.qrc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
+  <ItemGroup>
+    <Content Include="defaults\**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
 </Project>

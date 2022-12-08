@@ -18,7 +18,7 @@ namespace spic::internal::systems {
 		* @brief Loads data in game object
 		* @spicapi
 		*/
-		void Start(std::vector<std::shared_ptr<spic::GameObject>>& entities) override;
+		void Start(std::vector<std::shared_ptr<spic::GameObject>>& entities, Scene& currentScene) override;
 
 		/**
 		* @brief Saves data in game object

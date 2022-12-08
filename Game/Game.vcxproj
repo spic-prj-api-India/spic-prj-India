@@ -146,15 +146,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CameraMovementScript.cpp" />
     <ClCompile Include="CollisionDetectionScript.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="KeyListener.cpp" />
     <ClCompile Include="MouseListener.cpp" />
+    <ClCompile Include="MenuScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Box.h" />
+    <ClInclude Include="CameraMovementScript.h" />
     <ClInclude Include="CollisionDetectionScript.h" />
+    <ClInclude Include="GameScene.h" />
     <ClInclude Include="KeyListener.h" />
+    <ClInclude Include="MenuScene.h" />
     <ClInclude Include="MouseListener.h" />
   </ItemGroup>
   <ItemGroup>

@@ -49,7 +49,7 @@ namespace spic
 					const float x = static_cast<float>(j * tileSize);
 					const float y = static_cast<float>(i * tileSize);
 					Transform transform = Transform(Point(x, y), 0.0f, 1.0f);
-					spic::internal::Rendering::DrawSprite(&transform, false, sprite.get());
+					spic::internal::Rendering::DrawSprite(&transform, sprite.get());
 				}
 			}
 		}

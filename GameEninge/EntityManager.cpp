@@ -48,7 +48,7 @@ void EntityManager::Init()
 	std::unique_ptr<systems::DataSystem> dataSystem = std::make_unique<systems::DataSystem>();
 	AddInternalSystem(std::move(inputSystem), 0);
 	AddInternalSystem(std::move(physicsSystem), 1);
-	AddInternalSystem(std::move(scriptSystem), 1);
+	//AddInternalSystem(std::move(scriptSystem), 1);
 	AddInternalSystem(std::move(dataSystem), 1);
 	AddInternalSystem(std::move(renderingSystem), 2);
 }
@@ -59,6 +59,21 @@ void EntityManager::Reset()
 	systems.clear();
 	scenes.clear();
 	scene = nullptr;
+}
+
+std::vector<std::shared_ptr<spic::GameObject>> EntityManager::GetEntities() {
+	return entities;
+}
+
+void EntityManager::AddEntity(const std::shared_ptr<spic::GameObject>& entity)
+{
+	entities.push_back(entity);
+}
+
+void EntityManager::RemoveEntity(const std::shared_ptr<spic::GameObject>& entity) {
+	entities.erase(
+		std::remove(entities.begin(), entities.end(), entity),
+		entities.end());
 }
 
 void EntityManager::RegisterScene(const std::string& sceneName, std::shared_ptr<Scene> scene)
@@ -84,35 +99,8 @@ void EntityManager::SetScene(const std::string& sceneName)
 {
 	if (!scenes.count(sceneName))
 		throw std::exception("Scene does not exist.");
-	DestroyScene();
 	scene = scenes[sceneName];
-	entities.clear();
-	for (auto& entity : scene->Contents())
-	{
-		entities.push_back(entity);
-	}
-	for (const auto& systemsMap : systems)
-	{
-		for (const auto& system : systemsMap.second)
-		{
-			system->Start(entities);
-		}
-	}
-}
-
-std::vector<std::shared_ptr<spic::GameObject>> EntityManager::GetEntities() {
-	return entities;
-}
-
-void EntityManager::AddEntity(const std::shared_ptr<spic::GameObject>& entity)
-{
-	entities.push_back(entity);
-}
-
-void EntityManager::RemoveEntity(const std::shared_ptr<spic::GameObject>& entity) {
-	entities.erase(
-		std::remove(entities.begin(), entities.end(), entity),
-		entities.end());
+	SetScene(scene);
 }
 
 void EntityManager::SetScene(std::shared_ptr<Scene> newScene)
@@ -120,7 +108,7 @@ void EntityManager::SetScene(std::shared_ptr<Scene> newScene)
 	DestroyScene();
 	scene = newScene;
 	entities.clear();
-	TileMap* tileMap = scene->TileMap();
+	const TileMap* tileMap = scene->TileMap();
 	if (tileMap != nullptr) {
 		for (auto& entity : scene->TileMap()->CollisionEntities()) {
 			entities.push_back(entity);
@@ -134,7 +122,7 @@ void EntityManager::SetScene(std::shared_ptr<Scene> newScene)
 	{
 		for (const auto& system : systemsMap.second)
 		{
-			system->Start(entities);
+			system->Start(entities, *scene);
 		}
 	}
 

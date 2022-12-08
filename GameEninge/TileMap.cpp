@@ -21,11 +21,11 @@ namespace spic
 		collisionEntities.emplace_back(entity);
 	}
 
-	std::vector<std::shared_ptr<spic::GameObject>> TileMap::CollisionEntities() {
+	std::vector<std::shared_ptr<spic::GameObject>> TileMap::CollisionEntities() const {
 		return collisionEntities;
 	}
 
-	void TileMap::Render()
+	void TileMap::Render() const
 	{
 		for (const auto& layer : tileLayers) layer.second->Render();
 	}

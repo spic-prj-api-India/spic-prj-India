@@ -3,8 +3,9 @@
 
 #include <string>
 #include <regex>
+#include <memory>
 
-namespace spic::internal {
+namespace spic::TypeHelper {
 	/**
 	* @brief Gets name of type
 	* @spicapi

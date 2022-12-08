@@ -166,6 +166,9 @@
     <Filter Include="Source Files\core\systems\data">
       <UniqueIdentifier>{27aeaf8d-a913-428a-b880-8759f42deda0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\helpers">
+      <UniqueIdentifier>{9f084e52-f411-4ec3-a73b-4e96a26e3e9e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AudioSource.hpp">
@@ -222,9 +225,6 @@
     <ClInclude Include="AudioInfo.hpp">
       <Filter>Header Files\components\audio\SDL2Audio</Filter>
     </ClInclude>
-    <ClInclude Include="ISystem.hpp">
-      <Filter>Source Files\core\systems</Filter>
-    </ClInclude>
     <ClInclude Include="MapParser.hpp">
       <Filter>Header Files\core\tilemap</Filter>
     </ClInclude>
@@ -233,9 +233,6 @@
     </ClInclude>
     <ClInclude Include="InputSystem.hpp">
       <Filter>Header Files\core\systems\input</Filter>
-    </ClInclude>
-    <ClInclude Include="ISystem.hpp">
-      <Filter>Header Files\systems</Filter>
     </ClInclude>
     <ClInclude Include="WindowValues.hpp">
       <Filter>Header Files\core\systems\rendering</Filter>
@@ -303,6 +300,9 @@
     <ClInclude Include="Transform.hpp">
       <Filter>Header Files\objects</Filter>
     </ClInclude>
+    <ClInclude Include="StringHelper.hpp">
+      <Filter>Header Files\helpers</Filter>
+    </ClInclude>
     <ClInclude Include="UIObject.hpp">
       <Filter>Header Files\objects</Filter>
     </ClInclude>
@@ -335,6 +335,21 @@
     </ClInclude>
     <ClInclude Include="Persistable.hpp">
       <Filter>Header Files\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="ContainerHelper.hpp">
+      <Filter>Header Files\helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="ButtonClickListener.hpp">
+      <Filter>Header Files\core\systems\input</Filter>
+    </ClInclude>
+    <ClInclude Include="ISystem.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Defaults.hpp">
+      <Filter>Header Files\core</Filter>
+    </ClInclude>
+    <ClInclude Include="ISystem.hpp">
+      <Filter>Header Files\core\interfaces</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -452,11 +467,21 @@
     <ClCompile Include="Input.cpp">
       <Filter>Source Files\models</Filter>
     </ClCompile>
+    <ClCompile Include="StringHelper.cpp">
+      <Filter>Source Files\helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="ButtonClickListener.cpp">
+      <Filter>Source Files\core\systems\input</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>Source Files\objects</Filter>
+    </ClCompile>
     <ClCompile Include="DataSystem.cpp">
       <Filter>Source Files\core\systems\data</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="UISprite.qrc" />
   </ItemGroup>
 </Project>

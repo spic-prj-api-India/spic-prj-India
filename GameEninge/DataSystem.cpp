@@ -6,7 +6,7 @@ namespace spic::internal::systems {
 	DataSystem::DataSystem()
 	{}
 
-	void DataSystem::Start(std::vector<std::shared_ptr<spic::GameObject>>& entities)
+	void DataSystem::Start(std::vector<std::shared_ptr<spic::GameObject>>& entities, Scene& currentScene)
 	{
 		// Data ophalen uit xml's
 		// Door de data loopen
@@ -27,11 +27,11 @@ namespace spic::internal::systems {
 		// Eerst alle childs in de lijst, daarna pas omhoog werken en parent toevoegen
 		std::vector<std::shared_ptr<spic::Persistable>> persistableEntities;
 		for (const auto& entity : entities) {
-			if (SharedPtrIsOfType<spic::Persistable>(entity))
-				persistableEntities.emplace_back(CastSharedPtrToType<spic::Persistable>(entity));
+			if (spic::TypeHelper::SharedPtrIsOfType<spic::Persistable>(entity))
+				persistableEntities.emplace_back(spic::TypeHelper::CastSharedPtrToType<spic::Persistable>(entity));
 			for (const auto& child : entity->GetChildren()) {
-				if (SharedPtrIsOfType<spic::Persistable>(child))
-					persistableEntities.emplace_back(CastSharedPtrToType<spic::Persistable>(child));
+				if (spic::TypeHelper::SharedPtrIsOfType<spic::Persistable>(child))
+					persistableEntities.emplace_back(spic::TypeHelper::CastSharedPtrToType<spic::Persistable>(child));
 			}
 		}
 		return persistableEntities;
