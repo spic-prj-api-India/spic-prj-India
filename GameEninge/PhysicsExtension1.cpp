@@ -99,9 +99,16 @@ namespace spic::extensions {
 			if (bodies.count(name) == 0)
 				CreateEntity(entity);
 			b2Body* body = bodies[name];
-			const b2Vec2 force = { forceDirection.x, forceDirection.y };
+			b2Vec2 force = { forceDirection.x, forceDirection.y };
 
-			body->ApplyForce(force, body->GetWorldCenter(), true);
+			body->ApplyForce(force, body->GetWorldCenter(), true);	
+
+			//body->ApplyLinearImpulseToCenter({ sinf(body->GetAngle()) * body->GetAngularVelocity(), -cosf(body->GetAngle()) * body->GetAngularVelocity() }, true);
+			
+			/*float desiredAngle = atan2f(-forceDirection.x, forceDirection.y);
+			float nextAngle = body->GetAngle() + body->GetAngularVelocity() / 3.0f;
+			float totalRotation = desiredAngle - nextAngle;
+			body->ApplyTorque(totalRotation < 0.0f ? -10.0f : 10.0f, false);*/
 		}
 
 		Point GetLinearVelocity(const std::string& name) {

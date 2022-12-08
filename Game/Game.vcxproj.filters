@@ -25,6 +25,12 @@
     <Filter Include="Header Files\listeners">
       <UniqueIdentifier>{525cfa17-ca8c-48c7-9473-876d036c2661}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\objects">
+      <UniqueIdentifier>{08cfb6f1-0b3a-4a0a-8571-3076ab7468eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\objects">
+      <UniqueIdentifier>{33e87f26-3048-4e00-97cc-e1b10e8c413f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -42,6 +48,9 @@
     <ClCompile Include="AimListener.cpp">
       <Filter>Source Files\listeners</Filter>
     </ClCompile>
+    <ClCompile Include="Rocket.cpp">
+      <Filter>Source Files\objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CollisionDetectionScript.h">
@@ -55,6 +64,9 @@
     </ClInclude>
     <ClInclude Include="AimListener.h">
       <Filter>Header Files\listeners</Filter>
+    </ClInclude>
+    <ClInclude Include="Rocket.h">
+      <Filter>Header Files\objects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

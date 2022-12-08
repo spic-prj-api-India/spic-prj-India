@@ -22,15 +22,16 @@ namespace spic {
     public:
         Flock(const spic::FlockBehaviour flockBehaviour, const float maxSteeringForce, const float maxSpeed);
 
-        float Heading();
+        Point Velocity();
+        float Mass();
 
         void FlockBehaviour(const spic::FlockBehaviour flockBehaviour);
 
         void WallAvoidance(const float wallAvoidanceWeight, const float width, const float height);
         void ObstacleAvoidance(const float obstacleAvoidanceWeight, const float feelerTreshold);
-        void Seperation(const float seperationWeight);
-        void Alignment(const float alignmentWeight);
-        void Cohesion(const float cohesionWeight);
+        void Seperation(const float seperationWeight, const float desiredSeparation);
+        void Alignment(const float alignmentWeight, const float viewRadius);
+        void Cohesion(const float cohesionWeight, const float viewRadius);
 
         void Target(std::unique_ptr<Point> newTarget, const float targetWeight);
         void Target(std::unique_ptr<Point> newTarget);
@@ -53,7 +54,7 @@ namespace spic {
         Point Align(const std::vector<std::shared_ptr<Flock>>& flocks);
         Point Cohere(const std::vector<std::shared_ptr<Flock>>& flocks);
 
-        void ApplyForce(const Point& force);
+        void ApplyForce(Point& force);
     private:
         spic::FlockBehaviour flockBehaviour;
         float maxSteeringForce;
@@ -66,12 +67,14 @@ namespace spic {
 
         // Seperation
         float seperationWeight;
+        float desiredSeparation;
 
         // Alignment
         float alignmentWeight;
 
         // Cohesion
         float cohesionWeight;
+        float viewRadius;
 
         // Wall avoidance
         float wallAvoidanceWeight;

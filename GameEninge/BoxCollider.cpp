@@ -5,6 +5,9 @@ namespace spic {
 	BoxCollider::BoxCollider() : width{ 0.0f }, height{ 0.0f }
 	{}
 
+	BoxCollider::BoxCollider(const float width, const float height) : width{ width }, height{ height }
+	{}
+
 	float BoxCollider::Width() const
 	{
 		return width;

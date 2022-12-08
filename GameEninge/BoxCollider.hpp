@@ -13,6 +13,8 @@ namespace spic {
         public:
             BoxCollider();
 
+            BoxCollider(const float width, const float height);
+
             /**
              * @brief The collider's width
              * @return The current width

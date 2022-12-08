@@ -151,12 +151,14 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="KeyListener.cpp" />
     <ClCompile Include="MouseMoveListener.cpp" />
+    <ClCompile Include="Rocket.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AimListener.h" />
     <ClInclude Include="CollisionDetectionScript.h" />
     <ClInclude Include="KeyListener.h" />
     <ClInclude Include="FollowMouseListener.h" />
+    <ClInclude Include="Rocket.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GameEninge\GameEninge.vcxproj">

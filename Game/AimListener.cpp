@@ -1,9 +1,9 @@
 #include "AimListener.h"
 #include "Input.hpp"
-#include "GeneralHelper.hpp"
-#include <Flock.hpp>
 #include <BoxCollider.hpp>
 #include <RigidBody.hpp>
+#include "Rocket.h"
+#include <GeneralHelper.hpp>
 
 AimListener::AimListener(const std::shared_ptr<spic::GameObject>& weapon) : rocketCount { 0 }
 {
@@ -37,32 +37,12 @@ void AimListener::OnMouseReleased() {
 
 void AimListener::Shoot()
 {
-	float angleDeg = spic::GeneralHelper::RAD2DEG<float>(this->angle) + 90.0f;
-
-	std::shared_ptr<spic::Flock> rocket = std::make_shared<spic::Flock>(spic::FlockBehaviour::SEEK, 0.05f, 2.0f);
-	std::string rocketName = "Rocket" + std::to_string(rocketCount);
-	std::string rocketTag = "rocket";
-	std::shared_ptr<spic::Transform> rocketTransform = std::make_shared<spic::Transform>();
-	rocketTransform->position = weapon->Transform()->position;
-	rocketTransform->rotation = spic::GeneralHelper::DEG2RAD<float>(angleDeg);
-	rocketTransform->scale = 0.125f;
-	std::shared_ptr<spic::BoxCollider> rocketCollider = std::make_shared<spic::BoxCollider>();
-	rocketCollider->Width(25.5f);
-	rocketCollider->Height(75.0f);
-	std::shared_ptr<spic::RigidBody> rocketRigidBody = std::make_shared<spic::RigidBody>(0.75f, 1.0f, spic::BodyType::dynamicBody);
-	auto rocketSprite = std::make_shared<spic::Sprite>("assets/textures/missile.png", 1);
-
-	/*rocket->Seperation(1.5f);
-	rocket->Alignment(1.5f);
-	rocket->Cohesion(1.5f);*/
+	const float angleDeg = spic::GeneralHelper::RAD2DEG<float>(this->angle) + 90.0f;
+	const float desiredAngle = spic::GeneralHelper::DEG2RAD<float>(angleDeg);
+	const std::string name = "Rocket" + std::to_string(rocketCount);
+	std::shared_ptr<Rocket> rocket = std::make_shared<Rocket>(name, weapon->Transform()->position, desiredAngle);
 	rocket->StartFlock();
 
-	rocket->Name(rocketName);
-	rocket->Tag(rocketTag);
-	rocket->Transform(rocketTransform);
-	rocket->AddComponent<spic::BoxCollider>(rocketCollider);
-	rocket->AddComponent<spic::RigidBody>(rocketRigidBody);
-	rocket->AddComponent<spic::Sprite>(rocketSprite);
 	spic::GameObject::Create(rocket);
 	followMouseListener->AddFollower(rocket);
 
@@ -72,5 +52,5 @@ void AimListener::Shoot()
 	force.x = weaponPosition.x - mousePosition.x;
 	force.y = weaponPosition.y - mousePosition.y;
 	force.Normalize();
-	rocketRigidBody->AddForce(force);
+	rocket->rigidBody->AddForce(force);
 }

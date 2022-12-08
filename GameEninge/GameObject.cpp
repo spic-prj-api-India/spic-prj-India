@@ -103,7 +103,7 @@ namespace spic {
 		return tag;
 	}
 
-	void GameObject::Tag(std::string& newTag) {
+	void GameObject::Tag(const std::string& newTag) {
 		tag = newTag;
 	}
 

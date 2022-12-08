@@ -9,11 +9,16 @@ namespace spic {
 	{
 	}
 
-	float Flock::Heading()
+	Point Flock::Velocity()
 	{
 		std::shared_ptr<RigidBody> body = this->GetComponent<RigidBody>();
-		Point velocity = body->Velocity();
-		return velocity.Normalize();
+		return body->Velocity();
+	}
+
+	float Flock::Mass()
+	{
+		std::shared_ptr<RigidBody> body = this->GetComponent<RigidBody>();
+		return body->Mass();
 	}
 
 	void Flock::Target(std::unique_ptr<Point> newTarget, const float targetWeight)
@@ -45,22 +50,25 @@ namespace spic {
 		this->feelerTreshold = feelerTreshold;
 	}
 
-	void Flock::Seperation(const float seperationWeight)
+	void Flock::Seperation(const float seperationWeight, const float desiredSeparation)
 	{
 		this->useSeperation = true;
 		this->seperationWeight = seperationWeight;
+		this->desiredSeparation = desiredSeparation;
 	}
 
-	void Flock::Alignment(const float alignmentWeight)
+	void Flock::Alignment(const float alignmentWeight, const float viewRadius)
 	{
 		this->useAlignment = true;
 		this->alignmentWeight = alignmentWeight;
+		this->viewRadius = viewRadius;
 	}
 
-	void Flock::Cohesion(const float cohesionWeight)
+	void Flock::Cohesion(const float cohesionWeight, const float viewRadius)
 	{
 		this->useCohesion = true;
 		this->cohesionWeight = cohesionWeight;
+		this->viewRadius = viewRadius;
 	}
 
 	void Flock::StartFlock()
@@ -135,8 +143,7 @@ namespace spic {
 	Point Flock::Seek(Point& target)
 	{
 		// Game object info
-		Point location = this->Transform()->position;
-		std::shared_ptr<RigidBody> body = this->GetComponent<RigidBody>();
+		const Point& location = this->Transform()->position;
 
 		Point desired = target - location;
 
@@ -145,8 +152,8 @@ namespace spic {
 		desired.Normalize();
 		desired *= maxSpeed;
 
-		Point steeringForce = desired - body->Velocity();
-		return steeringForce * body->Mass();
+		Point steeringForce = desired - Velocity();
+		return steeringForce;
 	}
 
 	Point Flock::Flee(Point& target)
@@ -178,12 +185,14 @@ namespace spic {
 	{
 		Point steeringForce;
 		for (const auto& flock : flocks) {
-			if (flock.get() != this) {
-				Point toAgent = Transform()->position - flock->Transform()->position;
+			if (flock.get() == this)
+				continue;
+			Point toAgent = Transform()->position - flock->Transform()->position;
+			const float distance = toAgent.Length();
 
+			if (distance > 0.0f && distance < desiredSeparation) {
 				toAgent.Normalize();
-				steeringForce += toAgent / toAgent.Length();
-
+				steeringForce += toAgent / distance;
 			}
 		}
 		return steeringForce;
@@ -194,15 +203,20 @@ namespace spic {
 		Point averageHeading;
 		float neighborCount = 0.0f;
 		for (const auto& flock : flocks) {
-			if (flock.get() != this) {
-				averageHeading += flock->Heading();
+			if (flock.get() == this)
+				continue;
+			Point toAgent = Transform()->position - flock->Transform()->position;
+			const float distance = toAgent.Length();
+
+			if (distance > 0.0f && distance < viewRadius) {
+				averageHeading += flock->Velocity();
 				neighborCount++;
 			}
 		}
 		if (neighborCount > 0.0f)
 		{
 			averageHeading /= neighborCount;
-			averageHeading -= Heading();
+			averageHeading -= Velocity();
 		}
 		return averageHeading;
 	}
@@ -213,7 +227,12 @@ namespace spic {
 		float neighborCount = 0.0f;
 
 		for (const auto& flock : flocks) {
-			if (flock.get() != this) {
+			if (flock.get() == this)
+				continue;
+			Point toAgent = Transform()->position - flock->Transform()->position;
+			const float distance = toAgent.Length();
+
+			if (distance > 0.0f && distance < viewRadius) {
 				centerOfMass += flock->Transform()->position;
 				++neighborCount;
 			}
@@ -226,7 +245,7 @@ namespace spic {
 		return steeringForce;
 	}
 
-	void Flock::ApplyForce(const Point& force) {
-		this->GetComponent<RigidBody>()->AddForce(force);
+	void Flock::ApplyForce(Point& force) {
+		this->GetComponent<RigidBody>()->AddForce(force / Mass());
 	}
 }

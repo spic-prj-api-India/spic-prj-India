@@ -54,7 +54,7 @@ namespace spic {
 		 * @param tag Desired value.
 		 * @spicapi
 		 */
-		void Tag(std::string& newTag);
+		void Tag(const std::string& newTag);
 
 		/**
 		 * @brief Returns whether this game object is itself active.
