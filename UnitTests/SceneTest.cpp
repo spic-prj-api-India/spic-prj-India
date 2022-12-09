@@ -41,34 +41,6 @@ TEST_F(SceneTest, AddContentSuccess)
 	EXPECT_FALSE(testScene->Contents().empty());
 }
 
-TEST_F(SceneTest, GetTileMapPathSuccess) 
-{
-	// 1. Arrange
-	std::string testTileMapPath = "Lorem/Ipsum/Lorem";
-	testScene->TileMapPath(testTileMapPath);
-	
-	// 2. Act
-
-	// 3. Assert
-	EXPECT_EQ(testScene->TileMapPath(), testTileMapPath);
-	EXPECT_FALSE(testScene->TileMapPath().empty());
-
-}
-
-TEST_F(SceneTest, SetTileMapPathSuccess)
-{
-	// 1. Arrange
-	std::string testTileMapPath = "Lorem/Ipsum/Lorem";
-
-	// 2. Act
-	testScene->TileMapPath(testTileMapPath);
-
-
-	// 3. Assert
-	EXPECT_EQ(testScene->TileMapPath(), testTileMapPath);
-	EXPECT_FALSE(testScene->TileMapPath().empty());
-}
-
 TEST_F(SceneTest, GetCameraSuccess) 
 {
 	// 1. Arrange
@@ -99,10 +71,10 @@ TEST_F(SceneTest, GetUpdateSettingSuccess)
 	// 1. Arrange
 
 	// 2. Act
-	testScene->UpdateSetting(CAMERA_VIEW);
+	testScene->UpdateSetting(spic::UpdateSetting::CAMERA_VIEW);
 
 	// 3. Assert
-	EXPECT_EQ(testScene->UpdateSetting(), CAMERA_VIEW);
+	EXPECT_EQ(testScene->UpdateSetting(), spic::UpdateSetting::CAMERA_VIEW);
 }
 
 TEST_F(SceneTest, SetUpdateSettingSuccess) 
@@ -110,8 +82,8 @@ TEST_F(SceneTest, SetUpdateSettingSuccess)
 	// 1. Arrange
 
 	// 2. Act
-	testScene->UpdateSetting(CAMERA_VIEW);
+	testScene->UpdateSetting(spic::UpdateSetting::CAMERA_VIEW);
 
 	// 3. Assert
-	EXPECT_EQ(testScene->UpdateSetting(), CAMERA_VIEW);
+	EXPECT_EQ(testScene->UpdateSetting(), spic::UpdateSetting::CAMERA_VIEW);
 }

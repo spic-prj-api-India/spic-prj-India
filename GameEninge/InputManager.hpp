@@ -59,10 +59,28 @@ namespace spic::internal {
 		void UnSubscribe(spic::Input::KeyCode keyEvent, const std::shared_ptr<spic::IKeyListener>& keyListener);
 
 		/**
+		* @brief Unsubscribes all listeners for a specific key event
+		* @spicapi
+		*/
+		void UnSubscribe(spic::Input::KeyCode keyEvent);
+
+		/**
 		* @brief Unsubscribes a mouse listener for a specific mouse event
 		* @spicapi
 		*/
 		void UnSubscribe(spic::Input::MouseButton mouseEvent, const std::shared_ptr<spic::IMouseListener>& mouseListener);
+	
+		/**
+		* @brief Unsubscribes all listeners for a specific mouse event
+		* @spicapi
+		*/
+		void UnSubscribe(spic::Input::MouseButton mouseEvent);
+
+		/**
+		* @brief Unsubscribes all listeners
+		* @spicapi
+		*/
+		void UnSubscribeAll();
 	private:
 		/**
 		* @brief Calls method OnKeyPressed of all key listeners for specific key event
@@ -80,7 +98,7 @@ namespace spic::internal {
 		* @brief Calls method OnMouseMoved of all mouse listeners
 		* @spicapi
 		*/
-		void TriggerMouseMoved() const;
+		void TriggerMouseMoved();
 
 		/**
 		* @brief Calls method OnMouseClicked of all mouse listeners for specific mouse event

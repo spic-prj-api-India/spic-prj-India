@@ -173,6 +173,7 @@
     <ClInclude Include="BehaviourScript.hpp" />
     <ClInclude Include="BoxCollider.hpp" />
     <ClInclude Include="Button.hpp" />
+    <ClInclude Include="ButtonClickListener.hpp" />
     <ClInclude Include="Camera.hpp" />
     <ClInclude Include="CastException.hpp" />
     <ClInclude Include="Chunk.hpp" />
@@ -182,7 +183,9 @@
     <ClInclude Include="Color.hpp" />
     <ClInclude Include="Component.hpp" />
     <ClInclude Include="ContainerHelper.hpp" />
+    <ClInclude Include="DataSystem.hpp" />
     <ClInclude Include="Debug.hpp" />
+    <ClInclude Include="Defaults.hpp" />
     <ClInclude Include="GameEngine.hpp" />
     <ClInclude Include="EntityManager.hpp" />
     <ClInclude Include="GameEngineInfo.hpp" />
@@ -197,6 +200,7 @@
     <ClInclude Include="InputManager.hpp" />
     <ClInclude Include="InputSystem.hpp" />
     <ClInclude Include="IPhysicsExtension.hpp" />
+    <ClInclude Include="Persistable.hpp" />
     <ClInclude Include="Flock.hpp" />
     <ClInclude Include="PhysicsExtension1.hpp" />
     <ClInclude Include="PhysicsSystem.hpp" />
@@ -205,10 +209,10 @@
     <ClInclude Include="Point.hpp" />
     <ClInclude Include="Renderer.hpp" />
     <ClInclude Include="RenderingSystem.hpp" />
+    <ClInclude Include="StringHelper.hpp" />
     <ClInclude Include="RigidBody.hpp" />
     <ClInclude Include="Sample.hpp" />
     <ClInclude Include="Scene.hpp" />
-    <ClInclude Include="ScriptSystem.hpp" />
     <ClInclude Include="Sprite.hpp" />
     <ClInclude Include="Text.hpp" />
     <ClInclude Include="TileLayer.hpp" />
@@ -227,10 +231,13 @@
     <ClCompile Include="Animator.cpp" />
     <ClCompile Include="AudioManager.cpp" />
     <ClCompile Include="AudioSource.cpp" />
+    <ClCompile Include="Button.cpp" />
+    <ClCompile Include="ButtonClickListener.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Chunk.cpp" />
     <ClCompile Include="BehaviourScript.cpp" />
     <ClCompile Include="Box2DCollisionListener.cpp" />
+    <ClCompile Include="DataSystem.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="GeneralHelper.cpp" />
     <ClCompile Include="IPhysicsExtension.cpp" />
@@ -244,6 +251,7 @@
     <ClCompile Include="Point.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Sprite.cpp" />
+    <ClCompile Include="StringHelper.cpp" />
     <ClCompile Include="Text.cpp" />
     <ClCompile Include="UIObject.cpp" />
     <ClCompile Include="RendererImpl.cpp" />
@@ -258,7 +266,6 @@
     <ClCompile Include="InputSystem.cpp" />
     <ClCompile Include="PhysicsSystem.cpp" />
     <ClCompile Include="RigidBody.cpp" />
-    <ClCompile Include="ScriptSystem.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="TileLayer.cpp" />
     <ClCompile Include="TileMap.cpp" />
@@ -267,8 +274,14 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="UISprite.qrc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
+  <ItemGroup>
+    <Content Include="defaults\**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
 </Project>

@@ -70,12 +70,27 @@ namespace spic {
 
 	void Input::UnSubscribe(KeyCode keyEvent, const std::shared_ptr<spic::IKeyListener>& keyListener)
 	{
-		spic::internal::InputManager::GetInstance()->Subscribe(keyEvent, keyListener);
+		spic::internal::InputManager::GetInstance()->UnSubscribe(keyEvent, keyListener);
+	}
+
+	void Input::UnSubscribe(KeyCode keyEvent)
+	{
+		spic::internal::InputManager::GetInstance()->UnSubscribe(keyEvent);
 	}
 
 	void Input::UnSubscribe(MouseButton mouseEvent, const std::shared_ptr<spic::IMouseListener>& mouseListener)
 	{
-		spic::internal::InputManager::GetInstance()->Subscribe(mouseEvent, mouseListener);
+		spic::internal::InputManager::GetInstance()->UnSubscribe(mouseEvent, mouseListener);
+	}
+
+	void Input::UnSubscribe(MouseButton mouseEvent)
+	{
+		spic::internal::InputManager::GetInstance()->UnSubscribe(mouseEvent);
+	}
+
+	void Input::UnSubscribeAll()
+	{
+		spic::internal::InputManager::GetInstance()->UnSubscribeAll();
 	}
 
 	void Input::ResetSubscribedEvents()

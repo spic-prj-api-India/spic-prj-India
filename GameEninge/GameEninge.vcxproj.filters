@@ -160,6 +160,15 @@
     <Filter Include="Source Files\helpers">
       <UniqueIdentifier>{9f084e52-f411-4ec3-a73b-4e96a26e3e9e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\core\systems\data">
+      <UniqueIdentifier>{142c002f-9e09-48f6-9a0b-b0238a85b97c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\core\systems\data">
+      <UniqueIdentifier>{27aeaf8d-a913-428a-b880-8759f42deda0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\helpers">
+      <UniqueIdentifier>{9f084e52-f411-4ec3-a73b-4e96a26e3e9e}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Header Files\core\systems\ai">
       <UniqueIdentifier>{6a12e60f-5e05-4fec-8a96-dc412db56dad}</UniqueIdentifier>
     </Filter>
@@ -197,9 +206,6 @@
     </ClInclude>
     <ClInclude Include="PhysicsSystem.hpp">
       <Filter>Header Files\core\systems\physics</Filter>
-    </ClInclude>
-    <ClInclude Include="ScriptSystem.hpp">
-      <Filter>Header Files\core\systems\scripts</Filter>
     </ClInclude>
     <ClInclude Include="CastException.hpp">
       <Filter>Header Files\exceptions</Filter>
@@ -294,6 +300,9 @@
     <ClInclude Include="Transform.hpp">
       <Filter>Header Files\objects</Filter>
     </ClInclude>
+    <ClInclude Include="StringHelper.hpp">
+      <Filter>Header Files\helpers</Filter>
+    </ClInclude>
     <ClInclude Include="UIObject.hpp">
       <Filter>Header Files\objects</Filter>
     </ClInclude>
@@ -321,23 +330,35 @@
     <ClInclude Include="PhysicsValues.hpp">
       <Filter>Header Files\extensions\physics</Filter>
     </ClInclude>
-    <ClInclude Include="GameEngineInfo.hpp">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="DataSystem.hpp">
+      <Filter>Header Files\core\systems\data</Filter>
+    </ClInclude>
+    <ClInclude Include="Persistable.hpp">
+      <Filter>Header Files\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="ContainerHelper.hpp">
+      <Filter>Header Files\helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="ButtonClickListener.hpp">
+      <Filter>Header Files\core\systems\input</Filter>
+    </ClInclude>
+    <ClInclude Include="Defaults.hpp">
+      <Filter>Header Files\core</Filter>
     </ClInclude>
     <ClInclude Include="ISystem.hpp">
       <Filter>Header Files\core\interfaces</Filter>
     </ClInclude>
-    <ClInclude Include="AISystem.hpp">
-      <Filter>Header Files\core\systems\ai</Filter>
+    <ClInclude Include="Flock.hpp">
+      <Filter>Header Files\objects</Filter>
     </ClInclude>
     <ClInclude Include="AudioManager.hpp">
       <Filter>Header Files\core\managers</Filter>
     </ClInclude>
-    <ClInclude Include="ISystem.hpp">
+    <ClInclude Include="GameEngineInfo.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Flock.hpp">
-      <Filter>Header Files\objects</Filter>
+    <ClInclude Include="AISystem.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -376,9 +397,6 @@
     </ClCompile>
     <ClCompile Include="PhysicsSystem.cpp">
       <Filter>Source Files\core\systems\physics</Filter>
-    </ClCompile>
-    <ClCompile Include="ScriptSystem.cpp">
-      <Filter>Source Files\core\systems\scripts</Filter>
     </ClCompile>
     <ClCompile Include="RendererImpl.cpp">
       <Filter>Source Files\core\systems\rendering</Filter>
@@ -452,6 +470,18 @@
     <ClCompile Include="Input.cpp">
       <Filter>Source Files\models</Filter>
     </ClCompile>
+    <ClCompile Include="StringHelper.cpp">
+      <Filter>Source Files\helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="ButtonClickListener.cpp">
+      <Filter>Source Files\core\systems\input</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>Source Files\objects</Filter>
+    </ClCompile>
+    <ClCompile Include="DataSystem.cpp">
+      <Filter>Source Files\core\systems\data</Filter>
+    </ClCompile>
     <ClCompile Include="Component.cpp">
       <Filter>Source Files\components</Filter>
     </ClCompile>
@@ -467,5 +497,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="UISprite.qrc" />
   </ItemGroup>
 </Project>

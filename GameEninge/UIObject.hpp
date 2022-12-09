@@ -4,7 +4,6 @@
 #include "GameObject.hpp"
 
 namespace spic {
-
     /**
      * @brief Base class for a user interface object like Button or Text.
      * @spicapi
@@ -16,13 +15,36 @@ namespace spic {
 
         public:
             UIObject();
-            float Width() const { return width; }
-            float Height() const { return height; }
+            UIObject(const float newWidth, const float newHeight);
 
-            void Width(const float widt) { width = widt; }
-            void Height(const float height) { this->height = height; }
+            /**
+             * @brief Gets width of UIObject.
+             * @return float.
+             * @spicapi
+            */
+            float Width() const;
+
+            /**
+             * @brief Gets height of UIObject.
+             * @return float.
+             * @spicapi
+            */
+            float Height() const;
+
+            /**
+            * @brief Sets width of UIObject.
+            * @param newWidth Desired value.
+            * @spicapi
+            */
+            void Width(const float newWidth);
+
+            /**
+            * @brief Sets height of UIObject.
+            * @param newHeight Desired value.
+            * @spicapi
+            */
+            void Height(const float newHeight);
     };
-
 }
 
 #endif // UIOBJECT_H_

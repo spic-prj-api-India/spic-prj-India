@@ -40,13 +40,13 @@ namespace spic
 		 * @return list with collision entities.
 		 * @spicapi
 		 */
-		std::vector<std::shared_ptr<spic::GameObject>> CollisionEntities();
+		std::vector<std::shared_ptr<spic::GameObject>> CollisionEntities() const;
 
 		/**
 		 * @brief Renders all tile layers.
 		 * @spicapi
 		 */
-		void Render();
+		void Render() const;
 	private:
 		std::map<int, std::unique_ptr<TileLayer>> tileLayers;
 		std::vector<std::shared_ptr<spic::GameObject>> collisionEntities;

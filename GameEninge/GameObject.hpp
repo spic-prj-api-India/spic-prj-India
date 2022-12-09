@@ -29,6 +29,16 @@ namespace spic {
 		virtual ~GameObject() = default;
 
 		/**
+		 * @brief Create instance function is used to 
+		 *			create derived classes of the game object in the engine.
+		 */
+		template<typename T>
+		static std::shared_ptr<T> CreateInstance()
+		{
+			return std::make_shared<T>();
+		}
+
+		/**
 		 * @brief Returns name of GameObject.
 		 * @return string.
 		 * @spicapi
@@ -90,7 +100,7 @@ namespace spic {
 		 * @return nullptr or transform.
 		 * @spicapi
 		 */
-		std::shared_ptr<Transform> Transform();
+		std::shared_ptr<Transform> Transform() const;
 
 		/**
 		 * @brief Sets tranform of GameObject.
@@ -98,22 +108,22 @@ namespace spic {
 		 * @spicapi
 		 */
 		void Transform(std::shared_ptr<spic::Transform> transform);
-		
+
 		/**
 		 * @brief const version of getting position
-		 * @return 
+		 * @return
 		*/
 		const Point Position() const;
-		
+
 		/**
 		 * @brief Const version of getting rotation
-		 * @return 
+		 * @return
 		*/
 		const float Rotation() const;
-		
+
 		/**
 		 * @brief Const version of scale
-		 * @return 
+		 * @return
 		*/
 		const float Scale() const;
 
@@ -233,7 +243,7 @@ namespace spic {
 		 */
 		bool operator==(const GameObject& other);
 
-		
+
 		/**
 		 * @brief Compare two gameObjects (used for sort function)
 		 * @param other The other object to compare this one with
@@ -313,21 +323,29 @@ namespace spic {
 		 */
 		template<class T>
 		std::vector<std::shared_ptr<T>> GetComponentsInParent() const;
-		
+
 		/**
 		 * @brief Adds a gameobject to an gameobject
-		 * @tparam T Has to be of type gameobject 
-		 * @param gameObject 
+		 * @tparam T Has to be of type gameobject
+		 * @param gameObject
 		*/
 		template<class T>
 		void AddChild(std::shared_ptr<T> gameObject);
-		
+
 		/**
 		 * @brief Gets all the children of this object
-		 * @param includeInactive If you want to include inactive children  
+		 * @param includeInactive If you want to include inactive children
 		 * @return A vector of gameobjects
 		*/
 		std::vector<std::shared_ptr<GameObject>> GetChildren(bool includeInactive = false) const;
+
+		/**
+		 * @brief Gets first child with given type
+		 * @return GameObject of type T
+		 * @spicapi
+		*/
+		template<class T>
+		std::shared_ptr<T> GetChild() const;
 
 		/**
 		 * @brief Gets the current parent
@@ -384,7 +402,7 @@ namespace spic {
 	template<class T>
 	void GameObject::AddComponent(std::shared_ptr<T> component)
 	{
-		spic::CastSharedPtrToType<Component>(component)->GameObject(*this);
+		spic::TypeHelper::CastSharedPtrToType<Component>(component)->GameObject(*this);
 		components.emplace_back(component);
 	}
 
@@ -448,6 +466,18 @@ namespace spic {
 			throw std::exception("Child can only have one parent");
 		children.emplace_back(gameObject);
 		gameObject->parent = this;
+	}
+
+	template<class T>
+	std::shared_ptr<T> GameObject::GetChild() const
+	{
+		for (const auto& child : GetChildren()) {
+			std::shared_ptr<T> castedChild = std::dynamic_pointer_cast<T>(child);
+			bool isChild = castedChild != nullptr;
+			if (isChild)
+				return castedChild;
+		}
+		return nullptr;
 	}
 }
 #endif // GAMEOBJECT_H_

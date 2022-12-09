@@ -1,6 +1,7 @@
 #include "InputManager.hpp"
 #include "Input.hpp"
 #include "GameEngine.hpp"
+#include "ContainerHelper.hpp"
 
 namespace spic::internal {
 	InputManager* InputManager::pinstance_{ nullptr };
@@ -39,25 +40,27 @@ namespace spic::internal {
 			currentMousePosition = newMousePosition;
 			TriggerMouseMoved();
 		}
-		for (const auto& keyEvent : keyEvents) {
-			if (spic::Input::GetKeyDown(keyEvent.first) && keyEvents[keyEvent.first] == false) {
-				keyEvents[keyEvent.first] = true;
-				TriggerKeyPressed(keyEvent.first);
+		for (const auto& key : ContainerHelper::GetKeys(keyEvents)) {
+			bool value = keyEvents[key];
+			if (spic::Input::GetKeyDown(key) && value == false) {
+				keyEvents[key] = true;
+				TriggerKeyPressed(key);
 			}
-			if (spic::Input::GetKeyUp(keyEvent.first) && keyEvents[keyEvent.first] == true) {
-				keyEvents[keyEvent.first] = false;
-				TriggerKeyReleased(keyEvent.first);
+			if (spic::Input::GetKeyUp(key) && value == true) {
+				keyEvents[key] = false;
+				TriggerKeyReleased(key);
 			}
 		}
-		for (const auto& mouseEvent : mouseEvents) {
-			if (spic::Input::GetMouseButtonDown(mouseEvent.first) && mouseEvents[mouseEvent.first] == false) {
-				mouseEvents[mouseEvent.first] = true;
-				TriggerMousePressed(mouseEvent.first);
+		for (const auto& key : ContainerHelper::GetKeys(mouseEvents)) {
+			bool value = mouseEvents[key];
+			if (spic::Input::GetMouseButtonDown(key) && value == false) {
+				mouseEvents[key] = true;
+				TriggerMousePressed(key);
 			}
-			if (spic::Input::GetMouseButtonUp(mouseEvent.first) && mouseEvents[mouseEvent.first] == true) {
-				mouseEvents[mouseEvent.first] = false;
-				TriggerMouseReleased(mouseEvent.first);
-				TriggerMouseClicked(mouseEvent.first);
+			if (spic::Input::GetMouseButtonUp(key) && value == true) {
+				mouseEvents[key] = false;
+				TriggerMouseReleased(key);
+				TriggerMouseClicked(key);
 			}
 		}
 	}
@@ -93,6 +96,15 @@ namespace spic::internal {
 		}
 	}
 
+	void InputManager::UnSubscribe(spic::Input::KeyCode keyEvent)
+	{
+		if (!keyEvents.count(keyEvent))
+			throw std::exception("Key event is not registrered.");
+		keyListeners[keyEvent].clear();
+		keyListeners.erase(keyListeners.find(keyEvent));
+		keyEvents.erase(keyEvents.find(keyEvent));
+	}
+
 	void InputManager::UnSubscribe(spic::Input::MouseButton mouseEvent, const std::shared_ptr<spic::IMouseListener>& mouseListener)
 	{
 		if (!mouseEvents.count(mouseEvent))
@@ -104,6 +116,23 @@ namespace spic::internal {
 			mouseListeners.erase(mouseListeners.find(mouseEvent));
 			mouseEvents.erase(mouseEvents.find(mouseEvent));
 		}
+	}
+
+	void InputManager::UnSubscribe(spic::Input::MouseButton mouseEvent)
+	{
+		if (!mouseEvents.count(mouseEvent))
+			throw std::exception("Mouse event is not registrered.");
+		mouseListeners[mouseEvent].clear();
+		mouseListeners.erase(mouseListeners.find(mouseEvent));
+		mouseEvents.erase(mouseEvents.find(mouseEvent));
+	}
+
+	void InputManager::UnSubscribeAll()
+	{
+		keyListeners.clear();
+		mouseListeners.clear();
+		keyEvents.clear();
+		mouseEvents.clear();
 	}
 
 	void InputManager::TriggerKeyPressed(spic::Input::KeyCode keyEvent)
@@ -120,10 +149,10 @@ namespace spic::internal {
 		}
 	}
 
-	void InputManager::TriggerMouseMoved() const
+	void InputManager::TriggerMouseMoved()
 	{
-		for (const auto& mousePair : mouseListeners) {
-			for (const std::shared_ptr<spic::IMouseListener>& mouseListener : mousePair.second) {
+		for (const auto& key : ContainerHelper::GetKeys(mouseListeners)) {
+			for (const std::shared_ptr<spic::IMouseListener>& mouseListener : mouseListeners[key]) {
 				mouseListener->OnMouseMoved();
 			}
 		}

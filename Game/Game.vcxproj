@@ -146,19 +146,29 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CameraMovementScript.cpp" />
     <ClCompile Include="AimListener.cpp" />
     <ClCompile Include="CollisionDetectionScript.cpp" />
+    <ClCompile Include="FlockingSystem.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="KeyListener.cpp" />
+    <ClCompile Include="MenuScene.cpp" />
     <ClCompile Include="MouseMoveListener.cpp" />
     <ClCompile Include="Rocket.cpp" />
+    <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AimListener.h" />
+    <ClInclude Include="Box.h" />
+    <ClInclude Include="CameraMovementScript.h" />
     <ClInclude Include="CollisionDetectionScript.h" />
+    <ClInclude Include="FlockingScene.h" />
+    <ClInclude Include="GameScene.h" />
     <ClInclude Include="KeyListener.h" />
     <ClInclude Include="FollowMouseListener.h" />
     <ClInclude Include="Rocket.h" />
+    <ClInclude Include="MenuScene.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GameEninge\GameEninge.vcxproj">

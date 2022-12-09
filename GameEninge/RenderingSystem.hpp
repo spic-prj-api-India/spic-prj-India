@@ -27,14 +27,19 @@ namespace spic::internal::systems {
 		* @brief Initiliazes system
 		* @spicapi
 		*/
-		void Start(std::vector<std::shared_ptr<spic::GameObject>>& entities) override;
+		void Start(std::vector<std::shared_ptr<spic::GameObject>>& entities, Scene& currentScene) override;
 
 		/**
 		* @brief Renders all entities in current scene
 		* @spicapi
 		*/
 		void Update(std::vector<std::shared_ptr<spic::GameObject>>& entities, Scene& currentScene) override;
-
+	private:
+		/**
+		 * @brief Filters entities between UI and non UI
+		 * @spicapi
+		 */
+		std::vector<std::vector<std::shared_ptr<spic::GameObject>>> GetFilteredEntities(const std::vector<std::shared_ptr<spic::GameObject>>& entities) const;
 	};
 }
 

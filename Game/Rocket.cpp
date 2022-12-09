@@ -21,7 +21,7 @@ void Rocket::SetAttributes(const std::string& name, const spic::Point& position,
 
 void Rocket::SetWeights()
 {
-	Seperation(1.5f, 24.0f);
+	/*Seperation(1.5f, 24.0f);
 	Alignment(1.0f, 125.0f);
-	Cohesion(1.0f, 125.0f);
+	Cohesion(1.0f, 125.0f);*/
 }

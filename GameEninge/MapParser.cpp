@@ -1,6 +1,6 @@
 #include "MapParser.hpp"
 #include "TileLayer.hpp"
-#include "ReplaceHelper.hpp"
+#include "StringHelper.hpp"
 #include "BoxCollider.hpp"
 #include "EntityManager.hpp"
 #include "RigidBody.hpp"
@@ -102,7 +102,7 @@ namespace spic::internal
 
 		const TiXmlElement& image = *tileSetData.FirstChildElement();
 		tileset.source = image.Attribute("source");
-		Replace(tileset.source, "..", "assets");
+		spic::StringHelper::Replace(tileset.source, "..", "assets");
 		return tileset;
 	}
 

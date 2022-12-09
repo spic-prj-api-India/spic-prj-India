@@ -15,6 +15,16 @@ const spic::Color spic::Camera::BackgroundColor()
 	return this->backgroundColor;
 }
 
+void spic::Camera::BackgroundImage(const std::string& imagePath)
+{
+	backgroundImage = imagePath;
+}
+
+const std::string spic::Camera::BackgroundImage()
+{
+	return backgroundImage;
+}
+
 const float spic::Camera::AspectWidth()
 {
 	return -1;

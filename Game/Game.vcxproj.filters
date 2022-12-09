@@ -26,16 +26,19 @@
       <UniqueIdentifier>{525cfa17-ca8c-48c7-9473-876d036c2661}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\objects">
-      <UniqueIdentifier>{08cfb6f1-0b3a-4a0a-8571-3076ab7468eb}</UniqueIdentifier>
+      <UniqueIdentifier>{436a4bed-7e7f-44af-b9cc-556a341301cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\scenes">
+      <UniqueIdentifier>{46546cea-c636-4ebc-8e3f-a5647b1e9ac1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\scenes">
+      <UniqueIdentifier>{eedb5559-7804-4684-845a-2a60395500ca}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\objects">
-      <UniqueIdentifier>{33e87f26-3048-4e00-97cc-e1b10e8c413f}</UniqueIdentifier>
+      <UniqueIdentifier>{6867dea8-c953-4a45-ab9f-786eb1d26ecd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Game.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="CollisionDetectionScript.cpp">
       <Filter>Source Files\scripts</Filter>
     </ClCompile>
@@ -48,8 +51,26 @@
     <ClCompile Include="AimListener.cpp">
       <Filter>Source Files\listeners</Filter>
     </ClCompile>
+    <ClCompile Include="CameraMovementScript.cpp">
+      <Filter>Source Files\scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuScene.cpp">
+      <Filter>Source Files\scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScene.cpp">
+      <Filter>Source Files\scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Source.cpp">
+      <Filter>Header Files</Filter>
+    </ClCompile>
     <ClCompile Include="Rocket.cpp">
       <Filter>Source Files\objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FlockingSystem.cpp">
+      <Filter>Source Files\scenes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -62,11 +83,26 @@
     <ClInclude Include="FollowMouseListener.h">
       <Filter>Header Files\listeners</Filter>
     </ClInclude>
+    <ClInclude Include="Box.h">
+      <Filter>Header Files\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraMovementScript.h">
+      <Filter>Header Files\scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuScene.h">
+      <Filter>Header Files\scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene.h">
+      <Filter>Header Files\scenes</Filter>
+    </ClInclude>
     <ClInclude Include="AimListener.h">
       <Filter>Header Files\listeners</Filter>
     </ClInclude>
     <ClInclude Include="Rocket.h">
       <Filter>Header Files\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="FlockingScene.h">
+      <Filter>Header Files\scenes</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

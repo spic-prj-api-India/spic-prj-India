@@ -9,9 +9,9 @@
 #include "MapParser.hpp"
 #include "InputSystem.hpp"
 #include "PhysicsSystem.hpp"
-#include "ScriptSystem.hpp"
 #include "AISystem.hpp"
 #include "RenderingSystem.hpp"
+#include "DataSystem.hpp"
 #include "AudioManager.hpp"
 
 using namespace spic;
@@ -43,13 +43,13 @@ void EntityManager::Init()
 {
 	std::unique_ptr<systems::InputSystem> inputSystem = std::make_unique<systems::InputSystem>();
 	std::unique_ptr<systems::PhysicsSystem> physicsSystem = std::make_unique<systems::PhysicsSystem>();
-	std::unique_ptr<systems::ScriptSystem> scriptSystem = std::make_unique<systems::ScriptSystem>();
 	std::unique_ptr<systems::RenderingSystem> renderingSystem = std::make_unique<systems::RenderingSystem>();
+	std::unique_ptr<systems::DataSystem> dataSystem = std::make_unique<systems::DataSystem>();
 	std::unique_ptr<systems::AISystem> aiSystem = std::make_unique<systems::AISystem>();
 	AddInternalSystem(std::move(inputSystem), 0);
 	AddInternalSystem(std::move(physicsSystem), 1);
+	AddInternalSystem(std::move(dataSystem), 1);
 	AddInternalSystem(std::move(aiSystem), 1);
-	AddInternalSystem(std::move(scriptSystem), 1);
 	AddInternalSystem(std::move(renderingSystem), 2);
 }
 
@@ -59,6 +59,23 @@ void EntityManager::Reset()
 	systems.clear();
 	scenes.clear();
 	scene = nullptr;
+}
+
+std::vector<std::shared_ptr<spic::GameObject>> EntityManager::GetEntities() {
+	return entities;
+}
+
+void EntityManager::AddEntity(const std::shared_ptr<spic::GameObject>& entity)
+{
+	if (entity->Name().empty())
+		throw std::exception("Entity requires a name.");
+	entities.push_back(entity);
+}
+
+void EntityManager::RemoveEntity(const std::shared_ptr<spic::GameObject>& entity) {
+	entities.erase(
+		std::remove(entities.begin(), entities.end(), entity),
+		entities.end());
 }
 
 void EntityManager::RegisterScene(const std::string& sceneName, std::shared_ptr<Scene> scene)
@@ -84,45 +101,18 @@ void EntityManager::SetScene(const std::string& sceneName)
 {
 	if (!scenes.count(sceneName))
 		throw std::exception("Scene does not exist.");
-	DestroyScene();
 	scene = scenes[sceneName];
-	entities.clear();
-	for (auto& entity : scene->Contents())
-	{
-		entities.push_back(entity);
-	}
-	for (const auto& systemsMap : systems)
-	{
-		for (const auto& system : systemsMap.second)
-		{
-			system->Start(entities);
-		}
-	}
-}
-
-std::vector<std::shared_ptr<spic::GameObject>> EntityManager::GetEntities() {
-	return entities;
-}
-
-void EntityManager::AddEntity(const std::shared_ptr<spic::GameObject>& entity)
-{
-	if (entity->Name().empty())
-		throw std::exception("Entity requires a name.");
-	entities.push_back(entity);
-}
-
-void EntityManager::RemoveEntity(const std::shared_ptr<spic::GameObject>& entity) {
-	entities.erase(
-		std::remove(entities.begin(), entities.end(), entity),
-		entities.end());
+	SetScene(scene);
 }
 
 void EntityManager::SetScene(std::shared_ptr<Scene> newScene)
 {
+	if (&newScene->Camera() == nullptr)
+		throw std::exception("No camera defined.");
 	DestroyScene();
 	scene = newScene;
 	entities.clear();
-	TileMap* tileMap = scene->TileMap();
+	const TileMap* tileMap = scene->TileMap();
 	if (tileMap != nullptr) {
 		for (auto& entity : scene->TileMap()->CollisionEntities()) {
 			entities.push_back(entity);
@@ -136,7 +126,7 @@ void EntityManager::SetScene(std::shared_ptr<Scene> newScene)
 	{
 		for (const auto& system : systemsMap.second)
 		{
-			system->Start(entities);
+			system->Start(entities, *scene);
 		}
 	}
 
