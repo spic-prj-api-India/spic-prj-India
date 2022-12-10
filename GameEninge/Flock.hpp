@@ -8,6 +8,8 @@
 #include "GameObject.hpp"
 
 namespace spic {
+    enum class SumMethod { WEIGHTED_AVERAGE, PRIORITIZED };
+
     enum class FlockBehaviour {
         SEEK,
         FLEE,
@@ -15,17 +17,22 @@ namespace spic {
         WANDER
     };
 
+    enum class Deceleration { SLOW = 3, NORMAL = 2, FAST = 1 };
+
     /**
      * @brief Component which can play audio.
      */
     class Flock : public spic::GameObject {  
     public:
-        Flock(const spic::FlockBehaviour flockBehaviour, const float maxSteeringForce, const float maxSpeed);
+        Flock(SumMethod sumMethod, const float maxSteeringForce, const float maxSpeed, const float angleSensitivity);
 
         Point Velocity();
         float Mass();
 
-        void FlockBehaviour(const spic::FlockBehaviour flockBehaviour);
+        void Seek();
+        void Flee();
+        void Arrival(Deceleration deceleration);
+        void Wander(const float wanderRadius, const float wanderDistance, const float wanderJitter);
 
         void WallAvoidance(const float wallAvoidanceWeight, const float width, const float height);
         void ObstacleAvoidance(const float obstacleAvoidanceWeight, const float feelerTreshold);
@@ -33,19 +40,21 @@ namespace spic {
         void Alignment(const float alignmentWeight, const float viewRadius);
         void Cohesion(const float cohesionWeight, const float viewRadius);
 
-        void Target(std::unique_ptr<Point> newTarget, const float targetWeight);
-        void Target(std::unique_ptr<Point> newTarget);
+        void Target(const Point& newTarget, const float targetWeight);
+        void Target(const Point& newTarget);
 
         void StartFlock();
         void UpdateFlock(const std::vector<std::shared_ptr<Flock>>& flocks);
         void StopFlock();
     private:
         Point Calculate(const std::vector<std::shared_ptr<Flock>>& flocks);
+        Point CalculateWeightedSum(const std::vector<std::shared_ptr<Flock>>& flocks);
+        Point CalculatePrioritized(const std::vector<std::shared_ptr<Flock>>& flocks);
 
-        Point Seek(Point& target);
-        Point Flee(Point& target);
-        Point Arrival(Point& target);
-        Point Wander(Point& target);
+        Point Seek(Point target);
+        Point Flee(Point target);
+        Point Arrival(Point target);
+        Point Wander();
 
         Point WallAvoidance();
         Point ObstacleAvoidance();
@@ -56,13 +65,16 @@ namespace spic {
 
         void ApplyForce(Point& force);
     private:
+        SumMethod sumMethod;
         spic::FlockBehaviour flockBehaviour;
         float maxSteeringForce;
         float maxSpeed;
+        // in rad
+        float angleSensitivity;
         bool paused;
 
         // Target
-        std::unique_ptr<Point> target;
+        Point target;
         float targetWeight;
 
         // Seperation
@@ -85,6 +97,14 @@ namespace spic {
         // When feeler reaches certain treshold start aplying obstacle avoidance force
         float obstacleAvoidanceWeight;
         float feelerTreshold;
+
+        // Wander
+        float wanderRadius;
+        float wanderDistance;
+        float wanderJitter;
+
+        // Arrival
+        Deceleration deceleration;
 
         // Settings using forces
         bool useWallAvoidance;

@@ -14,7 +14,7 @@ void FollowMouseListener::AddFollower(const std::shared_ptr<spic::Flock>& follow
 void FollowMouseListener::OnMouseMoved() {
 	spic::Point mousePosition = spic::Input::MousePosition();
 	for (const auto& follower : followers) {
-		follower->Target(std::make_unique<spic::Point>(mousePosition));
+		follower->Target(mousePosition, 1.0f);
 	}
 }
 void FollowMouseListener::OnMouseClicked() {

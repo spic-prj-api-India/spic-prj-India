@@ -14,7 +14,6 @@
 #include "ICollisionListener.hpp"
 #include "Box2DCollisionListener.hpp"
 #include "PhysicsValues.hpp"
-#include "GeneralHelper.hpp"
 #include "RigidBody.hpp"
 #include "GameObject.hpp"
 
@@ -75,7 +74,7 @@ namespace spic::extensions {
 				// Update entity
 				entity->Transform()->position.x = position.x / PhysicsValues::SCALING_FACTOR;
 				entity->Transform()->position.y = position.y / PhysicsValues::SCALING_FACTOR;
-				entity->Transform()->rotation = rotation;
+				//entity->Transform()->rotation = rotation;
 			}
 		}
 
@@ -101,14 +100,7 @@ namespace spic::extensions {
 			b2Body* body = bodies[name];
 			b2Vec2 force = { forceDirection.x, forceDirection.y };
 
-			body->ApplyForce(force, body->GetWorldCenter(), true);	
-
-			//body->ApplyLinearImpulseToCenter({ sinf(body->GetAngle()) * body->GetAngularVelocity(), -cosf(body->GetAngle()) * body->GetAngularVelocity() }, true);
-			
-			/*float desiredAngle = atan2f(-forceDirection.x, forceDirection.y);
-			float nextAngle = body->GetAngle() + body->GetAngularVelocity() / 3.0f;
-			float totalRotation = desiredAngle - nextAngle;
-			body->ApplyTorque(totalRotation < 0.0f ? -10.0f : 10.0f, false);*/
+			body->ApplyForce(force, body->GetWorldCenter(), true);
 		}
 
 		Point GetLinearVelocity(const std::string& name) {

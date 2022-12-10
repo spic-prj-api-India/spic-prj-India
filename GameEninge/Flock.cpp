@@ -1,11 +1,13 @@
 #include "Flock.hpp"
 #include "RigidBody.hpp"
+#include "GeneralHelper.hpp"
 
 namespace spic {
-	Flock::Flock(const spic::FlockBehaviour flockBehaviour, const float maxSteeringForce, const float maxSpeed) : GameObject(),
-		flockBehaviour{ flockBehaviour }, maxSteeringForce{ maxSteeringForce }, maxSpeed{ maxSpeed },
-		paused{ true }, useWallAvoidance{ false }, useObstacleAvoidance{ false },
-		useSeperation{ false }, useAlignment{ false }, useCohesion{ false }, useTarget{ false }
+	Flock::Flock(SumMethod sumMethod, const float maxSteeringForce, const float maxSpeed, const float angleSensitivity) : GameObject(),
+		sumMethod{ sumMethod }, maxSteeringForce{ maxSteeringForce }, maxSpeed{ maxSpeed },
+		angleSensitivity{ angleSensitivity }, paused{ true }, useWallAvoidance{ false },
+		useObstacleAvoidance{ false }, useSeperation{ false }, useAlignment{ false },
+		useCohesion{ false }, useTarget{ false }
 	{
 	}
 
@@ -21,18 +23,40 @@ namespace spic {
 		return body->Mass();
 	}
 
-	void Flock::Target(std::unique_ptr<Point> newTarget, const float targetWeight)
+	void Flock::Target(const Point& newTarget, const float targetWeight)
 	{
 		this->useTarget = true;
-		this->target = std::move(newTarget);
+		this->target = newTarget;
 		this->targetWeight = targetWeight;
 	}
 
-	void Flock::Target(std::unique_ptr<Point> newTarget)
+	void Flock::Target(const Point& newTarget)
 	{
-		this->useTarget = true;
-		this->target = std::move(newTarget);
-		this->targetWeight = 1.0f;
+		this->target = newTarget;
+	}
+
+	void Flock::Seek()
+	{
+		this->flockBehaviour = FlockBehaviour::SEEK;
+	}
+
+	void Flock::Flee()
+	{
+		this->flockBehaviour = FlockBehaviour::FLEE;
+	}
+
+	void Flock::Arrival(Deceleration deceleration)
+	{
+		this->flockBehaviour = FlockBehaviour::ARRIVAL;
+		this->deceleration = deceleration;
+	}
+
+	void Flock::Wander(const float wanderRadius, const float wanderDistance, const float wanderJitter)
+	{
+		this->flockBehaviour = FlockBehaviour::WANDER;
+		this->wanderRadius = wanderRadius;
+		this->wanderDistance = wanderDistance;
+		this->wanderJitter = wanderJitter;
 	}
 
 	void Flock::WallAvoidance(const float wallAvoidanceWeight, const float width, const float height)
@@ -73,6 +97,8 @@ namespace spic {
 
 	void Flock::StartFlock()
 	{
+		if (flockBehaviour < FlockBehaviour::SEEK || flockBehaviour > FlockBehaviour::WANDER)
+			throw std::exception("Flock behaviour needs to be defined");
 		paused = false;
 	}
 
@@ -90,6 +116,75 @@ namespace spic {
 	}
 
 	Point Flock::Calculate(const std::vector<std::shared_ptr<Flock>>& flocks)
+	{
+		switch (sumMethod) {
+		case SumMethod::WEIGHTED_AVERAGE:
+			return CalculateWeightedSum(flocks);
+
+		case SumMethod::PRIORITIZED:
+			return CalculatePrioritized(flocks);
+
+		default:
+			return {};
+		}
+	}
+
+	Point Flock::CalculateWeightedSum(const std::vector<std::shared_ptr<Flock>>& flocks)
+	{
+		Point steeringForce{};
+
+		Point force;
+		if (useWallAvoidance)
+		{
+			force = WallAvoidance() * wallAvoidanceWeight;
+			steeringForce += force;
+		}
+		if (useObstacleAvoidance)
+		{
+			force = ObstacleAvoidance() * obstacleAvoidanceWeight;
+			steeringForce += force;
+		}
+		if (useSeperation)
+		{
+			force = Seperate(flocks) * seperationWeight;
+			steeringForce += force;
+		}
+		if (useAlignment)
+		{
+			force = Align(flocks) * alignmentWeight;
+			steeringForce += force;
+		}
+		if (useCohesion)
+		{
+			force = Cohere(flocks) * cohesionWeight;
+			steeringForce += force;
+		}
+		if (useTarget)
+		{
+			switch (flockBehaviour) {
+			case FlockBehaviour::ARRIVAL:
+				force = Arrival(target) * targetWeight;
+				break;
+			case FlockBehaviour::FLEE:
+				force = Flee(target) * targetWeight;
+				break;
+			case FlockBehaviour::SEEK:
+				force = Seek(target) * targetWeight;
+				break;
+			case FlockBehaviour::WANDER:
+				force = Wander() * targetWeight;
+				break;
+			}
+			steeringForce += force;
+		}
+		if (steeringForce.Length() > maxSteeringForce) {
+			steeringForce.Normalize();
+			steeringForce *= maxSteeringForce;
+		}
+		return steeringForce;
+	}
+
+	Point Flock::CalculatePrioritized(const std::vector<std::shared_ptr<Flock>>& flocks)
 	{
 		Point steeringForce{};
 
@@ -123,16 +218,16 @@ namespace spic {
 		{
 			switch (flockBehaviour) {
 			case FlockBehaviour::ARRIVAL:
-				force = Arrival(*target.get()) * targetWeight;
+				force = Arrival(target) * targetWeight;
 				break;
 			case FlockBehaviour::FLEE:
-				force = Flee(*target.get()) * targetWeight;
+				force = Flee(target) * targetWeight;
 				break;
 			case FlockBehaviour::SEEK:
-				force = Seek(*target.get()) * targetWeight;
+				force = Seek(target) * targetWeight;
 				break;
 			case FlockBehaviour::WANDER:
-				force = Wander(*target.get()) * targetWeight;
+				force = Wander() * targetWeight;
 				break;
 			}
 			if (!steeringForce.Accumulate(force, maxSteeringForce)) return steeringForce;
@@ -140,34 +235,77 @@ namespace spic {
 		return steeringForce;
 	}
 
-	Point Flock::Seek(Point& target)
+	Point Flock::Seek(Point target)
 	{
-		// Game object info
 		const Point& location = this->Transform()->position;
 
-		Point desired = target - location;
+		Point desiredVelocity = target - location;
 
-		if (desired.Length() == 0.0f) return Point(0.0f, 0.0f);
+		if (desiredVelocity.Length() == 0.0f)
+			return {};
 
-		desired.Normalize();
-		desired *= maxSpeed;
+		desiredVelocity.Normalize();
+		desiredVelocity *= maxSpeed;
 
-		Point steeringForce = desired - Velocity();
-		return steeringForce;
+		return (desiredVelocity - Velocity());
 	}
 
-	Point Flock::Flee(Point& target)
+	Point Flock::Flee(Point target)
 	{
-		return {};
+		Point& location = this->Transform()->position;
+
+		Point desiredVelocity = location - target;
+
+		if (desiredVelocity.Length() == 0.0f)
+			return {};
+
+		desiredVelocity.Normalize();
+		desiredVelocity *= maxSpeed;
+
+		return (desiredVelocity - Velocity());
 	}
 
-	Point Flock::Arrival(Point& target)
+	Point Flock::Arrival(Point target)
 	{
-		return {};
+		Point& location = this->Transform()->position;
+
+		Point desiredVelocity = target - location;
+		const float distance = desiredVelocity.Length();
+
+		if (distance <= 5.f)
+			return {};
+
+		const float decelerationTweaker = 0.3f;
+
+		float speed = distance / ((float)deceleration * decelerationTweaker);
+
+		speed = std::min(speed, maxSpeed);
+
+		desiredVelocity *= speed;
+		desiredVelocity /= distance;
+
+		return (desiredVelocity - Velocity());
 	}
 
-	Point Flock::Wander(Point& target)
+	Point Flock::Wander()
 	{
+		//Point target;
+		//const Point& location = this->Transform()->position;
+
+		//target += Point(RandomClamped() * wanderJitter,
+		//	RandomClamped() * wanderJitter);
+
+		//target.Normalize();
+
+		//target *= wanderRadius;
+
+		//Point targetLocal = target + Point(wanderDistance, 0.0f);
+		////project the target into world space
+		//Point targetWorld = PointToWorldSpace(targetLocal,
+		//	location.Heading(),
+		//	m_pVehicle->Side(),
+		//	location);
+		//return targetWorld - Transform()->position;
 		return {};
 	}
 
@@ -247,5 +385,9 @@ namespace spic {
 
 	void Flock::ApplyForce(Point& force) {
 		this->GetComponent<RigidBody>()->AddForce(force / Mass());
+		const float desiredRotation = spic::GeneralHelper::DEG2RAD<float>(Velocity().Rotation());
+		const float angle = abs(this->Transform()->rotation - desiredRotation);
+		if (angle >= this->angleSensitivity)
+			Transform()->rotation = desiredRotation;
 	}
 }

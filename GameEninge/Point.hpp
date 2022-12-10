@@ -18,6 +18,10 @@ namespace spic {
 
 		bool Accumulate(Point& point, const float maxForce);
 
+		float Rotation() const;
+
+		float Heading() const;
+
 		/**
 		 * @brief operator for adding Point
 		 * @param point Point that will be added

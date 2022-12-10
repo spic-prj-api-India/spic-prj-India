@@ -2,8 +2,9 @@
 #include <BoxCollider.hpp>
 #include <Sprite.hpp>
 
-Rocket::Rocket(const std::string& name, const spic::Point& position, const float angle) : Flock(spic::FlockBehaviour::SEEK, 0.05f, 1.0f)
+Rocket::Rocket(const std::string& name, const spic::Point& position, const float angle) : Flock(spic::SumMethod::WEIGHTED_AVERAGE, 0.05f, 1.0f, 0.122173048f)
 {
+	Arrival(spic::Deceleration::NORMAL);
 	SetAttributes(name, position, angle);
 	SetWeights();
 }

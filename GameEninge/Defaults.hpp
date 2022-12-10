@@ -13,6 +13,11 @@ namespace spic::internal::Defaults {
 	 * @brief Default font text
 	*/
 	inline std::string TEXT_FONT = "defaults/fonts/07558_CenturyGothic.ttf";
+
+	/*
+	* @brief Definition of PI
+	*/
+	inline const float PI = 3.1416f;
 }
 
 #endif // DEFAULTS_H_
