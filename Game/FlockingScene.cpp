@@ -31,7 +31,7 @@ void FlockingScene::SetContents()
 	std::shared_ptr<spic::Transform> rocketLauncherTransform = std::make_shared<spic::Transform>();
 	rocketLauncherTransform->rotation = 0.0f;
 	rocketLauncherTransform->position = { 700.0f, 375.0f };
-	rocketLauncherTransform->scale = 0.5f;
+	rocketLauncherTransform->scale = 0.25f;
 	auto rocketLauncherSprite = std::make_shared<spic::Sprite>("assets/textures/rocket-launcher.png", 1);
 	rocketLauncher->Name(rocketLauncherName);
 	rocketLauncher->Transform(rocketLauncherTransform);

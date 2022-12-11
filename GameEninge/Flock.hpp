@@ -6,6 +6,7 @@
 #include <memory>
 #include "Point.hpp"
 #include "GameObject.hpp"
+#include "Bounds.hpp"
 
 namespace spic {
     enum class SumMethod { WEIGHTED_AVERAGE, PRIORITIZED };
@@ -26,15 +27,15 @@ namespace spic {
     public:
         Flock(SumMethod sumMethod, const float maxSteeringForce, const float maxSpeed, const float angleSensitivity);
 
-        Point Velocity();
-        float Mass();
+        Point Velocity() const;
+        float Mass() const;
 
         void Seek();
         void Flee();
         void Arrival(Deceleration deceleration);
         void Wander(const float wanderRadius, const float wanderDistance, const float wanderJitter);
 
-        void WallAvoidance(const float wallAvoidanceWeight, const float width, const float height);
+        void WallAvoidance(const float wallAvoidanceWeight, const float wallDetectionFeelerLength, const Bounds& bounds);
         void ObstacleAvoidance(const float obstacleAvoidanceWeight, const float feelerTreshold);
         void Seperation(const float seperationWeight, const float desiredSeparation);
         void Alignment(const float alignmentWeight, const float viewRadius);
@@ -71,6 +72,7 @@ namespace spic {
         float maxSpeed;
         // in rad
         float angleSensitivity;
+        Point heading;
         bool paused;
 
         // Target
@@ -90,8 +92,8 @@ namespace spic {
 
         // Wall avoidance
         float wallAvoidanceWeight;
-        float width;
-        float height;
+        float wallDetectionFeelerLength;
+        Bounds bounds;
 
         // Obstacle avoidance
         // When feeler reaches certain treshold start aplying obstacle avoidance force

@@ -20,7 +20,7 @@ namespace spic {
 
 		float Rotation() const;
 
-		float Heading() const;
+		void Rotate(const float angle);
 
 		/**
 		 * @brief operator for adding Point

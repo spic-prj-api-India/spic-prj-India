@@ -61,7 +61,7 @@ namespace spic::GeneralHelper
 	*/
 	bool CalculateWithinSquare(const Point& point, std::array<Point, 4>& square);
 
-	bool LineIntersection(const Point& sPoint1, const Point& ePoint1, const Point& sPoint2, const Point& ePoint2, Point& intersectPoint, float& distance);
+	bool LineIntersection(Point sPoint1, Point ePoint1, Point sPoint2, Point ePoint2, Point& intersectPoint, float& distance);
 	
 	/**
 	 * @brief 

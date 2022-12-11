@@ -1,6 +1,7 @@
 #include "Flock.hpp"
 #include "RigidBody.hpp"
 #include "GeneralHelper.hpp"
+#include "Defaults.hpp"
 
 namespace spic {
 	Flock::Flock(SumMethod sumMethod, const float maxSteeringForce, const float maxSpeed, const float angleSensitivity) : GameObject(),
@@ -11,13 +12,13 @@ namespace spic {
 	{
 	}
 
-	Point Flock::Velocity()
+	Point Flock::Velocity() const
 	{
 		std::shared_ptr<RigidBody> body = this->GetComponent<RigidBody>();
 		return body->Velocity();
 	}
 
-	float Flock::Mass()
+	float Flock::Mass() const
 	{
 		std::shared_ptr<RigidBody> body = this->GetComponent<RigidBody>();
 		return body->Mass();
@@ -59,12 +60,12 @@ namespace spic {
 		this->wanderJitter = wanderJitter;
 	}
 
-	void Flock::WallAvoidance(const float wallAvoidanceWeight, const float width, const float height)
+	void Flock::WallAvoidance(const float wallAvoidanceWeight, const float wallDetectionFeelerLength, const Bounds& bounds)
 	{
 		this->useWallAvoidance = true;
 		this->wallAvoidanceWeight = wallAvoidanceWeight;
-		this->width = width;
-		this->height = height;
+		this->wallDetectionFeelerLength = wallDetectionFeelerLength;
+		this->bounds = bounds;
 	}
 
 	void Flock::ObstacleAvoidance(const float obstacleAvoidanceWeight, const float feelerTreshold)
@@ -282,6 +283,7 @@ namespace spic {
 		speed = std::min(speed, maxSpeed);
 
 		desiredVelocity *= speed;
+		// Can't be zero, because of distance check
 		desiredVelocity /= distance;
 
 		return (desiredVelocity - Velocity());
@@ -311,7 +313,84 @@ namespace spic {
 
 	Point Flock::WallAvoidance()
 	{
-		return {};
+		std::vector<Point> feelers(3);
+
+		//feeler pointing straight in front
+		feelers[0] = Transform()->position + (heading * wallDetectionFeelerLength);
+
+		//feeler to left
+		Point temp = heading;
+		temp.Rotate(spic::internal::Defaults::HALF_PI * 3.5f);
+		feelers[1] = Transform()->position + (heading * (wallDetectionFeelerLength / 2.0f)) * temp;
+
+		//feeler to right
+		temp = heading;
+		temp.Rotate(spic::internal::Defaults::HALF_PI * 0.5f);
+		feelers[2] = Transform()->position + (heading * (wallDetectionFeelerLength / 2.0f)) * temp;
+
+		float distToThisIP = 0.0;
+		float distToClosestIP = std::numeric_limits<float>::max();
+
+		Point wallsv[5] = { Point(bounds.Left(), bounds.Top()),
+			Point(bounds.Left(), bounds.Top() + bounds.Height()),
+			Point(bounds.Left() + bounds.Width(), bounds.Top() + bounds.Height()),
+			Point(bounds.Left() + bounds.Width(), bounds.Top()),
+			Point(bounds.Left(), bounds.Top())
+		};
+
+		//this will hold an index into the vector of walls
+		int closestWall = -1;
+
+		Point steeringForce,
+			point,         //used for storing temporary info
+			closestPoint;  //holds the closest intersection point
+
+		//examine each feeler in turn
+		for (unsigned int flr = 0; flr < feelers.size(); ++flr) {
+
+			//run through each wall checking for any intersection points
+			for (int i = 0; i < 4; i++) {
+
+				if (spic::GeneralHelper::LineIntersection(Transform()->position,
+					feelers[flr],
+					wallsv[i],
+					wallsv[i + 1],
+					point,
+					distToThisIP))
+				{
+					//is this the closest found so far? If so keep a record
+					if (distToThisIP < distToClosestIP)
+					{
+						distToClosestIP = distToThisIP;
+
+						closestWall = i;
+
+						closestPoint = point;
+					}
+				}
+			}//next wall
+
+
+			//if an intersection point has been detected, calculate a force  
+			//that will direct the agent away
+			if (closestWall != -1)
+			{
+				//calculate by what distance the projected position of the agent
+				//will overshoot the wall
+				Point overShoot = feelers[flr] - closestPoint;
+
+				Point temp = (wallsv[closestWall] - wallsv[closestWall + 1]);
+				temp.Normalize();
+				Point normal(-temp.y, temp.x);
+
+				//create a force in the direction of the wall normal, with a 
+				//magnitude of the overshoot
+				steeringForce = normal * overShoot.Length();
+			}
+
+		}//next feeler
+
+		return steeringForce;
 	}
 
 	Point Flock::ObstacleAvoidance()
@@ -387,7 +466,9 @@ namespace spic {
 		this->GetComponent<RigidBody>()->AddForce(force / Mass());
 		const float desiredRotation = spic::GeneralHelper::DEG2RAD<float>(Velocity().Rotation());
 		const float angle = abs(this->Transform()->rotation - desiredRotation);
-		if (angle >= this->angleSensitivity)
+		if (angle >= this->angleSensitivity) {
 			Transform()->rotation = desiredRotation;
+			heading = { cosf(desiredRotation) , sin(desiredRotation) };
+		}
 	}
 }

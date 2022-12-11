@@ -71,9 +71,10 @@ namespace spic {
 		return atanf(y / x) * 180.f / spic::internal::Defaults::PI - 90.f;
 	}
 
-	float Point::Heading() const
+	void Point::Rotate(const float angle)
 	{
-		return -atan2f(y, x);
+		x = x * cosf(angle) - y * sinf(angle);
+		y = x * sinf(angle) + y * cosf(angle);
 	}
 
 	//Point PointToWorldSpace(const Point& point,

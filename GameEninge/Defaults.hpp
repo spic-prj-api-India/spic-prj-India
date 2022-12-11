@@ -17,7 +17,12 @@ namespace spic::internal::Defaults {
 	/*
 	* @brief Definition of PI
 	*/
-	inline const float PI = 3.1416f;
+	inline const float PI = 3.141592653589793238462643383279502884f;
+
+	/*
+	* @brief Definition of half PI
+	*/
+	inline const float HALF_PI = PI / 2.0f;
 }
 
 #endif // DEFAULTS_H_

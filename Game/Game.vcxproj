@@ -149,7 +149,7 @@
     <ClCompile Include="CameraMovementScript.cpp" />
     <ClCompile Include="AimListener.cpp" />
     <ClCompile Include="CollisionDetectionScript.cpp" />
-    <ClCompile Include="FlockingSystem.cpp" />
+    <ClCompile Include="FlockingScene.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="KeyListener.cpp" />

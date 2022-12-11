@@ -1,10 +1,13 @@
 #include "Rocket.h"
 #include <BoxCollider.hpp>
 #include <Sprite.hpp>
+#include <Point.cpp>
 
 Rocket::Rocket(const std::string& name, const spic::Point& position, const float angle) : Flock(spic::SumMethod::WEIGHTED_AVERAGE, 0.05f, 1.0f, 0.122173048f)
 {
-	Arrival(spic::Deceleration::NORMAL);
+	//Arrival(spic::Deceleration::NORMAL);
+	//Seek();
+	Flee();
 	SetAttributes(name, position, angle);
 	SetWeights();
 }
@@ -22,7 +25,8 @@ void Rocket::SetAttributes(const std::string& name, const spic::Point& position,
 
 void Rocket::SetWeights()
 {
-	/*Seperation(1.5f, 24.0f);
-	Alignment(1.0f, 125.0f);
-	Cohesion(1.0f, 125.0f);*/
+	Seperation(1.5f, 24.0f);
+	//Alignment(1.0f, 125.0f);
+	//Cohesion(1.0f, 125.0f);
+	WallAvoidance(1.5f, 20.0f, spic::Point(1200, 800));
 }

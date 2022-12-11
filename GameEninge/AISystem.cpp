@@ -18,6 +18,7 @@ namespace spic::internal::systems {
 
 	std::vector<std::shared_ptr<spic::Flock>> AISystem::GetFlockEntities(std::vector<std::shared_ptr<spic::GameObject>> entities)
 	{
+		// Todo recursion flock entities adden
 		std::vector<std::shared_ptr<spic::Flock>> flockEntities;
 		for (const auto& entity : entities) {
 			if (spic::TypeHelper::SharedPtrIsOfType<spic::Flock>(entity))
@@ -29,4 +30,6 @@ namespace spic::internal::systems {
 		}
 		return flockEntities;
 	}
+
+
 }

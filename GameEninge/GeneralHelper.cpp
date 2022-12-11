@@ -57,25 +57,29 @@ bool spic::GeneralHelper::CalculateWithinSquare(const Point& point, std::array<P
 	return false;
 }
 
-bool spic::GeneralHelper::LineIntersection(const Point& sPoint1, const Point& ePoint1, const Point& sPoint2, const Point& ePoint2, Point& intersectPoint, float& distance)
+bool spic::GeneralHelper::LineIntersection(Point sPoint1, Point ePoint1, Point sPoint2, Point ePoint2, Point& intersectPoint, float& distance)
 {
-	const float a1 = ePoint1.y - sPoint1.y;
-	const float b1 = sPoint1.x - ePoint1.x;
-	const float c1 = a1 * (sPoint1.x) + b1 * (sPoint1.y);
+	float rTop = (sPoint1.y - sPoint2.y) * (ePoint2.x - sPoint2.x) - (sPoint1.x - sPoint2.x) * (ePoint2.y - sPoint2.y);
+	float rePoint1ot = (ePoint1.x - sPoint1.x) * (ePoint2.y - sPoint2.y) - (ePoint1.y - sPoint1.y) * (ePoint2.x - sPoint2.x);
 
-	const float a2 = ePoint2.y - sPoint2.y;
-	const float b2 = sPoint2.x - ePoint2.x;
-	const float c2 = a2 * (sPoint2.x) + b2 * (sPoint2.y);
+	float sTop = (sPoint1.y - sPoint2.y) * (ePoint1.x - sPoint1.x) - (sPoint1.x - sPoint2.x) * (ePoint1.y - sPoint1.y);
+	float sePoint1ot = (ePoint1.x - sPoint1.x) * (ePoint2.y - sPoint2.y) - (ePoint1.y - sPoint1.y) * (ePoint2.x - sPoint2.x);
 
-	const float determinant = a1 * b2 - a2 * b1;
+	if ((rePoint1ot == 0) || (sePoint1ot == 0))
+	{
+		//lines are parallel
+		return false;
+	}
 
-	if (determinant != 0) {
-		const float x = (b2 * c1 - b1 * c2) / determinant;
-		const float y = (a1 * c2 - a2 * c1) / determinant;
-		intersectPoint = Point(x, y);
-		distance = sPoint1.Distance(intersectPoint);
+	float r = rTop / rePoint1ot;
+	float s = sTop / sePoint1ot;
+
+	if ((r > 0) && (r < 1) && (s > 0) && (s < 1)) {
+		distance = sPoint1.Distance(ePoint1) * r;
+		intersectPoint = sPoint1 + (ePoint1 - sPoint1) * r;
 		return true;
 	}
+	distance = 0;
 	return false;
 }
 
