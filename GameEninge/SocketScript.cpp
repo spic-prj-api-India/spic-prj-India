@@ -13,7 +13,6 @@ spic::NetworkPacket spic::SocketScript::PositionPacket(const GameObject* gameobj
 	return packet;
 }
 
-
 void recursion(const std::vector<std::shared_ptr<spic::GameObject>>& objects, const spic::Transform& transOld, const spic::Transform& transNew)
 {
 	for (auto& object : objects)
@@ -42,7 +41,7 @@ void spic::SocketScript::UpdatePosition(const spic::NetworkPacket* packet, GameO
 	gameobject->Transform()->Deserialize(test);
 }
 
-void spic::SocketScript::AddNewEntityToList(std::shared_ptr<spic::GameObject> entity)
+void spic::SocketScript::RemoveEntity(std::shared_ptr<spic::GameObject> entity)
 {
 	spic::internal::EntityManager::GetInstance()->RemoveEntity(entity);
 }
@@ -55,8 +54,6 @@ void spic::SocketScript::SendPacket(const spic::NetworkPacket& packet)
 		sock->Convert(packet);
 	}
 }
-
-
 
 void spic::SocketScript::RegisterNewEntity(std::shared_ptr<spic::GameObject> entity) const
 {

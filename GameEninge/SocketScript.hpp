@@ -62,7 +62,7 @@ namespace spic {
          * @brief Adds a new gamobject to an registration
          * @param entity 
         */
-        void AddNewEntityToList(std::shared_ptr<spic::GameObject> entity);
+        void RemoveEntity(std::shared_ptr<spic::GameObject> entity);
 
         /**
          * @brief Sends the network packet to the included socket;

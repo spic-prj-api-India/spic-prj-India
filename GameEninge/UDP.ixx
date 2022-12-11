@@ -106,5 +106,5 @@ export void Sender(const std::string& in, const std::string& IPADDRESS, const in
     boost::system::error_code err;
     auto sent = socket.send_to(boost::asio::buffer(in), remote_endpoint, 0, err);
     socket.close();
-    std::cerr << "Sent Payload --- " << sent << "\n";
+    //std::cerr << "Sent Payload --- " << sent << "\n";
 }

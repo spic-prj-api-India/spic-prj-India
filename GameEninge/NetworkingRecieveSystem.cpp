@@ -32,7 +32,7 @@ void spic::internal::systems::NetworkingRecieveSystem::Update(std::vector<std::s
 
 		for (auto componet : components)
 		{
-			componet->Send(object);
+			componet->Retrieve(&packet, object);
 		}
 	}
 
