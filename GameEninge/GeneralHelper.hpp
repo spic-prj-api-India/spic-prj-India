@@ -11,6 +11,7 @@
 #include <array>
 #include "Sprite.hpp"
 #include <memory>
+#include "NetworkPacket.hpp"
 
 
 namespace spic::GeneralHelper 
@@ -42,7 +43,22 @@ namespace spic::GeneralHelper
 	 * @return 
 	*/
 	bool SpriteSorting(const std::shared_ptr<Sprite> a, const std::shared_ptr<Sprite> b);
-	
+
+	bool NetworkPacketSorting(const spic::NetworkPacket& a, const spic::NetworkPacket& b);
+
+//	/**
+// * @brief
+// * @param a
+// * @param b
+// * @return
+//*/
+//	bool SortNetworkPacket(const NetworkPacket& a, const NetworkPacket& b)
+//	{
+//		if (a.timeSpan < b.timeSpan) return true;
+//
+//		return false;
+//	}
+//	
 	/**
 	 * @brief 
 	 * @param orgin 

@@ -56,6 +56,7 @@ namespace spic {
 		template <typename T>
 		std::vector<std::weak_ptr<T>> GetExtensions();
 
+
 		/**
 		* @brief Checks if extension exists.
 		* @spicapi

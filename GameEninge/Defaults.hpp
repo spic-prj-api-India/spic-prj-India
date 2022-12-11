@@ -7,12 +7,12 @@ namespace spic::internal::Defaults {
 	/**
 	 * @brief Default button texture
 	*/
-	inline std::string BUTTON_TEXTURE = "defaults/textures/UISprite.png";
+	inline std::string BUTTON_TEXTURE = "assets/textures/UISprite.png";
 
 	/**
 	 * @brief Default font text
 	*/
-	inline std::string TEXT_FONT = "defaults/fonts/07558_CenturyGothic.ttf";
+	inline std::string TEXT_FONT = "assets/fonts/07558_CenturyGothic.ttf";
 }
 
 #endif // DEFAULTS_H_

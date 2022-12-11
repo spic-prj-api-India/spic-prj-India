@@ -13,6 +13,8 @@
 #include "RenderingSystem.hpp"
 #include "DataSystem.hpp"
 #include "AudioManager.hpp"
+#include "NetworkingRecieveSystem.hpp"
+#include "NetworkingSendSystem.hpp"
 
 using namespace spic;
 using namespace spic::internal;
@@ -46,11 +48,16 @@ void EntityManager::Init()
 	std::unique_ptr<systems::ScriptSystem> scriptSystem = std::make_unique<systems::ScriptSystem>();
 	std::unique_ptr<systems::RenderingSystem> renderingSystem = std::make_unique<systems::RenderingSystem>();
 	std::unique_ptr<systems::DataSystem> dataSystem = std::make_unique<systems::DataSystem>();
-	AddInternalSystem(std::move(inputSystem), 0);
-	AddInternalSystem(std::move(physicsSystem), 1);
+	std::unique_ptr<systems::NetworkingRecieveSystem> networkRecieve = std::make_unique<systems::NetworkingRecieveSystem>();
+	std::unique_ptr<systems::NetworkingSendSystem> networkSend = std::make_unique<systems::NetworkingSendSystem>();
+	AddInternalSystem(std::move(networkRecieve), 0);
+	AddInternalSystem(std::move(inputSystem), 1);
+	AddInternalSystem(std::move(physicsSystem), 2);
 	//AddInternalSystem(std::move(scriptSystem), 1);
-	AddInternalSystem(std::move(dataSystem), 1);
-	AddInternalSystem(std::move(renderingSystem), 2);
+	AddInternalSystem(std::move(dataSystem), 3);
+	AddInternalSystem(std::move(networkSend), 4);
+	AddInternalSystem(std::move(renderingSystem), 5);
+	
 }
 
 void EntityManager::Reset()
@@ -68,6 +75,12 @@ std::vector<std::shared_ptr<spic::GameObject>> EntityManager::GetEntities() {
 void EntityManager::AddEntity(const std::shared_ptr<spic::GameObject>& entity)
 {
 	entities.push_back(entity);
+}
+
+void spic::internal::EntityManager::AddEntityAlsoToScene(const std::shared_ptr<spic::GameObject>& entity)
+{
+	AddEntity(entity);
+	scene->AddContent(entity);
 }
 
 void EntityManager::RemoveEntity(const std::shared_ptr<spic::GameObject>& entity) {

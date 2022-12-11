@@ -29,6 +29,14 @@ bool spic::GeneralHelper::SpriteSorting(const std::shared_ptr<Sprite> a, const s
 	return false;
 }
 
+bool spic::GeneralHelper::NetworkPacketSorting(const NetworkPacket& a, const NetworkPacket& b)
+{
+	if (a.timeSpan < b.timeSpan)
+		return true;
+
+	return false;
+}
+
 std::array<Point, 4> spic::GeneralHelper::GetPoints(const Point& orgin, const float angle, const float aspectWidth, const float aspectHeight)
 {
 	Point center{ (orgin.x + aspectWidth) / 2, (orgin.y + aspectHeight) / 2 };

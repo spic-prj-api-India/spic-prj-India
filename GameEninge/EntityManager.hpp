@@ -58,6 +58,11 @@ namespace spic::internal
 		void AddEntity(const std::shared_ptr<spic::GameObject>& entity);
 
 		/*
+		@brief Add entity.
+		@param entity The entity that will be added
+		*/
+		void AddEntityAlsoToScene(const std::shared_ptr<spic::GameObject>& entity);
+		/*
 		@brief Remove entity.
 		@param entity The entity that will be removed
 		*/

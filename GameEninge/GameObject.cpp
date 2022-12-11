@@ -3,18 +3,29 @@
 #include "AudioSource.hpp"
 #include "TypeHelper.hpp"
 #include "EntityManager.hpp"
+#include <string>
 
 namespace spic {
+	static int staticName = 0;
 	std::vector<std::shared_ptr<GameObject>> GameObject::GetGameObjects() {
 		return spic::internal::EntityManager::GetInstance()->GetEntities();
 	}
 
 	GameObject::GameObject() : active{ true }, layer{ 0 }, parent{nullptr}
 	{
+		if (GameObject::Find(name))
+			throw "Name exsits already";
+		
+		this->name = std::to_string(staticName++);
 	}
 
-	GameObject::GameObject(const std::string& name) : name{name}, active{ true }, layer{ 0 }
-	{}
+	GameObject::GameObject(const std::string& name) : active{ true }, layer{ 0 }
+	{
+		if (GameObject::Find(name))
+			throw "Name exsits already";
+
+		this->name = name;
+	}
 
 	std::shared_ptr<GameObject> GameObject::Find(const std::string& name)
 	{
@@ -85,6 +96,11 @@ namespace spic {
 	}
 
 	void GameObject::Name(const std::string& newName) {
+
+		for (const auto& gameObject : spic::internal::EntityManager::GetInstance()->GetEntities()) {
+			if (typeid(gameObject).name() == typeid(this).name())
+				return;
+		}
 		name = newName;
 	}
 
