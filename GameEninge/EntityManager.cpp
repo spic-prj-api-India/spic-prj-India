@@ -13,7 +13,7 @@
 #include "RenderingSystem.hpp"
 #include "DataSystem.hpp"
 #include "AudioManager.hpp"
-#include "NetworkingRecieveSystem.hpp"
+#include "NetworkingReceiveSystem.hpp"
 #include "NetworkingSendSystem.hpp"
 
 using namespace spic;
@@ -48,7 +48,7 @@ void EntityManager::Init()
 	std::unique_ptr<systems::ScriptSystem> scriptSystem = std::make_unique<systems::ScriptSystem>();
 	std::unique_ptr<systems::RenderingSystem> renderingSystem = std::make_unique<systems::RenderingSystem>();
 	std::unique_ptr<systems::DataSystem> dataSystem = std::make_unique<systems::DataSystem>();
-	std::unique_ptr<systems::NetworkingRecieveSystem> networkRecieve = std::make_unique<systems::NetworkingRecieveSystem>();
+	std::unique_ptr<systems::NetworkingReceiveSystem> networkRecieve = std::make_unique<systems::NetworkingReceiveSystem>();
 	std::unique_ptr<systems::NetworkingSendSystem> networkSend = std::make_unique<systems::NetworkingSendSystem>();
 	AddInternalSystem(std::move(networkRecieve), 0);
 	AddInternalSystem(std::move(inputSystem), 1);
@@ -71,6 +71,7 @@ void EntityManager::Reset()
 std::vector<std::shared_ptr<spic::GameObject>> EntityManager::GetEntities() {
 	return entities;
 }
+
 
 void EntityManager::AddEntity(const std::shared_ptr<spic::GameObject>& entity)
 {
@@ -174,6 +175,37 @@ void EntityManager::AddSystem(std::unique_ptr<spic::systems::ISystem> system)
 		systems[CustomSystemDefaultPriority];
 	}
 	systems[CustomSystemDefaultPriority].emplace_back(std::move(system));
+}
+
+bool Children(std::vector<std::shared_ptr<GameObject>>& objects, std::string& name)
+{
+	for (auto& object : objects)
+	{
+		auto children = object->GetChildren();
+		if (Children(children, name))
+			return true;
+
+		if (object->Name() == name && object->DontDestroyOnLoad())
+			return true;
+	}
+
+	return false;
+}
+
+
+bool spic::internal::EntityManager::CheckIfNameExsitsInDontDestoryOnLoadObjects(std::string& name) const
+{
+	for (auto& s : scenes)
+	{
+		for (auto& entity : s.second->Contents())
+		{
+			auto children = entity->GetChildren();
+			if (Children(children,name))
+				return true;
+		}
+	}
+	
+	return false;
 }
 
 void EntityManager::AddInternalSystem(std::unique_ptr<spic::systems::ISystem> system, int priority)

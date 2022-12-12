@@ -1,20 +1,20 @@
-#include "NetworkingRecieveSystem.hpp"
+#include "NetworkingReceiveSystem.hpp"
 #include "GameEngine.hpp"
 #include "SocketScript.hpp"
 #include <algorithm>
 #include "GeneralHelper.hpp"
 
-spic::internal::systems::NetworkingRecieveSystem::NetworkingRecieveSystem()
+spic::internal::systems::NetworkingReceiveSystem::NetworkingReceiveSystem()
 {
 }
 
-void spic::internal::systems::NetworkingRecieveSystem::Start(std::vector<std::shared_ptr<spic::GameObject>>& entities, Scene& currentScene)
+void spic::internal::systems::NetworkingReceiveSystem::Start(std::vector<std::shared_ptr<spic::GameObject>>& entities, Scene& currentScene)
 {
-	sockets = spic::GameEngine::GetInstance()->GetExtensions<spic::INetworkExtension>();
+	sockets = spic::GameEngine::GetInstance()->GetExtensions<spic::extensions::INetworkExtension>();
 }
 
 
-void spic::internal::systems::NetworkingRecieveSystem::Update(std::vector<std::shared_ptr<spic::GameObject>>& entities, Scene& currentScene)
+void spic::internal::systems::NetworkingReceiveSystem::Update(std::vector<std::shared_ptr<spic::GameObject>>& entities, Scene& currentScene)
 {
 	std::vector<spic::NetworkPacket> packets;
 	for (auto& socket : sockets)
@@ -30,11 +30,9 @@ void spic::internal::systems::NetworkingRecieveSystem::Update(std::vector<std::s
 		auto object = GameObject::Find(packet.name);
 		auto components = object->GetComponents<spic::SocketScript>();
 
-		for (auto componet : components)
+		for (auto component : components)
 		{
-			componet->Retrieve(&packet, object);
+			component->Retrieve(&packet, object);
 		}
 	}
-
-
 }

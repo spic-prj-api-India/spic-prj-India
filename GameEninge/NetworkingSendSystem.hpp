@@ -29,9 +29,8 @@ namespace spic::internal::systems {
         void Update(std::vector<std::shared_ptr<spic::GameObject>>& entities, Scene& currentScene) override;
 
     private:
-        std::vector<std::weak_ptr<spic::INetworkExtension>> sockets;
+        std::vector<std::weak_ptr<spic::extensions::INetworkExtension>> sockets;
     };
 }
 
 #endif // NETWORKINGSENDSYSTEM_H_
-

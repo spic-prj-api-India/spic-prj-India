@@ -1,6 +1,6 @@
 #include "Scene.hpp"
 #include "MapParser.hpp"
-
+#include "EntityManager.hpp"
 namespace spic
 {
 	Scene::Scene() : setting{ UpdateSetting::ALWAYS }
@@ -16,6 +16,22 @@ namespace spic
 	std::vector<std::shared_ptr<GameObject>> Scene::Contents() const
 	{
 		return contents;
+	}
+
+
+	void Scene::AddContent(std::shared_ptr<GameObject> content)
+	{
+		for (auto& cont : contents)
+		{
+			if (cont->Name() == content->Name())
+				throw "Name exsits already\n";
+		}
+
+		auto name = content->Name();
+		if(spic::internal::EntityManager::GetInstance()->CheckIfNameExsitsInDontDestoryOnLoadObjects(name))
+			throw "Name exsits already\n";
+
+		this->contents.emplace_back(content);
 	}
 
 	void Scene::LoadTileMap(const std::string& newTileMapPath, const int newCollisionLayerIndex)

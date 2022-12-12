@@ -5,12 +5,12 @@
 #include <string>
 #include <vector>
 #include "NetworkPacket.hpp"
-namespace spic {
+namespace spic::extensions {
 
 	/**
 	 * @brief An interface for all networkextensions
 	*/
-	class INetworkExtension : public spic::internal::extensions::IEngineExtension
+	class INetworkExtension : public spic::extensions::IEngineExtension
 	{
 	public:
 

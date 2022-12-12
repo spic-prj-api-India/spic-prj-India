@@ -18,14 +18,13 @@ namespace spic {
          * @brief Adds a socket to the SocketScript
          * @param socketTypname 
         */
-        void AddSocket(std::weak_ptr<spic::INetworkExtension> socketTypname);
+        void AddSocket(std::weak_ptr<spic::extensions::INetworkExtension> socketTypname);
 
         /**
          * @brief Creates a new message and calls SendPacket at the end
          * @param entity 
         */
-        virtual void Send
-        (std::shared_ptr<spic::GameObject> entity) = 0;
+        virtual void Send(std::shared_ptr<spic::GameObject> entity) = 0;
 
         /**
          * @brief Calls the CreateEntity for createMessage, Calls DestroyEntity for destroyMessages, Calls SyncEntity
@@ -35,12 +34,36 @@ namespace spic {
         void Retrieve(const spic::NetworkPacket* packet, std::shared_ptr<spic::GameObject> entity);
         
     protected:
+
+        /**
+         * @brief Writes own code of creating an entity
+         * @param packet 
+         * @param entity 
+        */
         virtual void CreateEntity(const spic::NetworkPacket* packet, std::shared_ptr<spic::GameObject> entity) = 0;
+
+        /**
+         * @brief Writes own code for destroying an entiy
+         * @param packet 
+         * @param entityy 
+        */
         virtual void DestroyEntity(const spic::NetworkPacket* packet, std::shared_ptr<spic::GameObject> entityy) = 0;
+
+        /**
+         * @brief Writes own code for syncing an entity
+         * @param packet 
+         * @param entity 
+        */
         virtual void SyncEntity(const spic::NetworkPacket* packet, std::shared_ptr<spic::GameObject> entity) = 0;
+
+        /**
+         * @brief Writes own code for updating an entity
+         * @param packet 
+         * @param entity 
+        */
         virtual void UpdateEntity(const spic::NetworkPacket* packet, std::shared_ptr<spic::GameObject> entity) = 0;
     private:
-        std::weak_ptr<spic::INetworkExtension> socket;
+        std::weak_ptr<spic::extensions::INetworkExtension> socket;
     private:
 
         /**

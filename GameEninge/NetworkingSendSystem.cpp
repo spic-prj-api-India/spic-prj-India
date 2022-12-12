@@ -7,9 +7,8 @@ spic::internal::systems::NetworkingSendSystem::NetworkingSendSystem()
 
 void spic::internal::systems::NetworkingSendSystem::Start(std::vector<std::shared_ptr<spic::GameObject>>& entities, Scene& currentScene)
 {
-	sockets = spic::GameEngine::GetInstance()->GetExtensions<spic::INetworkExtension>();
+	sockets = spic::GameEngine::GetInstance()->GetExtensions<spic::extensions::INetworkExtension>();
 }
-
 
 void UpdateRecursion(std::vector<std::shared_ptr<spic::GameObject>>& entities, spic::Scene& currentScene)
 {

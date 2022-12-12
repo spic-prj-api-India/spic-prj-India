@@ -112,6 +112,13 @@ namespace spic::internal
 		*/
 		void AddSystem(std::unique_ptr<spic::systems::ISystem> system);
 
+		/**
+		 * @brief Calls an condition relating to the current enties list
+		 * @param function 
+		 * @return 
+		*/
+		bool CheckIfNameExsitsInDontDestoryOnLoadObjects(std::string& name) const;
+
 		/*
 		@brief Use this function to remove a (custom) system to the systems list.
 		@param The (custom) system to be removed.

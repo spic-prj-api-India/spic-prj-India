@@ -27,7 +27,6 @@ void recursion(const std::vector<std::shared_ptr<spic::GameObject>>& objects, co
 	}
 }
 
-
 void spic::SocketScript::UpdatePosition(const spic::NetworkPacket* packet, GameObject* gameobject) const
 {
 	auto test = packet->data.find("transform")->second;
@@ -61,7 +60,7 @@ void spic::SocketScript::RegisterNewEntity(std::shared_ptr<spic::GameObject> ent
 	manger->AddEntityAlsoToScene(std::move(entity));
 }
 
-void spic::SocketScript::AddSocket(std::weak_ptr<spic::INetworkExtension> socketTypname)
+void spic::SocketScript::AddSocket(std::weak_ptr<spic::extensions::INetworkExtension> socketTypname)
 {
 	this->socket = std::move(socketTypname);
 }

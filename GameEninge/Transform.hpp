@@ -16,12 +16,15 @@ namespace spic {
         float scale; // Multiplication factor
 
         /**
-         * @brief Serialize Transform into a string so it can be send 
+         * @brief Serialize Transform into a string so it can be send trough the network
          * @return 
         */
         std::stringstream Serialize() const;
-        
 
+        /**
+         * @brief Desserialeze an string into a current transform object
+         * @param in 
+        */
         void Deserialize(const std::string& in);
     };
 }

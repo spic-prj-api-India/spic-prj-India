@@ -200,7 +200,8 @@
     <ClInclude Include="InputSystem.hpp" />
     <ClInclude Include="IPhysicsExtension.hpp" />
     <ClInclude Include="INetworkExtension.hpp" />
-    <ClInclude Include="NetworkingRecieveSystem.hpp" />
+    <ClInclude Include="NetworkingHelper.hpp" />
+    <ClInclude Include="NetworkingReceiveSystem.hpp" />
     <ClInclude Include="NetworkingSendSystem.hpp" />
     <ClInclude Include="Persistable.hpp" />
     <ClInclude Include="PhysicsExtension1.hpp" />
@@ -217,7 +218,7 @@
     <ClInclude Include="Sample.hpp" />
     <ClInclude Include="Scene.hpp" />
     <ClInclude Include="ScriptSystem.hpp" />
-    <ClInclude Include="SocketUDP.hpp" />
+    <ClInclude Include="SocketUDPExtension.hpp" />
     <ClInclude Include="Sprite.hpp" />
     <ClInclude Include="Text.hpp" />
     <ClInclude Include="ThreadWrapper.hpp" />
@@ -246,6 +247,7 @@
     <ClCompile Include="GeneralHelper.cpp" />
     <ClCompile Include="IPhysicsExtension.cpp" />
     <ClCompile Include="MapParser.cpp" />
+    <ClCompile Include="NetworkingHelper.cpp" />
     <ClCompile Include="NetworkingRecieveSystem.cpp" />
     <ClCompile Include="NetworkingSendSystem.cpp" />
     <ClCompile Include="NetworkPacket.cpp" />
@@ -257,7 +259,7 @@
     <ClCompile Include="Point.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="SocketScript.cpp" />
-    <ClCompile Include="SocketUDP.cpp" />
+    <ClCompile Include="SocketUDPExtension.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="StringHelper.cpp" />
     <ClCompile Include="Text.cpp" />

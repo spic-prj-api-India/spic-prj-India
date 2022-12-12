@@ -28,7 +28,6 @@ std::stringstream spic::NetworkPacket::Serialize() const
 {
     std::string temp = this->name  + '§' + std::to_string(this->timeSpan) + '§' + std::to_string(this->typeMessage) + '§';
 
-
     temp += spic::internal::networking::encode_map(this->data);
     temp += '~';
 

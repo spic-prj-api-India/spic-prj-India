@@ -44,21 +44,14 @@ namespace spic::GeneralHelper
 	*/
 	bool SpriteSorting(const std::shared_ptr<Sprite> a, const std::shared_ptr<Sprite> b);
 
+	/**
+	 * @brief Sorts network packages
+	 * @param a 
+	 * @param b 
+	 * @return 
+	*/
 	bool NetworkPacketSorting(const spic::NetworkPacket& a, const spic::NetworkPacket& b);
 
-//	/**
-// * @brief
-// * @param a
-// * @param b
-// * @return
-//*/
-//	bool SortNetworkPacket(const NetworkPacket& a, const NetworkPacket& b)
-//	{
-//		if (a.timeSpan < b.timeSpan) return true;
-//
-//		return false;
-//	}
-//	
 	/**
 	 * @brief 
 	 * @param orgin 

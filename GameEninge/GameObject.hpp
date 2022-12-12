@@ -9,6 +9,8 @@
 #include <memory>
 #include "Collider.hpp"
 #include "Sprite.hpp"
+#include <functional>
+#include <map>
 
 namespace spic {
 	/**
@@ -38,6 +40,13 @@ namespace spic {
 			return std::make_shared<T>();
 		}
 
+		/**
+		 * @brief Sets content of gameobject
+		 * @details If you want to use networking use this
+		 * @param data 
+		*/
+		virtual void SetContent(std::map<std::string, std::string>& data);
+		
 		/**
 		 * @brief Returns name of GameObject.
 		 * @return string.
@@ -470,4 +479,5 @@ namespace spic {
 		return nullptr;
 	}
 }
+
 #endif // GAMEOBJECT_H_

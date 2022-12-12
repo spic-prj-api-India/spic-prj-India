@@ -11,15 +11,11 @@ namespace spic {
 		return spic::internal::EntityManager::GetInstance()->GetEntities();
 	}
 
-	GameObject::GameObject() : active{ true }, layer{ 0 }, parent{nullptr}
+	GameObject::GameObject() : active{ true }, layer{ 0 }, parent{ nullptr }, name{""}
 	{
-		if (GameObject::Find(name))
-			throw "Name exsits already";
-		
-		this->name = std::to_string(staticName++);
 	}
 
-	GameObject::GameObject(const std::string& name) : active{ true }, layer{ 0 }
+	GameObject::GameObject(const std::string& name) : active{ true }, layer{ 0 }, parent{ nullptr }
 	{
 		if (GameObject::Find(name))
 			throw "Name exsits already";
@@ -91,16 +87,18 @@ namespace spic {
 		return layer < other.layer;
 	}
 
+	void GameObject::SetContent(std::map<std::string, std::string>& data)
+	{
+	}
+
 	std::string GameObject::Name() const {
 		return name;
 	}
 
 	void GameObject::Name(const std::string& newName) {
+		if (GameObject::Find(newName))
+			throw "Name exsits already";
 
-		for (const auto& gameObject : spic::internal::EntityManager::GetInstance()->GetEntities()) {
-			if (typeid(gameObject).name() == typeid(this).name())
-				return;
-		}
 		name = newName;
 	}
 

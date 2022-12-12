@@ -6,22 +6,61 @@
 #include "ThreadWrapper.hpp"
 
 
-namespace spic {
+namespace spic::extensions {
 	
 	/**
 	 * @brief An basic udp send/recieve client
-	 * @details Socket buffer is max 64k and a basic message is around a 100~200 bytes.
+	 * @details Socket buffer is max 64k and a basic message is around a 100~200 bytes. Can only be one listener at the same time
 	*/
-	class SocketUDP : public spic::INetworkExtension
+	class SocketUDPExtension : public spic::extensions::INetworkExtension
 	{
 	public:
+
+		/**
+		 * @brief See INetworkExtension interface
+		 * @param inputBufferSize 
+		 * @param outputBufferSize 
+		*/
 		void InitSocket(const int inputBufferSize, const int outputBufferSize) override;
+
+		/**
+		 * @brief See INetworkExtension interface
+		 * @param port 
+		*/
 		void InitListener(const int port) override;
+
+		/**
+		 * @brief See INetworkExtension interface
+		 * @param ip 
+		 * @param port 
+		*/
 		void InitSender(const std::string& ip, const int port) override;
+
+		/**
+		 * @brief See INetworkExtension interface
+		*/
 		void StopConnections() override;
+
+		/**
+		 * @brief See INetworkExtension interface
+		*/
 		void SocketReset() override;
+
+		/**
+		 * @brief See INetworkExtension interface
+		 * @param data 
+		*/
 		void Convert(const NetworkPacket& data) override;
+
+		/**
+		 * @brief See INetworkExtension interface
+		*/
 		void SendData() override;
+
+		/**
+		 * @brief See INetworkExtension interface
+		 * @return 
+		*/
 		std::vector<NetworkPacket> RetrieveData() override;
 	private:
 		/**

@@ -10,11 +10,11 @@
 * @brief A system that calls all physics extensions and triggers collision script methods
 */
 namespace spic::internal::systems {
-    class NetworkingRecieveSystem :
+    class NetworkingReceiveSystem :
         public spic::systems::ISystem
     {
     public:
-        NetworkingRecieveSystem();
+        NetworkingReceiveSystem();
 
         /**
         * @brief Initiliazes system
@@ -29,8 +29,8 @@ namespace spic::internal::systems {
         void Update(std::vector<std::shared_ptr<spic::GameObject>>& entities, Scene& currentScene) override;
        
     private:
-        std::vector<std::weak_ptr<spic::INetworkExtension>> sockets;
+        std::vector<std::weak_ptr<spic::extensions::INetworkExtension>> sockets;
     };
 }
 
-#endif // PHYSICSSYSTEM_H_
+#endif // NETWORKINGREVIECESYSTEM_H_

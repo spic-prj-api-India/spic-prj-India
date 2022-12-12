@@ -357,7 +357,7 @@
     <ClInclude Include="INetworkExtension.hpp">
       <Filter>Header Files\core\interfaces</Filter>
     </ClInclude>
-    <ClInclude Include="NetworkingRecieveSystem.hpp">
+    <ClInclude Include="NetworkingReceiveSystem.hpp">
       <Filter>Header Files\core\systems\networking</Filter>
     </ClInclude>
     <ClInclude Include="NetworkingSendSystem.hpp">
@@ -369,7 +369,7 @@
     <ClInclude Include="Serializer.hpp">
       <Filter>Header Files\components</Filter>
     </ClInclude>
-    <ClInclude Include="SocketUDP.hpp">
+    <ClInclude Include="SocketUDPExtension.hpp">
       <Filter>Header Files\extensions\networking</Filter>
     </ClInclude>
     <ClInclude Include="ThreadWrapper.hpp">
@@ -377,6 +377,9 @@
     </ClInclude>
     <ClInclude Include="ConvertListToBytes.hpp">
       <Filter>Header Files\extensions\networking</Filter>
+    </ClInclude>
+    <ClInclude Include="NetworkingHelper.hpp">
+      <Filter>Header Files\helpers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -506,7 +509,7 @@
     <ClCompile Include="DataSystem.cpp">
       <Filter>Source Files\core\systems\data</Filter>
     </ClCompile>
-    <ClCompile Include="SocketUDP.cpp">
+    <ClCompile Include="SocketUDPExtension.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ThreadWrapper.cpp">
@@ -529,6 +532,9 @@
     </ClCompile>
     <ClCompile Include="UDP.ixx">
       <Filter>Header Files\extensions\networking</Filter>
+    </ClCompile>
+    <ClCompile Include="NetworkingHelper.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

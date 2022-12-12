@@ -8,8 +8,9 @@
 #include "GameScene.h"
 #include "PhysicsValues.hpp"
 #include "Box.h"
-#include "SocketUDP.hpp"
+#include "SocketUdpExtension.hpp"
 #include <NetworkPacket.hpp>
+#include "NetworkingHelper.hpp"
 
 std::shared_ptr<spic::Scene> scene;
 
@@ -19,10 +20,10 @@ void InitGame() {
 	std::shared_ptr<spic::extensions::PhysicsExtension1> physicsExtension = std::make_shared<spic::extensions::PhysicsExtension1>();
 	engine->AddExtension(std::move(physicsExtension));
 
-	auto socket = std::make_shared<spic::SocketUDP>();
+	auto socket = std::make_shared<spic::extensions::SocketUDPExtension>();
 	socket->InitListener(13251);
 
-	socket->InitSender("192.168.68.52", 13251);
+	socket->InitSender(spic::networkingHelper::GetParsedIPConfigData("IPv4 Address"), 13251);
 	engine->AddExtension(std::move(socket));
 
 	// Register types

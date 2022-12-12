@@ -14,7 +14,6 @@ module;
 #include <boost/algorithm/string/case_conv.hpp>
 #include <boost/algorithm/string.hpp>
 
-
 export module UDP;
 
 using boost::asio::ip::udp;
@@ -63,8 +62,6 @@ struct Client {
     }
 
 };
-
-
 
 std::mutex listenersMutex;
 std::vector<std::unique_ptr<Client>> listeners;
