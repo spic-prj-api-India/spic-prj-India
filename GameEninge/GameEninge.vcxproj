@@ -201,6 +201,7 @@
     <ClInclude Include="InputManager.hpp" />
     <ClInclude Include="InputSystem.hpp" />
     <ClInclude Include="IPhysicsExtension.hpp" />
+    <ClInclude Include="Matrix.hpp" />
     <ClInclude Include="Persistable.hpp" />
     <ClInclude Include="Flock.hpp" />
     <ClInclude Include="PhysicsExtension1.hpp" />
@@ -208,6 +209,7 @@
     <ClInclude Include="ISystem.hpp" />
     <ClInclude Include="MapParser.hpp" />
     <ClInclude Include="Point.hpp" />
+    <ClInclude Include="Random.hpp" />
     <ClInclude Include="Renderer.hpp" />
     <ClInclude Include="RenderingSystem.hpp" />
     <ClInclude Include="StringHelper.hpp" />
@@ -221,6 +223,7 @@
     <ClInclude Include="TileSet.hpp" />
     <ClInclude Include="Time.hpp" />
     <ClInclude Include="Transform.hpp" />
+    <ClInclude Include="Transformations.hpp" />
     <ClInclude Include="TypeHelper.hpp" />
     <ClInclude Include="UIObject.hpp" />
     <ClInclude Include="RendererImpl.hpp" />
@@ -245,16 +248,19 @@
     <ClCompile Include="IPhysicsExtension.cpp" />
     <ClCompile Include="MapParser.cpp" />
     <ClCompile Include="Flock.cpp" />
+    <ClCompile Include="Matrix.cpp" />
     <ClCompile Include="PhysicsExtension1.cpp" />
     <ClCompile Include="BoxCollider.cpp" />
     <ClCompile Include="CastException.cpp" />
     <ClCompile Include="CircleCollider.cpp" />
     <ClCompile Include="Color.cpp" />
     <ClCompile Include="Point.cpp" />
+    <ClCompile Include="Random.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="StringHelper.cpp" />
     <ClCompile Include="Text.cpp" />
+    <ClCompile Include="Transformations.cpp" />
     <ClCompile Include="UIObject.cpp" />
     <ClCompile Include="RendererImpl.cpp" />
     <ClCompile Include="EntityManager.cpp" />

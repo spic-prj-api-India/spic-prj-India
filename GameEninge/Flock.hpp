@@ -28,12 +28,13 @@ namespace spic {
         Flock(SumMethod sumMethod, const float maxSteeringForce, const float maxSpeed, const float angleSensitivity);
 
         Point Velocity() const;
+        Point Heading() const;
         float Mass() const;
 
-        void Seek();
-        void Flee();
-        void Arrival(Deceleration deceleration);
-        void Wander(const float wanderRadius, const float wanderDistance, const float wanderJitter);
+        void UseSeek();
+        void UseFlee();
+        void UseArrival(Deceleration deceleration = Deceleration::NORMAL);
+        void UseWander(const float wanderRadius = 1.0f, const float wanderDistance = 6.0f, const float wanderJitter = 60.0f);
 
         void WallAvoidance(const float wallAvoidanceWeight, const float wallDetectionFeelerLength, const Bounds& bounds);
         void ObstacleAvoidance(const float obstacleAvoidanceWeight, const float feelerTreshold);
@@ -48,9 +49,11 @@ namespace spic {
         void UpdateFlock(const std::vector<std::shared_ptr<Flock>>& flocks);
         void StopFlock();
     private:
-        Point Calculate(const std::vector<std::shared_ptr<Flock>>& flocks);
-        Point CalculateWeightedSum(const std::vector<std::shared_ptr<Flock>>& flocks);
-        Point CalculatePrioritized(const std::vector<std::shared_ptr<Flock>>& flocks);
+        void TagNeighbors(const std::vector<std::shared_ptr<Flock>>& flocks);
+
+        Point Calculate();
+        Point CalculateWeightedSum();
+        Point CalculatePrioritized();
 
         Point Seek(Point target);
         Point Flee(Point target);
@@ -60,20 +63,21 @@ namespace spic {
         Point WallAvoidance();
         Point ObstacleAvoidance();
 
-        Point Seperate(const std::vector<std::shared_ptr<Flock>>& flocks);
-        Point Align(const std::vector<std::shared_ptr<Flock>>& flocks);
-        Point Cohere(const std::vector<std::shared_ptr<Flock>>& flocks);
+        Point Seperate();
+        Point Align();
+        Point Cohere();
 
         void ApplyForce(Point& force);
     private:
+        // General variables
         SumMethod sumMethod;
         spic::FlockBehaviour flockBehaviour;
         float maxSteeringForce;
         float maxSpeed;
-        // in rad
-        float angleSensitivity;
-        Point heading;
+        float angleSensitivity; // in rad
         bool paused;
+        Point heading;
+        std::vector<std::shared_ptr<Flock>> neighbors;
 
         // Target
         Point target;

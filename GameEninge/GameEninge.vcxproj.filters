@@ -175,6 +175,12 @@
     <Filter Include="Source Files\core\systems\ai">
       <UniqueIdentifier>{0c28b002-89f0-4a80-a68c-13864a8e5604}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\core\math">
+      <UniqueIdentifier>{26b59009-31ec-4b2f-98c4-7fcfd26fa034}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\core\math">
+      <UniqueIdentifier>{9331d722-efc1-4965-a1d9-9558416e9dd9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AudioSource.hpp">
@@ -363,6 +369,15 @@
     <ClInclude Include="Bounds.hpp">
       <Filter>Header Files\models</Filter>
     </ClInclude>
+    <ClInclude Include="Matrix.hpp">
+      <Filter>Header Files\core\math</Filter>
+    </ClInclude>
+    <ClInclude Include="Transformations.hpp">
+      <Filter>Header Files\core\math</Filter>
+    </ClInclude>
+    <ClInclude Include="Random.hpp">
+      <Filter>Header Files\core\math</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sample.cpp">
@@ -499,6 +514,15 @@
     </ClCompile>
     <ClCompile Include="Bounds.cpp">
       <Filter>Source Files\models</Filter>
+    </ClCompile>
+    <ClCompile Include="Matrix.cpp">
+      <Filter>Source Files\core\math</Filter>
+    </ClCompile>
+    <ClCompile Include="Transformations.cpp">
+      <Filter>Source Files\core\math</Filter>
+    </ClCompile>
+    <ClCompile Include="Random.cpp">
+      <Filter>Source Files\core\math</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

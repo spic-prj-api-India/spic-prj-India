@@ -16,11 +16,11 @@ namespace spic {
 
 		float Distance(const Point& point) const;
 
-		bool Accumulate(Point& point, const float maxForce);
+		Point Side() const;
 
 		float Rotation() const;
 
-		void Rotate(const float angle);
+		bool Accumulate(Point& point, const float maxForce);
 
 		/**
 		 * @brief operator for adding Point

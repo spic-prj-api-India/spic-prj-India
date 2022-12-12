@@ -28,6 +28,25 @@ namespace spic {
 		return sqrtf(powf(this->x - point.x, 2) + powf(this->y - point.y, 2));
 	}
 
+	Point Point::Side() const
+	{
+		return { -y, x };
+	}
+
+	float Point::Rotation() const
+	{
+		if (y <= 0) {
+			return asinf(x / sqrtf(x * x + y * y)) * 180.f / spic::internal::Defaults::PI;
+		}
+		if (x == 0) {
+			return 180.f;
+		}
+		if (x > 0) {
+			return atanf(y / x) * 180.f / spic::internal::Defaults::PI + 90.f;
+		}
+		return atanf(y / x) * 180.f / spic::internal::Defaults::PI - 90.f;
+	}
+
 	bool Point::Accumulate(Point& point, const float maxForce)
 	{
 		const float MagnitudeSoFar = Length();
@@ -56,51 +75,6 @@ namespace spic {
 		}
 		return true;
 	}
-
-	float Point::Rotation() const
-	{
-		if (y <= 0) {
-			return asinf(x / sqrtf(x * x + y * y)) * 180.f / spic::internal::Defaults::PI;
-		}
-		if (x == 0) {
-			return 180.f;
-		}
-		if (x > 0) {
-			return atanf(y / x) * 180.f / spic::internal::Defaults::PI + 90.f;
-		}
-		return atanf(y / x) * 180.f / spic::internal::Defaults::PI - 90.f;
-	}
-
-	void Point::Rotate(const float angle)
-	{
-		x = x * cosf(angle) - y * sinf(angle);
-		y = x * sinf(angle) + y * cosf(angle);
-	}
-
-	//Point PointToWorldSpace(const Point& point,
-	//	const Point& AgentHeading,
-	//	const Point& AgentPosition)
-	//{
-
-	//	Point AgentSide = AgentHeading.Perp();
-
-	//	//make a copy of the point
-	//	Point TransPoint = point;
-
-	//	//create a transformation matrix
-	//	C2DMatrix matTransform;
-
-	//	//rotate
-	//	matTransform.Rotate(AgentHeading, AgentSide);
-
-	//	//and translate
-	//	matTransform.Translate(AgentPosition.x, AgentPosition.y);
-
-	//	//now transform the vertices
-	//	matTransform.TransformVector2Ds(TransPoint);
-
-	//	return TransPoint;
-	//}
 
 	Point Point::operator +(const Point& point)
 	{

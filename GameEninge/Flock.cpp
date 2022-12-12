@@ -2,6 +2,10 @@
 #include "RigidBody.hpp"
 #include "GeneralHelper.hpp"
 #include "Defaults.hpp"
+#include "Transformations.hpp"
+#include "Random.hpp"
+
+using namespace spic::internal::math;
 
 namespace spic {
 	Flock::Flock(SumMethod sumMethod, const float maxSteeringForce, const float maxSpeed, const float angleSensitivity) : GameObject(),
@@ -16,6 +20,11 @@ namespace spic {
 	{
 		std::shared_ptr<RigidBody> body = this->GetComponent<RigidBody>();
 		return body->Velocity();
+	}
+
+	Point Flock::Heading() const
+	{
+		return heading;
 	}
 
 	float Flock::Mass() const
@@ -36,23 +45,23 @@ namespace spic {
 		this->target = newTarget;
 	}
 
-	void Flock::Seek()
+	void Flock::UseSeek()
 	{
 		this->flockBehaviour = FlockBehaviour::SEEK;
 	}
 
-	void Flock::Flee()
+	void Flock::UseFlee()
 	{
 		this->flockBehaviour = FlockBehaviour::FLEE;
 	}
 
-	void Flock::Arrival(Deceleration deceleration)
+	void Flock::UseArrival(Deceleration deceleration)
 	{
 		this->flockBehaviour = FlockBehaviour::ARRIVAL;
 		this->deceleration = deceleration;
 	}
 
-	void Flock::Wander(const float wanderRadius, const float wanderDistance, const float wanderJitter)
+	void Flock::UseWander(const float wanderRadius, const float wanderDistance, const float wanderJitter)
 	{
 		this->flockBehaviour = FlockBehaviour::WANDER;
 		this->wanderRadius = wanderRadius;
@@ -107,7 +116,11 @@ namespace spic {
 	{
 		if (paused)
 			return;
-		Point steeringForce = Calculate(flocks);
+		if (useSeperation || useAlignment || useCohesion)
+		{
+			TagNeighbors(flocks);
+		}
+		Point steeringForce = Calculate();
 		ApplyForce(steeringForce);
 	}
 
@@ -116,21 +129,34 @@ namespace spic {
 		paused = true;
 	}
 
-	Point Flock::Calculate(const std::vector<std::shared_ptr<Flock>>& flocks)
+	void Flock::TagNeighbors(const std::vector<std::shared_ptr<Flock>>& flocks)
+	{
+		neighbors = {};
+		for (const auto& flock : flocks) {
+			if (flock.get() == this)
+				continue;
+			Point toAgent = Transform()->position - flock->Transform()->position;
+			const float distance = toAgent.Length();
+
+			if (distance > 0.0f && distance < viewRadius) {
+				neighbors.emplace_back(flock);
+			}
+		}
+	}
+
+	Point Flock::Calculate()
 	{
 		switch (sumMethod) {
 		case SumMethod::WEIGHTED_AVERAGE:
-			return CalculateWeightedSum(flocks);
-
+			return CalculateWeightedSum();
 		case SumMethod::PRIORITIZED:
-			return CalculatePrioritized(flocks);
-
+			return CalculatePrioritized();
 		default:
 			return {};
 		}
 	}
 
-	Point Flock::CalculateWeightedSum(const std::vector<std::shared_ptr<Flock>>& flocks)
+	Point Flock::CalculateWeightedSum()
 	{
 		Point steeringForce{};
 
@@ -147,17 +173,17 @@ namespace spic {
 		}
 		if (useSeperation)
 		{
-			force = Seperate(flocks) * seperationWeight;
+			force = Seperate() * seperationWeight;
 			steeringForce += force;
 		}
 		if (useAlignment)
 		{
-			force = Align(flocks) * alignmentWeight;
+			force = Align() * alignmentWeight;
 			steeringForce += force;
 		}
 		if (useCohesion)
 		{
-			force = Cohere(flocks) * cohesionWeight;
+			force = Cohere() * cohesionWeight;
 			steeringForce += force;
 		}
 		if (useTarget)
@@ -185,7 +211,7 @@ namespace spic {
 		return steeringForce;
 	}
 
-	Point Flock::CalculatePrioritized(const std::vector<std::shared_ptr<Flock>>& flocks)
+	Point Flock::CalculatePrioritized()
 	{
 		Point steeringForce{};
 
@@ -202,17 +228,17 @@ namespace spic {
 		}
 		if (useSeperation)
 		{
-			force = Seperate(flocks) * seperationWeight;
+			force = Seperate() * seperationWeight;
 			if (!steeringForce.Accumulate(force, maxSteeringForce)) return steeringForce;
 		}
 		if (useAlignment)
 		{
-			force = Align(flocks) * alignmentWeight;
+			force = Align() * alignmentWeight;
 			if (!steeringForce.Accumulate(force, maxSteeringForce)) return steeringForce;
 		}
 		if (useCohesion)
 		{
-			force = Cohere(flocks) * cohesionWeight;
+			force = Cohere() * cohesionWeight;
 			if (!steeringForce.Accumulate(force, maxSteeringForce)) return steeringForce;
 		}
 		if (useTarget)
@@ -291,105 +317,84 @@ namespace spic {
 
 	Point Flock::Wander()
 	{
-		//Point target;
-		//const Point& location = this->Transform()->position;
+		Point target;
+		const Point& location = this->Transform()->position;
 
-		//target += Point(RandomClamped() * wanderJitter,
-		//	RandomClamped() * wanderJitter);
+		target += Point(RandomClamped() * wanderJitter,
+			RandomClamped() * wanderJitter);
 
-		//target.Normalize();
+		target.Normalize();
 
-		//target *= wanderRadius;
+		target *= wanderRadius;
 
-		//Point targetLocal = target + Point(wanderDistance, 0.0f);
-		////project the target into world space
-		//Point targetWorld = PointToWorldSpace(targetLocal,
-		//	location.Heading(),
-		//	m_pVehicle->Side(),
-		//	location);
-		//return targetWorld - Transform()->position;
-		return {};
+		Point targetLocal = target + Point(wanderDistance, 0.0f);
+
+		Point targetWorld = PointToWorldSpace(targetLocal,
+			heading,
+			heading.Side(),
+			location);
+		return targetWorld - location;
 	}
 
 	Point Flock::WallAvoidance()
 	{
 		std::vector<Point> feelers(3);
 
-		//feeler pointing straight in front
 		feelers[0] = Transform()->position + (heading * wallDetectionFeelerLength);
 
-		//feeler to left
 		Point temp = heading;
-		temp.Rotate(spic::internal::Defaults::HALF_PI * 3.5f);
+		RotateAroundOrigin(temp, spic::internal::Defaults::HALF_PI * 3.5f);
 		feelers[1] = Transform()->position + (heading * (wallDetectionFeelerLength / 2.0f)) * temp;
 
-		//feeler to right
 		temp = heading;
-		temp.Rotate(spic::internal::Defaults::HALF_PI * 0.5f);
+		RotateAroundOrigin(temp, spic::internal::Defaults::HALF_PI * 0.5f);
 		feelers[2] = Transform()->position + (heading * (wallDetectionFeelerLength / 2.0f)) * temp;
 
 		float distToThisIP = 0.0;
 		float distToClosestIP = std::numeric_limits<float>::max();
 
-		Point wallsv[5] = { Point(bounds.Left(), bounds.Top()),
+		Point walls[5] = { Point(bounds.Left(), bounds.Top()),
 			Point(bounds.Left(), bounds.Top() + bounds.Height()),
 			Point(bounds.Left() + bounds.Width(), bounds.Top() + bounds.Height()),
 			Point(bounds.Left() + bounds.Width(), bounds.Top()),
 			Point(bounds.Left(), bounds.Top())
 		};
 
-		//this will hold an index into the vector of walls
-		int closestWall = -1;
+		int closestWallIndex = -1;
 
-		Point steeringForce,
-			point,         //used for storing temporary info
-			closestPoint;  //holds the closest intersection point
+		Point steeringForce, point, closestPoint;
 
-		//examine each feeler in turn
-		for (unsigned int flr = 0; flr < feelers.size(); ++flr) {
-
-			//run through each wall checking for any intersection points
-			for (int i = 0; i < 4; i++) {
-
+		for (auto& feeler : feelers) {
+			for (int wallIndex = 0; wallIndex < 4; wallIndex++) {
 				if (spic::GeneralHelper::LineIntersection(Transform()->position,
-					feelers[flr],
-					wallsv[i],
-					wallsv[i + 1],
+					feeler,
+					walls[wallIndex],
+					walls[wallIndex + 1],
 					point,
 					distToThisIP))
 				{
-					//is this the closest found so far? If so keep a record
 					if (distToThisIP < distToClosestIP)
 					{
 						distToClosestIP = distToThisIP;
 
-						closestWall = i;
+						closestWallIndex = wallIndex;
 
 						closestPoint = point;
 					}
 				}
-			}//next wall
+			}
 
-
-			//if an intersection point has been detected, calculate a force  
-			//that will direct the agent away
-			if (closestWall != -1)
+			if (closestWallIndex != -1)
 			{
-				//calculate by what distance the projected position of the agent
-				//will overshoot the wall
-				Point overShoot = feelers[flr] - closestPoint;
+				const Point overShoot = feeler - closestPoint;
 
-				Point temp = (wallsv[closestWall] - wallsv[closestWall + 1]);
+				Point temp = (walls[closestWallIndex] - walls[closestWallIndex + 1]);
 				temp.Normalize();
 				Point normal(-temp.y, temp.x);
 
-				//create a force in the direction of the wall normal, with a 
-				//magnitude of the overshoot
 				steeringForce = normal * overShoot.Length();
 			}
-
-		}//next feeler
-
+		}
 		return steeringForce;
 	}
 
@@ -398,13 +403,11 @@ namespace spic {
 		return {};
 	}
 
-	Point Flock::Seperate(const std::vector<std::shared_ptr<Flock>>& flocks)
+	Point Flock::Seperate()
 	{
 		Point steeringForce;
-		for (const auto& flock : flocks) {
-			if (flock.get() == this)
-				continue;
-			Point toAgent = Transform()->position - flock->Transform()->position;
+		for (const auto& neighbor : neighbors) {
+			Point toAgent = Transform()->position - neighbor->Transform()->position;
 			const float distance = toAgent.Length();
 
 			if (distance > 0.0f && distance < desiredSeparation) {
@@ -415,20 +418,12 @@ namespace spic {
 		return steeringForce;
 	}
 
-	Point Flock::Align(const std::vector<std::shared_ptr<Flock>>& flocks)
+	Point Flock::Align()
 	{
 		Point averageHeading;
-		float neighborCount = 0.0f;
-		for (const auto& flock : flocks) {
-			if (flock.get() == this)
-				continue;
-			Point toAgent = Transform()->position - flock->Transform()->position;
-			const float distance = toAgent.Length();
-
-			if (distance > 0.0f && distance < viewRadius) {
-				averageHeading += flock->Velocity();
-				neighborCount++;
-			}
+		float neighborCount = static_cast<float>(neighbors.size());
+		for (const auto& neighbor : neighbors) {
+			averageHeading += neighbor->Heading();
 		}
 		if (neighborCount > 0.0f)
 		{
@@ -438,21 +433,13 @@ namespace spic {
 		return averageHeading;
 	}
 
-	Point Flock::Cohere(const std::vector<std::shared_ptr<Flock>>& flocks)
+	Point Flock::Cohere()
 	{
 		Point centerOfMass, steeringForce;
-		float neighborCount = 0.0f;
+		float neighborCount = static_cast<float>(neighbors.size());
 
-		for (const auto& flock : flocks) {
-			if (flock.get() == this)
-				continue;
-			Point toAgent = Transform()->position - flock->Transform()->position;
-			const float distance = toAgent.Length();
-
-			if (distance > 0.0f && distance < viewRadius) {
-				centerOfMass += flock->Transform()->position;
-				++neighborCount;
-			}
+		for (const auto& neighbor : neighbors) {
+			centerOfMass += neighbor->Transform()->position;
 		}
 		if (neighborCount > 0.0f)
 		{
