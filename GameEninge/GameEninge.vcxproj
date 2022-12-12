@@ -203,7 +203,7 @@
     <ClInclude Include="IPhysicsExtension.hpp" />
     <ClInclude Include="Matrix.hpp" />
     <ClInclude Include="Persistable.hpp" />
-    <ClInclude Include="Flock.hpp" />
+    <ClInclude Include="ForceDriven.hpp" />
     <ClInclude Include="PhysicsExtension1.hpp" />
     <ClInclude Include="PhysicsSystem.hpp" />
     <ClInclude Include="ISystem.hpp" />
@@ -247,7 +247,7 @@
     <ClCompile Include="GeneralHelper.cpp" />
     <ClCompile Include="IPhysicsExtension.cpp" />
     <ClCompile Include="MapParser.cpp" />
-    <ClCompile Include="Flock.cpp" />
+    <ClCompile Include="ForceDriven.cpp" />
     <ClCompile Include="Matrix.cpp" />
     <ClCompile Include="PhysicsExtension1.cpp" />
     <ClCompile Include="BoxCollider.cpp" />

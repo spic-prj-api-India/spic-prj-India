@@ -4,8 +4,6 @@
 #include "Collider.hpp"
 
 namespace spic {
-    class Component;
-
     /**
      * @brief A collider which represents a rectangular collision area.
      */

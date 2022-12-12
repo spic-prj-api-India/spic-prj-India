@@ -61,6 +61,17 @@ namespace spic::GeneralHelper
 	*/
 	bool CalculateWithinSquare(const Point& point, std::array<Point, 4>& square);
 
+	/**
+	 * @brief Calculates if a line intersects with another line.
+	 *		Sets intersection point and distance to intersection if intersection exists.
+	 * @param sPoint1 Start point of line 1
+	 * @param ePoint1 End point of line 1
+	 * @param sPoint2 Start point of line 2
+	 * @param ePoint2 End point of line 2
+	 * @param intersectPoint Intersection point
+	 * @param distance Distance to intersection
+	 * @return
+	*/
 	bool LineIntersection(Point sPoint1, Point ePoint1, Point sPoint2, Point ePoint2, Point& intersectPoint, float& distance);
 	
 	/**

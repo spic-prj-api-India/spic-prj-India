@@ -2,7 +2,7 @@
 #define AISYSTEM_H_
 
 #include "ISystem.hpp"
-#include "Flock.hpp"
+#include "ForceDriven.hpp"
 
 /**
 * @brief A system that calls the Start and Update method in scripts of entities
@@ -15,18 +15,22 @@ namespace spic::internal::systems {
 		AISystem();
 
 		/**
-		* @brief Initiliazes system
+		* @brief Initiliazes system.
 		* @spicapi
 		*/
 		void Start(std::vector<std::shared_ptr<spic::GameObject>>& entities, Scene& currentScene) override;
 
 		/**
-		* @brief Calls Listen method in InputManager
+		* @brief Calls UpdateFlock method in flocks.
 		* @spicapi
 		*/
 		void Update(std::vector<std::shared_ptr<spic::GameObject>>& entities, Scene& currentScene) override;
 	private:
-		std::vector<std::shared_ptr<spic::Flock>> GetFlockEntities(std::vector<std::shared_ptr<spic::GameObject>> entities);
+		/**
+		* @brief Filters all Flock Entities from entities list.
+		* @spicapi
+		*/
+		std::vector<std::shared_ptr<spic::ForceDriven>> GetForceDrivenEntities(std::vector<std::shared_ptr<spic::GameObject>> entities);
 	};
 }
 

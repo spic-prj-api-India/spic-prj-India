@@ -1,7 +1,7 @@
 #pragma once
 
 #include <IMouseListener.hpp>
-#include "Flock.hpp"
+#include "ForceDriven.hpp"
 
 class FollowMouseListener : public spic::IMouseListener {
 public:
@@ -12,7 +12,7 @@ public:
     void OnMousePressed() override;
     void OnMouseReleased() override;
 
-    void AddFollower(const std::shared_ptr<spic::Flock>& follower);
+    void AddFollower(const std::shared_ptr<spic::ForceDriven>& follower);
 private:
-    std::vector<std::shared_ptr<spic::Flock>> followers;
+    std::vector<std::shared_ptr<spic::ForceDriven>> followers;
 };

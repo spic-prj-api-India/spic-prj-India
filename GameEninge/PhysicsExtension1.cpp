@@ -15,7 +15,7 @@
 #include "Box2DCollisionListener.hpp"
 #include "PhysicsValues.hpp"
 #include "RigidBody.hpp"
-#include "GameObject.hpp"
+#include "ForceDriven.hpp"
 
 namespace spic::extensions {
 	std::unique_ptr<b2World> world;
@@ -74,7 +74,8 @@ namespace spic::extensions {
 				// Update entity
 				entity->Transform()->position.x = position.x / PhysicsValues::SCALING_FACTOR;
 				entity->Transform()->position.y = position.y / PhysicsValues::SCALING_FACTOR;
-				//entity->Transform()->rotation = rotation;
+				if(!spic::TypeHelper::SharedPtrIsOfType<ForceDriven>(entity))
+					entity->Transform()->rotation = rotation;
 			}
 		}
 

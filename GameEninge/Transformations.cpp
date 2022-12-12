@@ -3,17 +3,17 @@
 
 namespace spic::internal::math {
 	spic::Point PointToWorldSpace(const spic::Point& point,
-		const spic::Point& AgentHeading,
-		const spic::Point& AgentSide,
-		const spic::Point& AgentPosition)
+		const spic::Point& agentHeading,
+		const spic::Point& agentSide,
+		const spic::Point& agentPosition)
 	{
 		spic::Point transPoint = point;
 
 		S2DMatrix matTransform;
 
-		matTransform.Rotate(AgentHeading, AgentSide);
+		matTransform.Rotate(agentHeading, agentSide);
 
-		matTransform.Translate(AgentPosition.x, AgentPosition.y);
+		matTransform.Translate(agentPosition.x, agentPosition.y);
 
 		matTransform.TransformPoints(transPoint);
 

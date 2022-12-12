@@ -354,7 +354,7 @@
     <ClInclude Include="ISystem.hpp">
       <Filter>Header Files\core\interfaces</Filter>
     </ClInclude>
-    <ClInclude Include="Flock.hpp">
+    <ClInclude Include="ForceDriven.hpp">
       <Filter>Header Files\objects</Filter>
     </ClInclude>
     <ClInclude Include="AudioManager.hpp">
@@ -509,7 +509,7 @@
     <ClCompile Include="AudioManager.cpp">
       <Filter>Source Files\core\managers</Filter>
     </ClCompile>
-    <ClCompile Include="Flock.cpp">
+    <ClCompile Include="ForceDriven.cpp">
       <Filter>Source Files\objects</Filter>
     </ClCompile>
     <ClCompile Include="Bounds.cpp">

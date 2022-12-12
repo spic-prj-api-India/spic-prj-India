@@ -3,7 +3,7 @@
 #include <Sprite.hpp>
 #include <Point.cpp>
 
-Rocket::Rocket(const std::string& name, const spic::Point& position, const float angle) : Flock(spic::SumMethod::WEIGHTED_AVERAGE, 0.05f, 1.0f, 0.122173048f)
+Rocket::Rocket(const std::string& name, const spic::Point& position, const float angle) : ForceDriven(spic::SumMethod::WEIGHTED_AVERAGE, 0.05f, 1.0f, 0.122173048f)
 {
 	SetAttributes(name, position, angle);
 	SetWeights();

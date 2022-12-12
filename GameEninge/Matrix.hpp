@@ -6,12 +6,40 @@
 namespace spic::internal::math {
     class S2DMatrix {
     public:
+        /**
+         * @brief Initializes the matrix to an identity matrix.
+        */
         S2DMatrix();
 
+        /**
+         * @brief Creates an identity matrix.
+        */
         void Identity();
+
+        /**
+         * @brief Creates a transformation matrix.
+         * @param x X of transformation.
+         * @param y Y of transformation.
+        */
         void Translate(float x, float y);
+
+        /**
+         * @brief Creates a rotation matrix.
+         * @param rotation Rotation in grad.
+        */
         void Rotate(float rotation);
+
+        /**
+         * @brief Creates a rotation matrix.
+         * @param heading Direction of 2D Vector.
+         * @param side Side of 2D Vector.
+        */
         void Rotate(const spic::Point& heading, const spic::Point& side);
+
+        /**
+         * @brief Applies a transformation matrix to a point.
+         * @param point Point that transformation is applied on.
+        */
         void TransformPoints(spic::Point& point);
     private:
         struct Matrix
@@ -23,6 +51,10 @@ namespace spic::internal::math {
             Matrix();
         };
 
+        /**
+         * @brief Multiplies matrix with mIn.
+         * @param mIn Matrix that will be multiplied.
+        */
         void MatrixMultiply(Matrix& mIn);
     private:
         Matrix matrix;

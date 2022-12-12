@@ -9,14 +9,19 @@ namespace spic {
 		return sqrtf(x * x + y * y);
 	}
 
+	float Point::LengthSq() const
+	{
+		return (x * x + y * y);
+	}
+
 	float Point::Normalize()
 	{
-		float length = sqrtf(x * x + y * y);
+		const float length = Length();
 		if (length < FLT_EPSILON)
 		{
 			return 0.0f;
 		}
-		float invLength = 1.0f / length;
+		const float invLength = 1.0f / length;
 		x *= invLength;
 		y *= invLength;
 
@@ -47,29 +52,29 @@ namespace spic {
 		return atanf(y / x) * 180.f / spic::internal::Defaults::PI - 90.f;
 	}
 
-	bool Point::Accumulate(Point& point, const float maxForce)
+	bool Point::Accumulate(Point& force, const float maxForce)
 	{
 		const float MagnitudeSoFar = Length();
 		//calculate how much steering force remains to be used by this vehicle
-		const float MagnitudeRemaining = maxForce - MagnitudeSoFar;
+		float MagnitudeRemaining = maxForce - MagnitudeSoFar;
 		//return false if there is no more force left to use
 		if (MagnitudeRemaining <= 0.0) return false;
 		//calculate the magnitude of the force we want to add
-		const float MagnitudeToAdd = point.Length();
+		const float MagnitudeToAdd = force.Length();
 		//if the magnitude of the sum of ForceToAdd and the running total
 		//does not exceed the maximum force available to this vehicle, just
 		//add together. Otherwise add as much of the ForceToAdd vector as
 		//possible without going over the max.
 		if (MagnitudeToAdd < MagnitudeRemaining)
 		{
-			this->x += point.x;
-			this->y += point.y;
+			this->x += force.x;
+			this->y += force.y;
 		}
 		else
 		{
 			//add it to the steering force
-			point.Normalize();
-			const Point force = point * MagnitudeRemaining;
+			force.Normalize();
+			Point force = force * MagnitudeRemaining;
 			this->x += force.x;
 			this->y += force.y;
 		}

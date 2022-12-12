@@ -212,7 +212,7 @@ namespace spic {
 		* @param gameObject The game object.
 		* @spicapi
 		*/
-		static void Create(const std::shared_ptr<GameObject>& gameObject);
+		static void Create(const std::shared_ptr<GameObject> gameObject);
 
 		/**
 		 * @brief Gets game object by name

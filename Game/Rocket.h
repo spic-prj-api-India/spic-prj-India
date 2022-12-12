@@ -1,8 +1,8 @@
 #pragma once
-#include <Flock.hpp>
+#include <ForceDriven.hpp>
 #include "RigidBody.hpp"
 
-class Rocket : public spic::Flock {
+class Rocket : public spic::ForceDriven {
 public:
 	Rocket(const std::string& name, const spic::Point& position, const float angle);
 	void SetAttributes(const std::string& name, const spic::Point& position, const float angle);

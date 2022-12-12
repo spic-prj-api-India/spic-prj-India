@@ -4,8 +4,6 @@
 #include "Component.hpp"
 
 namespace spic {
-    class Component;
-
     /**
      * @brief The base class for all colliders.
      * @spicapi

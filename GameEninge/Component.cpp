@@ -11,15 +11,10 @@ namespace spic {
 		return this->active;
 	}
 
-	/**
-	 * @brief flag New active status.
-	 * @spicapi
-	 */
 	void Component::Active(bool flag)
 	{
 		this->active = flag;
 	}
-
 
 	bool Component::IsChanged() const
 	{

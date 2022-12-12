@@ -14,7 +14,7 @@ namespace spic {
 		components = {};
 	}
 
-	void GameObject::Create(const std::shared_ptr<GameObject>& gameObject)
+	void GameObject::Create(const std::shared_ptr<GameObject> gameObject)
 	{
 		internal::EntityManager::GetInstance()->AddEntity(gameObject);
 	}

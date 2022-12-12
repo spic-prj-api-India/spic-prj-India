@@ -41,7 +41,7 @@ void AimListener::Shoot()
 	const float desiredAngle = spic::GeneralHelper::DEG2RAD<float>(angleDeg);
 	const std::string name = "Rocket" + std::to_string(rocketCount);
 	std::shared_ptr<Rocket> rocket = std::make_shared<Rocket>(name, weapon->Transform()->position, desiredAngle);
-	rocket->StartFlock();
+	rocket->StartForceDrivenEntity();
 
 	spic::GameObject::Create(rocket);
 	followMouseListener->AddFollower(rocket);
