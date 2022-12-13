@@ -18,17 +18,15 @@ namespace spic
 		return contents;
 	}
 
-
-
 	void Scene::AddContent(std::shared_ptr<GameObject> content)
 	{
 		try
 		{
 			if (GameObject::CheckIfNameExsists(content->GetChildren(), content->Name()))
-				throw std::runtime_error("Name of current gameobject exsits already");
+				throw std::runtime_error("Name of current gameobject exists already");
 
-			if (spic::internal::EntityManager::GetInstance()->CheckIfNameExsits(content->Name()))
-				throw std::runtime_error("Name of current gameobject exsits already");;
+			if (spic::internal::EntityManager::GetInstance()->CheckIfNameExists(content->Name()))
+				throw std::runtime_error("Name of current gameobject exists already");;
 
 			this->contents.emplace_back(std::move(content));
 		}

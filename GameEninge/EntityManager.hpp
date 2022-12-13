@@ -113,11 +113,11 @@ namespace spic::internal
 		void AddSystem(std::unique_ptr<spic::systems::ISystem> system);
 
 		/**
-		 * @brief Calls an condition relating to the current enties list
+		 * @brief Calls an condition relating to the current entities list
 		 * @param function 
 		 * @return 
 		*/
-		bool CheckIfNameExsits(const std::string& name) const;
+		bool CheckIfNameExists(const std::string& name) const;
 
 		/*
 		@brief Use this function to remove a (custom) system to the systems list.

@@ -176,7 +176,7 @@ void EntityManager::AddSystem(std::unique_ptr<spic::systems::ISystem> system)
 	systems[CustomSystemDefaultPriority].emplace_back(std::move(system));
 }
 
-bool spic::internal::EntityManager::CheckIfNameExsits(const std::string& name) const
+bool spic::internal::EntityManager::CheckIfNameExists(const std::string& name) const
 {
 	for (auto& s : scenes)
 	{
