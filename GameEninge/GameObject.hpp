@@ -16,7 +16,7 @@ namespace spic {
 	/**
 	 * @brief Any object which should be represented on screen.
 	 */
-	class GameObject : public std::enable_shared_from_this<GameObject> {
+	class GameObject {
 	public:
 		GameObject();
 		GameObject(const GameObject& other) = default;

@@ -183,7 +183,7 @@ bool spic::internal::EntityManager::CheckIfNameExsits(const std::string& name) c
 		for (auto& entity : s.second->Contents())
 		{
 			auto children = entity->GetChildren();
-			if (spic::GameObject::GetIfNameExsists(children, name))
+			if (spic::GameObject::CheckIfNameExsists(children, name))
 				return true;
 		}
 	}
