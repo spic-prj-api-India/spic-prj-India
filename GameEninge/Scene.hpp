@@ -31,9 +31,7 @@ namespace spic {
              * @param content Reference to the game object.
              * @spicapi
              */
-            template<class T>
-            void AddContent(std::shared_ptr<T> content);
-
+            void AddContent(std::shared_ptr<GameObject> content);
 
             /**
              * @brief Load tile map
@@ -87,12 +85,6 @@ namespace spic {
         std::unique_ptr<spic::Camera> camera;
         spic::UpdateSetting setting;
     };
-
-    template<class T>
-	void Scene::AddContent(std::shared_ptr<T> content)
-	{
-		contents.emplace_back(content);
-	}
 }
 
 #endif // SCENE_H_

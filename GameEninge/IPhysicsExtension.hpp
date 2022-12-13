@@ -10,7 +10,7 @@ namespace spic::extensions{
 	/**
 	 * @brief An interface for the physics extensions
 	 */
-	class IPhysicsExtension : public spic::internal::extensions::IEngineExtension{
+	class IPhysicsExtension : public spic::extensions::IEngineExtension{
 	public:
 		IPhysicsExtension();
 		~IPhysicsExtension();

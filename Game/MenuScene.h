@@ -8,5 +8,6 @@ public:
 
 	void SetCamera();
 	void SetContents();
+	void SetMatchMenu();
 	void SetInputListeners();
 };

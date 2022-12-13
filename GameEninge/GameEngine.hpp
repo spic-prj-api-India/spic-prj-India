@@ -23,7 +23,7 @@ namespace spic {
 		GameEngine();
 		~GameEngine();
 
-		std::map<std::string, std::shared_ptr<spic::internal::extensions::IEngineExtension>> _extensions;
+		std::map<std::string, std::shared_ptr<spic::extensions::IEngineExtension>> _extensions;
 		std::map<std::string, std::function<std::shared_ptr<spic::GameObject>()>> _types;
 		bool quit;
 	public:
@@ -41,6 +41,7 @@ namespace spic {
 		*/
 		template <typename T>
 		void AddExtension(std::shared_ptr<T> extension);
+
 
 		/**
 		* @brief Gets extension of type IEngineExtension.
@@ -192,7 +193,7 @@ namespace spic {
 	template <typename T>
 	bool GameEngine::IsEngineExtension(std::shared_ptr<T> extension) const
 	{
-		auto castedEngineExtension = std::dynamic_pointer_cast<spic::internal::extensions::IEngineExtension>(extension);
+		auto castedEngineExtension = std::dynamic_pointer_cast<spic::extensions::IEngineExtension>(extension);
 		return castedEngineExtension != nullptr;
 	}
 }

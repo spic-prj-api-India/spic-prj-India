@@ -58,6 +58,11 @@ namespace spic::internal
 		void AddEntity(const std::shared_ptr<spic::GameObject>& entity);
 
 		/*
+		@brief Add entity.
+		@param entity The entity that will be added
+		*/
+		void AddEntityAlsoToScene(const std::shared_ptr<spic::GameObject>& entity);
+		/*
 		@brief Remove entity.
 		@param entity The entity that will be removed
 		*/
@@ -106,6 +111,13 @@ namespace spic::internal
 		@param The (custom) system to be added.
 		*/
 		void AddSystem(std::unique_ptr<spic::systems::ISystem> system);
+
+		/**
+		 * @brief Calls an condition relating to the current entities list
+		 * @param function 
+		 * @return 
+		*/
+		bool CheckIfNameExists(const std::string& name) const;
 
 		/*
 		@brief Use this function to remove a (custom) system to the systems list.

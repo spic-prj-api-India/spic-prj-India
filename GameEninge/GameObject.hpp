@@ -9,14 +9,25 @@
 #include <memory>
 #include "Collider.hpp"
 #include "Sprite.hpp"
+#include <functional>
+#include <map>
 
 namespace spic {
 	/**
 	 * @brief Any object which should be represented on screen.
 	 */
-	class GameObject : public std::enable_shared_from_this<GameObject> {
+	class GameObject {
 	public:
 		GameObject();
+
+		/**
+		 * @brief Constructor.
+		 * @details Object will be created with name
+		 * @param name The name for the game object.
+		 * @spicapi
+		*/
+		GameObject(const std::string& name);
+
 		GameObject(const GameObject& other) = default;
 		GameObject(GameObject&& other) = default;
 		GameObject& operator=(const GameObject& other) = default;
@@ -38,6 +49,21 @@ namespace spic {
 			return std::make_shared<T>();
 		}
 
+		/**
+		 * @brief Checks if name exsists in colection
+		 * @param gameobjects 
+		 * @param name 
+		 * @return 
+		*/
+		static bool CheckIfNameExsists(const std::vector<std::shared_ptr<GameObject>>& objects, const std::string& name);
+
+		/**
+		 * @brief Sets content of gameobject
+		 * @details If you want to use networking use this
+		 * @param data 
+		*/
+		virtual void SetContent(std::map<std::string, std::string>& data);
+		
 		/**
 		 * @brief Returns name of GameObject.
 		 * @return string.
@@ -200,17 +226,12 @@ namespace spic {
 		 * @brief Removes a Component.
 		 * @details Will search for the Component among the GameObjects.
 		 * @param obj The Component to be removed. If obj == nullptr, Destroy() does nothing.
+		 * @details TODO needs recursion
 		 * @spicapi
 		 */
 		static void Destroy(Component* obj);
 
-		/**
-		 * @brief Constructor.
-		 * @details Object will be created with name
-		 * @param name The name for the game object.
-		 * @spicapi
-		 */
-		GameObject(const std::string& name);
+
 
 		/**
 		 * @brief Does the object exist? TODO wat wordt hiermee bedoeld?
@@ -470,4 +491,5 @@ namespace spic {
 		return nullptr;
 	}
 }
+
 #endif // GAMEOBJECT_H_

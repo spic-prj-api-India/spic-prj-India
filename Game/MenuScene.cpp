@@ -35,6 +35,10 @@ void MenuScene::SetContents()
 	AddContent(button);
 }
 
+void MenuScene::SetMatchMenu()
+{
+}
+
 void MenuScene::SetInputListeners()
 {
 	std::shared_ptr<MouseListener> mouseListener = std::make_shared<MouseListener>();

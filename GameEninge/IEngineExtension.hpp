@@ -1,7 +1,7 @@
 #ifndef IENGINEEXTENSION_H_
 #define IENGINEEXTENSION_H_
 
-namespace spic::internal::extensions {
+namespace spic::extensions {
 	/**
 	 * @brief A interface for the engine extensions
 	 */

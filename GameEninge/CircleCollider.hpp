@@ -25,6 +25,7 @@ namespace spic {
              * @spicapi
              */
             void Radius(float newRadius);
+
         private:
             float radius;
     };
