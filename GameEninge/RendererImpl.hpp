@@ -182,7 +182,7 @@ namespace spic::internal::rendering {
 		 * @param isUiObject
 		 * @param transform Contains position and rotation
 		*/
-		void DrawAnimator(GameObject* gameObject, Animator* animator, const Transform* transform, const bool isUiObject);
+		void DrawAnimator(Animator* animator, const Transform* transform, const bool isUiObject, const float width, const float height);
 
 		/**
 		 * @brief Draws text on window space

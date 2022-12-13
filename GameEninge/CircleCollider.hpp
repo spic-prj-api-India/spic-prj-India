@@ -24,7 +24,7 @@ namespace spic {
              * @param newRadius The desired radius
              * @spicapi
              */
-            void Radius(float newRadius);
+            void Radius(const float newRadius);
 
         private:
             float radius;

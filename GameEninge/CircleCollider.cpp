@@ -9,7 +9,7 @@ namespace spic {
 	{
 		return radius;
 	}
-	void CircleCollider::Radius(float newRadius)
+	void CircleCollider::Radius(const float newRadius)
 	{
 		if (newRadius < 0.0f)
 			throw std::range_error("Radius can't be below zero");

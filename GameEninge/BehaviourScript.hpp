@@ -13,7 +13,7 @@ namespace spic {
              * @brief Sets game object of Behaviour script
              * @spicapi
              */
-            void GameObject(const std::shared_ptr<spic::GameObject>& gameObject);
+            void GameObject(const std::shared_ptr<spic::GameObject> gameObject);
 
             /**
              * @brief Is called once on start

@@ -109,9 +109,6 @@
     <Filter Include="Header Files\core\systems\networking">
       <UniqueIdentifier>{d16d3029-f666-477c-9d01-c6dbefca1a47}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\core\systems\scripts">
-      <UniqueIdentifier>{d8655c86-e302-4ed1-bbf0-0c564114f111}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\core\systems\physics">
       <UniqueIdentifier>{0faa61b9-0dfb-4284-a0d9-ffd8d1663372}</UniqueIdentifier>
     </Filter>
@@ -144,9 +141,6 @@
     </Filter>
     <Filter Include="Source Files\core\systems\physics">
       <UniqueIdentifier>{a4c84af4-e6cc-4c91-bd83-1714dbc1fb98}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\core\systems\scripts">
-      <UniqueIdentifier>{4fc209ec-3065-487c-8d8d-65c7a84fbd8c}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\core\systems\rendering">
       <UniqueIdentifier>{f1a73fff-ed6a-452f-86f7-00a43417a997}</UniqueIdentifier>
@@ -203,9 +197,6 @@
     </ClInclude>
     <ClInclude Include="PhysicsSystem.hpp">
       <Filter>Header Files\core\systems\physics</Filter>
-    </ClInclude>
-    <ClInclude Include="ScriptSystem.hpp">
-      <Filter>Header Files\core\systems\scripts</Filter>
     </ClInclude>
     <ClInclude Include="CastException.hpp">
       <Filter>Header Files\exceptions</Filter>
@@ -421,9 +412,6 @@
     </ClCompile>
     <ClCompile Include="PhysicsSystem.cpp">
       <Filter>Source Files\core\systems\physics</Filter>
-    </ClCompile>
-    <ClCompile Include="ScriptSystem.cpp">
-      <Filter>Source Files\core\systems\scripts</Filter>
     </ClCompile>
     <ClCompile Include="RendererImpl.cpp">
       <Filter>Source Files\core\systems\rendering</Filter>

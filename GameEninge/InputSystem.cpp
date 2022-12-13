@@ -9,6 +9,17 @@
 namespace spic::internal::systems {
 	InputSystem::InputSystem() 
 	{}
+	
+	void StartRecusion(std::vector<std::shared_ptr<spic::GameObject>> entities)
+	{
+		for (auto& entity : entities) {
+			for (const auto& script : entity->GetComponents<spic::BehaviourScript>()) {
+				script->GameObject(entity);
+				script->OnStart();
+				StartRecusion(std::move(entity->GetChildren()));
+			}
+		}
+	}
 
 	void InputSystem::Start(std::vector<std::shared_ptr<spic::GameObject>>& entities, Scene& currentScene)
 	{
@@ -19,12 +30,18 @@ namespace spic::internal::systems {
 			script->GameObject(std::make_shared<GameObject>(currentScene.Camera()));
 			script->OnStart();
 		}
+		StartRecusion(entities);
+	}
+
+	void UpdateRecusion(std::vector<std::shared_ptr<spic::GameObject>> entities)
+	{
 		for (auto& entity : entities) {
 			for (const auto& script : entity->GetComponents<spic::BehaviourScript>()) {
-				script->GameObject(entity);
-				script->OnStart();
+				script->OnUpdate();
 			}
+			UpdateRecusion(std::move(entity->GetChildren()));
 		}
+		
 	}
 
 	void InputSystem::Update(std::vector<std::shared_ptr<spic::GameObject>>& entities, Scene& currentScene)
@@ -33,29 +50,33 @@ namespace spic::internal::systems {
 		while (InputImpl::Poll()) 
 		{
 			InputManager::GetInstance()->Listen();
+		}
 
-			for (const auto& script : currentScene.Camera().GetComponents<spic::BehaviourScript>()) {
+		for (const auto& script : currentScene.Camera().GetComponents<spic::BehaviourScript>()) {
+			script->OnUpdate();
+		}
+		for (auto& entity : entities) {
+			for (const auto& script : entity->GetComponents<spic::BehaviourScript>()) {
 				script->OnUpdate();
 			}
-			for (auto& entity : entities) {
-				for (const auto& script : entity->GetComponents<spic::BehaviourScript>()) {
-					script->OnUpdate();
-				}
-			}
+			UpdateRecusion(entity->GetChildren());
 		}
 	}
 
 	std::vector<std::shared_ptr<spic::Button>> InputSystem::GetButtons(std::vector<std::shared_ptr<spic::GameObject>>& entities)
 	{
 		std::vector<std::shared_ptr<spic::Button>> buttons;
-		for (const auto& entity : entities) {
+		for (const auto& entity : entities) 
+		{
 			if (spic::TypeHelper::SharedPtrIsOfType<spic::Button>(entity))
 				buttons.emplace_back(TypeHelper::CastSharedPtrToType<spic::Button>(entity));
-			for (const auto& child : entity->GetChildren()) {
-				if (spic::TypeHelper::SharedPtrIsOfType<spic::Button>(child))
-					buttons.emplace_back(TypeHelper::CastSharedPtrToType<spic::Button>(entity));
-			}
+
+			auto childeren = entity->GetChildren();
+			auto temp = this->GetButtons(childeren);
+
+			std::copy(temp.begin(), temp.end(), std::back_inserter(buttons));
 		}
+
 		return buttons;
 	}
 }

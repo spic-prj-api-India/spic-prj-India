@@ -24,7 +24,7 @@ namespace spic {
      */
     class RigidBody : public Component {
         public:
-            RigidBody(float mass, float gravityScale, BodyType bodyType);
+            RigidBody(const float mass, const float gravityScale, const BodyType bodyType);
 
             /**
              * @brief Get rigid body's mass
@@ -52,21 +52,21 @@ namespace spic {
              * @param newMass The desired mass
              * @spicapi
              */
-            void Mass(float newMass);
+            void Mass(const float newMass);
 
             /**
              * @brief Set rigid body's gravity scale
              * @param newGravityScale The desired gravity scale
              * @spicapi
              */
-            void GravityScale(float newGravityScale);
+            void GravityScale(const float newGravityScale);
 
             /**
              * @brief Set rigid body's body type
              * @param newBodyType The desired body type
              * @spicapi
              */
-            void BodyType(spic::BodyType newBodyType);
+            void BodyType(const spic::BodyType newBodyType);
 
             /**
              * @brief Apply force to this rigid body.

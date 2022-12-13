@@ -28,7 +28,7 @@ namespace spic {
              * @return spic::Color.
              * @spicapi
              */
-            const Color BackgroundColor();
+            const Color BackgroundColor() const;
 
             /**
              * @brief Sets background image path of Camera.
@@ -42,10 +42,10 @@ namespace spic {
              * @return string.
              * @spicapi
              */
-            const std::string BackgroundImage();
+            const std::string BackgroundImage() const;
 
-            const float AspectWidth();
-            const float AspectHeight();
+            const float AspectWidth() const;
+            const float AspectHeight() const;
         private:
             Color backgroundColor;
             std::string backgroundImage;

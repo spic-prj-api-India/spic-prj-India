@@ -66,7 +66,7 @@ namespace spic::internal
 		@brief Remove entity.
 		@param entity The entity that will be removed
 		*/
-		void RemoveEntity(const std::shared_ptr<spic::GameObject>& entity);
+		void RemoveEntity(const std::shared_ptr<spic::GameObject> entity);
 
 		/*
 		@brief Register scene.
@@ -132,10 +132,6 @@ namespace spic::internal
 		*/
 		void Update();
 
-		/*
-		@brief Calls the RendererSystem to render the entities and tilemap.
-		*/
-		void Render();
 	private:
 		/*
 		@brief Use this function to add a internal system to the systems list.

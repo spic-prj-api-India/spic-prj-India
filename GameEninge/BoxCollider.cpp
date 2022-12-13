@@ -9,7 +9,7 @@ namespace spic {
 	{
 		return width;
 	}
-	void BoxCollider::Width(float newWidth)
+	void BoxCollider::Width(const float newWidth)
 	{
 		if (newWidth < 0.0f)
 			throw std::range_error("Width can't be below zero");
@@ -19,7 +19,7 @@ namespace spic {
 	{
 		return height;
 	}
-	void BoxCollider::Height(float newHeight)
+	void BoxCollider::Height(const float newHeight)
 	{
 		if (newHeight < 0.0f)
 			throw std::range_error("Height can't be below zero");

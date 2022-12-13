@@ -9,7 +9,6 @@
 #include "MapParser.hpp"
 #include "InputSystem.hpp"
 #include "PhysicsSystem.hpp"
-#include "ScriptSystem.hpp"
 #include "RenderingSystem.hpp"
 #include "DataSystem.hpp"
 #include "AudioManager.hpp"
@@ -45,7 +44,6 @@ void EntityManager::Init()
 {
 	std::unique_ptr<systems::InputSystem> inputSystem = std::make_unique<systems::InputSystem>();
 	std::unique_ptr<systems::PhysicsSystem> physicsSystem = std::make_unique<systems::PhysicsSystem>();
-	std::unique_ptr<systems::ScriptSystem> scriptSystem = std::make_unique<systems::ScriptSystem>();
 	std::unique_ptr<systems::RenderingSystem> renderingSystem = std::make_unique<systems::RenderingSystem>();
 	std::unique_ptr<systems::DataSystem> dataSystem = std::make_unique<systems::DataSystem>();
 	std::unique_ptr<systems::NetworkingReceiveSystem> networkRecieve = std::make_unique<systems::NetworkingReceiveSystem>();
@@ -53,7 +51,6 @@ void EntityManager::Init()
 	AddInternalSystem(std::move(networkRecieve), 0);
 	AddInternalSystem(std::move(inputSystem), 1);
 	AddInternalSystem(std::move(physicsSystem), 2);
-	//AddInternalSystem(std::move(scriptSystem), 1);
 	AddInternalSystem(std::move(dataSystem), 3);
 	AddInternalSystem(std::move(networkSend), 4);
 	AddInternalSystem(std::move(renderingSystem), 5);
@@ -83,7 +80,7 @@ void spic::internal::EntityManager::AddEntityAlsoToScene(const std::shared_ptr<s
 	scene->AddContent(entity);
 }
 
-void EntityManager::RemoveEntity(const std::shared_ptr<spic::GameObject>& entity) {
+void EntityManager::RemoveEntity(const std::shared_ptr<spic::GameObject> entity) {
 	entities.erase(
 		std::remove(entities.begin(), entities.end(), entity),
 		entities.end());
@@ -210,6 +207,3 @@ void EntityManager::Update()
 		}
 	}
 }
-
-void EntityManager::Render()
-{}

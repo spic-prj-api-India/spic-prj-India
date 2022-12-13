@@ -8,35 +8,18 @@ namespace spic {
      */
     class Component {
         public:
+            Component() = default;
             /**
              * @brief Virtual destructor.
              * @spicapi
              */
             virtual ~Component() = default;
 
-            /**
-             * @brief Getter for active status.
-             * @return true if active, false otherwise.
-             * @spicapi
-             */
-            bool Active() const;
-
-            /**
-             * @brief flag New active status.
-             * @spicapi
-             */
-            void Active(bool flag);
-
-
-            bool IsChanged() const;
-        private:
-            /**
-             * @brief Active status.
-             */
-            bool active;
-            bool isChanged;
+            Component(const Component& other) = default; // copy constructor
+            Component(Component&& other) noexcept = default; // move constructor
+            virtual Component& operator=(const Component& other) = default; // copy assignment
+            virtual Component& operator=(Component&& other) noexcept = default;// move assignment
     };
-
 }
 
 #endif // COMPONENT_H_

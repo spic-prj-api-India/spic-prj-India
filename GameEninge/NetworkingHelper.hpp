@@ -19,7 +19,7 @@ namespace spic::networkingHelper
      * @param Columb Which parameter you want
      * @return 
     */
-    std::string GetParsedIPConfigData(std::string Columb);
+    std::string GetParsedIPConfigData(const std::string& Columb);
    
 };
 #endif

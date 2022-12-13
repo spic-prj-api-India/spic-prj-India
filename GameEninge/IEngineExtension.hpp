@@ -13,10 +13,10 @@ namespace spic::extensions {
 		 *			otherwise can't be used as interface
 		 */
 		virtual ~IEngineExtension() = default;
-		IEngineExtension(const IEngineExtension& other) = delete;
-		IEngineExtension(IEngineExtension&& other) = delete;
-		IEngineExtension& operator=(const IEngineExtension& other) = delete;
-		IEngineExtension& operator=(IEngineExtension&& other) = delete;
+		IEngineExtension(const IEngineExtension& other) = default;
+		IEngineExtension(IEngineExtension&& other) = default;
+		virtual IEngineExtension& operator=(const IEngineExtension& other) = default;
+		virtual IEngineExtension& operator=(IEngineExtension&& other) = default;
 	private:
 	};
 }

@@ -30,8 +30,8 @@ namespace spic {
 
 		GameObject(const GameObject& other) = default;
 		GameObject(GameObject&& other) = default;
-		GameObject& operator=(const GameObject& other) = default;
-		GameObject& operator=(GameObject&& other) = default;
+		virtual GameObject& operator=(const GameObject& other) = default;
+		virtual GameObject& operator=(GameObject&& other) = default;
 
 		/**
 		 * @brief Needs to declare virtual destructor,
@@ -55,7 +55,7 @@ namespace spic {
 		 * @param name 
 		 * @return 
 		*/
-		static bool CheckIfNameExists(const std::vector<std::shared_ptr<GameObject>>& objects, const std::string& name);
+		static bool CheckIfNameExists(const std::vector<std::shared_ptr<GameObject>> objects, const std::string& name);
 
 		/**
 		 * @brief Sets content of gameobject
@@ -90,7 +90,7 @@ namespace spic {
 		 * @param tag Desired value.
 		 * @spicapi
 		 */
-		void Tag(std::string& newTag);
+		void Tag(const std::string& newTag);
 
 		/**
 		 * @brief Returns whether this game object is itself active.
@@ -105,7 +105,7 @@ namespace spic {
 		 * @param active Desired value.
 		 * @spicapi
 		 */
-		void Active(bool flag);
+		void Active(const bool flag);
 
 		/**
 		 * @brief Returns layer of GameObject.
@@ -119,7 +119,7 @@ namespace spic {
 		 * @param newLayer Desired value.
 		 * @spicapi
 		 */
-		void Layer(int newLayer);
+		void Layer(const int newLayer);
 
 		/**
 		 * @brief Returns transform of GameObject.

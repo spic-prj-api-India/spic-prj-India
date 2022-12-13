@@ -217,7 +217,6 @@
     <ClInclude Include="RigidBody.hpp" />
     <ClInclude Include="Sample.hpp" />
     <ClInclude Include="Scene.hpp" />
-    <ClInclude Include="ScriptSystem.hpp" />
     <ClInclude Include="SocketUDPExtension.hpp" />
     <ClInclude Include="Sprite.hpp" />
     <ClInclude Include="Text.hpp" />
@@ -279,7 +278,6 @@
     <ClCompile Include="InputSystem.cpp" />
     <ClCompile Include="PhysicsSystem.cpp" />
     <ClCompile Include="RigidBody.cpp" />
-    <ClCompile Include="ScriptSystem.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="TileLayer.cpp" />
     <ClCompile Include="TileMap.cpp" />

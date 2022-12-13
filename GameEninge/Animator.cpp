@@ -69,3 +69,8 @@ void spic::Animator::Index(const int index)
 void spic::Animator::IncreaseIndex(const int index)
 {
 }
+
+bool spic::Animator::IsRunning() const
+{
+    return this->running;
+}

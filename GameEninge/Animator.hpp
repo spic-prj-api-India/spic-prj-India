@@ -75,6 +75,11 @@ namespace spic {
             /// @param index 
             void IncreaseIndex(const int index);
 
+            /**
+             * @brief If the animator is playing
+            */
+            bool IsRunning() const;
+
         private:
             /**
              * @brief frames per second (playing speed)

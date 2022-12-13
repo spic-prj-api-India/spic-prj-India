@@ -124,14 +124,14 @@ namespace spic {
 		return layer < other.layer;
 	}
 
-	bool GameObject::CheckIfNameExists(const std::vector<std::shared_ptr<spic::GameObject>>& objects, const std::string& name)
+	bool GameObject::CheckIfNameExists(const std::vector<std::shared_ptr<spic::GameObject>> objects, const std::string& name)
 	{
 		for (auto& object : objects)
 		{
 			if (object->Name() == name)
 				return true;
 
-			if (GameObject::CheckIfNameExists(object->GetChildren(), name))
+			if (GameObject::CheckIfNameExists(std::move(object->GetChildren()), name))
 				return true;
 		}
 		return false;
@@ -156,7 +156,7 @@ namespace spic {
 		return tag;
 	}
 
-	void GameObject::Tag(std::string& newTag) {
+	void GameObject::Tag(const std::string& newTag) {
 		tag = newTag;
 	}
 
@@ -164,7 +164,7 @@ namespace spic {
 		return active;
 	}
 
-	void GameObject::Active(bool flag) {
+	void GameObject::Active(const bool flag) {
 		for (const auto& child : GetChildren(flag)) {
 			child->Active(flag);
 			if (flag)
@@ -187,7 +187,7 @@ namespace spic {
 		return layer;
 	}
 
-	void GameObject::Layer(int newLayer) {
+	void GameObject::Layer(const int newLayer) {
 		layer = newLayer;
 	}
 

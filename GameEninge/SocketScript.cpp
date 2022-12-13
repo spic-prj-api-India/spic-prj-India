@@ -42,7 +42,7 @@ void spic::SocketScript::UpdatePosition(const spic::NetworkPacket* packet, GameO
 
 void spic::SocketScript::RemoveEntity(std::shared_ptr<spic::GameObject> entity)
 {
-	spic::internal::EntityManager::GetInstance()->RemoveEntity(entity);
+	spic::internal::EntityManager::GetInstance()->RemoveEntity(std::move(entity));
 }
 
 

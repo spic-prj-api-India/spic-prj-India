@@ -152,14 +152,31 @@ void RendererImpl::DrawAnimators(GameObject* gameObject, const bool isUiObject)
 {
 	auto _animator = gameObject->GetComponents<Animator>();
 
+	
+	float height = 0;
+	float width = 0;
+
+	if (isUiObject)
+	{
+		auto uiObject = TypeHelper::CastPtrToType<UIObject>(gameObject);
+
+		height = uiObject->Height();
+		width = uiObject->Width();
+	}
+		
+
 	for (auto& animator : _animator)
 	{
-		DrawAnimator(gameObject, animator.get(), gameObject->Transform().get(), isUiObject);
+		DrawAnimator(animator.get(), gameObject->Transform().get(), isUiObject, width, height);
 	}
 }
 
-void RendererImpl::DrawAnimator(GameObject* gameObject, Animator* animator, const Transform* transform, const bool isUIObject)
+void RendererImpl::DrawAnimator(Animator* animator, const Transform* transform, const bool isUIObject, const float width, const float height)
 {
+
+	if (!animator->IsRunning())
+		return;
+
 	auto sprites = animator->Sprites();
 	// sort sprites
 
@@ -171,22 +188,20 @@ void RendererImpl::DrawAnimator(GameObject* gameObject, Animator* animator, cons
 
 	const auto frame = static_cast<uint64_t>(SDL_GetTicks() / (1000 / animator->Fps() * Time::TimeScale())) % framesAmount;
 
-	UIObject* uiObject = nullptr;
-	if (isUIObject)
-		uiObject = TypeHelper::CastPtrToType<UIObject>(gameObject);
+	
 	for (auto& sprite : sprites)
 	{
 		if (sprite->OrderInLayer() == frame && !animator->IsFrozen())
 		{
 			//animator->Index(frame);
 			if (isUIObject)
-				DrawUISprite(uiObject->Width(), uiObject->Height(), sprite.get(), transform);
+				DrawUISprite(width, height, sprite.get(), transform);
 			else
 				DrawSprite(sprite.get(), transform);
 		}
 		else if (sprite->OrderInLayer() == animator->Index() && animator->IsFrozen()) {
 			if (isUIObject)
-				DrawUISprite(uiObject->Width(), uiObject->Height(), sprite.get(), transform);
+				DrawUISprite(width, height, sprite.get(), transform);
 			else
 				DrawSprite(sprite.get(), transform);
 		}
@@ -255,9 +270,6 @@ void RendererImpl::DrawSprite(const Sprite* sprite, const Transform* transform, 
 
 	SDL_SetTextureAlphaMod(texture,
 		PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, color.A())));
-
-	auto center = SDL_FPoint{ dstRect->x + (dstRect->w / 2)
-		,dstRect->y + (dstRect->h / 2) };
 
 	SDL_RendererFlip flip = GetFlip(sprite->FlipX(), sprite->FlipY());
 
