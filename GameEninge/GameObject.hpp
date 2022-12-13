@@ -19,6 +19,15 @@ namespace spic {
 	class GameObject {
 	public:
 		GameObject();
+
+		/**
+		 * @brief Constructor.
+		 * @details Object will be created with name
+		 * @param name The name for the game object.
+		 * @spicapi
+		*/
+		GameObject(const std::string& name);
+
 		GameObject(const GameObject& other) = default;
 		GameObject(GameObject&& other) = default;
 		GameObject& operator=(const GameObject& other) = default;
@@ -217,17 +226,12 @@ namespace spic {
 		 * @brief Removes a Component.
 		 * @details Will search for the Component among the GameObjects.
 		 * @param obj The Component to be removed. If obj == nullptr, Destroy() does nothing.
+		 * @details TODO needs recursion
 		 * @spicapi
 		 */
 		static void Destroy(Component* obj);
 
-		/**
-		 * @brief Constructor.
-		 * @details Object will be created with name
-		 * @param name The name for the game object.
-		 * @spicapi
-		 */
-		GameObject(const std::string& name);
+
 
 		/**
 		 * @brief Does the object exist? TODO wat wordt hiermee bedoeld?

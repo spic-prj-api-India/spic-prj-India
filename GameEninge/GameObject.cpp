@@ -19,29 +19,70 @@ namespace spic {
 	{
 	}
 
+	std::shared_ptr<GameObject> FindRecusion(const std::vector<std::shared_ptr<GameObject>>& objects,const std::string& name)
+	{
+		for (const auto& gameObject : objects) {
+			if (gameObject->Name() == name)
+				return gameObject;
+		}
+		return nullptr;
+	}
+
 	std::shared_ptr<GameObject> GameObject::Find(const std::string& name)
 	{
 		for (const auto& gameObject : spic::internal::EntityManager::GetInstance()->GetEntities()) {
 			if (gameObject->name == name)
 				return gameObject;
+			
+			if (auto i = FindRecusion(gameObject->GetChildren(), name); i.get() != nullptr)
+				return i;
 		}
 		return nullptr;
+	}
+
+	std::vector<std::shared_ptr<GameObject>> FindGameObjectsWithTagRecursion(const std::vector<std::shared_ptr<GameObject>>& objects ,const std::string& tag)
+	{
+		std::vector<std::shared_ptr<GameObject>> gameObjects;
+		for (const auto& gameObject : objects) {
+			if (gameObject->Active() && gameObject->Tag() == tag)
+				gameObjects.emplace_back(gameObject);
+		}
+		return gameObjects;
 	}
 
 	std::vector<std::shared_ptr<GameObject>> GameObject::FindGameObjectsWithTag(const std::string& tag)
 	{
 		std::vector<std::shared_ptr<GameObject>> gameObjects;
 		for (const auto& gameObject : spic::internal::EntityManager::GetInstance()->GetEntities()) {
-			if (gameObject->active && gameObject->tag == tag)
+
+			if (gameObject->Active() && gameObject->Tag() == tag)
 				gameObjects.emplace_back(gameObject);
+
+			const auto temp = FindGameObjectsWithTagRecursion(gameObject->children, tag);
+
+			std::copy(temp.begin(), temp.end(), back_inserter(gameObjects));
+			gameObjects.emplace_back(gameObject);
 		}
 		return gameObjects;
 	}
+
+	std::shared_ptr<GameObject> FindWithTagRecusion(const std::vector<std::shared_ptr<GameObject>>& objects, const std::string& tag)
+	{
+		for (const auto& gameObject : spic::internal::EntityManager::GetInstance()->GetEntities()) {
+			if (gameObject->Tag() == tag)
+				return gameObject;
+		}
+		return nullptr;
+	}
+
 
 	std::shared_ptr<GameObject> GameObject::FindWithTag(const std::string& tag)
 	{
 		for (const auto& gameObject : spic::internal::EntityManager::GetInstance()->GetEntities()) {
 			if (gameObject->tag == tag)
+				return gameObject;
+
+			if (auto i = FindWithTagRecusion(gameObject->children, tag); i.get() != nullptr)
 				return gameObject;
 		}
 		return nullptr;
