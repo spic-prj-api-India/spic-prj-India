@@ -22,7 +22,7 @@ namespace spic
 	{
 		try
 		{
-			if (GameObject::CheckIfNameExsists(content->GetChildren(), content->Name()))
+			if (GameObject::CheckIfNameExists(content->GetChildren(), content->Name()))
 				throw std::runtime_error("Name of current gameobject exists already");
 
 			if (spic::internal::EntityManager::GetInstance()->CheckIfNameExists(content->Name()))

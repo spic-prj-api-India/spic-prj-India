@@ -124,14 +124,14 @@ namespace spic {
 		return layer < other.layer;
 	}
 
-	bool GameObject::CheckIfNameExsists(const std::vector<std::shared_ptr<spic::GameObject>>& objects, const std::string& name)
+	bool GameObject::CheckIfNameExists(const std::vector<std::shared_ptr<spic::GameObject>>& objects, const std::string& name)
 	{
 		for (auto& object : objects)
 		{
 			if (object->Name() == name)
 				return true;
 
-			if (GameObject::CheckIfNameExsists(object->GetChildren(), name))
+			if (GameObject::CheckIfNameExists(object->GetChildren(), name))
 				return true;
 		}
 		return false;
