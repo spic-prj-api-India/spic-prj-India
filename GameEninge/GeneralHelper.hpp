@@ -37,6 +37,12 @@ namespace spic::GeneralHelper
 	Point GetsPointY(Point& pointX, const Point& rotation, const float angle, float height, float width, float scaling) noexcept;
 	
 	/**
+	 * @brief Gets an unique uuid
+	 * @return 
+	*/
+	std::string GetRandomUUID();
+
+	/**
 	 * @brief 
 	 * @param a 
 	 * @param b 

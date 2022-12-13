@@ -13,7 +13,6 @@ namespace spic {
      */
     class SocketScript : public Component {
     public:
-
         /**
          * @brief Adds a socket to the SocketScript
          * @param socketTypname 
@@ -33,7 +32,6 @@ namespace spic {
         */
         void Retrieve(const spic::NetworkPacket* packet, std::shared_ptr<spic::GameObject> entity);
         
-    protected:
 
         /**
          * @brief Writes own code of creating an entity
@@ -62,34 +60,31 @@ namespace spic {
          * @param entity 
         */
         virtual void UpdateEntity(const spic::NetworkPacket* packet, std::shared_ptr<spic::GameObject> entity) = 0;
-    private:
-        std::weak_ptr<spic::extensions::INetworkExtension> socket;
-    private:
 
         /**
          * @brief Gets update packet with only an update of the transform of a gameobject.
          * @details Only transform gets added
-         * @param gameobject 
-         * @return 
+         * @param gameobject
+         * @return
         */
         spic::NetworkPacket PositionPacket(const GameObject* gameobject) const;
 
         /**
-         * @brief Updates the position of an gameobject with children included 
-         * @param packet 
-         * @param gameobject 
+         * @brief Updates the position of an gameobject with children included
+         * @param packet
+         * @param gameobject
         */
         void UpdatePosition(const spic::NetworkPacket* packet, GameObject* gameobject) const;
 
         /**
          * @brief Adds a new gamobject to an registration
-         * @param entity 
+         * @param entity
         */
         void RemoveEntity(std::shared_ptr<spic::GameObject> entity);
 
         /**
          * @brief Sends the network packet to the included socket;
-         * @param packet 
+         * @param packet
         */
         void SendPacket(const spic::NetworkPacket& packet);
 
@@ -98,6 +93,8 @@ namespace spic {
          * @param entity
         */
         void RegisterNewEntity(std::shared_ptr<spic::GameObject> entity) const;
+    private:
+        std::weak_ptr<spic::extensions::INetworkExtension> socket;
     };
 }
 #endif // SOCKETSCRIPT_H_

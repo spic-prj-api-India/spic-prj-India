@@ -19,19 +19,23 @@ namespace spic
 	}
 
 
+
 	void Scene::AddContent(std::shared_ptr<GameObject> content)
 	{
-		for (auto& cont : contents)
+		try
 		{
-			if (cont->Name() == content->Name())
-				throw "Name exsits already\n";
+			if (GameObject::GetIfNameExsists(content->GetChildren(), content->Name()))
+				throw std::runtime_error("Name of current gameobject exsits already");
+
+			if (spic::internal::EntityManager::GetInstance()->CheckIfNameExsits(content->Name()))
+				throw std::runtime_error("Name of current gameobject exsits already");;
+
+			this->contents.emplace_back(std::move(content));
 		}
-
-		auto name = content->Name();
-		if(spic::internal::EntityManager::GetInstance()->CheckIfNameExsitsInDontDestoryOnLoadObjects(name))
-			throw "Name exsits already\n";
-
-		this->contents.emplace_back(content);
+		catch (std::exception& ex)
+		{
+			std::cerr << ex.what() << std::endl;
+		}
 	}
 
 	void Scene::LoadTileMap(const std::string& newTileMapPath, const int newCollisionLayerIndex)

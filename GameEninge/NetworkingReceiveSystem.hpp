@@ -1,5 +1,5 @@
-#ifndef NETWORKINGREVIECESYSTEM_H_
-#define NETWORKINGREVIECESYSTEM_H_
+#ifndef NETWORKINGRECEIVESYSTEM_H_
+#define NETWORKINGRECEIVESYSTEM_H_
 
 #include <map>
 #include "ISystem.hpp"
@@ -33,4 +33,4 @@ namespace spic::internal::systems {
     };
 }
 
-#endif // NETWORKINGREVIECESYSTEM_H_
+#endif // NETWORKINGRECEIVESYSTEM_H_

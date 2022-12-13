@@ -1,4 +1,6 @@
 #include "GeneralHelper.hpp"
+#include <random>
+
 using namespace spic;
 
 void spic::GeneralHelper::RotatePoint(const Point& org, float angle, Point& p) noexcept
@@ -10,6 +12,25 @@ void spic::GeneralHelper::RotatePoint(const Point& org, float angle, Point& p) n
 spic::Point spic::GeneralHelper::GetsPointY(Point& pointX, const Point& rotation, const float angle, float height, float width, float scaling) noexcept
 {
 	return Point{ pointX.x * scaling, pointX.y * height * scaling };
+}
+
+std::string spic::GeneralHelper::GetRandomUUID()
+{
+	static std::random_device dev;
+	static std::mt19937 rng(dev());
+
+	std::uniform_int_distribution<int> dist(0, 15);
+
+	const char* v = "0123456789abcdef";
+	const bool dash[] = { 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0 };
+
+	std::string res;
+	for (int i = 0; i < 16; i++) {
+		if (dash[i]) res += "-";
+		res += v[dist(rng)];
+		res += v[dist(rng)];
+	}
+	return res;
 }
 
 bool spic::GeneralHelper::SpriteSorting(const std::shared_ptr<Sprite> a, const std::shared_ptr<Sprite> b)

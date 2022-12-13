@@ -72,7 +72,6 @@ std::vector<std::shared_ptr<spic::GameObject>> EntityManager::GetEntities() {
 	return entities;
 }
 
-
 void EntityManager::AddEntity(const std::shared_ptr<spic::GameObject>& entity)
 {
 	entities.push_back(entity);
@@ -177,30 +176,14 @@ void EntityManager::AddSystem(std::unique_ptr<spic::systems::ISystem> system)
 	systems[CustomSystemDefaultPriority].emplace_back(std::move(system));
 }
 
-bool Children(std::vector<std::shared_ptr<GameObject>>& objects, std::string& name)
-{
-	for (auto& object : objects)
-	{
-		auto children = object->GetChildren();
-		if (Children(children, name))
-			return true;
-
-		if (object->Name() == name && object->DontDestroyOnLoad())
-			return true;
-	}
-
-	return false;
-}
-
-
-bool spic::internal::EntityManager::CheckIfNameExsitsInDontDestoryOnLoadObjects(std::string& name) const
+bool spic::internal::EntityManager::CheckIfNameExsits(const std::string& name) const
 {
 	for (auto& s : scenes)
 	{
 		for (auto& entity : s.second->Contents())
 		{
 			auto children = entity->GetChildren();
-			if (Children(children,name))
+			if (spic::GameObject::GetIfNameExsists(children, name))
 				return true;
 		}
 	}

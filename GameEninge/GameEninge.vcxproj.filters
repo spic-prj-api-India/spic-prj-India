@@ -518,7 +518,7 @@
     <ClCompile Include="SocketScript.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="NetworkingRecieveSystem.cpp">
+    <ClCompile Include="NetworkingReceiveSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="NetworkingSendSystem.cpp">

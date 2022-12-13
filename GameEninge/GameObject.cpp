@@ -4,23 +4,19 @@
 #include "TypeHelper.hpp"
 #include "EntityManager.hpp"
 #include <string>
+#include "GeneralHelper.hpp"
 
 namespace spic {
-	static int staticName = 0;
 	std::vector<std::shared_ptr<GameObject>> GameObject::GetGameObjects() {
 		return spic::internal::EntityManager::GetInstance()->GetEntities();
 	}
 
-	GameObject::GameObject() : active{ true }, layer{ 0 }, parent{ nullptr }, name{""}
+	GameObject::GameObject() : active{ true }, layer{ 0 }, parent{ nullptr }, name{ spic::GeneralHelper::GetRandomUUID()}
 	{
 	}
 
-	GameObject::GameObject(const std::string& name) : active{ true }, layer{ 0 }, parent{ nullptr }
+	GameObject::GameObject(const std::string& name) : active{ true }, layer{ 0 }, parent{ nullptr }, name{name}
 	{
-		if (GameObject::Find(name))
-			throw "Name exsits already";
-
-		this->name = name;
 	}
 
 	std::shared_ptr<GameObject> GameObject::Find(const std::string& name)
@@ -87,6 +83,19 @@ namespace spic {
 		return layer < other.layer;
 	}
 
+	bool GameObject::CheckIfNameExsists(const std::vector<std::shared_ptr<spic::GameObject>>& objects, const std::string& name)
+	{
+		for (auto& object : objects)
+		{
+			if (object->Name() == name)
+				return true;
+
+			if (GameObject::CheckIfNameExsists(object->GetChildren(), name))
+				return true;
+		}
+		return false;
+	}
+
 	void GameObject::SetContent(std::map<std::string, std::string>& data)
 	{
 	}
@@ -96,8 +105,8 @@ namespace spic {
 	}
 
 	void GameObject::Name(const std::string& newName) {
-		if (GameObject::Find(newName))
-			throw "Name exsits already";
+		if (spic::internal::EntityManager::GetInstance()->CheckIfNameExsits(newName))
+			throw std::runtime_error("Name of current gameobject exsits already");
 
 		name = newName;
 	}

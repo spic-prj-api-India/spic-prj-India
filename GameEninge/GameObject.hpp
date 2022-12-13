@@ -41,6 +41,14 @@ namespace spic {
 		}
 
 		/**
+		 * @brief Checks if name exsits in colection
+		 * @param gameobjects 
+		 * @param name 
+		 * @return 
+		*/
+		static bool CheckIfNameExsists(const std::vector<std::shared_ptr<GameObject>>& gameobjects, const std::string& name);
+
+		/**
 		 * @brief Sets content of gameobject
 		 * @details If you want to use networking use this
 		 * @param data 

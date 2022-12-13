@@ -117,7 +117,7 @@ namespace spic::internal
 		 * @param function 
 		 * @return 
 		*/
-		bool CheckIfNameExsitsInDontDestoryOnLoadObjects(std::string& name) const;
+		bool CheckIfNameExsits(const std::string& name) const;
 
 		/*
 		@brief Use this function to remove a (custom) system to the systems list.

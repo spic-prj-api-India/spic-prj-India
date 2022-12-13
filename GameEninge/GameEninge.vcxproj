@@ -248,7 +248,7 @@
     <ClCompile Include="IPhysicsExtension.cpp" />
     <ClCompile Include="MapParser.cpp" />
     <ClCompile Include="NetworkingHelper.cpp" />
-    <ClCompile Include="NetworkingRecieveSystem.cpp" />
+    <ClCompile Include="NetworkingReceiveSystem.cpp" />
     <ClCompile Include="NetworkingSendSystem.cpp" />
     <ClCompile Include="NetworkPacket.cpp" />
     <ClCompile Include="PhysicsExtension1.cpp" />
