@@ -154,7 +154,7 @@
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="KeyListener.cpp" />
     <ClCompile Include="MenuScene.cpp" />
-    <ClCompile Include="MouseMoveListener.cpp" />
+    <ClCompile Include="FollowMouseListener.cpp" />
     <ClCompile Include="Rocket.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>

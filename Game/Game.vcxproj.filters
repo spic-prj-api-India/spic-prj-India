@@ -45,7 +45,7 @@
     <ClCompile Include="KeyListener.cpp">
       <Filter>Source Files\listeners</Filter>
     </ClCompile>
-    <ClCompile Include="MouseMoveListener.cpp">
+    <ClCompile Include="FollowMouseListener.cpp">
       <Filter>Source Files\listeners</Filter>
     </ClCompile>
     <ClCompile Include="AimListener.cpp">

@@ -159,6 +159,12 @@ namespace spic {
 		void operator /=(const float value);
 
 		/**
+		 * @brief operator for using Point as key in map
+		 * @param cp Compare point
+		*/
+		bool operator<(const Point& cp) const noexcept;
+
+		/**
 		 * @brief operator for multipling Point
 		 * @param point Point used as multiplier
 		 * @return float

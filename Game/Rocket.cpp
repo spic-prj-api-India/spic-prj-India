@@ -22,12 +22,12 @@ void Rocket::SetAttributes(const std::string& name, const spic::Point& position,
 
 void Rocket::SetWeights()
 {
-	//UseArrival(spic::Deceleration::NORMAL);
-	//UseSeek();
-	UseFlee();
-	//UseWander(1.0f, 1.1f, 60.0f);
+	//UseArrival({}, spic::Deceleration::NORMAL);
+	//UseSeek({});
+	UseFlee({});
+	//UseWander(1.0f, 1.0f, 1.1f, 60.0f);
 
-	Seperation(0.5f, 24.0f);	
+	Seperation(0.5f, 24.0f);
 	Alignment(0.25f, 125.0f);
 	Cohesion(0.25f, 125.0f);
 	WallAvoidance(1.5f, 20.0f, spic::Point(1200.0f, 800.0f));

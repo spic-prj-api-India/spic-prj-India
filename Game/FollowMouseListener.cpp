@@ -3,26 +3,28 @@
 
 FollowMouseListener::FollowMouseListener()
 {
+	const spic::Point mousePosition = spic::Input::MousePosition();
+	target = std::make_unique<spic::Point>(mousePosition.x, mousePosition.y);
 	followers;
 }
 
 void FollowMouseListener::AddFollower(const std::shared_ptr<spic::ForceDriven>& follower)
 {
+	follower->AddTarget(spic::SteeringBehaviour::FLEE, *target.get(), 1.0f);
 	this->followers.emplace_back(follower);
 }
 
 void FollowMouseListener::OnMouseMoved() {
 	const spic::Point mousePosition = spic::Input::MousePosition();
-	for (const auto& follower : followers) {
-		follower->Target(mousePosition, 1.0f);
-	}
+	this->target->x = mousePosition.x;
+	this->target->y = mousePosition.y;
 }
 void FollowMouseListener::OnMouseClicked() {
-	
+
 }
 void FollowMouseListener::OnMousePressed() {
-	
+
 }
 void FollowMouseListener::OnMouseReleased() {
-	
+
 }

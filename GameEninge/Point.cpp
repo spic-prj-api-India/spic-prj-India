@@ -169,6 +169,11 @@ namespace spic {
 		this->y /= value;
 	}
 
+	bool Point::operator<(const Point& cp) const noexcept
+	{
+		return Length() < cp.Length();
+	}
+
 	float Point::DotProduct(const Point& point)
 	{
 		return this->x * point.x + this->y * point.y;

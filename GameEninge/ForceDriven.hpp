@@ -7,6 +7,8 @@
 #include "Point.hpp"
 #include "GameObject.hpp"
 #include "Bounds.hpp"
+#include <map>
+#include <functional>
 
 namespace spic {
     /**
@@ -58,23 +60,51 @@ namespace spic {
         float Mass() const;
 
         /**
-         * @brief Sets steering behaviour to SEEK.
+         * @brief Adds target with targetWeight for specific SteeringBehaviour.
+         * @param steeringBehaviour SteeringBehaviour that is used for target.
+         * @param target Desired target.
+         * @param targetWeight Weight that shows how much target steering behaviour influences the steering force.
          * @spicapi
         */
-        void UseSeek();
+        void AddTarget(SteeringBehaviour steeringBehaviour, Point& target, const float targetWeight);
+
+        /**
+         * @brief Removes target for specific SteeringBehaviour.
+         * @param steeringBehaviour SteeringBehaviour that is used for target.
+         * @param target Desired target to remove.
+         * @spicapi
+        */
+        void RemoveTarget(SteeringBehaviour steeringBehaviour, Point& target);
+
+        /**
+         * @brief Removes steering behaviour and all underlying targets.
+         * @param steeringBehaviour SteeringBehaviour to remove.
+         * @spicapi
+        */
+        void RemoveSteeringBehaviour(SteeringBehaviour steeringBehaviour);
+
+        /**
+         * @brief Sets steering behaviour to SEEK.
+         * @param targets Targets to seek to.
+         * @spicapi
+        */
+        void UseSeek(const std::map<std::reference_wrapper<Point>, float, std::less<Point>>& targets);
 
         /**
          * @brief Sets steering behaviour to FLEE.
+         * @param targets Targets to flee from.
          * @spicapi
         */
-        void UseFlee();
+        void UseFlee(const std::map<std::reference_wrapper<Point>, float, std::less<Point>>& targets);
 
         /**
          * @brief Sets steering behaviour to ARRIVAL.
          * @param deceleration Deceleration that is used when force driven entity arrives at target.
+         * @param targets Targets to arrive at.
          * @spicapi
         */
-        void UseArrival(Deceleration deceleration = Deceleration::NORMAL);
+        void UseArrival(const std::map<std::reference_wrapper<Point>, float, std::less<Point>>& targets, 
+            Deceleration deceleration = Deceleration::NORMAL);
 
         /**
          * @brief Sets steering behaviour to WANDER.
@@ -83,7 +113,7 @@ namespace spic {
          * @param wanderJitter The maximum amount of displacement along the circle each frame.
          * @spicapi
         */
-        void UseWander(const float wanderRadius = 1.0f, const float wanderDistance = 6.0f, const float wanderJitter = 60.0f);
+        void UseWander(const float wanderWeight, const float wanderRadius = 1.0f, const float wanderDistance = 6.0f, const float wanderJitter = 60.0f);
 
         /**
         * @brief Activates wall avoidance for force driven entity.
@@ -191,6 +221,13 @@ namespace spic {
         Point CalculatePrioritized();
 
         /**
+         * @brief Add all steering forces to steering force.
+         * @param addSteeringForceCallback Callback that adds forces to steering force.
+         * @spicapi
+        */
+        void AddSteeringForces(std::function<bool(Point force)> addSteeringForceCallback);
+
+        /**
          * @brief Seek to target and return steering force.
          * @return spic::Point Steering force.
          * @spicapi
@@ -259,7 +296,6 @@ namespace spic {
         * @brief Default properties.
         */
         SumMethod sumMethod;
-        spic::SteeringBehaviour steeringBehaviour;
         float maxSteeringForce;
         float maxSpeed;
         float angleSensitivity; // in rad
@@ -269,9 +305,9 @@ namespace spic {
 
         /**
         * @brief Target properties.
+        *       Every steering force has a map with a target as a key and a target weight as value.
         */
-        Point target;
-        float targetWeight;
+        std::map<spic::SteeringBehaviour, std::map<std::reference_wrapper<Point>, float, std::less<Point>>> steeringBehavioursIncludingTargets;
 
         /**
         * @brief Seperation properties.
@@ -307,6 +343,7 @@ namespace spic {
         /**
         * @brief Wander properties.
         */
+        float wanderWeight;
         float wanderRadius;
         float wanderDistance;
         float wanderJitter;

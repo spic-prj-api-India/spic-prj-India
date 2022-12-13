@@ -4,6 +4,7 @@
 #include "Defaults.hpp"
 #include "Transformations.hpp"
 #include "Random.hpp"
+#include <functional>
 
 using namespace spic::internal::math;
 
@@ -14,6 +15,7 @@ namespace spic {
 		useObstacleAvoidance{ false }, useSeperation{ false }, useAlignment{ false },
 		useCohesion{ false }, useTarget{ false }
 	{
+		this->steeringBehavioursIncludingTargets;
 	}
 
 	Point ForceDriven::Velocity() const
@@ -33,37 +35,49 @@ namespace spic {
 		return body->Mass();
 	}
 
-	void ForceDriven::Target(const Point& newTarget, const float targetWeight)
+	void ForceDriven::AddTarget(SteeringBehaviour steeringBehaviour, Point& target, const float targetWeight)
 	{
-		this->useTarget = true;
-		this->target = newTarget;
-		this->targetWeight = targetWeight;
+		if (this->steeringBehavioursIncludingTargets.count(steeringBehaviour) == 0)
+			steeringBehavioursIncludingTargets[steeringBehaviour] = {};
+		this->steeringBehavioursIncludingTargets[steeringBehaviour][target] = targetWeight;
 	}
 
-	void ForceDriven::Target(const Point& newTarget)
+	void ForceDriven::RemoveTarget(SteeringBehaviour steeringBehaviour, Point& target)
 	{
-		this->target = newTarget;
+		if (this->steeringBehavioursIncludingTargets.count(steeringBehaviour) == 0)
+			return;
+		if (this->steeringBehavioursIncludingTargets[steeringBehaviour].count(target) == 0)
+			return;
+		this->steeringBehavioursIncludingTargets[steeringBehaviour].erase(target);
 	}
 
-	void ForceDriven::UseSeek()
+	void ForceDriven::RemoveSteeringBehaviour(SteeringBehaviour steeringBehaviour)
 	{
-		this->steeringBehaviour = SteeringBehaviour::SEEK;
+		if (this->steeringBehavioursIncludingTargets.count(steeringBehaviour) == 0)
+			return;
+		this->steeringBehavioursIncludingTargets.erase(steeringBehaviour);
 	}
 
-	void ForceDriven::UseFlee()
+	void ForceDriven::UseSeek(const std::map<std::reference_wrapper<Point>, float, std::less<Point>>& targets)
 	{
-		this->steeringBehaviour = SteeringBehaviour::FLEE;
+		this->steeringBehavioursIncludingTargets[SteeringBehaviour::SEEK] = targets;
 	}
 
-	void ForceDriven::UseArrival(Deceleration deceleration)
+	void ForceDriven::UseFlee(const std::map<std::reference_wrapper<Point>, float, std::less<Point>>& targets)
 	{
-		this->steeringBehaviour = SteeringBehaviour::ARRIVAL;
+		this->steeringBehavioursIncludingTargets[SteeringBehaviour::FLEE] = targets;
+	}
+
+	void ForceDriven::UseArrival(const std::map<std::reference_wrapper<Point>, float, std::less<Point>>& targets, Deceleration deceleration)
+	{
+		this->steeringBehavioursIncludingTargets[SteeringBehaviour::ARRIVAL] = targets;
 		this->deceleration = deceleration;
 	}
 
-	void ForceDriven::UseWander(const float wanderRadius, const float wanderDistance, const float wanderJitter)
+	void ForceDriven::UseWander(const float wanderWeight, const float wanderRadius, const float wanderDistance, const float wanderJitter)
 	{
-		this->steeringBehaviour = SteeringBehaviour::WANDER;
+		steeringBehavioursIncludingTargets[SteeringBehaviour::WANDER] = {};
+		this->wanderWeight = wanderWeight;
 		this->wanderRadius = wanderRadius;
 		this->wanderDistance = wanderDistance;
 		this->wanderJitter = wanderJitter;
@@ -107,8 +121,6 @@ namespace spic {
 
 	void ForceDriven::StartForceDrivenEntity()
 	{
-		if (steeringBehaviour < SteeringBehaviour::SEEK || steeringBehaviour > SteeringBehaviour::WANDER)
-			throw std::exception("Steering behaviour needs to be defined");
 		paused = false;
 	}
 
@@ -186,24 +198,10 @@ namespace spic {
 			force = Cohere() * cohesionWeight;
 			steeringForce += force;
 		}
-		if (useTarget)
-		{
-			switch (steeringBehaviour) {
-			case SteeringBehaviour::ARRIVAL:
-				force = Arrival(target) * targetWeight;
-				break;
-			case SteeringBehaviour::FLEE:
-				force = Flee(target) * targetWeight;
-				break;
-			case SteeringBehaviour::SEEK:
-				force = Seek(target) * targetWeight;
-				break;
-			case SteeringBehaviour::WANDER:
-				force = Wander() * targetWeight;
-				break;
-			}
+		AddSteeringForces([this, &steeringForce](Point force) {
 			steeringForce += force;
-		}
+			return false;
+			});
 		if (steeringForce.Length() > maxSteeringForce) {
 			steeringForce.Normalize();
 			steeringForce *= maxSteeringForce;
@@ -241,25 +239,45 @@ namespace spic {
 			force = Cohere() * cohesionWeight;
 			if (!steeringForce.Accumulate(force, maxSteeringForce)) return steeringForce;
 		}
-		if (useTarget)
-		{
-			switch (steeringBehaviour) {
-			case SteeringBehaviour::ARRIVAL:
-				force = Arrival(target) * targetWeight;
-				break;
-			case SteeringBehaviour::FLEE:
-				force = Flee(target) * targetWeight;
-				break;
-			case SteeringBehaviour::SEEK:
-				force = Seek(target) * targetWeight;
-				break;
-			case SteeringBehaviour::WANDER:
-				force = Wander() * targetWeight;
-				break;
-			}
-			if (!steeringForce.Accumulate(force, maxSteeringForce)) return steeringForce;
-		}
+		AddSteeringForces([this, &steeringForce](Point force) {
+			if (!steeringForce.Accumulate(force, maxSteeringForce)) return true;
+			return false;
+			});
 		return steeringForce;
+	}
+
+	void ForceDriven::AddSteeringForces(std::function<bool(Point force)> addSteeringForceCallback)
+	{
+		Point force;
+		for (const auto& steeringBehaviourIncludingTargets : steeringBehavioursIncludingTargets) {
+			SteeringBehaviour steeringBehaviour = steeringBehaviourIncludingTargets.first;
+			const auto& targets = steeringBehaviourIncludingTargets.second;
+			if (steeringBehaviour == SteeringBehaviour::WANDER) {
+				force = Wander() * wanderWeight;
+				if (addSteeringForceCallback(force))
+					return;
+				continue;
+			}
+			for (const auto& targetWithWeight : targets) {
+				const spic::Point& target = targetWithWeight.first;
+				const float targetWeight = targetWithWeight.second;
+
+				switch (steeringBehaviour) {
+				case SteeringBehaviour::ARRIVAL:
+					force = Arrival(target) * targetWeight;
+					break;
+				case SteeringBehaviour::FLEE:
+					force = Flee(target) * targetWeight;
+					break;
+				case SteeringBehaviour::SEEK:
+					force = Seek(target) * targetWeight;
+					break;
+				default: continue;
+				}
+			}
+			if (addSteeringForceCallback(force))
+				return;
+		}
 	}
 
 	Point ForceDriven::Seek(Point target)
