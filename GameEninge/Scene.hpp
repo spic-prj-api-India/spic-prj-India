@@ -33,7 +33,6 @@ namespace spic {
              */
             void AddContent(std::shared_ptr<GameObject> content);
 
-
             /**
              * @brief Load tile map
              * @param newCollisionLayerIndex The desired collision layer index

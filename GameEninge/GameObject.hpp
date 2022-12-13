@@ -50,7 +50,7 @@ namespace spic {
 		}
 
 		/**
-		 * @brief Checks if name exsits in colection
+		 * @brief Checks if name exsists in colection
 		 * @param gameobjects 
 		 * @param name 
 		 * @return 

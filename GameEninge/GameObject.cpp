@@ -147,7 +147,7 @@ namespace spic {
 
 	void GameObject::Name(const std::string& newName) {
 		if (spic::internal::EntityManager::GetInstance()->CheckIfNameExists(newName))
-			throw std::runtime_error("Name of current gameobject exsits already");
+			throw std::runtime_error("Name of current gameobject exists already");
 
 		name = newName;
 	}
