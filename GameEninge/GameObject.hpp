@@ -55,7 +55,7 @@ namespace spic {
 		 * @param name 
 		 * @return 
 		*/
-		static bool CheckIfNameExsists(const std::vector<std::shared_ptr<GameObject>>& gameobjects, const std::string& name);
+		static bool CheckIfNameExsists(const std::vector<std::shared_ptr<GameObject>>& objects, const std::string& name);
 
 		/**
 		 * @brief Sets content of gameobject
