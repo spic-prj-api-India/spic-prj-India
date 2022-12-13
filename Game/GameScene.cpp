@@ -6,6 +6,7 @@
 #include "AudioSource.hpp"
 #include "Box.h"
 #include <RigidBody.hpp>
+#include "PlayerMovementScript.h"
 
 GameScene::GameScene() : Scene()
 {
@@ -28,14 +29,15 @@ void GameScene::SetContents()
 	std::shared_ptr<spic::GameObject> box = std::make_shared<spic::GameObject>();
 	std::string boxName = "box";
 	std::shared_ptr<spic::Transform> boxTransform = std::make_shared<spic::Transform>();
-	boxTransform->position = { 75.0f, 24.0f };
-	boxTransform->rotation = 0.785f;
+	boxTransform->position = { 180.0f, 24.0f };
+	boxTransform->rotation = 0.0f;
 	boxTransform->scale = 5.0f;
 	std::shared_ptr<spic::BoxCollider> boxCollider = std::make_shared<spic::BoxCollider>();
-	boxCollider->Width(45.0f);
-	boxCollider->Height(45.0f);
+	boxCollider->Width(50.0f);
+	boxCollider->Height(50.0f);
 	std::shared_ptr<spic::RigidBody> boxRigidBody = std::make_shared<spic::RigidBody>(1.0f, 1.0f, spic::BodyType::dynamicBody);
-	std::shared_ptr<CollisionDetectionScript> script = std::make_shared<CollisionDetectionScript>();
+	std::shared_ptr<CollisionDetectionScript> collisionScript = std::make_shared<CollisionDetectionScript>();
+	std::shared_ptr<PlayerMovementScript> movementScript = std::make_shared<PlayerMovementScript>();
 	auto boxSprite = std::make_shared<spic::Sprite>("assets/textures/box.png", 1);
 	auto music = std::make_shared<spic::AudioSource>("assets/music/file_example_MP3_700KB.mp3", true, true, 1.0f);
 
@@ -43,9 +45,10 @@ void GameScene::SetContents()
 	box->Transform(boxTransform);
 	box->AddComponent<spic::BoxCollider>(boxCollider);
 	box->AddComponent<spic::RigidBody>(boxRigidBody);
-	box->AddComponent<spic::BehaviourScript>(script);
+	box->AddComponent<spic::BehaviourScript>(collisionScript);
+	box->AddComponent<spic::BehaviourScript>(movementScript);
 	box->AddComponent<spic::Sprite>(boxSprite);
-	box->AddComponent<spic::AudioSource>(music);
+	//box->AddComponent<spic::AudioSource>(music);
 
 	//UI test
 	std::shared_ptr<spic::Button> button = std::make_shared<spic::Button>(200.0f, 100.0f, "Click me");

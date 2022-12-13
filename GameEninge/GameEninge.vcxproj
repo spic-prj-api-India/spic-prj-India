@@ -209,6 +209,7 @@
     <ClInclude Include="ISystem.hpp" />
     <ClInclude Include="MapParser.hpp" />
     <ClInclude Include="Point.hpp" />
+    <ClInclude Include="Rect.hpp" />
     <ClInclude Include="Random.hpp" />
     <ClInclude Include="Renderer.hpp" />
     <ClInclude Include="RenderingSystem.hpp" />
@@ -244,6 +245,7 @@
     <ClCompile Include="Box2DCollisionListener.cpp" />
     <ClCompile Include="DataSystem.cpp" />
     <ClCompile Include="Component.cpp" />
+    <ClCompile Include="Debug.cpp" />
     <ClCompile Include="GeneralHelper.cpp" />
     <ClCompile Include="IPhysicsExtension.cpp" />
     <ClCompile Include="MapParser.cpp" />

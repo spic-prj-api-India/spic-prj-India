@@ -7,6 +7,7 @@
 #include "MenuScene.h"
 #include "PhysicsValues.hpp"
 #include "Box.h"
+#include "Debug.hpp"
 
 std::shared_ptr<spic::Scene> scene;
 
@@ -21,6 +22,8 @@ void InitGame() {
 
 	// Register scenes
 	engine->RegisterScene("menu", std::make_shared<MenuScene>());
+
+	spic::Debug::COLLIDER_VISIBILITY = true;
 }
 
 void StartGame()

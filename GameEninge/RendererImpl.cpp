@@ -10,6 +10,7 @@
 #include <filesystem>
 #include "TypeHelper.hpp"
 #include "StringHelper.hpp"
+#include "Defaults.hpp"
 
 using namespace spic;
 using namespace spic::window;
@@ -90,7 +91,7 @@ void RendererImpl::Start(const spic::window::WindowValues* values)
 	this->UpdateWindow(values);
 
 
-	auto tmp_sprites = SurfacePtr(IMG_Load("assets/textures/missing_texture.png"));
+	auto tmp_sprites = SurfacePtr(IMG_Load(spic::internal::Defaults::MISSING_TEXTURE.c_str()));
 	if (!tmp_sprites.get())
 		return;
 
@@ -501,30 +502,31 @@ void RendererImpl::SetBackgroundColor()
 	SDL_RenderFillRectF(renderer.get(), &this->windowCamera);
 }
 
-void RendererImpl::DrawRect(const SDL_FRect* rect, const double angle, const Color* colour)
+void RendererImpl::DrawRect(const spic::Rect& rect, const double angle, const spic::Color& color)
 {
-	std::string defaultRectanglePath = StringHelper::GetBasePath() + "\\assets\\textures\\UISprite.png";
-	SDL_Texture* texture = LoadTexture(defaultRectanglePath);
+	SDL_Texture* texture = LoadTexture(spic::internal::Defaults::RECT_TEXTURE);
 	SDL_SetRenderDrawColor(renderer.get()
-		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, colour->R()))
-		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, colour->G()))
-		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, colour->B()))
-		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, colour->A())));
-	SDL_RenderCopyExF(renderer.get(), NULL, NULL, rect, angle, NULL, SDL_FLIP_NONE);
+		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, color.R()))
+		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, color.G()))
+		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, color.B()))
+		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, color.A())));
+	const double angleInDeg = spic::GeneralHelper::RAD2DEG<double>(angle);
+	SDL_FRect frect = SDL_FRect(rect.x, rect.y, rect.w, rect.h);
+	SDL_RenderCopyExF(renderer.get(), texture, NULL, &frect, angleInDeg, NULL, SDL_FLIP_NONE);
 }
 
-void RendererImpl::DrawLine(const Point* start, const Point* end, const Color* colour)
+void RendererImpl::DrawLine(const spic::Point& start, const spic::Point& end, const spic::Color& color)
 {
 	SDL_SetRenderDrawColor(renderer.get()
-		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, colour->R()))
-		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, colour->G()))
-		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, colour->B()))
-		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, colour->A())));
+		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, color.R()))
+		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, color.G()))
+		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, color.B()))
+		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, color.A())));
 	SDL_RenderDrawLine(renderer.get()
-		, PrecisionRoundingoInt(start->x)
-		, PrecisionRoundingoInt(start->y)
-		, PrecisionRoundingoInt(end->x)
-		, PrecisionRoundingoInt(end->y));
+		, PrecisionRoundingoInt(start.x)
+		, PrecisionRoundingoInt(start.y)
+		, PrecisionRoundingoInt(end.x)
+		, PrecisionRoundingoInt(end.y));
 }
 
 void RendererImpl::UpdateCamera(Camera* camera)

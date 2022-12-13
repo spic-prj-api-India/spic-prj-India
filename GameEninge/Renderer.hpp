@@ -6,6 +6,7 @@
 #include "Text.hpp"
 #include "Scene.hpp"
 #include "WindowValues.hpp"
+#include "Rect.hpp"
 
 namespace spic::internal {
     struct Rendering
@@ -35,12 +36,20 @@ namespace spic::internal {
         static void UpdateCamera(Camera* camera);
 
         /**
+         * @brief Draws an rectangle in window space
+         * @param rect The x, y, width, height of rectangle
+         * @param angle The angle of the square
+         * @param colour The colour of the square
+        */
+        static void DrawRect(const spic::Rect& rect, const double angle, const spic::Color& color);
+
+        /**
          * @brief Draws a line from start to end
          * @param start Start point of the line
          * @param end End point of the line
          * @param color Color of this line
         */
-        static void DrawLine(const Point* start, const Point* end, const Color* color);
+        static void DrawLine(const spic::Point& start, const spic::Point& end, const spic::Color& color);
         
         /**
          * @brief Draws a sprite as an ui object

@@ -40,6 +40,20 @@ namespace spic::internal::systems {
 		 * @spicapi
 		 */
 		std::vector<std::vector<std::shared_ptr<spic::GameObject>>> GetFilteredEntities(const std::vector<std::shared_ptr<spic::GameObject>>& entities) const;
+	
+		/**
+		 * @brief Draws a colored line around box collider of entity.
+		 * @param entity Desired entity that needs to be drawn.
+		 * @spicapi
+		 */
+		void DrawBoxCollider(std::shared_ptr<spic::GameObject> entity);
+
+		/**
+		 * @brief Draws a colored line around box colliders of entities.
+		 * @param entities Desired entities that need to be drawn.
+		 * @spicapi
+		 */
+		void DrawBoxColliders(std::vector<std::shared_ptr<spic::GameObject>>& entities);
 	};
 }
 

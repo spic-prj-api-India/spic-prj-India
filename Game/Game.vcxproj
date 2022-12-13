@@ -167,6 +167,7 @@
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="KeyListener.h" />
     <ClInclude Include="FollowMouseListener.h" />
+    <ClInclude Include="PlayerMovementScript.h" />
     <ClInclude Include="Rocket.h" />
     <ClInclude Include="MenuScene.h" />
   </ItemGroup>

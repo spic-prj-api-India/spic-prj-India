@@ -16,6 +16,7 @@
 #include "PhysicsValues.hpp"
 #include "RigidBody.hpp"
 #include "ForceDriven.hpp"
+#include "Defaults.hpp"
 
 namespace spic::extensions {
 	std::unique_ptr<b2World> world;
@@ -74,7 +75,7 @@ namespace spic::extensions {
 				// Update entity
 				entity->Transform()->position.x = position.x / PhysicsValues::SCALING_FACTOR;
 				entity->Transform()->position.y = position.y / PhysicsValues::SCALING_FACTOR;
-				if(!spic::TypeHelper::SharedPtrIsOfType<ForceDriven>(entity))
+				if (!spic::TypeHelper::SharedPtrIsOfType<ForceDriven>(entity))
 					entity->Transform()->rotation = rotation;
 			}
 		}
@@ -121,15 +122,9 @@ namespace spic::extensions {
 			std::shared_ptr<spic::RigidBody> rigidBody = entity->GetComponent<spic::RigidBody>();
 			b2Body* body = CreateBody(entity, rigidBody);
 
-			// Set velocity
-			b2Vec2 velocity;
-			velocity.Set(0, rigidBody->GravityScale());
-			body->SetLinearVelocity(velocity);
-
 			// Create fixture
 			if (entity->HasComponent<spic::Collider>()) {
-				const std::unique_ptr<b2FixtureDef> fixtureDef = CreateFixture(entity, rigidBody);
-				body->CreateFixture(fixtureDef.get());
+				CreateFixture(*body, entity, rigidBody);
 
 				// Set data
 				body->GetUserData().pointer = reinterpret_cast<uintptr_t>(entity.get());
@@ -155,48 +150,53 @@ namespace spic::extensions {
 			bodyDef.angle = entity->Transform()->rotation;
 			bodyDef.gravityScale = rigidBody->GravityScale();
 
-			b2Body* body = world->CreateBody(&bodyDef);
-			return body;
+			return world->CreateBody(&bodyDef);
 		}
 
 		/**
 		* @brief Creates box2d fixture with RigidBody of entity
 		* @spicapi
 		*/
-		std::unique_ptr<b2FixtureDef> CreateFixture(const std::shared_ptr<spic::GameObject>& entity, const std::shared_ptr<spic::RigidBody>& rigidBody) const
+		void CreateFixture(b2Body& body, const std::shared_ptr<spic::GameObject>& entity, const std::shared_ptr<spic::RigidBody>& rigidBody) const
 		{
-			std::unique_ptr<b2FixtureDef> fixtureDef = std::make_unique<b2FixtureDef>();
-			const b2Shape* shape = CreateShape(entity);
-			if (shape != nullptr)
-				fixtureDef->shape = shape;
-			fixtureDef->density = rigidBody->Mass();
-			fixtureDef->friction = 0.3f;
-			fixtureDef->restitution = 0.5f;
-			return std::move(fixtureDef);
+			b2FixtureDef fixtureDef = b2FixtureDef();
+			fixtureDef.density = 0.0f;
+			fixtureDef.friction = 0.3f;
+			fixtureDef.restitution = 0.5f;
+			SetShape(fixtureDef, entity, rigidBody);
+			body.CreateFixture(&fixtureDef);
 		}
 
 		/**
-		* @brief Creates box2d shape with Colliders of entity
+		* @brief Set box2d shape with Colliders of entity
 		* @spicapi
 		*/
-		b2Shape* CreateShape(const std::shared_ptr<spic::GameObject>& entity) const
+		void SetShape(b2FixtureDef& fixtureDef, const std::shared_ptr<spic::GameObject>& entity, const std::shared_ptr<spic::RigidBody>& rigidBody) const
 		{
 			std::shared_ptr<spic::BoxCollider> boxCollider = entity->GetComponent<spic::BoxCollider>();
 			const float scale = entity->Transform()->scale;
 			if (boxCollider != nullptr) {
+				const float width = boxCollider->Width() * PhysicsValues::SCALING_FACTOR;
+				const float height = boxCollider->Height() * PhysicsValues::SCALING_FACTOR;
+				const float hx = width / 2.0f;
+				const float hy = height / 2.0f;
+
 				b2PolygonShape* boxShape = new b2PolygonShape();
-				const float hx = (boxCollider->Width() * PhysicsValues::SCALING_FACTOR) / 2.0f;
-				const float hy = (boxCollider->Height() * PhysicsValues::SCALING_FACTOR) / 2.0f;
 				boxShape->SetAsBox(hx, hy); // will be 0.5 x 0.5
-				return boxShape;
+				fixtureDef.shape = boxShape;
+
+				float area = width * height;
+				fixtureDef.density = rigidBody->Mass() / area;
 			}
 			std::shared_ptr<spic::CircleCollider> circleCollider = entity->GetComponent<spic::CircleCollider>();
 			if (circleCollider != nullptr) {
 				b2CircleShape* circleShape = new b2CircleShape();
 				circleShape->m_radius = circleCollider->Radius();
-				return circleShape;
+				fixtureDef.shape = circleShape;;
+
+				float area = spic::internal::Defaults::PI * (circleShape->m_radius * circleShape->m_radius);
+				fixtureDef.density = rigidBody->Mass() / area;
 			}
-			return nullptr;
 		}
 
 		/**

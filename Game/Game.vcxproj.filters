@@ -104,5 +104,8 @@
     <ClInclude Include="FlockingScene.h">
       <Filter>Header Files\scenes</Filter>
     </ClInclude>
+    <ClInclude Include="PlayerMovementScript.h">
+      <Filter>Header Files\scripts</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

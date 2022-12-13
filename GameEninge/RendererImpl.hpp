@@ -14,6 +14,7 @@
 #include <SDL2/SDL_ttf.h>
 #include "Text.hpp"
 #include "WindowValues.hpp"
+#include "Rect.hpp"
 
 // needs to be used for SDL
 #undef main
@@ -22,7 +23,6 @@
  * @brief The internal rendering namespace
 */
 namespace spic::internal::rendering {
-
 	/**
 	 * @brief Deleters for SDL stuff
 	*/
@@ -272,7 +272,7 @@ namespace spic::internal::rendering {
 		 * @param angle The angle of the square
 		 * @param colour The colour of the square
 		*/
-		void DrawRect(const SDL_FRect* rect, const double angle, const Color* colour);
+		void DrawRect(const spic::Rect& rect, const double angle, const spic::Color& color);
 
 		/**
 		 * @brief Draws an line in window space
@@ -280,7 +280,7 @@ namespace spic::internal::rendering {
 		 * @param end The end point of an line
 		 * @param colour The colour of the line
 		*/
-		void DrawLine(const Point* start, const Point* end, const Color* colour);
+		void DrawLine(const spic::Point& start, const spic::Point& end, const spic::Color& color);
 
 		/**
 		 * @brief Draws an ui sprite

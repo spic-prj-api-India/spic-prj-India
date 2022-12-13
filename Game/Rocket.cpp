@@ -14,7 +14,7 @@ void Rocket::SetAttributes(const std::string& name, const spic::Point& position,
 	Name(name);
 	Tag("rocket");
 	Transform(std::make_shared<spic::Transform>(position, angle, 0.125f));
-	AddComponent<spic::BoxCollider>(std::make_shared<spic::BoxCollider>(25.5f, 75.0f));
+	AddComponent<spic::BoxCollider>(std::make_shared<spic::BoxCollider>(20.0f, 70.0f));
 	rigidBody = std::make_shared<spic::RigidBody>(0.75f, 1.0f, spic::BodyType::dynamicBody);
 	AddComponent<spic::RigidBody>(rigidBody);
 	AddComponent<spic::Sprite>(std::make_shared<spic::Sprite>("assets/textures/missile.png", 1));

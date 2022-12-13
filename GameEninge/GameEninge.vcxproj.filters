@@ -369,6 +369,9 @@
     <ClInclude Include="Bounds.hpp">
       <Filter>Header Files\models</Filter>
     </ClInclude>
+    <ClInclude Include="Rect.hpp">
+      <Filter>Header Files\models</Filter>
+    </ClInclude>
     <ClInclude Include="Matrix.hpp">
       <Filter>Header Files\core\math</Filter>
     </ClInclude>
@@ -523,6 +526,9 @@
     </ClCompile>
     <ClCompile Include="Random.cpp">
       <Filter>Source Files\core\math</Filter>
+    </ClCompile>
+    <ClCompile Include="Debug.cpp">
+      <Filter>Source Files\models</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
