@@ -37,6 +37,15 @@ namespace spic {
             /// @return 
             const bool IsFrozen() const;
 
+            /**
+             * @brief 
+             * @param width Width of an individual sprite in a vertical spriteSheet 
+             * @param height Heigth of an individual sprite in a vertical spriteSheet 
+             * @param yOffsett Starting place on the y axis
+             * @param xOffsett Starting place on the x axis
+            */
+            void InitHorizontalSpriteSheet(const std::string& spriteSheet, const int frames, const int width, const int height, const int yOffsett = 0, const int xOffsett = 0);
+
             /// @brief Stops the animator frow drawing frames
             void Stop();
 

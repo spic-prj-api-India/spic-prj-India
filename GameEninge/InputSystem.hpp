@@ -3,7 +3,7 @@
 
 #include "ISystem.hpp"
 #include "ButtonClickListener.hpp"
-
+#include "BehaviourScript.hpp"
 /**
 * @brief A system that calls the Start and Update method in scripts of entities
 */
@@ -32,6 +32,7 @@ namespace spic::internal::systems {
 		* @spicapi
 		*/
 		std::vector<std::shared_ptr<spic::Button>> GetButtons(std::vector<std::shared_ptr<spic::GameObject>>& entities);
+		std::vector<std::shared_ptr<spic::BehaviourScript>> GetAllScripts(std::vector<std::shared_ptr<spic::GameObject>>& entities);
 	private:
 		std::shared_ptr<ButtonClickListener> buttonClickListener;
 	};

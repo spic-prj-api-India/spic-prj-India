@@ -166,12 +166,6 @@
     <Filter Include="Header Files\extensions\networking">
       <UniqueIdentifier>{84978c89-f93f-4a0a-bad4-e8f6f7f5c0a2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\core\systems\script">
-      <UniqueIdentifier>{1fa21497-efa0-424c-a2fb-d78d3c2dc48c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\core\systems\script">
-      <UniqueIdentifier>{adb7e9dd-a1d6-4820-b869-8f62c7f0b74d}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AudioSource.hpp">
@@ -378,9 +372,6 @@
     <ClInclude Include="NetworkingHelper.hpp">
       <Filter>Header Files\helpers</Filter>
     </ClInclude>
-    <ClInclude Include="ScriptSystem.hpp">
-      <Filter>Header Files\core\systems\script</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sample.cpp">
@@ -532,9 +523,6 @@
     </ClCompile>
     <ClCompile Include="NetworkingHelper.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ScriptSystem.cpp">
-      <Filter>Source Files\core\systems\script</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
