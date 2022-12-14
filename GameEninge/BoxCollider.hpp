@@ -25,7 +25,7 @@ namespace spic {
              * @param newWidth The desired width
              * @spicapi
              */
-            void Width(float newWidth);
+            void Width(const float newWidth);
 
             /**
              * @brief The collider's height
@@ -39,7 +39,7 @@ namespace spic {
              * @param newHeight The desired height
              * @spicapi
              */
-            void Height(float newHeight);
+            void Height(const float newHeight);
 
         private:
             float width;

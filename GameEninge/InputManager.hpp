@@ -44,19 +44,19 @@ namespace spic::internal {
 		* @brief Subscribes a key listener for a specific key event
 		* @spicapi
 		*/
-		void Subscribe(spic::Input::KeyCode keyEvent, const std::shared_ptr<spic::IKeyListener>& keyListener);
+		void Subscribe(spic::Input::KeyCode keyEvent, const std::shared_ptr<spic::IKeyListener> keyListener);
 
 		/**
 		* @brief Subscribes a mouse listener for a specific mouse event
 		* @spicapi
 		*/
-		void Subscribe(spic::Input::MouseButton mouseEvent, const std::shared_ptr<spic::IMouseListener>& mouseListener);
+		void Subscribe(spic::Input::MouseButton mouseEvent, const std::shared_ptr<spic::IMouseListener> mouseListener);
 
 		/**
 		* @brief Unsubscribes a key listener for a specific key event
 		* @spicapi
 		*/
-		void UnSubscribe(spic::Input::KeyCode keyEvent, const std::shared_ptr<spic::IKeyListener>& keyListener);
+		void UnSubscribe(spic::Input::KeyCode keyEvent, const std::shared_ptr<spic::IKeyListener> keyListener);
 
 		/**
 		* @brief Unsubscribes all listeners for a specific key event
@@ -68,7 +68,7 @@ namespace spic::internal {
 		* @brief Unsubscribes a mouse listener for a specific mouse event
 		* @spicapi
 		*/
-		void UnSubscribe(spic::Input::MouseButton mouseEvent, const std::shared_ptr<spic::IMouseListener>& mouseListener);
+		void UnSubscribe(spic::Input::MouseButton mouseEvent, const std::shared_ptr<spic::IMouseListener> mouseListener);
 	
 		/**
 		* @brief Unsubscribes all listeners for a specific mouse event

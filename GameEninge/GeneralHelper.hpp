@@ -11,6 +11,7 @@
 #include <array>
 #include "Sprite.hpp"
 #include <memory>
+#include "NetworkPacket.hpp"
 
 
 namespace spic::GeneralHelper 
@@ -36,13 +37,27 @@ namespace spic::GeneralHelper
 	Point GetsPointY(Point& pointX, const Point& rotation, const float angle, float height, float width, float scaling) noexcept;
 	
 	/**
+	 * @brief Gets an unique uuid
+	 * @return 
+	*/
+	std::string GetRandomUUID();
+
+	/**
 	 * @brief 
 	 * @param a 
 	 * @param b 
 	 * @return 
 	*/
 	bool SpriteSorting(const std::shared_ptr<Sprite> a, const std::shared_ptr<Sprite> b);
-	
+
+	/**
+	 * @brief Sorts network packages
+	 * @param a 
+	 * @param b 
+	 * @return 
+	*/
+	bool NetworkPacketSorting(const spic::NetworkPacket& a, const spic::NetworkPacket& b);
+
 	/**
 	 * @brief 
 	 * @param orgin 

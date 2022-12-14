@@ -22,7 +22,6 @@ void AudioSource::Stop()
 
 void AudioSource::ChangeVolume(float _volume)
 {
-	volume = _volume;
 	AudioManager::GetInstance()->ChangeVolume(this, _volume);
 }
 
@@ -36,8 +35,18 @@ const std::string AudioSource::AudioClip() const
 	return this->audioClip;
 }
 
+void spic::AudioSource::AudioClip(const std::string& audioClip)
+{
+	this->audioClip = audioClip;
+}
+
 const bool AudioSource::PlayOnAwake() const {
 	return playOnAwake;
+}
+
+void spic::AudioSource::PlayOnAwake(const bool playOnAwake)
+{
+	this->playOnAwake = playOnAwake;
 }
 
 const bool AudioSource::Loop() const
@@ -45,7 +54,17 @@ const bool AudioSource::Loop() const
 	return loop;
 }
 
+void spic::AudioSource::Loop(const bool loop)
+{
+	this->loop = loop;
+}
+
 const float AudioSource::Volume() const
 {
 	return volume;
+}
+
+void spic::AudioSource::Volume(const float volume)
+{
+	this->volume = std::lerp(0.0f, 1.0f, volume);
 }

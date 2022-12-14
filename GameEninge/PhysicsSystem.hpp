@@ -32,25 +32,25 @@ namespace spic::internal::systems {
         * @brief Calls update method of physics extensions
         * @spicapi
         */
-        void Update(std::vector<std::shared_ptr<spic::GameObject>>& entities,Scene& currentScene) override;
+        void Update(std::vector<std::shared_ptr<spic::GameObject>>& entities, Scene& currentScene) override;
 
         /**
         * @brief Calls OnEnter method in the scripts of the entity
         * @spicapi
         */
-        void OnEnter(const std::shared_ptr<spic::GameObject>& entity, const std::shared_ptr<spic::Collider>& collider) const;
+        void OnEnter(const std::shared_ptr<spic::GameObject> entity, const std::shared_ptr<spic::Collider> collider) const;
 
         /**
         * @brief Calls OnExit method in the scripts of the entity
         * @spicapi
         */
-        void OnExit(const std::shared_ptr<spic::GameObject>& entity, const std::shared_ptr<spic::Collider>& collider) const;
+        void OnExit(const std::shared_ptr<spic::GameObject> entity, const std::shared_ptr<spic::Collider> collider) const;
 
         /**
         * @brief Calls OnStay method in the scripts of the entity
         * @spicapi
         */
-        void OnStay(const std::shared_ptr<spic::GameObject>& entity, const std::shared_ptr<spic::Collider>& collider) const;
+        void OnStay(const std::shared_ptr<spic::GameObject> entity, const std::shared_ptr<spic::Collider> collider) const;
     private:
         /**
         * @brief Filters all physics entities from entity list
@@ -62,7 +62,7 @@ namespace spic::internal::systems {
        * @brief Checks if entity has RigidBody or Collider
        * @spicapi
        */
-        bool IsPhysicsEntity(const std::shared_ptr<spic::GameObject>& entity) const;
+        bool IsPhysicsEntity(const spic::GameObject* entity) const;
     };
 }
 

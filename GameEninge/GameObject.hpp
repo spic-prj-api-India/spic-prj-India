@@ -7,6 +7,7 @@
 #include <vector>
 #include <memory>
 #include "TypeHelper.hpp"
+#include <map>
 
 namespace spic {
 	class Component;
@@ -17,10 +18,19 @@ namespace spic {
 	class GameObject {
 	public:
 		GameObject();
+
+		/**
+		 * @brief Constructor.
+		 * @details Object will be created with name
+		 * @param name The name for the game object.
+		 * @spicapi
+		*/
+		GameObject(const std::string& name);
+
 		GameObject(const GameObject& other) = default;
 		GameObject(GameObject&& other) = default;
-		GameObject& operator=(const GameObject& other) = default;
-		GameObject& operator=(GameObject&& other) = default;
+		virtual GameObject& operator=(const GameObject& other) = default;
+		virtual GameObject& operator=(GameObject&& other) = default;
 
 		/**
 		 * @brief Needs to declare virtual destructor,
@@ -38,6 +48,21 @@ namespace spic {
 			return std::make_shared<T>();
 		}
 
+		/**
+		 * @brief Checks if name exists in colection
+		 * @param gameobjects 
+		 * @param name 
+		 * @return 
+		*/
+		static bool CheckIfNameExists(const std::vector<std::shared_ptr<GameObject>> objects, const std::string& name);
+
+		/**
+		 * @brief Sets content of gameobject
+		 * @details If you want to use networking use this
+		 * @param data 
+		*/
+		virtual void SetContent(std::map<std::string, std::string>& data);
+		
 		/**
 		 * @brief Returns name of GameObject.
 		 * @return string.
@@ -79,7 +104,7 @@ namespace spic {
 		 * @param active Desired value.
 		 * @spicapi
 		 */
-		void Active(bool flag);
+		void Active(const bool flag);
 
 		/**
 		 * @brief Returns layer of GameObject.
@@ -93,7 +118,7 @@ namespace spic {
 		 * @param newLayer Desired value.
 		 * @spicapi
 		 */
-		void Layer(int newLayer);
+		void Layer(const int newLayer);
 
 		/**
 		 * @brief Returns transform of GameObject.
@@ -200,6 +225,7 @@ namespace spic {
 		 * @brief Removes a Component.
 		 * @details Will search for the Component among the GameObjects.
 		 * @param obj The Component to be removed. If obj == nullptr, Destroy() does nothing.
+		 * @details TODO needs recursion
 		 * @spicapi
 		 */
 		static void Destroy(Component* obj);
@@ -213,13 +239,6 @@ namespace spic {
 		* @spicapi
 		*/
 		static void Create(const std::shared_ptr<GameObject> gameObject);
-
-		/**
-		 * @brief Gets game object by name
-		 * @param name Name of game object
-		 * @return A shared pointer to the game object
-		*/
-		static const std::shared_ptr<GameObject> GetByName(const std::string& name);
 
 		/**
 		 * @brief Does the object exist? TODO wat wordt hiermee bedoeld?
@@ -480,4 +499,5 @@ namespace spic {
 		return nullptr;
 	}
 }
+
 #endif // GAMEOBJECT_H_

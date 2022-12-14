@@ -72,6 +72,9 @@
     <ClCompile Include="FlockingScene.cpp">
       <Filter>Source Files\scenes</Filter>
     </ClCompile>
+    <ClCompile Include="PlayerMovementScript.cpp">
+      <Filter>Source Files\scripts</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CollisionDetectionScript.h">

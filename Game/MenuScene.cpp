@@ -35,6 +35,10 @@ void MenuScene::SetContents()
 		}, 100.0f);
 }
 
+void MenuScene::SetMatchMenu()
+{
+}
+
 void MenuScene::SetInputListeners()
 {
 }

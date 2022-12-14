@@ -13,6 +13,8 @@
 #include "RenderingSystem.hpp"
 #include "DataSystem.hpp"
 #include "AudioManager.hpp"
+#include "NetworkingReceiveSystem.hpp"
+#include "NetworkingSendSystem.hpp"
 #include "GameEngine.hpp"
 #include "PhysicsExtension1.hpp"
 
@@ -48,11 +50,15 @@ void EntityManager::Init()
 	std::unique_ptr<systems::RenderingSystem> renderingSystem = std::make_unique<systems::RenderingSystem>();
 	std::unique_ptr<systems::DataSystem> dataSystem = std::make_unique<systems::DataSystem>();
 	std::unique_ptr<systems::AISystem> aiSystem = std::make_unique<systems::AISystem>();
-	AddInternalSystem(std::move(inputSystem), 0);
-	AddInternalSystem(std::move(physicsSystem), 1);
-	AddInternalSystem(std::move(dataSystem), 1);
-	AddInternalSystem(std::move(aiSystem), 1);
-	AddInternalSystem(std::move(renderingSystem), 2);
+	std::unique_ptr<systems::NetworkingReceiveSystem> networkRecieve = std::make_unique<systems::NetworkingReceiveSystem>();
+	std::unique_ptr<systems::NetworkingSendSystem> networkSend = std::make_unique<systems::NetworkingSendSystem>();
+	AddInternalSystem(std::move(networkRecieve), 0);
+	AddInternalSystem(std::move(inputSystem), 1);
+	AddInternalSystem(std::move(physicsSystem), 2);
+	AddInternalSystem(std::move(dataSystem), 3);
+    AddInternalSystem(std::move(aiSystem), 4);
+	AddInternalSystem(std::move(networkSend), 5);
+	AddInternalSystem(std::move(renderingSystem), 6);
 }
 
 void EntityManager::Reset()
@@ -74,7 +80,13 @@ void EntityManager::AddEntity(const std::shared_ptr<spic::GameObject>& entity)
 	entities.push_back(entity);
 }
 
-void EntityManager::RemoveEntity(const std::shared_ptr<spic::GameObject>& entity) {
+void spic::internal::EntityManager::AddEntityAlsoToScene(const std::shared_ptr<spic::GameObject>& entity)
+{
+	AddEntity(entity);
+	scene->AddContent(entity);
+}
+
+void EntityManager::RemoveEntity(const std::shared_ptr<spic::GameObject> entity) {
 	entities.erase(
 		std::remove(entities.begin(), entities.end(), entity),
 		entities.end());
@@ -174,6 +186,21 @@ void EntityManager::AddSystem(std::unique_ptr<spic::systems::ISystem> system)
 	systems[CustomSystemDefaultPriority].emplace_back(std::move(system));
 }
 
+bool spic::internal::EntityManager::CheckIfNameExists(const std::string& name) const
+{
+	for (auto& s : scenes)
+	{
+		for (auto& entity : s.second->Contents())
+		{
+			auto children = entity->GetChildren();
+			if (spic::GameObject::CheckIfNameExists(children, name))
+				return true;
+		}
+	}
+	
+	return false;
+}
+
 void EntityManager::AddInternalSystem(std::unique_ptr<spic::systems::ISystem> system, int priority)
 {
 	if (!systems.count(priority))
@@ -193,6 +220,3 @@ void EntityManager::Update()
 		}
 	}
 }
-
-void EntityManager::Render()
-{}

@@ -1,17 +1,15 @@
 #ifndef CHUNK_H_
 #define CHUNK_H_
 
-// Use to remove SDL2 warnings from error list
-#include <codeanalysis\warnings.h>
-#pragma warning( push )
-#pragma warning ( disable : ALL_CODE_ANALYSIS_WARNINGS )
-#include <SDL2/SDL_mixer.h>
-#pragma warning( pop )
 #include <string>
 #include <memory>
 
+struct Mix_Chunk;
+
 namespace spic::internal::audio {
 	/// @brief Holds a loaded audio chunk
+
+	
 	class Chunk
 	{
 	private:

@@ -12,7 +12,7 @@ namespace spic::internal::exceptions {
         /**
          * @brief Sets message, template: "Extension has to be of type {castType}"
          */
-        CastException(std::string castType);
+        CastException(const std::string castType);
 
         /**
          * @brief Returns error message

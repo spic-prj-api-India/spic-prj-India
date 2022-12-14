@@ -24,14 +24,15 @@ namespace spic {
             void Stop();
             
             /**
-            * @brief Call this method to change te intial volumen and if playing, the current volumen.
+            * @brief Call this method to change the playing volumen.
             * @param volume The value to change the current volumen.
             * @spicapi
             */
             void ChangeVolume(float volume);
 
             /**
-            * @brief overloaded method to change te intial volumen and if playing, the current volumen.
+            * @brief overloaded method to change the playing volumen.
+            * @details Currently broken cause there is a bug in the used music library
             * @param volume The value to change the current volumen.
             * @spicapi
             */
@@ -48,12 +49,16 @@ namespace spic {
             AudioSource(const std::string& audioClip, const bool playOnAwake, const bool loop, const float volume);
 
             const std::string AudioClip() const;
+            void AudioClip(const std::string& audioClip);
 
             const bool PlayOnAwake() const;
+            void PlayOnAwake(const bool playOnAwake);
 
             const bool Loop() const;
+            void Loop(const bool loop);
 
             const float Volume() const;
+            void Volume(const float volume);
 
         private:
             /**

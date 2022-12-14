@@ -45,21 +45,21 @@ namespace spic::internal::systems {
 		}
 	}
 
-	void PhysicsSystem::OnEnter(const std::shared_ptr<spic::GameObject>& entity, const std::shared_ptr<spic::Collider>& collider) const
+	void PhysicsSystem::OnEnter(const std::shared_ptr<spic::GameObject> entity, const std::shared_ptr<spic::Collider> collider) const
 	{
 		for (const auto& script : entity->GetComponents<spic::BehaviourScript>()) {
 			script->OnTriggerEnter2D(*collider);
 		}
 	}
 
-	void PhysicsSystem::OnStay(const std::shared_ptr<spic::GameObject>& entity, const std::shared_ptr<spic::Collider>& collider) const
+	void PhysicsSystem::OnStay(const std::shared_ptr<spic::GameObject> entity, const std::shared_ptr<spic::Collider> collider) const
 	{
 		for (const auto& script : entity->GetComponents<spic::BehaviourScript>()) {
 			script->OnTriggerStay2D(*collider);
 		}
 	}
 
-	void PhysicsSystem::OnExit(const std::shared_ptr<spic::GameObject>& entity, const std::shared_ptr<spic::Collider>& collider) const
+	void PhysicsSystem::OnExit(const std::shared_ptr<spic::GameObject> entity, const std::shared_ptr<spic::Collider> collider) const
 	{
 		for (const auto& script : entity->GetComponents<spic::BehaviourScript>()) {
 			script->OnTriggerExit2D(*collider);
@@ -70,17 +70,16 @@ namespace spic::internal::systems {
 	{
 		std::vector<std::shared_ptr<spic::GameObject>> physicsEntities;
 		for (const auto& entity : entities) {
-			if (IsPhysicsEntity(entity))
+			if (IsPhysicsEntity(entity.get()))
 				physicsEntities.emplace_back(entity);
-			for (const auto& child : entity->GetChildren()){
-				if (IsPhysicsEntity(child))
-					physicsEntities.emplace_back(child);
-			}
+
+			auto temp = this->GetPhysicsEntities(std::move(entity->GetChildren()));
+			std::copy(temp.begin(), temp.end(), std::back_inserter(physicsEntities));
 		}
 		return physicsEntities;
 	}
 
-	bool PhysicsSystem::IsPhysicsEntity(const std::shared_ptr<spic::GameObject>& entity) const
+	bool PhysicsSystem::IsPhysicsEntity(const spic::GameObject* entity) const
 	{
 		return entity->HasComponent<spic::RigidBody>() || entity->HasComponent<spic::Collider>();
 	}

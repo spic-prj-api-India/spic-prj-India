@@ -2,6 +2,11 @@
 #include "Chunk.hpp"
 #include <cmath>
 #include <iostream>
+#include <codeanalysis\warnings.h>
+#pragma warning( push )
+#pragma warning ( disable : ALL_CODE_ANALYSIS_WARNINGS )
+#include <SDL2/SDL_mixer.h>
+#pragma warning( pop )
 
 using namespace spic::internal::audio;
 

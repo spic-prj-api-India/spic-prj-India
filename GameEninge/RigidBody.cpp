@@ -3,7 +3,7 @@
 #include "PhysicsExtension1.hpp"
 
 namespace spic {
-	RigidBody::RigidBody(float mass, float gravityScale, spic::BodyType _bodyType) : bodyType{_bodyType}
+	RigidBody::RigidBody(const float mass, const float gravityScale, const spic::BodyType _bodyType) : bodyType{ _bodyType }
 	{
 		Mass(mass);
 		GravityScale(gravityScale);
@@ -36,19 +36,19 @@ namespace spic {
 		return bodyType;
 	}
 
-	void RigidBody::Mass(float newMass) {
+	void RigidBody::Mass(const float newMass) {
 		if (newMass < 0.0f)
 			throw std::range_error("Mass can't be below zero");
 		mass = newMass;
 	}
 
-	void RigidBody::GravityScale(float newGravityScale) {
+	void RigidBody::GravityScale(const float newGravityScale) {
 		if (newGravityScale < 0.0f)
 			throw std::range_error("Gravity scale can't be below zero");
 		gravityScale = newGravityScale;
 	}
 
-	void RigidBody::BodyType(spic::BodyType newBodyType) {
+	void RigidBody::BodyType(const spic::BodyType newBodyType) {
 		bodyType = newBodyType;
 	}
 
@@ -60,6 +60,6 @@ namespace spic {
 			return;
 		std::weak_ptr<extensions::PhysicsExtension1> physicsExtension = engine->GetExtension<extensions::PhysicsExtension1>();
 		if (const auto& box2DExtension = physicsExtension.lock())
-			box2DExtension->AddForce(GameObject::GetByName(this->gameObject->Name()), forceDirection);
+			box2DExtension->AddForce(GameObject::Find(this->gameObject->Name()), forceDirection);
 	}
 }

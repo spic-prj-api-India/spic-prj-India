@@ -109,9 +109,6 @@
     <Filter Include="Header Files\core\systems\networking">
       <UniqueIdentifier>{d16d3029-f666-477c-9d01-c6dbefca1a47}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\core\systems\scripts">
-      <UniqueIdentifier>{d8655c86-e302-4ed1-bbf0-0c564114f111}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\core\systems\physics">
       <UniqueIdentifier>{0faa61b9-0dfb-4284-a0d9-ffd8d1663372}</UniqueIdentifier>
     </Filter>
@@ -145,9 +142,6 @@
     <Filter Include="Source Files\core\systems\physics">
       <UniqueIdentifier>{a4c84af4-e6cc-4c91-bd83-1714dbc1fb98}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\core\systems\scripts">
-      <UniqueIdentifier>{4fc209ec-3065-487c-8d8d-65c7a84fbd8c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\core\systems\rendering">
       <UniqueIdentifier>{f1a73fff-ed6a-452f-86f7-00a43417a997}</UniqueIdentifier>
     </Filter>
@@ -169,6 +163,9 @@
     <Filter Include="Source Files\helpers">
       <UniqueIdentifier>{9f084e52-f411-4ec3-a73b-4e96a26e3e9e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\extensions\networking">
+      <UniqueIdentifier>{84978c89-f93f-4a0a-bad4-e8f6f7f5c0a2}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Header Files\core\systems\ai">
       <UniqueIdentifier>{6a12e60f-5e05-4fec-8a96-dc412db56dad}</UniqueIdentifier>
     </Filter>
@@ -180,6 +177,12 @@
     </Filter>
     <Filter Include="Header Files\core\math">
       <UniqueIdentifier>{9331d722-efc1-4965-a1d9-9558416e9dd9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\core\systems\networking">
+      <UniqueIdentifier>{a99407fd-3c69-4857-af8b-14a500c48509}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\extensions\networking">
+      <UniqueIdentifier>{0bcd053c-995f-4ec2-a250-a85a668d77cd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -303,9 +306,6 @@
     <ClInclude Include="Text.hpp">
       <Filter>Header Files\objects</Filter>
     </ClInclude>
-    <ClInclude Include="Transform.hpp">
-      <Filter>Header Files\objects</Filter>
-    </ClInclude>
     <ClInclude Include="StringHelper.hpp">
       <Filter>Header Files\helpers</Filter>
     </ClInclude>
@@ -354,6 +354,33 @@
     <ClInclude Include="ISystem.hpp">
       <Filter>Header Files\core\interfaces</Filter>
     </ClInclude>
+    <ClInclude Include="INetworkExtension.hpp">
+      <Filter>Header Files\core\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="NetworkingReceiveSystem.hpp">
+      <Filter>Header Files\core\systems\networking</Filter>
+    </ClInclude>
+    <ClInclude Include="NetworkingSendSystem.hpp">
+      <Filter>Header Files\core\systems\networking</Filter>
+    </ClInclude>
+    <ClInclude Include="SocketScript.hpp">
+      <Filter>Header Files\components\socket</Filter>
+    </ClInclude>
+    <ClInclude Include="Serializer.hpp">
+      <Filter>Header Files\components</Filter>
+    </ClInclude>
+    <ClInclude Include="SocketUDPExtension.hpp">
+      <Filter>Header Files\extensions\networking</Filter>
+    </ClInclude>
+    <ClInclude Include="ThreadWrapper.hpp">
+      <Filter>Header Files\extensions\networking</Filter>
+    </ClInclude>
+    <ClInclude Include="ConvertListToBytes.hpp">
+      <Filter>Header Files\extensions\networking</Filter>
+    </ClInclude>
+    <ClInclude Include="NetworkingHelper.hpp">
+      <Filter>Header Files\helpers</Filter>
+    </ClInclude>
     <ClInclude Include="ForceDriven.hpp">
       <Filter>Header Files\objects</Filter>
     </ClInclude>
@@ -361,9 +388,6 @@
       <Filter>Header Files\core\managers</Filter>
     </ClInclude>
     <ClInclude Include="GameEngineInfo.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="AISystem.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Bounds.hpp">
@@ -380,6 +404,12 @@
     </ClInclude>
     <ClInclude Include="Random.hpp">
       <Filter>Header Files\core\math</Filter>
+    </ClInclude>
+    <ClInclude Include="AISystem.hpp">
+      <Filter>Header Files\core\systems\ai</Filter>
+    </ClInclude>
+    <ClInclude Include="Transform.hpp">
+      <Filter>Header Files\models</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -503,6 +533,9 @@
     <ClCompile Include="DataSystem.cpp">
       <Filter>Source Files\core\systems\data</Filter>
     </ClCompile>
+    <ClCompile Include="UDP.ixx">
+      <Filter>Header Files\extensions\networking</Filter>
+    </ClCompile>
     <ClCompile Include="Component.cpp">
       <Filter>Source Files\components</Filter>
     </ClCompile>
@@ -530,9 +563,36 @@
     <ClCompile Include="Debug.cpp">
       <Filter>Source Files\models</Filter>
     </ClCompile>
+    <ClCompile Include="NetworkingHelper.cpp">
+      <Filter>Source Files\helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="NetworkingReceiveSystem.cpp">
+      <Filter>Source Files\core\systems\networking</Filter>
+    </ClCompile>
+    <ClCompile Include="NetworkingSendSystem.cpp">
+      <Filter>Source Files\core\systems\networking</Filter>
+    </ClCompile>
+    <ClCompile Include="NetworkPacket.cpp">
+      <Filter>Source Files\components\socket</Filter>
+    </ClCompile>
+    <ClCompile Include="SocketScript.cpp">
+      <Filter>Source Files\components\socket</Filter>
+    </ClCompile>
+    <ClCompile Include="Transform.cpp">
+      <Filter>Source Files\models</Filter>
+    </ClCompile>
+    <ClCompile Include="ThreadWrapper.cpp">
+      <Filter>Source Files\extensions\networking</Filter>
+    </ClCompile>
+    <ClCompile Include="SocketUDPExtension.cpp">
+      <Filter>Source Files\extensions\networking</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="UISprite.qrc" />
+    <None Include="NetworkPacket.hpp">
+      <Filter>Header Files\components\socket</Filter>
+    </None>
   </ItemGroup>
 </Project>

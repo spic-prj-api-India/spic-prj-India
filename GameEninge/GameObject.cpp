@@ -3,13 +3,15 @@
 #include "AudioSource.hpp"
 #include "TypeHelper.hpp"
 #include "EntityManager.hpp"
+#include <string>
+#include "GeneralHelper.hpp"
 
 namespace spic {
 	std::vector<std::shared_ptr<GameObject>> GameObject::GetGameObjects() {
 		return spic::internal::EntityManager::GetInstance()->GetEntities();
 	}
 
-	GameObject::GameObject() : active{ true }, layer{ 0 }, parent{nullptr}
+	GameObject::GameObject() : active{ true }, layer{ 0 }, parent{ nullptr }, name{ spic::GeneralHelper::GetRandomUUID()}
 	{
 		components = {};
 	}
@@ -18,12 +20,15 @@ namespace spic {
 	{
 		internal::EntityManager::GetInstance()->AddEntity(gameObject);
 	}
-
-	const std::shared_ptr<GameObject> GameObject::GetByName(const std::string& name)
+	GameObject::GameObject(const std::string& name) : active{ true }, layer{ 0 }, parent{ nullptr }, name{name}
 	{
-		for (const auto& entity : internal::EntityManager::GetInstance()->GetEntities()) {
-			if (entity->Name() == name)
-				return entity;
+	}
+
+	std::shared_ptr<GameObject> FindRecursion(const std::vector<std::shared_ptr<GameObject>>& objects,const std::string& name)
+	{
+		for (const auto& gameObject : objects) {
+			if (gameObject->Name() == name)
+				return gameObject;
 		}
 		return nullptr;
 	}
@@ -33,24 +38,56 @@ namespace spic {
 		for (const auto& gameObject : spic::internal::EntityManager::GetInstance()->GetEntities()) {
 			if (gameObject->name == name)
 				return gameObject;
+			
+			if (auto i = FindRecursion(gameObject->GetChildren(), name); i.get() != nullptr)
+				return i;
 		}
 		return nullptr;
+	}
+
+	std::vector<std::shared_ptr<GameObject>> FindGameObjectsWithTagRecursion(const std::vector<std::shared_ptr<GameObject>>& objects ,const std::string& tag)
+	{
+		std::vector<std::shared_ptr<GameObject>> gameObjects;
+		for (const auto& gameObject : objects) {
+			if (gameObject->Active() && gameObject->Tag() == tag)
+				gameObjects.emplace_back(gameObject);
+		}
+		return gameObjects;
 	}
 
 	std::vector<std::shared_ptr<GameObject>> GameObject::FindGameObjectsWithTag(const std::string& tag)
 	{
 		std::vector<std::shared_ptr<GameObject>> gameObjects;
 		for (const auto& gameObject : spic::internal::EntityManager::GetInstance()->GetEntities()) {
-			if (gameObject->active && gameObject->tag == tag)
+
+			if (gameObject->Active() && gameObject->Tag() == tag)
 				gameObjects.emplace_back(gameObject);
+
+			const auto temp = FindGameObjectsWithTagRecursion(gameObject->children, tag);
+
+			std::copy(temp.begin(), temp.end(), back_inserter(gameObjects));
+			gameObjects.emplace_back(gameObject);
 		}
 		return gameObjects;
 	}
+
+	std::shared_ptr<GameObject> FindWithTagRecusion(const std::vector<std::shared_ptr<GameObject>>& objects, const std::string& tag)
+	{
+		for (const auto& gameObject : spic::internal::EntityManager::GetInstance()->GetEntities()) {
+			if (gameObject->Tag() == tag)
+				return gameObject;
+		}
+		return nullptr;
+	}
+
 
 	std::shared_ptr<GameObject> GameObject::FindWithTag(const std::string& tag)
 	{
 		for (const auto& gameObject : spic::internal::EntityManager::GetInstance()->GetEntities()) {
 			if (gameObject->tag == tag)
+				return gameObject;
+
+			if (auto i = FindWithTagRecusion(gameObject->children, tag); i.get() != nullptr)
 				return gameObject;
 		}
 		return nullptr;
@@ -92,11 +129,31 @@ namespace spic {
 		return layer < other.layer;
 	}
 
+	bool GameObject::CheckIfNameExists(const std::vector<std::shared_ptr<spic::GameObject>> objects, const std::string& name)
+	{
+		for (auto& object : objects)
+		{
+			if (object->Name() == name)
+				return true;
+
+			if (GameObject::CheckIfNameExists(std::move(object->GetChildren()), name))
+				return true;
+		}
+		return false;
+	}
+
+	void GameObject::SetContent(std::map<std::string, std::string>& data)
+	{
+	}
+
 	std::string GameObject::Name() const {
 		return name;
 	}
 
 	void GameObject::Name(const std::string& newName) {
+		if (spic::internal::EntityManager::GetInstance()->CheckIfNameExists(newName))
+			throw std::runtime_error("Name of current gameobject exists already");
+
 		name = newName;
 	}
 
@@ -112,7 +169,7 @@ namespace spic {
 		return active;
 	}
 
-	void GameObject::Active(bool flag) {
+	void GameObject::Active(const bool flag) {
 		for (const auto& child : GetChildren(flag)) {
 			child->Active(flag);
 			if (flag)
@@ -135,7 +192,7 @@ namespace spic {
 		return layer;
 	}
 
-	void GameObject::Layer(int newLayer) {
+	void GameObject::Layer(const int newLayer) {
 		layer = newLayer;
 	}
 

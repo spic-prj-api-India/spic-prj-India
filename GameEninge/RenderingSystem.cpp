@@ -9,14 +9,18 @@
 namespace spic::internal::systems {
 	RenderingSystem::RenderingSystem()
 	{
+
 	}
 
 	RenderingSystem::~RenderingSystem()
 	{
+
 	}
 
 	void RenderingSystem::Start(std::vector<std::shared_ptr<spic::GameObject>>& entities, Scene& currentScene)
-	{}
+	{
+
+	}
 
 	void RenderingSystem::Update(std::vector<std::shared_ptr<spic::GameObject>>& entities, Scene& currentScene)
 	{
@@ -24,12 +28,17 @@ namespace spic::internal::systems {
 		spic::internal::Rendering::UpdateCamera(&currentScene.Camera());
 		auto filteredEntities = GetFilteredEntities(entities);
 		const spic::TileMap* tileMap = currentScene.TileMap();
+
 		if (tileMap != nullptr)
 			tileMap->Render();
-		for (const auto& entity : filteredEntities[0]) {
+
+		for (const auto& entity : filteredEntities[0]) 
+		{
 			spic::internal::Rendering::Draw(entity.get());
 		}
-		for (const auto& entity : filteredEntities[1]) {
+
+		for (const auto& entity : filteredEntities[1]) 
+		{
 			spic::internal::Rendering::Draw(entity.get());
 		}
 		if(Debug::DEBUG && Debug::COLLIDER_VISIBILITY)
@@ -46,13 +55,8 @@ namespace spic::internal::systems {
 				uiEntities.emplace_back(entity);
 			else
 				nonUIEntities.emplace_back(entity);
-			for (const auto& child : entity->GetChildren()) {
-				if (spic::TypeHelper::SharedPtrIsOfType<UIObject>(child))
-					uiEntities.emplace_back(child);
-				else
-					nonUIEntities.emplace_back(child);
-			}
 		}
+
 		return { nonUIEntities, uiEntities };
 	}
 

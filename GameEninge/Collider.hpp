@@ -9,9 +9,7 @@ namespace spic {
      * @spicapi
      */
     class Collider : public Component {
-
     };
-
 }
 
 #endif // COLLIDER2D_H_

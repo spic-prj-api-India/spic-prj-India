@@ -3,8 +3,7 @@
 
 namespace spic {
 	void BehaviourScript::OnStart() 
-	{
-	}
+	{}
 
 	void BehaviourScript::OnUpdate() 
 	{}
