@@ -14,6 +14,13 @@ namespace spic::internal::systems {
 	{
 		buttonClickListener = std::make_shared<ButtonClickListener>();
 		Input::Subscribe(spic::Input::MouseButton::LEFT, buttonClickListener);
+
+		auto scripts = this->GetAllScripts(entities);
+		for (auto& script : scripts)
+		{
+			script->OnStart();
+		}
+
 	}
 
 	void InputSystem::Update(std::vector<std::shared_ptr<spic::GameObject>>& entities, Scene& currentScene)
