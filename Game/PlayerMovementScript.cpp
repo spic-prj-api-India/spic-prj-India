@@ -5,6 +5,9 @@ void PlayerMovementScript::OnStart() {
 }
 
 void PlayerMovementScript::OnUpdate() {
+}
+
+void PlayerMovementScript::OnInput() {
 	const auto& rigidBody = this->gameObject->GetComponent<spic::RigidBody>();
 	if (spic::Input::GetKeyDown(spic::Input::KeyCode::A))
 	{

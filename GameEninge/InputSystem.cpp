@@ -10,34 +10,19 @@ namespace spic::internal::systems {
 	InputSystem::InputSystem() 
 	{}
 
-	void StartRecursion(std::vector<std::shared_ptr<spic::GameObject>> entities)
-	{
-		for (auto& entity : entities) {
-			for (const auto& script : entity->GetComponents<spic::BehaviourScript>()) {
-				script->OnStart();
-			}
-			StartRecursion(std::move(entity->GetChildren()));
-		}
-	}
-
 	void InputSystem::Start(std::vector<std::shared_ptr<spic::GameObject>>& entities, Scene& currentScene)
 	{
 		buttonClickListener = std::make_shared<ButtonClickListener>();
 		Input::Subscribe(spic::Input::MouseButton::LEFT, buttonClickListener);
-
-		for (const auto& script : currentScene.Camera().GetComponents<spic::BehaviourScript>()) {
-			script->OnStart();
-		}
-		StartRecursion(entities);
 	}
 
-	void UpdateRecursion(std::vector<std::shared_ptr<spic::GameObject>> entities)
+	void InputRecursion(std::vector<std::shared_ptr<spic::GameObject>> entities)
 	{
 		for (auto& entity : entities) {
 			for (const auto& script : entity->GetComponents<spic::BehaviourScript>()) {
-				script->OnUpdate();
+				script->OnInput();
 			}
-			UpdateRecursion(std::move(entity->GetChildren()));
+			InputRecursion(std::move(entity->GetChildren()));
 		}
 	}
 
@@ -49,9 +34,9 @@ namespace spic::internal::systems {
 			InputManager::GetInstance()->Listen();
 
 			for (const auto& script : currentScene.Camera().GetComponents<spic::BehaviourScript>()) {
-				script->OnUpdate();
+				script->OnInput();
 			}
-			UpdateRecursion(entities);
+			InputRecursion(entities);
 		}
 	}
 

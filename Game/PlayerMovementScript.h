@@ -7,11 +7,10 @@ class PlayerMovementScript :
 	public spic::BehaviourScript {
 public:
 	virtual void OnStart() override;
-
 	virtual void OnUpdate() override;
+	virtual void OnInput() override;
 
 	virtual void OnTriggerEnter2D(const spic::Collider& collider) override;
-
 	virtual void OnTriggerExit2D(const spic::Collider& collider) override;
 private:
 	bool collided;

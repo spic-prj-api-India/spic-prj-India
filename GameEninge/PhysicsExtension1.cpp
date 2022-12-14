@@ -387,9 +387,13 @@ namespace spic::extensions {
 		return *this;
 	}
 
-	void spic::extensions::PhysicsExtension1::Reset()
+	void spic::extensions::PhysicsExtension1::Reset(std::function<void(const std::shared_ptr<spic::GameObject>, const std::shared_ptr<spic::Collider>)> enterCallback,
+		std::function<void(const std::shared_ptr<spic::GameObject>, const std::shared_ptr<spic::Collider>)> exitCallback,
+		std::function<void(const std::shared_ptr<spic::GameObject>, const std::shared_ptr<spic::Collider>)> stayCallback)
 	{
 		physicsImpl->Reset();
+		spic::extensions::ICollisionListener* listener = new spic::internal::extensions::Box2DCollisionListener(enterCallback, exitCallback, stayCallback);
+		RegisterListener(listener);
 	}
 
 	void spic::extensions::PhysicsExtension1::AddCollisionLayer(const spic::TileLayer& collisionLayer)

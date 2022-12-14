@@ -21,6 +21,12 @@ namespace spic {
             virtual void OnUpdate();
 
             /**
+             * @brief Is called every input event
+             * @spicapi
+             */
+            virtual void OnInput();
+
+            /**
              * @brief Sent when another object enters a trigger collider
              *        attached to this object (2D physics only).
              * @spicapi

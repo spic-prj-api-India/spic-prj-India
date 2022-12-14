@@ -24,7 +24,9 @@ namespace spic::extensions{
 		* @brief Resets all physics and removes entities from extension
 		* @spicapi
 		*/
-		virtual void Reset() = 0;
+		virtual void Reset(std::function<void(const std::shared_ptr<spic::GameObject>, const std::shared_ptr<spic::Collider>)> enterCallback,
+			std::function<void(const std::shared_ptr<spic::GameObject>, const std::shared_ptr<spic::Collider>)> exitCallback,
+			std::function<void(const std::shared_ptr<spic::GameObject>, const std::shared_ptr<spic::Collider>)> stayCallback) = 0;
 
 		/**
 		* @brief Add collision layer to physic world

@@ -1,21 +1,10 @@
 #ifndef INPUTIMPL_H_
 #define INPUTIMPL_H_
 
-// Use to remove SDL2 warnings from error list
-#include <codeanalysis\warnings.h>
-#pragma warning( push )
-#pragma warning ( disable : ALL_CODE_ANALYSIS_WARNINGS )
-#include <SDL2/SDL_events.h>
-#pragma warning( pop )
 #include <vector>
 #include "Input.hpp"
 
 namespace spic::internal::InputImpl {
-    /**
-    * @brief Converts KeyCode to SDL_KeyCode
-    * @spicapi
-    */
-    std::vector<SDL_Keycode> ToSDLKeyCodes(spic::Input::KeyCode key);
 
     /**
     * @brief Polls all input events, needs to be used to update input events

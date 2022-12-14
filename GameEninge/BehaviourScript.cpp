@@ -8,6 +8,9 @@ namespace spic {
 	void BehaviourScript::OnUpdate() 
 	{}
 
+	void BehaviourScript::OnInput()
+	{}
+
 	void BehaviourScript::OnTriggerEnter2D(const Collider& collider) 
 	{}
 

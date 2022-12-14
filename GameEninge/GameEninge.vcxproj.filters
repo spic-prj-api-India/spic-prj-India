@@ -184,6 +184,12 @@
     <Filter Include="Source Files\extensions\networking">
       <UniqueIdentifier>{0bcd053c-995f-4ec2-a250-a85a668d77cd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\core\systems\script">
+      <UniqueIdentifier>{1fa21497-efa0-424c-a2fb-d78d3c2dc48c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\core\systems\script">
+      <UniqueIdentifier>{adb7e9dd-a1d6-4820-b869-8f62c7f0b74d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AudioSource.hpp">
@@ -380,6 +386,9 @@
     </ClInclude>
     <ClInclude Include="NetworkingHelper.hpp">
       <Filter>Header Files\helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="ScriptSystem.hpp">
+      <Filter>Header Files\core\systems\script</Filter>
     </ClInclude>
     <ClInclude Include="ForceDriven.hpp">
       <Filter>Header Files\objects</Filter>
@@ -586,6 +595,12 @@
     </ClCompile>
     <ClCompile Include="SocketUDPExtension.cpp">
       <Filter>Source Files\extensions\networking</Filter>
+    </ClCompile>
+    <ClCompile Include="NetworkingHelper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ScriptSystem.cpp">
+      <Filter>Source Files\core\systems\script</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

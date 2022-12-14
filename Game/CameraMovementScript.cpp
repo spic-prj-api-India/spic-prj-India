@@ -4,6 +4,9 @@
 void CameraMovementScript::OnStart() {
 }
 void CameraMovementScript::OnUpdate() {
+}
+
+void CameraMovementScript::OnInput() {
 	auto transform = gameObject->Transform();
 	if (spic::Input::GetKeyDown(spic::Input::KeyCode::RIGHT_ARROW)
 		&& (transform->position.x + 10.0f) <= 2000.0f)
@@ -16,12 +19,4 @@ void CameraMovementScript::OnUpdate() {
 	if (spic::Input::GetKeyDown(spic::Input::KeyCode::DOWN_ARROW) 
 		&& (transform->position.y + 10.0f) <= 0.0f)
 		transform->position.y = transform->position.y + 10.0f;
-}
-void CameraMovementScript::OnTriggerEnter2D(const spic::Collider& collider) {
-}
-
-void CameraMovementScript::OnTriggerExit2D(const spic::Collider& collider) {
-}
-
-void CameraMovementScript::OnTriggerStay2D(const spic::Collider& collider) {
 }

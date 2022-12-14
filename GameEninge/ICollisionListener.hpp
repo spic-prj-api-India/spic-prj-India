@@ -19,7 +19,7 @@ namespace spic::extensions {
 		ICollisionListener(std::function<void(const std::shared_ptr<spic::GameObject>, const std::shared_ptr<spic::Collider>)> enterCallback,
 			std::function<void(const std::shared_ptr<spic::GameObject>, const std::shared_ptr<spic::Collider>)> exitCallback,
 			std::function<void(const std::shared_ptr<spic::GameObject>, const std::shared_ptr<spic::Collider>)> stayCallback);
-		virtual ~ICollisionListener();
+		virtual ~ICollisionListener() = default;
 		ICollisionListener(const ICollisionListener& other) = delete;
 		ICollisionListener(ICollisionListener&& other) = delete;
 		virtual ICollisionListener& operator=(const ICollisionListener& other) = delete;
