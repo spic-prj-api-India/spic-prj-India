@@ -48,7 +48,7 @@ namespace spic {
              * @return The current tile map
              * @spicapi
              */
-            const TileMap* TileMap() const;
+            TileMap* TileMap() const;
 
             /**
              * @brief The scene's camera

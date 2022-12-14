@@ -5,6 +5,7 @@
 #include <memory>
 #include "IEngineExtension.hpp"
 #include "ICollisionListener.hpp"
+#include "TileLayer.hpp"
 
 namespace spic::extensions{
 	/**
@@ -24,6 +25,12 @@ namespace spic::extensions{
 		* @spicapi
 		*/
 		virtual void Reset() = 0;
+
+		/**
+		* @brief Add collision layer to physic world
+		* @spicapi
+		*/
+		virtual void AddCollisionLayer(const spic::TileLayer& collisionLayer) = 0;
 
 		/**
 		* @brief Add and updates entities with physics
@@ -48,6 +55,12 @@ namespace spic::extensions{
 		* @spicapi
 		*/
 		virtual Point GetLinearVelocity(const std::string& entityName) = 0;
+
+		/**
+		* @brief Draw all colliders
+		* @spicapi
+		*/
+		virtual void DrawColliders() = 0;
 	};
 }
 

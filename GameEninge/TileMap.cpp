@@ -2,8 +2,9 @@
 
 namespace spic
 {
-	TileMap::TileMap()
+	TileMap::TileMap(int collisionLayerIndex)
 	{
+		this->collisionLayerIndex = collisionLayerIndex;
 		tileLayers;
 	}
 
@@ -17,12 +18,9 @@ namespace spic
 		return *tileLayers[layerIndex];
 	}
 
-	void TileMap::AddCollisionEntity(const std::shared_ptr<spic::GameObject> entity) {
-		collisionEntities.emplace_back(entity);
-	}
-
-	std::vector<std::shared_ptr<spic::GameObject>> TileMap::CollisionEntities() const {
-		return collisionEntities;
+	const TileLayer& TileMap::GetCollisionLayer()
+	{
+		return GetLayer(this->collisionLayerIndex);
 	}
 
 	void TileMap::Render() const

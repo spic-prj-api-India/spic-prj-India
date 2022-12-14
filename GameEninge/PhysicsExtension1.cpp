@@ -17,6 +17,8 @@
 #include "RigidBody.hpp"
 #include "ForceDriven.hpp"
 #include "Defaults.hpp"
+#include "TileLayer.hpp"
+#include "Renderer.hpp"
 
 namespace spic::extensions {
 	std::unique_ptr<b2World> world;
@@ -45,6 +47,29 @@ namespace spic::extensions {
 		void Reset()
 		{
 			world = std::make_unique<b2World>(b2Vec2(0.0f, PhysicsValues::GRAVITY));
+		}
+
+		/**
+		* @brief Add collision layer in world
+		* @spicapi
+		*/
+		void AddCollisionLayer(const spic::TileLayer& collisionLayer) {
+			const float tileSize = static_cast<float>(collisionLayer.GetTilesize());
+			Matrix matrix = collisionLayer.GetMatrix();
+			const Point size = collisionLayer.GetSize();
+			for (int rowIndex = 0; rowIndex < size.y; rowIndex++)
+			{
+				for (int colIndex = 0; colIndex < size.x; colIndex++)
+				{
+					const bool tileExists = matrix[colIndex][rowIndex] != 0;
+					if (!tileExists) continue;
+
+					const float x = static_cast<float>(colIndex * tileSize);
+					const float y = static_cast<float>(rowIndex * tileSize);
+					const Point origin = { x,  y };
+					AddEdges(matrix, colIndex, rowIndex, origin, tileSize);
+				}
+			}
 		}
 
 		/**
@@ -105,13 +130,78 @@ namespace spic::extensions {
 			body->ApplyForce(force, body->GetWorldCenter(), true);
 		}
 
+		/**
+		* @brief Gets linear velocty of entity
+		* @spicapi
+		*/
 		Point GetLinearVelocity(const std::string& name) {
 			if (bodies.count(name) == 0)
 				return { 0.0f, 0.0f };
 			const b2Vec2 linearVelocity = bodies[name]->GetLinearVelocity();
 			return { linearVelocity.x, linearVelocity.y };
 		}
+
+		/**
+		* @brief Draw all colliders in world
+		* @spicapi
+		*/
+		void DrawColliders()
+		{
+			const b2Body* currentBody = world->GetBodyList();
+			while (currentBody != nullptr)
+			{
+				const b2Shape* shape = currentBody->GetFixtureList()->GetShape();
+				if (shape == nullptr) {
+					currentBody = currentBody->GetNext();
+					continue;
+				}
+				switch (shape->GetType()) {
+				case b2Shape::e_polygon:
+					DrawBoxCollider(*currentBody, static_cast<const b2PolygonShape&>(*shape));
+					break;
+				case b2Shape::e_edge:
+					DrawEdgeCollider(static_cast<const b2EdgeShape&>(*shape));
+					break;
+				}
+				currentBody = currentBody->GetNext();
+			}
+		}
 	private:
+		void AddEdges(const Matrix& matrix, const int colIndex, const int rowIndex, const Point& origin, const float tileSize)
+		{
+			if (rowIndex > 0 && matrix[colIndex][rowIndex - 1] == 0)
+				AddEdge(origin.x, origin.y, origin.x + tileSize, origin.y);
+			if (colIndex + 1 < matrix.size() && matrix[colIndex + 1][rowIndex] == 0)
+				AddEdge(origin.x + tileSize, origin.y, origin.x + tileSize, origin.y + tileSize);
+			if (rowIndex + 1 < matrix[0].size() && matrix[colIndex][rowIndex + 1] == 0)
+				AddEdge(origin.x, origin.y + tileSize, origin.x + tileSize, origin.y + tileSize);
+			if (colIndex > 0 && matrix[colIndex - 1][rowIndex] == 0)
+				AddEdge(origin.x, origin.y, origin.x, origin.y + tileSize);
+		}
+
+		void AddEdge(float startX, float startY, float endX, float endY)
+		{
+			b2BodyDef edgeBodyDef = b2BodyDef();
+			b2Body* edgeBody = world->CreateBody(&edgeBodyDef);
+
+			b2FixtureDef myFixtureDef;
+			myFixtureDef.density = 1;
+			myFixtureDef.friction = 0;
+
+			b2EdgeShape edgeShape;
+			myFixtureDef.shape = &edgeShape;
+
+			startX *= PhysicsValues::SCALING_FACTOR;
+			startY *= PhysicsValues::SCALING_FACTOR;
+			endX *= PhysicsValues::SCALING_FACTOR;
+			endY *= PhysicsValues::SCALING_FACTOR;
+			edgeShape.SetTwoSided(b2Vec2(startX, startY), b2Vec2(endX, endY));
+			edgeShape.m_vertex0 = b2Vec2(startX - 1, startY);
+			edgeShape.m_vertex3 = b2Vec2(startX + 1, startY);
+
+			edgeBody->CreateFixture(&myFixtureDef);
+		}
+
 		/**
 		* @brief Creates body, fixture and shape and adds body to box2d world
 		* @spicapi
@@ -174,7 +264,6 @@ namespace spic::extensions {
 		void SetShape(b2FixtureDef& fixtureDef, const std::shared_ptr<spic::GameObject>& entity, const std::shared_ptr<spic::RigidBody>& rigidBody) const
 		{
 			std::shared_ptr<spic::BoxCollider> boxCollider = entity->GetComponent<spic::BoxCollider>();
-			const float scale = entity->Transform()->scale;
 			if (boxCollider != nullptr) {
 				const float width = boxCollider->Width() * PhysicsValues::SCALING_FACTOR;
 				const float height = boxCollider->Height() * PhysicsValues::SCALING_FACTOR;
@@ -185,7 +274,7 @@ namespace spic::extensions {
 				boxShape->SetAsBox(hx, hy); // will be 0.5 x 0.5
 				fixtureDef.shape = boxShape;
 
-				float area = width * height;
+				const float area = width * height;
 				fixtureDef.density = rigidBody->Mass() / area;
 			}
 			std::shared_ptr<spic::CircleCollider> circleCollider = entity->GetComponent<spic::CircleCollider>();
@@ -194,7 +283,7 @@ namespace spic::extensions {
 				circleShape->m_radius = circleCollider->Radius();
 				fixtureDef.shape = circleShape;;
 
-				float area = spic::internal::Defaults::PI * (circleShape->m_radius * circleShape->m_radius);
+				const float area = spic::internal::Defaults::PI * (circleShape->m_radius * circleShape->m_radius);
 				fixtureDef.density = rigidBody->Mass() / area;
 			}
 		}
@@ -239,6 +328,43 @@ namespace spic::extensions {
 				body->SetGravityScale(rigidBody->GravityScale());
 			}
 		}
+
+		void DrawBoxCollider(const b2Body& body, const b2PolygonShape& shape)
+		{
+			auto vectors = std::vector<Point>();
+			const auto vertices = { shape.m_vertices[0], shape.m_vertices[1], shape.m_vertices[2], shape.m_vertices[3] };
+			float maxTop = 0.0f, maxRight = 0.0f, maxBottom = 0.0f, maxLeft = 0.0f;
+			for (const auto& vertice : vertices) {
+				Point point = { vertice.x, vertice.y };
+				vectors.emplace_back(point);
+				if (vertice.y < maxTop)
+					maxTop = vertice.y;
+				if (vertice.x > maxRight)
+					maxRight = vertice.x;
+				if (vertice.y > maxBottom)
+					maxBottom = vertice.y;
+				if (vertice.x < maxLeft)
+					maxLeft = vertice.x;
+			}
+
+			const float width = fabs(maxRight - maxLeft);
+			const float height = fabs(maxTop - maxBottom);
+			const auto& position = body.GetTransform().p;
+			const double rotation = static_cast<double>(body.GetAngle());
+
+			spic::Rect rect = spic::Rect(position.x / PhysicsValues::SCALING_FACTOR,
+				position.y / PhysicsValues::SCALING_FACTOR,
+				width / PhysicsValues::SCALING_FACTOR,
+				height / PhysicsValues::SCALING_FACTOR);
+			spic::internal::Rendering::DrawRect(rect, rotation, spic::Color::white());
+		}
+
+		void DrawEdgeCollider(const b2EdgeShape& shape)
+		{
+			Point startPoint = { shape.m_vertex1.x / PhysicsValues::SCALING_FACTOR, shape.m_vertex1.y / PhysicsValues::SCALING_FACTOR };
+			Point endPoint = { shape.m_vertex2.x / PhysicsValues::SCALING_FACTOR, shape.m_vertex2.y / PhysicsValues::SCALING_FACTOR };
+			spic::internal::Rendering::DrawLine(startPoint, endPoint, spic::Color::white());
+		}
 	};
 
 	PhysicsExtension1::PhysicsExtension1() : physicsImpl(new PhysicsExtensionImpl1())
@@ -266,6 +392,11 @@ namespace spic::extensions {
 		physicsImpl->Reset();
 	}
 
+	void spic::extensions::PhysicsExtension1::AddCollisionLayer(const spic::TileLayer& collisionLayer)
+	{
+		physicsImpl->AddCollisionLayer(collisionLayer);
+	}
+
 	void spic::extensions::PhysicsExtension1::Update(std::vector<std::shared_ptr<spic::GameObject>> entities)
 	{
 		physicsImpl->Update(entities);
@@ -284,5 +415,10 @@ namespace spic::extensions {
 	Point spic::extensions::PhysicsExtension1::GetLinearVelocity(const std::string& entityName)
 	{
 		return physicsImpl->GetLinearVelocity(entityName);
+	}
+
+	void spic::extensions::PhysicsExtension1::DrawColliders()
+	{
+		physicsImpl->DrawColliders();
 	}
 }

@@ -169,6 +169,11 @@ namespace spic {
 		this->y /= value;
 	}
 
+	bool Point::operator==(const Point value)
+	{
+		return this->x == value.x && this->y == value.y;
+	}
+
 	bool Point::operator<(const Point& cp) const noexcept
 	{
 		return Length() < cp.Length();

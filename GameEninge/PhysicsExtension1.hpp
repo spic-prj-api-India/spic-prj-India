@@ -28,6 +28,12 @@ namespace spic::extensions {
 		void Reset() override;
 
 		/**
+		* @brief Add collision layer to physic world
+		* @spicapi
+		*/
+		void AddCollisionLayer(const spic::TileLayer& collisionLayer) override;
+
+		/**
 		* @brief Add and updates physic bodies
 		* @spicapi
 		*/
@@ -49,7 +55,13 @@ namespace spic::extensions {
 		* @brief Gets linear velocity of entity with name
 		* @spicapi
 		*/
-		Point GetLinearVelocity(const std::string& entityName);
+		Point GetLinearVelocity(const std::string& entityName) override;
+
+		/**
+		* @brief Draw all colliders
+		* @spicapi
+		*/
+		void DrawColliders() override;
 	private:
         std::unique_ptr<PhysicsExtensionImpl1> physicsImpl;
 	};

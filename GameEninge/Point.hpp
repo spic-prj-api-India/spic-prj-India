@@ -159,6 +159,12 @@ namespace spic {
 		void operator /=(const float value);
 
 		/**
+		 * @brief operator for checking if points are equal
+		 * @param value Value used for checking
+		*/
+		bool operator==(const Point value);
+
+		/**
 		 * @brief operator for using Point as key in map
 		 * @param cp Compare point
 		*/

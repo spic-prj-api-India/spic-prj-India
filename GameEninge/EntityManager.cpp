@@ -13,6 +13,8 @@
 #include "RenderingSystem.hpp"
 #include "DataSystem.hpp"
 #include "AudioManager.hpp"
+#include "GameEngine.hpp"
+#include "PhysicsExtension1.hpp"
 
 using namespace spic;
 using namespace spic::internal;
@@ -112,21 +114,26 @@ void EntityManager::SetScene(std::shared_ptr<Scene> newScene)
 	DestroyScene();
 	scene = newScene;
 	entities.clear();
-	const TileMap* tileMap = scene->TileMap();
-	if (tileMap != nullptr) {
-		for (auto& entity : scene->TileMap()->CollisionEntities()) {
-			entities.push_back(entity);
-		}
-	}
+
 	for (auto& entity : scene->Contents())
 	{
 		entities.push_back(entity);
 	}
+
 	for (const auto& systemsMap : systems)
 	{
 		for (const auto& system : systemsMap.second)
 		{
 			system->Start(entities, *scene);
+		}
+	}
+
+	TileMap* tileMap = scene->TileMap();
+	if (tileMap != nullptr) {
+		GameEngine* engine = GameEngine::GetInstance();
+		for (const auto& weakExtension : engine->GetExtensions<spic::extensions::IPhysicsExtension>()) {
+			if (const auto& physicsExtension = weakExtension.lock())
+				physicsExtension->AddCollisionLayer(tileMap->GetCollisionLayer());
 		}
 	}
 
