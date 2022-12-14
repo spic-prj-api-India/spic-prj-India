@@ -15,7 +15,7 @@ namespace spic::extensions {
 	 */
 	class PhysicsExtension1 : public IPhysicsExtension {
 	public:
-		explicit PhysicsExtension1();
+		PhysicsExtension1();
 		~PhysicsExtension1();
 		PhysicsExtension1(PhysicsExtension1&& rhs) noexcept;
 		PhysicsExtension1& operator=(PhysicsExtension1&& rhs) noexcept;
@@ -26,7 +26,9 @@ namespace spic::extensions {
 		* @brief Resets all physic bodies
 		* @spicapi
 		*/
-		void Reset() override;
+		void Reset(std::function<void(const std::shared_ptr<spic::GameObject>, const std::shared_ptr<spic::Collider>)> enterCallback,
+			std::function<void(const std::shared_ptr<spic::GameObject>, const std::shared_ptr<spic::Collider>)> exitCallback,
+			std::function<void(const std::shared_ptr<spic::GameObject>, const std::shared_ptr<spic::Collider>)> stayCallback) override;
 
 		/**
 		* @brief Add and updates physic bodies

@@ -1,9 +1,14 @@
 #include "InputImpl.hpp"
+#include <codeanalysis\warnings.h>
+#pragma warning( push )
+#pragma warning ( disable : ALL_CODE_ANALYSIS_WARNINGS )
+#include <SDL2/SDL_events.h>
+#pragma warning( pop )
 
 namespace spic::internal::InputImpl {
 	SDL_Event ev;
 
-	std::vector<SDL_Keycode> InputImpl::ToSDLKeyCodes(spic::Input::KeyCode key) 
+	std::vector<SDL_Keycode> ToSDLKeyCodes(spic::Input::KeyCode key) 
 	{
 		switch (key) {
 		case spic::Input::KeyCode::ERROR_ROLLOVER:

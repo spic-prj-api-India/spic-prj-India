@@ -3,7 +3,6 @@
 #include "GameEngine.hpp"
 #include "Collider.hpp"
 #include <functional>
-#include "Box2DCollisionListener.hpp"
 #include "BehaviourScript.hpp"
 
 namespace spic::internal::systems {
@@ -21,12 +20,11 @@ namespace spic::internal::systems {
 		std::vector<std::weak_ptr<spic::extensions::IPhysicsExtension>> physicsExtensions = engine->GetExtensions<spic::extensions::IPhysicsExtension>();
 		for (const auto& extension : physicsExtensions) {
 			if (const auto& physicsExtension = extension.lock()) {
-				std::function<void(const std::shared_ptr<spic::GameObject>&, const std::shared_ptr<spic::Collider>&)> enterCallback = [this](const std::shared_ptr<spic::GameObject>& entity, const std::shared_ptr<spic::Collider>& collider) { OnEnter(entity, collider); };
-				std::function<void(const std::shared_ptr<spic::GameObject>&, const std::shared_ptr<spic::Collider>&)> exitCallback = [this](const std::shared_ptr<spic::GameObject>& entity, const std::shared_ptr<spic::Collider>& collider) { OnExit(entity, collider); };
-				std::function<void(const std::shared_ptr<spic::GameObject>&, const std::shared_ptr<spic::Collider>&)> stayCallback = [this](const std::shared_ptr<spic::GameObject>& entity, const std::shared_ptr<spic::Collider>& collider) { OnStay(entity, collider); };
-				spic::extensions::ICollisionListener* listener = new extensions::Box2DCollisionListener(enterCallback, exitCallback, stayCallback);
-				physicsExtension->Reset();
-				physicsExtension->RegisterListener(listener);
+				std::function<void(const std::shared_ptr<spic::GameObject>, const std::shared_ptr<spic::Collider>)> enterCallback = [this](const std::shared_ptr<spic::GameObject> entity, const std::shared_ptr<spic::Collider>& collider) { OnEnter(entity, collider); };
+				std::function<void(const std::shared_ptr<spic::GameObject>, const std::shared_ptr<spic::Collider>)> exitCallback = [this](const std::shared_ptr<spic::GameObject> entity, const std::shared_ptr<spic::Collider>& collider) { OnExit(entity, collider); };
+				std::function<void(const std::shared_ptr<spic::GameObject>, const std::shared_ptr<spic::Collider>)> stayCallback = [this](const std::shared_ptr<spic::GameObject> entity, const std::shared_ptr<spic::Collider>& collider) { OnStay(entity, collider); };
+				
+				physicsExtension->Reset(enterCallback, exitCallback, stayCallback);
 			}
 		}
 	}

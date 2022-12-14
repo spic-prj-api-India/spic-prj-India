@@ -41,7 +41,6 @@ namespace spic::internal::systems {
 			}
 			UpdateRecusion(std::move(entity->GetChildren()));
 		}
-		
 	}
 
 	void InputSystem::Update(std::vector<std::shared_ptr<spic::GameObject>>& entities, Scene& currentScene)
