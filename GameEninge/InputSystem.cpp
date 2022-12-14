@@ -14,29 +14,36 @@ namespace spic::internal::systems {
 	{
 		buttonClickListener = std::make_shared<ButtonClickListener>();
 		Input::Subscribe(spic::Input::MouseButton::LEFT, buttonClickListener);
-	}
 
-	void InputRecursion(std::vector<std::shared_ptr<spic::GameObject>> entities)
-	{
-		for (auto& entity : entities) {
-			for (const auto& script : entity->GetComponents<spic::BehaviourScript>()) {
-				script->OnInput();
-			}
-			InputRecursion(std::move(entity->GetChildren()));
+		auto scripts = this->GetAllScripts(entities);
+		for (auto& script : scripts)
+		{
+			script->OnStart();
 		}
 	}
 
 	void InputSystem::Update(std::vector<std::shared_ptr<spic::GameObject>>& entities, Scene& currentScene)
 	{
 		buttonClickListener->SetButtons(GetButtons(entities));
+		auto scripts = this->GetAllScripts(entities);
+
 		while (InputImpl::Poll()) 
 		{
 			InputManager::GetInstance()->Listen();
 
-			for (const auto& script : currentScene.Camera().GetComponents<spic::BehaviourScript>()) {
+			for (auto& script : currentScene.Camera().GetComponents<spic::BehaviourScript>()) {
 				script->OnInput();
 			}
-			InputRecursion(entities);
+			
+			for (auto& script : scripts)
+			{
+				script->OnInput();
+			}
+		}
+
+		for (auto& script : scripts)
+		{
+			script->OnUpdate();
 		}
 	}
 
@@ -55,5 +62,23 @@ namespace spic::internal::systems {
 		}
 
 		return buttons;
+	}
+
+	std::vector<std::shared_ptr<spic::BehaviourScript>> InputSystem::GetAllScripts(std::vector<std::shared_ptr<spic::GameObject>>& entities)
+	{
+		std::vector<std::shared_ptr<spic::BehaviourScript>> scripts;
+
+		for (auto& entity : entities) 
+		{
+			for (const auto& script : entity->GetComponents<spic::BehaviourScript>()) 
+				scripts.emplace_back(script);
+			
+
+			auto children = entity->GetChildren();
+			auto childrenScripts = GetAllScripts(children);
+
+			std::copy(childrenScripts.begin(), childrenScripts.end(), std::back_inserter(scripts));
+		}
+		return scripts;
 	}
 }

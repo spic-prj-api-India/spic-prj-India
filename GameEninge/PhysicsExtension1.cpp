@@ -274,16 +274,16 @@ namespace spic::extensions {
 				boxShape->SetAsBox(hx, hy); // will be 0.5 x 0.5
 				fixtureDef.shape = boxShape;
 
-				const float area = width * height;
+				const float area = (width * height) * 1000;
 				fixtureDef.density = rigidBody->Mass() / area;
 			}
 			std::shared_ptr<spic::CircleCollider> circleCollider = entity->GetComponent<spic::CircleCollider>();
 			if (circleCollider != nullptr) {
 				b2CircleShape* circleShape = new b2CircleShape();
-				circleShape->m_radius = circleCollider->Radius();
+				circleShape->m_radius = circleCollider->Radius() * PhysicsValues::SCALING_FACTOR;
 				fixtureDef.shape = circleShape;;
 
-				const float area = spic::internal::Defaults::PI * (circleShape->m_radius * circleShape->m_radius);
+				const float area = (spic::internal::Defaults::PI * (circleShape->m_radius * circleShape->m_radius)) * 1000;
 				fixtureDef.density = rigidBody->Mass() / area;
 			}
 		}

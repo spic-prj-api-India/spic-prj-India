@@ -179,7 +179,6 @@ void RendererImpl::DrawAnimator(Animator* animator, const Transform* transform, 
 		return;
 
 	auto sprites = animator->Sprites();
-	// sort sprites
 
 	const auto framesAmount = sprites.back()->OrderInLayer();
 

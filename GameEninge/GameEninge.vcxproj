@@ -218,7 +218,6 @@
     <ClInclude Include="Random.hpp" />
     <ClInclude Include="Renderer.hpp" />
     <ClInclude Include="RenderingSystem.hpp" />
-    <ClInclude Include="ScriptSystem.hpp" />
     <ClInclude Include="Serializer.hpp" />
     <ClInclude Include="SocketScript.hpp" />
     <ClInclude Include="StringHelper.hpp" />
@@ -273,7 +272,6 @@
     <ClCompile Include="Point.cpp" />
     <ClCompile Include="Random.cpp" />
     <ClCompile Include="Renderer.cpp" />
-    <ClCompile Include="ScriptSystem.cpp" />
     <ClCompile Include="SocketScript.cpp" />
     <ClCompile Include="SocketUDPExtension.cpp" />
     <ClCompile Include="Sprite.cpp" />

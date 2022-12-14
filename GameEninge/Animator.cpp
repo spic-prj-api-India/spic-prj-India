@@ -21,6 +21,26 @@ const bool spic::Animator::IsFrozen() const
     return this->freeze;
 }
 
+void spic::Animator::InitHorizontalSpriteSheet(const std::string& spriteSheet, const int frames, const int width, const int height, const int yOffsett, const int XOffsett)
+{
+    for (size_t i = 0; i < frames; ++i)
+    {
+        sprites.emplace_back(std::make_shared<spic::Sprite>(spriteSheet,0, static_cast<int>(i)));
+        sprites[i]->Height(height);
+        sprites[i]->Height(width);
+        sprites[i]->X(width * (static_cast<int>(i) - XOffsett));
+        sprites[i]->Y(yOffsett);
+    }
+}
+
+void spic::Animator::Play(bool loop)
+{
+    freeze = false;
+    index = { 1 };
+    looping = { loop };
+    running = { true };
+}
+
 void spic::Animator::Stop()
 {
     freeze = false;

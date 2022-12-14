@@ -15,7 +15,6 @@
 #include "AudioManager.hpp"
 #include "NetworkingReceiveSystem.hpp"
 #include "NetworkingSendSystem.hpp"
-#include "ScriptSystem.hpp"
 #include "GameEngine.hpp"
 #include "PhysicsExtension1.hpp"
 
@@ -48,7 +47,6 @@ void EntityManager::Init()
 {
 	std::unique_ptr<systems::InputSystem> inputSystem = std::make_unique<systems::InputSystem>();
 	std::unique_ptr<systems::PhysicsSystem> physicsSystem = std::make_unique<systems::PhysicsSystem>();
-	std::unique_ptr<systems::ScriptSystem> scriptSystem = std::make_unique<systems::ScriptSystem>();
 	std::unique_ptr<systems::RenderingSystem> renderingSystem = std::make_unique<systems::RenderingSystem>();
 	std::unique_ptr<systems::DataSystem> dataSystem = std::make_unique<systems::DataSystem>();
 	std::unique_ptr<systems::AISystem> aiSystem = std::make_unique<systems::AISystem>();
@@ -57,11 +55,10 @@ void EntityManager::Init()
 	AddInternalSystem(std::move(networkRecieve), 0);
 	AddInternalSystem(std::move(inputSystem), 1);
 	AddInternalSystem(std::move(physicsSystem), 2);
-	AddInternalSystem(std::move(scriptSystem), 3);
-	AddInternalSystem(std::move(dataSystem), 4);
-    AddInternalSystem(std::move(aiSystem), 5);
-	AddInternalSystem(std::move(networkSend), 6);
-	AddInternalSystem(std::move(renderingSystem), 7);
+	AddInternalSystem(std::move(dataSystem), 3);
+    AddInternalSystem(std::move(aiSystem), 4);
+	AddInternalSystem(std::move(networkSend), 5);
+	AddInternalSystem(std::move(renderingSystem), 6);
 }
 
 void EntityManager::Reset()
