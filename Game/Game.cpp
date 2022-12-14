@@ -11,7 +11,7 @@
 #include "SocketUdpExtension.hpp"
 #include <NetworkPacket.hpp>
 #include "NetworkingHelper.hpp"
-
+#include "CredditsScene.h"
 std::shared_ptr<spic::Scene> scene;
 
 void InitGame() {
@@ -32,6 +32,7 @@ void InitGame() {
 	// Register scenes
 	engine->RegisterScene("menu", std::make_shared<MenuScene>());
 	engine->RegisterScene("game", std::make_shared<GameScene>());
+	engine->RegisterScene("creddits", std::make_shared<CredditsScene>());
 }
 
 void StartGame()

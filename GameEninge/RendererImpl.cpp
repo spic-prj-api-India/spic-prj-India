@@ -151,29 +151,16 @@ void RendererImpl::DrawSprites(GameObject* gameObject, const bool isUIObject)
 void RendererImpl::DrawAnimators(GameObject* gameObject, const bool isUiObject)
 {
 	auto _animator = gameObject->GetComponents<Animator>();
-
-	
-	float height = 0;
-	float width = 0;
-
-	if (isUiObject)
-	{
-		auto uiObject = TypeHelper::CastPtrToType<UIObject>(gameObject);
-
-		height = uiObject->Height();
-		width = uiObject->Width();
-	}
 		
 
 	for (auto& animator : _animator)
 	{
-		DrawAnimator(animator.get(), gameObject->Transform().get(), isUiObject, width, height);
+		DrawAnimator(animator.get(), gameObject->Transform().get(), isUiObject);
 	}
 }
 
-void RendererImpl::DrawAnimator(Animator* animator, const Transform* transform, const bool isUIObject, const float width, const float height)
+void RendererImpl::DrawAnimator(Animator* animator, const Transform* transform, const bool isUIObject)
 {
-
 	if (!animator->IsRunning())
 		return;
 
@@ -185,24 +172,17 @@ void RendererImpl::DrawAnimator(Animator* animator, const Transform* transform, 
 
 	//const auto frame = static_cast<uint64_t>(SDL_GetTicks() / ((static_cast<double>(fps) / animator->Fps()) * Time::TimeScale())) % framesAmount;
 
-	const auto frame = static_cast<uint64_t>(SDL_GetTicks() / (1000 / animator->Fps() * Time::TimeScale())) % framesAmount;
+	const auto frame = static_cast<uint64_t>(SDL_GetTicks() / (1000 / animator->Fps() * Time::TimeScale())) % framesAmount+1;
 
 	
 	for (auto& sprite : sprites)
 	{
 		if (sprite->OrderInLayer() == frame && !animator->IsFrozen())
 		{
-			//animator->Index(frame);
-			if (isUIObject)
-				DrawUISprite(width, height, sprite.get(), transform);
-			else
-				DrawSprite(sprite.get(), transform);
+			DrawSprite(sprite.get(), transform, isUIObject);
 		}
 		else if (sprite->OrderInLayer() == animator->Index() && animator->IsFrozen()) {
-			if (isUIObject)
-				DrawUISprite(width, height, sprite.get(), transform);
-			else
-				DrawSprite(sprite.get(), transform);
+			DrawSprite(sprite.get(), transform, isUIObject);
 		}
 	}
 }
@@ -226,7 +206,7 @@ void RendererImpl::DrawUISprite(const float width, const float height, const Spr
 	DrawSprite(sprite, transform, texture, &dstRect, NULL);
 }
 
-void RendererImpl::DrawSprite(const Sprite* sprite, const Transform* transform)
+void RendererImpl::DrawSprite(const Sprite* sprite, const Transform* transform, bool isUiOject)
 {
 	if (transform == nullptr)
 		return;
@@ -246,12 +226,20 @@ void RendererImpl::DrawSprite(const Sprite* sprite, const Transform* transform)
 		, PrecisionRoundingoInt(width)
 		, PrecisionRoundingoInt(height) };
 
-	if (SDL_HasIntersectionF(&dstRect, &this->camera))
+	if (!isUiOject)
 	{
-		dstRect = { dstRect.x - this->camera.x
-			, dstRect.y - this->camera.y
-			, dstRect.w
-			, dstRect.h };
+		if (SDL_HasIntersectionF(&dstRect, &this->camera))
+			dstRect = { dstRect.x - this->camera.x
+				, dstRect.y - this->camera.y
+				, dstRect.w
+				, dstRect.h };
+		else
+			return;
+	}
+	else if (isUiOject)
+	{
+		if (!SDL_HasIntersectionF(&dstRect, &this->windowCamera))
+			return;
 	}
 	else
 		return;
@@ -437,7 +425,7 @@ void RendererImpl::RenderMultiLineText(const TTF_Font* pFont, std::string& rText
 				const float textHeight = static_cast<float>(pSurface->h);
 				const float nextY = yPosition + ((textHeight + distanceBetweenLines) * currentLine);
 
-				totalLength += nextY - yPosition;
+				totalLength = ((textHeight + distanceBetweenLines) * currentLine);
 
 				if (totalLength > height)
 				{

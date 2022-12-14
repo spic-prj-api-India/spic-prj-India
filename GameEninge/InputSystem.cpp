@@ -20,7 +20,6 @@ namespace spic::internal::systems {
 		{
 			script->OnStart();
 		}
-
 	}
 
 	void InputSystem::Update(std::vector<std::shared_ptr<spic::GameObject>>& entities, Scene& currentScene)
@@ -64,6 +63,7 @@ namespace spic::internal::systems {
 
 		return buttons;
 	}
+
 	std::vector<std::shared_ptr<spic::BehaviourScript>> InputSystem::GetAllScripts(std::vector<std::shared_ptr<spic::GameObject>>& entities)
 	{
 		std::vector<std::shared_ptr<spic::BehaviourScript>> scripts;

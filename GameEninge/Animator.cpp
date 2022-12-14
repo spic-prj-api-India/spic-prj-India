@@ -27,7 +27,7 @@ void spic::Animator::InitHorizontalSpriteSheet(const std::string& spriteSheet, c
     {
         sprites.emplace_back(std::make_shared<spic::Sprite>(spriteSheet,0, static_cast<int>(i)));
         sprites[i]->Height(height);
-        sprites[i]->Height(width);
+        sprites[i]->Width(width);
         sprites[i]->X(width * (static_cast<int>(i) - XOffsett));
         sprites[i]->Y(yOffsett);
     }

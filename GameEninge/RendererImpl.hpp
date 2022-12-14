@@ -182,7 +182,7 @@ namespace spic::internal::rendering {
 		 * @param isUiObject
 		 * @param transform Contains position and rotation
 		*/
-		void DrawAnimator(Animator* animator, const Transform* transform, const bool isUiObject, const float width, const float height);
+		void DrawAnimator(Animator* animator, const Transform* transform, const bool isUiObject);
 
 		/**
 		 * @brief Draws text on window space
@@ -296,7 +296,7 @@ namespace spic::internal::rendering {
 		 * @param sprite The sprite to draw
 		 * @param transform Contains position and rotation
 		*/
-		void DrawSprite(const Sprite* sprite, const Transform* transform);
+		void DrawSprite(const Sprite* sprite, const Transform* transform, bool isUiOject = false);
 
 		/**
 		 * @brief Cleans the render class before drawing it.
