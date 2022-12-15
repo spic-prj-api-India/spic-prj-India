@@ -35,7 +35,7 @@ void MenuScene::SetContents()
 		}, 100.0f);
 	AddButton("Credits", []() {
 		spic::Input::UnSubscribeAll();
-		spic::GameEngine::GetInstance()->LoadSceneByName("creddits");
+		spic::GameEngine::GetInstance()->LoadSceneByName("credits");
 		}, 200.0f);
 }
 
@@ -50,7 +50,7 @@ void MenuScene::SetInputListeners()
 void MenuScene::AddButton(const std::string& text, std::function<void()> callback, const float offset)
 {
 	std::shared_ptr<spic::Button> button = std::make_shared<spic::Button>(200.0f, 100.0f, text, spic::Color::white(), "assets/textures/buttons/Button22.png");
-	button->Transform(std::make_shared<spic::Transform>(spic::Point(500.0f, 350.0f+offset), 0.0f, 1.0f));
+	button->Transform(std::make_shared<spic::Transform>(spic::Point(500.0f, 260.0f+offset), 0.0f, 1.0f));
 	auto textTransform = button->GetChild<spic::Text>()->Transform();
 	textTransform->position.y = 10.0f;
 	button->OnClick(callback);

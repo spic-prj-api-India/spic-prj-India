@@ -3,7 +3,7 @@
 #include "Animator.hpp"
 #include "Input.hpp"
 
-class CredditsSceneScript :
+class CreditsSceneScript :
 	public spic::BehaviourScript {
 public:
 	virtual void OnInput() override;

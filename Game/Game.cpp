@@ -13,7 +13,7 @@
 #include "NetworkingHelper.hpp"
 #include "GameScene.h"
 #include "FlockingScene.h"
-#include "CredditsScene.h"
+#include "CreditsScene.h"
 
 std::shared_ptr<spic::Scene> scene;
 
@@ -36,7 +36,7 @@ void InitGame() {
 	engine->RegisterScene("menu", std::make_shared<MenuScene>());
 	engine->RegisterScene("game", std::make_shared<GameScene>());
 	engine->RegisterScene("flock", std::make_shared<FlockingScene>());
-	engine->RegisterScene("creddits", std::make_shared<CredditsScene>());
+	engine->RegisterScene("credits", std::make_shared<CreditsScene>());
 
 	spic::Debug::COLLIDER_VISIBILITY = true;
 }

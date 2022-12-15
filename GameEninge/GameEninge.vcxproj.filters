@@ -563,9 +563,6 @@
     <ClCompile Include="Debug.cpp">
       <Filter>Source Files\models</Filter>
     </ClCompile>
-    <ClCompile Include="NetworkingHelper.cpp">
-      <Filter>Source Files\helpers</Filter>
-    </ClCompile>
     <ClCompile Include="NetworkingReceiveSystem.cpp">
       <Filter>Source Files\core\systems\networking</Filter>
     </ClCompile>
@@ -592,6 +589,9 @@
     </ClCompile>
     <ClCompile Include="Collider.cpp">
       <Filter>Source Files\components\collider</Filter>
+    </ClCompile>
+    <ClCompile Include="NetworkingHelper.cpp">
+      <Filter>Source Files\helpers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

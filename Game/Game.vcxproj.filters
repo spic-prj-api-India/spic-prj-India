@@ -60,9 +60,6 @@
     <ClCompile Include="GameScene.cpp">
       <Filter>Source Files\scenes</Filter>
     </ClCompile>
-    <ClCompile Include="Source.cpp">
-      <Filter>Header Files</Filter>
-    </ClCompile>
     <ClCompile Include="Rocket.cpp">
       <Filter>Source Files\objects</Filter>
     </ClCompile>
@@ -78,10 +75,10 @@
     <ClCompile Include="Ball.cpp">
       <Filter>Source Files\objects</Filter>
     </ClCompile>
-    <ClCompile Include="CredditsScene.cpp">
+    <ClCompile Include="CreditsScene.cpp">
       <Filter>Source Files\scenes</Filter>
     </ClCompile>
-    <ClCompile Include="CredditsSceneScript.cpp">
+    <ClCompile Include="CreditsSceneScript.cpp">
       <Filter>Source Files\scripts</Filter>
     </ClCompile>
   </ItemGroup>
@@ -122,10 +119,10 @@
     <ClInclude Include="Ball.h">
       <Filter>Header Files\objects</Filter>
     </ClInclude>
-    <ClInclude Include="CredditsScene.h">
+    <ClInclude Include="CreditsScene.h">
       <Filter>Header Files\scenes</Filter>
     </ClInclude>
-    <ClInclude Include="CredditsSceneScript.h">
+    <ClInclude Include="CreditsSceneScript.h">
       <Filter>Header Files\scripts</Filter>
     </ClInclude>
   </ItemGroup>

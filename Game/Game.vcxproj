@@ -151,8 +151,8 @@
     <ClCompile Include="CollisionDetectionScript.cpp" />
     <ClCompile Include="FlockingScene.cpp" />
     <ClCompile Include="Ball.cpp" />
-    <ClCompile Include="CredditsScene.cpp" />
-    <ClCompile Include="CredditsSceneScript.cpp" />
+    <ClCompile Include="CreditsScene.cpp" />
+    <ClCompile Include="CreditsSceneScript.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="KeyListener.cpp" />
@@ -160,7 +160,6 @@
     <ClCompile Include="FollowMouseListener.cpp" />
     <ClCompile Include="PlayerMovementScript.cpp" />
     <ClCompile Include="Rocket.cpp" />
-    <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AimListener.h" />
@@ -169,8 +168,8 @@
     <ClInclude Include="CollisionDetectionScript.h" />
     <ClInclude Include="FlockingScene.h" />
     <ClInclude Include="Ball.h" />
-    <ClInclude Include="CredditsScene.h" />
-    <ClInclude Include="CredditsSceneScript.h" />
+    <ClInclude Include="CreditsScene.h" />
+    <ClInclude Include="CreditsSceneScript.h" />
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="KeyListener.h" />
     <ClInclude Include="FollowMouseListener.h" />
