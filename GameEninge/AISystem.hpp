@@ -21,16 +21,17 @@ namespace spic::internal::systems {
 		void Start(std::vector<std::shared_ptr<spic::GameObject>>& entities, Scene& currentScene) override;
 
 		/**
-		* @brief Calls UpdateFlock method in flocks.
+		* @brief Updates force driven entities.
 		* @spicapi
 		*/
 		void Update(std::vector<std::shared_ptr<spic::GameObject>>& entities, Scene& currentScene) override;
 	private:
 		/**
-		* @brief Filters all Flock Entities from entities list.
+		* @brief Filters all Force driven entities from entities list.
 		* @spicapi
 		*/
-		std::vector<std::shared_ptr<spic::ForceDriven>> GetForceDrivenEntities(std::vector<std::shared_ptr<spic::GameObject>> entities);
+		void GetForceDrivenEntities(std::vector<std::shared_ptr<spic::ForceDriven>>& forceDrivenEntities, 
+			const std::vector<std::shared_ptr<spic::GameObject>>& entities);
 	};
 }
 

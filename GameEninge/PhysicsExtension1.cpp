@@ -118,38 +118,6 @@ namespace spic::extensions {
 			}
 		}
 
-		void ConvertCoordinateToMeters(Point& coordinate, Point size) {
-			size.x *= PIX2MET;
-			size.y *= PIX2MET;
-			const float x = coordinate.x - (WINDOW_WIDTH / 2.0f);
-			const float y = coordinate.y - (WINDOW_HEIGHT / 2.0f);
-			coordinate.x = (x * PIX2MET) + (size.x / 2.0f);
-			coordinate.y = (y * PIX2MET) + (size.y / 2.0f);
-		}
-
-		void ConvertCoordinateToPixels(b2Vec2& coordinate, Point size) {
-			size.x *= MET2PIX;
-			size.y *= MET2PIX;
-			const float x = (SCALED_WIDTH / 2.0f) + coordinate.x;
-			const float y = (SCALED_HEIGHT / 2.0f) + coordinate.y;
-			coordinate.x = (x * MET2PIX) - (size.x / 2.0f);
-			coordinate.y = (y * MET2PIX) - (size.y / 2.0f);
-		}
-
-		void ConvertCoordinateToMeters(Point& coordinate) {
-			const float x = coordinate.x - (WINDOW_WIDTH / 2.0f);
-			const float y = coordinate.y - (WINDOW_HEIGHT / 2.0f);
-			coordinate.x = x * PIX2MET;
-			coordinate.y = y * PIX2MET;
-		}
-
-		void ConvertCoordinateToPixels(b2Vec2& coordinate) {
-			const float x = (SCALED_WIDTH / 2.0f) + coordinate.x;
-			const float y = (SCALED_HEIGHT / 2.0f) + coordinate.y;
-			coordinate.x = x * MET2PIX;
-			coordinate.y = y * MET2PIX;
-		}
-
 		/**
 		* @brief Registers collision listener in world
 		* @spicapi
@@ -223,6 +191,38 @@ namespace spic::extensions {
 			}
 		}
 	private:
+		void ConvertCoordinateToMeters(Point& coordinate, Point size) {
+			size.x *= PIX2MET;
+			size.y *= PIX2MET;
+			const float x = coordinate.x - (WINDOW_WIDTH / 2.0f);
+			const float y = coordinate.y - (WINDOW_HEIGHT / 2.0f);
+			coordinate.x = (x * PIX2MET) + (size.x / 2.0f);
+			coordinate.y = (y * PIX2MET) + (size.y / 2.0f);
+		}
+
+		void ConvertCoordinateToPixels(b2Vec2& coordinate, Point size) {
+			size.x *= MET2PIX;
+			size.y *= MET2PIX;
+			const float x = (SCALED_WIDTH / 2.0f) + coordinate.x;
+			const float y = (SCALED_HEIGHT / 2.0f) + coordinate.y;
+			coordinate.x = (x * MET2PIX) - (size.x / 2.0f);
+			coordinate.y = (y * MET2PIX) - (size.y / 2.0f);
+		}
+
+		void ConvertCoordinateToMeters(Point& coordinate) {
+			const float x = coordinate.x - (WINDOW_WIDTH / 2.0f);
+			const float y = coordinate.y - (WINDOW_HEIGHT / 2.0f);
+			coordinate.x = x * PIX2MET;
+			coordinate.y = y * PIX2MET;
+		}
+
+		void ConvertCoordinateToPixels(b2Vec2& coordinate) {
+			const float x = (SCALED_WIDTH / 2.0f) + coordinate.x;
+			const float y = (SCALED_HEIGHT / 2.0f) + coordinate.y;
+			coordinate.x = x * MET2PIX;
+			coordinate.y = y * MET2PIX;
+		}
+
 		void AddEdges(const Matrix& matrix, const int colIndex, const int rowIndex, const Point& origin, const float tileSize)
 		{
 			if (rowIndex > 0 && matrix[colIndex][rowIndex - 1] == 0)

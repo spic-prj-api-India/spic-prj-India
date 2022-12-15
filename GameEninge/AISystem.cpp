@@ -10,24 +10,20 @@ namespace spic::internal::systems {
 
 	void AISystem::Update(std::vector<std::shared_ptr<spic::GameObject>>& entities, Scene& currentScene)
 	{
-		std::vector<std::shared_ptr<spic::ForceDriven>> flocks = GetForceDrivenEntities(entities);
-		for (const auto& flock : flocks) {
-			flock->UpdateForceDrivenEntity(flocks);
+		std::vector<std::shared_ptr<spic::ForceDriven>> forceDrivenEntities;
+		GetForceDrivenEntities(forceDrivenEntities, entities);
+		for (const auto& forceDrivenEntity : forceDrivenEntities) {
+			forceDrivenEntity->UpdateForceDrivenEntity(forceDrivenEntities);
 		}
 	}
 
-	std::vector<std::shared_ptr<spic::ForceDriven>> AISystem::GetForceDrivenEntities(std::vector<std::shared_ptr<spic::GameObject>> entities)
+	void AISystem::GetForceDrivenEntities(std::vector<std::shared_ptr<spic::ForceDriven>>& forceDrivenEntities, 
+		const std::vector<std::shared_ptr<spic::GameObject>>& entities)
 	{
-		// Todo recursion flock entities adden
-		std::vector<std::shared_ptr<spic::ForceDriven>> flockEntities;
 		for (const auto& entity : entities) {
 			if (spic::TypeHelper::SharedPtrIsOfType<spic::ForceDriven>(entity))
-				flockEntities.emplace_back(spic::TypeHelper::CastSharedPtrToType<spic::ForceDriven>(entity));
-			for (const auto& child : entity->GetChildren()) {
-				if (spic::TypeHelper::SharedPtrIsOfType<spic::ForceDriven>(child))
-					flockEntities.emplace_back(spic::TypeHelper::CastSharedPtrToType<spic::ForceDriven>(child));
-			}
+				forceDrivenEntities.emplace_back(spic::TypeHelper::CastSharedPtrToType<spic::ForceDriven>(entity));	
+			GetForceDrivenEntities(forceDrivenEntities, entity->GetChildren());
 		}
-		return flockEntities;
 	}
 }

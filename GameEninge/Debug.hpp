@@ -18,6 +18,10 @@ namespace spic {
          * @brief Enables or disables collider visibility.
         */
         inline bool COLLIDER_VISIBILITY = false;
+
+        /*
+         * @brief Sets DEBUG to true if project is running in Debug mode.
+        */
         #ifdef NDEBUG
             const inline bool DEBUG = false;
         #else

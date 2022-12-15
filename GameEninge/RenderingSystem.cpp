@@ -42,7 +42,7 @@ namespace spic::internal::systems {
 			spic::internal::Rendering::Draw(entity.get());
 		}
 		if(Debug::DEBUG && Debug::COLLIDER_VISIBILITY)
-			DrawColliders(filteredEntities[0]);
+			DrawColliders();
 		spic::internal::Rendering::Render();
 	}
 
@@ -60,7 +60,7 @@ namespace spic::internal::systems {
 		return { nonUIEntities, uiEntities };
 	}
 
-	void RenderingSystem::DrawColliders(std::vector<std::shared_ptr<spic::GameObject>>& entities)
+	void RenderingSystem::DrawColliders()
 	{
 		GameEngine* engine = GameEngine::GetInstance();
 		for (const auto& weakExtension : engine->GetExtensions<spic::extensions::IPhysicsExtension>()) {

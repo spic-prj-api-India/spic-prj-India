@@ -11,8 +11,15 @@ namespace spic {
         public:
             BoxCollider();
 
+            /*
+            * @brief Sets width and height of collider
+            */
             BoxCollider(const float width, const float height);
 
+            /**
+             * @return The collider's width and height
+             * @spicapi
+             */
             virtual Point Size() const override;
 
             /**

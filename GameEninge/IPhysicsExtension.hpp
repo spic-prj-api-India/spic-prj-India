@@ -47,7 +47,7 @@ namespace spic::extensions{
 		virtual void RegisterListener(ICollisionListener* listener) const = 0;
 
 		/**
-		* @brief Adds force to an entity with name
+		* @brief Adds force to an entity
 		* @spicapi
 		*/
 		virtual void AddForce(const std::shared_ptr<GameObject>& entity, const spic::Point& forceDirection) = 0;

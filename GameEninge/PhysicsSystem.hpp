@@ -56,8 +56,8 @@ namespace spic::internal::systems {
         * @brief Filters all physics entities from entity list
         * @spicapi
         */
-        std::vector<std::shared_ptr<spic::GameObject>> GetPhysicsEntities(std::vector<std::shared_ptr<spic::GameObject>> entities) const;
-           
+        void GetPhysicsEntities(std::vector<std::shared_ptr<spic::GameObject>>& physicsEntities, const std::vector<std::shared_ptr<spic::GameObject>>& entities) const;
+
         /**
        * @brief Checks if entity has RigidBody or Collider
        * @spicapi

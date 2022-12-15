@@ -20,6 +20,7 @@ namespace spic {
 	{
 		internal::EntityManager::GetInstance()->AddEntity(gameObject);
 	}
+
 	GameObject::GameObject(const std::string& name) : active{ true }, layer{ 0 }, parent{ nullptr }, name{name}
 	{
 	}

@@ -11,8 +11,15 @@ namespace spic {
         public:
             CircleCollider();
 
+            /*
+            * @brief Sets radius of collider
+            */
             CircleCollider(const float radius);
 
+            /**
+             * @return The collider's width and height
+             * @spicapi
+             */
             virtual Point Size() const override;
 
             /**

@@ -18,10 +18,10 @@ namespace spic {
 		 */
 		virtual ~Component() = default;
 
-        Component(const Component& other) = default; // copy constructor
-        Component(Component&& other) noexcept = default; // move constructor
-        virtual Component& operator=(const Component& other) = default; // copy assignment
-        virtual Component& operator=(Component&& other) noexcept = default;// move assignment
+		Component(const Component& other) = default; // copy constructor
+		Component(Component&& other) noexcept = default; // move constructor
+		virtual Component& operator=(const Component& other) = default; // copy assignment
+		virtual Component& operator=(Component&& other) noexcept = default;// move assignment
 
 		void GameObject(spic::GameObject& gameObject);
 
@@ -42,9 +42,9 @@ namespace spic {
 		bool IsChanged() const;
 	public:
 		/**
-	    * @brief Parent of component
-	    * @spicapi
-	    */
+		* @brief Parent of component
+		* @spicapi
+		*/
 		spic::GameObject* gameObject;
 	private:
 		/**
