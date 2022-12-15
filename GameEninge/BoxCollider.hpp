@@ -13,6 +13,8 @@ namespace spic {
 
             BoxCollider(const float width, const float height);
 
+            virtual Point Size() const override;
+
             /**
              * @brief The collider's width
              * @return The current width

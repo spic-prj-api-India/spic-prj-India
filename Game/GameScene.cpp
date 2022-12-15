@@ -7,6 +7,8 @@
 #include "Box.h"
 #include <RigidBody.hpp>
 #include "PlayerMovementScript.h"
+#include <CircleCollider.hpp>
+#include "Ball.h"
 
 GameScene::GameScene() : Scene()
 {
@@ -35,7 +37,7 @@ void GameScene::SetContents()
 	std::shared_ptr<spic::BoxCollider> boxCollider = std::make_shared<spic::BoxCollider>();
 	boxCollider->Width(50.0f);
 	boxCollider->Height(50.0f);
-	std::shared_ptr<spic::RigidBody> boxRigidBody = std::make_shared<spic::RigidBody>(1.0f, 1.0f, spic::BodyType::dynamicBody);
+	std::shared_ptr<spic::RigidBody> boxRigidBody = std::make_shared<spic::RigidBody>(10.0f, 1.0f, spic::BodyType::dynamicBody);
 	std::shared_ptr<CollisionDetectionScript> collisionScript = std::make_shared<CollisionDetectionScript>();
 	std::shared_ptr<PlayerMovementScript> movementScript = std::make_shared<PlayerMovementScript>();
 	auto boxSprite = std::make_shared<spic::Sprite>("assets/textures/box.png", 1);
@@ -50,6 +52,12 @@ void GameScene::SetContents()
 	box->AddComponent<spic::Sprite>(boxSprite);
 	//box->AddComponent<spic::AudioSource>(music);
 
+	spic::Point ballPosition = { 400.0f, 24.0f };
+	std::shared_ptr<Ball> football = std::make_shared<Ball>("football", ballPosition, "assets/textures/football.png", 0.09765625f);
+	auto moveFootballScript = std::make_shared<PlayerMovementScript>(
+		spic::Input::KeyCode::J, spic::Input::KeyCode::L, spic::Input::KeyCode::I);
+	football->AddComponent<spic::BehaviourScript>(moveFootballScript);
+
 	//UI test
 	std::shared_ptr<spic::Button> button = std::make_shared<spic::Button>(200.0f, 100.0f, "Click me");
 	button->Transform(std::make_shared<spic::Transform>(spic::Point(20.0f, 20.0f), 0.0f, 1.0f));
@@ -58,6 +66,7 @@ void GameScene::SetContents()
 		});
 
 	AddContent(box);
+	AddContent(football);
 	AddContent(button);
 	AddContent(std::make_shared<Box>());
 }

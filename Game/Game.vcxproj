@@ -150,6 +150,7 @@
     <ClCompile Include="AimListener.cpp" />
     <ClCompile Include="CollisionDetectionScript.cpp" />
     <ClCompile Include="FlockingScene.cpp" />
+    <ClCompile Include="Ball.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="KeyListener.cpp" />
@@ -165,6 +166,7 @@
     <ClInclude Include="CameraMovementScript.h" />
     <ClInclude Include="CollisionDetectionScript.h" />
     <ClInclude Include="FlockingScene.h" />
+    <ClInclude Include="Ball.h" />
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="KeyListener.h" />
     <ClInclude Include="FollowMouseListener.h" />

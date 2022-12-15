@@ -9,6 +9,14 @@ namespace spic {
      * @spicapi
      */
     class Collider : public Component {
+    public:
+        Collider();
+        virtual Point Size() const = 0;
+        bool Enabled() const;
+        void Disable();
+        void Enable();
+    private:
+        bool enabled;
     };
 }
 

@@ -21,6 +21,7 @@ void FollowMouseListener::OnMouseMoved() {
 	this->target->x = mousePosition.x;
 	this->target->y = mousePosition.y;
 }
+
 void FollowMouseListener::OnMouseClicked() {
 
 }

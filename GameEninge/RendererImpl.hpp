@@ -270,9 +270,33 @@ namespace spic::internal::rendering {
 		 * @brief Draws an rectangle in window space
 		 * @param rect The x, y, width, height of rectangle
 		 * @param angle The angle of the square
-		 * @param colour The colour of the square
+		 * @param color The color of the square
 		*/
 		void DrawRect(const spic::Rect& rect, const double angle, const spic::Color& color);
+
+		/**
+		 * @brief Draws an circle in window space 
+					using the mid point circle algorithm https://en.wikipedia.org/w/index.php?title=Midpoint_circle_algorithm
+		 * @param center The center of the circle
+		 * @param angle The radius of the circle
+		 * @param color The color of the circle
+		*/
+		void DrawCircle(spic::Point center, const float radius, const spic::Color& color);
+
+		/**
+		 * @brief Draws a point in window space
+		 * @param x of point
+		 * @param y of point
+		 * @param color The color of the point
+		*/
+		void DrawPoint(float x, float y, const spic::Color& color);
+
+		/**
+		 * @brief Draws a point in window space
+		 * @param x of point
+		 * @param y of point
+		*/
+		void DrawPoint(const float x, const float y);
 
 		/**
 		 * @brief Draws an line in window space
@@ -280,7 +304,7 @@ namespace spic::internal::rendering {
 		 * @param end The end point of an line
 		 * @param colour The colour of the line
 		*/
-		void DrawLine(const spic::Point& start, const spic::Point& end, const spic::Color& color);
+		void DrawLine(spic::Point start, spic::Point end, const spic::Color& color);
 
 		/**
 		 * @brief Draws an ui sprite

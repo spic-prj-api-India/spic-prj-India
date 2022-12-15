@@ -19,11 +19,16 @@
 #include "Defaults.hpp"
 #include "TileLayer.hpp"
 #include "Renderer.hpp"
+#include "GameEngineInfo.hpp"
 
 namespace spic::extensions {
 	std::unique_ptr<b2World> world;
 	std::map<std::string, b2Body*> bodies;
 	std::map<spic::BodyType, b2BodyType> bodyTypeConvertions;
+
+	std::map<std::string, Point> sizes;
+
+	inline const float OFFSET = 0.00999999978f;
 
 	class PhysicsExtensionImpl1 {
 	public:
@@ -47,6 +52,8 @@ namespace spic::extensions {
 		void Reset()
 		{
 			world = std::make_unique<b2World>(b2Vec2(0.0f, PhysicsValues::GRAVITY));
+			sizes = {};
+			bodies = {};
 		}
 
 		/**
@@ -87,22 +94,56 @@ namespace spic::extensions {
 					CreateEntity(entity);
 			}
 			// Update world
-			world->Step(1.0f / 60.0f, int32(6), int32(2.0));
+			world->Step(1.0f / 60.0f, int32(8), int32(3));
 			// Update entities
 			for (auto& entity : entities) {
 				// Get body
 				b2Body* body = bodies[entity->Name()];
 
-				// Get transform
-				const b2Vec2 position = body->GetPosition();
+				// Get information
+				auto size = sizes[entity->Name()] - OFFSET;
+				b2Vec2 position = body->GetWorldCenter();
+				ConvertCoordinateToPixels(position, size);
 				const float rotation = body->GetAngle();
 
 				// Update entity
-				entity->Transform()->position.x = position.x / PhysicsValues::SCALING_FACTOR;
-				entity->Transform()->position.y = position.y / PhysicsValues::SCALING_FACTOR;
+				entity->Transform()->position.x = position.x;
+				entity->Transform()->position.y = position.y;
 				if (!spic::TypeHelper::SharedPtrIsOfType<ForceDriven>(entity))
 					entity->Transform()->rotation = rotation;
 			}
+		}
+
+		void ConvertCoordinateToMeters(Point& coordinate, Point size) {
+			size.x *= PIX2MET;
+			size.y *= PIX2MET;
+			const float x = coordinate.x - (WINDOW_WIDTH / 2.0f);
+			const float y = coordinate.y - (WINDOW_HEIGHT / 2.0f);
+			coordinate.x = (x * PIX2MET) + (size.x / 2.0f);
+			coordinate.y = (y * PIX2MET) + (size.y / 2.0f);
+		}
+
+		void ConvertCoordinateToPixels(b2Vec2& coordinate, Point size) {
+			size.x *= MET2PIX;
+			size.y *= MET2PIX;
+			const float x = (SCALED_WIDTH / 2.0f) + coordinate.x;
+			const float y = (SCALED_HEIGHT / 2.0f) + coordinate.y;
+			coordinate.x = (x * MET2PIX) - (size.x / 2.0f);
+			coordinate.y = (y * MET2PIX) - (size.y / 2.0f);
+		}
+
+		void ConvertCoordinateToMeters(Point& coordinate) {
+			const float x = coordinate.x - (WINDOW_WIDTH / 2.0f);
+			const float y = coordinate.y - (WINDOW_HEIGHT / 2.0f);
+			coordinate.x = x * PIX2MET;
+			coordinate.y = y * PIX2MET;
+		}
+
+		void ConvertCoordinateToPixels(b2Vec2& coordinate) {
+			const float x = (SCALED_WIDTH / 2.0f) + coordinate.x;
+			const float y = (SCALED_HEIGHT / 2.0f) + coordinate.y;
+			coordinate.x = x * MET2PIX;
+			coordinate.y = y * MET2PIX;
 		}
 
 		/**
@@ -125,7 +166,7 @@ namespace spic::extensions {
 			if (bodies.count(name) == 0)
 				CreateEntity(entity);
 			b2Body* body = bodies[name];
-			b2Vec2 force = { forceDirection.x, forceDirection.y };
+			b2Vec2 force = { forceDirection.x * MET2PIX, forceDirection.y * MET2PIX };
 
 			body->ApplyForce(force, body->GetWorldCenter(), true);
 		}
@@ -147,7 +188,7 @@ namespace spic::extensions {
 		*/
 		void DrawColliders()
 		{
-			const b2Body* currentBody = world->GetBodyList();
+			b2Body* currentBody = world->GetBodyList();
 			while (currentBody != nullptr)
 			{
 				const b2Shape* shape = currentBody->GetFixtureList()->GetShape();
@@ -157,8 +198,19 @@ namespace spic::extensions {
 				}
 				switch (shape->GetType()) {
 				case b2Shape::e_polygon:
-					DrawBoxCollider(*currentBody, static_cast<const b2PolygonShape&>(*shape));
-					break;
+				{
+					const auto entity = reinterpret_cast<spic::GameObject*>(currentBody->GetUserData().pointer);
+					auto size = sizes[entity->Name()];
+					DrawBoxCollider(*currentBody, size);
+				}
+				break;
+				case b2Shape::e_circle:
+				{
+					const auto entity = reinterpret_cast<spic::GameObject*>(currentBody->GetUserData().pointer);
+					auto size = sizes[entity->Name()];
+					DrawCircleCollider(*currentBody, size);
+				}
+				break;
 				case b2Shape::e_edge:
 					DrawEdgeCollider(static_cast<const b2EdgeShape&>(*shape));
 					break;
@@ -170,34 +222,33 @@ namespace spic::extensions {
 		void AddEdges(const Matrix& matrix, const int colIndex, const int rowIndex, const Point& origin, const float tileSize)
 		{
 			if (rowIndex > 0 && matrix[colIndex][rowIndex - 1] == 0)
-				AddEdge(origin.x, origin.y, origin.x + tileSize, origin.y);
+				AddEdge({ origin.x, origin.y }, { origin.x + tileSize, origin.y });
 			if (colIndex + 1 < matrix.size() && matrix[colIndex + 1][rowIndex] == 0)
-				AddEdge(origin.x + tileSize, origin.y, origin.x + tileSize, origin.y + tileSize);
+				AddEdge({ origin.x + tileSize, origin.y }, { origin.x + tileSize, origin.y + tileSize });
 			if (rowIndex + 1 < matrix[0].size() && matrix[colIndex][rowIndex + 1] == 0)
-				AddEdge(origin.x, origin.y + tileSize, origin.x + tileSize, origin.y + tileSize);
+				AddEdge({ origin.x, origin.y + tileSize }, { origin.x + tileSize, origin.y + tileSize });
 			if (colIndex > 0 && matrix[colIndex - 1][rowIndex] == 0)
-				AddEdge(origin.x, origin.y, origin.x, origin.y + tileSize);
+				AddEdge({ origin.x, origin.y }, { origin.x, origin.y + tileSize });
 		}
 
-		void AddEdge(float startX, float startY, float endX, float endY)
+		void AddEdge(Point start, Point end)
 		{
 			b2BodyDef edgeBodyDef = b2BodyDef();
 			b2Body* edgeBody = world->CreateBody(&edgeBodyDef);
 
 			b2FixtureDef myFixtureDef;
-			myFixtureDef.density = 1;
-			myFixtureDef.friction = 0;
+			myFixtureDef.density = 1.0f;
+			myFixtureDef.friction = 0.3f;
 
 			b2EdgeShape edgeShape;
 			myFixtureDef.shape = &edgeShape;
 
-			startX *= PhysicsValues::SCALING_FACTOR;
-			startY *= PhysicsValues::SCALING_FACTOR;
-			endX *= PhysicsValues::SCALING_FACTOR;
-			endY *= PhysicsValues::SCALING_FACTOR;
-			edgeShape.SetTwoSided(b2Vec2(startX, startY), b2Vec2(endX, endY));
-			edgeShape.m_vertex0 = b2Vec2(startX - 1, startY);
-			edgeShape.m_vertex3 = b2Vec2(startX + 1, startY);
+			ConvertCoordinateToMeters(start);
+			ConvertCoordinateToMeters(end);
+
+			edgeShape.SetTwoSided(b2Vec2(start.x, start.y), b2Vec2(end.x, end.y));
+			edgeShape.m_vertex0 = b2Vec2(start.x - 0.01f, start.y);
+			edgeShape.m_vertex3 = b2Vec2(start.x + 0.01f, start.y);
 
 			edgeBody->CreateFixture(&myFixtureDef);
 		}
@@ -230,13 +281,13 @@ namespace spic::extensions {
 		*/
 		b2Body* CreateBody(const std::shared_ptr<spic::GameObject>& entity, const std::shared_ptr<spic::RigidBody>& rigidBody)
 		{
-			// cartesian origin
-			const float ground_x = entity->Transform()->position.x * PhysicsValues::SCALING_FACTOR;
-			const float ground_y = entity->Transform()->position.y * PhysicsValues::SCALING_FACTOR;
+			const auto size = entity->GetComponent<Collider>()->Size();
+			Point position = entity->Transform()->position;
+			ConvertCoordinateToMeters(position, size);
 
 			b2BodyDef bodyDef;
 			bodyDef.type = bodyTypeConvertions[rigidBody->BodyType()];
-			bodyDef.position.Set(ground_x, ground_y); // set the starting position x and y cartesian
+			bodyDef.position.Set(position.x, position.y); // set the starting position x and y cartesian
 			bodyDef.angle = entity->Transform()->rotation;
 			bodyDef.gravityScale = rigidBody->GravityScale();
 
@@ -253,39 +304,51 @@ namespace spic::extensions {
 			fixtureDef.density = 0.0f;
 			fixtureDef.friction = 0.3f;
 			fixtureDef.restitution = 0.5f;
-			SetShape(fixtureDef, entity, rigidBody);
-			body.CreateFixture(&fixtureDef);
+			auto collider = SetShape(fixtureDef, entity, rigidBody);
+			if (collider != nullptr)
+				body.CreateFixture(&fixtureDef)->SetSensor(!collider->Enabled());
 		}
 
 		/**
 		* @brief Set box2d shape with Colliders of entity
+		* @return bool Shape is enabled
 		* @spicapi
 		*/
-		void SetShape(b2FixtureDef& fixtureDef, const std::shared_ptr<spic::GameObject>& entity, const std::shared_ptr<spic::RigidBody>& rigidBody) const
+		std::shared_ptr<spic::Collider> SetShape(b2FixtureDef& fixtureDef, const std::shared_ptr<spic::GameObject>& entity, const std::shared_ptr<spic::RigidBody>& rigidBody) const
 		{
-			std::shared_ptr<spic::BoxCollider> boxCollider = entity->GetComponent<spic::BoxCollider>();
+			const std::shared_ptr<spic::BoxCollider> boxCollider = entity->GetComponent<spic::BoxCollider>();
 			if (boxCollider != nullptr) {
-				const float width = boxCollider->Width() * PhysicsValues::SCALING_FACTOR;
-				const float height = boxCollider->Height() * PhysicsValues::SCALING_FACTOR;
-				const float hx = width / 2.0f;
-				const float hy = height / 2.0f;
-
 				b2PolygonShape* boxShape = new b2PolygonShape();
+
+				const float width = boxCollider->Width() * PIX2MET;
+				const float height = boxCollider->Height() * PIX2MET;
+				const float hx = (width / 2.0f) - boxShape->m_radius;
+				const float hy = (height / 2.0f) - boxShape->m_radius;
+
 				boxShape->SetAsBox(hx, hy); // will be 0.5 x 0.5
 				fixtureDef.shape = boxShape;
 
-				const float area = (width * height) * 1000;
+				const float area = width * height;
 				fixtureDef.density = rigidBody->Mass() / area;
+
+				sizes[entity->Name()] = { width, height };
+				return boxCollider;
 			}
-			std::shared_ptr<spic::CircleCollider> circleCollider = entity->GetComponent<spic::CircleCollider>();
+			const std::shared_ptr<spic::CircleCollider> circleCollider = entity->GetComponent<spic::CircleCollider>();
 			if (circleCollider != nullptr) {
 				b2CircleShape* circleShape = new b2CircleShape();
-				circleShape->m_radius = circleCollider->Radius() * PhysicsValues::SCALING_FACTOR;
-				fixtureDef.shape = circleShape;;
 
-				const float area = (spic::internal::Defaults::PI * (circleShape->m_radius * circleShape->m_radius)) * 1000;
+				circleShape->m_radius = circleCollider->Radius() * PIX2MET;
+				fixtureDef.shape = circleShape;
+
+				const float area = spic::internal::Defaults::PI * (circleShape->m_radius * circleShape->m_radius);
 				fixtureDef.density = rigidBody->Mass() / area;
+
+				const float diameter = circleShape->m_radius + circleShape->m_radius;
+				sizes[entity->Name()] = { diameter, diameter };
+				return circleCollider;
 			}
+			return nullptr;
 		}
 
 		/**
@@ -300,13 +363,13 @@ namespace spic::extensions {
 			b2Body* body = bodies[entity->Name()];
 
 			// Get Box2D transform
-			b2Vec2 b2Position = body->GetPosition();
+			b2Vec2 b2Position = body->GetWorldCenter();
 			float b2Rotation = body->GetAngle();
 
 			// Get entity transform
 			spic::Point ePosition = entity->Transform()->position;
-			ePosition.x = ePosition.x * PhysicsValues::SCALING_FACTOR;
-			ePosition.y = ePosition.y * PhysicsValues::SCALING_FACTOR;
+			const auto size = entity->GetComponent<Collider>()->Size() - (OFFSET * MET2PIX);
+			ConvertCoordinateToMeters(ePosition, size);
 			const float eRotation = entity->Transform()->rotation;
 
 			// Update
@@ -329,41 +392,42 @@ namespace spic::extensions {
 			}
 		}
 
-		void DrawBoxCollider(const b2Body& body, const b2PolygonShape& shape)
+		void DrawBoxCollider(const b2Body& body, Point size)
 		{
-			auto vectors = std::vector<Point>();
-			const auto vertices = { shape.m_vertices[0], shape.m_vertices[1], shape.m_vertices[2], shape.m_vertices[3] };
-			float maxTop = 0.0f, maxRight = 0.0f, maxBottom = 0.0f, maxLeft = 0.0f;
-			for (const auto& vertice : vertices) {
-				Point point = { vertice.x, vertice.y };
-				vectors.emplace_back(point);
-				if (vertice.y < maxTop)
-					maxTop = vertice.y;
-				if (vertice.x > maxRight)
-					maxRight = vertice.x;
-				if (vertice.y > maxBottom)
-					maxBottom = vertice.y;
-				if (vertice.x < maxLeft)
-					maxLeft = vertice.x;
-			}
-
-			const float width = fabs(maxRight - maxLeft);
-			const float height = fabs(maxTop - maxBottom);
-			const auto& position = body.GetTransform().p;
+			size -= OFFSET;
+			auto position = body.GetTransform().p;
+			ConvertCoordinateToPixels(position, size);
+			size += OFFSET;
 			const double rotation = static_cast<double>(body.GetAngle());
 
-			spic::Rect rect = spic::Rect(position.x / PhysicsValues::SCALING_FACTOR,
-				position.y / PhysicsValues::SCALING_FACTOR,
-				width / PhysicsValues::SCALING_FACTOR,
-				height / PhysicsValues::SCALING_FACTOR);
-			spic::internal::Rendering::DrawRect(rect, rotation, spic::Color::white());
+			spic::Rect rect = spic::Rect(position.x,
+				position.y,
+				size.x * MET2PIX,
+				size.y * MET2PIX);
+			spic::internal::Rendering::DrawRect(rect, rotation, spic::Color::red());
+		}
+
+		void DrawCircleCollider(const b2Body& body, Point size)
+		{
+			size -= OFFSET;
+			auto position = body.GetTransform().p;
+			ConvertCoordinateToPixels(position, size);
+			size += OFFSET;
+			const float radius = (size.x / 2.0f) * MET2PIX;
+
+			spic::Point center = { position.x + radius, position.y + radius };
+			spic::internal::Rendering::DrawCircle(center, radius, spic::Color::red());
 		}
 
 		void DrawEdgeCollider(const b2EdgeShape& shape)
 		{
-			Point startPoint = { shape.m_vertex1.x / PhysicsValues::SCALING_FACTOR, shape.m_vertex1.y / PhysicsValues::SCALING_FACTOR };
-			Point endPoint = { shape.m_vertex2.x / PhysicsValues::SCALING_FACTOR, shape.m_vertex2.y / PhysicsValues::SCALING_FACTOR };
-			spic::internal::Rendering::DrawLine(startPoint, endPoint, spic::Color::white());
+			b2Vec2 startVec = { shape.m_vertex1.x, shape.m_vertex1.y };
+			b2Vec2 endVec = { shape.m_vertex2.x, shape.m_vertex2.y };
+			ConvertCoordinateToPixels(startVec);
+			ConvertCoordinateToPixels(endVec);
+			Point startPoint = { startVec.x, startVec.y };
+			Point endPoint = { endVec.x, endVec.y };
+			spic::internal::Rendering::DrawLine(startPoint, endPoint, spic::Color::red());
 		}
 	};
 
