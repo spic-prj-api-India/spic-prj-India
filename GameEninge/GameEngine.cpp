@@ -7,6 +7,7 @@
 #include "EntityManager.hpp"
 #include "Input.hpp"
 #include "Renderer.hpp"
+#include "DataHandler.hpp"
 
 namespace spic {
 	GameEngine* GameEngine::pinstance_{ nullptr };
@@ -46,6 +47,21 @@ namespace spic {
 	{
 		internal::EntityManager::GetInstance()->SetScene(sceneName);
 	}
+
+	void GameEngine::SaveScene(const std::string& fileName)
+	{
+		DataHandler dataHandler = DataHandler(fileName);
+		dataHandler.AddScene(spic::internal::EntityManager::GetInstance()->GetEntities());
+		dataHandler.Save();
+	}
+
+	void GameEngine::LoadSceneBySaveFile(std::shared_ptr<Scene> scene, const std::string& fileName)
+	{
+		spic::internal::EntityManager::GetInstance()->SetScene(scene);
+		DataHandler dataHandler = DataHandler(fileName);
+		dataHandler.LoadScene(spic::internal::EntityManager::GetInstance()->GetEntities());
+	}
+
 
 	void GameEngine::LoadScene(std::shared_ptr<Scene> scene)
 	{

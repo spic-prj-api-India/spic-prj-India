@@ -156,7 +156,7 @@ namespace spic {
 		/*
 		@brief Set this GameObject to get destroyed upon loading a new scene.
 		*/
-		bool DontDestroyOnLoad();
+		bool DontDestroyOnLoad() const;
 
 		/*
 		@brief Set this GameObject to (not) get destroyed upon loading a new scene.

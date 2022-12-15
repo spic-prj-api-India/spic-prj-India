@@ -5,6 +5,7 @@
 #include "MouseListener.h"
 #include "KeyListener.h"
 #include <Input.hpp>
+#include "GameScene.h"
 
 MenuScene::MenuScene() : Scene()
 {
@@ -47,9 +48,19 @@ void MenuScene::SetContents()
 			});
 		AddContent(button2);
 	}
+	
+	// Load game
+	std::shared_ptr<GameScene> sceneToLoad = std::make_shared<GameScene>();
 
-	
-	
+	std::shared_ptr<spic::Button> loadButton = std::make_shared<spic::Button>(200.0f, 100, "Load Game", spic::Color::white(), "assets/textures/buttons/Button22.png");
+	loadButton->Transform(std::make_shared<spic::Transform>(spic::Point(500.0f, 420.0f), 0.0f, 1.0f));
+	auto textTransform2 = loadButton->GetChild<spic::Text>()->Transform();
+	textTransform2->position.y = 10.0f;
+	loadButton->OnClick([sceneToLoad]() {
+		spic::Input::UnSubscribeAll();
+	spic::GameEngine::GetInstance()->LoadSceneBySaveFile(sceneToLoad, "game");
+		});
+	AddContent(loadButton);
 }
 
 void MenuScene::SetMatchMenu()

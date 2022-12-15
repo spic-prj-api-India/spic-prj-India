@@ -216,11 +216,11 @@ namespace spic {
 		return transform->scale;
 	}
 
-	bool GameObject::DontDestroyOnLoad()
+	bool GameObject::DontDestroyOnLoad() const
 	{
-		return false;
+		return destroyOnLoad;
 	}
-
+	
 	void GameObject::DontDestroyOnLoad(bool destroy)
 	{
 		destroyOnLoad = destroy;

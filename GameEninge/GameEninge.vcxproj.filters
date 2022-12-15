@@ -154,9 +154,6 @@
     <Filter Include="Source Files\helpers">
       <UniqueIdentifier>{9f084e52-f411-4ec3-a73b-4e96a26e3e9e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\core\systems\data">
-      <UniqueIdentifier>{142c002f-9e09-48f6-9a0b-b0238a85b97c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\core\systems\data">
       <UniqueIdentifier>{27aeaf8d-a913-428a-b880-8759f42deda0}</UniqueIdentifier>
     </Filter>
@@ -324,9 +321,6 @@
     <ClInclude Include="PhysicsValues.hpp">
       <Filter>Header Files\extensions\physics</Filter>
     </ClInclude>
-    <ClInclude Include="DataSystem.hpp">
-      <Filter>Header Files\core\systems\data</Filter>
-    </ClInclude>
     <ClInclude Include="Persistable.hpp">
       <Filter>Header Files\objects</Filter>
     </ClInclude>
@@ -371,6 +365,9 @@
     </ClInclude>
     <ClInclude Include="NetworkingHelper.hpp">
       <Filter>Header Files\helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="DataHandler.hpp">
+      <Filter>Header Files\models</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -494,9 +491,6 @@
     <ClCompile Include="Button.cpp">
       <Filter>Source Files\objects</Filter>
     </ClCompile>
-    <ClCompile Include="DataSystem.cpp">
-      <Filter>Source Files\core\systems\data</Filter>
-    </ClCompile>
     <ClCompile Include="SocketUDPExtension.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -523,6 +517,9 @@
     </ClCompile>
     <ClCompile Include="NetworkingHelper.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DataHandler.cpp">
+      <Filter>Source Files\core\models</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -1,11 +1,25 @@
-#pragma once
-#include "GameObject.hpp"
+#ifndef PERSISTABLE_H_
+#define PERSISTABLE_H_
 
-namespace spic {
-	class Persistable: public spic::GameObject {
+#include "GameObject.hpp"
+#include <map>
+
+namespace spic
+{
+	class Persistable
+	{
 	public:
 		Persistable() = default;
-		virtual void Load() = 0;
-		virtual void Save() = 0;
+		/**
+		 * @brief Needs to declare virtual destructor,
+		 *			otherwise can't be used as interface
+		 */
+		virtual ~Persistable() = default;
+		Persistable(const Persistable& other) = delete;
+		Persistable(Persistable&& other) = delete;
+		Persistable& operator=(const Persistable& other) = delete;
+		Persistable& operator=(Persistable&& other) = delete;
 	};
 }
+
+#endif // PERSISTABLE_H_

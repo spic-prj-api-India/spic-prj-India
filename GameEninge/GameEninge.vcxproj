@@ -183,7 +183,7 @@
     <ClInclude Include="Component.hpp" />
     <ClInclude Include="ContainerHelper.hpp" />
     <ClInclude Include="ConvertListToBytes.hpp" />
-    <ClInclude Include="DataSystem.hpp" />
+    <ClInclude Include="DataHandler.hpp" />
     <ClInclude Include="Debug.hpp" />
     <ClInclude Include="Defaults.hpp" />
     <ClInclude Include="GameEngine.hpp" />
@@ -242,7 +242,7 @@
     <ClCompile Include="Chunk.cpp" />
     <ClCompile Include="BehaviourScript.cpp" />
     <ClCompile Include="Box2DCollisionListener.cpp" />
-    <ClCompile Include="DataSystem.cpp" />
+    <ClCompile Include="DataHandler.cpp" />
     <ClCompile Include="GeneralHelper.cpp" />
     <ClCompile Include="IPhysicsExtension.cpp" />
     <ClCompile Include="MapParser.cpp" />
