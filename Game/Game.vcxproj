@@ -151,6 +151,8 @@
     <ClCompile Include="CollisionDetectionScript.cpp" />
     <ClCompile Include="FlockingScene.cpp" />
     <ClCompile Include="Ball.cpp" />
+    <ClCompile Include="CredditsScene.cpp" />
+    <ClCompile Include="CredditsSceneScript.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="KeyListener.cpp" />
@@ -167,6 +169,8 @@
     <ClInclude Include="CollisionDetectionScript.h" />
     <ClInclude Include="FlockingScene.h" />
     <ClInclude Include="Ball.h" />
+    <ClInclude Include="CredditsScene.h" />
+    <ClInclude Include="CredditsSceneScript.h" />
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="KeyListener.h" />
     <ClInclude Include="FollowMouseListener.h" />

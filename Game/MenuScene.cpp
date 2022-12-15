@@ -33,6 +33,10 @@ void MenuScene::SetContents()
 		spic::Input::UnSubscribeAll();
 		spic::GameEngine::GetInstance()->LoadSceneByName("flock");
 		}, 100.0f);
+	AddButton("Credits", []() {
+		spic::Input::UnSubscribeAll();
+		spic::GameEngine::GetInstance()->LoadSceneByName("creddits");
+		}, 200.0f);
 }
 
 void MenuScene::SetMatchMenu()

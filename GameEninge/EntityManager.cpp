@@ -115,8 +115,13 @@ void EntityManager::SetScene(const std::string& sceneName)
 {
 	if (!scenes.count(sceneName))
 		throw std::exception("Scene does not exist.");
-	scene = scenes[sceneName];
-	SetScene(scene);
+
+	if (currentSceneName != sceneName)
+	{
+		scene = scenes[sceneName];
+		currentSceneName = sceneName;
+		SetScene(scene);
+	}
 }
 
 void EntityManager::SetScene(std::shared_ptr<Scene> newScene)
