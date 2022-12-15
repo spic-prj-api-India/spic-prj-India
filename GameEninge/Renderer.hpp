@@ -66,6 +66,12 @@ namespace spic::internal {
          * @brief Renders all bufferd
         */
         static void Render();
+
+        /**
+        * @brief Renders all bufferd
+       */
+        static void Delay();
+
         
         /**
          * @brief Gets the aspect values from the window
@@ -73,6 +79,8 @@ namespace spic::internal {
          * @return Width, Height
         */
         static std::pair<float, float> GetAspects();
+
+        static void DrawFps();
     };
 }
 #endif

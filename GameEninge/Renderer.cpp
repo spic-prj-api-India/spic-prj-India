@@ -46,7 +46,17 @@ void spic::internal::Rendering::Render()
 	spic::internal::rendering::RendererImpl::GetInstance()->Render();
 }
 
+void spic::internal::Rendering::Delay()
+{
+	spic::internal::rendering::RendererImpl::GetInstance()->Delay();
+}
+
 std::pair<float, float> spic::internal::Rendering::GetAspects()
 {
 	return std::pair<float, float>();
+}
+
+void spic::internal::Rendering::DrawFps()
+{
+	spic::internal::rendering::RendererImpl::GetInstance()->RenderFps();
 }

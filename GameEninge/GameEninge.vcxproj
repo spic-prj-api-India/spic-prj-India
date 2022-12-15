@@ -186,6 +186,7 @@
     <ClInclude Include="DataSystem.hpp" />
     <ClInclude Include="Debug.hpp" />
     <ClInclude Include="Defaults.hpp" />
+    <ClInclude Include="FPSlistener.hpp" />
     <ClInclude Include="GameEngine.hpp" />
     <ClInclude Include="EntityManager.hpp" />
     <ClInclude Include="GameObject.hpp" />
@@ -198,6 +199,7 @@
     <ClInclude Include="InputImpl.hpp" />
     <ClInclude Include="InputManager.hpp" />
     <ClInclude Include="InputSystem.hpp" />
+    <ClInclude Include="InternalTime.hpp" />
     <ClInclude Include="IPhysicsExtension.hpp" />
     <ClInclude Include="INetworkExtension.hpp" />
     <ClInclude Include="NetworkingHelper.hpp" />
@@ -243,7 +245,9 @@
     <ClCompile Include="BehaviourScript.cpp" />
     <ClCompile Include="Box2DCollisionListener.cpp" />
     <ClCompile Include="DataSystem.cpp" />
+    <ClCompile Include="FPSlistener.cpp" />
     <ClCompile Include="GeneralHelper.cpp" />
+    <ClCompile Include="InternalTime.cpp" />
     <ClCompile Include="IPhysicsExtension.cpp" />
     <ClCompile Include="MapParser.cpp" />
     <ClCompile Include="NetworkingHelper.cpp" />

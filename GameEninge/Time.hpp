@@ -13,25 +13,25 @@ namespace spic {
              * TODO: no funtionality
              * @spicapi
              */
-            static double DeltaTime();
+            static float DeltaTime();
 
             /**
              * @brief The scale at which time passes.
              * @return time scale value
              * @spicapi
              */
-            static double TimeScale();
+            static float TimeScale();
 
             /**
              * @brief The scale at which time passes.
              * @param newTimeScale The new value for the time scale.
              * @spicapi
              */
-            static void TimeScale(double newTimeScale);
+            static void TimeScale(const float newTimeScale);
 
         private:
-            static double deltaTime;
-            static double timeScale;
+            static float deltaTime;
+            static float timeScale;
     };
 }
 #endif // TIME_H_

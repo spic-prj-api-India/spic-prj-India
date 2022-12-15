@@ -14,6 +14,7 @@
 #include "AudioManager.hpp"
 #include "NetworkingReceiveSystem.hpp"
 #include "NetworkingSendSystem.hpp"
+#include "InternalTime.hpp"
 
 using namespace spic;
 using namespace spic::internal;
@@ -49,8 +50,8 @@ void EntityManager::Init()
 	std::unique_ptr<systems::NetworkingReceiveSystem> networkRecieve = std::make_unique<systems::NetworkingReceiveSystem>();
 	std::unique_ptr<systems::NetworkingSendSystem> networkSend = std::make_unique<systems::NetworkingSendSystem>();
 	AddInternalSystem(std::move(networkRecieve), 0);
-	AddInternalSystem(std::move(inputSystem), 1);
-	AddInternalSystem(std::move(physicsSystem), 2);
+	AddInternalSystem(std::move(inputSystem), 2);
+	AddInternalSystem(std::move(physicsSystem), 1);
 	AddInternalSystem(std::move(dataSystem), 3);
 	AddInternalSystem(std::move(networkSend), 4);
 	AddInternalSystem(std::move(renderingSystem), 5);
@@ -147,6 +148,9 @@ void EntityManager::SetScene(std::shared_ptr<Scene> newScene)
 		if (entity->Active())
 			entity->Active(true);
 	}
+	using namespace spic::internal::time;
+
+	InternalTime::SetStartValues();
 }
 
 void EntityManager::DestroyScene(bool forceDelete)
@@ -201,12 +205,21 @@ void EntityManager::AddInternalSystem(std::unique_ptr<spic::systems::ISystem> sy
 	systems[priority].emplace_back(std::move(system));
 }
 
+
+
 void EntityManager::Update()
 {
+	using namespace spic::internal::time;
+
+
+	InternalTime::BeginFrame();
+
 	for (const auto& systemsMap : systems)
 	{
 		for (const auto& system : systemsMap.second)
 		{
+			if(systemsMap.first == 5)
+
 			system->Update(entities, *scene);
 		}
 	}

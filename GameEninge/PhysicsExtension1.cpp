@@ -25,7 +25,14 @@ namespace spic::extensions {
 	public:
 		PhysicsExtensionImpl1()
 		{
-			world = nullptr;
+			if (auto& w = world; w != nullptr)
+			{
+				while (world->IsLocked())
+				{
+					std::this_thread::sleep_for(std::chrono::milliseconds(1));
+				}
+			}
+
 			bodyTypeConvertions = {
 				{spic::BodyType::staticBody, b2_staticBody},
 				{spic::BodyType::kinematicBody, b2_kinematicBody},
@@ -34,7 +41,16 @@ namespace spic::extensions {
 			Reset();
 		}
 
-		~PhysicsExtensionImpl1() = default;
+		~PhysicsExtensionImpl1()
+		{
+			if (auto& w = world; w != nullptr)
+			{
+				while (world->IsLocked())
+				{
+					std::this_thread::sleep_for(std::chrono::milliseconds(1));
+				}
+			}
+		}
 
 		/**
 		* @brief Resets all physic bodies in world
@@ -42,7 +58,17 @@ namespace spic::extensions {
 		*/
 		void Reset()
 		{
-			world = std::make_unique<b2World>(b2Vec2(0.0f, PhysicsValues::GRAVITY));
+			if (auto& w = world; w != nullptr)
+			{
+				while (world->IsLocked())
+				{
+					std::this_thread::sleep_for(std::chrono::milliseconds(1));
+				}
+				bodies.clear();
+
+				world.reset(new b2World(b2Vec2(0.0f, PhysicsValues::GRAVITY)));
+			}
+			world.reset(new b2World(b2Vec2(0.0f, PhysicsValues::GRAVITY)));
 		}
 
 		/**
@@ -51,29 +77,50 @@ namespace spic::extensions {
 		*/
 		void Update(std::vector<std::shared_ptr<spic::GameObject>> entities)
 		{
-			// Update or create entity bodiese
-			for (auto& entity : entities) {
-				bool exists = bodies.find(entity->Name()) != bodies.end();
-				if (exists)
-					UpdateEntity(entity);
-				else
-					CreateEntity(entity);
-			}
-			// Update world
-			world->Step(1.0f / 60.0f, int32(6), int32(2.0));
-			// Update entities
-			for (auto& entity : entities) {
-				// Get body
-				b2Body* body = bodies[entity->Name()];
+			if (auto& w = world; w != nullptr)
+			{
+				while (world->IsLocked())
+				{
+					std::this_thread::sleep_for(std::chrono::milliseconds(2));
+				}
+				// Update or create entity bodiese
+				for (auto& entity : entities) 
+				{
+					bool exists = bodies.find(entity->Name()) != bodies.end();
+					if (exists)
+						UpdateEntity(entity);
+					else
+						CreateEntity(entity);
+				}
 
-				// Get transform
-				const b2Vec2 position = body->GetPosition();
-				const float rotation = body->GetAngle();
+				while (world->IsLocked())
+				{
+					std::this_thread::sleep_for(std::chrono::milliseconds(2));
+				}
 
-				// Update entity
-				entity->Transform()->position.x = position.x / PhysicsValues::SCALING_FACTOR;
-				entity->Transform()->position.y = position.y / PhysicsValues::SCALING_FACTOR;
-				entity->Transform()->rotation = rotation;
+				// Update world
+				world->Step(1.0f / 30.0f, int32(6), int32(2.0));
+
+
+				while (world->IsLocked())
+				{
+					std::this_thread::sleep_for(std::chrono::milliseconds(2));
+				}
+
+				// Update entities
+				for (auto& entity : entities) {
+					// Get body
+					b2Body* body = bodies[entity->Name()];
+
+					// Get transform
+					const b2Vec2 position = body->GetPosition();
+					const float rotation = body->GetAngle();
+
+					// Update entity
+					entity->Transform()->position.x = position.x / PhysicsValues::SCALING_FACTOR;
+					entity->Transform()->position.y = position.y / PhysicsValues::SCALING_FACTOR;
+					entity->Transform()->rotation = rotation;
+				}
 			}
 		}
 
@@ -83,6 +130,11 @@ namespace spic::extensions {
 		*/
 		void RegisterListener(spic::extensions::ICollisionListener* listener) const
 		{
+			while (world->IsLocked())
+			{
+				std::this_thread::sleep_for(std::chrono::milliseconds(2));
+			}
+
 			b2ContactListener* box2DListener = dynamic_cast<spic::internal::extensions::Box2DCollisionListener*>(listener);
 			world->SetContactListener(box2DListener);
 		}
@@ -93,6 +145,11 @@ namespace spic::extensions {
 		*/
 		void AddForce(std::shared_ptr<spic::GameObject> entity, const spic::Point& forceDirection)
 		{
+			while (world->IsLocked())
+			{
+				std::this_thread::sleep_for(std::chrono::milliseconds(2));
+			}
+
 			b2Body* body = bodies[entity->Name()];
 
 			b2Vec2 velocity;
@@ -104,8 +161,13 @@ namespace spic::extensions {
 		* @brief Creates body, fixture and shape and adds body to box2d world
 		* @spicapi
 		*/
-		void CreateEntity(const std::shared_ptr<spic::GameObject>& entity)
+		void CreateEntity(const std::shared_ptr<spic::GameObject> entity)
 		{
+			while (world->IsLocked())
+			{
+				std::this_thread::sleep_for(std::chrono::milliseconds(2));
+			}
+
 			// Create body
 			std::shared_ptr<spic::RigidBody> rigidBody = entity->GetComponent<spic::RigidBody>();
 			b2Body* body = CreateBody(entity, rigidBody);
@@ -132,8 +194,13 @@ namespace spic::extensions {
 		* @brief Creates box2d body with RigidBody of entity
 		* @spicapi
 		*/
-		b2Body* CreateBody(const std::shared_ptr<spic::GameObject>& entity, const std::shared_ptr<spic::RigidBody>& rigidBody)
+		b2Body* CreateBody(const std::shared_ptr<spic::GameObject> entity, const std::shared_ptr<spic::RigidBody> rigidBody)
 		{
+			while (world->IsLocked())
+			{
+				std::this_thread::sleep_for(std::chrono::milliseconds(2));
+			}
+
 			// cartesian origin
 			const float ground_x = entity->Transform()->position.x * PhysicsValues::SCALING_FACTOR;
 			const float ground_y = entity->Transform()->position.y * PhysicsValues::SCALING_FACTOR;
@@ -152,8 +219,13 @@ namespace spic::extensions {
 		* @brief Creates box2d fixture with RigidBody of entity
 		* @spicapi
 		*/
-		std::unique_ptr<b2FixtureDef> CreateFixture(const std::shared_ptr<spic::GameObject>& entity, const std::shared_ptr<spic::RigidBody>& rigidBody) const
+		std::unique_ptr<b2FixtureDef> CreateFixture(const std::shared_ptr<spic::GameObject> entity, const std::shared_ptr<spic::RigidBody> rigidBody) const
 		{
+			while (world->IsLocked())
+			{
+				std::this_thread::sleep_for(std::chrono::milliseconds(2));
+			}
+
 			std::unique_ptr<b2FixtureDef> fixtureDef = std::make_unique<b2FixtureDef>();
 			const b2Shape* shape = CreateShape(entity);
 			if (shape != nullptr)
@@ -168,8 +240,13 @@ namespace spic::extensions {
 		* @brief Creates box2d shape with Colliders of entity
 		* @spicapi
 		*/
-		b2Shape* CreateShape(const std::shared_ptr<spic::GameObject>& entity) const
+		b2Shape* CreateShape(const std::shared_ptr<spic::GameObject> entity) const
 		{
+			while (world->IsLocked())
+			{
+				std::this_thread::sleep_for(std::chrono::milliseconds(2));
+			}
+
 			std::shared_ptr<spic::BoxCollider> boxCollider = entity->GetComponent<spic::BoxCollider>();
 			const float scale = entity->Transform()->scale;
 			if (boxCollider != nullptr) {
@@ -193,8 +270,13 @@ namespace spic::extensions {
 		*		been changed outside extension
 		* @spicapi
 		*/
-		void UpdateEntity(const std::shared_ptr<spic::GameObject>& entity)
+		void UpdateEntity(const std::shared_ptr<spic::GameObject> entity)
 		{
+			while (world->IsLocked())
+			{
+				std::this_thread::sleep_for(std::chrono::milliseconds(2));
+			}
+
 			// Get body
 			std::shared_ptr<spic::RigidBody> rigidBody = entity->GetComponent<spic::RigidBody>();
 			b2Body* body = bodies[entity->Name()];
@@ -273,6 +355,11 @@ namespace spic::extensions {
 
 	void spic::extensions::PhysicsExtension1::AddForce(std::shared_ptr<spic::GameObject> entity, const spic::Point& forceDirection)
 	{
+		while (world->IsLocked())
+		{
+			std::this_thread::sleep_for(std::chrono::milliseconds(2));
+		}
+
 		physicsImpl->AddForce(entity, forceDirection);
 	}
 }

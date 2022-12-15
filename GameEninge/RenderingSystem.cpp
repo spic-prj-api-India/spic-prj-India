@@ -1,6 +1,9 @@
 #include "RenderingSystem.hpp"
 #include "Renderer.hpp"
 #include "TypeHelper.hpp"
+#include "InternalTime.hpp"
+#include "Input.hpp"
+
 
 namespace spic::internal::systems {
 	RenderingSystem::RenderingSystem()
@@ -15,7 +18,8 @@ namespace spic::internal::systems {
 
 	void RenderingSystem::Start(std::vector<std::shared_ptr<spic::GameObject>>& entities, Scene& currentScene)
 	{
-
+		this->fps.reset(new FPSListener());
+		Input::Subscribe(spic::Input::KeyCode::L, this->fps);
 	}
 
 	void RenderingSystem::Update(std::vector<std::shared_ptr<spic::GameObject>>& entities, Scene& currentScene)
@@ -38,7 +42,18 @@ namespace spic::internal::systems {
 			spic::internal::Rendering::Draw(entity.get());
 		}
 
+		if (fps->renderFps)
+		{
+			spic::internal::Rendering::DrawFps();
+		}
+
 		spic::internal::Rendering::Render();
+
+		using namespace spic::internal::time;
+
+		InternalTime::EndFrame();
+
+		spic::internal::Rendering::Delay();
 	}
 
 	std::vector<std::vector<std::shared_ptr<spic::GameObject>>> RenderingSystem::GetFilteredEntities(const std::vector<std::shared_ptr<spic::GameObject>>& entities) const

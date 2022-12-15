@@ -61,12 +61,6 @@ namespace spic::internal::rendering {
 		static std::mutex mutex_;
 
 		/**
-		 * @brief Time related
-		*/
-		double lastTick;
-		double deltatime;
-
-		/**
 		 * @brief World camera settings
 		*/
 		SDL_FRect camera;
@@ -318,6 +312,11 @@ namespace spic::internal::rendering {
 		 * @param values All windowValues
 		*/
 		void Start(const spic::window::WindowValues* values);
+
+
+		void Delay();
+
+		void RenderFps();
 	};
 }
 #endif // RENDERERIMPL_H_

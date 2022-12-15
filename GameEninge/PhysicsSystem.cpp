@@ -8,13 +8,9 @@
 namespace spic::internal::systems {
 	PhysicsSystem::PhysicsSystem() 
 	{
-		Reset();
 	}
 
 	void PhysicsSystem::Start(std::vector<std::shared_ptr<spic::GameObject>>& entities, Scene& currentScene)
-	{}
-
-	void PhysicsSystem::Reset() const
 	{
 		spic::GameEngine* engine = spic::GameEngine::GetInstance();
 		std::vector<std::weak_ptr<spic::extensions::IPhysicsExtension>> physicsExtensions = engine->GetExtensions<spic::extensions::IPhysicsExtension>();
@@ -23,7 +19,7 @@ namespace spic::internal::systems {
 				std::function<void(const std::shared_ptr<spic::GameObject>, const std::shared_ptr<spic::Collider>)> enterCallback = [this](const std::shared_ptr<spic::GameObject> entity, const std::shared_ptr<spic::Collider>& collider) { OnEnter(entity, collider); };
 				std::function<void(const std::shared_ptr<spic::GameObject>, const std::shared_ptr<spic::Collider>)> exitCallback = [this](const std::shared_ptr<spic::GameObject> entity, const std::shared_ptr<spic::Collider>& collider) { OnExit(entity, collider); };
 				std::function<void(const std::shared_ptr<spic::GameObject>, const std::shared_ptr<spic::Collider>)> stayCallback = [this](const std::shared_ptr<spic::GameObject> entity, const std::shared_ptr<spic::Collider>& collider) { OnStay(entity, collider); };
-				
+
 				physicsExtension->Reset(enterCallback, exitCallback, stayCallback);
 			}
 		}

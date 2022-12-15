@@ -10,6 +10,8 @@
 #include <filesystem>
 #include "TypeHelper.hpp"
 #include "StringHelper.hpp"
+#include "InternalTime.hpp"
+#include "Defaults.hpp"
 
 using namespace spic;
 using namespace spic::window;
@@ -58,10 +60,6 @@ void RendererImpl::Start(const spic::window::WindowValues* values)
 		exit(-1);
 	}
 
-	// for deltatime 
-	lastTick = SDL_GetTicks();
-	deltatime = 0;
-
 	// TODO: Zet in CreateWindow
 	const SDL_WindowFlags w_flags = SDL_WindowFlags(SDL_WINDOW_ALLOW_HIGHDPI | SDL_WINDOW_RESIZABLE);
 	window = WindowPtr(SDL_CreateWindow(values->WindowName.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, values->ScreenWidth, values->ScreenHeight, w_flags));
@@ -95,6 +93,31 @@ void RendererImpl::Start(const spic::window::WindowValues* values)
 		return;
 
 	missingTexture = TexturePtr(SDL_CreateTextureFromSurface(renderer.get(), tmp_sprites.get()));
+}
+
+void spic::internal::rendering::RendererImpl::Delay()
+{
+	using namespace spic::internal::time;
+	std::cerr << InternalTime::frameRate << ' ' << InternalTime::deltaTime << std::endl;
+
+	if ((InternalTime::frameRate > 0) && ((InternalTime::deltaTime) < (1000.0 / InternalTime::frameRate)))
+	{
+		// wait until the desired time has passed
+		SDL_Delay((Uint32)((InternalTime::deltaTime)));
+	}
+}
+
+void spic::internal::rendering::RendererImpl::RenderFps()
+{
+	using namespace spic::internal::time;
+	auto frameRate = std::to_string(InternalTime::frameRate);
+
+	auto defaultText = spic::internal::Defaults::TEXT_FONT;
+
+	auto font = TTF_OpenFont(defaultText.c_str(), 12);
+
+	SDL_Color orange = SDL_Color{ 255,255,0,255 };
+	this->RenderMultiLineText(font,frameRate, orange,0,0,100,100,1,spic::Alignment::CENTER);
 }
 
 void RendererImpl::Exit()

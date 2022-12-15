@@ -9,6 +9,7 @@
 #include "ISystem.hpp"
 #include "Scene.hpp"
 #include "TypeHelper.hpp"
+#include <ctime>
 
 namespace spic::internal
 {

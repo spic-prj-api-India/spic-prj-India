@@ -1,8 +1,3 @@
-#include <codeanalysis\warnings.h>
-#pragma warning( push )
-#pragma warning ( disable : ALL_CODE_ANALYSIS_WARNINGS )
-#include "SDL2/SDL.h"
-#pragma warning( pop )
 #include "GameEngine.hpp"
 #include "EntityManager.hpp"
 #include "Input.hpp"
@@ -69,25 +64,11 @@ namespace spic {
 
 	void GameEngine::Start(const spic::window::WindowValues* values)
 	{
-		const int FPS = 60;
-		const int frameDelay = 1000 / FPS;
-
-		Uint32 frameStart;
-		int frameTime;
-
 		spic::internal::Rendering::Start(values);
 
 		while (!quit) {
-			frameStart = SDL_GetTicks();
-
+	
 			internal::EntityManager::GetInstance()->Update();
-
-			// make the program sleep for the alotted time so nothing occurs within the excess frames and we can efficiently use the computers processing power.
-			frameTime = SDL_GetTicks() - frameStart;
-			if (frameDelay > frameTime)
-			{
-				SDL_Delay(frameDelay - frameTime);
-			}
 		}
 	}
 

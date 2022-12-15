@@ -372,6 +372,12 @@
     <ClInclude Include="NetworkingHelper.hpp">
       <Filter>Header Files\helpers</Filter>
     </ClInclude>
+    <ClInclude Include="InternalTime.hpp">
+      <Filter>Header Files\models</Filter>
+    </ClInclude>
+    <ClInclude Include="FPSlistener.hpp">
+      <Filter>Header Files\core\systems\rendering</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sample.cpp">
@@ -522,6 +528,12 @@
       <Filter>Header Files\extensions\networking</Filter>
     </ClCompile>
     <ClCompile Include="NetworkingHelper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FPSlistener.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="InternalTime.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
