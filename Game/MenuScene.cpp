@@ -28,7 +28,7 @@ void MenuScene::SetContents()
 		std::shared_ptr<spic::Button> button = std::make_shared<spic::Button>(200.0f, 100.0f, "Start Game", spic::Color::white(), "assets/textures/buttons/Button22.png");
 		button->Transform(std::make_shared<spic::Transform>(spic::Point(500.0f, 350.0f), 0.0f, 1.0f));
 		auto textTransform = button->GetChild<spic::Text>()->Transform();
-		textTransform->position.y = 10.0f;
+		textTransform->position.y = 35.0f;
 		button->OnClick([]() {
 			spic::Input::UnSubscribeAll();
 		spic::GameEngine::GetInstance()->LoadSceneByName("game");
@@ -40,7 +40,7 @@ void MenuScene::SetContents()
 		std::shared_ptr<spic::Button> button2 = std::make_shared<spic::Button>(200.0f, 100.0f, "Creddits", spic::Color::white(), "assets/textures/buttons/Button22.png");
 		button2->Transform(std::make_shared<spic::Transform>(spic::Point(500.0f, 450.0f), 0.0f, 1.0f));
 		auto textTransform2 = button2->GetChild<spic::Text>()->Transform();
-		textTransform2->position.y = 10.0f;
+		textTransform2->position.y = 35.0f;
 		button2->OnClick([]() {
 			spic::Input::UnSubscribeAll();
 		spic::GameEngine::GetInstance()->LoadSceneByName("creddits");

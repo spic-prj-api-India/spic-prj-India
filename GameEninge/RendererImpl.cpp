@@ -12,6 +12,7 @@
 #include "StringHelper.hpp"
 #include "InternalTime.hpp"
 #include "Defaults.hpp"
+#include <chrono>
 
 using namespace spic;
 using namespace spic::window;
@@ -98,12 +99,13 @@ void RendererImpl::Start(const spic::window::WindowValues* values)
 void spic::internal::rendering::RendererImpl::Delay()
 {
 	using namespace spic::internal::time;
-	std::cerr << InternalTime::frameRate << ' ' << InternalTime::deltaTime << std::endl;
+	//std::cerr << InternalTime::frameRate << ' ' << InternalTime::deltaTime << std::endl;
 
 	if ((InternalTime::frameRate > 0) && ((InternalTime::deltaTime) < (1000.0 / InternalTime::frameRate)))
 	{
 		// wait until the desired time has passed
-		SDL_Delay((Uint32)((InternalTime::deltaTime)));
+
+		std::this_thread::sleep_for(std::chrono::milliseconds(InternalTime::deltaTime));
 	}
 }
 
@@ -114,10 +116,10 @@ void spic::internal::rendering::RendererImpl::RenderFps()
 
 	auto defaultText = spic::internal::Defaults::TEXT_FONT;
 
-	auto font = TTF_OpenFont(defaultText.c_str(), 12);
+	auto font = this->LoadFont(defaultText, 10);
 
 	SDL_Color orange = SDL_Color{ 255,255,0,255 };
-	this->RenderMultiLineText(font,frameRate, orange,0,0,100,100,1,spic::Alignment::CENTER);
+	this->RenderMultiLineText(font,frameRate, orange,0,0,100,100,0,spic::Alignment::CENTER);
 }
 
 void RendererImpl::Exit()
@@ -338,11 +340,11 @@ void RendererImpl::DrawUI(UIObject* gameObject)
 
 void RendererImpl::DrawText(Text* text)
 {
-	const std::string  font = text->Font();
-	const char* filePath = font.c_str();
+	const std::string  fontPath = text->Font();
+	const char* filePath = fontPath.c_str();
 	if (std::filesystem::exists(filePath))
 	{
-		auto font = TTF_OpenFont(filePath, text->Size());
+		auto font = this->LoadFont(fontPath, text->Size());
 		auto transform = text->Transform().get();
 		auto colour = SDL_Color{ static_cast<unsigned char>(PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, text->Color().R())))
 			, static_cast<unsigned char>(PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, text->Color().G())))
@@ -354,8 +356,6 @@ void RendererImpl::DrawText(Text* text)
 		const float x = transform->position.x + (parent != nullptr ? parent->Transform()->position.x : 0);
 		const float y = transform->position.y + (parent != nullptr ? parent->Transform()->position.y : 0);
 		this->RenderMultiLineText(font, texts, colour, x, y, text->Width(), text->Height(), 2, text->Alignment());
-
-		TTF_CloseFont(font);
 	}
 }
 
@@ -408,6 +408,7 @@ void RendererImpl::RenderMultiLineText(const TTF_Font* pFont, std::string& rText
 	if (rText.empty())
 		return;
 	Wrap(pFont, rText, width);
+
 	try
 	{
 		SurfacePtr pSurface;
@@ -415,6 +416,7 @@ void RendererImpl::RenderMultiLineText(const TTF_Font* pFont, std::string& rText
 
 		int currentLine = 0;
 		float totalLength = 0;
+		float previusy = yPosition;
 
 		// This string will contain one line of text
 		std::string textLine = "";
@@ -469,9 +471,11 @@ void RendererImpl::RenderMultiLineText(const TTF_Font* pFont, std::string& rText
 					PositionQuad.x = xPosition;
 				}
 
-				PositionQuad.y = nextY;
+				PositionQuad.y = previusy;
 				PositionQuad.w = textWidth;
 				PositionQuad.h = textHeight;
+				previusy = PositionQuad.y;
+
 
 
 				SDL_RenderCopyF(this->renderer.get(), pTexture.get(), NULL, &PositionQuad);
@@ -492,17 +496,19 @@ void RendererImpl::RenderMultiLineText(const TTF_Font* pFont, std::string& rText
 
 TTF_Font* RendererImpl::LoadFont(const std::string& font, const int size)
 {
+	auto key = std::make_pair(font, size);
 	if (font.empty())
 		return nullptr;
-	bool exists = fonts.find(font) != fonts.end();
+	bool exists = fonts.find(key) != fonts.end();
 	if (exists)
-		return fonts[font].get();
+		return fonts[key].get();
 
 	auto tmp_font = FontPtr(TTF_OpenFont(font.c_str(), size));
 	if (!tmp_font.get())
 		return nullptr;
 
-	return tmp_font.get();
+	fonts.emplace(key, std::move(tmp_font));
+	return  fonts[key].get();
 }
 
 void RendererImpl::NewScene()

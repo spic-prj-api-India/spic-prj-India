@@ -91,7 +91,7 @@ namespace spic::internal::rendering {
 		/**
 		 * @brief Font Map
 		*/
-		std::map<std::string, FontPtr> fonts;
+		std::map<std::pair<std::string, int>, FontPtr> fonts;
 
 		/**
 		 * @brief Camera of the window
