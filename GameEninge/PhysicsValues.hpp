@@ -1,6 +1,8 @@
 #ifndef PHYSICSVALUES_H_
 #define PHYSICSVALUES_H_
 
+#include "WindowValues.hpp"
+
 namespace spic::extensions::PhysicsValues {
 	/**
 	 * @brief gravity used in physics world
@@ -8,11 +10,26 @@ namespace spic::extensions::PhysicsValues {
 	inline float GRAVITY = 9.81f;
 
 	/**
-	 * @brief Scaling factor in world.
-	 *      if game object is 100x100 pixels and scaling factor 0.01f
-	 *      then game object is 1x1 in meters
+	 * @brief Physics world uses meters instead of pixels. 
+	 *		This variable can be changed to define the conversion from pixels to meters.
+	 *		This will influence your physics world.
 	*/
-	inline float SCALING_FACTOR = 0.01f;
+	inline float PIX2MET = 0.0023f;
+
+	/**
+	 * @brief Conversion from meters to pixels.
+	*/
+	inline const float MET2PIX = 1.0f / PIX2MET;
+
+	/**
+	 * @brief Width of physics world.
+	*/
+	inline const float SCALED_WIDTH = spic::window::WINDOW_WIDTH * PIX2MET;
+
+	/**
+	 * @brief Height of physics world.
+	*/
+	inline const float SCALED_HEIGHT = spic::window::WINDOW_HEIGHT * PIX2MET;
 }
 
 #endif // PHYSICSVALUES_H_

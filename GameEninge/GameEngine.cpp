@@ -68,14 +68,14 @@ namespace spic {
 		return internal::EntityManager::GetInstance()->GetScene(sceneName);
 	}
 
-	void GameEngine::Start(const spic::window::WindowValues* values)
+	void GameEngine::Start()
 	{
 		const float frameDelay = 1000 / FPS;
 
 		Uint32 frameStart;
 		int frameTime;
 
-		spic::internal::Rendering::Start(values);
+		spic::internal::Rendering::Start();
 
 		while (!quit) {
 			frameStart = SDL_GetTicks();

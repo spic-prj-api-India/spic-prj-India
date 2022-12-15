@@ -8,12 +8,12 @@
 
 namespace spic::internal::systems {
 	PhysicsSystem::PhysicsSystem() 
+	{}
+
+	void PhysicsSystem::Start(std::vector<std::shared_ptr<spic::GameObject>>& entities, Scene& currentScene)
 	{
 		Reset();
 	}
-
-	void PhysicsSystem::Start(std::vector<std::shared_ptr<spic::GameObject>>& entities, Scene& currentScene)
-	{}
 
 	void PhysicsSystem::Reset() const
 	{

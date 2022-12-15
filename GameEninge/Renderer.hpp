@@ -13,9 +13,8 @@ namespace spic::internal {
     {        
         /**
          * @brief Starts up a window with all the correct values
-         * @param values 
         */
-        static void Start(const spic::window::WindowValues* values);
+        static void Start();
 
         /**
          * @brief Closes the window

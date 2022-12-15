@@ -27,11 +27,11 @@ void MenuScene::SetContents()
 {
 	AddButton("Start Game", []() {
 		spic::Input::UnSubscribeAll();
-		spic::GameEngine::GetInstance()->LoadScene(std::make_shared<GameScene>());
+		spic::GameEngine::GetInstance()->LoadSceneByName("game");
 		}, 0.0f);
 	AddButton("Start Flocking", []() {
 		spic::Input::UnSubscribeAll();
-		spic::GameEngine::GetInstance()->LoadScene(std::make_shared<FlockingScene>());
+		spic::GameEngine::GetInstance()->LoadSceneByName("flock");
 		}, 100.0f);
 }
 

@@ -219,9 +219,8 @@ namespace spic::internal::rendering {
 
 		/**
 		 * @brief Sets up aditional window values like name
-		 * @param values
 		*/
-		void UpdateWindow(const spic::window::WindowValues* values);
+		void UpdateWindow();
 	public:
 		/**
 		 * Singletons should not be cloneable or assignable.
@@ -339,9 +338,8 @@ namespace spic::internal::rendering {
 
 		/**
 		 * @brief Start up an new window
-		 * @param values All windowValues
 		*/
-		void Start(const spic::window::WindowValues* values);
+		void Start();
 	};
 }
 #endif // RENDERERIMPL_H_

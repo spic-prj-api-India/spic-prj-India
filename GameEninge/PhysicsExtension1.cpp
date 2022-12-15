@@ -14,12 +14,16 @@
 #include "ICollisionListener.hpp"
 #include "Box2DCollisionListener.hpp"
 #include "PhysicsValues.hpp"
+#include "WindowValues.hpp"
 #include "RigidBody.hpp"
 #include "ForceDriven.hpp"
 #include "Defaults.hpp"
 #include "TileLayer.hpp"
 #include "Renderer.hpp"
 #include "GameEngineInfo.hpp"
+
+using namespace spic::extensions::PhysicsValues;
+using namespace spic::window;
 
 namespace spic::extensions {
 	std::unique_ptr<b2World> world;

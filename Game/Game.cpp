@@ -11,12 +11,14 @@
 #include "SocketUdpExtension.hpp"
 #include <NetworkPacket.hpp>
 #include "NetworkingHelper.hpp"
+#include "GameScene.h"
+#include "FlockingScene.h"
 
 std::shared_ptr<spic::Scene> scene;
 
 void InitGame() {
 	spic::GameEngine* engine = spic::GameEngine::GetInstance();
-	spic::extensions::PhysicsValues::SCALING_FACTOR = 0.0017f;
+	spic::extensions::PhysicsValues::PIX2MET = 0.0023f;
 	std::shared_ptr<spic::extensions::PhysicsExtension1> physicsExtension = std::make_shared<spic::extensions::PhysicsExtension1>();
 	engine->AddExtension(std::move(physicsExtension));
 
@@ -31,16 +33,20 @@ void InitGame() {
 
 	// Register scenes
 	engine->RegisterScene("menu", std::make_shared<MenuScene>());
+	engine->RegisterScene("game", std::make_shared<GameScene>());
+	engine->RegisterScene("flock", std::make_shared<FlockingScene>());
 
 	spic::Debug::COLLIDER_VISIBILITY = true;
 }
 
 void StartGame()
 {
-	auto values = spic::window::WindowValues{ "Forts 2", 1200, 800, false, spic::window::FULLSCREENTYPE::WINDOWED };
+	spic::window::WINDOW_NAME = "Forts 2";
+	spic::window::WINDOW_WIDTH = 1200;
+	spic::window::WINDOW_HEIGHT = 800;
 	spic::GameEngine* engine = spic::GameEngine::GetInstance();
 	engine->LoadSceneByName("menu");
-	engine->Start(&values);
+	engine->Start();
 }
 
 int main()

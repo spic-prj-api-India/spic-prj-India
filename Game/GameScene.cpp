@@ -9,6 +9,7 @@
 #include "PlayerMovementScript.h"
 #include <CircleCollider.hpp>
 #include "Ball.h"
+#include <GameEngine.hpp>
 
 GameScene::GameScene() : Scene()
 {
@@ -59,10 +60,12 @@ void GameScene::SetContents()
 	football->AddComponent<spic::BehaviourScript>(moveFootballScript);
 
 	//UI test
-	std::shared_ptr<spic::Button> button = std::make_shared<spic::Button>(200.0f, 100.0f, "Click me");
+	std::shared_ptr<spic::Button> button = std::make_shared<spic::Button>(200.0f, 100.0f, "Menu");
 	button->Transform(std::make_shared<spic::Transform>(spic::Point(20.0f, 20.0f), 0.0f, 1.0f));
 	button->OnClick([]() {
-		std::cout << "Button clicked" << std::endl;
+		spic::Input::UnSubscribeAll();
+
+		spic::GameEngine::GetInstance()->LoadSceneByName("menu");
 		});
 
 	AddContent(box);

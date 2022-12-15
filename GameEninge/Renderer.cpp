@@ -1,9 +1,9 @@
 #include "Renderer.hpp"
 #include "RendererImpl.hpp"
 
-void spic::internal::Rendering::Start(const spic::window::WindowValues* values)
+void spic::internal::Rendering::Start()
 {
-	spic::internal::rendering::RendererImpl::GetInstance()->Start(values);
+	spic::internal::rendering::RendererImpl::GetInstance()->Start();
 }
 
 void spic::internal::Rendering::Exit()

@@ -48,7 +48,7 @@ RendererImpl* RendererImpl::GetInstance()
 	return pinstance_;
 }
 
-void RendererImpl::Start(const spic::window::WindowValues* values)
+void RendererImpl::Start()
 {
 	//Exit(); // does nothing if it has not been called yet
 
@@ -65,14 +65,14 @@ void RendererImpl::Start(const spic::window::WindowValues* values)
 
 	// TODO: Zet in CreateWindow
 	const SDL_WindowFlags w_flags = SDL_WindowFlags(SDL_WINDOW_ALLOW_HIGHDPI | SDL_WINDOW_RESIZABLE);
-	window = WindowPtr(SDL_CreateWindow(values->WindowName.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, values->ScreenWidth, values->ScreenHeight, w_flags));
+	window = WindowPtr(SDL_CreateWindow(spic::window::WINDOW_NAME.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, spic::window::WINDOW_WIDTH, spic::window::WINDOW_HEIGHT, w_flags));
 	if (window.get() == nullptr) {
 		std::cerr << SDL_GetError() << std::endl;
 		exit(-1);
 	}
 
 	SDL_SetWindowAlwaysOnTop(window.get(),
-		(SDL_bool)values->SetOnTop);
+		(SDL_bool)spic::window::SET_ON_TOP);
 
 	// TODO: Zet in CreateRenderer
 	SDL_RendererFlags rendererFlags = (SDL_RendererFlags)(SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
@@ -88,7 +88,7 @@ void RendererImpl::Start(const spic::window::WindowValues* values)
 		exit(-1);
 	}
 
-	this->UpdateWindow(values);
+	this->UpdateWindow();
 
 
 	auto tmp_sprites = SurfacePtr(IMG_Load(spic::internal::Defaults::MISSING_TEXTURE.c_str()));
@@ -681,11 +681,11 @@ void RendererImpl::Render()
 	SDL_RenderPresent(renderer.get());
 }
 
-void RendererImpl::UpdateWindow(const spic::window::WindowValues* values)
+void RendererImpl::UpdateWindow()
 {
 	Uint32 window_flags = -1;
 
-	switch (values->selector)
+	switch (spic::window::SELECTOR)
 	{
 	case FULLSCREENTYPE::BORDERLESS:
 		window_flags = SDL_WINDOW_FULLSCREEN_DESKTOP;
