@@ -40,6 +40,12 @@ namespace spic::internal::systems {
 		 * @spicapi
 		 */
 		std::vector<std::vector<std::shared_ptr<spic::GameObject>>> GetFilteredEntities(const std::vector<std::shared_ptr<spic::GameObject>>& entities) const;
+
+		/**
+		 * @brief Calls draw colliders method in physics extensions.
+		 * @spicapi
+		 */
+		void DrawColliders();
 	};
 }
 

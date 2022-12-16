@@ -1,17 +1,17 @@
-#include "CredditsScene.h"
+#include "CreditsScene.h"
 #include "Text.hpp"
 #include "Animator.hpp"
-#include "CredditsSceneScript.h"
+#include "CreditsSceneScript.h"
 
-CredditsScene::CredditsScene()
+CreditsScene::CreditsScene()
 {
 	SetCammera();
 	SetContents();
 }
 
-void CredditsScene::SetContents()
+void CreditsScene::SetContents()
 {
-	auto creddits = std::make_shared<spic::Text>(1200, 900
+	auto creddits = std::make_shared<spic::Text>(1200.0f, 900.0f
 		, "Made by:\nCollin Knuit\nBart Blaak\nMilo van der pas\n\n\nPress 'backspace' to return to menu\nPress 'spacebar' for fun"
 		, ""
 		, 50
@@ -27,7 +27,7 @@ void CredditsScene::SetContents()
 	animator1->InitHorizontalSpriteSheet("assets/textures/animated-explosion/Explosion_9/spritesheet.png",10, 800, 800);
 	animator1->Stop();
 
-	auto script1 = std::make_shared<CredditsSceneScript>();
+	auto script1 = std::make_shared<CreditsSceneScript>();
 	script1->ani = animator1.get();
 	animatorObject1->AddComponent(std::move(animator1));
 
@@ -42,7 +42,7 @@ void CredditsScene::SetContents()
 	animator2->InitHorizontalSpriteSheet("assets/textures/animated-explosion/Explosion_9/spritesheet.png", 10, 800, 800);
 	animator2->Stop();
 
-	auto script2 = std::make_shared<CredditsSceneScript>();
+	auto script2 = std::make_shared<CreditsSceneScript>();
 	script2->ani = animator2.get();
 
 	animatorObject2->AddComponent(std::move(animator2));
@@ -52,7 +52,7 @@ void CredditsScene::SetContents()
 	this->AddContent(creddits);
 }
 
-void CredditsScene::SetCammera()
+void CreditsScene::SetCammera()
 {
 	std::unique_ptr<spic::Camera> camera = std::make_unique<spic::Camera>();
 	camera->Transform(std::make_shared<spic::Transform>(spic::Point(0.0f, 0.0f), 0.0f, 1.0f));

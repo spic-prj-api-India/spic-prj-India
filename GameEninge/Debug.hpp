@@ -3,7 +3,10 @@
 
 #include "Point.hpp"
 #include "Color.hpp"
+#include "GameObject.hpp"
 #include <string>
+#include <vector>
+#include <memory>
 
 namespace spic {
 
@@ -11,6 +14,19 @@ namespace spic {
      * @brief Some convenient debugging functions.
      */
     namespace Debug {
+        /*
+         * @brief Enables or disables collider visibility.
+        */
+        inline bool COLLIDER_VISIBILITY = false;
+
+        /*
+         * @brief Sets DEBUG to true if project is running in Debug mode.
+        */
+        #ifdef NDEBUG
+            const inline bool DEBUG = false;
+        #else
+            const inline bool DEBUG = true;
+        #endif
 
         /**
          * @brief Draws a colored line between specified start and end points.
@@ -41,7 +57,6 @@ namespace spic {
          * @spicapi
          */
         void LogWarning(const std::string& warning);
-
     }
 
 }

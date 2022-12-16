@@ -3,19 +3,21 @@
 
 #include "Component.hpp"
 #include "Transform.hpp"
-#include "RigidBody.hpp"
 #include <string>
 #include <vector>
 #include <memory>
-#include "Collider.hpp"
-#include "Sprite.hpp"
-#include <functional>
+#include "TypeHelper.hpp"
 #include <map>
 
 namespace spic {
+	/*
+	 * @brief Forward declaration is used, because there is a circular dependency.
+	*/
+	class Component;
+
 	/**
 	 * @brief Any object which should be represented on screen.
-	 */
+	*/
 	class GameObject {
 	public:
 		GameObject();
@@ -50,7 +52,7 @@ namespace spic {
 		}
 
 		/**
-		 * @brief Checks if name exsists in colection
+		 * @brief Checks if name exists in colection
 		 * @param gameobjects 
 		 * @param name 
 		 * @return 
@@ -231,7 +233,15 @@ namespace spic {
 		 */
 		static void Destroy(Component* obj);
 
-
+		/**
+		* @brief Create function.
+		* @details The new GameObject will be added to a statically
+		*          available collection.  This makes the
+		*          Find()-functions possible.
+		* @param gameObject The game object.
+		* @spicapi
+		*/
+		static void Create(const std::shared_ptr<GameObject> gameObject);
 
 		/**
 		 * @brief Does the object exist? TODO wat wordt hiermee bedoeld?
@@ -414,6 +424,7 @@ namespace spic {
 	template<class T>
 	void GameObject::AddComponent(std::shared_ptr<T> component)
 	{
+		spic::TypeHelper::CastSharedPtrToType<Component>(component)->Parent(*this);
 		components.emplace_back(component);
 	}
 

@@ -19,38 +19,37 @@ namespace spic
 
 	void TileLayer::Render()
 	{
-		for (unsigned int i = 0; i < tileMatrix.size(); i++)
+		const Point size = GetSize();
+		for (int rowIndex = 0; rowIndex < size.y; rowIndex++)
 		{
-			for (unsigned int j = 0; j < tileMatrix[1].size(); j++)
+			for (int colIndex = 0; colIndex < size.x; colIndex++)
 			{
-				int tileId = tileMatrix[i][j];
+				int tileId = tileMatrix[colIndex][rowIndex];
 				if (tileId == 0) continue;
 
-				else {
-					tileId--;
-					int tilesetIndex = 0;
+				tileId--;
+				spic::TileSet& useTileset = tilesets[0];
 
-					if (tilesets.size() > 1) {
-						for (unsigned int k = 1; k < tilesets.size(); k++)
+				if (tilesets.size() > 1) {
+					for (int tilesetIndex = 1; tilesetIndex < tilesets.size(); tilesetIndex++)
+					{
+						if (tileId >= (tilesets[tilesetIndex].firstId - 1) && tileId < tilesets[tilesetIndex].lastId)
 						{
-							if (tileId >= (tilesets[k].firstId - 1) && tileId < tilesets[k].lastId)
-							{
-								tileId = tileId + tilesets[k].tileCount - tilesets[k].lastId;
-								tilesetIndex = k;
-								break;
-							}
+							tileId = tileId + tilesets[tilesetIndex].tileCount - tilesets[tilesetIndex].lastId;
+							useTileset = tilesets[tilesetIndex];
+							break;
 						}
 					}
-
-					const int tileRow = static_cast<int>(tileId / tilesets[tilesetIndex].columnCount);
-					const int tileCol = static_cast<int>(tileId - (tilesets[tilesetIndex].columnCount * tileRow));
-
-					std::unique_ptr<Sprite> sprite = GetSprite(tilesets[tilesetIndex], tileCol * tileSize, tileRow * tileSize, tileSize);
-					const float x = static_cast<float>(j * tileSize);
-					const float y = static_cast<float>(i * tileSize);
-					Transform transform = Transform(Point(x, y), 0.0f, 1.0f);
-					spic::internal::Rendering::DrawSprite(&transform, sprite.get());
 				}
+
+				const int tileRow = static_cast<int>(tileId / useTileset.columnCount);
+				const int tileCol = static_cast<int>(tileId - (useTileset.columnCount * tileRow));
+
+				std::unique_ptr<Sprite> sprite = GetSprite(useTileset, tileCol * tileSize, tileRow * tileSize, tileSize);
+				const float x = static_cast<float>(colIndex * tileSize);
+				const float y = static_cast<float>(rowIndex * tileSize);
+				Transform transform = Transform(Point(x, y), 0.0f, 1.0f);
+				spic::internal::Rendering::DrawSprite(&transform, sprite.get());
 			}
 		}
 	}
@@ -84,8 +83,8 @@ namespace spic
 
 	Point TileLayer::GetSize() const
 	{
-		float sizeX = static_cast<float>(tileMatrix.size());
-		float sizeY = static_cast<float>(tileMatrix[1].size());
+		const float sizeX = static_cast<float>(tileMatrix.size());
+		const float sizeY = static_cast<float>(tileMatrix[0].size());
 		return Point(sizeX, sizeY);
 	}
 }

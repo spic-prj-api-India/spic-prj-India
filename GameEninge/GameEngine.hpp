@@ -132,7 +132,7 @@ namespace spic {
 		* @brief Start game loop
 		* @spicapi
 		*/
-		void Start(const spic::window::WindowValues* values);
+		void Start();
 
 		/*
 		* @brief Stop game loop

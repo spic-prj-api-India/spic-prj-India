@@ -149,10 +149,10 @@ namespace spic::internal {
 		}
 	}
 
-	void InputManager::TriggerMouseMoved() const
+	void InputManager::TriggerMouseMoved()
 	{
-		for (const auto& mousePair : mouseListeners) {
-			for (const auto& mouseListener : mousePair.second) {
+		for (const auto& key : ContainerHelper::GetKeys(mouseListeners)) {
+			for (const std::shared_ptr<spic::IMouseListener>& mouseListener : mouseListeners[key]) {
 				mouseListener->OnMouseMoved();
 			}
 		}

@@ -2,6 +2,7 @@
 #define BUTTON_H_
 
 #include "UIObject.hpp"
+#include "Color.hpp"
 #include <functional>
 
 namespace spic {

@@ -165,11 +165,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AISystem.hpp" />
     <ClInclude Include="Animator.hpp" />
     <ClInclude Include="AudioInfo.hpp" />
     <ClInclude Include="AudioManager.hpp" />
     <ClInclude Include="AudioSource.hpp" />
     <ClInclude Include="BehaviourScript.hpp" />
+    <ClInclude Include="Bounds.hpp" />
     <ClInclude Include="BoxCollider.hpp" />
     <ClInclude Include="Button.hpp" />
     <ClInclude Include="ButtonClickListener.hpp" />
@@ -188,6 +190,7 @@
     <ClInclude Include="Defaults.hpp" />
     <ClInclude Include="GameEngine.hpp" />
     <ClInclude Include="EntityManager.hpp" />
+    <ClInclude Include="GameEngineInfo.hpp" />
     <ClInclude Include="GameObject.hpp" />
     <ClInclude Include="GeneralHelper.hpp" />
     <ClInclude Include="ICollisionListener.hpp" />
@@ -199,16 +202,20 @@
     <ClInclude Include="InputManager.hpp" />
     <ClInclude Include="InputSystem.hpp" />
     <ClInclude Include="IPhysicsExtension.hpp" />
+    <ClInclude Include="Matrix.hpp" />
     <ClInclude Include="INetworkExtension.hpp" />
     <ClInclude Include="NetworkingHelper.hpp" />
     <ClInclude Include="NetworkingReceiveSystem.hpp" />
     <ClInclude Include="NetworkingSendSystem.hpp" />
     <ClInclude Include="Persistable.hpp" />
+    <ClInclude Include="ForceDriven.hpp" />
     <ClInclude Include="PhysicsExtension1.hpp" />
     <ClInclude Include="PhysicsSystem.hpp" />
     <ClInclude Include="ISystem.hpp" />
     <ClInclude Include="MapParser.hpp" />
     <ClInclude Include="Point.hpp" />
+    <ClInclude Include="Rect.hpp" />
+    <ClInclude Include="Random.hpp" />
     <ClInclude Include="Renderer.hpp" />
     <ClInclude Include="RenderingSystem.hpp" />
     <ClInclude Include="Serializer.hpp" />
@@ -226,6 +233,7 @@
     <ClInclude Include="TileSet.hpp" />
     <ClInclude Include="Time.hpp" />
     <ClInclude Include="Transform.hpp" />
+    <ClInclude Include="Transformations.hpp" />
     <ClInclude Include="TypeHelper.hpp" />
     <ClInclude Include="UIObject.hpp" />
     <ClInclude Include="RendererImpl.hpp" />
@@ -233,19 +241,26 @@
     <ClInclude Include="WindowValues.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AISystem.cpp" />
     <ClCompile Include="Animator.cpp" />
     <ClCompile Include="AudioManager.cpp" />
     <ClCompile Include="AudioSource.cpp" />
+    <ClCompile Include="Bounds.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="ButtonClickListener.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Chunk.cpp" />
     <ClCompile Include="BehaviourScript.cpp" />
     <ClCompile Include="Box2DCollisionListener.cpp" />
+    <ClCompile Include="Collider.cpp" />
     <ClCompile Include="DataSystem.cpp" />
+    <ClCompile Include="Component.cpp" />
+    <ClCompile Include="Debug.cpp" />
     <ClCompile Include="GeneralHelper.cpp" />
     <ClCompile Include="IPhysicsExtension.cpp" />
     <ClCompile Include="MapParser.cpp" />
+    <ClCompile Include="ForceDriven.cpp" />
+    <ClCompile Include="Matrix.cpp" />
     <ClCompile Include="NetworkingHelper.cpp" />
     <ClCompile Include="NetworkingReceiveSystem.cpp" />
     <ClCompile Include="NetworkingSendSystem.cpp" />
@@ -256,12 +271,14 @@
     <ClCompile Include="CircleCollider.cpp" />
     <ClCompile Include="Color.cpp" />
     <ClCompile Include="Point.cpp" />
+    <ClCompile Include="Random.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="SocketScript.cpp" />
     <ClCompile Include="SocketUDPExtension.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="StringHelper.cpp" />
     <ClCompile Include="Text.cpp" />
+    <ClCompile Include="Transformations.cpp" />
     <ClCompile Include="ThreadWrapper.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="UDP.ixx" />

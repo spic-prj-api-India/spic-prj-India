@@ -9,11 +9,14 @@
 #include "MapParser.hpp"
 #include "InputSystem.hpp"
 #include "PhysicsSystem.hpp"
+#include "AISystem.hpp"
 #include "RenderingSystem.hpp"
 #include "DataSystem.hpp"
 #include "AudioManager.hpp"
 #include "NetworkingReceiveSystem.hpp"
 #include "NetworkingSendSystem.hpp"
+#include "GameEngine.hpp"
+#include "PhysicsExtension1.hpp"
 
 using namespace spic;
 using namespace spic::internal;
@@ -46,14 +49,16 @@ void EntityManager::Init()
 	std::unique_ptr<systems::PhysicsSystem> physicsSystem = std::make_unique<systems::PhysicsSystem>();
 	std::unique_ptr<systems::RenderingSystem> renderingSystem = std::make_unique<systems::RenderingSystem>();
 	std::unique_ptr<systems::DataSystem> dataSystem = std::make_unique<systems::DataSystem>();
+	std::unique_ptr<systems::AISystem> aiSystem = std::make_unique<systems::AISystem>();
 	std::unique_ptr<systems::NetworkingReceiveSystem> networkRecieve = std::make_unique<systems::NetworkingReceiveSystem>();
 	std::unique_ptr<systems::NetworkingSendSystem> networkSend = std::make_unique<systems::NetworkingSendSystem>();
 	AddInternalSystem(std::move(networkRecieve), 0);
 	AddInternalSystem(std::move(inputSystem), 1);
 	AddInternalSystem(std::move(physicsSystem), 2);
 	AddInternalSystem(std::move(dataSystem), 3);
-	AddInternalSystem(std::move(networkSend), 4);
-	AddInternalSystem(std::move(renderingSystem), 5);
+    AddInternalSystem(std::move(aiSystem), 4);
+	AddInternalSystem(std::move(networkSend), 5);
+	AddInternalSystem(std::move(renderingSystem), 6);
 }
 
 void EntityManager::Reset()
@@ -68,9 +73,11 @@ std::vector<std::shared_ptr<spic::GameObject>> EntityManager::GetEntities() {
 	return entities;
 }
 
-void EntityManager::AddEntity(const std::shared_ptr<spic::GameObject>& entity)
+void EntityManager::AddEntity(std::shared_ptr<spic::GameObject> entity)
 {
-	entities.push_back(entity);
+	if (entity->Name().empty())
+		throw std::exception("Entity requires a name.");
+	entities.push_back(std::move(entity));
 }
 
 void spic::internal::EntityManager::AddEntityAlsoToScene(const std::shared_ptr<spic::GameObject>& entity)
@@ -79,7 +86,7 @@ void spic::internal::EntityManager::AddEntityAlsoToScene(const std::shared_ptr<s
 	scene->AddContent(entity);
 }
 
-void EntityManager::RemoveEntity(const std::shared_ptr<spic::GameObject> entity) {
+void EntityManager::RemoveEntity(const std::shared_ptr<spic::GameObject>& entity) {
 	entities.erase(
 		std::remove(entities.begin(), entities.end(), entity),
 		entities.end());
@@ -119,24 +126,31 @@ void EntityManager::SetScene(const std::string& sceneName)
 
 void EntityManager::SetScene(std::shared_ptr<Scene> newScene)
 {
+	if (&newScene->Camera() == nullptr)
+		throw std::exception("No camera defined.");
 	DestroyScene();
 	scene = newScene;
 	entities.clear();
-	const TileMap* tileMap = scene->TileMap();
-	if (tileMap != nullptr) {
-		for (auto& entity : scene->TileMap()->CollisionEntities()) {
-			entities.push_back(entity);
-		}
-	}
+
 	for (auto& entity : scene->Contents())
 	{
 		entities.push_back(entity);
 	}
+
 	for (const auto& systemsMap : systems)
 	{
 		for (const auto& system : systemsMap.second)
 		{
 			system->Start(entities, *scene);
+		}
+	}
+
+	const TileMap* tileMap = scene->TileMap();
+	if (tileMap != nullptr) {
+		GameEngine* engine = GameEngine::GetInstance();
+		for (const auto& weakExtension : engine->GetExtensions<spic::extensions::IPhysicsExtension>()) {
+			if (const auto& physicsExtension = weakExtension.lock())
+				physicsExtension->AddCollisionLayer(tileMap->GetCollisionLayer());
 		}
 	}
 

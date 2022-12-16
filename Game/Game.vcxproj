@@ -147,25 +147,35 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CameraMovementScript.cpp" />
+    <ClCompile Include="AimListener.cpp" />
     <ClCompile Include="CollisionDetectionScript.cpp" />
-    <ClCompile Include="CredditsScene.cpp" />
-    <ClCompile Include="CredditsSceneScript.cpp" />
+    <ClCompile Include="FlockingScene.cpp" />
+    <ClCompile Include="Ball.cpp" />
+    <ClCompile Include="CreditsScene.cpp" />
+    <ClCompile Include="CreditsSceneScript.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="KeyListener.cpp" />
-    <ClCompile Include="MouseListener.cpp" />
     <ClCompile Include="MenuScene.cpp" />
+    <ClCompile Include="FollowMouseListener.cpp" />
+    <ClCompile Include="PlayerMovementScript.cpp" />
+    <ClCompile Include="Rocket.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AimListener.h" />
     <ClInclude Include="Box.h" />
     <ClInclude Include="CameraMovementScript.h" />
     <ClInclude Include="CollisionDetectionScript.h" />
-    <ClInclude Include="CredditsScene.h" />
-    <ClInclude Include="CredditsSceneScript.h" />
+    <ClInclude Include="FlockingScene.h" />
+    <ClInclude Include="Ball.h" />
+    <ClInclude Include="CreditsScene.h" />
+    <ClInclude Include="CreditsSceneScript.h" />
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="KeyListener.h" />
+    <ClInclude Include="FollowMouseListener.h" />
+    <ClInclude Include="PlayerMovementScript.h" />
+    <ClInclude Include="Rocket.h" />
     <ClInclude Include="MenuScene.h" />
-    <ClInclude Include="MouseListener.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GameEninge\GameEninge.vcxproj">

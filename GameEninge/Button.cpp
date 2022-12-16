@@ -2,6 +2,7 @@
 #include "Text.hpp"
 #include "StringHelper.hpp"
 #include "Defaults.hpp"
+#include "Sprite.hpp"
 
 namespace spic {
 	Button::Button() : Button(0.0f, 0.0f)

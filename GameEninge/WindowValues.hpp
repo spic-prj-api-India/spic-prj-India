@@ -2,8 +2,10 @@
 #ifndef WINDOWINFO_H_
 #define WINDOWINFO_H_
 
+/**
+ * @brief Values needed to start rendering
+*/
 namespace spic::window {
-
     enum class FULLSCREENTYPE
     {
         WINDOWED = 0,
@@ -12,34 +14,28 @@ namespace spic::window {
     };
 
     /**
-     * @brief Values needed to start rendering
+     * @brief Name of the window
     */
-    struct WindowValues
-    {
-        /**
-         * @brief Name of the window
-        */
-        std::string WindowName;
+    inline std::string WINDOW_NAME = "Window name";
 
-        /**
-         * @brief Width of the window
-        */
-        int ScreenWidth;
+    /**
+     * @brief Width of the window
+    */
+    inline int WINDOW_WIDTH = 1200;
 
-        /**
-         * @brief Height of the window
-        */
-        int ScreenHeight;
+    /**
+     * @brief Height of the window
+    */
+    inline int WINDOW_HEIGHT = 800;
 
-        /**
-         * @brief If the window is always on Top
-        */
-        bool SetOnTop;
+    /**
+     * @brief If the window is always on Top
+    */
+    inline bool SET_ON_TOP = false;
 
-        /**
-         * @brief Which mode the window is
-        */
-        FULLSCREENTYPE selector;
-    };
+    /**
+     * @brief Which mode the window is
+    */
+    inline FULLSCREENTYPE SELECTOR = FULLSCREENTYPE::WINDOWED;
 }
 #endif // WINDOWINFO_H_

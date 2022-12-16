@@ -11,15 +11,17 @@ namespace spic::internal
     class MapParser
     {
     public:
-        MapParser();
+        /**
+         * @param collisionLayerIndex Index of layer where collision tiles are.
+         */
+        MapParser(const int collisionLayerIndex);
 
         /**
          * @brief Parse tmx file to Tilemap.
          * @param fileName File name of tmx file.
-         * @param collisionLayerIndex Index of layer where collision tiles are.
          * @spicapi
          */
-        std::unique_ptr<spic::TileMap> Parse(const std::string fileName, const int collisionLayerIndex);
+        std::unique_ptr<spic::TileMap> Parse(const std::string fileName);
     private:
         /**
          * @brief Parse tile layer and add layer to tile map.

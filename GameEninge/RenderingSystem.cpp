@@ -1,6 +1,10 @@
 #include "RenderingSystem.hpp"
 #include "Renderer.hpp"
 #include "TypeHelper.hpp"
+#include "Debug.hpp"
+#include "BoxCollider.hpp"
+#include "GameEngine.hpp"
+#include "IPhysicsExtension.hpp"
 
 namespace spic::internal::systems {
 	RenderingSystem::RenderingSystem()
@@ -37,7 +41,8 @@ namespace spic::internal::systems {
 		{
 			spic::internal::Rendering::Draw(entity.get());
 		}
-
+		if(Debug::DEBUG && Debug::COLLIDER_VISIBILITY)
+			DrawColliders();
 		spic::internal::Rendering::Render();
 	}
 
@@ -53,5 +58,14 @@ namespace spic::internal::systems {
 		}
 
 		return { nonUIEntities, uiEntities };
+	}
+
+	void RenderingSystem::DrawColliders()
+	{
+		GameEngine* engine = GameEngine::GetInstance();
+		for (const auto& weakExtension : engine->GetExtensions<spic::extensions::IPhysicsExtension>()) {
+			if (const auto& physicsExtension = weakExtension.lock())
+				physicsExtension->DrawColliders();
+		}
 	}
 }
