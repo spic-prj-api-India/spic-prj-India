@@ -13,6 +13,7 @@
 #include "Defaults.hpp"
 #include "WindowValues.hpp"
 #include <iostream>
+#include "InternalTime.hpp"
 
 using namespace spic;
 using namespace spic::window;
@@ -22,8 +23,6 @@ using namespace spic::GeneralHelper;
 #define UINT_8_BEGIN 0
 #define UINT_8_END 255
 
-RendererImpl* RendererImpl::pinstance_{ nullptr };
-std::mutex RendererImpl::mutex_;
 
 RendererImpl::RendererImpl() noexcept(false) : camera{ 0, 0, 0, 0 }, backgroundColor{ 0,0,0,1 }, backgroundImage{ "" }, scaling{ 1 }, rotation{ 0 }
 {

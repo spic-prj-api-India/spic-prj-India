@@ -2,7 +2,6 @@
 #include "EntityManager.hpp"
 #include "Input.hpp"
 #include "Renderer.hpp"
-#include "GameEngineInfo.hpp"
 
 namespace spic {
 	GameEngine* GameEngine::pinstance_{ nullptr };
@@ -65,7 +64,7 @@ namespace spic {
 
 	void GameEngine::Start()
 	{
-		spic::internal::Rendering::Start(values);
+		spic::internal::Rendering::Start();
 
 		while (!quit) {
 	

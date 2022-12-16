@@ -7,9 +7,10 @@ public:
 	CreditsScene();
 	void SetContents();
 	void SetCammera();
+
 	static spic::Scene* Start()
 	{
-		CredditsScene* a = new CredditsScene();
+		CreditsScene* a = new CreditsScene();
 		return a;
 	}
 };

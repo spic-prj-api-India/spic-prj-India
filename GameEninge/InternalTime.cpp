@@ -1,5 +1,7 @@
 #include "InternalTime.hpp"
 #include <chrono>
+#include <thread>
+
 using spic::internal::time::InternalTime;
 
 clock_t InternalTime::beginFrame;

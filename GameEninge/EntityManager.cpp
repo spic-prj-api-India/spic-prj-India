@@ -46,7 +46,6 @@ EntityManager* EntityManager::GetInstance()
 		pinstance_ = new EntityManager();
 	}
 	return pinstance_;
-	
 }
 
 void EntityManager::Init()
@@ -140,7 +139,7 @@ void EntityManager::SetScene(std::shared_ptr<Scene> newScene)
 		throw std::exception("No camera defined.");
 	DestroyScene();
 	scene = newScene;
-	entities.clear();
+	//entities.clear();
 
 	for (auto& entity : scene->Contents())
 	{
@@ -182,19 +181,13 @@ void EntityManager::DestroyScene(bool forceDelete)
 {
 	scene = nullptr;
 	if (forceDelete)
-	{
 		entities.clear();
-	}
+	
 	else
-	{
-		for (auto& entity : entities)
-		{
-			if (!entity->DontDestroyOnLoad())
-			{
-				entities.erase(std::remove(entities.begin(), entities.end(), entity), entities.end());
-			}
-		}
-	}
+		entities.erase(std::remove_if(entities.begin(), entities.end()
+			, [](const std::shared_ptr<spic::GameObject>& x){
+				return !x->DontDestroyOnLoad(); 
+			}), entities.end());
 }
 
 void EntityManager::AddSystem(std::unique_ptr<spic::systems::ISystem> system)

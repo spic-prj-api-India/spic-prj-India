@@ -17,6 +17,12 @@ namespace spic::internal::systems {
         PhysicsSystem();
 
         /**
+        * @brief Resets physics extensions and registers new collision listener
+        * @spicapi
+        */
+        void Reset() const;
+
+        /**
         * @brief Initiliazes system
         * @spicapi
         */

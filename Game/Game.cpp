@@ -13,7 +13,8 @@
 #include "GameScene.h"
 #include "FlockingScene.h"
 #include "CreditsScene.h"
-
+#include "MenuScene.h"
+#include "CreditsScene.h"
 
 
 
@@ -29,15 +30,16 @@ void InitGame() {
 	engine->AddExtension(std::move(socket));
 
 	// Register types
-	engine->RegisterType<Box>();
+	//engine->RegisterType<Box>();
 
 	// Register scenes
 
 	engine->RegisterScene("menu", std::function<spic::Scene* ()>(MenuScene::Start));
 
-	//engine->RegisterScene("game", std::make_shared<GameScene>());
-	engine->RegisterScene("creddits", std::function<spic::Scene* ()>(CredditsScene::Start));
-	spic::Debug::COLLIDER_VISIBILITY = true;
+	
+	engine->RegisterScene("game", std::function<spic::Scene* ()>(GameScene::Start));
+	engine->RegisterScene("credits", std::function<spic::Scene* ()>(CreditsScene::Start));
+	//spic::Debug::COLLIDER_VISIBILITY = true;
 }
 
 void StartGame()

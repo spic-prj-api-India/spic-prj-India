@@ -396,9 +396,6 @@
     <ClInclude Include="AudioManager.hpp">
       <Filter>Header Files\core\managers</Filter>
     </ClInclude>
-    <ClInclude Include="GameEngineInfo.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Bounds.hpp">
       <Filter>Header Files\models</Filter>
     </ClInclude>

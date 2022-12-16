@@ -20,7 +20,7 @@
 #include "Defaults.hpp"
 #include "TileLayer.hpp"
 #include "Renderer.hpp"
-#include "GameEngineInfo.hpp"
+#include "InternalTime.hpp"
 
 using namespace spic::extensions::PhysicsValues;
 using namespace spic::window;
@@ -130,8 +130,10 @@ namespace spic::extensions {
 				else
 					CreateEntity(entity);
 			}
+			using namespace spic::internal::time;
 			// Update world
-			world->Step(1.0f / 60.0f, int32(velocityIterations), int32(positionIterations));
+			
+			world->Step(1.0f / static_cast<float>(InternalTime::frameRate), int32(velocityIterations), int32(positionIterations));
 			// Update entities
 			for (auto& entity : entities) {
 				// Get body

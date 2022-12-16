@@ -23,7 +23,7 @@ void CreditsScene::SetContents()
 
 	auto animatorObject1 = std::make_shared<spic::GameObject>();
 	animatorObject1->Transform(std::make_shared<spic::Transform>(spic::Point(0.0f, 200.0f), 0.0f, 0.5f));
-	auto animator1 = std::make_shared<spic::Animator>(1);
+	auto animator1 = std::make_shared<spic::Animator>(10);
 	animator1->InitHorizontalSpriteSheet("assets/textures/animated-explosion/Explosion_9/spritesheet.png",10, 800, 800);
 	animator1->Stop();
 
@@ -38,7 +38,7 @@ void CreditsScene::SetContents()
 
 	auto animatorObject2 = std::make_shared<spic::GameObject>();
 	animatorObject2->Transform(std::make_shared<spic::Transform>(spic::Point(700.0f, 200.0f), 0.0f, 0.5f));
-	auto animator2 = std::make_shared<spic::Animator>(1);
+	auto animator2 = std::make_shared<spic::Animator>(20);
 	animator2->InitHorizontalSpriteSheet("assets/textures/animated-explosion/Explosion_9/spritesheet.png", 10, 800, 800);
 	animator2->Stop();
 
