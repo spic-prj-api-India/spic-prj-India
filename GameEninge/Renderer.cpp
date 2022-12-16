@@ -26,9 +26,9 @@ void spic::internal::Rendering::DrawRect(const spic::Rect& rect, const double an
 	spic::internal::rendering::RendererImpl::GetInstance()->DrawRect(rect, angle, color);
 }
 
-void spic::internal::Rendering::DrawCircle(const spic::Point& center, const float radius, const spic::Color& color)
+void spic::internal::Rendering::DrawCircle(const spic::Point& center, const float radius, const spic::Color& color, const float pixelGap)
 {
-	spic::internal::rendering::RendererImpl::GetInstance()->DrawCircle(center, radius, color);
+	spic::internal::rendering::RendererImpl::GetInstance()->DrawCircle(center, radius, pixelGap, color);
 }
 
 void spic::internal::Rendering::DrawPoint(const spic::Point& point, const spic::Color& color)

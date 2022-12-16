@@ -524,7 +524,7 @@ void RendererImpl::DrawRect(const spic::Rect& rect, const double angle, const sp
 	SDL_RenderCopyExF(renderer.get(), texture, NULL, &dstRect, angleInDeg, NULL, SDL_FLIP_NONE);
 }
 
-void RendererImpl::DrawCircle(const spic::Point& center, const float radius, const spic::Color& color)
+void RendererImpl::DrawCircle(const spic::Point& center, const float radius, const float pixelGap, const spic::Color& color)
 {
 	const float diameter = radius * 2.0f;
 	SDL_FRect dstCenter = SDL_FRect(center.x - radius, center.y - radius, diameter, diameter);
@@ -540,7 +540,6 @@ void RendererImpl::DrawCircle(const spic::Point& center, const float radius, con
 		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, color.A())));
 
 	// Pixel gap configures how precise the circle is drawn
-	constexpr float pixelGap = 1.0f;
 	float x = radius - pixelGap;
 	float y = 0.0f;
 	float dx = pixelGap;

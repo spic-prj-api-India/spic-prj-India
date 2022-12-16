@@ -277,9 +277,10 @@ namespace spic::internal::rendering {
 		 * @details Circle is not drawn when circle is not in camera view.
 		 * @param center The center of the circle
 		 * @param angle The radius of the circle
+		 * @param pixelGap The gap (in pixels) between each point in the circle
 		 * @param color The color of the circle
 		*/
-		void DrawCircle(const spic::Point& center, const float radius, const spic::Color& color);
+		void DrawCircle(const spic::Point& center, const float radius, const float pixelGap, const spic::Color& color);
 
 		/**
 		 * @brief Draws a point in world space. 

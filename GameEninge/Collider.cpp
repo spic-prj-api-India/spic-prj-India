@@ -2,21 +2,42 @@
 
 using namespace spic;
 
-Collider::Collider()
+Collider::Collider() : Collider(0.3f, 0.5f)
+{}
+
+Collider::Collider(const float friction, const float bounciness) : friction{ friction }, bounciness{ bounciness }, enabled{ true }
+{}
+
+float Collider::Friction() const
 {
-	enabled = true;
+	return this->friction;
+}
+
+void Collider::Friction(const float newFriction)
+{
+	this->friction = newFriction;
+}
+
+float Collider::Bounciness() const
+{
+	return this->bounciness;
+}
+
+void Collider::Bounciness(const float newBounciness)
+{
+	this->bounciness = newBounciness;
 }
 
 bool Collider::Enabled() const
 {
-	return enabled;
+	return this->enabled;
 }
 
 void Collider::Disable()
 {
-	enabled = false;
+	this->enabled = false;
 }
 
 void Collider::Enable() {
-	enabled = true;
+	this->enabled = true;
 }

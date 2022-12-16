@@ -5,12 +5,11 @@
 #include "Rocket.h"
 #include <GeneralHelper.hpp>
 
-AimListener::AimListener(std::shared_ptr<spic::GameObject> weapon) : rocketCount { 0 }
+AimListener::AimListener(std::shared_ptr<spic::GameObject> weapon) : rocketCount{ 0 }
 {
 	this->followMouseListener = std::make_shared<FollowMouseListener>();
-        this->angle = weapon->Transform()->rotation;
-	this->weapon = std::move(weapon);
 	this->angle = weapon->Transform()->rotation;
+	this->weapon = std::move(weapon);
 
 	spic::Input::Subscribe(spic::Input::MouseButton::LEFT, this->followMouseListener);
 }

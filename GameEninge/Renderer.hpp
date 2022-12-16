@@ -46,9 +46,10 @@ namespace spic::internal {
                     using the mid point circle algorithm https://en.wikipedia.org/w/index.php?title=Midpoint_circle_algorithm
          * @param center The center of the circle
          * @param angle The radius of the circle
+         * @param pixelGap The gap (in pixels) between each point in the circle
          * @param color The color of the circle
         */
-        static void DrawCircle(const spic::Point& center, const float radius, const spic::Color& color);
+        static void DrawCircle(const spic::Point& center, const float radius, const spic::Color& color, const float pixelGap = 1.0f);
 
         /**
          * @brief Draws a point in window space

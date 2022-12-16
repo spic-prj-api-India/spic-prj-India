@@ -28,8 +28,10 @@ using namespace spic::window;
 namespace spic::extensions {
 	class PhysicsExtensionImpl1 {
 	public:
-		PhysicsExtensionImpl1(const float pix2Met) : PIX2MET{ pix2Met }, MET2PIX{ 1.0f / PIX2MET },
-			SCALED_WIDTH{ spic::window::WINDOW_WIDTH * PIX2MET }, SCALED_HEIGHT{ spic::window::WINDOW_HEIGHT * PIX2MET }
+		PhysicsExtensionImpl1(const float pix2Met, const int velocityIterations, const int positionIterations) : 
+			PIX2MET{ pix2Met }, MET2PIX{ 1.0f / PIX2MET }, SCALED_WIDTH{ spic::window::WINDOW_WIDTH * PIX2MET }, 
+			SCALED_HEIGHT{ spic::window::WINDOW_HEIGHT * PIX2MET }, velocityIterations{velocityIterations}, 
+			positionIterations{positionIterations}
 		{
 			world = nullptr;
 			bodyTypeConvertions = {
@@ -43,15 +45,18 @@ namespace spic::extensions {
 		~PhysicsExtensionImpl1() = default;
 
 		PhysicsExtensionImpl1(const PhysicsExtensionImpl1& rhs)
-			: PhysicsExtensionImpl1(rhs.PIX2MET)
+			: PhysicsExtensionImpl1(rhs.PIX2MET, rhs.velocityIterations, rhs.positionIterations)
 		{}
 
 		PhysicsExtensionImpl1(PhysicsExtensionImpl1&& other) noexcept = default;
 
 		PhysicsExtensionImpl1& operator=(const PhysicsExtensionImpl1& rhs)
 		{
-			if (this != &rhs)
+			if (this != &rhs) {
 				PIX2MET = rhs.PIX2MET;
+				velocityIterations = rhs.velocityIterations;
+				positionIterations = rhs.positionIterations;
+			}
 			return *this;
 		}
 
@@ -106,7 +111,7 @@ namespace spic::extensions {
 					CreateEntity(entity);
 			}
 			// Update world
-			world->Step(1.0f / 60.0f, int32(8), int32(3));
+			world->Step(1.0f / 60.0f, int32(velocityIterations), int32(positionIterations));
 			// Update entities
 			for (auto& entity : entities) {
 				// Get body
@@ -271,13 +276,10 @@ namespace spic::extensions {
 		*/
 		void AddEdge(Point start, Point end)
 		{
-			b2BodyDef edgeBodyDef = b2BodyDef();
+			const b2BodyDef edgeBodyDef = b2BodyDef();
 			b2Body* edgeBody = world->CreateBody(&edgeBodyDef);
 
 			b2FixtureDef myFixtureDef;
-			myFixtureDef.density = 1.0f;
-			myFixtureDef.friction = 0.3f;
-
 			b2EdgeShape edgeShape;
 			myFixtureDef.shape = &edgeShape;
 
@@ -303,7 +305,7 @@ namespace spic::extensions {
 
 			// Create fixture
 			if (entity->HasComponent<spic::Collider>()) {
-				CreateFixture(*body, entity, rigidBody);
+				CreateFixture(*body, entity, rigidBody->Mass());
 
 				// Set data
 				body->GetUserData().pointer = reinterpret_cast<uintptr_t>(entity.get());
@@ -336,15 +338,15 @@ namespace spic::extensions {
 		* @brief Creates box2d fixture with RigidBody of entity
 		* @spicapi
 		*/
-		void CreateFixture(b2Body& body, const std::shared_ptr<spic::GameObject>& entity, const std::shared_ptr<spic::RigidBody>& rigidBody)
+		void CreateFixture(b2Body& body, const std::shared_ptr<spic::GameObject>& entity, const float mass)
 		{
 			b2FixtureDef fixtureDef = b2FixtureDef();
-			fixtureDef.density = 0.0f;
-			fixtureDef.friction = 0.3f;
-			fixtureDef.restitution = 0.5f;
-			auto collider = SetShape(fixtureDef, entity, rigidBody);
-			if (collider != nullptr)
+			auto collider = SetShape(fixtureDef, entity, mass);
+			if (collider != nullptr) {
+				fixtureDef.friction = collider->Friction();
+				fixtureDef.restitution = collider->Bounciness();
 				body.CreateFixture(&fixtureDef)->SetSensor(!collider->Enabled());
+			}
 		}
 
 		/**
@@ -352,7 +354,7 @@ namespace spic::extensions {
 		* @return bool Shape is enabled
 		* @spicapi
 		*/
-		std::shared_ptr<spic::Collider> SetShape(b2FixtureDef& fixtureDef, const std::shared_ptr<spic::GameObject>& entity, const std::shared_ptr<spic::RigidBody>& rigidBody)
+		std::shared_ptr<spic::Collider> SetShape(b2FixtureDef& fixtureDef, const std::shared_ptr<spic::GameObject>& entity, const float mass)
 		{
 			const std::shared_ptr<spic::BoxCollider> boxCollider = entity->GetComponent<spic::BoxCollider>();
 			if (boxCollider != nullptr) {
@@ -367,7 +369,7 @@ namespace spic::extensions {
 				fixtureDef.shape = boxShape;
 
 				const float area = width * height;
-				fixtureDef.density = rigidBody->Mass() / area;
+				fixtureDef.density = mass / area;
 
 				sizes[entity->Name()] = { width, height };
 				return boxCollider;
@@ -380,7 +382,7 @@ namespace spic::extensions {
 				fixtureDef.shape = circleShape;
 
 				const float area = spic::internal::Defaults::PI * (circleShape->m_radius * circleShape->m_radius);
-				fixtureDef.density = rigidBody->Mass() / area;
+				fixtureDef.density = mass / area;
 
 				const float diameter = circleShape->m_radius + circleShape->m_radius;
 				sizes[entity->Name()] = { diameter, diameter };
@@ -483,9 +485,11 @@ namespace spic::extensions {
 		}
 	private:
 		std::unique_ptr<b2World> world;
-		std::map<std::string, b2Body*> bodies;
 		std::map<spic::BodyType, b2BodyType> bodyTypeConvertions;
+		int velocityIterations;
+		int positionIterations;
 
+		std::map<std::string, b2Body*> bodies;
 		std::map<std::string, Point> sizes;
 
 		/**
@@ -521,7 +525,8 @@ namespace spic::extensions {
 		const float OFFSET = 0.00999999978f;
 	};
 
-	PhysicsExtension1::PhysicsExtension1(const float pix2Met) : physicsImpl(new PhysicsExtensionImpl1(pix2Met))
+	PhysicsExtension1::PhysicsExtension1(const float pix2Met, const int velocityIterations, const int positionIterations) : 
+		physicsImpl(new PhysicsExtensionImpl1(pix2Met, velocityIterations, positionIterations))
 	{}
 
 	PhysicsExtension1::~PhysicsExtension1() = default;
