@@ -100,9 +100,10 @@ namespace spic::internal {
         */
         static std::pair<float, float> GetAspects();
 
-
+        /**
+         * @brief Draws the fps counter
+        */
         static void DrawFps();
-
     };
 }
 #endif
