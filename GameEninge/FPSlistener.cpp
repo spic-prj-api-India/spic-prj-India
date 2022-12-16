@@ -5,9 +5,9 @@ bool FPSListener::renderFps = true;
 void FPSListener::OnKeyPressed()
 {
 	if(renderFps)
-		renderFps = true;
-	else
 		renderFps = false;
+	else
+		renderFps = true;
 }
 
 void FPSListener::OnKeyReleased()

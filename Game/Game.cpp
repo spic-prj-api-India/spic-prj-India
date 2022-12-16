@@ -20,7 +20,7 @@
 
 void InitGame() {
 	spic::GameEngine* engine = spic::GameEngine::GetInstance();
-	std::shared_ptr<spic::extensions::PhysicsExtension1> physicsExtension = std::make_shared<spic::extensions::PhysicsExtension1>(0.0023f);
+	std::shared_ptr<spic::extensions::PhysicsExtension1> physicsExtension = std::make_shared<spic::extensions::PhysicsExtension1>(0.0023f,4,2);
 	engine->AddExtension(std::move(physicsExtension));
 
 	auto socket = std::make_shared<spic::extensions::SocketUDPExtension>();
