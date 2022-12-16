@@ -557,7 +557,7 @@ namespace spic::extensions {
 
 	void spic::extensions::PhysicsExtension1::Update(std::vector<std::shared_ptr<spic::GameObject>> entities)
 	{
-		physicsImpl->Update(entities);
+		physicsImpl->Update(std::move(entities));
 	}
 
 	void spic::extensions::PhysicsExtension1::AddForce(const std::shared_ptr<GameObject> entity, const spic::Point& forceDirection)

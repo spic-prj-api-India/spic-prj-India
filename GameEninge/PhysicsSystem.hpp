@@ -53,7 +53,7 @@ namespace spic::internal::systems {
         void OnStay(const std::shared_ptr<spic::GameObject> entity, const std::shared_ptr<spic::Collider> collider) const;
     private:
         /**
-        * @brief Filters all physics entities from entity list recursively
+        * @brief Filters all physics entities from entity list by recursively adding to the second vector
         * @spicapi
         */
         void GetPhysicsEntities(std::vector<std::shared_ptr<spic::GameObject>>& physicsEntities, const std::vector<std::shared_ptr<spic::GameObject>>& entities) const;

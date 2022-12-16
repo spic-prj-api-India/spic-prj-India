@@ -47,6 +47,6 @@ namespace spic::internal {
 
 	void ButtonClickListener::SetButtons(std::vector<std::shared_ptr<spic::Button>> buttons)
 	{
-		this->buttons = buttons;
+		this->buttons = std::move(buttons);
 	}
 }

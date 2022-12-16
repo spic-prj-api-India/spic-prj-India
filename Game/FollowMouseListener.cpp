@@ -13,7 +13,7 @@ void FollowMouseListener::AddFollower(std::shared_ptr<spic::ForceDriven> followe
 	//follower->AddTarget(spic::SteeringBehaviour::FLEE, *target.get(), 1.0f);
 	follower->AddTarget(spic::SteeringBehaviour::SEEK, *target.get(), 1.0f);
 	//follower->AddTarget(spic::SteeringBehaviour::ARRIVAL, *target.get(), 1.0f);
-	this->followers.emplace_back(follower);
+	this->followers.emplace_back(std::move(follower));
 }
 
 void FollowMouseListener::OnMouseMoved() {
