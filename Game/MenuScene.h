@@ -10,4 +10,10 @@ public:
 	void SetContents();
 	void SetMatchMenu();
 	void SetInputListeners();
+
+	static spic::Scene* Start()
+	{
+		MenuScene* a = new MenuScene();
+		return a;
+	}
 };

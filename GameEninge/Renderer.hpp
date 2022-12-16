@@ -8,6 +8,7 @@
 #include "WindowValues.hpp"
 
 namespace spic::internal {
+
     struct Rendering
     {        
         /**
@@ -67,11 +68,6 @@ namespace spic::internal {
         */
         static void Render();
 
-        /**
-        * @brief Renders all bufferd
-       */
-        static void Delay();
-
         
         /**
          * @brief Gets the aspect values from the window
@@ -80,7 +76,9 @@ namespace spic::internal {
         */
         static std::pair<float, float> GetAspects();
 
+
         static void DrawFps();
+
     };
 }
 #endif

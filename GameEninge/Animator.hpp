@@ -79,15 +79,19 @@ namespace spic {
             /// @return current frame index
             void Index(const int index);
 
-            /// @brief dynamic increase of index not dependend on frame rate
-            /// @details No functionality at this momen
-            /// @param index 
-            void IncreaseIndex(const int index);
+            /**
+             * @brief increase index by 1 (includes wrapping)
+            */
+            void IncreaseIndex();
 
             /**
              * @brief If the animator is playing
             */
             bool IsRunning() const;
+
+            uint64_t LastUpdate() const;
+
+            void LastUpdate(const uint64_t lastUpdate);
 
         private:
             /**
@@ -110,6 +114,12 @@ namespace spic {
 
             /// @brief sprites collection
             std::vector<std::shared_ptr<Sprite>> sprites;
+
+            /**
+             * @brief Last update
+            */
+            uint64_t lastUpdate = 0;
+            
     };
 }
 

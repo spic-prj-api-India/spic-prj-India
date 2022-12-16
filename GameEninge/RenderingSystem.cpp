@@ -19,7 +19,7 @@ namespace spic::internal::systems {
 	void RenderingSystem::Start(std::vector<std::shared_ptr<spic::GameObject>>& entities, Scene& currentScene)
 	{
 		this->fps.reset(new FPSListener());
-		//Input::Subscribe(spic::Input::KeyCode::L, this->fps);
+		Input::Subscribe(spic::Input::KeyCode::TAB, this->fps);
 	}
 
 	void RenderingSystem::Update(std::vector<std::shared_ptr<spic::GameObject>>& entities, Scene& currentScene)
@@ -41,18 +41,17 @@ namespace spic::internal::systems {
 		{
 			spic::internal::Rendering::Draw(entity.get());
 		}
-
 	
-		spic::internal::Rendering::DrawFps();
+		if(this->fps->renderFps)
+			spic::internal::Rendering::DrawFps();
 		
-
 		spic::internal::Rendering::Render();
 
 		using namespace spic::internal::time;
 
 		InternalTime::EndFrame();
 
-		//spic::internal::Rendering::Delay();
+		InternalTime::Delay();
 	}
 
 	std::vector<std::vector<std::shared_ptr<spic::GameObject>>> RenderingSystem::GetFilteredEntities(const std::vector<std::shared_ptr<spic::GameObject>>& entities) const

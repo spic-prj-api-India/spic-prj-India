@@ -1,5 +1,5 @@
 #include "InternalTime.hpp"
-
+#include <chrono>
 using spic::internal::time::InternalTime;
 
 clock_t InternalTime::beginFrame;
@@ -9,17 +9,12 @@ unsigned int InternalTime::frames;
 double InternalTime::frameRate;
 double  InternalTime::averageFrameTimeMilliseconds;
 
-double clockToMilliseconds(clock_t ticks) {
-		// units/(units/time) => time (seconds) * 1000 = milliseconds
-		return (ticks / (double)CLOCKS_PER_SEC) * 1000.0;
-}
-
 void spic::internal::time::InternalTime::SetStartValues()
 {
 	deltaTime = 0;
 	frames = 0;
-	frameRate = 30;
-	averageFrameTimeMilliseconds = 33.333;
+	frameRate = 60;
+	averageFrameTimeMilliseconds = 16.6;
 }
 
 void spic::internal::time::InternalTime::EndFrame()
@@ -30,11 +25,20 @@ void spic::internal::time::InternalTime::EndFrame()
 	frames++;
 
 	//if you really want fps
-	if (clockToMilliseconds(deltaTime) > 1000.0) { //every second
-		frameRate = (double)frames * 0.5 + frameRate * 0.5; //more stable
+	if (InternalTime::clockToMilliseconds(deltaTime) > 1000.0) { //every second
+		frameRate = (double)frames * 0.5 + frameRate * 0.5; //more stable framerate
 		frames = 0;
 		deltaTime -= CLOCKS_PER_SEC;
-		averageFrameTimeMilliseconds = 1000.0 / (frameRate == 0 ? 0.001 : frameRate);
+		averageFrameTimeMilliseconds = 1000.0 / (frameRate == 0 ? 0.001 : frameRate); // second / framerate
+	}
+}
+
+void spic::internal::time::InternalTime::Delay()
+{
+	// 1000 ms <=> 1 s
+	if ((InternalTime::frameRate > 0) && ((InternalTime::deltaTime) < (1000.0 / InternalTime::frameRate)))
+	{
+		std::this_thread::sleep_for(std::chrono::milliseconds(InternalTime::deltaTime));
 	}
 }
 

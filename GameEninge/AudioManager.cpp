@@ -9,10 +9,7 @@
 #include "Chunk.hpp"
 #include "AudioSource.hpp"
 
-using namespace spic::internal::audio;
-
-AudioManager* AudioManager::pinstance_{ nullptr };
-std::mutex AudioManager::mutex_;
+using namespace spic::internal::audio::impl;
 
 AudioManager::AudioManager()
 {
@@ -27,17 +24,14 @@ AudioManager::AudioManager()
 
 AudioManager::~AudioManager()
 {
-    Mix_CloseAudio();
-}
-
-AudioManager* AudioManager::GetInstance()
-{
-    std::lock_guard<std::mutex> lock(mutex_);
-    if (pinstance_ == nullptr)
+    try
     {
-        pinstance_ = new AudioManager();
+        Mix_CloseAudio();
     }
-    return pinstance_;
+    catch (...)
+    {
+
+    }
 }
 
 void AudioManager::AddChunk(const std::string& path)
@@ -113,7 +107,7 @@ void AudioManager::RemoveSample(AudioSource* source)
     TrimChunk(source->AudioClip());
 }
 
-void AudioManager::ChangeVolume(AudioSource* source, float left, float right) const
+void AudioManager::ChangeVolume(AudioSource* source, const float left, const float right) const
 {
     auto it = samples.find(source);
     if (it != samples.end())
@@ -122,7 +116,7 @@ void AudioManager::ChangeVolume(AudioSource* source, float left, float right) co
     }
 }
 
-void AudioManager::ChangeVolume(AudioSource* source, float volume) const
+void AudioManager::ChangeVolume(AudioSource* source, const float volume) const
 {
     auto it = samples.find(source);
     if (it != samples.end())

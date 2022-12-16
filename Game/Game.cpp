@@ -12,7 +12,11 @@
 #include <NetworkPacket.hpp>
 #include "NetworkingHelper.hpp"
 #include "CredditsScene.h"
-std::shared_ptr<spic::Scene> scene;
+#include <functional>
+#include "Scene.hpp"
+
+
+
 
 void InitGame() {
 	spic::GameEngine* engine = spic::GameEngine::GetInstance();
@@ -30,9 +34,11 @@ void InitGame() {
 	engine->RegisterType<Box>();
 
 	// Register scenes
-	engine->RegisterScene("menu", std::make_shared<MenuScene>());
-	engine->RegisterScene("game", std::make_shared<GameScene>());
-	engine->RegisterScene("creddits", std::make_shared<CredditsScene>());
+
+	engine->RegisterScene("menu", std::function<spic::Scene* ()>(MenuScene::Start));
+
+	//engine->RegisterScene("game", std::make_shared<GameScene>());
+	engine->RegisterScene("creddits", std::function<spic::Scene* ()>(CredditsScene::Start));
 }
 
 void StartGame()

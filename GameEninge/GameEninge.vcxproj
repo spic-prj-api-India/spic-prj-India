@@ -166,6 +166,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Animator.hpp" />
+    <ClInclude Include="AudioFacade.hpp" />
     <ClInclude Include="AudioInfo.hpp" />
     <ClInclude Include="AudioManager.hpp" />
     <ClInclude Include="AudioSource.hpp" />
@@ -236,6 +237,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animator.cpp" />
+    <ClCompile Include="AudioFacade.cpp" />
     <ClCompile Include="AudioManager.cpp" />
     <ClCompile Include="AudioSource.cpp" />
     <ClCompile Include="Button.cpp" />

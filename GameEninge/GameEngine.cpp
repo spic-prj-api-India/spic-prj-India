@@ -32,7 +32,7 @@ namespace spic {
 		return _types[typeName]();
 	}
 
-	void GameEngine::RegisterScene(const std::string& sceneName, std::shared_ptr<Scene> scene)
+	void GameEngine::RegisterScene(const std::string& sceneName, std::function<spic::Scene* ()> scene)
 	{
 		internal::EntityManager::GetInstance()->RegisterScene(sceneName, scene);
 	}
@@ -59,7 +59,7 @@ namespace spic {
 
 	std::shared_ptr<Scene> GameEngine::GetSceneByName(const std::string& sceneName)
 	{
-		return internal::EntityManager::GetInstance()->GetScene(sceneName);
+		return std::move(internal::EntityManager::GetInstance()->GetScene(sceneName));
 	}
 
 	void GameEngine::Start(const spic::window::WindowValues* values)

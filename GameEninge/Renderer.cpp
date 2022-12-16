@@ -1,54 +1,54 @@
 #include "Renderer.hpp"
 #include "RendererImpl.hpp"
 
+using namespace spic::internal;
+
+static std::unique_ptr<rendering::RendererImpl> impl = std::make_unique<rendering::RendererImpl>();
+
+
 void spic::internal::Rendering::Start(const spic::window::WindowValues* values)
 {
-	spic::internal::rendering::RendererImpl::GetInstance()->Start(values);
+	impl->Start(values);
 }
 
 void spic::internal::Rendering::Exit()
 {
-	spic::internal::rendering::RendererImpl::GetInstance()->Exit();
+	impl->Exit();
 }
 
 void spic::internal::Rendering::Draw(GameObject* gameObject)
 {
-	spic::internal::rendering::RendererImpl::GetInstance()->DrawGameObject(gameObject);
+	impl->DrawGameObject(gameObject);
 }
 
 void spic::internal::Rendering::UpdateCamera(Camera* camera)
 {
-	spic::internal::rendering::RendererImpl::GetInstance()->UpdateCamera(camera);
+	impl->UpdateCamera(camera);
 }
 
 void spic::internal::Rendering::DrawLine(const Point* start, const Point* end, const Color* colour)
 {
-	spic::internal::rendering::RendererImpl::GetInstance()->DrawLine(start,end, colour);
+	impl->DrawLine(start, end, colour);
 }
 
 void spic::internal::Rendering::DrawSprite(const Transform* position, Sprite* sprite)
 {
-	spic::internal::rendering::RendererImpl::GetInstance()->DrawSprite(sprite, position );
+	impl->DrawSprite(sprite, position);
 }
 
 void spic::internal::Rendering::Clean()
 {
-	spic::internal::rendering::RendererImpl::GetInstance()->Clean();
+	impl->Clean();
 }
 
 void spic::internal::Rendering::NewScene()
 {
-	spic::internal::rendering::RendererImpl::GetInstance()->NewScene();
+	impl->NewScene();
 }
 
 void spic::internal::Rendering::Render()
 {
-	spic::internal::rendering::RendererImpl::GetInstance()->Render();
-}
-
-void spic::internal::Rendering::Delay()
-{
-	spic::internal::rendering::RendererImpl::GetInstance()->Delay();
+	impl->Render();
 }
 
 std::pair<float, float> spic::internal::Rendering::GetAspects()
@@ -58,5 +58,5 @@ std::pair<float, float> spic::internal::Rendering::GetAspects()
 
 void spic::internal::Rendering::DrawFps()
 {
-	spic::internal::rendering::RendererImpl::GetInstance()->RenderFps();
+	impl->RenderFps();
 }

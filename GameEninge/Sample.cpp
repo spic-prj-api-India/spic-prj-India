@@ -8,14 +8,13 @@
 #include <SDL2/SDL_mixer.h>
 #pragma warning( pop )
 
-using namespace spic::internal::audio;
+using namespace spic::internal::audio::impl;
 
 Sample* Sample::handlers[MAX_CHANNELS];
 
 Sample::Sample(std::shared_ptr<Chunk> chunk, const bool looping)
     : chunk{ chunk }, looping{ looping }
 {
-
 }
 
 void Sample::Play(const bool looping, float volume)

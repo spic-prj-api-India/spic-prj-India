@@ -31,7 +31,7 @@ void MenuScene::SetContents()
 		textTransform->position.y = 35.0f;
 		button->OnClick([]() {
 			spic::Input::UnSubscribeAll();
-		spic::GameEngine::GetInstance()->LoadSceneByName("game");
+			spic::GameEngine::GetInstance()->LoadSceneByName("game");
 			});
 		AddContent(button);
 	}
@@ -43,7 +43,7 @@ void MenuScene::SetContents()
 		textTransform2->position.y = 35.0f;
 		button2->OnClick([]() {
 			spic::Input::UnSubscribeAll();
-		spic::GameEngine::GetInstance()->LoadSceneByName("creddits");
+			spic::GameEngine::GetInstance()->LoadSceneByName("creddits");
 			});
 		AddContent(button2);
 	}

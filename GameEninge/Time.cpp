@@ -1,13 +1,18 @@
 #include "Time.hpp"
+#include "InternalTime.hpp"
 
 using namespace spic;
 
-float Time::deltaTime {0.0};
+double Time::deltaTime {0.0};
 float Time::timeScale {1.0};
 
-float spic::Time::DeltaTime()
+
+double spic::Time::DeltaTime()
 {
-    //TODO
+    using namespace spic::internal::time;
+
+    Time::deltaTime = InternalTime::deltaTime;
+
     return Time::deltaTime;
 }
 

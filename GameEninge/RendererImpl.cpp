@@ -21,9 +21,6 @@ using namespace spic::GeneralHelper;
 #define UINT_8_BEGIN 0
 #define UINT_8_END 255
 
-RendererImpl* RendererImpl::pinstance_{ nullptr };
-std::mutex RendererImpl::mutex_;
-
 RendererImpl::RendererImpl() noexcept(false) : camera{ 0, 0, 0, 0 }, backgroundColor{ 0,0,0,1 }, backgroundImage{""}, scaling{1}, rotation{0}
 {
 }
@@ -38,16 +35,6 @@ RendererImpl::~RendererImpl()
 	{
 
 	}
-}
-
-RendererImpl* RendererImpl::GetInstance()
-{
-	std::lock_guard<std::mutex> lock(mutex_);
-	if (pinstance_ == nullptr)
-	{
-		pinstance_ = new RendererImpl();
-	}
-	return pinstance_;
 }
 
 void RendererImpl::Start(const spic::window::WindowValues* values)
@@ -73,7 +60,7 @@ void RendererImpl::Start(const spic::window::WindowValues* values)
 		(SDL_bool)values->SetOnTop);
 
 	// TODO: Zet in CreateRenderer
-	SDL_RendererFlags rendererFlags = (SDL_RendererFlags)(SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+	SDL_RendererFlags rendererFlags = (SDL_RendererFlags)(SDL_RENDERER_ACCELERATED);
 	renderer = RendererPtr(SDL_CreateRenderer(window.get(), -1, rendererFlags));
 	if (renderer.get() == nullptr) {
 		std::cerr << SDL_GetError() << std::endl;
@@ -96,18 +83,6 @@ void RendererImpl::Start(const spic::window::WindowValues* values)
 	missingTexture = TexturePtr(SDL_CreateTextureFromSurface(renderer.get(), tmp_sprites.get()));
 }
 
-void spic::internal::rendering::RendererImpl::Delay()
-{
-	using namespace spic::internal::time;
-	//std::cerr << InternalTime::frameRate << ' ' << InternalTime::deltaTime << std::endl;
-
-	if ((InternalTime::frameRate > 0) && ((InternalTime::deltaTime) < (1000.0 / InternalTime::frameRate)))
-	{
-		// wait until the desired time has passed
-
-		std::this_thread::sleep_for(std::chrono::milliseconds(InternalTime::deltaTime));
-	}
-}
 
 void spic::internal::rendering::RendererImpl::RenderFps()
 {
@@ -189,27 +164,22 @@ void RendererImpl::DrawAnimator(Animator* animator, const Transform* transform, 
 	if (!animator->IsRunning())
 		return;
 
-	auto sprites = animator->Sprites();
+ 	auto sprites = animator->Sprites();
 
-	const auto framesAmount = sprites.back()->OrderInLayer();
+	const auto framesAmount = sprites.back()->OrderInLayer() + 1;
+	using namespace spic::internal::time;
 
-	const int fps = 1000;
+	uint64_t current = SDL_GetTicks();
+	double dT = (current - animator->LastUpdate()) / InternalTime::averageFrameTimeMilliseconds;
 
-	//const auto frame = static_cast<uint64_t>(SDL_GetTicks() / ((static_cast<double>(fps) / animator->Fps()) * Time::TimeScale())) % framesAmount;
 
-	const auto frame = static_cast<uint64_t>(SDL_GetTicks() / (1000 / animator->Fps() * Time::TimeScale())) % framesAmount+1;
-
-	
-	for (auto& sprite : sprites)
+	if (dT > InternalTime::frameRate / (animator->Fps() * Time::TimeScale()) && !animator->IsFrozen())
 	{
-		if (sprite->OrderInLayer() == frame && !animator->IsFrozen())
-		{
-			DrawSprite(sprite.get(), transform, isUIObject);
-		}
-		else if (sprite->OrderInLayer() == animator->Index() && animator->IsFrozen()) {
-			DrawSprite(sprite.get(), transform, isUIObject);
-		}
+		animator->IncreaseIndex();
+		animator->LastUpdate(current);
 	}
+	
+	DrawSprite(sprites[animator->Index() - 1].get(), transform, isUIObject);
 }
 
 void RendererImpl::DrawUISprite(const float width, const float height, const Sprite* sprite, const Transform* transform)
@@ -448,7 +418,7 @@ void RendererImpl::RenderMultiLineText(const TTF_Font* pFont, std::string& rText
 			{
 				const float textWidth = static_cast<float>(pSurface->w);
 				const float textHeight = static_cast<float>(pSurface->h);
-				const float nextY = yPosition + ((textHeight + distanceBetweenLines) * currentLine);
+				const float nextY = yPosition + ((textHeight + distanceBetweenLines) * (currentLine-1));
 
 				totalLength = ((textHeight + distanceBetweenLines) * currentLine);
 
@@ -471,12 +441,9 @@ void RendererImpl::RenderMultiLineText(const TTF_Font* pFont, std::string& rText
 					PositionQuad.x = xPosition;
 				}
 
-				PositionQuad.y = previusy;
+				PositionQuad.y = nextY;
 				PositionQuad.w = textWidth;
 				PositionQuad.h = textHeight;
-				previusy = PositionQuad.y;
-
-
 
 				SDL_RenderCopyF(this->renderer.get(), pTexture.get(), NULL, &PositionQuad);
 
@@ -590,7 +557,7 @@ void RendererImpl::Clean()
 	);
 }
 
-void RendererImpl::Render()
+void RendererImpl::Render() const
 {
 	SDL_SetRenderDrawColor(renderer.get()
 		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, this->backgroundColor.R()))

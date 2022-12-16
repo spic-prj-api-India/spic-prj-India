@@ -7,4 +7,9 @@ public:
 	CredditsScene();
 	void SetContents();
 	void SetCammera();
+	static spic::Scene* Start()
+	{
+		CredditsScene* a = new CredditsScene();
+		return a;
+	}
 };

@@ -9,8 +9,7 @@
 #include "ISystem.hpp"
 #include "Scene.hpp"
 #include "TypeHelper.hpp"
-#include <ctime>
-
+#include "AudioManager.hpp"
 namespace spic::internal
 {
 	class EntityManager
@@ -23,9 +22,10 @@ namespace spic::internal
 
 		std::vector<std::shared_ptr<spic::GameObject>> entities;
 		std::map<int, std::vector<std::unique_ptr<spic::systems::ISystem>>> systems;
-		std::map<std::string, std::shared_ptr<Scene>> scenes;
+		std::map<std::string, std::function<spic::Scene* ()>> scenes;
 		std::shared_ptr<Scene> scene;
 		std::string currentSceneName;
+
 	protected:
 		EntityManager();
 		~EntityManager();
@@ -68,14 +68,14 @@ namespace spic::internal
 		@brief Remove entity.
 		@param entity The entity that will be removed
 		*/
-		void RemoveEntity(const std::shared_ptr<spic::GameObject> entity);
+		void RemoveEntity(const std::shared_ptr<spic::GameObject>& entity);
 
 		/*
 		@brief Register scene.
 		@param The sceneName is the key in the scenes list.
 		@param The scene that will be registered in scenes list.
 		*/
-		void RegisterScene(const std::string& sceneName, std::shared_ptr<Scene> scene);
+		void RegisterScene(const std::string& sceneName, std::function<spic::Scene* ()> scene);
 
 		/*
 		@brief Gets current scene.
@@ -93,6 +93,7 @@ namespace spic::internal
 		/*
 		@brief Sets the current scene with entities.
 		@param The sceneName of the scene that needs to be set.
+		@details Triggers an exception if the name does not 
 		*/
 		void SetScene(const std::string& sceneName);
 

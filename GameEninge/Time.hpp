@@ -13,7 +13,7 @@ namespace spic {
              * TODO: no funtionality
              * @spicapi
              */
-            static float DeltaTime();
+            static double DeltaTime();
 
             /**
              * @brief The scale at which time passes.
@@ -30,7 +30,7 @@ namespace spic {
             static void TimeScale(const float newTimeScale);
 
         private:
-            static float deltaTime;
+            static double deltaTime;
             static float timeScale;
     };
 }

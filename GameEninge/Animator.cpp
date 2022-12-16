@@ -35,8 +35,10 @@ void spic::Animator::InitHorizontalSpriteSheet(const std::string& spriteSheet, c
 
 void spic::Animator::Play(bool loop)
 {
+    using namespace std::chrono;
+    typedef high_resolution_clock Clock;
+    Clock::time_point t0 = Clock::now();
     freeze = false;
-    index = { 1 };
     looping = { loop };
     running = { true };
 }
@@ -45,6 +47,7 @@ void spic::Animator::Stop()
 {
     freeze = false;
     index = 1;
+    lastUpdate = 0;
     looping = false;
     running = false;
 }
@@ -86,11 +89,23 @@ void spic::Animator::Index(const int index)
     this->index = index;
 }
 
-void spic::Animator::IncreaseIndex(const int index)
+void spic::Animator::IncreaseIndex()
 {
+    if (++this->index > sprites.back()->OrderInLayer() + 1)
+        this->index = 1;
 }
 
 bool spic::Animator::IsRunning() const
 {
     return this->running;
+}
+
+uint64_t spic::Animator::LastUpdate() const
+{
+    return this->lastUpdate;
+}
+
+void spic::Animator::LastUpdate(const uint64_t lastUpdate)
+{
+    this->lastUpdate = lastUpdate;
 }

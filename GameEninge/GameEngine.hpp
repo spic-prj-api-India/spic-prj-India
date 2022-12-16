@@ -95,7 +95,7 @@ namespace spic {
 		@param The sceneName is the key in the scenes list.
 		@param The scene that will be registered in scenes list.
 		*/
-		void RegisterScene(const std::string& sceneName, std::shared_ptr<Scene> scene);
+		void RegisterScene(const std::string& sceneName, std::function<spic::Scene* ()> scene);
 
 		/*
 		@brief Load the specified scene.
