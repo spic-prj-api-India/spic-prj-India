@@ -23,7 +23,7 @@ namespace spic {
 		virtual Component& operator=(const Component& other) = default; // copy assignment
 		virtual Component& operator=(Component&& other) noexcept = default;// move assignment
 
-		void GameObject(spic::GameObject& gameObject);
+		void Parent(spic::GameObject& gameObject);
 
 		/**
 		 * @brief Getter for active status.

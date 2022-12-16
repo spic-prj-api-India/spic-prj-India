@@ -5,7 +5,6 @@
 #include "GameEngine.hpp"
 #include <PhysicsExtension1.hpp>
 #include "MenuScene.h"
-#include "PhysicsValues.hpp"
 #include "Box.h"
 #include "Debug.hpp"
 #include "SocketUdpExtension.hpp"
@@ -19,8 +18,7 @@ std::shared_ptr<spic::Scene> scene;
 
 void InitGame() {
 	spic::GameEngine* engine = spic::GameEngine::GetInstance();
-	spic::extensions::PhysicsValues::PIX2MET = 0.0023f;
-	std::shared_ptr<spic::extensions::PhysicsExtension1> physicsExtension = std::make_shared<spic::extensions::PhysicsExtension1>();
+	std::shared_ptr<spic::extensions::PhysicsExtension1> physicsExtension = std::make_shared<spic::extensions::PhysicsExtension1>(0.0023f);
 	engine->AddExtension(std::move(physicsExtension));
 
 	auto socket = std::make_shared<spic::extensions::SocketUDPExtension>();

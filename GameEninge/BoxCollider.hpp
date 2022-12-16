@@ -13,6 +13,7 @@ namespace spic {
 
             /*
             * @brief Sets width and height of collider
+            * @throws Throws if width or height is below zero
             */
             BoxCollider(const float width, const float height);
 
@@ -32,6 +33,7 @@ namespace spic {
             /**
              * @brief The collider's width
              * @param newWidth The desired width
+             * @throws Throws if newWidth is below zero
              * @spicapi
              */
             void Width(const float newWidth);
@@ -46,6 +48,7 @@ namespace spic {
             /**
              * @brief The collider's height
              * @param newHeight The desired height
+             * @throws Throws if newHeight is below zero
              * @spicapi
              */
             void Height(const float newHeight);

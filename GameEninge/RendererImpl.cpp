@@ -11,11 +11,13 @@
 #include "TypeHelper.hpp"
 #include "StringHelper.hpp"
 #include "Defaults.hpp"
+#include "WindowValues.hpp"
 
 using namespace spic;
 using namespace spic::window;
 using namespace spic::internal::rendering;
 using namespace spic::GeneralHelper;
+
 #define UINT_8_BEGIN 0
 #define UINT_8_END 255
 
@@ -172,7 +174,7 @@ void RendererImpl::DrawAnimator(Animator* animator, const Transform* transform, 
 
 	//const auto frame = static_cast<uint64_t>(SDL_GetTicks() / ((static_cast<double>(fps) / animator->Fps()) * Time::TimeScale())) % framesAmount;
 
-	const auto frame = static_cast<uint64_t>(SDL_GetTicks() / (1000 / animator->Fps() * Time::TimeScale())) % framesAmount+1;
+	const auto frame = static_cast<uint64_t>(SDL_GetTicks() / (1000 / animator->Fps() * Time::TimeScale())) % framesAmount + 1;
 
 
 	for (auto& sprite : sprites)
@@ -503,15 +505,10 @@ void RendererImpl::SetBackgroundColor()
 void RendererImpl::DrawRect(const spic::Rect& rect, const double angle, const spic::Color& color)
 {
 	SDL_FRect dstRect = SDL_FRect(rect.x, rect.y, rect.w, rect.h);
-	if (SDL_HasIntersectionF(&dstRect, &this->camera))
-	{
-		dstRect = { dstRect.x - this->camera.x
-			, dstRect.y - this->camera.y
-			, dstRect.w
-			, dstRect.h };
-	}
-	else
+	if (!SDL_HasIntersectionF(&dstRect, &this->camera))
 		return;
+	dstRect.x = dstRect.x - this->camera.x;
+	dstRect.y = dstRect.y - this->camera.y;
 
 	SDL_Texture* texture = LoadTexture(spic::internal::Defaults::RECT_TEXTURE);
 
@@ -527,14 +524,14 @@ void RendererImpl::DrawRect(const spic::Rect& rect, const double angle, const sp
 	SDL_RenderCopyExF(renderer.get(), texture, NULL, &dstRect, angleInDeg, NULL, SDL_FLIP_NONE);
 }
 
-void RendererImpl::DrawCircle(spic::Point center, const float radius, const spic::Color& color)
+void RendererImpl::DrawCircle(const spic::Point& center, const float radius, const spic::Color& color)
 {
 	const float diameter = radius * 2.0f;
-	SDL_FRect dstRect = SDL_FRect(center.x - radius, center.y - radius, diameter, diameter);
-	if (!SDL_HasIntersectionF(&dstRect, &this->camera))
+	SDL_FRect dstCenter = SDL_FRect(center.x - radius, center.y - radius, diameter, diameter);
+	if (!SDL_HasIntersectionF(&dstCenter, &this->camera))
 		return;
-	center.x = center.x - this->camera.x;
-	center.y = center.y - this->camera.y;
+	dstCenter.x = dstCenter.x + radius - this->camera.x;
+	dstCenter.y = dstCenter.y + radius - this->camera.y;
 
 	SDL_SetRenderDrawColor(renderer.get()
 		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, color.R()))
@@ -542,46 +539,49 @@ void RendererImpl::DrawCircle(spic::Point center, const float radius, const spic
 		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, color.B()))
 		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, color.A())));
 
-	float x = radius - 1.0f;
+	// Pixel gap configures how precise the circle is drawn
+	constexpr float pixelGap = 1.0f;
+	float x = radius - pixelGap;
 	float y = 0.0f;
-	float dx = 1.0f;
-	float dy = 1.0f;
+	float dx = pixelGap;
+	float dy = pixelGap;
+	// if decision is above zero: y++, otherwise x++
 	float decisionOver2 = dx - diameter;
 
 	while (x >= y)
 	{
-		DrawPoint(center.x + x, center.y + y);
-		DrawPoint(center.x + y, center.y + x);
-		DrawPoint(center.x - y, center.y + x);
-		DrawPoint(center.x - x, center.y + y);
-		DrawPoint(center.x - x, center.y - y);
-		DrawPoint(center.x - y, center.y - x);
-		DrawPoint(center.x + y, center.y - x);
-		DrawPoint(center.x + x, center.y - y);
+		DrawPoint(dstCenter.x + x, dstCenter.y + y);
+		DrawPoint(dstCenter.x + y, dstCenter.y + x);
+		DrawPoint(dstCenter.x - y, dstCenter.y + x);
+		DrawPoint(dstCenter.x - x, dstCenter.y + y);
+		DrawPoint(dstCenter.x - x, dstCenter.y - y);
+		DrawPoint(dstCenter.x - y, dstCenter.y - x);
+		DrawPoint(dstCenter.x + y, dstCenter.y - x);
+		DrawPoint(dstCenter.x + x, dstCenter.y - y);
 
 		if (decisionOver2 <= 0.0f)
 		{
-			y++;
+			y += pixelGap;
 			decisionOver2 += dy;
-			dy += 2;
+			dy += 2 * pixelGap;
 		}
 		if (decisionOver2 > 0.0f)
 		{
-			x--;
-			dx += 2;
+			x -= pixelGap;
+			dx += 2 * pixelGap;
 			decisionOver2 += (-diameter) + dx;
 		}
 	}
 }
 
-void RendererImpl::DrawPoint(float x, float y, const spic::Color& color)
+void RendererImpl::DrawPoint(const spic::Point& point, const spic::Color& color)
 {
-	SDL_FPoint point = { x , y };
-	if (!SDL_PointInFRect(&point, &this->camera)) {
+	SDL_FPoint dstPoint = { point.x , point.y };
+	if (!SDL_PointInFRect(&dstPoint, &this->camera)) {
 		return;
 	}
-	x = x - this->camera.x;
-	y = y - this->camera.y;
+	dstPoint.x = dstPoint.x - this->camera.x;
+	dstPoint.y = dstPoint.y - this->camera.y;
 
 	SDL_SetRenderDrawColor(renderer.get()
 		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, color.R()))
@@ -589,24 +589,24 @@ void RendererImpl::DrawPoint(float x, float y, const spic::Color& color)
 		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, color.B()))
 		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, color.A())));
 
-	SDL_RenderDrawPointF(renderer.get(), x, y);
+	DrawPoint(dstPoint.x, dstPoint.y);
 }
 
 void RendererImpl::DrawPoint(const float x, const float y) {
 	SDL_RenderDrawPointF(renderer.get(), x, y);
 }
 
-void RendererImpl::DrawLine(spic::Point start, spic::Point end, const spic::Color& color)
+void RendererImpl::DrawLine(const spic::Point& start, const spic::Point& end, const spic::Color& color)
 {
 	SDL_FPoint startPoint = { start.x , start.y };
 	SDL_FPoint endPoint = { end.x , end.y };
 	if (!SDL_PointInFRect(&startPoint, &this->camera) && !SDL_PointInFRect(&endPoint, &this->camera)) {
 		return;
 	}
-	start.x = start.x - this->camera.x;
-	start.y = start.y - this->camera.y;
-	end.x = end.x - this->camera.x;
-	end.y = end.y - this->camera.y;
+	startPoint.x = startPoint.x - this->camera.x;
+	startPoint.y = startPoint.y - this->camera.y;
+	endPoint.x = endPoint.x - this->camera.x;
+	endPoint.y = endPoint.y - this->camera.y;
 
 	SDL_SetRenderDrawColor(renderer.get()
 		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, color.R()))
@@ -614,11 +614,11 @@ void RendererImpl::DrawLine(spic::Point start, spic::Point end, const spic::Colo
 		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, color.B()))
 		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, color.A())));
 
-	SDL_RenderDrawLine(renderer.get()
-		, PrecisionRoundingoInt(start.x)
-		, PrecisionRoundingoInt(start.y)
-		, PrecisionRoundingoInt(end.x)
-		, PrecisionRoundingoInt(end.y));
+	SDL_RenderDrawLineF(renderer.get()
+		, startPoint.x
+		, startPoint.y
+		, endPoint.x
+		, endPoint.y);
 }
 
 void RendererImpl::UpdateCamera(Camera* camera)

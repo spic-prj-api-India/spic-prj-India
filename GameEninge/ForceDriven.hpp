@@ -88,14 +88,14 @@ namespace spic {
          * @param targets Targets to seek to.
          * @spicapi
         */
-        void UseSeek(const std::map<std::reference_wrapper<Point>, float, std::less<Point>>& targets);
+        void UseSeek(std::map<std::reference_wrapper<Point>, float, std::less<Point>> targets);
 
         /**
          * @brief Sets steering behaviour to FLEE.
          * @param targets Targets to flee from.
          * @spicapi
         */
-        void UseFlee(const std::map<std::reference_wrapper<Point>, float, std::less<Point>>& targets);
+        void UseFlee(std::map<std::reference_wrapper<Point>, float, std::less<Point>> targets);
 
         /**
          * @brief Sets steering behaviour to ARRIVAL.
@@ -103,7 +103,7 @@ namespace spic {
          * @param targets Targets to arrive at.
          * @spicapi
         */
-        void UseArrival(const std::map<std::reference_wrapper<Point>, float, std::less<Point>>& targets, 
+        void UseArrival(std::map<std::reference_wrapper<Point>, float, std::less<Point>> targets, 
             Deceleration deceleration = Deceleration::NORMAL);
 
         /**
@@ -363,7 +363,6 @@ namespace spic {
         bool useCohesion;
         bool useTarget;
     };
-
 }
 
 #endif // FORCEDRIVEN_H_

@@ -26,17 +26,10 @@ using namespace spic::extensions::PhysicsValues;
 using namespace spic::window;
 
 namespace spic::extensions {
-	std::unique_ptr<b2World> world;
-	std::map<std::string, b2Body*> bodies;
-	std::map<spic::BodyType, b2BodyType> bodyTypeConvertions;
-
-	std::map<std::string, Point> sizes;
-
-	inline const float OFFSET = 0.00999999978f;
-
 	class PhysicsExtensionImpl1 {
 	public:
-		PhysicsExtensionImpl1()
+		PhysicsExtensionImpl1(const float pix2Met) : PIX2MET{ pix2Met }, MET2PIX{ 1.0f / PIX2MET },
+			SCALED_WIDTH{ spic::window::WINDOW_WIDTH * PIX2MET }, SCALED_HEIGHT{ spic::window::WINDOW_HEIGHT * PIX2MET }
 		{
 			world = nullptr;
 			bodyTypeConvertions = {
@@ -48,6 +41,21 @@ namespace spic::extensions {
 		}
 
 		~PhysicsExtensionImpl1() = default;
+
+		PhysicsExtensionImpl1(const PhysicsExtensionImpl1& rhs)
+			: PhysicsExtensionImpl1(rhs.PIX2MET)
+		{}
+
+		PhysicsExtensionImpl1(PhysicsExtensionImpl1&& other) noexcept = default;
+
+		PhysicsExtensionImpl1& operator=(const PhysicsExtensionImpl1& rhs)
+		{
+			if (this != &rhs)
+				PIX2MET = rhs.PIX2MET;
+			return *this;
+		}
+
+		PhysicsExtensionImpl1& operator=(PhysicsExtensionImpl1&& other) noexcept = default;
 
 		/**
 		* @brief Resets all physic bodies in world
@@ -122,9 +130,10 @@ namespace spic::extensions {
 		* @brief Registers collision listener in world
 		* @spicapi
 		*/
-		void RegisterListener(spic::extensions::ICollisionListener* listener) const
+		void RegisterListener(std::unique_ptr<ICollisionListener> listener)
 		{
-			b2ContactListener* box2DListener = dynamic_cast<spic::internal::extensions::Box2DCollisionListener*>(listener);
+			this->collisionListener = std::move(listener);
+			b2ContactListener* box2DListener = dynamic_cast<spic::internal::extensions::Box2DCollisionListener*>(this->collisionListener.get());
 			world->SetContactListener(box2DListener);
 		}
 
@@ -138,7 +147,7 @@ namespace spic::extensions {
 			if (bodies.count(name) == 0)
 				CreateEntity(entity);
 			b2Body* body = bodies[name];
-			b2Vec2 force = { forceDirection.x * MET2PIX, forceDirection.y * MET2PIX };
+			const b2Vec2 force = { forceDirection.x * MET2PIX, forceDirection.y * MET2PIX };
 
 			body->ApplyForce(force, body->GetWorldCenter(), true);
 		}
@@ -191,6 +200,9 @@ namespace spic::extensions {
 			}
 		}
 	private:
+		/**
+		 * @brief Convert coordinate from pixels to meters
+		*/
 		void ConvertCoordinateToMeters(Point& coordinate, Point size) {
 			size.x *= PIX2MET;
 			size.y *= PIX2MET;
@@ -200,6 +212,9 @@ namespace spic::extensions {
 			coordinate.y = (y * PIX2MET) + (size.y / 2.0f);
 		}
 
+		/**
+		 * @brief Convert coordinate from meters to pixels
+		*/
 		void ConvertCoordinateToPixels(b2Vec2& coordinate, Point size) {
 			size.x *= MET2PIX;
 			size.y *= MET2PIX;
@@ -209,6 +224,9 @@ namespace spic::extensions {
 			coordinate.y = (y * MET2PIX) - (size.y / 2.0f);
 		}
 
+		/**
+		 * @brief Convert coordinate from pixels to meters
+		*/
 		void ConvertCoordinateToMeters(Point& coordinate) {
 			const float x = coordinate.x - (WINDOW_WIDTH / 2.0f);
 			const float y = coordinate.y - (WINDOW_HEIGHT / 2.0f);
@@ -216,6 +234,9 @@ namespace spic::extensions {
 			coordinate.y = y * PIX2MET;
 		}
 
+		/**
+		 * @brief Convert coordinate from meters to pixels
+		*/
 		void ConvertCoordinateToPixels(b2Vec2& coordinate) {
 			const float x = (SCALED_WIDTH / 2.0f) + coordinate.x;
 			const float y = (SCALED_HEIGHT / 2.0f) + coordinate.y;
@@ -223,6 +244,14 @@ namespace spic::extensions {
 			coordinate.y = y * MET2PIX;
 		}
 
+		/**
+		 * @brief Add all edges of tile
+		 * @param matrix Grid of tiles
+		 * @param colIndex x of tile
+		 * @param rowIndex y of tile
+		 * @param origin Left-Top point of tile
+		 * @param tileSize Size of tile
+		*/
 		void AddEdges(const Matrix& matrix, const int colIndex, const int rowIndex, const Point& origin, const float tileSize)
 		{
 			if (rowIndex > 0 && matrix[colIndex][rowIndex - 1] == 0)
@@ -235,6 +264,11 @@ namespace spic::extensions {
 				AddEdge({ origin.x, origin.y }, { origin.x, origin.y + tileSize });
 		}
 
+		/**
+		 * @brief Add edge to physics world
+		 * @param start Start point of edge
+		 * @param end End point of edge
+		*/
 		void AddEdge(Point start, Point end)
 		{
 			b2BodyDef edgeBodyDef = b2BodyDef();
@@ -302,7 +336,7 @@ namespace spic::extensions {
 		* @brief Creates box2d fixture with RigidBody of entity
 		* @spicapi
 		*/
-		void CreateFixture(b2Body& body, const std::shared_ptr<spic::GameObject>& entity, const std::shared_ptr<spic::RigidBody>& rigidBody) const
+		void CreateFixture(b2Body& body, const std::shared_ptr<spic::GameObject>& entity, const std::shared_ptr<spic::RigidBody>& rigidBody)
 		{
 			b2FixtureDef fixtureDef = b2FixtureDef();
 			fixtureDef.density = 0.0f;
@@ -318,7 +352,7 @@ namespace spic::extensions {
 		* @return bool Shape is enabled
 		* @spicapi
 		*/
-		std::shared_ptr<spic::Collider> SetShape(b2FixtureDef& fixtureDef, const std::shared_ptr<spic::GameObject>& entity, const std::shared_ptr<spic::RigidBody>& rigidBody) const
+		std::shared_ptr<spic::Collider> SetShape(b2FixtureDef& fixtureDef, const std::shared_ptr<spic::GameObject>& entity, const std::shared_ptr<spic::RigidBody>& rigidBody)
 		{
 			const std::shared_ptr<spic::BoxCollider> boxCollider = entity->GetComponent<spic::BoxCollider>();
 			if (boxCollider != nullptr) {
@@ -396,6 +430,11 @@ namespace spic::extensions {
 			}
 		}
 
+		/**
+		 * @brief Draws box collider in window
+		 * @param body Body of box collider
+		 * @param size Size of box collider
+		*/
 		void DrawBoxCollider(const b2Body& body, Point size)
 		{
 			size -= OFFSET;
@@ -411,6 +450,11 @@ namespace spic::extensions {
 			spic::internal::Rendering::DrawRect(rect, rotation, spic::Color::red());
 		}
 
+		/**
+		 * @brief Draws circle collider in window
+		 * @param body Body of circle collider
+		 * @param size Size/diameter of circle collider
+		*/
 		void DrawCircleCollider(const b2Body& body, Point size)
 		{
 			size -= OFFSET;
@@ -423,6 +467,10 @@ namespace spic::extensions {
 			spic::internal::Rendering::DrawCircle(center, radius, spic::Color::red());
 		}
 
+		/**
+		 * @brief Draws edge collider in window
+		 * @param shape Shape of edge
+		*/
 		void DrawEdgeCollider(const b2EdgeShape& shape)
 		{
 			b2Vec2 startVec = { shape.m_vertex1.x, shape.m_vertex1.y };
@@ -433,9 +481,47 @@ namespace spic::extensions {
 			Point endPoint = { endVec.x, endVec.y };
 			spic::internal::Rendering::DrawLine(startPoint, endPoint, spic::Color::red());
 		}
+	private:
+		std::unique_ptr<b2World> world;
+		std::map<std::string, b2Body*> bodies;
+		std::map<spic::BodyType, b2BodyType> bodyTypeConvertions;
+
+		std::map<std::string, Point> sizes;
+
+		/**
+		 * @brief Listener for bodies colliding in physics world.
+		*/
+		std::unique_ptr<ICollisionListener> collisionListener;
+
+		/**
+		 * @brief Physics world uses meters instead of pixels.
+		 *		This variable can be changed to define the conversion from pixels to meters.
+		 *		This will influence your physics world.
+		*/
+		float PIX2MET;
+
+		/**
+		 * @brief Conversion from meters to pixels.
+		*/
+		const float MET2PIX;
+
+		/**
+		 * @brief Width of physics world.
+		*/
+		const float SCALED_WIDTH;
+
+		/**
+		 * @brief Height of physics world.
+		*/
+		const float SCALED_HEIGHT = spic::window::WINDOW_HEIGHT * PIX2MET;
+
+		/*
+		* @brief Collider shapes in Box2D have a standard offset, this is the offset
+		*/
+		const float OFFSET = 0.00999999978f;
 	};
 
-	PhysicsExtension1::PhysicsExtension1() : physicsImpl(new PhysicsExtensionImpl1())
+	PhysicsExtension1::PhysicsExtension1(const float pix2Met) : physicsImpl(new PhysicsExtensionImpl1(pix2Met))
 	{}
 
 	PhysicsExtension1::~PhysicsExtension1() = default;
@@ -460,8 +546,8 @@ namespace spic::extensions {
 		std::function<void(const std::shared_ptr<spic::GameObject>, const std::shared_ptr<spic::Collider>)> stayCallback)
 	{
 		physicsImpl->Reset();
-		spic::extensions::ICollisionListener* listener = new spic::internal::extensions::Box2DCollisionListener(enterCallback, exitCallback, stayCallback);
-		RegisterListener(listener);
+		std::unique_ptr<ICollisionListener> listener = std::make_unique<spic::internal::extensions::Box2DCollisionListener>(enterCallback, exitCallback, stayCallback);
+		physicsImpl->RegisterListener(std::move(listener));
 	}
 
 	void spic::extensions::PhysicsExtension1::AddCollisionLayer(const spic::TileLayer& collisionLayer)
@@ -474,14 +560,9 @@ namespace spic::extensions {
 		physicsImpl->Update(entities);
 	}
 
-	void spic::extensions::PhysicsExtension1::RegisterListener(ICollisionListener* listener) const
+	void spic::extensions::PhysicsExtension1::AddForce(const std::shared_ptr<GameObject> entity, const spic::Point& forceDirection)
 	{
-		physicsImpl->RegisterListener(listener);
-	}
-
-	void spic::extensions::PhysicsExtension1::AddForce(const std::shared_ptr<GameObject>& entity, const spic::Point& forceDirection)
-	{
-		physicsImpl->AddForce(entity, forceDirection);
+		physicsImpl->AddForce(std::move(entity), forceDirection);
 	}
 
 	Point spic::extensions::PhysicsExtension1::GetLinearVelocity(const std::string& entityName)

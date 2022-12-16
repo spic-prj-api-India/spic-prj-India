@@ -58,17 +58,17 @@ namespace spic {
 		this->steeringBehavioursIncludingTargets.erase(steeringBehaviour);
 	}
 
-	void ForceDriven::UseSeek(const std::map<std::reference_wrapper<Point>, float, std::less<Point>>& targets)
+	void ForceDriven::UseSeek(std::map<std::reference_wrapper<Point>, float, std::less<Point>> targets)
 	{
 		this->steeringBehavioursIncludingTargets[SteeringBehaviour::SEEK] = targets;
 	}
 
-	void ForceDriven::UseFlee(const std::map<std::reference_wrapper<Point>, float, std::less<Point>>& targets)
+	void ForceDriven::UseFlee(std::map<std::reference_wrapper<Point>, float, std::less<Point>> targets)
 	{
 		this->steeringBehavioursIncludingTargets[SteeringBehaviour::FLEE] = targets;
 	}
 
-	void ForceDriven::UseArrival(const std::map<std::reference_wrapper<Point>, float, std::less<Point>>& targets, Deceleration deceleration)
+	void ForceDriven::UseArrival(std::map<std::reference_wrapper<Point>, float, std::less<Point>> targets, Deceleration deceleration)
 	{
 		this->steeringBehavioursIncludingTargets[SteeringBehaviour::ARRIVAL] = targets;
 		this->deceleration = deceleration;

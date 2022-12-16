@@ -5,7 +5,6 @@
 #include "Animator.hpp"
 #include "Text.hpp"
 #include "Scene.hpp"
-#include "WindowValues.hpp"
 #include "Rect.hpp"
 
 namespace spic::internal {
@@ -49,15 +48,14 @@ namespace spic::internal {
          * @param angle The radius of the circle
          * @param color The color of the circle
         */
-        static void DrawCircle(spic::Point center, const float radius, const spic::Color& color);
+        static void DrawCircle(const spic::Point& center, const float radius, const spic::Color& color);
 
         /**
          * @brief Draws a point in window space
-         * @param x of point
-         * @param y of point
+         * @param point Point to be drawn
          * @param color The color of the point
         */
-        static void DrawPoint(float x, float y, const spic::Color& color);
+        static void DrawPoint(const spic::Point& point, const spic::Color& color);
 
         /**
          * @brief Draws a line from start to end
@@ -65,7 +63,7 @@ namespace spic::internal {
          * @param end End point of the line
          * @param color Color of this line
         */
-        static void DrawLine(spic::Point start, spic::Point end, const spic::Color& color);
+        static void DrawLine(const spic::Point& start, const spic::Point& end, const spic::Color& color);
         
         /**
          * @brief Draws a sprite as an ui object

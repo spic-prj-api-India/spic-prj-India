@@ -8,7 +8,7 @@ FollowMouseListener::FollowMouseListener()
 	followers;
 }
 
-void FollowMouseListener::AddFollower(const std::shared_ptr<spic::ForceDriven>& follower)
+void FollowMouseListener::AddFollower(std::shared_ptr<spic::ForceDriven> follower)
 {
 	//follower->AddTarget(spic::SteeringBehaviour::FLEE, *target.get(), 1.0f);
 	follower->AddTarget(spic::SteeringBehaviour::SEEK, *target.get(), 1.0f);

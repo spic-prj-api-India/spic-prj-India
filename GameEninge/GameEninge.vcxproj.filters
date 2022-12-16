@@ -437,9 +437,6 @@
     <ClCompile Include="CastException.cpp">
       <Filter>Source Files\exceptions</Filter>
     </ClCompile>
-    <ClCompile Include="Box2DCollisionListener.cpp">
-      <Filter>Source Files\extensions\physics</Filter>
-    </ClCompile>
     <ClCompile Include="PhysicsExtension1.cpp">
       <Filter>Source Files\extensions\physics</Filter>
     </ClCompile>
@@ -592,6 +589,9 @@
     </ClCompile>
     <ClCompile Include="NetworkingHelper.cpp">
       <Filter>Source Files\helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="Box2DCollisionListener.cpp">
+      <Filter>Source Files\extensions\physics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

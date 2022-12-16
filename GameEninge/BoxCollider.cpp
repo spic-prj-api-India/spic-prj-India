@@ -2,11 +2,14 @@
 #include <stdexcept>
 
 namespace spic {
-	BoxCollider::BoxCollider() : Collider(), width{ 0.0f }, height{ 0.0f }
+	BoxCollider::BoxCollider() : BoxCollider(0.0f, 0.0f)
 	{}
 
-	BoxCollider::BoxCollider(const float width, const float height) : width{ width }, height{ height }
-	{}
+	BoxCollider::BoxCollider(const float width, const float height) : Collider()
+	{
+		Width(width);
+		Height(height);
+	}
 
 	Point BoxCollider::Size() const
 	{

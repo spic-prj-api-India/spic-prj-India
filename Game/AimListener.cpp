@@ -5,7 +5,7 @@
 #include "Rocket.h"
 #include <GeneralHelper.hpp>
 
-AimListener::AimListener(const std::shared_ptr<spic::GameObject>& weapon) : rocketCount { 0 }
+AimListener::AimListener(std::shared_ptr<spic::GameObject> weapon) : rocketCount { 0 }
 {
 	this->followMouseListener = std::make_shared<FollowMouseListener>();
 	this->weapon = weapon;

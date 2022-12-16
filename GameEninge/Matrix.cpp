@@ -16,7 +16,7 @@ void S2DMatrix::Identity()
 	matrix._31 = 0.0f; matrix._32 = 0.0f; matrix._33 = 1.0f;
 }
 
-void S2DMatrix::Translate(float x, float y)
+void S2DMatrix::Translate(const float x, const float y)
 {
 	Matrix mat;
 
@@ -27,7 +27,7 @@ void S2DMatrix::Translate(float x, float y)
 	MatrixMultiply(mat);
 }
 
-void S2DMatrix::Rotate(float rotation)
+void S2DMatrix::Rotate(const float rotation)
 {
 	Matrix mat;
 
@@ -68,7 +68,7 @@ S2DMatrix::Matrix::Matrix()
 	_31 = 0.0f; _32 = 0.0f; _33 = 0.0f;
 }
 
-void S2DMatrix::MatrixMultiply(Matrix& mIn)
+void S2DMatrix::MatrixMultiply(const Matrix& mIn)
 {
 	Matrix mat_temp;
 

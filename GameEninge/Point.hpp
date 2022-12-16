@@ -47,10 +47,11 @@ namespace spic {
 		float Rotation() const;
 
 		/**
-		 * @brief Checks if force can be added.
+		 * @brief Checks if force can be added. 
+		 *			If force added to current force is higher than maxForce, then only remaining force is added
 		 * @param force Force that needs to be applied
 		 * @param maxForce Max force that can be used
-		 * @return bool Rotation in degrees.
+		 * @return bool Is true if force could be added, Is false when force couldn't be added
 		*/
 		bool Accumulate(Point& force, const float maxForce);
 

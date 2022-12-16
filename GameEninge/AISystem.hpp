@@ -27,7 +27,7 @@ namespace spic::internal::systems {
 		void Update(std::vector<std::shared_ptr<spic::GameObject>>& entities, Scene& currentScene) override;
 	private:
 		/**
-		* @brief Filters all Force driven entities from entities list.
+		* @brief Filters all Force driven entities from entities list recursively.
 		* @spicapi
 		*/
 		void GetForceDrivenEntities(std::vector<std::shared_ptr<spic::ForceDriven>>& forceDrivenEntities, 

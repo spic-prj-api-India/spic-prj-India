@@ -12,6 +12,7 @@
 #include "Sprite.hpp"
 #include <memory>
 #include "NetworkPacket.hpp"
+#include "Rect.hpp"
 
 
 namespace spic::GeneralHelper 
@@ -76,6 +77,8 @@ namespace spic::GeneralHelper
 	*/
 	bool CalculateWithinSquare(const Point& point, std::array<Point, 4>& square);
 
+	bool RectIntersection(const Rect& rect1, const Rect& rect2);
+
 	/**
 	 * @brief Calculates if a line intersects with another line.
 	 *		Sets intersection point and distance to intersection if intersection exists.
@@ -83,8 +86,8 @@ namespace spic::GeneralHelper
 	 * @param ePoint1 End point of line 1
 	 * @param sPoint2 Start point of line 2
 	 * @param ePoint2 End point of line 2
-	 * @param intersectPoint Intersection point
-	 * @param distance Distance to intersection
+	 * @param intersectPoint Intersection point, is reference so that intersect point can be used outside function
+	 * @param distance Distance to intersection, is reference so that distance between lines can be used outside function
 	 * @return
 	*/
 	bool LineIntersection(Point sPoint1, Point ePoint1, Point sPoint2, Point ePoint2, Point& intersectPoint, float& distance);

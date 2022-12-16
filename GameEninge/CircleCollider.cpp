@@ -5,12 +5,14 @@ namespace spic {
 	CircleCollider::CircleCollider() : CircleCollider(0.0f)
 	{}
 
-	CircleCollider::CircleCollider(const float radius) : Collider(), radius{ radius }
-	{}
+	CircleCollider::CircleCollider(const float radius) : Collider()
+	{
+		Radius(radius);
+	}
 
 	Point CircleCollider::Size() const
 	{
-		float diameter = radius * 2.0f;
+		const float diameter = radius * 2.0f;
 		return { diameter, diameter };
 	}
 

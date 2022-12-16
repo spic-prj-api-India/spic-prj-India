@@ -73,11 +73,11 @@ std::vector<std::shared_ptr<spic::GameObject>> EntityManager::GetEntities() {
 	return entities;
 }
 
-void EntityManager::AddEntity(const std::shared_ptr<spic::GameObject>& entity)
+void EntityManager::AddEntity(std::shared_ptr<spic::GameObject> entity)
 {
 	if (entity->Name().empty())
 		throw std::exception("Entity requires a name.");
-	entities.push_back(entity);
+	entities.push_back(std::move(entity));
 }
 
 void spic::internal::EntityManager::AddEntityAlsoToScene(const std::shared_ptr<spic::GameObject>& entity)
@@ -86,7 +86,7 @@ void spic::internal::EntityManager::AddEntityAlsoToScene(const std::shared_ptr<s
 	scene->AddContent(entity);
 }
 
-void EntityManager::RemoveEntity(const std::shared_ptr<spic::GameObject> entity) {
+void EntityManager::RemoveEntity(const std::shared_ptr<spic::GameObject>& entity) {
 	entities.erase(
 		std::remove(entities.begin(), entities.end(), entity),
 		entities.end());
@@ -145,7 +145,7 @@ void EntityManager::SetScene(std::shared_ptr<Scene> newScene)
 		}
 	}
 
-	TileMap* tileMap = scene->TileMap();
+	const TileMap* tileMap = scene->TileMap();
 	if (tileMap != nullptr) {
 		GameEngine* engine = GameEngine::GetInstance();
 		for (const auto& weakExtension : engine->GetExtensions<spic::extensions::IPhysicsExtension>()) {

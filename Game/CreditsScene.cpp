@@ -11,7 +11,7 @@ CreditsScene::CreditsScene()
 
 void CreditsScene::SetContents()
 {
-	auto creddits = std::make_shared<spic::Text>(1200, 900
+	auto creddits = std::make_shared<spic::Text>(1200.0f, 900.0f
 		, "Made by:\nCollin Knuit\nBart Blaak\nMilo van der pas\n\n\nPress 'backspace' to return to menu\nPress 'spacebar' for fun"
 		, ""
 		, 50

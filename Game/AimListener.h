@@ -6,7 +6,7 @@
 
 class AimListener : public spic::IMouseListener {
 public:
-    AimListener(const std::shared_ptr<spic::GameObject>& weapon);
+    AimListener(std::shared_ptr<spic::GameObject> weapon);
 
     void OnMouseMoved() override;
     void OnMouseClicked() override;

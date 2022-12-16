@@ -13,6 +13,7 @@ namespace spic {
 
             /*
             * @brief Sets radius of collider
+            * @throws Throws if radius is below zero
             */
             CircleCollider(const float radius);
 
@@ -32,6 +33,7 @@ namespace spic {
             /**
              * @brief Set the collider's radius
              * @param newRadius The desired radius
+             * @throws Throws if newRadius is below zero
              * @spicapi
              */
             void Radius(const float newRadius);

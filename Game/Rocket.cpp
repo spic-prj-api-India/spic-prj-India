@@ -13,7 +13,7 @@ void Rocket::SetAttributes(const std::string& name, const spic::Point& position,
 	Name(name);
 	Tag("rocket");
 	auto boxCollider = std::make_shared<spic::BoxCollider>(20.0f, 70.0f);
-	//boxCollider->Disable();
+	boxCollider->Disable();
 	Transform(std::make_shared<spic::Transform>(position, angle, 0.125f));
 	AddComponent<spic::BoxCollider>(std::move(boxCollider));
 	rigidBody = std::make_shared<spic::RigidBody>(3.0f, 1.0f, spic::BodyType::dynamicBody);

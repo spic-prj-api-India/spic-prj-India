@@ -4,6 +4,9 @@
 #include "Point.hpp"
 
 namespace spic::internal::math {
+    /**
+     * @brief Matrix that can be used to translate and rotate matrixes.
+    */
     class S2DMatrix {
     public:
         /**
@@ -21,13 +24,13 @@ namespace spic::internal::math {
          * @param x X of transformation.
          * @param y Y of transformation.
         */
-        void Translate(float x, float y);
+        void Translate(const float x, const float y);
 
         /**
          * @brief Creates a rotation matrix.
          * @param rotation Rotation in grad.
         */
-        void Rotate(float rotation);
+        void Rotate(const float rotation);
 
         /**
          * @brief Creates a rotation matrix.
@@ -55,7 +58,7 @@ namespace spic::internal::math {
          * @brief Multiplies matrix with mIn.
          * @param mIn Matrix that will be multiplied.
         */
-        void MatrixMultiply(Matrix& mIn);
+        void MatrixMultiply(const Matrix& mIn);
     private:
         Matrix matrix;
     };

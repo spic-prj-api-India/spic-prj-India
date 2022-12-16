@@ -13,9 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Header Files\scripts">
-      <UniqueIdentifier>{ae407631-ead0-46b5-86ae-554f2f8b33e1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\scripts">
       <UniqueIdentifier>{0dc15951-691d-4f8e-9da7-15acd53ffd6b}</UniqueIdentifier>
     </Filter>
@@ -36,6 +33,9 @@
     </Filter>
     <Filter Include="Source Files\objects">
       <UniqueIdentifier>{6867dea8-c953-4a45-ab9f-786eb1d26ecd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\scripts">
+      <UniqueIdentifier>{ae407631-ead0-46b5-86ae-554f2f8b33e1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

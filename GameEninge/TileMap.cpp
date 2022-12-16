@@ -2,7 +2,7 @@
 
 namespace spic
 {
-	TileMap::TileMap(int collisionLayerIndex)
+	TileMap::TileMap(const int collisionLayerIndex)
 	{
 		this->collisionLayerIndex = collisionLayerIndex;
 		tileLayers;
@@ -13,12 +13,12 @@ namespace spic
 		tileLayers[layerIndex] = std::move(tileLayer);
 	}
 
-	const TileLayer& TileMap::GetLayer(int layerIndex)
+	const TileLayer& TileMap::GetLayer(const int layerIndex) const
 	{
-		return *tileLayers[layerIndex];
+		return *tileLayers.at(layerIndex);
 	}
 
-	const TileLayer& TileMap::GetCollisionLayer()
+	const TileLayer& TileMap::GetCollisionLayer() const
 	{
 		return GetLayer(this->collisionLayerIndex);
 	}

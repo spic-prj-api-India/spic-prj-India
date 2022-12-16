@@ -1,7 +1,7 @@
 #include "ButtonClickListener.hpp"
 #include "Input.hpp"
 #include "GameEngine.hpp"
-#include <SDL2/SDL_rect.h>
+#include "GeneralHelper.hpp"
 
 namespace spic::internal {
 	ButtonClickListener::ButtonClickListener()
@@ -16,7 +16,7 @@ namespace spic::internal {
 	void ButtonClickListener::OnMouseClicked()
 	{
 		spic::Point point = spic::Input::MousePosition();
-		SDL_FRect mouseRect = {
+		Rect mouseRect = {
 			point.x,
 			point.y,
 			1.0f,
@@ -24,13 +24,13 @@ namespace spic::internal {
 		};
 		for (const auto& button : buttons) {
 			const auto& transform = button->Transform();
-			SDL_FRect buttonRect = {
+			Rect buttonRect = {
 				transform->position.x,
 				transform->position.y,
 				button->Width() * transform->scale,
 				button->Height() * transform->scale
 			};
-			if (SDL_HasIntersectionF(&mouseRect, &buttonRect)) {
+			if (spic::GeneralHelper::RectIntersection(mouseRect, buttonRect)) {
 				button->Click();
 				return;
 			}
@@ -45,7 +45,7 @@ namespace spic::internal {
 	{
 	}
 
-	void ButtonClickListener::SetButtons(const std::vector<std::shared_ptr<spic::Button>>& buttons)
+	void ButtonClickListener::SetButtons(std::vector<std::shared_ptr<spic::Button>> buttons)
 	{
 		this->buttons = buttons;
 	}

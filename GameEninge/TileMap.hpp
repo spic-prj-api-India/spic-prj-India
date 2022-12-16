@@ -10,7 +10,7 @@ namespace spic
 	class TileMap
 	{
 	public:
-		TileMap(int collisionLayerIndex);
+		TileMap(const int collisionLayerIndex);
 
 		/**
 		 * @brief Adds tile layer
@@ -26,14 +26,14 @@ namespace spic
 		 * @return TileLayer.
 		 * @spicapi
 		 */
-		const TileLayer& GetLayer(int index);
+		const TileLayer& GetLayer(const int index) const;
 
 		/**
 		 * @brief Returns collision layer.
 		 * @return TileLayer.
 		 * @spicapi
 		 */
-		const TileLayer& GetCollisionLayer();
+		const TileLayer& GetCollisionLayer() const;
 
 		/**
 		 * @brief Renders all tile layers.

@@ -43,7 +43,6 @@ namespace spic::internal::systems {
 
 		/**
 		 * @brief Calls draw colliders method in physics extensions.
-		 * @param entities Desired entities that need to be drawn.
 		 * @spicapi
 		 */
 		void DrawColliders();

@@ -18,14 +18,14 @@ namespace spic {
 
 	void GameObject::Create(const std::shared_ptr<GameObject> gameObject)
 	{
-		internal::EntityManager::GetInstance()->AddEntity(gameObject);
+		internal::EntityManager::GetInstance()->AddEntity(std::move(gameObject));
 	}
 
 	GameObject::GameObject(const std::string& name) : active{ true }, layer{ 0 }, parent{ nullptr }, name{name}
 	{
 	}
 
-	std::shared_ptr<GameObject> FindRecursion(const std::vector<std::shared_ptr<GameObject>>& objects,const std::string& name)
+	std::shared_ptr<GameObject> FindRecursion(const std::vector<std::shared_ptr<GameObject>>& objects, const std::string& name)
 	{
 		for (const auto& gameObject : objects) {
 			if (gameObject->Name() == name)

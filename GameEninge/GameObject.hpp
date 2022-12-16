@@ -10,11 +10,14 @@
 #include <map>
 
 namespace spic {
+	/*
+	 * @brief Forward declaration is used, because there is a circular dependency.
+	*/
 	class Component;
 
 	/**
 	 * @brief Any object which should be represented on screen.
-	 */
+	*/
 	class GameObject {
 	public:
 		GameObject();
@@ -421,7 +424,7 @@ namespace spic {
 	template<class T>
 	void GameObject::AddComponent(std::shared_ptr<T> component)
 	{
-		spic::TypeHelper::CastSharedPtrToType<Component>(component)->GameObject(*this);
+		spic::TypeHelper::CastSharedPtrToType<Component>(component)->Parent(*this);
 		components.emplace_back(component);
 	}
 

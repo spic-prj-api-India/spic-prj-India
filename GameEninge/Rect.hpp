@@ -2,6 +2,9 @@
 #define RECT_H_
 
 namespace spic {
+	/**
+	* @brief A rectangle, with the origin at the upper left (floating point).
+	*/
 	struct Rect
 	{
 		float x;

@@ -71,6 +71,8 @@ std::array<Point, 4> spic::GeneralHelper::GetPoints(const Point& orgin, const fl
 	return returnValue;
 }
 
+
+
 bool spic::GeneralHelper::CalculateWithinSquare(const Point& point, std::array<Point, 4>& square)
 {
 	auto am = square[0].DotProduct(point);
@@ -86,13 +88,28 @@ bool spic::GeneralHelper::CalculateWithinSquare(const Point& point, std::array<P
 	return false;
 }
 
-bool spic::GeneralHelper::LineIntersection(Point sPoint1, Point ePoint1, Point sPoint2, Point ePoint2, Point& intersectPoint, float& distance)
+bool ValueInRange(float value, float min, float max)
 {
-	float rTop = (sPoint1.y - sPoint2.y) * (ePoint2.x - sPoint2.x) - (sPoint1.x - sPoint2.x) * (ePoint2.y - sPoint2.y);
-	float rePoint1ot = (ePoint1.x - sPoint1.x) * (ePoint2.y - sPoint2.y) - (ePoint1.y - sPoint1.y) * (ePoint2.x - sPoint2.x);
+	return (value >= min) && (value <= max);
+}
 
-	float sTop = (sPoint1.y - sPoint2.y) * (ePoint1.x - sPoint1.x) - (sPoint1.x - sPoint2.x) * (ePoint1.y - sPoint1.y);
-	float sePoint1ot = (ePoint1.x - sPoint1.x) * (ePoint2.y - sPoint2.y) - (ePoint1.y - sPoint1.y) * (ePoint2.x - sPoint2.x);
+bool spic::GeneralHelper::RectIntersection(const Rect& rect1, const Rect& rect2) {
+	const bool xOverlap = ValueInRange(rect1.x, rect2.x, rect2.x + rect2.w) ||
+		ValueInRange(rect2.x, rect1.x, rect1.x + rect1.w);
+
+	const bool yOverlap = ValueInRange(rect1.y, rect2.y, rect2.y + rect2.h) ||
+		ValueInRange(rect2.y, rect1.y, rect1.y + rect1.h);
+
+	return xOverlap && yOverlap;
+}
+
+bool spic::GeneralHelper::LineIntersection(Point sPoint1, Point ePoint1, const Point sPoint2, const Point ePoint2, Point& intersectPoint, float& distance)
+{
+	const float rTop = (sPoint1.y - sPoint2.y) * (ePoint2.x - sPoint2.x) - (sPoint1.x - sPoint2.x) * (ePoint2.y - sPoint2.y);
+	const float rePoint1ot = (ePoint1.x - sPoint1.x) * (ePoint2.y - sPoint2.y) - (ePoint1.y - sPoint1.y) * (ePoint2.x - sPoint2.x);
+
+	const float sTop = (sPoint1.y - sPoint2.y) * (ePoint1.x - sPoint1.x) - (sPoint1.x - sPoint2.x) * (ePoint1.y - sPoint1.y);
+	const float sePoint1ot = (ePoint1.x - sPoint1.x) * (ePoint2.y - sPoint2.y) - (ePoint1.y - sPoint1.y) * (ePoint2.x - sPoint2.x);
 
 	if ((rePoint1ot == 0) || (sePoint1ot == 0))
 	{
@@ -100,8 +117,8 @@ bool spic::GeneralHelper::LineIntersection(Point sPoint1, Point ePoint1, Point s
 		return false;
 	}
 
-	float r = rTop / rePoint1ot;
-	float s = sTop / sePoint1ot;
+	const float r = rTop / rePoint1ot;
+	const float s = sTop / sePoint1ot;
 
 	if ((r > 0) && (r < 1) && (s > 0) && (s < 1)) {
 		distance = sPoint1.Distance(ePoint1) * r;
