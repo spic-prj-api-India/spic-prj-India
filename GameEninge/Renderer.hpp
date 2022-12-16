@@ -88,7 +88,7 @@ namespace spic::internal {
         static void NewScene();
         
         /**
-         * @brief Renders all bufferd
+         * @brief Renders all bufferd entities
         */
         static void Render();
 
