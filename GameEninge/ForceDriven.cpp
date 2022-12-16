@@ -338,8 +338,8 @@ namespace spic {
 		Point target;
 		const Point& location = this->Transform()->position;
 
-		target += Point(RandomClamped() * wanderJitter,
-			RandomClamped() * wanderJitter);
+		target += Point(ClampedRandomFloat() * wanderJitter,
+			ClampedRandomFloat() * wanderJitter);
 
 		target.Normalize();
 

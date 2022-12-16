@@ -7,7 +7,7 @@ namespace spic::internal::math {
 		return ((rand()) / (RAND_MAX + 1.0f));
 	}
 
-	float RandomClamped()
+	float ClampedRandomFloat()
 	{
 		return RandomFloat() - RandomFloat();
 	}

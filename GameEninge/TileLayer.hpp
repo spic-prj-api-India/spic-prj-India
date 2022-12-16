@@ -2,7 +2,6 @@
 #define TILELAYER_H_
 
 #include <vector>
-#include <iostream>
 #include "TileSet.hpp"
 #include "Point.hpp"
 #include "Sprite.hpp"

@@ -103,7 +103,7 @@ bool spic::GeneralHelper::RectIntersection(const Rect& rect1, const Rect& rect2)
 	return xOverlap && yOverlap;
 }
 
-bool spic::GeneralHelper::LineIntersection(Point sPoint1, Point ePoint1, const Point sPoint2, const Point ePoint2, Point& intersectPoint, float& distance)
+bool spic::GeneralHelper::LineIntersection(Point sPoint1, Point ePoint1, const Point& sPoint2, const Point& ePoint2, Point& intersectPoint, float& distance)
 {
 	const float rTop = (sPoint1.y - sPoint2.y) * (ePoint2.x - sPoint2.x) - (sPoint1.x - sPoint2.x) * (ePoint2.y - sPoint2.y);
 	const float rePoint1ot = (ePoint1.x - sPoint1.x) * (ePoint2.y - sPoint2.y) - (ePoint1.y - sPoint1.y) * (ePoint2.x - sPoint2.x);

@@ -5,7 +5,7 @@
 
 namespace spic::internal::math 
 {
-	const float MaxFloat = (std::numeric_limits<float>::max)();
+	constexpr float MaxFloat = (std::numeric_limits<float>::max)();
 
 	/**
 	 * @brief Returns a random float between zero and 1
@@ -15,7 +15,7 @@ namespace spic::internal::math
 	/**
 	 * @brief Returns a random float in the range -1 < n < 1
 	*/
-	float RandomClamped();
+	float ClampedRandomFloat();
 }
 
 #endif // RANDOM_H_

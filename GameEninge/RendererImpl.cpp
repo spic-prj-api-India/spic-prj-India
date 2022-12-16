@@ -12,6 +12,7 @@
 #include "StringHelper.hpp"
 #include "Defaults.hpp"
 #include "WindowValues.hpp"
+#include <iostream>
 
 using namespace spic;
 using namespace spic::window;

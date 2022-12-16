@@ -69,7 +69,9 @@ namespace spic::extensions {
 		void Reset()
 		{
 			while (world != nullptr && world->IsLocked()) 
-			{}
+			{
+				std::this_thread::sleep_for(std::chrono::milliseconds(1));
+			}
 			world = std::make_unique<b2World>(b2Vec2(0.0f, PhysicsValues::GRAVITY));
 			sizes = {};
 			bodies = {};
