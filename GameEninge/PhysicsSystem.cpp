@@ -4,13 +4,17 @@
 #include "Collider.hpp"
 #include <functional>
 #include "BehaviourScript.hpp"
+#include "RigidBody.hpp"
 
 namespace spic::internal::systems {
 	PhysicsSystem::PhysicsSystem() 
+	{}
+
+	void PhysicsSystem::Start(std::vector<std::shared_ptr<spic::GameObject>>& entities, Scene& currentScene)
 	{
 	}
 
-	void PhysicsSystem::Start(std::vector<std::shared_ptr<spic::GameObject>>& entities, Scene& currentScene)
+	void PhysicsSystem::Reset() const
 	{
 		spic::GameEngine* engine = spic::GameEngine::GetInstance();
 		std::vector<std::weak_ptr<spic::extensions::IPhysicsExtension>> physicsExtensions = engine->GetExtensions<spic::extensions::IPhysicsExtension>();
@@ -32,7 +36,8 @@ namespace spic::internal::systems {
 		std::vector<std::weak_ptr<spic::extensions::IPhysicsExtension>> physicsExtensions = engine->GetExtensions<spic::extensions::IPhysicsExtension>();
 		for (const auto& extension : physicsExtensions) {
 			if (const auto& physicsExtension = extension.lock()) {
-				std::vector<std::shared_ptr<spic::GameObject>> physicsEntities = GetPhysicsEntities(entities);
+				std::vector<std::shared_ptr<spic::GameObject>> physicsEntities; 
+				GetPhysicsEntities(physicsEntities, entities);
 				physicsExtension->Update(physicsEntities);
 			}
 		}
@@ -59,17 +64,13 @@ namespace spic::internal::systems {
 		}
 	}
 
-	std::vector<std::shared_ptr<spic::GameObject>> PhysicsSystem::GetPhysicsEntities(std::vector<std::shared_ptr<spic::GameObject>> entities) const
+	void PhysicsSystem::GetPhysicsEntities(std::vector<std::shared_ptr<spic::GameObject>>& physicsEntities, const std::vector<std::shared_ptr<spic::GameObject>>& entities) const
 	{
-		std::vector<std::shared_ptr<spic::GameObject>> physicsEntities;
 		for (const auto& entity : entities) {
 			if (IsPhysicsEntity(entity.get()))
 				physicsEntities.emplace_back(entity);
-
-			auto temp = this->GetPhysicsEntities(std::move(entity->GetChildren()));
-			std::copy(temp.begin(), temp.end(), std::back_inserter(physicsEntities));
+			GetPhysicsEntities(physicsEntities, entity->GetChildren());
 		}
-		return physicsEntities;
 	}
 
 	bool PhysicsSystem::IsPhysicsEntity(const spic::GameObject* entity) const

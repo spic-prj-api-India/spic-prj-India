@@ -5,23 +5,21 @@
 #include "GameEngine.hpp"
 #include <PhysicsExtension1.hpp>
 #include "MenuScene.h"
-#include "GameScene.h"
-#include "PhysicsValues.hpp"
 #include "Box.h"
+#include "Debug.hpp"
 #include "SocketUdpExtension.hpp"
 #include <NetworkPacket.hpp>
 #include "NetworkingHelper.hpp"
-#include "CredditsScene.h"
-#include <functional>
-#include "Scene.hpp"
+#include "GameScene.h"
+#include "FlockingScene.h"
+#include "CreditsScene.h"
 
 
 
 
 void InitGame() {
 	spic::GameEngine* engine = spic::GameEngine::GetInstance();
-	spic::extensions::PhysicsValues::SCALING_FACTOR = 0.0017f;
-	std::shared_ptr<spic::extensions::PhysicsExtension1> physicsExtension = std::make_shared<spic::extensions::PhysicsExtension1>();
+	std::shared_ptr<spic::extensions::PhysicsExtension1> physicsExtension = std::make_shared<spic::extensions::PhysicsExtension1>(0.0023f);
 	engine->AddExtension(std::move(physicsExtension));
 
 	auto socket = std::make_shared<spic::extensions::SocketUDPExtension>();
@@ -39,14 +37,17 @@ void InitGame() {
 
 	//engine->RegisterScene("game", std::make_shared<GameScene>());
 	engine->RegisterScene("creddits", std::function<spic::Scene* ()>(CredditsScene::Start));
+	spic::Debug::COLLIDER_VISIBILITY = true;
 }
 
 void StartGame()
 {
-	auto values = spic::window::WindowValues{ "Forts 2", 1200, 800, false, spic::window::FULLSCREENTYPE::WINDOWED };
+	spic::window::WINDOW_NAME = "Forts 2";
+	spic::window::WINDOW_WIDTH = 1200;
+	spic::window::WINDOW_HEIGHT = 800;
 	spic::GameEngine* engine = spic::GameEngine::GetInstance();
 	engine->LoadSceneByName("menu");
-	engine->Start(&values);
+	engine->Start();
 }
 
 int main()

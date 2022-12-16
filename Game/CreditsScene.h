@@ -2,9 +2,9 @@
 
 #include "Scene.hpp"
 
-class CredditsScene : public spic::Scene {
+class CreditsScene : public spic::Scene {
 public:
-	CredditsScene();
+	CreditsScene();
 	void SetContents();
 	void SetCammera();
 	static spic::Scene* Start()

@@ -24,7 +24,7 @@ namespace spic::internal {
         * @param buttons Active buttons in scene.
         * @spicapi
         */
-        void SetButtons(const std::vector<std::shared_ptr<spic::Button>>& buttons);
+        void SetButtons(std::vector<std::shared_ptr<spic::Button>> buttons);
     private:
         std::vector<std::shared_ptr<spic::Button>> buttons;
     };

@@ -1,7 +1,7 @@
 #include "CollisionDetectionScript.h"
 
 void CollisionDetectionScript::OnStart() {
-	std::cout << "Script started for game object: " << this->gameObject->Tag() << std::endl;
+	std::cout << "Script started for game object: " << this->gameObject->Name() << std::endl;
 }
 void CollisionDetectionScript::OnUpdate() {
 	

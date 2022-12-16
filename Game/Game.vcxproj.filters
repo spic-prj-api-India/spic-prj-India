@@ -13,9 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Header Files\scripts">
-      <UniqueIdentifier>{ae407631-ead0-46b5-86ae-554f2f8b33e1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\scripts">
       <UniqueIdentifier>{0dc15951-691d-4f8e-9da7-15acd53ffd6b}</UniqueIdentifier>
     </Filter>
@@ -34,18 +31,24 @@
     <Filter Include="Header Files\scenes">
       <UniqueIdentifier>{eedb5559-7804-4684-845a-2a60395500ca}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\objects">
+      <UniqueIdentifier>{6867dea8-c953-4a45-ab9f-786eb1d26ecd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\scripts">
+      <UniqueIdentifier>{ae407631-ead0-46b5-86ae-554f2f8b33e1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Game.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="CollisionDetectionScript.cpp">
       <Filter>Source Files\scripts</Filter>
     </ClCompile>
-    <ClCompile Include="MouseListener.cpp">
+    <ClCompile Include="KeyListener.cpp">
       <Filter>Source Files\listeners</Filter>
     </ClCompile>
-    <ClCompile Include="KeyListener.cpp">
+    <ClCompile Include="FollowMouseListener.cpp">
+      <Filter>Source Files\listeners</Filter>
+    </ClCompile>
+    <ClCompile Include="AimListener.cpp">
       <Filter>Source Files\listeners</Filter>
     </ClCompile>
     <ClCompile Include="CameraMovementScript.cpp">
@@ -57,10 +60,25 @@
     <ClCompile Include="GameScene.cpp">
       <Filter>Source Files\scenes</Filter>
     </ClCompile>
-    <ClCompile Include="CredditsScene.cpp">
+    <ClCompile Include="Rocket.cpp">
+      <Filter>Source Files\objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FlockingScene.cpp">
       <Filter>Source Files\scenes</Filter>
     </ClCompile>
-    <ClCompile Include="CredditsSceneScript.cpp">
+    <ClCompile Include="PlayerMovementScript.cpp">
+      <Filter>Source Files\scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="Ball.cpp">
+      <Filter>Source Files\objects</Filter>
+    </ClCompile>
+    <ClCompile Include="CreditsScene.cpp">
+      <Filter>Source Files\scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="CreditsSceneScript.cpp">
       <Filter>Source Files\scripts</Filter>
     </ClCompile>
   </ItemGroup>
@@ -68,10 +86,10 @@
     <ClInclude Include="CollisionDetectionScript.h">
       <Filter>Header Files\scripts</Filter>
     </ClInclude>
-    <ClInclude Include="MouseListener.h">
+    <ClInclude Include="KeyListener.h">
       <Filter>Header Files\listeners</Filter>
     </ClInclude>
-    <ClInclude Include="KeyListener.h">
+    <ClInclude Include="FollowMouseListener.h">
       <Filter>Header Files\listeners</Filter>
     </ClInclude>
     <ClInclude Include="Box.h">
@@ -86,10 +104,25 @@
     <ClInclude Include="GameScene.h">
       <Filter>Header Files\scenes</Filter>
     </ClInclude>
-    <ClInclude Include="CredditsScene.h">
+    <ClInclude Include="AimListener.h">
+      <Filter>Header Files\listeners</Filter>
+    </ClInclude>
+    <ClInclude Include="Rocket.h">
+      <Filter>Header Files\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="FlockingScene.h">
       <Filter>Header Files\scenes</Filter>
     </ClInclude>
-    <ClInclude Include="CredditsSceneScript.h">
+    <ClInclude Include="PlayerMovementScript.h">
+      <Filter>Header Files\scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="Ball.h">
+      <Filter>Header Files\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="CreditsScene.h">
+      <Filter>Header Files\scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="CreditsSceneScript.h">
       <Filter>Header Files\scripts</Filter>
     </ClInclude>
   </ItemGroup>

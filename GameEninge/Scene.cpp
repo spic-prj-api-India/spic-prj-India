@@ -38,8 +38,8 @@ namespace spic
 
 	void Scene::LoadTileMap(const std::string& newTileMapPath, const int newCollisionLayerIndex)
 	{
-		std::unique_ptr<spic::internal::MapParser> mapParser = std::make_unique<spic::internal::MapParser>();
-		tileMap = mapParser->Parse(newTileMapPath, newCollisionLayerIndex);
+		std::unique_ptr<spic::internal::MapParser> mapParser = std::make_unique<spic::internal::MapParser>(newCollisionLayerIndex);
+		tileMap = mapParser->Parse(newTileMapPath);
 	}
 
 	const TileMap* Scene::TileMap() const

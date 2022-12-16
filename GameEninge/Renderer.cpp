@@ -6,9 +6,9 @@ using namespace spic::internal;
 static std::unique_ptr<rendering::RendererImpl> impl = std::make_unique<rendering::RendererImpl>();
 
 
-void spic::internal::Rendering::Start(const spic::window::WindowValues* values)
+void spic::internal::Rendering::Start()
 {
-	impl->Start(values);
+	impl->Start();
 }
 
 void spic::internal::Rendering::Exit()
@@ -26,9 +26,24 @@ void spic::internal::Rendering::UpdateCamera(Camera* camera)
 	impl->UpdateCamera(camera);
 }
 
-void spic::internal::Rendering::DrawLine(const Point* start, const Point* end, const Color* colour)
+void spic::internal::Rendering::DrawRect(const spic::Rect& rect, const double angle, const spic::Color& color)
 {
-	impl->DrawLine(start, end, colour);
+	spic::internal::rendering::RendererImpl::GetInstance()->DrawRect(rect, angle, color);
+}
+
+void spic::internal::Rendering::DrawCircle(const spic::Point& center, const float radius, const spic::Color& color, const float pixelGap)
+{
+	spic::internal::rendering::RendererImpl::GetInstance()->DrawCircle(center, radius, pixelGap, color);
+}
+
+void spic::internal::Rendering::DrawPoint(const spic::Point& point, const spic::Color& color)
+{
+	spic::internal::rendering::RendererImpl::GetInstance()->DrawPoint(point, color);
+}
+
+void spic::internal::Rendering::DrawLine(const spic::Point& start, const spic::Point& end, const spic::Color& color)
+{
+	spic::internal::rendering::RendererImpl::GetInstance()->DrawLine(start, end, color);
 }
 
 void spic::internal::Rendering::DrawSprite(const Transform* position, Sprite* sprite)

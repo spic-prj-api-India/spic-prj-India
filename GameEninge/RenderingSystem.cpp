@@ -3,6 +3,10 @@
 #include "TypeHelper.hpp"
 #include "InternalTime.hpp"
 #include "Input.hpp"
+#include "Debug.hpp"
+#include "BoxCollider.hpp"
+#include "GameEngine.hpp"
+#include "IPhysicsExtension.hpp"
 
 
 namespace spic::internal::systems {
@@ -41,6 +45,8 @@ namespace spic::internal::systems {
 		{
 			spic::internal::Rendering::Draw(entity.get());
 		}
+		if(Debug::DEBUG && Debug::COLLIDER_VISIBILITY)
+			DrawColliders();
 	
 		if(this->fps->renderFps)
 			spic::internal::Rendering::DrawFps();
@@ -66,5 +72,14 @@ namespace spic::internal::systems {
 		}
 
 		return { nonUIEntities, uiEntities };
+	}
+
+	void RenderingSystem::DrawColliders()
+	{
+		GameEngine* engine = GameEngine::GetInstance();
+		for (const auto& weakExtension : engine->GetExtensions<spic::extensions::IPhysicsExtension>()) {
+			if (const auto& physicsExtension = weakExtension.lock())
+				physicsExtension->DrawColliders();
+		}
 	}
 }

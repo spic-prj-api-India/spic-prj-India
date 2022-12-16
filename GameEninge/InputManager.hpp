@@ -98,7 +98,7 @@ namespace spic::internal {
 		* @brief Calls method OnMouseMoved of all mouse listeners
 		* @spicapi
 		*/
-		void TriggerMouseMoved() const;
+		void TriggerMouseMoved();
 
 		/**
 		* @brief Calls method OnMouseClicked of all mouse listeners for specific mouse event

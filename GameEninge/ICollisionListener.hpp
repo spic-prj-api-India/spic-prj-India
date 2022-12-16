@@ -3,6 +3,7 @@
 
 #include <functional>
 #include "GameObject.hpp"
+#include "Collider.hpp"
 
 namespace spic::extensions {
 	/**
@@ -11,8 +12,12 @@ namespace spic::extensions {
 	class ICollisionListener {
 	public:
 		ICollisionListener();
+
 		/**
 		* @brief Constructor for all callback methods
+		* @param enterCallback Callback that is called when collider enters collision
+		* @param exitCallback Callback that is called when collider exits collision
+		* @param stayCallback Callback that is called when collider stays in collision
 		* @spicapi
 		*/
 		ICollisionListener(std::function<void(const std::shared_ptr<spic::GameObject>, const std::shared_ptr<spic::Collider>)> enterCallback,

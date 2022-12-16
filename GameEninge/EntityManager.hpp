@@ -38,55 +38,56 @@ namespace spic::internal
 		static EntityManager* GetInstance();
 
 		/*
-		@brief Initialization of the class.
+		* @brief Initialization of the class.
 		*/
 		void Init();
 
 		/*
-		@brief Clears all variable members.
+		* @brief Clears all variable members.
 		*/
 		void Reset();
 
 		/*
-		@brief Gets entities that are currently loaded.
-		@return The current entities
+		* @brief Gets entities that are currently loaded.
+		* @return The current entities
 		*/
 		std::vector<std::shared_ptr<spic::GameObject>> GetEntities();
 
 		/*
-		@brief Add entity.
-		@param entity The entity that will be added
+		* @brief Add entity.
+		* @param entity The entity that will be added
+		* @throws Throws if entity does not have a name
 		*/
-		void AddEntity(const std::shared_ptr<spic::GameObject>& entity);
+		void AddEntity(std::shared_ptr<spic::GameObject> entity);
 
 		/*
-		@brief Add entity.
-		@param entity The entity that will be added
+		* @brief Add entity.
+		* @param entity The entity that will be added
 		*/
 		void AddEntityAlsoToScene(const std::shared_ptr<spic::GameObject>& entity);
 		/*
-		@brief Remove entity.
-		@param entity The entity that will be removed
+		* @brief Remove entity.
+		* @param entity The entity that will be removed
 		*/
 		void RemoveEntity(const std::shared_ptr<spic::GameObject>& entity);
 
 		/*
-		@brief Register scene.
-		@param The sceneName is the key in the scenes list.
-		@param The scene that will be registered in scenes list.
+		* @brief Register scene.
+		* @param The sceneName is the key in the scenes list.
+		* @param The scene that will be registered in scenes list.
 		*/
 		void RegisterScene(const std::string& sceneName, std::function<spic::Scene* ()> scene);
 
 		/*
-		@brief Gets current scene.
-		@returns The current scene.
+		* @brief Gets current scene.
+		* @returns The current scene.
 		*/
 		std::shared_ptr<Scene> GetScene();
 
 		/*
-		@brief Gets scene with name.
-		@param The sceneName of the scene.
-		@returns The scene with the given sceneName.
+		* @brief Gets scene with name.
+		* @param The sceneName of the scene.
+		* @returns The scene with the given sceneName.
 		*/
 		std::shared_ptr<Scene> GetScene(const std::string& sceneName);
 
@@ -98,20 +99,20 @@ namespace spic::internal
 		void SetScene(const std::string& sceneName);
 
 		/*
-		@brief Sets the current scene with entities.
-		@param The scene to be set.
+		* @brief Sets the current scene with entities.
+		* @param The scene to be set.
 		*/
 		void SetScene(std::shared_ptr<Scene> scene);
 
 		/*
-		@brief Destroys the current scene.
-		@param forceDelete: Set to true to delete GameObjects with boolean "destroyOnLoad = false" as well.
+		* @brief Destroys the current scene.
+		* @param forceDelete: Set to true to delete GameObjects with boolean "destroyOnLoad = false" as well.
 		*/
 		void DestroyScene(bool forceDelete = false);
 
 		/*
-		@brief Use this function to add a (custom) system to the systems list.
-		@param The (custom) system to be added.
+		* @brief Use this function to add a (custom) system to the systems list.
+		* @param The (custom) system to be added.
 		*/
 		void AddSystem(std::unique_ptr<spic::systems::ISystem> system);
 
@@ -123,22 +124,22 @@ namespace spic::internal
 		bool CheckIfNameExists(const std::string& name) const;
 
 		/*
-		@brief Use this function to remove a (custom) system to the systems list.
-		@param The (custom) system to be removed.
+		* @brief Use this function to remove a (custom) system to the systems list.
+		* @param The (custom) system to be removed.
 		*/
 		template <typename T>
 		void RemoveSystem();
 
 		/*
-		@brief The update function which updates the systems according to the specified DeltaTime.
-		@param deltaTime: The Delta Time.
+		* @brief The update function which updates the systems according to the specified DeltaTime.
+		* @param deltaTime: The Delta Time.
 		*/
 		void Update();
 
 	private:
 		/*
-		@brief Use this function to add a internal system to the systems list.
-		@param The (custom) system to be added.
+		* @brief Use this function to add a internal system to the systems list.
+		* @param The (custom) system to be added.
 		*/
 		void AddInternalSystem(std::unique_ptr<spic::systems::ISystem> system, int priority = 0);
 	};

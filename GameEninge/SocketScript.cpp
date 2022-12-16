@@ -4,7 +4,7 @@
 #include <map>
 #include "EntityManager.hpp"
 
-spic::NetworkPacket spic::SocketScript::PositionPacket(const GameObject* gameobject) const
+spic::NetworkPacket spic::SocketScript::PositionPacket(const spic::GameObject* gameobject) const
 {
 	auto packet = spic::NetworkPacket();
 	packet.name = gameobject->Name();
@@ -27,7 +27,7 @@ void recursion(const std::vector<std::shared_ptr<spic::GameObject>>& objects, co
 	}
 }
 
-void spic::SocketScript::UpdatePosition(const spic::NetworkPacket* packet, GameObject* gameobject) const
+void spic::SocketScript::UpdatePosition(const spic::NetworkPacket* packet, spic::GameObject* gameobject) const
 {
 	auto test = packet->data.find("transform")->second;
 	Transform transNew = Transform();

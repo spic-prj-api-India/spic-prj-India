@@ -6,16 +6,15 @@
 #include <string>
 
 namespace spic {
-
-	/**
-	 * @brief A component representing a sprite (small image)
-	 * @spicapi
-	 */
-	class Sprite : public Component {
-	public:
-		/// @brief default constructor
-		/// @details the default color is white color swapping of textures
-		Sprite();
+    /**
+     * @brief A component representing a sprite (small image)
+     * @spicapi
+     */
+    class Sprite : public Component {
+    public:
+        /// @brief default constructor
+        /// @details the default color is white color swapping of textures
+        Sprite();
 
 		/// @brief 
 		/// @param sprite

@@ -166,6 +166,24 @@
     <Filter Include="Header Files\extensions\networking">
       <UniqueIdentifier>{84978c89-f93f-4a0a-bad4-e8f6f7f5c0a2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\core\systems\ai">
+      <UniqueIdentifier>{6a12e60f-5e05-4fec-8a96-dc412db56dad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\core\systems\ai">
+      <UniqueIdentifier>{0c28b002-89f0-4a80-a68c-13864a8e5604}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\core\math">
+      <UniqueIdentifier>{26b59009-31ec-4b2f-98c4-7fcfd26fa034}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\core\math">
+      <UniqueIdentifier>{9331d722-efc1-4965-a1d9-9558416e9dd9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\core\systems\networking">
+      <UniqueIdentifier>{a99407fd-3c69-4857-af8b-14a500c48509}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\extensions\networking">
+      <UniqueIdentifier>{0bcd053c-995f-4ec2-a250-a85a668d77cd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AudioSource.hpp">
@@ -211,9 +229,6 @@
       <Filter>Header Files\components\audio\SDL2Audio</Filter>
     </ClInclude>
     <ClInclude Include="Chunk.hpp">
-      <Filter>Header Files\components\audio\SDL2Audio</Filter>
-    </ClInclude>
-    <ClInclude Include="AudioManager.hpp">
       <Filter>Header Files\components\audio\SDL2Audio</Filter>
     </ClInclude>
     <ClInclude Include="AudioInfo.hpp">
@@ -291,9 +306,6 @@
     <ClInclude Include="Text.hpp">
       <Filter>Header Files\objects</Filter>
     </ClInclude>
-    <ClInclude Include="Transform.hpp">
-      <Filter>Header Files\objects</Filter>
-    </ClInclude>
     <ClInclude Include="StringHelper.hpp">
       <Filter>Header Files\helpers</Filter>
     </ClInclude>
@@ -335,9 +347,6 @@
     </ClInclude>
     <ClInclude Include="ButtonClickListener.hpp">
       <Filter>Header Files\core\systems\input</Filter>
-    </ClInclude>
-    <ClInclude Include="ISystem.hpp">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Defaults.hpp">
       <Filter>Header Files\core</Filter>
@@ -381,6 +390,36 @@
     <ClInclude Include="AudioFacade.hpp">
       <Filter>Header Files\components\audio</Filter>
     </ClInclude>
+    <ClInclude Include="ForceDriven.hpp">
+      <Filter>Header Files\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioManager.hpp">
+      <Filter>Header Files\core\managers</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngineInfo.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Bounds.hpp">
+      <Filter>Header Files\models</Filter>
+    </ClInclude>
+    <ClInclude Include="Rect.hpp">
+      <Filter>Header Files\models</Filter>
+    </ClInclude>
+    <ClInclude Include="Matrix.hpp">
+      <Filter>Header Files\core\math</Filter>
+    </ClInclude>
+    <ClInclude Include="Transformations.hpp">
+      <Filter>Header Files\core\math</Filter>
+    </ClInclude>
+    <ClInclude Include="Random.hpp">
+      <Filter>Header Files\core\math</Filter>
+    </ClInclude>
+    <ClInclude Include="AISystem.hpp">
+      <Filter>Header Files\core\systems\ai</Filter>
+    </ClInclude>
+    <ClInclude Include="Transform.hpp">
+      <Filter>Header Files\models</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sample.cpp">
@@ -388,9 +427,6 @@
     </ClCompile>
     <ClCompile Include="AudioSource.cpp">
       <Filter>Source Files\components\audio</Filter>
-    </ClCompile>
-    <ClCompile Include="AudioManager.cpp">
-      <Filter>Source Files\components\audio\SDL2Audio</Filter>
     </ClCompile>
     <ClCompile Include="Chunk.cpp">
       <Filter>Source Files\components\audio\SDL2Audio</Filter>
@@ -409,9 +445,6 @@
     </ClCompile>
     <ClCompile Include="CastException.cpp">
       <Filter>Source Files\exceptions</Filter>
-    </ClCompile>
-    <ClCompile Include="Box2DCollisionListener.cpp">
-      <Filter>Source Files\extensions\physics</Filter>
     </ClCompile>
     <ClCompile Include="PhysicsExtension1.cpp">
       <Filter>Source Files\extensions\physics</Filter>
@@ -506,29 +539,56 @@
     <ClCompile Include="DataSystem.cpp">
       <Filter>Source Files\core\systems\data</Filter>
     </ClCompile>
-    <ClCompile Include="SocketUDPExtension.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ThreadWrapper.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SocketScript.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="NetworkingReceiveSystem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="NetworkingSendSystem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Transform.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="NetworkPacket.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="UDP.ixx">
       <Filter>Header Files\extensions\networking</Filter>
+    </ClCompile>
+    <ClCompile Include="Component.cpp">
+      <Filter>Source Files\components</Filter>
+    </ClCompile>
+    <ClCompile Include="AISystem.cpp">
+      <Filter>Source Files\core\systems\ai</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioManager.cpp">
+      <Filter>Source Files\core\managers</Filter>
+    </ClCompile>
+    <ClCompile Include="ForceDriven.cpp">
+      <Filter>Source Files\objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Bounds.cpp">
+      <Filter>Source Files\models</Filter>
+    </ClCompile>
+    <ClCompile Include="Matrix.cpp">
+      <Filter>Source Files\core\math</Filter>
+    </ClCompile>
+    <ClCompile Include="Transformations.cpp">
+      <Filter>Source Files\core\math</Filter>
+    </ClCompile>
+    <ClCompile Include="Random.cpp">
+      <Filter>Source Files\core\math</Filter>
+    </ClCompile>
+    <ClCompile Include="Debug.cpp">
+      <Filter>Source Files\models</Filter>
+    </ClCompile>
+    <ClCompile Include="NetworkingReceiveSystem.cpp">
+      <Filter>Source Files\core\systems\networking</Filter>
+    </ClCompile>
+    <ClCompile Include="NetworkingSendSystem.cpp">
+      <Filter>Source Files\core\systems\networking</Filter>
+    </ClCompile>
+    <ClCompile Include="NetworkPacket.cpp">
+      <Filter>Source Files\components\socket</Filter>
+    </ClCompile>
+    <ClCompile Include="SocketScript.cpp">
+      <Filter>Source Files\components\socket</Filter>
+    </ClCompile>
+    <ClCompile Include="Transform.cpp">
+      <Filter>Source Files\models</Filter>
+    </ClCompile>
+    <ClCompile Include="ThreadWrapper.cpp">
+      <Filter>Source Files\extensions\networking</Filter>
+    </ClCompile>
+    <ClCompile Include="SocketUDPExtension.cpp">
+      <Filter>Source Files\extensions\networking</Filter>
     </ClCompile>
     <ClCompile Include="NetworkingHelper.cpp">
       <Filter>Source Files</Filter>
@@ -541,6 +601,15 @@
     </ClCompile>
     <ClCompile Include="AudioFacade.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Collider.cpp">
+      <Filter>Source Files\components\collider</Filter>
+    </ClCompile>
+    <ClCompile Include="NetworkingHelper.cpp">
+      <Filter>Source Files\helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="Box2DCollisionListener.cpp">
+      <Filter>Source Files\extensions\physics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

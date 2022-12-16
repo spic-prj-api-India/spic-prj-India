@@ -6,6 +6,7 @@
 #include "Component.hpp"
 #include "INetworkExtension.hpp"
 #include "NetworkPacket.hpp"
+
 namespace spic {
 
     /**
@@ -67,14 +68,14 @@ namespace spic {
          * @param gameobject
          * @return
         */
-        spic::NetworkPacket PositionPacket(const GameObject* gameobject) const;
+        spic::NetworkPacket PositionPacket(const spic::GameObject* gameobject) const;
 
         /**
          * @brief Updates the position of an gameobject with children included
          * @param packet
          * @param gameobject
         */
-        void UpdatePosition(const spic::NetworkPacket* packet, GameObject* gameobject) const;
+        void UpdatePosition(const spic::NetworkPacket* packet, spic::GameObject* gameobject) const;
 
         /**
          * @brief Adds a new gamobject to an registration
