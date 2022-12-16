@@ -12,7 +12,7 @@
 #include "StringHelper.hpp"
 #include "Defaults.hpp"
 #include "WindowValues.hpp"
-#include <iostream>
+#include "Debug.hpp"
 
 using namespace spic;
 using namespace spic::window;
@@ -36,9 +36,7 @@ RendererImpl::~RendererImpl()
 		Exit();
 	}
 	catch (...)
-	{
-
-	}
+	{}
 }
 
 RendererImpl* RendererImpl::GetInstance()
@@ -58,7 +56,7 @@ void RendererImpl::Start()
 	// sets up video
 	if (SDL_Init(SDL_INIT_VIDEO != 0))
 	{
-		std::cout << SDL_GetError() << std::endl;
+		spic::Debug::LogError(SDL_GetError());
 		exit(-1);
 	}
 
@@ -70,7 +68,7 @@ void RendererImpl::Start()
 	const SDL_WindowFlags w_flags = SDL_WindowFlags(SDL_WINDOW_ALLOW_HIGHDPI | SDL_WINDOW_RESIZABLE);
 	window = WindowPtr(SDL_CreateWindow(spic::window::WINDOW_NAME.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, spic::window::WINDOW_WIDTH, spic::window::WINDOW_HEIGHT, w_flags));
 	if (window.get() == nullptr) {
-		std::cerr << SDL_GetError() << std::endl;
+		spic::Debug::LogError(SDL_GetError());
 		exit(-1);
 	}
 
@@ -81,7 +79,7 @@ void RendererImpl::Start()
 	SDL_RendererFlags rendererFlags = (SDL_RendererFlags)(SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 	renderer = RendererPtr(SDL_CreateRenderer(window.get(), -1, rendererFlags));
 	if (renderer.get() == nullptr) {
-		std::cerr << SDL_GetError() << std::endl;
+		spic::Debug::LogError(SDL_GetError());
 		exit(-1);
 	}
 
@@ -266,7 +264,7 @@ void RendererImpl::DrawSprite(const Sprite* sprite, const Transform* transform, 
 	double angle = RAD2DEG<double>(transform->rotation);
 	if (texture == nullptr) {
 		SDL_RenderCopyExF(renderer.get(), NULL, sourceRect, dstRect, angle, NULL, flip);
-		std::cout << SDL_GetError() << std::endl;
+		spic::Debug::LogError(SDL_GetError());
 		return;
 	}
 	SDL_RenderCopyExF(renderer.get(), texture, sourceRect, dstRect, angle, NULL, flip);
@@ -370,9 +368,10 @@ void RendererImpl::Wrap(const TTF_Font* pFont, std::string& input, const float w
 			current = 0;
 		}
 	}
-	catch (...)
+	catch (const std::exception& ex)
 	{
-
+		const std::string& message = ex.what();
+		spic::Debug::LogError("Wrap text failed: " + message);
 	}
 
 	delete w;
@@ -464,9 +463,10 @@ void RendererImpl::RenderMultiLineText(const TTF_Font* pFont, std::string& rText
 			pSurface.reset(NULL);
 		}
 	}
-	catch (...)
+	catch (const std::exception& ex)
 	{
-		return;
+		const std::string& message = ex.what();
+		spic::Debug::LogError("Multiline render failed: " + message);
 	}
 }
 

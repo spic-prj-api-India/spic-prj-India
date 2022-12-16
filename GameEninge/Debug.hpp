@@ -3,30 +3,26 @@
 
 #include "Point.hpp"
 #include "Color.hpp"
-#include "GameObject.hpp"
 #include <string>
-#include <vector>
-#include <memory>
 
 namespace spic {
-
     /**
      * @brief Some convenient debugging functions.
      */
     namespace Debug {
         /*
+        * @brief Sets DEBUG_MODE to true if project is running in Debug mode.
+        */
+        #ifdef NDEBUG
+            const inline bool DEBUG_MODE = false;
+        #else
+            const inline bool DEBUG_MODE = true;
+        #endif
+
+        /*
          * @brief Enables or disables collider visibility.
         */
         inline bool COLLIDER_VISIBILITY = false;
-
-        /*
-         * @brief Sets DEBUG to true if project is running in Debug mode.
-        */
-        #ifdef NDEBUG
-            const inline bool DEBUG = false;
-        #else
-            const inline bool DEBUG = true;
-        #endif
 
         /**
          * @brief Draws a colored line between specified start and end points.
