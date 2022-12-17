@@ -36,7 +36,8 @@ RendererImpl::~RendererImpl()
 		Exit();
 	}
 	catch (...)
-	{}
+	{
+	}
 }
 
 RendererImpl* RendererImpl::GetInstance()

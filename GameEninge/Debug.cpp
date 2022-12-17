@@ -15,7 +15,7 @@ std::string CurrentTimeString() {
 
 std::string GetLogMessage(const std::string& logLevel, const std::string& message)
 {
-	return "- " + CurrentTimeString() + " " + logLevel + ": " + message;
+	return "[" + CurrentTimeString() + "] " + logLevel + ": " + message;
 }
 
 namespace spic {
