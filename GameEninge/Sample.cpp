@@ -1,7 +1,7 @@
 #include "Sample.hpp"
 #include "Chunk.hpp"
+#include "Debug.hpp"
 #include <cmath>
-#include <iostream>
 #include <codeanalysis\warnings.h>
 #pragma warning( push )
 #pragma warning ( disable : ALL_CODE_ANALYSIS_WARNINGS )
@@ -143,6 +143,6 @@ Sample::~Sample()
     }
     catch (const std::exception& ex)
     {
-        std::cout << ex.what() << std::endl;
+        spic::Debug::LogError(ex.what());
     }
 }

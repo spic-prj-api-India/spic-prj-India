@@ -45,7 +45,8 @@ namespace spic::internal::systems {
 		{
 			spic::internal::Rendering::Draw(entity.get());
 		}
-		if(Debug::DEBUG && Debug::COLLIDER_VISIBILITY)
+
+		if(Debug::DEBUG_MODE && Debug::COLLIDER_VISIBILITY)
 			DrawColliders();
 	
 		if(this->fps->renderFps)

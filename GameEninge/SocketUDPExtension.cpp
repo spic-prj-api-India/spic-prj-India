@@ -1,5 +1,7 @@
 #include "SocketUdpExtension.hpp"
 #include "NetworkPacket.hpp"
+#include "Debug.hpp"
+
 import UDP;
 
 using namespace spic;
@@ -78,9 +80,10 @@ std::vector<NetworkPacket> SocketUDPExtension::RetrieveData()
 			dat.Deserialize(string);
 			temp.push_back(dat);
 		}
-		catch (...)
+		catch (const std::exception& ex)
 		{
-
+			const std::string& message = ex.what();
+			Debug::LogError("Retrieve data failed: " + message);
 		}
 	}
 	return temp;
