@@ -4,6 +4,7 @@
 #include "BoxCollider.hpp"
 #include "EntityManager.hpp"
 #include "RigidBody.hpp"
+#include "Debug.hpp"
 
 namespace spic::internal
 {
@@ -31,7 +32,8 @@ namespace spic::internal
 		{
 			if (element->Value() == std::string("tileset")) {
 				tilesets.push_back(ParseTileSet(*element));
-				std::cout << element->Attribute("name") << " <-- Parsed!" << std::endl;
+				const std::string& name = element->Attribute("name");
+				Debug::Log(name + " <-- Parsed!");
 			}
 		}
 
