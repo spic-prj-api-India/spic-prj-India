@@ -10,6 +10,13 @@
 
 namespace spic::internal::networking
 {
+    /**
+     * @brief Encodes an map to an string
+     * @tparam K Random value/object
+     * @tparam V Random value/object
+     * @param data The map
+     * @return 
+    */
     template<class K, class V>
     std::string encode_map(std::map<K, V> data) {
         std::string buffer;
@@ -21,6 +28,13 @@ namespace spic::internal::networking
         return buffer;
     }
 
+    /**
+     * @brief Decodes an map to an string
+     * @tparam K Random value/object
+     * @tparam V Random value/object
+     * @param bytes The string
+     * @return
+    */
     template<class K, class V>
     std::map<K, V> decode_map(std::string bytes) {
         std::map<K, V> map;

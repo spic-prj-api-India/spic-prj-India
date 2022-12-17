@@ -167,7 +167,7 @@
   <ItemGroup>
     <ClInclude Include="AISystem.hpp" />
     <ClInclude Include="Animator.hpp" />
-    <ClInclude Include="AudioInfo.hpp" />
+    <ClInclude Include="AudioFacade.hpp" />
     <ClInclude Include="AudioManager.hpp" />
     <ClInclude Include="AudioSource.hpp" />
     <ClInclude Include="BehaviourScript.hpp" />
@@ -188,9 +188,9 @@
     <ClInclude Include="DataSystem.hpp" />
     <ClInclude Include="Debug.hpp" />
     <ClInclude Include="Defaults.hpp" />
+    <ClInclude Include="FPSlistener.hpp" />
     <ClInclude Include="GameEngine.hpp" />
     <ClInclude Include="EntityManager.hpp" />
-    <ClInclude Include="GameEngineInfo.hpp" />
     <ClInclude Include="GameObject.hpp" />
     <ClInclude Include="GeneralHelper.hpp" />
     <ClInclude Include="ICollisionListener.hpp" />
@@ -201,6 +201,7 @@
     <ClInclude Include="InputImpl.hpp" />
     <ClInclude Include="InputManager.hpp" />
     <ClInclude Include="InputSystem.hpp" />
+    <ClInclude Include="InternalTime.hpp" />
     <ClInclude Include="IPhysicsExtension.hpp" />
     <ClInclude Include="Matrix.hpp" />
     <ClInclude Include="INetworkExtension.hpp" />
@@ -238,11 +239,12 @@
     <ClInclude Include="UIObject.hpp" />
     <ClInclude Include="RendererImpl.hpp" />
     <ClInclude Include="PhysicsValues.hpp" />
-    <ClInclude Include="WindowValues.hpp" />
+    <ClInclude Include="Settings.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AISystem.cpp" />
     <ClCompile Include="Animator.cpp" />
+    <ClCompile Include="AudioFacade.cpp" />
     <ClCompile Include="AudioManager.cpp" />
     <ClCompile Include="AudioSource.cpp" />
     <ClCompile Include="Bounds.cpp" />
@@ -254,9 +256,11 @@
     <ClCompile Include="Box2DCollisionListener.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="DataSystem.cpp" />
+    <ClCompile Include="FPSlistener.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="Debug.cpp" />
     <ClCompile Include="GeneralHelper.cpp" />
+    <ClCompile Include="InternalTime.cpp" />
     <ClCompile Include="IPhysicsExtension.cpp" />
     <ClCompile Include="MapParser.cpp" />
     <ClCompile Include="ForceDriven.cpp" />

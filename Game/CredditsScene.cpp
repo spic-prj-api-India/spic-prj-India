@@ -1,18 +1,18 @@
-#include "CreditsScene.h"
+#include "CredditsScene.h"
 #include "Text.hpp"
 #include "Animator.hpp"
-#include "CreditsSceneScript.h"
+#include "CredditsSceneScript.h"
 
-CreditsScene::CreditsScene()
+CredditsScene::CredditsScene()
 {
-	SetCamera();
+	SetCammera();
 	SetContents();
 }
 
-void CreditsScene::SetContents()
+void CredditsScene::SetContents()
 {
-	auto creddits = std::make_shared<spic::Text>(1200.0f, 900.0f
-		, "Made by:\nCollin Knuit\nBart Blaak\nMilo van der pas\n\n\nPress 'backspace' to return to menu\nPress 'spacebar' for fun"
+	auto creddits = std::make_shared<spic::Text>(1200, 900
+		, "Made by:\nCollin Knuit\nBart Blaak\nMilo van der pas\n\n\nPress 'backspace' to return to menu\n\n\nPress 'spacebar' for fun"
 		, ""
 		, 50
 		, spic::Alignment::CENTER
@@ -27,7 +27,7 @@ void CreditsScene::SetContents()
 	animator1->InitHorizontalSpriteSheet("assets/textures/animated-explosion/Explosion_9/spritesheet.png",10, 800, 800);
 	animator1->Stop();
 
-	auto script1 = std::make_shared<CreditsSceneScript>();
+	auto script1 = std::make_shared<CredditsSceneScript>();
 	script1->ani = animator1.get();
 	animatorObject1->AddComponent(std::move(animator1));
 
@@ -42,7 +42,7 @@ void CreditsScene::SetContents()
 	animator2->InitHorizontalSpriteSheet("assets/textures/animated-explosion/Explosion_9/spritesheet.png", 10, 800, 800);
 	animator2->Stop();
 
-	auto script2 = std::make_shared<CreditsSceneScript>();
+	auto script2 = std::make_shared<CredditsSceneScript>();
 	script2->ani = animator2.get();
 
 	animatorObject2->AddComponent(std::move(animator2));
@@ -52,17 +52,11 @@ void CreditsScene::SetContents()
 	this->AddContent(creddits);
 }
 
-void CreditsScene::SetCamera()
+void CredditsScene::SetCammera()
 {
 	std::unique_ptr<spic::Camera> camera = std::make_unique<spic::Camera>();
 	camera->Transform(std::make_shared<spic::Transform>(spic::Point(0.0f, 0.0f), 0.0f, 1.0f));
 	camera->BackgroundColor(spic::Color::green());
 	camera->BackgroundImage("assets/textures/backgrounds/392777.png");
 	Camera(std::move(camera));
-}
-
-spic::Scene* CreditsScene::Start()
-{
-	CreditsScene* a = new CreditsScene();
-	return a;
 }

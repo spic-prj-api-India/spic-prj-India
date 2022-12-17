@@ -6,6 +6,7 @@
 class MenuScene : public spic::Scene {
 public:
 	MenuScene();
+	static spic::Scene* Start();
 private:
 	void SetCamera();
 	void SetContents();

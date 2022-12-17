@@ -34,7 +34,7 @@ namespace spic
 		}
 		catch (std::exception& ex)
 		{
-			Debug::LogError(ex.what());
+			debug::LogError(ex.what());
 		}
 	}
 

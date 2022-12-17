@@ -4,7 +4,11 @@
 
 std::stringstream spic::Transform::Serialize() const
 {
-    std::string temp = std::to_string(this->position.x) + ' ' + std::to_string(this->position.y) + ' ' + std::to_string(this->rotation) + ' ' + std::to_string(this->scale);
+    std::string temp = std::to_string(this->position.x) 
+        + ' ' + std::to_string(this->position.y) + ' ' 
+        + std::to_string(this->rotation) + ' ' 
+        + std::to_string(this->scale);
+
     return std::stringstream(temp);
 }
 

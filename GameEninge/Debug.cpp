@@ -19,25 +19,25 @@ std::string GetLogMessage(const std::string& logLevel, const std::string& messag
 }
 
 namespace spic {
-	void Debug::DrawLine(const spic::Point& start, const spic::Point& end, const spic::Color& color)
+	void debug::DrawLine(const spic::Point& start, const spic::Point& end, const spic::Color& color)
 	{
 		if(DEBUG_MODE)
 			spic::internal::Rendering::DrawLine(start, end, color);
 	}
 
-	void Debug::Log(const std::string& message)
+	void debug::Log(const std::string& message)
 	{
 		if (DEBUG_MODE)
 			std::cout << GetLogMessage("INFO", message) << std::endl;
 	}
 
-	void Debug::LogError(const std::string& error)
+	void debug::LogError(const std::string& error)
 	{
 		if (DEBUG_MODE)
 			std::cerr << GetLogMessage("ERROR", error) << std::endl;
 	}
 
-	void Debug::LogWarning(const std::string& warning)
+	void debug::LogWarning(const std::string& warning)
 	{
 		if (DEBUG_MODE)
 			std::cout << GetLogMessage("WARNING", warning) << std::endl;

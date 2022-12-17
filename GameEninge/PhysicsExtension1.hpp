@@ -28,9 +28,9 @@ namespace spic::extensions {
 		* @param stayCallback Callback that is called when collider stays in collision
 		* @spicapi
 		*/
-		void Reset(std::function<void(const std::shared_ptr<spic::GameObject>, const std::shared_ptr<spic::Collider>)> enterCallback,
-			std::function<void(const std::shared_ptr<spic::GameObject>, const std::shared_ptr<spic::Collider>)> exitCallback,
-			std::function<void(const std::shared_ptr<spic::GameObject>, const std::shared_ptr<spic::Collider>)> stayCallback) override;
+		void Reset(std::function<void(const std::shared_ptr<spic::GameObject>&, const std::shared_ptr<spic::Collider>&)> enterCallback,
+			std::function<void(const std::shared_ptr<spic::GameObject>&, const std::shared_ptr<spic::Collider>&)> exitCallback,
+			std::function<void(const std::shared_ptr<spic::GameObject>&, const std::shared_ptr<spic::Collider>&)> stayCallback) override;
 
 		/**
 		* @brief Add collision layer to physic world
@@ -42,13 +42,13 @@ namespace spic::extensions {
 		* @brief Add and updates physic bodies
 		* @spicapi
 		*/
-		void Update(std::vector<std::shared_ptr<spic::GameObject>> entities) override;
+		void Update(std::vector<std::shared_ptr<spic::GameObject>>& entities) override;
 
 		/**
 		* @brief Adds force to an entity
 		* @spicapi
 		*/
-		void AddForce(const std::shared_ptr<GameObject> entity, const spic::Point& forceDirection) override;
+		void AddForce(const std::shared_ptr<GameObject>& entity, const spic::Point& forceDirection) override;
 
 		/**
 		* @brief Gets linear velocity of entity with name

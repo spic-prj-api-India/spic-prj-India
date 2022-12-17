@@ -7,6 +7,7 @@
 #include "SDL2/SDL.h"
 #pragma warning( pop )
 #include "ISystem.hpp"
+#include "FPSlistener.hpp"
 
 /**
 * @brief A system that calls the Start and Update method in scripts of entities
@@ -35,6 +36,11 @@ namespace spic::internal::systems {
 		*/
 		void Update(std::vector<std::shared_ptr<spic::GameObject>>& entities, Scene& currentScene) override;
 	private:
+
+		/**
+		 * @brief The keylistiner bound to show fps
+		*/
+		std::shared_ptr<FPSListener> fps;
 		/**
 		 * @brief Filters entities between UI and non UI
 		 * @spicapi

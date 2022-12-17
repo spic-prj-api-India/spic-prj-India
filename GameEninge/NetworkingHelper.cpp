@@ -18,6 +18,7 @@ std::string spic::networkingHelper::GetParsedIPConfigData(const std::string& Col
     int arrayCount = 0;
 
     std::ifstream file(path);
+
     if (file.is_open())
     {
         //Get all lines

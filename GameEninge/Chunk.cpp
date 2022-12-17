@@ -6,8 +6,7 @@
 #include <SDL2/SDL_mixer.h>
 #pragma warning( pop )
 
-using namespace spic::internal::audio;
-
+using namespace spic::internal::audio::impl;
 
 Chunk::Chunk(const std::string& path) : chunk(Mix_LoadWAV(path.c_str()), Mix_FreeChunk)
 {

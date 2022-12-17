@@ -13,28 +13,27 @@
 #include "BoxCollider.hpp"
 #include "ICollisionListener.hpp"
 #include "Box2DCollisionListener.hpp"
-#include "PhysicsValues.hpp"
-#include "WindowValues.hpp"
 #include "RigidBody.hpp"
 #include "ForceDriven.hpp"
 #include "Defaults.hpp"
 #include "TileLayer.hpp"
 #include "Renderer.hpp"
-#include "GameEngineInfo.hpp"
+#include "InternalTime.hpp"
+#include "Settings.hpp"
 
-using namespace spic::extensions::PhysicsValues;
-using namespace spic::window;
 
-namespace spic::extensions {
-	class PhysicsExtensionImpl1 {
+namespace spic::extensions 
+{
+	class PhysicsExtensionImpl1 
+	{
 	public:
 		PhysicsExtensionImpl1(const float pix2Met, const int velocityIterations, const int positionIterations) : 
-			PIX2MET{ pix2Met }, MET2PIX{ 1.0f / PIX2MET }, SCALED_WIDTH{ spic::window::WINDOW_WIDTH * PIX2MET }, 
-			SCALED_HEIGHT{ spic::window::WINDOW_HEIGHT * PIX2MET }, velocityIterations{velocityIterations}, 
+			PIX2MET{ pix2Met }, MET2PIX{ 1.0f / PIX2MET }, SCALED_WIDTH{ spic::settings::WINDOW_WIDTH * PIX2MET }, 
+			SCALED_HEIGHT{ spic::settings::WINDOW_HEIGHT * PIX2MET }, velocityIterations{velocityIterations}, 
 			positionIterations{positionIterations}
 		{
-			world = nullptr;
-			bodyTypeConvertions = {
+			bodyTypeConvertions = 
+			{
 				{spic::BodyType::staticBody, b2_staticBody},
 				{spic::BodyType::kinematicBody, b2_kinematicBody},
 				{spic::BodyType::dynamicBody, b2_dynamicBody},
@@ -42,11 +41,18 @@ namespace spic::extensions {
 			Reset();
 		}
 
-		~PhysicsExtensionImpl1() = default;
+		~PhysicsExtensionImpl1()
+		{
+			if (auto& w = world; w != nullptr)
+				while (world->IsLocked())
+					std::this_thread::sleep_for(std::chrono::milliseconds(1));
+			
+		}
 
 		PhysicsExtensionImpl1(const PhysicsExtensionImpl1& rhs)
 			: PhysicsExtensionImpl1(rhs.PIX2MET, rhs.velocityIterations, rhs.positionIterations)
-		{}
+		{
+		}
 
 		PhysicsExtensionImpl1(PhysicsExtensionImpl1&& other) noexcept = default;
 
@@ -57,6 +63,7 @@ namespace spic::extensions {
 				velocityIterations = rhs.velocityIterations;
 				positionIterations = rhs.positionIterations;
 			}
+
 			return *this;
 		}
 
@@ -69,10 +76,10 @@ namespace spic::extensions {
 		void Reset()
 		{
 			while (world != nullptr && world->IsLocked()) 
-			{
 				std::this_thread::sleep_for(std::chrono::milliseconds(1));
-			}
-			world = std::make_unique<b2World>(b2Vec2(0.0f, PhysicsValues::GRAVITY));
+
+			world.release();
+			world = std::make_unique<b2World>(b2Vec2(0.0f, spic::settings::GRAVITY));
 			sizes = {};
 			bodies = {};
 		}
@@ -90,7 +97,9 @@ namespace spic::extensions {
 				for (int colIndex = 0; colIndex < size.x; colIndex++)
 				{
 					const bool tileExists = matrix[colIndex][rowIndex] != 0;
-					if (!tileExists) continue;
+
+					if (!tileExists) 
+						continue;
 
 					const float x = static_cast<float>(colIndex * tileSize);
 					const float y = static_cast<float>(rowIndex * tileSize);
@@ -104,20 +113,27 @@ namespace spic::extensions {
 		* @brief Add and updates physic bodies in world
 		* @spicapi
 		*/
-		void Update(std::vector<std::shared_ptr<spic::GameObject>> entities)
+		void Update(std::vector<std::shared_ptr<spic::GameObject>>& entities)
 		{
 			// Update or create entity bodiese
-			for (auto& entity : entities) {
+			for (auto& entity : entities) 
+			{
 				bool exists = bodies.find(entity->Name()) != bodies.end();
+
 				if (exists)
 					UpdateEntity(entity);
 				else
 					CreateEntity(entity);
 			}
+
+			using namespace spic::internal::time;
+
 			// Update world
-			world->Step(1.0f / 60.0f, int32(velocityIterations), int32(positionIterations));
+			world->Step(1.0f / static_cast<float>(InternalTime::frameRate), int32(velocityIterations), int32(positionIterations));
+
 			// Update entities
-			for (auto& entity : entities) {
+			for (auto& entity : entities) 
+			{
 				// Get body
 				b2Body* body = bodies[entity->Name()];
 
@@ -155,6 +171,7 @@ namespace spic::extensions {
 			const std::string& name = entity->Name();
 			if (bodies.count(name) == 0)
 				CreateEntity(entity);
+
 			b2Body* body = bodies[name];
 			const b2Vec2 force = { forceDirection.x * MET2PIX, forceDirection.y * MET2PIX };
 
@@ -168,7 +185,9 @@ namespace spic::extensions {
 		Point GetLinearVelocity(const std::string& name) {
 			if (bodies.count(name) == 0)
 				return { 0.0f, 0.0f };
+
 			const b2Vec2 linearVelocity = bodies[name]->GetLinearVelocity();
+
 			return { linearVelocity.x, linearVelocity.y };
 		}
 
@@ -186,24 +205,27 @@ namespace spic::extensions {
 					currentBody = currentBody->GetNext();
 					continue;
 				}
+
 				switch (shape->GetType()) {
-				case b2Shape::e_polygon:
-				{
-					const auto entity = reinterpret_cast<spic::GameObject*>(currentBody->GetUserData().pointer);
-					auto size = sizes[entity->Name()];
-					DrawBoxCollider(*currentBody, size);
-				}
-				break;
-				case b2Shape::e_circle:
-				{
-					const auto entity = reinterpret_cast<spic::GameObject*>(currentBody->GetUserData().pointer);
-					auto size = sizes[entity->Name()];
-					DrawCircleCollider(*currentBody, size);
-				}
-				break;
-				case b2Shape::e_edge:
-					DrawEdgeCollider(static_cast<const b2EdgeShape&>(*shape));
-					break;
+					case b2Shape::e_polygon:
+					{
+						const auto entity = reinterpret_cast<spic::GameObject*>(currentBody->GetUserData().pointer);
+						auto size = sizes[entity->Name()];
+						DrawBoxCollider(*currentBody, size);
+						break;
+					}
+					case b2Shape::e_circle:
+					{
+						const auto entity = reinterpret_cast<spic::GameObject*>(currentBody->GetUserData().pointer);
+						auto size = sizes[entity->Name()];
+						DrawCircleCollider(*currentBody, size);
+						break;
+					}
+					case b2Shape::e_edge:
+					{
+						DrawEdgeCollider(static_cast<const b2EdgeShape&>(*shape));
+						break;
+					}
 				}
 				currentBody = currentBody->GetNext();
 			}
@@ -212,11 +234,12 @@ namespace spic::extensions {
 		/**
 		 * @brief Convert coordinate from pixels to meters
 		*/
-		void ConvertCoordinateToMeters(Point& coordinate, Point size) {
+		void ConvertCoordinateToMeters(Point& coordinate, Point size) 
+		{
 			size.x *= PIX2MET;
 			size.y *= PIX2MET;
-			const float x = coordinate.x - (WINDOW_WIDTH / 2.0f);
-			const float y = coordinate.y - (WINDOW_HEIGHT / 2.0f);
+			const float x = coordinate.x - (spic::settings::WINDOW_WIDTH / 2.0f);
+			const float y = coordinate.y - (spic::settings::WINDOW_HEIGHT / 2.0f);
 			coordinate.x = (x * PIX2MET) + (size.x / 2.0f);
 			coordinate.y = (y * PIX2MET) + (size.y / 2.0f);
 		}
@@ -224,7 +247,8 @@ namespace spic::extensions {
 		/**
 		 * @brief Convert coordinate from meters to pixels
 		*/
-		void ConvertCoordinateToPixels(b2Vec2& coordinate, Point size) {
+		void ConvertCoordinateToPixels(b2Vec2& coordinate, Point size) 
+		{
 			size.x *= MET2PIX;
 			size.y *= MET2PIX;
 			const float x = (SCALED_WIDTH / 2.0f) + coordinate.x;
@@ -236,9 +260,10 @@ namespace spic::extensions {
 		/**
 		 * @brief Convert coordinate from pixels to meters
 		*/
-		void ConvertCoordinateToMeters(Point& coordinate) {
-			const float x = coordinate.x - (WINDOW_WIDTH / 2.0f);
-			const float y = coordinate.y - (WINDOW_HEIGHT / 2.0f);
+		void ConvertCoordinateToMeters(Point& coordinate) 
+		{
+			const float x = coordinate.x - (spic::settings::WINDOW_WIDTH / 2.0f);
+			const float y = coordinate.y - (spic::settings::WINDOW_HEIGHT / 2.0f);
 			coordinate.x = x * PIX2MET;
 			coordinate.y = y * PIX2MET;
 		}
@@ -246,7 +271,8 @@ namespace spic::extensions {
 		/**
 		 * @brief Convert coordinate from meters to pixels
 		*/
-		void ConvertCoordinateToPixels(b2Vec2& coordinate) {
+		void ConvertCoordinateToPixels(b2Vec2& coordinate) 
+		{
 			const float x = (SCALED_WIDTH / 2.0f) + coordinate.x;
 			const float y = (SCALED_HEIGHT / 2.0f) + coordinate.y;
 			coordinate.x = x * MET2PIX;
@@ -265,10 +291,13 @@ namespace spic::extensions {
 		{
 			if (rowIndex > 0 && matrix[colIndex][rowIndex - 1] == 0)
 				AddEdge({ origin.x, origin.y }, { origin.x + tileSize, origin.y });
+
 			if (colIndex + 1 < matrix.size() && matrix[colIndex + 1][rowIndex] == 0)
 				AddEdge({ origin.x + tileSize, origin.y }, { origin.x + tileSize, origin.y + tileSize });
+
 			if (rowIndex + 1 < matrix[0].size() && matrix[colIndex][rowIndex + 1] == 0)
 				AddEdge({ origin.x, origin.y + tileSize }, { origin.x + tileSize, origin.y + tileSize });
+
 			if (colIndex > 0 && matrix[colIndex - 1][rowIndex] == 0)
 				AddEdge({ origin.x, origin.y }, { origin.x, origin.y + tileSize });
 		}
@@ -303,6 +332,9 @@ namespace spic::extensions {
 		*/
 		void CreateEntity(const std::shared_ptr<spic::GameObject>& entity)
 		{
+			while (world->IsLocked())
+				std::this_thread::sleep_for(std::chrono::milliseconds(1));
+
 			// Create body
 			std::shared_ptr<spic::RigidBody> rigidBody = entity->GetComponent<spic::RigidBody>();
 			b2Body* body = CreateBody(entity, rigidBody);
@@ -323,7 +355,8 @@ namespace spic::extensions {
 		* @brief Creates box2d body with RigidBody of entity
 		* @spicapi
 		*/
-		b2Body* CreateBody(const std::shared_ptr<spic::GameObject>& entity, const std::shared_ptr<spic::RigidBody>& rigidBody)
+		b2Body* CreateBody(const std::shared_ptr<spic::GameObject>& entity
+			, const std::shared_ptr<spic::RigidBody>& rigidBody)
 		{
 			const auto size = entity->GetComponent<Collider>()->Size();
 			Point position = entity->Transform()->position;
@@ -342,10 +375,12 @@ namespace spic::extensions {
 		* @brief Creates box2d fixture with RigidBody of entity
 		* @spicapi
 		*/
-		void CreateFixture(b2Body& body, const std::shared_ptr<spic::GameObject>& entity, const float mass)
+		void CreateFixture(b2Body& body, const std::shared_ptr<spic::GameObject>& entity
+			, const float mass)
 		{
 			b2FixtureDef fixtureDef = b2FixtureDef();
 			auto collider = SetShape(fixtureDef, entity, mass);
+
 			if (collider != nullptr) {
 				fixtureDef.friction = collider->Friction();
 				fixtureDef.restitution = collider->Bounciness();
@@ -358,10 +393,14 @@ namespace spic::extensions {
 		* @return bool Shape is enabled
 		* @spicapi
 		*/
-		std::shared_ptr<spic::Collider> SetShape(b2FixtureDef& fixtureDef, const std::shared_ptr<spic::GameObject>& entity, const float mass)
+		std::shared_ptr<spic::Collider> SetShape(b2FixtureDef& fixtureDef
+			, const std::shared_ptr<spic::GameObject>& entity, const float mass)
 		{
-			const std::shared_ptr<spic::BoxCollider> boxCollider = entity->GetComponent<spic::BoxCollider>();
-			if (boxCollider != nullptr) {
+			const std::shared_ptr<spic::BoxCollider> boxCollider 
+				= entity->GetComponent<spic::BoxCollider>();
+
+			if (boxCollider != nullptr) 
+			{
 				b2PolygonShape* boxShape = new b2PolygonShape();
 
 				const float width = boxCollider->Width() * PIX2MET;
@@ -378,20 +417,30 @@ namespace spic::extensions {
 				sizes[entity->Name()] = { width, height };
 				return boxCollider;
 			}
-			const std::shared_ptr<spic::CircleCollider> circleCollider = entity->GetComponent<spic::CircleCollider>();
+
+			const std::shared_ptr<spic::CircleCollider> circleCollider 
+				= entity->GetComponent<spic::CircleCollider>();
+
 			if (circleCollider != nullptr) {
 				b2CircleShape* circleShape = new b2CircleShape();
 
-				circleShape->m_radius = circleCollider->Radius() * PIX2MET;
+				circleShape->m_radius = circleCollider->Radius() 
+					* PIX2MET;
+
 				fixtureDef.shape = circleShape;
 
-				const float area = spic::internal::Defaults::PI * (circleShape->m_radius * circleShape->m_radius);
+				const float area = spic::internal::defaults::PI 
+					* (circleShape->m_radius * circleShape->m_radius);
+
 				fixtureDef.density = mass / area;
 
-				const float diameter = circleShape->m_radius + circleShape->m_radius;
+				const float diameter = circleShape->m_radius 
+					+ circleShape->m_radius;
+
 				sizes[entity->Name()] = { diameter, diameter };
 				return circleCollider;
 			}
+
 			return nullptr;
 		}
 
@@ -402,6 +451,9 @@ namespace spic::extensions {
 		*/
 		void UpdateEntity(const std::shared_ptr<spic::GameObject>& entity)
 		{
+			while (world->IsLocked())
+				std::this_thread::sleep_for(std::chrono::milliseconds(1));
+
 			// Get body
 			std::shared_ptr<spic::RigidBody> rigidBody = entity->GetComponent<spic::RigidBody>();
 			b2Body* body = bodies[entity->Name()];
@@ -418,19 +470,27 @@ namespace spic::extensions {
 
 			// Update
 			bool updated = false;
-			if (b2Position.x != ePosition.x) {
+
+			if (b2Position.x != ePosition.x) 
+			{
 				b2Position.x = ePosition.x;
 				updated = true;
 			}
-			if (b2Position.y != ePosition.y) {
+
+			if (b2Position.y != ePosition.y) 
+			{
 				b2Position.y = ePosition.y;
 				updated = true;
 			}
-			if (b2Rotation != eRotation) {
+
+			if (b2Rotation != eRotation) 
+			{
 				b2Rotation = eRotation;
 				updated = true;
 			}
-			if (updated) {
+
+			if (updated) 
+			{
 				body->SetTransform(b2Position, b2Rotation);
 				body->SetGravityScale(rigidBody->GravityScale());
 			}
@@ -453,6 +513,7 @@ namespace spic::extensions {
 				position.y,
 				size.x * MET2PIX,
 				size.y * MET2PIX);
+
 			spic::internal::Rendering::DrawRect(rect, rotation, spic::Color::red());
 		}
 
@@ -521,7 +582,7 @@ namespace spic::extensions {
 		/**
 		 * @brief Height of physics world.
 		*/
-		const float SCALED_HEIGHT = spic::window::WINDOW_HEIGHT * PIX2MET;
+		const float SCALED_HEIGHT = spic::settings::WINDOW_HEIGHT * PIX2MET;
 
 		/*
 		* @brief Collider shapes in Box2D have a standard offset, this is the offset
@@ -531,7 +592,8 @@ namespace spic::extensions {
 
 	PhysicsExtension1::PhysicsExtension1(const float pix2Met, const int velocityIterations, const int positionIterations) : 
 		physicsImpl(new PhysicsExtensionImpl1(pix2Met, velocityIterations, positionIterations))
-	{}
+	{
+	}
 
 	PhysicsExtension1::~PhysicsExtension1() = default;
 
@@ -541,21 +603,25 @@ namespace spic::extensions {
 
 	PhysicsExtension1::PhysicsExtension1(const PhysicsExtension1& rhs)
 		: physicsImpl(new PhysicsExtensionImpl1(*rhs.physicsImpl))
-	{}
+	{
+	}
 
 	PhysicsExtension1& PhysicsExtension1::operator=(const PhysicsExtension1& rhs)
 	{
 		if (this != &rhs)
 			physicsImpl.reset(new PhysicsExtensionImpl1(*rhs.physicsImpl));
+
 		return *this;
 	}
 
-	void spic::extensions::PhysicsExtension1::Reset(std::function<void(const std::shared_ptr<spic::GameObject>, const std::shared_ptr<spic::Collider>)> enterCallback,
-		std::function<void(const std::shared_ptr<spic::GameObject>, const std::shared_ptr<spic::Collider>)> exitCallback,
-		std::function<void(const std::shared_ptr<spic::GameObject>, const std::shared_ptr<spic::Collider>)> stayCallback)
+	void spic::extensions::PhysicsExtension1::Reset(
+		std::function<void(const std::shared_ptr<spic::GameObject>&, const std::shared_ptr<spic::Collider>&)> enterCallback,
+		std::function<void(const std::shared_ptr<spic::GameObject>&, const std::shared_ptr<spic::Collider>&)> exitCallback,
+		std::function<void(const std::shared_ptr<spic::GameObject>&, const std::shared_ptr<spic::Collider>&)> stayCallback)
 	{
 		physicsImpl->Reset();
-		std::unique_ptr<ICollisionListener> listener = std::make_unique<spic::internal::extensions::Box2DCollisionListener>(enterCallback, exitCallback, stayCallback);
+		std::unique_ptr<ICollisionListener> listener 
+			= std::make_unique<spic::internal::extensions::Box2DCollisionListener>(enterCallback, exitCallback, stayCallback);
 		physicsImpl->RegisterListener(std::move(listener));
 	}
 
@@ -564,12 +630,12 @@ namespace spic::extensions {
 		physicsImpl->AddCollisionLayer(collisionLayer);
 	}
 
-	void spic::extensions::PhysicsExtension1::Update(std::vector<std::shared_ptr<spic::GameObject>> entities)
+	void spic::extensions::PhysicsExtension1::Update(std::vector<std::shared_ptr<spic::GameObject>>& entities)
 	{
-		physicsImpl->Update(std::move(entities));
+		physicsImpl->Update(entities);
 	}
 
-	void spic::extensions::PhysicsExtension1::AddForce(const std::shared_ptr<GameObject> entity, const spic::Point& forceDirection)
+	void spic::extensions::PhysicsExtension1::AddForce(const std::shared_ptr<GameObject>& entity, const spic::Point& forceDirection)
 	{
 		physicsImpl->AddForce(std::move(entity), forceDirection);
 	}

@@ -14,19 +14,20 @@ namespace spic::extensions{
 	class IPhysicsExtension : public spic::extensions::IEngineExtension{
 	public:
 		IPhysicsExtension();
-		~IPhysicsExtension();
-		IPhysicsExtension(IPhysicsExtension&& rhs) noexcept;
-		IPhysicsExtension& operator=(IPhysicsExtension&& rhs) noexcept;
-		IPhysicsExtension(const IPhysicsExtension& rhs);
-		IPhysicsExtension& operator=(const IPhysicsExtension& rhs);
+		virtual ~IPhysicsExtension() = default;
+		IPhysicsExtension(IPhysicsExtension&& rhs) = default;
+		virtual IPhysicsExtension& operator=(IPhysicsExtension&& rhs) = default;
+		IPhysicsExtension(const IPhysicsExtension& rhs) = default;
+		virtual IPhysicsExtension& operator=(const IPhysicsExtension& rhs) = default;
 
 		/**
 		* @brief Resets all physics and removes entities from extension
 		* @spicapi
 		*/
-		virtual void Reset(std::function<void(const std::shared_ptr<spic::GameObject>, const std::shared_ptr<spic::Collider>)> enterCallback,
-			std::function<void(const std::shared_ptr<spic::GameObject>, const std::shared_ptr<spic::Collider>)> exitCallback,
-			std::function<void(const std::shared_ptr<spic::GameObject>, const std::shared_ptr<spic::Collider>)> stayCallback) = 0;
+		virtual void Reset(
+			std::function<void(const std::shared_ptr<spic::GameObject>&, const std::shared_ptr<spic::Collider>&)> enterCallback,
+			std::function<void(const std::shared_ptr<spic::GameObject>&, const std::shared_ptr<spic::Collider>&)> exitCallback,
+			std::function<void(const std::shared_ptr<spic::GameObject>&, const std::shared_ptr<spic::Collider>&)> stayCallback) = 0;
 
 		/**
 		* @brief Add collision layer to physic world
@@ -38,13 +39,13 @@ namespace spic::extensions{
 		* @brief Add and updates entities with physics
 		* @spicapi
 		*/
-		virtual void Update(std::vector<std::shared_ptr<spic::GameObject>> entities) = 0;
+		virtual void Update(std::vector<std::shared_ptr<spic::GameObject>>& entities) = 0;
 
 		/**
 		* @brief Adds force to an entity
 		* @spicapi
 		*/
-		virtual void AddForce(const std::shared_ptr<GameObject> entity, const spic::Point& forceDirection) = 0;
+		virtual void AddForce(const std::shared_ptr<GameObject>& entity, const spic::Point& forceDirection) = 0;
 
 		/**
 		* @brief Gets linear velocity of entity with name

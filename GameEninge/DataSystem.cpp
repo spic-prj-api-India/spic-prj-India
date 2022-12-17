@@ -26,14 +26,16 @@ namespace spic::internal::systems {
 	{
 		// Eerst alle childs in de lijst, daarna pas omhoog werken en parent toevoegen
 		std::vector<std::shared_ptr<spic::Persistable>> persistableEntities;
-		for (const auto& entity : entities) {
+		for (const auto& entity : entities) 
+		{
 			if (spic::TypeHelper::SharedPtrIsOfType<spic::Persistable>(entity))
 				persistableEntities.emplace_back(spic::TypeHelper::CastSharedPtrToType<spic::Persistable>(entity));
-			for (const auto& child : entity->GetChildren()) {
+
+			for (const auto& child : entity->GetChildren()) 
 				if (spic::TypeHelper::SharedPtrIsOfType<spic::Persistable>(child))
 					persistableEntities.emplace_back(spic::TypeHelper::CastSharedPtrToType<spic::Persistable>(child));
-			}
 		}
+
 		return persistableEntities;
 	}
 }

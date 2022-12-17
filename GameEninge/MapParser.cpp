@@ -17,10 +17,9 @@ namespace spic::internal
 	{
 		TiXmlDocument xml;
 		xml.LoadFile(filename);
-		if (xml.Error()) {
+		if (xml.Error())
 			throw std::exception(xml.ErrorDesc());
-		}
-
+	
 		TiXmlElement* root = xml.RootElement();
 		root->Attribute("width", &colCount);
 		root->Attribute("height", &rowCount);
@@ -33,7 +32,7 @@ namespace spic::internal
 			if (element->Value() == std::string("tileset")) {
 				tilesets.push_back(ParseTileSet(*element));
 				const std::string& name = element->Attribute("name");
-				Debug::Log(name + " <-- Parsed!");
+				debug::Log(name + " <-- Parsed!");
 			}
 		}
 
@@ -44,6 +43,7 @@ namespace spic::internal
 				ParseLayer(*element, tilesets);
 			}
 		}
+
 		return std::move(tileMap);
 	}
 
@@ -67,8 +67,10 @@ namespace spic::internal
 				break;
 			}
 		}
+
 		if (data == nullptr)
 			throw std::exception("No matrix data");
+
 		std::string dataString(data->GetText());
 		std::istringstream iss(dataString);
 		std::string tileId;
@@ -86,6 +88,7 @@ namespace spic::internal
 					break;
 			}
 		}
+
 		return matrix;
 	}
 
@@ -103,6 +106,7 @@ namespace spic::internal
 		const TiXmlElement& image = *tileSetData.FirstChildElement();
 		tileset.source = image.Attribute("source");
 		spic::StringHelper::Replace(tileset.source, "..", "assets");
+
 		return tileset;
 	}
 }

@@ -58,6 +58,7 @@ void SocketUDPExtension::SendData()
 	{
 		Sender(string, ip, port);
 	}
+
 	inputBuffer.clear();
 }
 
@@ -83,7 +84,7 @@ std::vector<NetworkPacket> SocketUDPExtension::RetrieveData()
 		catch (const std::exception& ex)
 		{
 			const std::string& message = ex.what();
-			Debug::LogError("Retrieve data failed: " + message);
+			debug::LogError("Retrieve data failed: " + message);
 		}
 	}
 	return temp;

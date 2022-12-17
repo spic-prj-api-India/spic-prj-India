@@ -361,11 +361,11 @@ namespace spic {
 		feelers[0] = Transform()->position + (heading * wallDetectionFeelerLength);
 
 		Point temp = heading;
-		RotateAroundOrigin(temp, spic::internal::Defaults::HALF_PI * 3.5f);
+		RotateAroundOrigin(temp, spic::internal::defaults::HALF_PI * 3.5f);
 		feelers[1] = Transform()->position + (heading * (wallDetectionFeelerLength / 2.0f)) * temp;
 
 		temp = heading;
-		RotateAroundOrigin(temp, spic::internal::Defaults::HALF_PI * 0.5f);
+		RotateAroundOrigin(temp, spic::internal::defaults::HALF_PI * 0.5f);
 		feelers[2] = Transform()->position + (heading * (wallDetectionFeelerLength / 2.0f)) * temp;
 
 		float distToThisIP = 0.0;
@@ -384,7 +384,7 @@ namespace spic {
 
 		for (auto& feeler : feelers) {
 			for (int wallIndex = 0; wallIndex < 4; wallIndex++) {
-				if (spic::GeneralHelper::LineIntersection(Transform()->position,
+				if (spic::general_helper::LineIntersection(Transform()->position,
 					feeler,
 					walls[wallIndex],
 					walls[wallIndex + 1],
@@ -571,7 +571,7 @@ namespace spic {
 
 	void ForceDriven::ApplyForce(Point& force) {
 		this->GetComponent<RigidBody>()->AddForce(force / Mass());
-		const float desiredRotation = spic::GeneralHelper::DEG2RAD<float>(Velocity().Rotation());
+		const float desiredRotation = spic::general_helper::DEG2RAD<float>(Velocity().Rotation());
 		const float angle = abs(this->Transform()->rotation - desiredRotation);
 		if (angle >= this->angleSensitivity) {
 			Transform()->rotation = desiredRotation;
