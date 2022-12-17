@@ -26,7 +26,7 @@ spic::Text::Text(const float width, const float height
 	, color{ color }
 {
 	if (font.empty()) {
-		this->font = spic::internal::Defaults::TEXT_FONT;
+		this->font = spic::internal::defaults::TEXT_FONT;
 	}
 }
 

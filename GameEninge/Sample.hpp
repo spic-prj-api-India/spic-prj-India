@@ -6,8 +6,7 @@
 #include <vector>
 #include <tuple>
 #include <mutex>
-#include "AudioInfo.hpp"
-
+#include "Settings.hpp"
 
 namespace spic::internal::audio::impl {
     class Chunk;
@@ -90,7 +89,7 @@ namespace spic::internal::audio::impl {
         /**
          * @brief For use by CatchChannelDone
         */
-        static Sample* handlers[MAX_CHANNELS];
+        static Sample* handlers[spic::settings::MAX_CHANNELS];
 
         /**
          * @brief All playing channels and if they are looping

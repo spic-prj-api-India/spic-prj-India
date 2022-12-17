@@ -71,7 +71,7 @@ namespace spic::internal::rendering {
 		/**
 		 * @brief sdl window ptr
 		*/
-		WindowPtr window;
+		WindowPtr settings;
 
 		/**
 		 * @brief sdl renderer ptr

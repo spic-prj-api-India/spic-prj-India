@@ -7,7 +7,7 @@
 #include "IEngineExtension.hpp"
 #include "Scene.hpp"
 #include "TypeHelper.hpp"
-#include "WindowValues.hpp"
+#include "Settings.hpp"
 #include <functional>
 
 namespace spic {

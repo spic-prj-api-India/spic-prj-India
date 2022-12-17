@@ -361,11 +361,11 @@ namespace spic {
 		feelers[0] = Transform()->position + (heading * wallDetectionFeelerLength);
 
 		Point temp = heading;
-		RotateAroundOrigin(temp, spic::internal::Defaults::HALF_PI * 3.5f);
+		RotateAroundOrigin(temp, spic::internal::defaults::HALF_PI * 3.5f);
 		feelers[1] = Transform()->position + (heading * (wallDetectionFeelerLength / 2.0f)) * temp;
 
 		temp = heading;
-		RotateAroundOrigin(temp, spic::internal::Defaults::HALF_PI * 0.5f);
+		RotateAroundOrigin(temp, spic::internal::defaults::HALF_PI * 0.5f);
 		feelers[2] = Transform()->position + (heading * (wallDetectionFeelerLength / 2.0f)) * temp;
 
 		float distToThisIP = 0.0;

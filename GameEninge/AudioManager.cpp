@@ -18,7 +18,7 @@ AudioManager::AudioManager()
     }
 
     // Amount of channels (Max amount of sounds playing at the same time)
-    Mix_AllocateChannels(MAX_CHANNELS);
+    Mix_AllocateChannels(spic::settings::MAX_CHANNELS);
     Mix_ChannelFinished(Sample::CatchChannelDone);
 }
 

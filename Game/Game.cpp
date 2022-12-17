@@ -42,16 +42,15 @@ void InitGame() {
 	engine->RegisterScene("game", std::function<spic::Scene* ()>(GameScene::Start));
 	engine->RegisterScene("credits", std::function<spic::Scene* ()>(CreditsScene::Start));
 	engine->RegisterScene("flock", std::function<spic::Scene* ()>(FlockingScene::Start));
-
-	// sets collider on or off (defaults to off)
-	spic::debug::COLLIDER_VISIBILITY = false;
 }
 
 void StartGame()
 {
-	spic::window::WINDOW_NAME = "Forts 2";
-	spic::window::WINDOW_WIDTH = 1200;
-	spic::window::WINDOW_HEIGHT = 800;
+	// sets collider on or off (defaults to off)
+	spic::settings::COLLIDER_VISIBILITY = true;
+	spic::settings::WINDOW_NAME = "Forts 2";
+	spic::settings::WINDOW_WIDTH = 1200;
+	spic::settings::WINDOW_HEIGHT = 800;
 	spic::GameEngine* engine = spic::GameEngine::GetInstance();
 	engine->LoadSceneByName("menu");
 	engine->Start();

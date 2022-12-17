@@ -7,7 +7,7 @@
 #include "BoxCollider.hpp"
 #include "GameEngine.hpp"
 #include "IPhysicsExtension.hpp"
-
+#include "Settings.hpp"
 
 namespace spic::internal::systems {
 	RenderingSystem::RenderingSystem()
@@ -46,7 +46,7 @@ namespace spic::internal::systems {
 			spic::internal::Rendering::Draw(entity.get());
 		}
 
-		if(debug::DEBUG_MODE && debug::COLLIDER_VISIBILITY)
+		if(debug::DEBUG_MODE && spic::settings::COLLIDER_VISIBILITY)
 			DrawColliders();
 	
 		if(this->fps->renderFps)

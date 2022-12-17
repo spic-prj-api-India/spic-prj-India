@@ -13,24 +13,21 @@
 #include "BoxCollider.hpp"
 #include "ICollisionListener.hpp"
 #include "Box2DCollisionListener.hpp"
-#include "PhysicsValues.hpp"
-#include "WindowValues.hpp"
 #include "RigidBody.hpp"
 #include "ForceDriven.hpp"
 #include "Defaults.hpp"
 #include "TileLayer.hpp"
 #include "Renderer.hpp"
 #include "InternalTime.hpp"
+#include "Settings.hpp"
 
-using namespace spic::extensions::PhysicsValues;
-using namespace spic::window;
 
 namespace spic::extensions {
 	class PhysicsExtensionImpl1 {
 	public:
 		PhysicsExtensionImpl1(const float pix2Met, const int velocityIterations, const int positionIterations) : 
-			PIX2MET{ pix2Met }, MET2PIX{ 1.0f / PIX2MET }, SCALED_WIDTH{ spic::window::WINDOW_WIDTH * PIX2MET }, 
-			SCALED_HEIGHT{ spic::window::WINDOW_HEIGHT * PIX2MET }, velocityIterations{velocityIterations}, 
+			PIX2MET{ pix2Met }, MET2PIX{ 1.0f / PIX2MET }, SCALED_WIDTH{ spic::settings::WINDOW_WIDTH * PIX2MET }, 
+			SCALED_HEIGHT{ spic::settings::WINDOW_HEIGHT * PIX2MET }, velocityIterations{velocityIterations}, 
 			positionIterations{positionIterations}
 		{
 			bodyTypeConvertions = {
@@ -77,7 +74,7 @@ namespace spic::extensions {
 				std::this_thread::sleep_for(std::chrono::milliseconds(1));
 
 			world.release();
-			world = std::make_unique<b2World>(b2Vec2(0.0f, PhysicsValues::GRAVITY));
+			world = std::make_unique<b2World>(b2Vec2(0.0f, spic::settings::GRAVITY));
 			sizes = {};
 			bodies = {};
 		}
@@ -222,8 +219,8 @@ namespace spic::extensions {
 		void ConvertCoordinateToMeters(Point& coordinate, Point size) {
 			size.x *= PIX2MET;
 			size.y *= PIX2MET;
-			const float x = coordinate.x - (WINDOW_WIDTH / 2.0f);
-			const float y = coordinate.y - (WINDOW_HEIGHT / 2.0f);
+			const float x = coordinate.x - (spic::settings::WINDOW_WIDTH / 2.0f);
+			const float y = coordinate.y - (spic::settings::WINDOW_HEIGHT / 2.0f);
 			coordinate.x = (x * PIX2MET) + (size.x / 2.0f);
 			coordinate.y = (y * PIX2MET) + (size.y / 2.0f);
 		}
@@ -244,8 +241,8 @@ namespace spic::extensions {
 		 * @brief Convert coordinate from pixels to meters
 		*/
 		void ConvertCoordinateToMeters(Point& coordinate) {
-			const float x = coordinate.x - (WINDOW_WIDTH / 2.0f);
-			const float y = coordinate.y - (WINDOW_HEIGHT / 2.0f);
+			const float x = coordinate.x - (spic::settings::WINDOW_WIDTH / 2.0f);
+			const float y = coordinate.y - (spic::settings::WINDOW_HEIGHT / 2.0f);
 			coordinate.x = x * PIX2MET;
 			coordinate.y = y * PIX2MET;
 		}
@@ -395,7 +392,7 @@ namespace spic::extensions {
 				circleShape->m_radius = circleCollider->Radius() * PIX2MET;
 				fixtureDef.shape = circleShape;
 
-				const float area = spic::internal::Defaults::PI * (circleShape->m_radius * circleShape->m_radius);
+				const float area = spic::internal::defaults::PI * (circleShape->m_radius * circleShape->m_radius);
 				fixtureDef.density = mass / area;
 
 				const float diameter = circleShape->m_radius + circleShape->m_radius;
@@ -534,7 +531,7 @@ namespace spic::extensions {
 		/**
 		 * @brief Height of physics world.
 		*/
-		const float SCALED_HEIGHT = spic::window::WINDOW_HEIGHT * PIX2MET;
+		const float SCALED_HEIGHT = spic::settings::WINDOW_HEIGHT * PIX2MET;
 
 		/*
 		* @brief Collider shapes in Box2D have a standard offset, this is the offset

@@ -11,12 +11,11 @@
 #include "TypeHelper.hpp"
 #include "StringHelper.hpp"
 #include "Defaults.hpp"
-#include "WindowValues.hpp"
+#include "Settings.hpp"
 #include "Debug.hpp"
 #include "InternalTime.hpp"
 
 using namespace spic;
-using namespace spic::window;
 using namespace spic::internal::rendering;
 using namespace spic::generalHelper;
 
@@ -52,18 +51,18 @@ void RendererImpl::Start()
 
 	// TODO: Zet in CreateWindow
 	const SDL_WindowFlags w_flags = SDL_WindowFlags(SDL_WINDOW_ALLOW_HIGHDPI | SDL_WINDOW_RESIZABLE);
-	window = WindowPtr(SDL_CreateWindow(spic::window::WINDOW_NAME.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, spic::window::WINDOW_WIDTH, spic::window::WINDOW_HEIGHT, w_flags));
-	if (window.get() == nullptr) {
+	settings = WindowPtr(SDL_CreateWindow(spic::settings::WINDOW_NAME.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, spic::settings::WINDOW_WIDTH, spic::settings::WINDOW_HEIGHT, w_flags));
+	if (settings.get() == nullptr) {
 		spic::debug::LogError(SDL_GetError());
 		exit(-1);
 	}
 
-	SDL_SetWindowAlwaysOnTop(window.get(),
-		(SDL_bool)spic::window::SET_ON_TOP);
+	SDL_SetWindowAlwaysOnTop(settings.get(),
+		(SDL_bool)spic::settings::SET_ON_TOP);
 
 	// TODO: Zet in CreateRenderer
 	SDL_RendererFlags rendererFlags = (SDL_RendererFlags)(SDL_RENDERER_ACCELERATED);
-	renderer = RendererPtr(SDL_CreateRenderer(window.get(), -1, rendererFlags));
+	renderer = RendererPtr(SDL_CreateRenderer(settings.get(), -1, rendererFlags));
 	if (renderer.get() == nullptr) {
 		spic::debug::LogError(SDL_GetError());
 		exit(-1);
@@ -78,7 +77,7 @@ void RendererImpl::Start()
 	this->UpdateWindow();
 
 
-	auto tmp_sprites = SurfacePtr(IMG_Load(spic::internal::Defaults::MISSING_TEXTURE.c_str()));
+	auto tmp_sprites = SurfacePtr(IMG_Load(spic::internal::defaults::MISSING_TEXTURE.c_str()));
 	if (!tmp_sprites.get())
 		return;
 
@@ -91,7 +90,7 @@ void spic::internal::rendering::RendererImpl::RenderFps()
 	using namespace spic::internal::time;
 	auto frameRate = std::to_string(InternalTime::frameRate);
 
-	auto defaultText = spic::internal::Defaults::TEXT_FONT;
+	auto defaultText = spic::internal::defaults::TEXT_FONT;
 
 	auto font = this->LoadFont(defaultText, 10);
 
@@ -105,7 +104,7 @@ void spic::internal::rendering::RendererImpl::RenderFps()
 void RendererImpl::Exit()
 {
 	renderer.release();
-	window.release();
+	settings.release();
 	SDL_Quit();
 }
 
@@ -518,7 +517,7 @@ void RendererImpl::DrawRect(const spic::Rect& rect, const double angle, const sp
 	dstRect.x = dstRect.x - this->camera.x;
 	dstRect.y = dstRect.y - this->camera.y;
 
-	SDL_Texture* texture = LoadTexture(spic::internal::Defaults::RECT_TEXTURE);
+	SDL_Texture* texture = LoadTexture(spic::internal::defaults::RECT_TEXTURE);
 
 	SDL_SetTextureColorMod(texture
 		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, color.R()))
@@ -639,7 +638,7 @@ void RendererImpl::UpdateCamera(Camera* camera)
 	this->rotation = transform->rotation;
 
 	int width, height = 0;
-	SDL_GetWindowSize(window.get(), &width, &height);
+	SDL_GetWindowSize(settings.get(), &width, &height);
 	this->camera =
 	{ pos.x
 	, pos.y
@@ -688,25 +687,25 @@ void RendererImpl::UpdateWindow()
 {
 	Uint32 window_flags = -1;
 
-	switch (spic::window::SELECTOR)
+	switch (spic::settings::SELECTOR)
 	{
-	case FULLSCREENTYPE::BORDERLESS:
+	case spic::settings::FULLSCREENTYPE::BORDERLESS:
 		window_flags = SDL_WINDOW_FULLSCREEN_DESKTOP;
 		break;
-	case FULLSCREENTYPE::FULLSCREEN:
+	case spic::settings::FULLSCREENTYPE::FULLSCREEN:
 		window_flags = SDL_WINDOW_FULLSCREEN;
 		break;
-	case FULLSCREENTYPE::WINDOWED:
+	case spic::settings::FULLSCREENTYPE::WINDOWED:
 		window_flags = 0;
 		break;
 	}
 
 	if (window_flags != -1)
-		SDL_SetWindowFullscreen(window.get(),
+		SDL_SetWindowFullscreen(settings.get(),
 			window_flags);
 
 	int width, height = 0;
-	SDL_GetWindowSize(window.get(), &width, &height);
+	SDL_GetWindowSize(settings.get(), &width, &height);
 	this->windowCamera = { 0, 0, static_cast<float>(width), static_cast<float>(height) };
 	this->camera.w = static_cast<float>(width);
 	this->camera.h = static_cast<float>(height);

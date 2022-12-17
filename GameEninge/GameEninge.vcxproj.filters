@@ -184,6 +184,9 @@
     <Filter Include="Source Files\extensions\networking">
       <UniqueIdentifier>{0bcd053c-995f-4ec2-a250-a85a668d77cd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\settings">
+      <UniqueIdentifier>{12d45431-ab90-4d70-9df6-86d1edb87651}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AudioSource.hpp">
@@ -231,9 +234,6 @@
     <ClInclude Include="Chunk.hpp">
       <Filter>Header Files\components\audio\SDL2Audio</Filter>
     </ClInclude>
-    <ClInclude Include="AudioInfo.hpp">
-      <Filter>Header Files\components\audio\SDL2Audio</Filter>
-    </ClInclude>
     <ClInclude Include="MapParser.hpp">
       <Filter>Header Files\core\tilemap</Filter>
     </ClInclude>
@@ -242,9 +242,6 @@
     </ClInclude>
     <ClInclude Include="InputSystem.hpp">
       <Filter>Header Files\core\systems\input</Filter>
-    </ClInclude>
-    <ClInclude Include="WindowValues.hpp">
-      <Filter>Header Files\core\systems\rendering</Filter>
     </ClInclude>
     <ClInclude Include="Renderer.hpp">
       <Filter>Header Files\core\systems\rendering</Filter>
@@ -333,9 +330,6 @@
     <ClInclude Include="Color.hpp">
       <Filter>Header Files\models</Filter>
     </ClInclude>
-    <ClInclude Include="PhysicsValues.hpp">
-      <Filter>Header Files\extensions\physics</Filter>
-    </ClInclude>
     <ClInclude Include="DataSystem.hpp">
       <Filter>Header Files\core\systems\data</Filter>
     </ClInclude>
@@ -416,6 +410,12 @@
     </ClInclude>
     <ClInclude Include="Transform.hpp">
       <Filter>Header Files\models</Filter>
+    </ClInclude>
+    <ClInclude Include="Settings.hpp">
+      <Filter>Header Files\settings</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsValues.hpp">
+      <Filter>Header Files\settings</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

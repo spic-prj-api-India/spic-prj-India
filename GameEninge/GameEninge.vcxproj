@@ -168,7 +168,6 @@
     <ClInclude Include="AISystem.hpp" />
     <ClInclude Include="Animator.hpp" />
     <ClInclude Include="AudioFacade.hpp" />
-    <ClInclude Include="AudioInfo.hpp" />
     <ClInclude Include="AudioManager.hpp" />
     <ClInclude Include="AudioSource.hpp" />
     <ClInclude Include="BehaviourScript.hpp" />
@@ -240,7 +239,7 @@
     <ClInclude Include="UIObject.hpp" />
     <ClInclude Include="RendererImpl.hpp" />
     <ClInclude Include="PhysicsValues.hpp" />
-    <ClInclude Include="WindowValues.hpp" />
+    <ClInclude Include="Settings.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AISystem.cpp" />

@@ -19,11 +19,6 @@ namespace spic::debug {
         const inline bool DEBUG_MODE = true;
     #endif
 
-    /*
-        * @brief Enables or disables collider visibility.
-    */
-    inline bool COLLIDER_VISIBILITY = false;
-
     /**
         * @brief Draws a colored line between specified start and end points.
         * @param start The starting point.

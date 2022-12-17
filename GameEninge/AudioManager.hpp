@@ -6,7 +6,7 @@
 #include <memory>
 #include <map>
 #include "AudioSource.hpp"
-#include "AudioInfo.hpp"
+#include "Settings.hpp"
 #include "Sample.hpp"
 #include "Chunk.hpp"
 

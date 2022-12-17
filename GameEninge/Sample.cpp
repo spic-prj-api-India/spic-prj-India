@@ -2,6 +2,7 @@
 #include "Chunk.hpp"
 #include "Debug.hpp"
 #include <cmath>
+#include "Defaults.hpp"
 #include <codeanalysis\warnings.h>
 #pragma warning( push )
 #pragma warning ( disable : ALL_CODE_ANALYSIS_WARNINGS )
@@ -10,7 +11,7 @@
 
 using namespace spic::internal::audio::impl;
 
-Sample* Sample::handlers[MAX_CHANNELS];
+Sample* Sample::handlers[spic::settings::MAX_CHANNELS];
 
 Sample::Sample(std::shared_ptr<Chunk> chunk, const bool looping)
     : chunk{ chunk }, looping{ looping }
@@ -60,14 +61,14 @@ constexpr int ConvertVolume(const float volume, const float begin, const float e
 void Sample::SetVolume(const float volume)
 {
     Mix_Volume(std::get<0>(channels.back())
-        , ConvertVolume(volume, VOLUME_BEGIN, VOLUME_END));
+        , ConvertVolume(volume, spic::internal::defaults::VOLUME_BEGIN, spic::internal::defaults::VOLUME_END));
 }
 
 void Sample::SetVolume(const float left, const float right)
 {   
     Mix_SetPanning(std::get<0>(channels.back())
-        , ConvertVolume(left, VOLUME_BEGIN, 255)
-        , ConvertVolume(right, VOLUME_BEGIN, 255));
+        , ConvertVolume(left, spic::internal::defaults::VOLUME_BEGIN, 255)
+        , ConvertVolume(right, spic::internal::defaults::VOLUME_BEGIN, 255));
 }
 
 void Sample::StopPlaying()

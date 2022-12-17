@@ -41,15 +41,15 @@ namespace spic {
 	float Point::Rotation() const
 	{
 		if (y <= 0) {
-			return asinf(x / sqrtf(x * x + y * y)) * 180.f / spic::internal::Defaults::PI;
+			return asinf(x / sqrtf(x * x + y * y)) * 180.f / spic::internal::defaults::PI;
 		}
 		if (x == 0) {
 			return 180.f;
 		}
 		if (x > 0) {
-			return atanf(y / x) * 180.f / spic::internal::Defaults::PI + 90.f;
+			return atanf(y / x) * 180.f / spic::internal::defaults::PI + 90.f;
 		}
-		return atanf(y / x) * 180.f / spic::internal::Defaults::PI - 90.f;
+		return atanf(y / x) * 180.f / spic::internal::defaults::PI - 90.f;
 	}
 
 	bool Point::Accumulate(Point& force, const float maxForce)

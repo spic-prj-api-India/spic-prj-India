@@ -13,7 +13,7 @@ namespace spic {
 	{
 		std::shared_ptr<Sprite> sprite;
 		if (texturePath.empty()) {
-			std::string defaultSpritePath = spic::internal::Defaults::BUTTON_TEXTURE;
+			std::string defaultSpritePath = spic::internal::defaults::BUTTON_TEXTURE;
 			sprite = std::make_shared<Sprite>(defaultSpritePath, 0, 0, color);
 		}
 		else {
