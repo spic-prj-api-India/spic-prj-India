@@ -31,7 +31,7 @@ void MenuScene::SetContents()
 		}, 0.0f);
 	AddButton("Start Flocking", []() {
 		spic::Input::UnSubscribeAll();
-		spic::GameEngine::GetInstance()->LoadSceneByName("flock");
+		spic::GameEngine::GetInstance()->LoadScene(std::make_shared<FlockingScene>());
 		}, 100.0f);
 	AddButton("Credits", []() {
 		spic::Input::UnSubscribeAll();

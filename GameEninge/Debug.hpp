@@ -20,6 +20,11 @@ namespace spic {
         inline bool COLLIDER_VISIBILITY = false;
 
         /*
+         * @brief Enables or disables feelers visibility.
+        */
+        inline bool FEELER_VISIBILITY = false;
+
+        /*
          * @brief Sets DEBUG to true if project is running in Debug mode.
         */
         #ifdef NDEBUG

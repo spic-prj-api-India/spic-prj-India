@@ -108,6 +108,11 @@ namespace spic::internal::rendering {
 		*/
 		std::mutex mutex_rendering;
 
+		/**
+		 * @brief Debug lines currently used to draw feelers
+		*/
+		std::vector<std::pair<spic::Point, spic::Point>> debugLines;
+
 	protected:
 		RendererImpl() noexcept(false);
 		~RendererImpl();
@@ -307,6 +312,10 @@ namespace spic::internal::rendering {
 		 * @param colour The colour of the line
 		*/
 		void DrawLine(const spic::Point& start, const spic::Point& end, const spic::Color& color);
+
+		void AddDebugLine(const spic::Point& start, const spic::Point& end);
+
+		void DrawDebugLines();
 
 		/**
 		 * @brief Draws an ui sprite

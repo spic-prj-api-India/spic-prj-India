@@ -5,6 +5,8 @@
 #include "Transformations.hpp"
 #include "Random.hpp"
 #include <functional>
+#include "Debug.hpp"
+#include "Collider.hpp"
 
 using namespace spic::internal::math;
 
@@ -356,17 +358,27 @@ namespace spic {
 
 	Point ForceDriven::WallAvoidance()
 	{
+		Point location = this->Transform()->position;
+		Point halfSize = this->GetComponent<Collider>()->Size() / 2;
+		Point center = { location.x + halfSize.x,location.y + halfSize.y };
+		Point top = center + (heading * halfSize.y);
 		std::vector<Point> feelers(3);
 
-		feelers[0] = Transform()->position + (heading * wallDetectionFeelerLength);
+		feelers[0] = top + (heading * wallDetectionFeelerLength);
 
 		Point temp = heading;
 		RotateAroundOrigin(temp, spic::internal::Defaults::HALF_PI * 3.5f);
-		feelers[1] = Transform()->position + (heading * (wallDetectionFeelerLength / 2.0f)) * temp;
+		feelers[1] = top + (temp * wallDetectionFeelerLength);
 
 		temp = heading;
 		RotateAroundOrigin(temp, spic::internal::Defaults::HALF_PI * 0.5f);
-		feelers[2] = Transform()->position + (heading * (wallDetectionFeelerLength / 2.0f)) * temp;
+		feelers[2] = top + (temp * wallDetectionFeelerLength);
+
+		if (Debug::FEELER_VISIBILITY) {
+			Debug::DrawLine(top, feelers[0]);
+			Debug::DrawLine(top, feelers[1]);
+			Debug::DrawLine(top, feelers[2]);
+		}
 
 		float distToThisIP = 0.0;
 		float distToClosestIP = std::numeric_limits<float>::max();
@@ -377,6 +389,10 @@ namespace spic {
 			Point(bounds.Left() + bounds.Width(), bounds.Top()),
 			Point(bounds.Left(), bounds.Top())
 		};
+		Debug::DrawLine(walls[0], walls[1]);
+		Debug::DrawLine(walls[1], walls[2]);
+		Debug::DrawLine(walls[2], walls[3]);
+		Debug::DrawLine(walls[3], walls[4]);
 
 		int closestWallIndex = -1;
 
@@ -384,7 +400,7 @@ namespace spic {
 
 		for (auto& feeler : feelers) {
 			for (int wallIndex = 0; wallIndex < 4; wallIndex++) {
-				if (spic::GeneralHelper::LineIntersection(Transform()->position,
+				if (spic::GeneralHelper::LineIntersection(top,
 					feeler,
 					walls[wallIndex],
 					walls[wallIndex + 1],
@@ -532,7 +548,7 @@ namespace spic {
 
 			if (distance > 0.0f && distance < desiredSeparation) {
 				toAgent.Normalize();
-				steeringForce += toAgent / distance;
+				steeringForce += toAgent / toAgent.Length();
 			}
 		}
 		return steeringForce;
@@ -571,11 +587,12 @@ namespace spic {
 
 	void ForceDriven::ApplyForce(Point& force) {
 		this->GetComponent<RigidBody>()->AddForce(force / Mass());
-		const float desiredRotation = spic::GeneralHelper::DEG2RAD<float>(Velocity().Rotation());
+		const float rotationInDeg = Velocity().Rotation();
+		const float desiredRotation = spic::GeneralHelper::DEG2RAD<float>(rotationInDeg);
 		const float angle = abs(this->Transform()->rotation - desiredRotation);
 		if (angle >= this->angleSensitivity) {
 			Transform()->rotation = desiredRotation;
-			heading = { cosf(desiredRotation) , sin(desiredRotation) };
+			heading = { sin(desiredRotation), -cosf(desiredRotation) };
 		}
 	}
 }

@@ -65,6 +65,10 @@ namespace spic::internal {
          * @param color Color of this line
         */
         static void DrawLine(const spic::Point& start, const spic::Point& end, const spic::Color& color);
+
+        static void AddDebugLine(const spic::Point& start, const spic::Point& end);
+
+        static void DrawDebugLines();
         
         /**
          * @brief Draws a sprite as an ui object

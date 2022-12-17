@@ -41,6 +41,16 @@ void spic::internal::Rendering::DrawLine(const spic::Point& start, const spic::P
 	spic::internal::rendering::RendererImpl::GetInstance()->DrawLine(start, end, color);
 }
 
+void spic::internal::Rendering::AddDebugLine(const spic::Point& start, const spic::Point& end)
+{
+	spic::internal::rendering::RendererImpl::GetInstance()->AddDebugLine(start, end);
+}
+
+void spic::internal::Rendering::DrawDebugLines()
+{
+	spic::internal::rendering::RendererImpl::GetInstance()->DrawDebugLines();
+}
+
 void spic::internal::Rendering::DrawSprite(const Transform* position, Sprite* sprite)
 {
 	spic::internal::rendering::RendererImpl::GetInstance()->DrawSprite(sprite, position);

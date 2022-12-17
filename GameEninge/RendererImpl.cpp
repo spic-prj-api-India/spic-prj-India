@@ -99,6 +99,8 @@ void RendererImpl::Start()
 		return;
 
 	missingTexture = TexturePtr(SDL_CreateTextureFromSurface(renderer.get(), tmp_sprites.get()));
+
+	debugLines;
 }
 
 void RendererImpl::Exit()
@@ -621,6 +623,19 @@ void RendererImpl::DrawLine(const spic::Point& start, const spic::Point& end, co
 		, endPoint.y);
 }
 
+void RendererImpl::AddDebugLine(const spic::Point& start, const spic::Point& end) 
+{
+	std::pair<spic::Point, spic::Point> debugLine = { start, end };
+	debugLines.emplace_back(debugLine);
+}
+
+void RendererImpl::DrawDebugLines()
+{
+	for (const auto& debugLine : debugLines) {
+		DrawLine(debugLine.first, debugLine.second, spic::Color::red());
+	}
+}
+
 void RendererImpl::UpdateCamera(Camera* camera)
 {
 	auto transform = camera->Transform().get();
@@ -666,6 +681,8 @@ void RendererImpl::Render()
 	);
 
 	SDL_RenderPresent(renderer.get());
+
+	debugLines = {};
 }
 
 void RendererImpl::UpdateWindow()
