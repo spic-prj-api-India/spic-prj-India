@@ -91,7 +91,6 @@ namespace spic::internal {
          * @brief Renders all bufferd entities
         */
         static void Render();
-
         
         /**
          * @brief Gets the aspect values from the window

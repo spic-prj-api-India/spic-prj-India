@@ -13,6 +13,7 @@ void spic::internal::audio::AudioFacade::PlaySample(AudioSource* source, const b
 {
 	if (manager == nullptr)
 		spic::internal::audio::AudioFacade::CreateAudio();
+
 	manager->PlaySample(source, looping);
 }
 
@@ -20,6 +21,7 @@ void spic::internal::audio::AudioFacade::StopSample(AudioSource* source)
 {
 	if (manager == nullptr)
 		spic::internal::audio::AudioFacade::CreateAudio();
+
 	manager->StopSample(source);
 }
 
@@ -27,6 +29,7 @@ void spic::internal::audio::AudioFacade::StopAllSamples()
 {
 	if (manager == nullptr)
 		spic::internal::audio::AudioFacade::CreateAudio();
+
 	manager->StopAllSamples();
 }
 
@@ -34,6 +37,7 @@ void spic::internal::audio::AudioFacade::AddSample(AudioSource* source)
 {
 	if (manager == nullptr)
 		spic::internal::audio::AudioFacade::CreateAudio();
+
 	manager->AddSample(source);
 }
 
@@ -41,6 +45,7 @@ void spic::internal::audio::AudioFacade::RemoveSample(AudioSource* source)
 {
 	if (manager == nullptr)
 		spic::internal::audio::AudioFacade::CreateAudio();
+
 	manager->RemoveSample(source);
 }
 
@@ -48,6 +53,7 @@ void spic::internal::audio::AudioFacade::ChangeVolume(AudioSource* source, const
 {
 	if (manager == nullptr)
 		spic::internal::audio::AudioFacade::CreateAudio();
+
 	manager->ChangeVolume(source,left,right);
 }
 
@@ -55,6 +61,7 @@ void spic::internal::audio::AudioFacade::ChangeVolume(AudioSource* source, const
 {
 	if (manager == nullptr)
 		spic::internal::audio::AudioFacade::CreateAudio();
+
 	manager->ChangeVolume(source, volume);
 }
 

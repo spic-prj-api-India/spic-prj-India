@@ -18,11 +18,11 @@
 using namespace spic;
 using namespace spic::window;
 using namespace spic::internal::rendering;
-using namespace spic::GeneralHelper;
+using namespace spic::generalHelper;
 
 #define UINT_8_BEGIN 0
 #define UINT_8_END 255
-
+#define KEEPLOADED true
 
 RendererImpl::RendererImpl() noexcept(false) : camera{ 0, 0, 0, 0 }, backgroundColor{ 0,0,0,1 }, backgroundImage{ "" }, scaling{ 1 }, rotation{ 0 }
 {
@@ -46,7 +46,7 @@ void RendererImpl::Start()
 	// sets up video
 	if (SDL_Init(SDL_INIT_VIDEO != 0))
 	{
-		spic::Debug::LogError(SDL_GetError());
+		spic::debug::LogError(SDL_GetError());
 		exit(-1);
 	}
 
@@ -54,7 +54,7 @@ void RendererImpl::Start()
 	const SDL_WindowFlags w_flags = SDL_WindowFlags(SDL_WINDOW_ALLOW_HIGHDPI | SDL_WINDOW_RESIZABLE);
 	window = WindowPtr(SDL_CreateWindow(spic::window::WINDOW_NAME.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, spic::window::WINDOW_WIDTH, spic::window::WINDOW_HEIGHT, w_flags));
 	if (window.get() == nullptr) {
-		spic::Debug::LogError(SDL_GetError());
+		spic::debug::LogError(SDL_GetError());
 		exit(-1);
 	}
 
@@ -65,7 +65,7 @@ void RendererImpl::Start()
 	SDL_RendererFlags rendererFlags = (SDL_RendererFlags)(SDL_RENDERER_ACCELERATED);
 	renderer = RendererPtr(SDL_CreateRenderer(window.get(), -1, rendererFlags));
 	if (renderer.get() == nullptr) {
-		spic::Debug::LogError(SDL_GetError());
+		spic::debug::LogError(SDL_GetError());
 		exit(-1);
 	}
 
@@ -97,6 +97,9 @@ void spic::internal::rendering::RendererImpl::RenderFps()
 
 	SDL_Color orange = SDL_Color{ 255,255,0,255 };
 	this->RenderMultiLineText(font,frameRate, orange,0,0,100,100,0,spic::Alignment::CENTER);
+
+	if (!KEEPLOADED)
+		this->fonts.clear();
 }
 
 void RendererImpl::Exit()
@@ -137,7 +140,7 @@ void RendererImpl::DrawSprites(GameObject* gameObject, const bool isUIObject)
 {
 	const auto transform = gameObject->Transform();
 	auto _sprites = gameObject->GetComponents<Sprite>();
-	std::sort(_sprites.begin(), _sprites.end(), spic::GeneralHelper::SpriteSorting);
+	std::sort(_sprites.begin(), _sprites.end(), spic::generalHelper::SpriteSorting);
 	UIObject* uiObject = nullptr;
 	if (isUIObject)
 		uiObject = TypeHelper::CastPtrToType<UIObject>(gameObject);
@@ -200,6 +203,9 @@ void RendererImpl::DrawUISprite(const float width, const float height, const Spr
 		return;
 
 	DrawSprite(sprite, transform, texture, &dstRect, NULL);
+
+	if (!KEEPLOADED)
+		this->textures.clear();
 }
 
 void RendererImpl::DrawSprite(const Sprite* sprite, const Transform* transform, bool isUiOject)
@@ -241,6 +247,9 @@ void RendererImpl::DrawSprite(const Sprite* sprite, const Transform* transform, 
 		return;
 
 	DrawSprite(sprite, transform, texture, &dstRect, &sourceRect);
+
+	if (!KEEPLOADED)
+		this->textures.clear();
 }
 
 void RendererImpl::DrawSprite(const Sprite* sprite, const Transform* transform, SDL_Texture* texture, SDL_FRect* dstRect, SDL_Rect* sourceRect) {
@@ -259,7 +268,7 @@ void RendererImpl::DrawSprite(const Sprite* sprite, const Transform* transform, 
 	double angle = RAD2DEG<double>(transform->rotation);
 	if (texture == nullptr) {
 		SDL_RenderCopyExF(renderer.get(), NULL, sourceRect, dstRect, angle, NULL, flip);
-		spic::Debug::LogError(SDL_GetError());
+		spic::debug::LogError(SDL_GetError());
 		return;
 	}
 	SDL_RenderCopyExF(renderer.get(), texture, sourceRect, dstRect, angle, NULL, flip);
@@ -328,6 +337,9 @@ void RendererImpl::DrawText(Text* text)
 		const float y = transform->position.y + (parent != nullptr ? parent->Transform()->position.y : 0);
 		this->RenderMultiLineText(font, texts, colour, x, y, text->Width(), text->Height(), 2, text->Alignment());
 	}
+
+	if (!KEEPLOADED)
+		this->fonts.clear();
 }
 
 void RendererImpl::Wrap(const TTF_Font* pFont, std::string& input, const float width)
@@ -364,7 +376,7 @@ void RendererImpl::Wrap(const TTF_Font* pFont, std::string& input, const float w
 	catch (const std::exception& ex)
 	{
 		const std::string& message = ex.what();
-		spic::Debug::LogError("Wrap text failed: " + message);
+		spic::debug::LogError("Wrap text failed: " + message);
 	}
 
 	delete w;
@@ -388,7 +400,6 @@ void RendererImpl::RenderMultiLineText(const TTF_Font* pFont, std::string& rText
 
 		int currentLine = 0;
 		float totalLength = 0;
-		float previusy = yPosition;
 
 		// This string will contain one line of text
 		std::string textLine = "";
@@ -460,7 +471,7 @@ void RendererImpl::RenderMultiLineText(const TTF_Font* pFont, std::string& rText
 	catch (const std::exception& ex)
 	{
 		const std::string& message = ex.what();
-		spic::Debug::LogError("Multiline render failed: " + message);
+		spic::debug::LogError("Multiline render failed: " + message);
 	}
 }
 
@@ -517,8 +528,11 @@ void RendererImpl::DrawRect(const spic::Rect& rect, const double angle, const sp
 	SDL_SetTextureAlphaMod(texture,
 		PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, color.A())));
 
-	const double angleInDeg = spic::GeneralHelper::RAD2DEG<double>(angle);
+	const double angleInDeg = spic::generalHelper::RAD2DEG<double>(angle);
 	SDL_RenderCopyExF(renderer.get(), texture, NULL, &dstRect, angleInDeg, NULL, SDL_FLIP_NONE);
+
+	if (!KEEPLOADED)
+		this->textures.clear();
 }
 
 void RendererImpl::DrawCircle(const spic::Point& center, const float radius, const float pixelGap, const spic::Color& color)
@@ -650,6 +664,12 @@ void RendererImpl::Clean()
 		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, this->backgroundColor.B()))
 		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, this->backgroundColor.A()))
 	);
+
+	if (!KEEPLOADED)
+	{
+		this->textures.clear();
+		this->fonts.clear();
+	}
 }
 
 void RendererImpl::Render() const

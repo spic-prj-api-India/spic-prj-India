@@ -38,19 +38,19 @@ namespace spic::internal::systems {
         * @brief Calls OnEnter method in the scripts of the entity
         * @spicapi
         */
-        void OnEnter(const std::shared_ptr<spic::GameObject> entity, const std::shared_ptr<spic::Collider> collider) const;
+        void OnEnter(const std::shared_ptr<spic::GameObject>& entity, const std::shared_ptr<spic::Collider>& collider) const;
 
         /**
         * @brief Calls OnExit method in the scripts of the entity
         * @spicapi
         */
-        void OnExit(const std::shared_ptr<spic::GameObject> entity, const std::shared_ptr<spic::Collider> collider) const;
+        void OnExit(const std::shared_ptr<spic::GameObject>& entity, const std::shared_ptr<spic::Collider>& collider) const;
 
         /**
         * @brief Calls OnStay method in the scripts of the entity
         * @spicapi
         */
-        void OnStay(const std::shared_ptr<spic::GameObject> entity, const std::shared_ptr<spic::Collider> collider) const;
+        void OnStay(const std::shared_ptr<spic::GameObject>& entity, const std::shared_ptr<spic::Collider>& collider) const;
     private:
         /**
         * @brief Filters all physics entities from entity list by recursively adding to the second vector

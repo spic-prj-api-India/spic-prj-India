@@ -384,7 +384,7 @@ namespace spic {
 
 		for (auto& feeler : feelers) {
 			for (int wallIndex = 0; wallIndex < 4; wallIndex++) {
-				if (spic::GeneralHelper::LineIntersection(Transform()->position,
+				if (spic::generalHelper::LineIntersection(Transform()->position,
 					feeler,
 					walls[wallIndex],
 					walls[wallIndex + 1],
@@ -571,7 +571,7 @@ namespace spic {
 
 	void ForceDriven::ApplyForce(Point& force) {
 		this->GetComponent<RigidBody>()->AddForce(force / Mass());
-		const float desiredRotation = spic::GeneralHelper::DEG2RAD<float>(Velocity().Rotation());
+		const float desiredRotation = spic::generalHelper::DEG2RAD<float>(Velocity().Rotation());
 		const float angle = abs(this->Transform()->rotation - desiredRotation);
 		if (angle >= this->angleSensitivity) {
 			Transform()->rotation = desiredRotation;

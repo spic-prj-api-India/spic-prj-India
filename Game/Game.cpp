@@ -19,27 +19,32 @@
 
 
 void InitGame() {
+
+	// Creates GameEngine instance 
 	spic::GameEngine* engine = spic::GameEngine::GetInstance();
-	std::shared_ptr<spic::extensions::PhysicsExtension1> physicsExtension = std::make_shared<spic::extensions::PhysicsExtension1>(0.0023f,4,2);
+
+	// Creates box2d physics extension and adds it to the extension list
+	std::shared_ptr<spic::extensions::PhysicsExtension1> physicsExtension 
+		= std::make_shared<spic::extensions::PhysicsExtension1>(0.0023f, 4, 2);
 	engine->AddExtension(std::move(physicsExtension));
 
+	// Creates a SocketUDPExtension and adds it to the extension list
 	auto socket = std::make_shared<spic::extensions::SocketUDPExtension>();
 	socket->InitListener(13251);
-
 	socket->InitSender(spic::networkingHelper::GetParsedIPConfigData("IPv4 Address"), 13251);
 	engine->AddExtension(std::move(socket));
 
-	// Register types
-	//engine->RegisterType<Box>();
+	// Register object types
+	engine->RegisterType<Box>();
 
 	// Register scenes
-
 	engine->RegisterScene("menu", std::function<spic::Scene* ()>(MenuScene::Start));
-
-	
 	engine->RegisterScene("game", std::function<spic::Scene* ()>(GameScene::Start));
 	engine->RegisterScene("credits", std::function<spic::Scene* ()>(CreditsScene::Start));
-	//spic::Debug::COLLIDER_VISIBILITY = true;
+	engine->RegisterScene("flock", std::function<spic::Scene* ()>(FlockingScene::Start));
+
+	// sets collider on or off (defaults to off)
+	spic::debug::COLLIDER_VISIBILITY = false;
 }
 
 void StartGame()

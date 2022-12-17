@@ -3,18 +3,18 @@
 
 using namespace spic;
 
-void spic::GeneralHelper::RotatePoint(const Point& org, float angle, Point& p) noexcept
+void spic::generalHelper::RotatePoint(const Point& org, float angle, Point& p) noexcept
 {
 	p = Point{ std::cos(angle) * (p.x - org.x) - std::sin(angle) * (p.y - org.y) + org.x,
 		std::sin(angle) * (p.x - org.x) + std::cos(angle) * (p.y - org.y) + org.y };
 }
 
-spic::Point spic::GeneralHelper::GetsPointY(Point& pointX, const Point& rotation, const float angle, float height, float width, float scaling) noexcept
+spic::Point spic::generalHelper::GetsPointY(Point& pointX, const Point& rotation, const float angle, float height, float width, float scaling) noexcept
 {
 	return Point{ pointX.x * scaling, pointX.y * height * scaling };
 }
 
-std::string spic::GeneralHelper::GetRandomUUID()
+std::string spic::generalHelper::GetRandomUUID()
 {
 	static std::random_device dev;
 	static std::mt19937 rng(dev());
@@ -33,7 +33,7 @@ std::string spic::GeneralHelper::GetRandomUUID()
 	return res;
 }
 
-bool spic::GeneralHelper::SpriteSorting(const std::shared_ptr<Sprite> a, const std::shared_ptr<Sprite> b)
+bool spic::generalHelper::SpriteSorting(const std::shared_ptr<Sprite> a, const std::shared_ptr<Sprite> b)
 {
 	if (a->OrderInLayer() < b->OrderInLayer())
 		return true;
@@ -50,7 +50,7 @@ bool spic::GeneralHelper::SpriteSorting(const std::shared_ptr<Sprite> a, const s
 	return false;
 }
 
-bool spic::GeneralHelper::NetworkPacketSorting(const NetworkPacket& a, const NetworkPacket& b)
+bool spic::generalHelper::NetworkPacketSorting(const NetworkPacket& a, const NetworkPacket& b)
 {
 	if (a.timeSpan < b.timeSpan)
 		return true;
@@ -58,7 +58,7 @@ bool spic::GeneralHelper::NetworkPacketSorting(const NetworkPacket& a, const Net
 	return false;
 }
 
-std::array<Point, 4> spic::GeneralHelper::GetPoints(const Point& orgin, const float angle, const float aspectWidth, const float aspectHeight)
+std::array<Point, 4> spic::generalHelper::GetPoints(const Point& orgin, const float angle, const float aspectWidth, const float aspectHeight)
 {
 	Point center{ (orgin.x + aspectWidth) / 2, (orgin.y + aspectHeight) / 2 };
 
@@ -73,7 +73,7 @@ std::array<Point, 4> spic::GeneralHelper::GetPoints(const Point& orgin, const fl
 
 
 
-bool spic::GeneralHelper::CalculateWithinSquare(const Point& point, std::array<Point, 4>& square)
+bool spic::generalHelper::CalculateWithinSquare(const Point& point, std::array<Point, 4>& square)
 {
 	auto am = square[0].DotProduct(point);
 	auto ab = square[0].DotProduct(square[1]);
@@ -93,7 +93,7 @@ bool ValueInRange(float value, float min, float max)
 	return (value >= min) && (value <= max);
 }
 
-bool spic::GeneralHelper::RectIntersection(const Rect& rect1, const Rect& rect2) {
+bool spic::generalHelper::RectIntersection(const Rect& rect1, const Rect& rect2) {
 	const bool xOverlap = ValueInRange(rect1.x, rect2.x, rect2.x + rect2.w) ||
 		ValueInRange(rect2.x, rect1.x, rect1.x + rect1.w);
 
@@ -103,7 +103,7 @@ bool spic::GeneralHelper::RectIntersection(const Rect& rect1, const Rect& rect2)
 	return xOverlap && yOverlap;
 }
 
-bool spic::GeneralHelper::LineIntersection(Point sPoint1, Point ePoint1, const Point& sPoint2, const Point& ePoint2, Point& intersectPoint, float& distance)
+bool spic::generalHelper::LineIntersection(Point sPoint1, Point ePoint1, const Point& sPoint2, const Point& ePoint2, Point& intersectPoint, float& distance)
 {
 	const float rTop = (sPoint1.y - sPoint2.y) * (ePoint2.x - sPoint2.x) - (sPoint1.x - sPoint2.x) * (ePoint2.y - sPoint2.y);
 	const float rePoint1ot = (ePoint1.x - sPoint1.x) * (ePoint2.y - sPoint2.y) - (ePoint1.y - sPoint1.y) * (ePoint2.x - sPoint2.x);
@@ -129,7 +129,7 @@ bool spic::GeneralHelper::LineIntersection(Point sPoint1, Point ePoint1, const P
 	return false;
 }
 
-Point spic::GeneralHelper::GetCenter(const Point& point, const float aspectWidth, const float aspectHeight)
+Point spic::generalHelper::GetCenter(const Point& point, const float aspectWidth, const float aspectHeight)
 {
 	return Point{ (point.x + aspectWidth) / 2, (point.y + aspectHeight) / 2 };
 }

@@ -104,7 +104,7 @@ namespace spic::internal
 		* @brief Sets the current scene with entities.
 		* @param The scene to be set.
 		*/
-		void SetScene(std::shared_ptr<Scene> scene);
+		void SetScene(std::shared_ptr<Scene> scene, const std::string& name);
 
 		/*
 		* @brief Destroys the current scene.

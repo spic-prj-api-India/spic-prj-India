@@ -38,7 +38,7 @@ struct Client {
     void handle_receive(const boost::system::error_code& error, size_t bytes_transferred) {
 
         if (error.failed()) {
-            spic::Debug::LogError("Receive failed: " + error.message());
+            spic::debug::LogError("Receive failed: " + error.message());
             return;
         }
 
@@ -81,7 +81,7 @@ export void Receiver(const int UDP_PORT)
     }
     catch (const std::exception& ex) {
         const std::string& message = ex.what();
-        spic::Debug::LogError("Receive failed: " + message);
+        spic::debug::LogError("Receive failed: " + message);
     }
 }
 
@@ -102,5 +102,5 @@ export void Sender(const std::string& in, const std::string& IPADDRESS, const in
     auto sent = socket.send_to(boost::asio::buffer(in), remote_endpoint, 0, error);
     socket.close();
     if(error.failed())
-        spic::Debug::LogError("Send failed: " + error.message());
+        spic::debug::LogError("Send failed: " + error.message());
 }

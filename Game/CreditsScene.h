@@ -6,7 +6,7 @@ class CreditsScene : public spic::Scene {
 public:
 	CreditsScene();
 	void SetContents();
-	void SetCammera();
+	void SetCamera();
 
 	static spic::Scene* Start()
 	{

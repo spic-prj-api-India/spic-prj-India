@@ -33,6 +33,8 @@ namespace spic
          * @brief Constructor
          * @tparam T An function or lambda that the thread has to complete
          * @tparam T2 An value/object
+         * @param func 
+         * @param value 
         */
         template<typename T, typename T2>
         ThreadWrapper(T func, T2 value) : threadHandler(func, value)
@@ -44,6 +46,9 @@ namespace spic
          * @tparam T An function or lambda that the thread has to complete
          * @tparam T2 An value/object
          * @tparam T3 An value/object
+         * @param func 
+         * @param value1 
+         * @param value2 
         */
         template<typename T, typename T2, typename T3>
         ThreadWrapper(T func, T2 value1, T3 value2) : threadHandler(func, value1, value2)

@@ -2,6 +2,7 @@
 #include "EntityManager.hpp"
 #include "Input.hpp"
 #include "Renderer.hpp"
+#include "InternalTime.hpp"
 
 namespace spic {
 	GameEngine* GameEngine::pinstance_{ nullptr };
@@ -18,10 +19,12 @@ namespace spic {
 	GameEngine* GameEngine::GetInstance()
 	{
 		std::lock_guard<std::mutex> lock(mutex_);
+
 		if (pinstance_ == nullptr)
 		{
 			pinstance_ = new GameEngine();
 		}
+
 		return pinstance_;
 	}
 
@@ -29,6 +32,7 @@ namespace spic {
 	{
 		if (_types.count(typeName) == 0)
 			throw std::exception("Type not registered.");
+
 		return _types[typeName]();
 	}
 
@@ -42,9 +46,9 @@ namespace spic {
 		internal::EntityManager::GetInstance()->SetScene(sceneName);
 	}
 
-	void GameEngine::LoadScene(std::shared_ptr<Scene> scene)
+	void GameEngine::LoadScene(std::shared_ptr<Scene> scene, const std::string& sceneName)
 	{
-		spic::internal::EntityManager::GetInstance()->SetScene(scene);
+		spic::internal::EntityManager::GetInstance()->SetScene(std::move(scene), sceneName);
 	}
 
 	void GameEngine::DestroyScene(bool forceDelete)
@@ -66,9 +70,16 @@ namespace spic {
 	{
 		spic::internal::Rendering::Start();
 
-		while (!quit) {
+		while (!quit) 
+		{
+			using namespace spic::internal::time;
+			InternalTime::BeginFrame();
 	
 			internal::EntityManager::GetInstance()->Update();
+
+			InternalTime::EndFrame();
+
+			InternalTime::Delay();
 		}
 	}
 

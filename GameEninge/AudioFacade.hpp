@@ -61,12 +61,14 @@ namespace spic::internal::audio {
         static void Reset();
 
         /**
-         * @brief Creates an new AudioSystem
+         * @brief Creates an new AudioSystem and puts it on the heap. The current audioImplementation has an bug that if it is placed in an rai class you get an exception.
+         *      And since you don't want it on the stack you have to delete manualy. (delete if fixed)
         */
         static void CreateAudio();
 
         /**
-         * @brief Destorys the current audio system
+         * @brief Destorys the current audio system. The current audioImplementation has an bug that if it is placed in an rai class you get an exception.
+         *      And since you don't want it on the stack you have to delete manualy. (delete if fixed)
         */
         static void DestroyAudio();
     };

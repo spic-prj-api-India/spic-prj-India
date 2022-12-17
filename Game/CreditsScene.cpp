@@ -5,7 +5,7 @@
 
 CreditsScene::CreditsScene()
 {
-	SetCammera();
+	SetCamera();
 	SetContents();
 }
 
@@ -52,7 +52,7 @@ void CreditsScene::SetContents()
 	this->AddContent(creddits);
 }
 
-void CreditsScene::SetCammera()
+void CreditsScene::SetCamera()
 {
 	std::unique_ptr<spic::Camera> camera = std::make_unique<spic::Camera>();
 	camera->Transform(std::make_shared<spic::Transform>(spic::Point(0.0f, 0.0f), 0.0f, 1.0f));

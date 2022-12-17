@@ -11,7 +11,7 @@ namespace spic {
 		return spic::internal::EntityManager::GetInstance()->GetEntities();
 	}
 
-	GameObject::GameObject() : active{ true }, layer{ 0 }, parent{ nullptr }, name{ spic::GeneralHelper::GetRandomUUID()}
+	GameObject::GameObject() : active{ true }, layer{ 0 }, parent{ nullptr }, name{ spic::generalHelper::GetRandomUUID()}
 	{
 		components = {};
 	}

@@ -143,6 +143,6 @@ Sample::~Sample()
     }
     catch (const std::exception& ex)
     {
-        spic::Debug::LogError(ex.what());
+        spic::debug::LogError(ex.what());
     }
 }

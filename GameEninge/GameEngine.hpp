@@ -99,9 +99,11 @@ namespace spic {
 
 		/*
 		@brief Load the specified scene.
-		@param scene: The scene you want to load.
+		@details Destoys the current scene and sets it to this one even if this scene is already loaded
+		@param scene The scene you want to load.
+		@param sceneName Name of the scene
 		*/
-		void LoadScene(std::shared_ptr<Scene> scene);
+		void LoadScene(std::shared_ptr<Scene> scene, const std::string& sceneName);
 
 		/*
 		@brief Load the specified scene.

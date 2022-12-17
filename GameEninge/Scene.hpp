@@ -17,7 +17,6 @@ namespace spic {
             Scene();
             Scene(std::unique_ptr<Camera> newCamera, UpdateSetting setting = UpdateSetting::ALWAYS);
 
-
             /**
              * @brief The scene's contents
              * @return The current contents
@@ -76,7 +75,6 @@ namespace spic {
              * @spicapi
              */
             void UpdateSetting(spic::UpdateSetting newUpdateSetting);
-
     private:
         /**
         * @brief This property contains all the Game Object that are contained in this scene.

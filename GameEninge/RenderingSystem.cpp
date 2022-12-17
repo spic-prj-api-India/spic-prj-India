@@ -46,19 +46,13 @@ namespace spic::internal::systems {
 			spic::internal::Rendering::Draw(entity.get());
 		}
 
-		if(Debug::DEBUG_MODE && Debug::COLLIDER_VISIBILITY)
+		if(debug::DEBUG_MODE && debug::COLLIDER_VISIBILITY)
 			DrawColliders();
 	
 		if(this->fps->renderFps)
 			spic::internal::Rendering::DrawFps();
 		
 		spic::internal::Rendering::Render();
-
-		using namespace spic::internal::time;
-
-		InternalTime::EndFrame();
-
-		InternalTime::Delay();
 	}
 
 	std::vector<std::vector<std::shared_ptr<spic::GameObject>>> RenderingSystem::GetFilteredEntities(const std::vector<std::shared_ptr<spic::GameObject>>& entities) const

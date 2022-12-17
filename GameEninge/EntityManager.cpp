@@ -20,6 +20,7 @@
 #include "AudioFacade.hpp"
 #include "GameEngine.hpp"
 #include "PhysicsExtension1.hpp"
+#include "Debug.hpp"
 
 using namespace spic;
 using namespace spic::internal;
@@ -35,7 +36,15 @@ EntityManager::EntityManager() : CustomSystemDefaultPriority{ 1 }, scene{ nullpt
 
 EntityManager::~EntityManager()
 {
-	
+	try
+	{
+		spic::internal::audio::AudioFacade::DestroyAudio();
+	}
+	catch (std::exception& ex)
+	{
+		const std::string& message = ex.what();
+		spic::debug::LogError("Receive failed: " + message);
+	}
 }
 
 EntityManager* EntityManager::GetInstance()
@@ -50,7 +59,7 @@ EntityManager* EntityManager::GetInstance()
 
 void EntityManager::Init()
 {
-	spic::internal::audio::AudioFacade::DestroyAudio();
+	spic::internal::audio::AudioFacade::CreateAudio();
 	std::unique_ptr<systems::InputSystem> inputSystem = std::make_unique<systems::InputSystem>();
 	std::unique_ptr<systems::PhysicsSystem> physicsSystem = std::make_unique<systems::PhysicsSystem>();
 	std::unique_ptr<systems::RenderingSystem> renderingSystem = std::make_unique<systems::RenderingSystem>();
@@ -127,19 +136,17 @@ void EntityManager::SetScene(const std::string& sceneName)
 	if (currentSceneName != sceneName)
 	{
 		auto scene = std::shared_ptr<spic::Scene>(scenes[sceneName]());
-		currentSceneName = sceneName;
-
-		SetScene(scene);
+		SetScene(std::move(scene), sceneName);
 	}
 }
 
-void EntityManager::SetScene(std::shared_ptr<Scene> newScene)
+void EntityManager::SetScene(std::shared_ptr<Scene> newScene, const std::string& sceneName)
 {
 	if (&newScene->Camera() == nullptr)
 		throw std::exception("No camera defined.");
 	DestroyScene();
-	scene = newScene;
-	//entities.clear();
+	scene = std::move(newScene);
+	currentSceneName = sceneName;
 
 	for (auto& entity : scene->Contents())
 	{
@@ -230,8 +237,6 @@ void UpdateSave(std::map<int, std::vector<std::unique_ptr<spic::systems::ISystem
 	, std::vector<std::shared_ptr<spic::GameObject>>& vectorCopy
 	, std::shared_ptr<spic::Scene> scene)
 {
-	using namespace spic::internal::time;
-	InternalTime::BeginFrame();
 	for (const auto& systemsMap : systems)
 	{
 		for (const auto& system : systemsMap.second)

@@ -33,7 +33,7 @@ namespace spic::internal
 			if (element->Value() == std::string("tileset")) {
 				tilesets.push_back(ParseTileSet(*element));
 				const std::string& name = element->Attribute("name");
-				Debug::Log(name + " <-- Parsed!");
+				debug::Log(name + " <-- Parsed!");
 			}
 		}
 

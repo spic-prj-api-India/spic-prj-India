@@ -33,14 +33,6 @@ namespace spic::extensions {
 			SCALED_HEIGHT{ spic::window::WINDOW_HEIGHT * PIX2MET }, velocityIterations{velocityIterations}, 
 			positionIterations{positionIterations}
 		{
-			if (auto& w = world; w != nullptr)
-			{
-				while (world->IsLocked())
-				{
-					std::this_thread::sleep_for(std::chrono::milliseconds(1));
-				}
-			}
-
 			bodyTypeConvertions = {
 				{spic::BodyType::staticBody, b2_staticBody},
 				{spic::BodyType::kinematicBody, b2_kinematicBody},
@@ -52,12 +44,9 @@ namespace spic::extensions {
 		~PhysicsExtensionImpl1()
 		{
 			if (auto& w = world; w != nullptr)
-			{
 				while (world->IsLocked())
-				{
 					std::this_thread::sleep_for(std::chrono::milliseconds(1));
-				}
-			}
+			
 		}
 
 		PhysicsExtensionImpl1(const PhysicsExtensionImpl1& rhs)
@@ -85,9 +74,9 @@ namespace spic::extensions {
 		void Reset()
 		{
 			while (world != nullptr && world->IsLocked()) 
-			{
 				std::this_thread::sleep_for(std::chrono::milliseconds(1));
-			}
+
+			world.release();
 			world = std::make_unique<b2World>(b2Vec2(0.0f, PhysicsValues::GRAVITY));
 			sizes = {};
 			bodies = {};
@@ -120,7 +109,7 @@ namespace spic::extensions {
 		* @brief Add and updates physic bodies in world
 		* @spicapi
 		*/
-		void Update(std::vector<std::shared_ptr<spic::GameObject>> entities)
+		void Update(std::vector<std::shared_ptr<spic::GameObject>>& entities)
 		{
 			// Update or create entity bodiese
 			for (auto& entity : entities) {
@@ -319,12 +308,10 @@ namespace spic::extensions {
 		* @brief Creates body, fixture and shape and adds body to box2d world
 		* @spicapi
 		*/
-		void CreateEntity(const std::shared_ptr<spic::GameObject> entity)
+		void CreateEntity(const std::shared_ptr<spic::GameObject>& entity)
 		{
 			while (world->IsLocked())
-			{
-				std::this_thread::sleep_for(std::chrono::milliseconds(2));
-			}
+				std::this_thread::sleep_for(std::chrono::milliseconds(1));
 
 			// Create body
 			std::shared_ptr<spic::RigidBody> rigidBody = entity->GetComponent<spic::RigidBody>();
@@ -346,7 +333,7 @@ namespace spic::extensions {
 		* @brief Creates box2d body with RigidBody of entity
 		* @spicapi
 		*/
-		b2Body* CreateBody(const std::shared_ptr<spic::GameObject> entity, const std::shared_ptr<spic::RigidBody> rigidBody)
+		b2Body* CreateBody(const std::shared_ptr<spic::GameObject>& entity, const std::shared_ptr<spic::RigidBody>& rigidBody)
 		{
 			const auto size = entity->GetComponent<Collider>()->Size();
 			Point position = entity->Transform()->position;
@@ -423,12 +410,10 @@ namespace spic::extensions {
 		*		been changed outside extension
 		* @spicapi
 		*/
-		void UpdateEntity(const std::shared_ptr<spic::GameObject> entity)
+		void UpdateEntity(const std::shared_ptr<spic::GameObject>& entity)
 		{
 			while (world->IsLocked())
-			{
-				std::this_thread::sleep_for(std::chrono::milliseconds(2));
-			}
+				std::this_thread::sleep_for(std::chrono::milliseconds(1));
 
 			// Get body
 			std::shared_ptr<spic::RigidBody> rigidBody = entity->GetComponent<spic::RigidBody>();
@@ -578,9 +563,10 @@ namespace spic::extensions {
 		return *this;
 	}
 
-	void spic::extensions::PhysicsExtension1::Reset(std::function<void(const std::shared_ptr<spic::GameObject>, const std::shared_ptr<spic::Collider>)> enterCallback,
-		std::function<void(const std::shared_ptr<spic::GameObject>, const std::shared_ptr<spic::Collider>)> exitCallback,
-		std::function<void(const std::shared_ptr<spic::GameObject>, const std::shared_ptr<spic::Collider>)> stayCallback)
+	void spic::extensions::PhysicsExtension1::Reset(
+		std::function<void(const std::shared_ptr<spic::GameObject>&, const std::shared_ptr<spic::Collider>&)> enterCallback,
+		std::function<void(const std::shared_ptr<spic::GameObject>&, const std::shared_ptr<spic::Collider>&)> exitCallback,
+		std::function<void(const std::shared_ptr<spic::GameObject>&, const std::shared_ptr<spic::Collider>&)> stayCallback)
 	{
 		physicsImpl->Reset();
 		std::unique_ptr<ICollisionListener> listener = std::make_unique<spic::internal::extensions::Box2DCollisionListener>(enterCallback, exitCallback, stayCallback);
@@ -592,12 +578,12 @@ namespace spic::extensions {
 		physicsImpl->AddCollisionLayer(collisionLayer);
 	}
 
-	void spic::extensions::PhysicsExtension1::Update(std::vector<std::shared_ptr<spic::GameObject>> entities)
+	void spic::extensions::PhysicsExtension1::Update(std::vector<std::shared_ptr<spic::GameObject>>& entities)
 	{
-		physicsImpl->Update(std::move(entities));
+		physicsImpl->Update(entities);
 	}
 
-	void spic::extensions::PhysicsExtension1::AddForce(const std::shared_ptr<GameObject> entity, const spic::Point& forceDirection)
+	void spic::extensions::PhysicsExtension1::AddForce(const std::shared_ptr<GameObject>& entity, const spic::Point& forceDirection)
 	{
 		physicsImpl->AddForce(std::move(entity), forceDirection);
 	}
