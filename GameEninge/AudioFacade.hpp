@@ -67,7 +67,7 @@ namespace spic::internal::audio {
         static void CreateAudio();
 
         /**
-         * @brief Destorys the current audio system. The current audioImplementation has an bug that if it is placed in an rai class you get an exception.
+         * @brief Destroys the current audio system. The current audioImplementation has a bug that if it is placed in a rai class you get an exception.
          *      And since you don't want it on the stack you have to delete manualy. (delete if fixed)
         */
         static void DestroyAudio();

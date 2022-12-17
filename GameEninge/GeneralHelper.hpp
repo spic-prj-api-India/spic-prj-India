@@ -15,7 +15,7 @@
 #include "Rect.hpp"
 
 
-namespace spic::generalHelper 
+namespace spic::general_helper 
 {	
 	/**
 	 * @brief 

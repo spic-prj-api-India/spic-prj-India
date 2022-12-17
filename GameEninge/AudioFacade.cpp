@@ -5,7 +5,7 @@ using namespace spic::internal::audio::impl;
 
 /**
  * @brief The current audioManager has an exception if it is placed in an rai class.
- *		And since you don't want it on the stack the create and destory are the best options. 
+ *		And since you don't want it on the stack the create and destroy methods are the best options. 
 */
 static AudioManager* manager; 
 
