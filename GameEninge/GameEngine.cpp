@@ -46,9 +46,9 @@ namespace spic {
 		internal::EntityManager::GetInstance()->SetScene(sceneName);
 	}
 
-	void GameEngine::LoadScene(std::shared_ptr<Scene> scene, const std::string& sceneName)
+	void GameEngine::LoadScene(std::shared_ptr<Scene> scene)
 	{
-		spic::internal::EntityManager::GetInstance()->SetScene(std::move(scene), sceneName);
+		spic::internal::EntityManager::GetInstance()->SetScene(std::move(scene));
 	}
 
 	void GameEngine::DestroyScene(bool forceDelete)

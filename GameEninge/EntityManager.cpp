@@ -132,21 +132,16 @@ void EntityManager::SetScene(const std::string& sceneName)
 {
 	if (!scenes.count(sceneName))
 		throw std::exception("Scene does not exist.");
-
-	if (currentSceneName != sceneName)
-	{
-		auto scene = std::shared_ptr<spic::Scene>(scenes[sceneName]());
-		SetScene(std::move(scene), sceneName);
-	}
+	auto scene = std::shared_ptr<spic::Scene>(scenes[sceneName]());
+	SetScene(std::move(scene));
 }
 
-void EntityManager::SetScene(std::shared_ptr<Scene> newScene, const std::string& sceneName)
+void EntityManager::SetScene(std::shared_ptr<Scene> newScene)
 {
 	if (&newScene->Camera() == nullptr)
 		throw std::exception("No camera defined.");
 	DestroyScene();
 	scene = std::move(newScene);
-	currentSceneName = sceneName;
 
 	for (auto& entity : scene->Contents())
 	{
