@@ -26,7 +26,6 @@ namespace spic::internal
 		std::map<int, std::vector<std::unique_ptr<spic::systems::ISystem>>> systems;
 		std::map<std::string, std::function<spic::Scene* ()>> scenes;
 		std::shared_ptr<Scene> scene;
-		std::string currentSceneName;
 
 	protected:
 		EntityManager();
