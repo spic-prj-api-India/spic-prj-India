@@ -26,22 +26,26 @@ void spic::internal::Rendering::UpdateCamera(Camera* camera)
 	impl->UpdateCamera(camera);
 }
 
-void spic::internal::Rendering::DrawRect(const spic::Rect& rect, const double angle, const spic::Color& color)
+void spic::internal::Rendering::DrawRect(const spic::Rect& rect
+	, const double angle, const spic::Color& color)
 {
 	impl->DrawRect(rect, angle, color);
 }
 
-void spic::internal::Rendering::DrawCircle(const spic::Point& center, const float radius, const spic::Color& color, const float pixelGap)
+void spic::internal::Rendering::DrawCircle(const spic::Point& center
+	, const float radius, const spic::Color& color, const float pixelGap)
 {
 	impl->DrawCircle(center, radius, pixelGap, color);
 }
 
-void spic::internal::Rendering::DrawPoint(const spic::Point& point, const spic::Color& color)
+void spic::internal::Rendering::DrawPoint(const spic::Point& point
+	, const spic::Color& color)
 {
 	impl->DrawPoint(point, color);
 }
 
-void spic::internal::Rendering::DrawLine(const spic::Point& start, const spic::Point& end, const spic::Color& color)
+void spic::internal::Rendering::DrawLine(const spic::Point& start
+	, const spic::Point& end, const spic::Color& color)
 {
 	impl->DrawLine(start, end, color);
 }

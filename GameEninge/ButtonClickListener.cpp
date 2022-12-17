@@ -30,7 +30,7 @@ namespace spic::internal {
 				button->Width() * transform->scale,
 				button->Height() * transform->scale
 			};
-			if (spic::generalHelper::RectIntersection(mouseRect, buttonRect)) {
+			if (spic::general_helper::RectIntersection(mouseRect, buttonRect)) {
 				button->Click();
 				return;
 			}

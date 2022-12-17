@@ -69,6 +69,7 @@ void spic::internal::audio::AudioFacade::Reset()
 {
 	if (manager == nullptr)
 		spic::internal::audio::AudioFacade::CreateAudio();
+
 	manager->Reset();
 }
 

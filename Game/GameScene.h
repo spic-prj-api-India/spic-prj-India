@@ -5,11 +5,7 @@
 class GameScene : public spic::Scene {
 public:
 	GameScene();
-	static spic::Scene* Start()
-	{
-		GameScene* a = new GameScene();
-		return a;
-	}
+	static spic::Scene* Start();
 	void SetCamera();
 	void SetContents();
 };

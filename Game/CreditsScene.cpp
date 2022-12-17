@@ -60,3 +60,9 @@ void CreditsScene::SetCamera()
 	camera->BackgroundImage("assets/textures/backgrounds/392777.png");
 	Camera(std::move(camera));
 }
+
+spic::Scene* CreditsScene::Start()
+{
+	CreditsScene* a = new CreditsScene();
+	return a;
+}

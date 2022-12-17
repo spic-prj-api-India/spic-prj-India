@@ -8,9 +8,5 @@ public:
 	void SetContents();
 	void SetCamera();
 
-	static spic::Scene* Start()
-	{
-		CreditsScene* a = new CreditsScene();
-		return a;
-	}
+	static spic::Scene* Start();
 };

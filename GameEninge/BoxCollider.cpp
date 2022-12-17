@@ -25,6 +25,7 @@ namespace spic {
 	{
 		if (newWidth < 0.0f)
 			throw std::range_error("Width can't be below zero");
+
 		width = newWidth;
 	}
 
@@ -37,6 +38,7 @@ namespace spic {
 	{
 		if (newHeight < 0.0f)
 			throw std::range_error("Height can't be below zero");
+
 		height = newHeight;
 	}
 }

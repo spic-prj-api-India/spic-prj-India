@@ -55,11 +55,13 @@ namespace spic::internal::systems {
 		spic::internal::Rendering::Render();
 	}
 
-	std::vector<std::vector<std::shared_ptr<spic::GameObject>>> RenderingSystem::GetFilteredEntities(const std::vector<std::shared_ptr<spic::GameObject>>& entities) const
+	std::vector<std::vector<std::shared_ptr<spic::GameObject>>> RenderingSystem::GetFilteredEntities(
+		const std::vector<std::shared_ptr<spic::GameObject>>& entities) const
 	{
 		std::vector<std::shared_ptr<spic::GameObject>> nonUIEntities;
 		std::vector<std::shared_ptr<spic::GameObject>> uiEntities;
-		for (const auto& entity : entities) {
+		for (const auto& entity : entities) 
+		{
 			if (spic::TypeHelper::SharedPtrIsOfType<UIObject>(entity))
 				uiEntities.emplace_back(entity);
 			else
@@ -72,9 +74,8 @@ namespace spic::internal::systems {
 	void RenderingSystem::DrawColliders()
 	{
 		GameEngine* engine = GameEngine::GetInstance();
-		for (const auto& weakExtension : engine->GetExtensions<spic::extensions::IPhysicsExtension>()) {
+		for (const auto& weakExtension : engine->GetExtensions<spic::extensions::IPhysicsExtension>())
 			if (const auto& physicsExtension = weakExtension.lock())
 				physicsExtension->DrawColliders();
-		}
 	}
 }

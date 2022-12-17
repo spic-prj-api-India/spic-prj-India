@@ -39,7 +39,6 @@ void AudioManager::AddChunk(const std::string& path)
     auto it = chunks.find(path);
     if (it == chunks.end())
         chunks.emplace(path, std::make_shared<Chunk>(path));
-        
 }
 
 void AudioManager::ResetChunks()
@@ -67,6 +66,7 @@ void AudioManager::PlaySample(AudioSource* source, const bool looping)
         const auto& temp = chunks[audioClip];
         samples.emplace(source, std::make_unique<Sample>(temp, source->Loop()));
     }
+
     samples[source]->Play(looping, source->Volume());
 }
 

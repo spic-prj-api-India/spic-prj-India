@@ -2,8 +2,10 @@
 #include <string>
 
 namespace spic::internal::exceptions {
-	CastException::CastException(const std::string castType) : message{ "Extension has to be of type " + castType } 
-	{}
+	CastException::CastException(const std::string castType) 
+		: message{ "Extension has to be of type " + castType } 
+	{
+	}
 
 	char* CastException::what() 
 	{

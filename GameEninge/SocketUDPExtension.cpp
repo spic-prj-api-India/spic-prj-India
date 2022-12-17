@@ -58,6 +58,7 @@ void SocketUDPExtension::SendData()
 	{
 		Sender(string, ip, port);
 	}
+
 	inputBuffer.clear();
 }
 

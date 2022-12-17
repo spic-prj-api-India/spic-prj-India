@@ -26,8 +26,8 @@ void spic::internal::time::InternalTime::EndFrame()
 	deltaTime += endFrame - beginFrame;
 	frames++;
 
-	//if you really want fps
-	if (InternalTime::clockToMilliseconds(deltaTime) > 1000.0) { //every second
+	if (InternalTime::clockToMilliseconds(deltaTime) > 1000.0) //every second
+	{ 
 		frameRate = (double)frames * 0.5 + frameRate * 0.5; //more stable framerate
 		frames = 0;
 		deltaTime -= CLOCKS_PER_SEC;

@@ -17,11 +17,10 @@
 
 using namespace spic;
 using namespace spic::internal::rendering;
-using namespace spic::generalHelper;
+using namespace spic::general_helper;
 
 #define UINT_8_BEGIN 0
 #define UINT_8_END 255
-#define KEEPLOADED true
 
 RendererImpl::RendererImpl() noexcept(false) : camera{ 0, 0, 0, 0 }, backgroundColor{ 0,0,0,1 }, backgroundImage{ "" }, scaling{ 1 }, rotation{ 0 }
 {
@@ -97,7 +96,7 @@ void spic::internal::rendering::RendererImpl::RenderFps()
 	SDL_Color orange = SDL_Color{ 255,255,0,255 };
 	this->RenderMultiLineText(font,frameRate, orange,0,0,100,100,0,spic::Alignment::CENTER);
 
-	if (!KEEPLOADED)
+	if (!KEEP_TEXTURES_AND_FONTS_LOADED)
 		this->fonts.clear();
 }
 
@@ -139,7 +138,7 @@ void RendererImpl::DrawSprites(GameObject* gameObject, const bool isUIObject)
 {
 	const auto transform = gameObject->Transform();
 	auto _sprites = gameObject->GetComponents<Sprite>();
-	std::sort(_sprites.begin(), _sprites.end(), spic::generalHelper::SpriteSorting);
+	std::sort(_sprites.begin(), _sprites.end(), spic::general_helper::SpriteSorting);
 	UIObject* uiObject = nullptr;
 	if (isUIObject)
 		uiObject = TypeHelper::CastPtrToType<UIObject>(gameObject);
@@ -203,7 +202,7 @@ void RendererImpl::DrawUISprite(const float width, const float height, const Spr
 
 	DrawSprite(sprite, transform, texture, &dstRect, NULL);
 
-	if (!KEEPLOADED)
+	if (!KEEP_TEXTURES_AND_FONTS_LOADED)
 		this->textures.clear();
 }
 
@@ -247,7 +246,7 @@ void RendererImpl::DrawSprite(const Sprite* sprite, const Transform* transform, 
 
 	DrawSprite(sprite, transform, texture, &dstRect, &sourceRect);
 
-	if (!KEEPLOADED)
+	if (!KEEP_TEXTURES_AND_FONTS_LOADED)
 		this->textures.clear();
 }
 
@@ -337,7 +336,7 @@ void RendererImpl::DrawText(Text* text)
 		this->RenderMultiLineText(font, texts, colour, x, y, text->Width(), text->Height(), 2, text->Alignment());
 	}
 
-	if (!KEEPLOADED)
+	if (!KEEP_TEXTURES_AND_FONTS_LOADED)
 		this->fonts.clear();
 }
 
@@ -527,10 +526,10 @@ void RendererImpl::DrawRect(const spic::Rect& rect, const double angle, const sp
 	SDL_SetTextureAlphaMod(texture,
 		PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, color.A())));
 
-	const double angleInDeg = spic::generalHelper::RAD2DEG<double>(angle);
+	const double angleInDeg = spic::general_helper::RAD2DEG<double>(angle);
 	SDL_RenderCopyExF(renderer.get(), texture, NULL, &dstRect, angleInDeg, NULL, SDL_FLIP_NONE);
 
-	if (!KEEPLOADED)
+	if (!KEEP_TEXTURES_AND_FONTS_LOADED)
 		this->textures.clear();
 }
 
@@ -664,7 +663,7 @@ void RendererImpl::Clean()
 		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, this->backgroundColor.A()))
 	);
 
-	if (!KEEPLOADED)
+	if (!KEEP_TEXTURES_AND_FONTS_LOADED)
 	{
 		this->textures.clear();
 		this->fonts.clear();

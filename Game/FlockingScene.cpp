@@ -15,6 +15,12 @@ FlockingScene::FlockingScene() : Scene()
 	LoadTileMap("assets/maps/map.tmx", 3);
 }
 
+spic::Scene* FlockingScene::Start()
+{
+	FlockingScene* a = new FlockingScene();
+	return a;
+}
+
 void FlockingScene::SetCamera()
 {
 	std::unique_ptr<spic::Camera> camera = std::make_unique<spic::Camera>();

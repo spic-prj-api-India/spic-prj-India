@@ -15,12 +15,14 @@ spic::NetworkPacket::NetworkPacket() : timeSpan{ duration_cast<std::chrono::mill
 }
 
 spic::NetworkPacket::NetworkPacket(const std::string& name, const MessageType& typeMessage)
-    : name{ name }, typeMessage{ typeMessage }, timeSpan{ duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count() }
+    : name{ name }, typeMessage{ typeMessage }
+    , timeSpan{ duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count() }
 {
 }
 
 spic::NetworkPacket::NetworkPacket(const std::string& name, const MessageType& typeMessage, std::map<std::string, std::string> data)
-    : name{ name }, typeMessage{ typeMessage }, data{ data }, timeSpan{ duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count() }
+    : name{ name }, typeMessage{ typeMessage }, data{ data }
+    , timeSpan{ duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count() }
 {
 }
 

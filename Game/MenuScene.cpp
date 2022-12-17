@@ -14,6 +14,12 @@ MenuScene::MenuScene() : Scene()
 	SetInputListeners();
 }
 
+spic::Scene* MenuScene::Start()
+{
+	MenuScene* a = new MenuScene();
+	return a;
+}
+
 void MenuScene::SetCamera()
 {
 	std::unique_ptr<spic::Camera> camera = std::make_unique<spic::Camera>();

@@ -2,5 +2,6 @@
 
 namespace spic::extensions {
 	ICollisionListener::ICollisionListener()
-	{}
+	{
+	}
 }
