@@ -2,7 +2,7 @@
 
 using namespace spic;
 
-Persistable::Persistable(GameObject* gameObject) : gameObject{ gameObject }
+Persistable::Persistable(GameObject* gameObject, std::string typeName) : gameObject{ gameObject }, typeName{typeName}
 {}
 
 std::map<std::string, std::function<std::string()>> Persistable::SaveProperties()
@@ -11,6 +11,7 @@ std::map<std::string, std::function<std::string()>> Persistable::SaveProperties(
 		return {};
 	const auto& transform = gameObject->Transform();
 	return {
+		{"type_name", [this]() { return typeName; }},
 		{"tag", [this]() { return gameObject->Tag(); }},
 		{"active", [this]() { return std::to_string(gameObject->Active()); }},
 		{"layer", [this]() { return  std::to_string(gameObject->Layer()); }},

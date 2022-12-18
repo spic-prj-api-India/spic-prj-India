@@ -4,6 +4,7 @@
 #include "Persistable.hpp"
 #include "EntityManager.hpp"
 #include "GameEngine.hpp"
+#include "ContainerHelper.hpp"
 
 class spic::SaveDocument {
 public:
@@ -11,6 +12,13 @@ public:
 	{
 		this->path = "save_files/" + fileName + ".save";
 		this->xmlDoc = {};
+		struct stat buffer;
+		const bool fileExist = (stat(this->path.c_str(), &buffer) == 0);
+		if (fileExist) {
+			xmlDoc.LoadFile(this->path);
+			if (xmlDoc.Error())
+				throw std::exception(xmlDoc.ErrorDesc());
+		}
 	}
 
 	TiXmlElement* FirstChildElement()
@@ -41,6 +49,22 @@ public:
 		root->LinkEndChild(properties);
 	}
 
+	void LoadContent(spic::IMemento& parentMemento, const TiXmlElement& parentElement)
+	{
+		const TiXmlElement& contents = *parentElement.FirstChildElement();
+		const TiXmlElement& properties = *contents.NextSiblingElement();
+		for (const TiXmlElement* parent = contents.FirstChildElement(); parent != nullptr; parent = parent->NextSiblingElement())
+		{
+			spic::IMemento subMemento = spic::IMemento();
+			LoadContent(subMemento, *parent);
+			parentMemento.contents.emplace_back(subMemento);
+		}
+		for (const TiXmlAttribute* att = properties.FirstAttribute(); att != nullptr; att = att->Next())
+		{
+			parentMemento.properties[att->Name()] = att->Value();
+		}
+	}
+
 	void SaveFile()
 	{
 		this->xmlDoc.SaveFile(this->path);
@@ -50,7 +74,6 @@ public:
 	{
 		return this->path;
 	}
-
 private:
 	TiXmlDocument xmlDoc;
 	std::string path;
@@ -112,7 +135,6 @@ void spic::DataHandler::AddProperties(const std::shared_ptr<spic::Persistable>& 
 		if (!value.empty())
 			memento.properties[name] = value;
 	}
-	memento.properties["type_name"] = spic::TypeHelper::GetTypeName(entity);
 }
 
 void spic::DataHandler::Save()
@@ -120,69 +142,80 @@ void spic::DataHandler::Save()
 	this->saveDocument->SaveFile();
 }
 
+const TiXmlElement* GetLastestSavedScene(const TiXmlElement& scenes)
+{
+	const TiXmlElement* sceneElement = scenes.FirstChildElement();
+	while (sceneElement->NextSiblingElement() != nullptr)
+		sceneElement = sceneElement->NextSiblingElement();
+	return sceneElement;
+}
+
 void spic::DataHandler::LoadScene(const std::vector<std::shared_ptr<spic::GameObject>>& entities)
 {
-	TiXmlDocument xmlDoc;
-	xmlDoc.LoadFile(this->saveDocument->Path());
-	if (xmlDoc.Error()) {
-		throw std::exception(xmlDoc.ErrorDesc());
+	// Get latest saved scene
+	const TiXmlElement& scenes = *this->saveDocument->FirstChildElement();
+	const TiXmlElement* sceneElement = GetLastestSavedScene(scenes);
+	if (sceneElement == nullptr)
+		return;
+
+	// Load xml data into struct
+	std::vector<IMemento> scene;
+	for (const TiXmlElement* parentElement = sceneElement->FirstChildElement(); parentElement != nullptr; parentElement = parentElement->NextSiblingElement())
+	{
+		IMemento parentMemento = IMemento();
+		this->saveDocument->LoadContent(parentMemento, *parentElement);
+		scene.emplace_back(parentMemento);
 	}
 
-	TiXmlElement* root = xmlDoc.RootElement();
-
-	ParseScene(root, entities);
+	// Update and create entities with data
+	for (const auto& parent : scene) {
+		const std::string& name = parent.properties.at("name");
+		auto entity = ContainerHelper::Find<GameObject>(entities, [name](std::shared_ptr<GameObject> entity) {return entity->Name() == name; });
+		auto loadedEntity = LoadContent(parent, entity);
+		if(entity == nullptr)
+			spic::internal::EntityManager::GetInstance()->AddEntity(loadedEntity);
+	}
 }
 
-void spic::DataHandler::GetPersistableEntities(std::map<std::string, std::shared_ptr<spic::Persistable>>& persistables, const std::vector<std::shared_ptr<spic::GameObject>>& entities)
+std::shared_ptr<spic::GameObject> spic::DataHandler::LoadContent(IMemento parent, std::shared_ptr<spic::GameObject> entity)
 {
-	for (const auto& entity : entities) {
-		GetPersistableEntities(persistables, entity->GetChildren());
-		const std::string& name = entity->Name();
-		if (persistables.count(name) != 0)
-			continue;
-		if (spic::TypeHelper::SharedPtrIsOfType<spic::Persistable>(entity))
-			persistables[name] = spic::TypeHelper::CastSharedPtrToType<spic::Persistable>(entity);
+	// Find or create entity if not exist
+	if (entity == nullptr) {
+		const std::string& name = parent.properties["name"];
+		entity = GameObject::Find(name);
+		if (entity == nullptr) {
+			entity = spic::GameEngine::GetInstance()->CreateType(parent.properties["type_name"]);
+			entity->Name(parent.properties["name"]);
+		}
 	}
+	// if entity is persistable load properties
+	if (spic::TypeHelper::SharedPtrIsOfType<Persistable>(entity))
+		LoadProperties(spic::TypeHelper::CastSharedPtrToType<Persistable>(entity), parent.properties);
+	
+	// Add/Update all children to/of entity
+	auto children = entity->GetChildren();
+	for (const auto& child : parent.contents) {
+		const std::string& name = child.properties.at("name");
+		auto childEntity = ContainerHelper::Find<GameObject>(children, [name](std::shared_ptr<GameObject> entity) {return entity->Name() == name; });
+		auto loadedChild = LoadContent(child, childEntity);
+		if (childEntity == nullptr)
+			entity->AddChild(loadedChild);
+	}
+	return entity;
 }
 
-void spic::DataHandler::LoadProperties(const std::shared_ptr<spic::Persistable>& entity, TiXmlElement* element)
+
+void spic::DataHandler::LoadProperties(const std::shared_ptr<spic::Persistable>& entity, const std::map<std::string, std::string> attributes)
 {
 	auto loadProperties = entity->LoadProperties();
-	for (const TiXmlAttribute* att = element->FirstAttribute(); att != nullptr; att = att->Next())
+	for (const auto& attribute : attributes)
 	{
 		for (const auto& propertyPair : loadProperties) {
 			const std::string name = propertyPair.first;
 			auto setter = propertyPair.second;
-			const std::string attributeName = att->Name();
+			const std::string attributeName = attribute.first;
 			if (attributeName == name)
-				setter(att->Value());
-		}
-	}
-}
-
-void spic::DataHandler::ParseScene(TiXmlElement* sceneElement, const std::vector<std::shared_ptr<spic::GameObject>>& entities)
-{
-	std::map<std::string, std::shared_ptr<spic::Persistable>> persistables;
-	GetPersistableEntities(persistables, entities);
-
-	for (TiXmlElement* element = sceneElement->FirstChildElement(); element != nullptr; element = element->NextSiblingElement())
-	{
-		ParseScene(element, entities);
-		if (element->ValueStr() == "properties")
-		{
-			const std::string& name = element->Attribute("name");
-			const auto& entity = GameObject::Find(name);
-
-			if (entity != nullptr)
-			{
-				LoadProperties(spic::TypeHelper::CastSharedPtrToType<Persistable>(entity), element);
-			}
-			else
-			{
-				std::shared_ptr<GameObject> newEntity = spic::GameEngine::GetInstance()->CreateType(element->Attribute("type_name"));
-				LoadProperties(spic::TypeHelper::CastSharedPtrToType<Persistable>(entity), element);
-				spic::internal::EntityManager::GetInstance()->AddEntity(newEntity);
-			}
+				setter(attribute.second);
 		}
 	}
 }

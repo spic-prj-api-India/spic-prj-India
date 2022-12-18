@@ -32,7 +32,7 @@ namespace spic {
 	std::shared_ptr<spic::GameObject> GameEngine::CreateType(const std::string& typeName)
 	{
 		if (_types.count(typeName) == 0)
-			throw std::exception("Type not registered.");
+			return std::make_shared<GameObject>();
 
 		return _types[typeName]();
 	}

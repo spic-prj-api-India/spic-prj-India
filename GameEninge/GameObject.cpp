@@ -7,16 +7,18 @@
 #include "GeneralHelper.hpp"
 
 namespace spic {
-	std::vector<std::shared_ptr<GameObject>> GameObject::GetGameObjects() 
+	std::vector<std::shared_ptr<GameObject>> GameObject::GetGameObjects()
 	{
 		return spic::internal::EntityManager::GetInstance()->GetEntities();
 	}
 
 	GameObject::GameObject() : active{ true }
 		, layer{ 0 }, parent{ nullptr }
-		, name{ spic::general_helper::GetRandomUUID()}, destroyOnLoad{ true }
+		, name{ spic::general_helper::GetRandomUUID() }, destroyOnLoad{ true }
 	{
 		components = {};
+		Point position{ 0.0f, 0.0f };
+		transform = std::make_shared<spic::Transform>(position, 0.0f, 1.0f);
 	}
 
 	void GameObject::Create(const std::shared_ptr<GameObject> gameObject)
@@ -24,7 +26,7 @@ namespace spic {
 		internal::EntityManager::GetInstance()->AddEntity(std::move(gameObject));
 	}
 
-	GameObject::GameObject(const std::string& name) : active{ true }, layer{ 0 }, parent{ nullptr }, name{name}, destroyOnLoad{ true }
+	GameObject::GameObject(const std::string& name) : active{ true }, layer{ 0 }, parent{ nullptr }, name{ name }, destroyOnLoad{ true }
 	{
 	}
 
@@ -33,7 +35,7 @@ namespace spic {
 		for (const auto& gameObject : objects)
 			if (gameObject->Name() == name)
 				return gameObject;
-		
+
 		return nullptr;
 	}
 
@@ -42,28 +44,28 @@ namespace spic {
 		for (const auto& gameObject : spic::internal::EntityManager::GetInstance()->GetEntities()) {
 			if (gameObject->name == name)
 				return gameObject;
-			
+
 			if (auto i = FindRecursion(gameObject->GetChildren(), name); i.get() != nullptr)
 				return i;
 		}
 		return nullptr;
 	}
 
-	std::vector<std::shared_ptr<GameObject>> FindGameObjectsWithTagRecursion(const std::vector<std::shared_ptr<GameObject>>& objects ,const std::string& tag)
+	std::vector<std::shared_ptr<GameObject>> FindGameObjectsWithTagRecursion(const std::vector<std::shared_ptr<GameObject>>& objects, const std::string& tag)
 	{
 		std::vector<std::shared_ptr<GameObject>> gameObjects;
 
-		for (const auto& gameObject : objects) 
+		for (const auto& gameObject : objects)
 			if (gameObject->Active() && gameObject->Tag() == tag)
 				gameObjects.emplace_back(gameObject);
-		
+
 		return gameObjects;
 	}
 
 	std::vector<std::shared_ptr<GameObject>> GameObject::FindGameObjectsWithTag(const std::string& tag)
 	{
 		std::vector<std::shared_ptr<GameObject>> gameObjects;
-		for (const auto& gameObject : spic::internal::EntityManager::GetInstance()->GetEntities()) 
+		for (const auto& gameObject : spic::internal::EntityManager::GetInstance()->GetEntities())
 		{
 
 			if (gameObject->Active() && gameObject->Tag() == tag)
@@ -82,14 +84,14 @@ namespace spic {
 		for (const auto& gameObject : spic::internal::EntityManager::GetInstance()->GetEntities())
 			if (gameObject->Tag() == tag)
 				return gameObject;
-		
+
 		return nullptr;
 	}
 
 
 	std::shared_ptr<GameObject> GameObject::FindWithTag(const std::string& tag)
 	{
-		for (const auto& gameObject : spic::internal::EntityManager::GetInstance()->GetEntities()) 
+		for (const auto& gameObject : spic::internal::EntityManager::GetInstance()->GetEntities())
 		{
 			if (gameObject->tag == tag)
 				return gameObject;
@@ -119,28 +121,28 @@ namespace spic {
 		}
 	}
 
-	GameObject::operator bool() 
+	GameObject::operator bool()
 	{
 		std::vector<std::shared_ptr<GameObject>> gameObjects;
 
 		for (const auto& gameObject : spic::internal::EntityManager::GetInstance()->GetEntities())
 			if (typeid(gameObject).name() == typeid(this).name())
 				return true;
-		
+
 		return false;
 	}
 
-	bool GameObject::operator!=(const GameObject& other) 
+	bool GameObject::operator!=(const GameObject& other)
 	{
 		return typeid(this) != typeid(other);
 	}
 
-	bool GameObject::operator==(const GameObject& other) 
+	bool GameObject::operator==(const GameObject& other)
 	{
 		return typeid(this) == typeid(other);
 	}
 
-	bool GameObject::operator<(const GameObject& other) 
+	bool GameObject::operator<(const GameObject& other)
 	{
 		return layer < other.layer;
 	}
@@ -163,12 +165,12 @@ namespace spic {
 	{
 	}
 
-	std::string GameObject::Name() const 
+	std::string GameObject::Name() const
 	{
 		return name;
 	}
 
-	void GameObject::Name(const std::string& newName) 
+	void GameObject::Name(const std::string& newName)
 	{
 		if (this->name != newName && spic::internal::EntityManager::GetInstance()->CheckIfNameExists(newName))
 			throw std::runtime_error("Name of current gameobject exists already");
@@ -189,7 +191,7 @@ namespace spic {
 	}
 
 	void GameObject::Active(const bool flag) {
-		for (const auto& child : GetChildren(flag)) 
+		for (const auto& child : GetChildren(flag))
 		{
 			child->Active(flag);
 			if (flag)
@@ -209,12 +211,12 @@ namespace spic {
 				audioSource->Play(audioSource->Loop());
 	}
 
-	int GameObject::Layer() const 
+	int GameObject::Layer() const
 	{
 		return layer;
 	}
 
-	void GameObject::Layer(const int newLayer) 
+	void GameObject::Layer(const int newLayer)
 	{
 		layer = newLayer;
 	}
@@ -224,7 +226,7 @@ namespace spic {
 		return transform;
 	}
 
-	void GameObject::Transform(std::shared_ptr<spic::Transform> _transform) 
+	void GameObject::Transform(std::shared_ptr<spic::Transform> _transform)
 	{
 		transform = _transform;
 	}
@@ -254,7 +256,7 @@ namespace spic {
 		destroyOnLoad = destroy;
 	}
 
-	bool GameObject::IsActiveInWorld() const 
+	bool GameObject::IsActiveInWorld() const
 	{
 		if (!active)
 			return false;
@@ -262,7 +264,7 @@ namespace spic {
 		return parent == nullptr || parent->IsActiveInWorld();
 	}
 
-	std::vector<std::shared_ptr<GameObject>> GameObject::GetChildren(bool includeInactive) const 
+	std::vector<std::shared_ptr<GameObject>> GameObject::GetChildren(bool includeInactive) const
 	{
 		if (includeInactive = true)
 			return children;
@@ -270,7 +272,7 @@ namespace spic {
 		std::vector <std::shared_ptr<GameObject>> filtered;
 
 		std::copy_if(children.begin(), children.end(), std::back_inserter(filtered)
-			, [](std::shared_ptr<GameObject> gameObject) 
+			, [](std::shared_ptr<GameObject> gameObject)
 			{
 				return gameObject->Active();
 			});
@@ -278,9 +280,9 @@ namespace spic {
 		return filtered;
 	}
 
-	const GameObject* GameObject::GetParent() const 
+	const GameObject* GameObject::GetParent() const
 	{
-		if(parent != nullptr)
+		if (parent != nullptr)
 			return parent;
 
 		return NULL;

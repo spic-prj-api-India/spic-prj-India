@@ -9,7 +9,7 @@ namespace spic {
 	class Persistable
 	{
 	public:
-		Persistable(GameObject* gameObject);
+		Persistable(GameObject* gameObject, std::string typeName);
 		/**
 		 * @brief Needs to declare virtual destructor,
 		 *			otherwise can't be used as interface
@@ -24,6 +24,7 @@ namespace spic {
 		virtual std::map<std::string, std::function<void(const std::string&)>> LoadProperties();
 	private:
 		GameObject* gameObject;
+		std::string typeName;
 	};
 }
 
