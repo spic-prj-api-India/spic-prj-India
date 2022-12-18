@@ -6,7 +6,7 @@
 namespace spic::internal::input
 {
     /**
-    * @brief Listiner for a certain key to show the fps counter
+    * @brief Listens for a certain key to show the fps counter
     */
     class IncreaseGameSpeedListener : public spic::IKeyListener
     {

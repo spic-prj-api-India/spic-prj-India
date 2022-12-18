@@ -64,14 +64,6 @@ namespace spic::internal::systems {
        * @spicapi
        */
         bool IsPhysicsEntity(const spic::GameObject* entity) const;
-
-       /* int frameCounter;
-
-        constexpr int UpdateAfterFrames() 
-        {
-            const auto fps = spic::internal::time::InternalTime::frameRate;
-            return static_cast<int>(std::ceil( (fps / (fps * spic::Time::TimeScale()))));
-        }*/
     };
 }
 

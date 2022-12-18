@@ -18,8 +18,6 @@
 // needs to be used for SDL
 #undef main
 
-#define KEEP_TEXTURES_AND_FONTS_LOADED true
-
 /**
  * @brief The internal rendering namespace
 */

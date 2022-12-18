@@ -3,16 +3,20 @@
 
 #include "IKeyListener.hpp"
 
-/**
- * @brief Listene for a certain key to show the fps counter
-*/
-class FPSListener : public spic::IKeyListener 
+namespace spic::internal::input
 {
-    void OnKeyPressed() override;
-    void OnKeyReleased() override;
+    /**
+    * @brief Listens for a certain key to show the fps counter
+    */
+    class FPSListener : public spic::IKeyListener
+    {
+        void OnKeyPressed() override;
+        void OnKeyReleased() override;
 
-public:
-    static bool renderFps;
-};
+    public:
+        static bool renderFps;
+    };
+}
+
 
 #endif // FPSLISTENER_H_

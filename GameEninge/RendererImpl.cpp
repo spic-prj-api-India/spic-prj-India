@@ -92,9 +92,9 @@ void spic::internal::rendering::RendererImpl::RenderFps()
 	auto font = this->LoadFont(defaultText, 20);
 
 	SDL_Color orange = SDL_Color{ 255,255,0,255 };
-	this->RenderMultiLineText(font,frameRate, orange, static_cast<int>(spic::settings::WINDOW_WIDTH - 50),0,50,100,0,spic::Alignment::CENTER);
+	this->RenderMultiLineText(font,frameRate, orange, static_cast<float>(spic::settings::WINDOW_WIDTH - 50), 0, 50, 100, 0, spic::Alignment::CENTER);
 
-	if (!KEEP_TEXTURES_AND_FONTS_LOADED)
+	if (!spic::settings::KEEP_TEXTURES_AND_FONTS_LOADED)
 		this->fonts.clear();
 }
 
@@ -200,7 +200,7 @@ void RendererImpl::DrawUISprite(const float width, const float height, const Spr
 
 	DrawSprite(sprite, transform, texture, &dstRect, NULL);
 
-	if (!KEEP_TEXTURES_AND_FONTS_LOADED)
+	if (!spic::settings::KEEP_TEXTURES_AND_FONTS_LOADED)
 		this->textures.clear();
 }
 
@@ -244,7 +244,7 @@ void RendererImpl::DrawSprite(const Sprite* sprite, const Transform* transform, 
 
 	DrawSprite(sprite, transform, texture, &dstRect, &sourceRect);
 
-	if (!KEEP_TEXTURES_AND_FONTS_LOADED)
+	if (!spic::settings::KEEP_TEXTURES_AND_FONTS_LOADED)
 		this->textures.clear();
 }
 
@@ -334,7 +334,7 @@ void RendererImpl::DrawText(Text* text)
 		this->RenderMultiLineText(font, texts, colour, x, y, text->Width(), text->Height(), 2, text->Alignment());
 	}
 
-	if (!KEEP_TEXTURES_AND_FONTS_LOADED)
+	if (!spic::settings::KEEP_TEXTURES_AND_FONTS_LOADED)
 		this->fonts.clear();
 }
 
@@ -485,7 +485,8 @@ TTF_Font* RendererImpl::LoadFont(const std::string& font, const int size)
 		return nullptr;
 
 	fonts.emplace(key, std::move(tmp_font));
-	return  fonts[key].get();
+
+	return fonts[key].get();
 }
 
 void RendererImpl::NewScene()
@@ -528,7 +529,7 @@ void RendererImpl::DrawRect(const spic::Rect& rect, const double angle, const sp
 	const double angleInDeg = spic::general_helper::RAD2DEG<double>(angle);
 	SDL_RenderCopyExF(renderer.get(), texture, NULL, &dstRect, angleInDeg, NULL, SDL_FLIP_NONE);
 
-	if (!KEEP_TEXTURES_AND_FONTS_LOADED)
+	if (!spic::settings::KEEP_TEXTURES_AND_FONTS_LOADED)
 		this->textures.clear();
 }
 
@@ -664,7 +665,7 @@ void RendererImpl::Clean()
 		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, this->backgroundColor.A()))
 	);
 
-	if (!KEEP_TEXTURES_AND_FONTS_LOADED)
+	if (!spic::settings::KEEP_TEXTURES_AND_FONTS_LOADED)
 	{
 		this->textures.clear();
 		this->fonts.clear();

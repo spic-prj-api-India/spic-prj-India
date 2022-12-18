@@ -87,11 +87,17 @@ namespace spic::settings {
     /**
      * @brief Button bound to show/not show the fps counter
     */
-    inline spic::input::KeyCode BOUND_BUTTON_FPS_COUNTER = spic::input::KeyCode::TAB;
+    inline spic::input::KeyCode BOUND_BUTTON_FPS_COUNTER = spic::input::KeyCode::F1;
 
     /**
      * @brief Which mouse button is used for clicking on ui buttons
     */
     inline spic::input::MouseButton MOUSEBUTTON_BOUND_TO_BUTTONS = spic::input::MouseButton::LEFT;
+
+    /**
+     * @brief If false it clears fonts and textures after each frame but the animations speed of the animator does not work correctly.
+     *      If true it keeps them loaded for the duration of the scene.
+    */
+    inline bool KEEP_TEXTURES_AND_FONTS_LOADED = true;
 }
 #endif // SETTINGS_H_

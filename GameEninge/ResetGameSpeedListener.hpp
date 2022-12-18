@@ -6,7 +6,7 @@
 namespace spic::internal::input
 {
     /**
-     * @brief Listene for a certain key to show the fps counter
+     * @brief Listens for a certain key to show the fps counter
     */
     class ResetGameSpeedListener : public spic::IKeyListener
     {
@@ -14,6 +14,5 @@ namespace spic::internal::input
         void OnKeyReleased() override;
     };
 }
-
 
 #endif // RESETGAMESPEEDLISTENER_H_

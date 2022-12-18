@@ -63,7 +63,7 @@ namespace spic::extensions {
 		void DrawColliders() override;
 
 		/**
-		* @brief Amount of times other systems should run
+		* @brief Amount of times the physics system runs in the current frame
 		* @return
 		*/
 		int RunTimes() override;
