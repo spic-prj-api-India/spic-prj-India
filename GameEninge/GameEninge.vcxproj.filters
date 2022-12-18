@@ -620,6 +620,9 @@
     <ClCompile Include="ResetGameSpeedListener.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="IncreaseGameSpeedListener.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

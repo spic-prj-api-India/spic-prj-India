@@ -10,9 +10,6 @@ class IncreaseGameSpeedListener : public spic::IKeyListener
 {
     void OnKeyPressed() override;
     void OnKeyReleased() override;
-
-private:
-    const INCREASE
 };
 
 #endif // INCREASEGAMESPEEDLISTENER_H_
