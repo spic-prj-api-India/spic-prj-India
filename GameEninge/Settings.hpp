@@ -1,7 +1,7 @@
 #include <string>
 #ifndef SETTINGS_H_
 #define SETTINGS_H_
-
+#include "Input.hpp"
 /**
  * @brief Values needed to start rendering
 */
@@ -64,14 +64,34 @@ namespace spic::settings {
     inline double STANDARD_GAME_SPEED = 1.0;
 
     /**
-    * @brief Standard game speed cannot be lower then 0 and higer then 2;
+    * @brief The speed increase and decrease rate.
+        Cannot be lower then 0 and higer then 2;
     */
-    inline double STANDARD_GAME_SPEED_INCREASE_RATE = 0.1;
+    inline double GAME_SPEED_INCREASE_AND_DECREASE_RATE = 0.1;
 
     /**
-    * @brief Standard game speed cannot be lower then 0 and higer then 2;
+     * @brief The button bound to speeding up the game
     */
-    inline double STANDARD_GAME_SPEED_DECREASE_RATE = 0.1;
+    inline spic::input::KeyCode INCREASE_SPEED = spic::input::KeyCode::PAGE_UP;
 
+    /**
+     * @brief The button bound to decreasing the speed of the game
+    */
+    inline spic::input::KeyCode DECREASE_SPEED = spic::input::KeyCode::PAGE_DOWN;
+
+    /**
+     * @brief The button bound to reseting the game speed
+    */
+    inline spic::input::KeyCode RESET_SPEED = spic::input::KeyCode::HOME;
+
+    /**
+     * @brief Button bound to show/not show the fps counter
+    */
+    inline spic::input::KeyCode BOUND_BUTTON_FPS_COUNTER = spic::input::KeyCode::TAB;
+
+    /**
+     * @brief Which mouse button is used for clicking on ui buttons
+    */
+    inline spic::input::MouseButton MOUSEBUTTON_BOUND_TO_BUTTONS = spic::input::MouseButton::LEFT;
 }
 #endif // SETTINGS_H_

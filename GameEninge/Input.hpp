@@ -12,7 +12,7 @@ namespace spic {
     /**
      * @brief Some convenient input functions.
      */
-    namespace Input {
+    namespace input {
         /**
          * @brief An enumeration describing the different keyboard keycodes.
          *

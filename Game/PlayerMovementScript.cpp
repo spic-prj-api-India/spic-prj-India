@@ -1,10 +1,10 @@
 #include "PlayerMovementScript.h"
 
 PlayerMovementScript::PlayerMovementScript() 
-	: PlayerMovementScript(spic::Input::KeyCode::A, spic::Input::KeyCode::D, spic::Input::KeyCode::W)
+	: PlayerMovementScript(spic::input::KeyCode::A, spic::input::KeyCode::D, spic::input::KeyCode::W)
 {}
 
-PlayerMovementScript::PlayerMovementScript(spic::Input::KeyCode left, spic::Input::KeyCode right, spic::Input::KeyCode up)
+PlayerMovementScript::PlayerMovementScript(spic::input::KeyCode left, spic::input::KeyCode right, spic::input::KeyCode up)
 	: left{left}, right{right}, up{up}
 {}
 
@@ -17,17 +17,17 @@ void PlayerMovementScript::OnUpdate() {
 
 void PlayerMovementScript::OnInput() {
 	const auto& rigidBody = this->gameObject->GetComponent<spic::RigidBody>();
-	if (spic::Input::GetKeyDown(left))
+	if (spic::input::GetKeyDown(left))
 	{
 		std::cout << "Pressed left" << std::endl;
 		rigidBody->AddForce({ -1.0f, 0.0f });
 	}
-	if (spic::Input::GetKeyDown(right))
+	if (spic::input::GetKeyDown(right))
 	{
 		std::cout << "Pressed right" << std::endl;
 		rigidBody->AddForce({ 1.0f, 0.0f });
 	}
-	if (spic::Input::GetKeyDown(up) && collided == true)
+	if (spic::input::GetKeyDown(up) && collided == true)
 	{
 		collided = false;
 		std::cout << "Pressed up" << std::endl;

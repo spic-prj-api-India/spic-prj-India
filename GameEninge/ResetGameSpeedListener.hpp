@@ -3,13 +3,17 @@
 
 #include "IKeyListener.hpp"
 
-/**
- * @brief Listene for a certain key to show the fps counter
-*/
-class ResetGameSpeedListener : public spic::IKeyListener
+namespace spic::internal::input
 {
-    void OnKeyPressed() override;
-    void OnKeyReleased() override;
-};
+    /**
+     * @brief Listene for a certain key to show the fps counter
+    */
+    class ResetGameSpeedListener : public spic::IKeyListener
+    {
+        void OnKeyPressed() override;
+        void OnKeyReleased() override;
+    };
+}
+
 
 #endif // RESETGAMESPEEDLISTENER_H_

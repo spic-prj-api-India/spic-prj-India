@@ -44,9 +44,9 @@ void spic::internal::time::InternalTime::Delay()
 	}
 }
 
-double spic::internal::time::InternalTime::TickNow()
+double spic::internal::time::InternalTime::TickInMilliseconds()
 {
-	return InternalTime::clockToMilliseconds(clock());
+	return InternalTime::clockToMilliseconds( clock() );
 }
 
 void spic::internal::time::InternalTime::BeginFrame()

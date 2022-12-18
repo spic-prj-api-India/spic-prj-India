@@ -22,13 +22,12 @@
 #include "Settings.hpp"
 #include "Time.hpp"
 
-
 namespace spic::extensions 
 {
 	class PhysicsExtensionImpl1 
 	{
 	public:
-		PhysicsExtensionImpl1(const float pix2Met, const int velocityIterations, const int positionIterations, const double stableUpdateFrameRate) :
+		PhysicsExtensionImpl1(const float pix2Met, const int velocityIterations, const int positionIterations, const float stableUpdateFrameRate) :
 			PIX2MET{ pix2Met }, MET2PIX{ 1.0f / PIX2MET }, SCALED_WIDTH{ spic::settings::WINDOW_WIDTH * PIX2MET }, 
 			SCALED_HEIGHT{ spic::settings::WINDOW_HEIGHT * PIX2MET }, velocityIterations{velocityIterations}, 
 			positionIterations{positionIterations}, kSecondsPerUpdate { stableUpdateFrameRate }
@@ -83,6 +82,8 @@ namespace spic::extensions
 			world = std::make_unique<b2World>(b2Vec2(0.0f, spic::settings::GRAVITY));
 			sizes = {};
 			bodies = {};
+			this->accumultator = 0;
+			this->lastTickTime = spic::internal::time::InternalTime::TickInMilliseconds() / CLOCKS_PER_SEC;
 		}
 
 		/**
@@ -116,18 +117,15 @@ namespace spic::extensions
 		*/
 		void Update(std::vector<std::shared_ptr<spic::GameObject>>& entities)
 		{
-			if (entities.size() == 0)
-				return;
 
 			this->stepsAmount = 0;
 
 			// get current time double
-			auto currentTime = spic::internal::time::InternalTime::TickNow()/1000;
+			auto currentTime = spic::internal::time::InternalTime::TickInMilliseconds() / CLOCKS_PER_SEC;
 			if (!this->lastTickTime)
 				this->lastTickTime = currentTime;
 
 			this->accumultator += (currentTime - this->lastTickTime) * spic::Time::TimeScale();
-			float progress = 0.0;
 
 			while (this->accumultator > kSecondsPerUpdate)
 			{
@@ -137,12 +135,7 @@ namespace spic::extensions
 
 			this->lastTickTime = currentTime;
 
-			if (this->stepsAmount == 0)
-				return;
 
-			
-
-			// Update or create entity bodiese
 			for (auto& entity : entities) 
 			{
 				bool exists = bodies.find(entity->Name()) != bodies.end();
@@ -154,9 +147,9 @@ namespace spic::extensions
 			}
 
 			using namespace spic::internal::time;
-
+			
 			// Update world
-			for(size_t i = 0; i < this->stepsAmount; i++)
+			for (size_t i = 0; i < this->stepsAmount; ++i)
 				world->Step(kSecondsPerUpdate, int32(velocityIterations), int32(positionIterations));
 
 			// Update entities
@@ -591,10 +584,10 @@ namespace spic::extensions
 
 		std::map<std::string, b2Body*> bodies;
 		std::map<std::string, Point> sizes;
-		double lastTickTime;
-		double accumultator;
 		int stepsAmount;
-		double kSecondsPerUpdate;
+		double accumultator;
+		double lastTickTime;
+		float kSecondsPerUpdate;
 		/**
 		 * @brief Listener for bodies colliding in physics world.
 		*/
@@ -628,8 +621,8 @@ namespace spic::extensions
 		const float OFFSET = 0.00999999978f;
 	};
 
-	PhysicsExtension1::PhysicsExtension1(const float pix2Met, const int velocityIterations, const int positionIterations, const double stableUpdateFrameRate) :
-		physicsImpl(new PhysicsExtensionImpl1(pix2Met, velocityIterations, positionIterations, stableUpdateFrameRate))
+	PhysicsExtension1::PhysicsExtension1(const float pix2Met, const int velocityIterations, const int positionIterations, const float kSecondsPerUpdate) :
+		physicsImpl(new PhysicsExtensionImpl1(pix2Met, velocityIterations, positionIterations, kSecondsPerUpdate))
 	{
 	}
 

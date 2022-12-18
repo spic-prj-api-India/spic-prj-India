@@ -32,15 +32,15 @@ void MenuScene::SetCamera()
 void MenuScene::SetContents()
 {
 	AddButton("Start Game", []() {
-		spic::Input::UnSubscribeAll();
+		spic::input::UnSubscribeAll();
 		spic::GameEngine::GetInstance()->LoadSceneByName("game");
 		}, 0.0f);
 	AddButton("Start Flocking", []() {
-		spic::Input::UnSubscribeAll();
+		spic::input::UnSubscribeAll();
 		spic::GameEngine::GetInstance()->LoadSceneByName("flock");
 		}, 100.0f);
 	AddButton("Credits", []() {
-		spic::Input::UnSubscribeAll();
+		spic::input::UnSubscribeAll();
 		spic::GameEngine::GetInstance()->LoadSceneByName("credits");
 		}, 200.0f);
 }

@@ -76,11 +76,7 @@ namespace spic::internal::time
 		*/
 		static void Delay();
 
-		/**
-		 * @brief Gets the current tick time
-		 * @return 
-		*/
-		static double TickNow();
+		static double TickInMilliseconds();
 	};
 }
 #endif

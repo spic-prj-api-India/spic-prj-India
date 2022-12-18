@@ -259,6 +259,7 @@
     <ClCompile Include="Box2DCollisionListener.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="DataSystem.cpp" />
+    <ClCompile Include="DecreaseGameSpeedListener.cpp" />
     <ClCompile Include="FPSlistener.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="Debug.cpp" />

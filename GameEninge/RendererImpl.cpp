@@ -39,8 +39,6 @@ RendererImpl::~RendererImpl()
 
 void RendererImpl::Start()
 {
-	//Exit(); // does nothing if it has not been called yet
-
 	// sets up video
 	if (SDL_Init(SDL_INIT_VIDEO != 0))
 	{

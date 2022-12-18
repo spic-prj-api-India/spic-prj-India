@@ -14,7 +14,7 @@ namespace spic::extensions {
 	 */
 	class PhysicsExtension1 : public IPhysicsExtension {
 	public:
-		PhysicsExtension1(const float pix2Met, const int velocityIterations = 8, const int positionIterations = 3, const double stableUpdateFrameRate = 1.0f / 60.0f);
+		PhysicsExtension1(const float pix2Met, const int velocityIterations = 8, const int positionIterations = 3, const float stableUpdateFrameRate = 1.0f / 60.0f);
 		~PhysicsExtension1();
 		PhysicsExtension1(PhysicsExtension1&& rhs) noexcept;
 		PhysicsExtension1& operator=(PhysicsExtension1&& rhs) noexcept;
