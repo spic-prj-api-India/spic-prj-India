@@ -39,6 +39,7 @@ void InitGame() {
 
 	// Register scenes
 	engine->RegisterScene("menu", std::function<spic::Scene* ()>(MenuScene::Start));
+
 	engine->RegisterScene("game", std::function<spic::Scene* ()>(GameScene::Start));
 	engine->RegisterScene("credits", std::function<spic::Scene* ()>(CreditsScene::Start));
 	engine->RegisterScene("flock", std::function<spic::Scene* ()>(FlockingScene::Start));

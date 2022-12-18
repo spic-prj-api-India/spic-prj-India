@@ -5,7 +5,8 @@
 #include "ISystem.hpp"
 #include "IEngineExtension.hpp"
 #include "Collider.hpp"
-
+#include "Time.hpp"
+#include "InternalTime.hpp"
 /**
 * @brief A system that calls all physics extensions and triggers collision script methods
 */
@@ -63,6 +64,14 @@ namespace spic::internal::systems {
        * @spicapi
        */
         bool IsPhysicsEntity(const spic::GameObject* entity) const;
+
+       /* int frameCounter;
+
+        constexpr int UpdateAfterFrames() 
+        {
+            const auto fps = spic::internal::time::InternalTime::frameRate;
+            return static_cast<int>(std::ceil( (fps / (fps * spic::Time::TimeScale()))));
+        }*/
     };
 }
 

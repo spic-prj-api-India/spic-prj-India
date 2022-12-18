@@ -57,5 +57,21 @@ namespace spic::settings {
      * @brief Enables or disables collider visibility.
     */
     inline bool COLLIDER_VISIBILITY = false;
+
+    /**
+     * @brief Standard game speed cannot be lower then 0 and higer then 2;
+    */
+    inline double STANDARD_GAME_SPEED = 1.0;
+
+    /**
+    * @brief Standard game speed cannot be lower then 0 and higer then 2;
+    */
+    inline double STANDARD_GAME_SPEED_INCREASE_RATE = 0.1;
+
+    /**
+    * @brief Standard game speed cannot be lower then 0 and higer then 2;
+    */
+    inline double STANDARD_GAME_SPEED_DECREASE_RATE = 0.1;
+
 }
 #endif // SETTINGS_H_

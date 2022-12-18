@@ -75,6 +75,12 @@ namespace spic::internal::time
 		 * @details Uses the std chrono lib
 		*/
 		static void Delay();
+
+		/**
+		 * @brief Gets the current tick time
+		 * @return 
+		*/
+		static double TickNow();
 	};
 }
 #endif

@@ -20,18 +20,18 @@ namespace spic {
              * @return time scale value
              * @spicapi
              */
-            static float TimeScale();
+            static double TimeScale();
 
             /**
-             * @brief The scale at which time passes.
-             * @param newTimeScale The new value for the time scale.
+             * @brief The scale at which time passes. 
+             * @param newTimeScale The new value for the time scale. Can not be lower then 0 or higher then 2
              * @spicapi
              */
-            static void TimeScale(const float newTimeScale);
+            static void TimeScale(const double newTimeScale);
 
         private:
             static double deltaTime;
-            static float timeScale;
+            static double timeScale;
     };
 }
 #endif // TIME_H_
