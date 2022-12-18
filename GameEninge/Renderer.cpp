@@ -1,72 +1,82 @@
 #include "Renderer.hpp"
 #include "RendererImpl.hpp"
 
+using namespace spic::internal;
+
+static std::unique_ptr<rendering::RendererImpl> impl = std::make_unique<rendering::RendererImpl>();
+
+
 void spic::internal::Rendering::Start()
 {
-	spic::internal::rendering::RendererImpl::GetInstance()->Start();
+	impl->Start();
 }
 
 void spic::internal::Rendering::Exit()
 {
-	spic::internal::rendering::RendererImpl::GetInstance()->Exit();
+	impl->Exit();
 }
 
 void spic::internal::Rendering::Draw(GameObject* gameObject)
 {
-	spic::internal::rendering::RendererImpl::GetInstance()->DrawGameObject(gameObject);
+	impl->DrawGameObject(gameObject);
 }
 
 void spic::internal::Rendering::UpdateCamera(Camera* camera)
 {
-	spic::internal::rendering::RendererImpl::GetInstance()->UpdateCamera(camera);
+	impl->UpdateCamera(camera);
 }
 
 void spic::internal::Rendering::AddDebugLine(const spic::Line& line, const spic::Color& color)
 {
-	spic::internal::rendering::RendererImpl::GetInstance()->AddDebugLine(line, color);
+	impl->AddDebugLine(line, color);
 }
 
 void spic::internal::Rendering::AddDebugRect(const spic::Rect& rect, const double angle, const spic::Color& color)
 {
-	spic::internal::rendering::RendererImpl::GetInstance()->AddDebugRect(rect, angle, color);
+	impl->AddDebugRect(rect, angle, color);
 }
 
 void spic::internal::Rendering::AddDebugCircle(const spic::Circle& circle, const spic::Color& color, const float pixelGap)
 {
-	spic::internal::rendering::RendererImpl::GetInstance()->AddDebugCircle(circle, color, pixelGap);
+	impl->AddDebugCircle(circle, color, pixelGap);
 }
 
 void spic::internal::Rendering::AddDebugPoint(const spic::Point& point, const spic::Color& color)
 {
-	spic::internal::rendering::RendererImpl::GetInstance()->AddDebugPoint(point, color);
+	impl->AddDebugPoint(point, color);
 }
 
 void spic::internal::Rendering::DrawDebugShapes()
 {
-	spic::internal::rendering::RendererImpl::GetInstance()->DrawDebugShapes();
+	impl->DrawDebugShapes();
 }
 
 void spic::internal::Rendering::DrawSprite(const Transform* position, Sprite* sprite)
 {
-	spic::internal::rendering::RendererImpl::GetInstance()->DrawSprite(sprite, position);
+	impl->DrawSprite(sprite, position);
 }
 
 void spic::internal::Rendering::Clean()
 {
-	spic::internal::rendering::RendererImpl::GetInstance()->Clean();
+	impl->Clean();
 }
 
 void spic::internal::Rendering::NewScene()
 {
-	spic::internal::rendering::RendererImpl::GetInstance()->NewScene();
+	impl->NewScene();
 }
 
 void spic::internal::Rendering::Render()
 {
-	spic::internal::rendering::RendererImpl::GetInstance()->Render();
+	impl->Render();
 }
 
 std::pair<float, float> spic::internal::Rendering::GetAspects()
 {
 	return std::pair<float, float>();
+}
+
+void spic::internal::Rendering::DrawFps()
+{
+	impl->RenderFps();
 }

@@ -1,5 +1,5 @@
 #include "AudioSource.hpp"
-#include "AudioManager.hpp"
+#include "AudioFacade.hpp"
 #include <cmath>
 
 using namespace spic;
@@ -12,22 +12,22 @@ AudioSource::AudioSource(const std::string& audioClip, const bool playOnAwake, c
 
 void AudioSource::Play(bool looping)
 {
-	AudioManager::GetInstance()->PlaySample(this, looping);
+	AudioFacade::PlaySample(this, looping);
 }
 
 void AudioSource::Stop()
 {
-	AudioManager::GetInstance()->StopSample(this);
+	AudioFacade::StopSample(this);
 }
 
 void AudioSource::ChangeVolume(float _volume)
 {
-	AudioManager::GetInstance()->ChangeVolume(this, _volume);
+	AudioFacade::ChangeVolume(this, _volume);
 }
 
 void AudioSource::ChangeVolume(float left, float right)
 {
-	AudioManager::GetInstance()->ChangeVolume(this, left, right);
+	AudioFacade::ChangeVolume(this, left, right);
 }
 
 const std::string AudioSource::AudioClip() const

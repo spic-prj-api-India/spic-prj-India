@@ -13,28 +13,35 @@
 #include "GameScene.h"
 #include "FlockingScene.h"
 #include "CreditsScene.h"
+#include "MenuScene.h"
+#include "CreditsScene.h"
 
-std::shared_ptr<spic::Scene> scene;
+
 
 void InitGame() {
+
+	// Creates GameEngine instance 
 	spic::GameEngine* engine = spic::GameEngine::GetInstance();
-	std::shared_ptr<spic::extensions::PhysicsExtension1> physicsExtension = std::make_shared<spic::extensions::PhysicsExtension1>(0.0023f);
+
+	// Creates box2d physics extension and adds it to the extension list
+	std::shared_ptr<spic::extensions::PhysicsExtension1> physicsExtension 
+		= std::make_shared<spic::extensions::PhysicsExtension1>(0.0023f, 4, 2);
 	engine->AddExtension(std::move(physicsExtension));
 
+	// Creates a SocketUDPExtension and adds it to the extension list
 	auto socket = std::make_shared<spic::extensions::SocketUDPExtension>();
 	socket->InitListener(13251);
-
 	socket->InitSender(spic::networkingHelper::GetParsedIPConfigData("IPv4 Address"), 13251);
 	engine->AddExtension(std::move(socket));
 
-	// Register types
+	// Register object types
 	engine->RegisterType<Box>();
 
 	// Register scenes
-	engine->RegisterScene("menu", std::make_shared<MenuScene>());
-	engine->RegisterScene("game", std::make_shared<GameScene>());
-	engine->RegisterScene("flock", std::make_shared<FlockingScene>());
-	engine->RegisterScene("credits", std::make_shared<CreditsScene>());
+	engine->RegisterScene("menu", std::function<spic::Scene* ()>(MenuScene::Start));
+	engine->RegisterScene("game", std::function<spic::Scene* ()>(GameScene::Start));
+	engine->RegisterScene("credits", std::function<spic::Scene* ()>(CreditsScene::Start));
+	engine->RegisterScene("flock", std::function<spic::Scene* ()>(FlockingScene::Start));
 
 	spic::Debug::COLLIDER_VISIBILITY = true;
 	spic::Debug::WALL_AVOIDANCE_FEELERS_VISIBILITY = false;
@@ -42,9 +49,11 @@ void InitGame() {
 
 void StartGame()
 {
-	spic::window::WINDOW_NAME = "Forts 2";
-	spic::window::WINDOW_WIDTH = 1200;
-	spic::window::WINDOW_HEIGHT = 800;
+	// sets collider on or off (defaults to off)
+	spic::settings::COLLIDER_VISIBILITY = true;
+	spic::settings::WINDOW_NAME = "Forts 2";
+	spic::settings::WINDOW_WIDTH = 1200;
+	spic::settings::WINDOW_HEIGHT = 800;
 	spic::GameEngine* engine = spic::GameEngine::GetInstance();
 	engine->LoadSceneByName("menu");
 	engine->Start();

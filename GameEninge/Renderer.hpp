@@ -10,6 +10,7 @@
 #include "Line.hpp"
 
 namespace spic::internal {
+
     struct Rendering
     {        
         /**
@@ -90,7 +91,7 @@ namespace spic::internal {
         static void NewScene();
         
         /**
-         * @brief Renders all bufferd
+         * @brief Renders all bufferd entities
         */
         static void Render();
         
@@ -100,6 +101,11 @@ namespace spic::internal {
          * @return Width, Height
         */
         static std::pair<float, float> GetAspects();
+
+        /**
+         * @brief Draws the fps counter
+        */
+        static void DrawFps();
     };
 }
 #endif

@@ -186,6 +186,8 @@
     </Filter>
     <Filter Include="Header Files\models\shapes">
       <UniqueIdentifier>{be5d6bd1-a075-46ce-8200-fa6f80fb6003}</UniqueIdentifier>
+    <Filter Include="Header Files\settings">
+      <UniqueIdentifier>{12d45431-ab90-4d70-9df6-86d1edb87651}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -234,9 +236,6 @@
     <ClInclude Include="Chunk.hpp">
       <Filter>Header Files\components\audio\SDL2Audio</Filter>
     </ClInclude>
-    <ClInclude Include="AudioInfo.hpp">
-      <Filter>Header Files\components\audio\SDL2Audio</Filter>
-    </ClInclude>
     <ClInclude Include="MapParser.hpp">
       <Filter>Header Files\core\tilemap</Filter>
     </ClInclude>
@@ -245,9 +244,6 @@
     </ClInclude>
     <ClInclude Include="InputSystem.hpp">
       <Filter>Header Files\core\systems\input</Filter>
-    </ClInclude>
-    <ClInclude Include="WindowValues.hpp">
-      <Filter>Header Files\core\systems\rendering</Filter>
     </ClInclude>
     <ClInclude Include="Renderer.hpp">
       <Filter>Header Files\core\systems\rendering</Filter>
@@ -333,9 +329,6 @@
     <ClInclude Include="Color.hpp">
       <Filter>Header Files\models</Filter>
     </ClInclude>
-    <ClInclude Include="PhysicsValues.hpp">
-      <Filter>Header Files\extensions\physics</Filter>
-    </ClInclude>
     <ClInclude Include="DataSystem.hpp">
       <Filter>Header Files\core\systems\data</Filter>
     </ClInclude>
@@ -381,14 +374,20 @@
     <ClInclude Include="NetworkingHelper.hpp">
       <Filter>Header Files\helpers</Filter>
     </ClInclude>
+    <ClInclude Include="InternalTime.hpp">
+      <Filter>Header Files\models</Filter>
+    </ClInclude>
+    <ClInclude Include="FPSlistener.hpp">
+      <Filter>Header Files\core\systems\rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioFacade.hpp">
+      <Filter>Header Files\components\audio</Filter>
+    </ClInclude>
     <ClInclude Include="ForceDriven.hpp">
       <Filter>Header Files\objects</Filter>
     </ClInclude>
     <ClInclude Include="AudioManager.hpp">
       <Filter>Header Files\core\managers</Filter>
-    </ClInclude>
-    <ClInclude Include="GameEngineInfo.hpp">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Bounds.hpp">
       <Filter>Header Files\models</Filter>
@@ -422,6 +421,11 @@
     </ClInclude>
     <ClInclude Include="Circle.hpp">
       <Filter>Header Files\models\shapes</Filter>
+    <ClInclude Include="Settings.hpp">
+      <Filter>Header Files\settings</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsValues.hpp">
+      <Filter>Header Files\settings</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -594,6 +598,15 @@
       <Filter>Source Files\extensions\networking</Filter>
     </ClCompile>
     <ClCompile Include="NetworkingHelper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FPSlistener.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="InternalTime.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioFacade.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Collider.cpp">

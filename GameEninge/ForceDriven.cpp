@@ -377,10 +377,10 @@ namespace spic {
 		RotateAroundOrigin(temp, spic::internal::Defaults::HALF_PI * 0.5f);
 		feelers[2] = top + (temp * wallDetectionFeelerLength);
 
-		if (Debug::WALL_AVOIDANCE_FEELERS_VISIBILITY) {
-			Debug::DrawLine(top, feelers[0]);
-			Debug::DrawLine(top, feelers[1]);
-			Debug::DrawLine(top, feelers[2]);
+		if (debug::WALL_AVOIDANCE_FEELERS_VISIBILITY) {
+			debug::DrawLine(top, feelers[0]);
+			debug::DrawLine(top, feelers[1]);
+			debug::DrawLine(top, feelers[2]);
 		}
 
 		float distToThisIP = 0.0;
@@ -392,10 +392,10 @@ namespace spic {
 			Point(bounds.Left() + bounds.Width(), bounds.Top()),
 			Point(bounds.Left(), bounds.Top())
 		};
-		Debug::DrawLine(walls[0], walls[1]);
-		Debug::DrawLine(walls[1], walls[2]);
-		Debug::DrawLine(walls[2], walls[3]);
-		Debug::DrawLine(walls[3], walls[4]);
+		debug::DrawLine(walls[0], walls[1]);
+		debug::DrawLine(walls[1], walls[2]);
+		debug::DrawLine(walls[2], walls[3]);
+		debug::DrawLine(walls[3], walls[4]);
 
 		int closestWallIndex = -1;
 

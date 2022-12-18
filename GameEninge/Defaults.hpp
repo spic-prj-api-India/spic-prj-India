@@ -3,7 +3,7 @@
 
 #include <string>
 
-namespace spic::internal::Defaults {
+namespace spic::internal::defaults {
 	/**
 	 * @brief Default button texture
 	*/
@@ -33,6 +33,16 @@ namespace spic::internal::Defaults {
 	* @brief Definition of half PI
 	*/
 	inline constexpr float HALF_PI = PI / 2.0f;
+
+	/**
+	 * @brief Volume in the current audio implimentation starts at 0
+	*/
+	inline constexpr int VOLUME_BEGIN = 0;
+
+	/**
+	 * @brief Volume in the current audio implimentation ends at 0
+	*/
+	inline constexpr int VOLUME_END = 128;
 }
 
 #endif // DEFAULTS_H_

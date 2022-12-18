@@ -25,9 +25,8 @@ spic::Text::Text(const float width, const float height
 	, alignment{ alignment }
 	, color{ color }
 {
-	if (font.empty()) {
-		this->font = spic::internal::Defaults::TEXT_FONT;
-	}
+	if (font.empty())
+		this->font = spic::internal::defaults::TEXT_FONT;
 }
 
 const std::string spic::Text::_Text()

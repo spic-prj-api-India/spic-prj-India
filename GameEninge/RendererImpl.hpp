@@ -20,6 +20,8 @@
 // needs to be used for SDL
 #undef main
 
+#define KEEP_TEXTURES_AND_FONTS_LOADED true
+
 /**
  * @brief The internal rendering namespace
 */
@@ -58,14 +60,6 @@ namespace spic::internal::rendering {
 		 * operator.
 		*/
 	private:
-		static RendererImpl* pinstance_;
-		static std::mutex mutex_;
-
-		/**
-		 * @brief Time related
-		*/
-		double lastTick;
-		double deltatime;
 
 		/**
 		 * @brief World camera settings
@@ -81,7 +75,7 @@ namespace spic::internal::rendering {
 		/**
 		 * @brief sdl window ptr
 		*/
-		WindowPtr window;
+		WindowPtr settings;
 
 		/**
 		 * @brief sdl renderer ptr
@@ -98,7 +92,7 @@ namespace spic::internal::rendering {
 		/**
 		 * @brief Font Map
 		*/
-		std::map<std::string, FontPtr> fonts;
+		std::map<std::pair<std::string, int>, FontPtr> fonts;
 
 		/**
 		 * @brief Camera of the window
@@ -118,7 +112,7 @@ namespace spic::internal::rendering {
 		std::vector<std::pair<std::pair<spic::Circle, float>, spic::Color>> debugCircles;
 		std::vector<std::pair<spic::Point, spic::Color>> debugPoints;
 
-	protected:
+	public:
 		RendererImpl() noexcept(false);
 		~RendererImpl();
 
@@ -285,20 +279,6 @@ namespace spic::internal::rendering {
 		RendererImpl& operator=(RendererImpl&& other) noexcept = delete;// move assignment
 
 		/**
-		 * This is the static method that controls the access to the singleton
-		 * instance. On the first run, it creates a singleton object and places it
-		 * into the static field. On subsequent runs, it returns the client existing
-		 * object stored in the static field.
-		*/
-
-		static RendererImpl* GetInstance();
-
-		/**
-		 * Finally, any singleton should define some business logic, which can be
-		 * executed on its instance.
-		*/
-
-		/**
 		 * @brief Draws all related components of an gameobject
 		 * @details Uses recursing
 		 * @param gameObject
@@ -379,12 +359,17 @@ namespace spic::internal::rendering {
 		/**
 		 * @brief Renders evrything in internal buffer to screen
 		*/
-		void Render();
+		void Render() const;
 
 		/**
 		 * @brief Start up an new window
 		*/
 		void Start();
+
+		/**
+		 * @brief Renders the fps counter
+		*/
+		void RenderFps();
 	};
 }
 #endif // RENDERERIMPL_H_

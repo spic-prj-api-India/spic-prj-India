@@ -1,6 +1,8 @@
 #include "Scene.hpp"
 #include "MapParser.hpp"
 #include "EntityManager.hpp"
+#include "Debug.hpp"
+
 namespace spic
 {
 	Scene::Scene() : setting{ UpdateSetting::ALWAYS }
@@ -32,7 +34,7 @@ namespace spic
 		}
 		catch (std::exception& ex)
 		{
-			std::cerr << ex.what() << std::endl;
+			debug::LogError(ex.what());
 		}
 	}
 

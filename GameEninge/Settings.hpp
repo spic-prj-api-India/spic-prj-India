@@ -1,11 +1,15 @@
 #include <string>
-#ifndef WINDOWINFO_H_
-#define WINDOWINFO_H_
+#ifndef SETTINGS_H_
+#define SETTINGS_H_
 
 /**
  * @brief Values needed to start rendering
 */
-namespace spic::window {
+namespace spic::settings {
+
+    /**
+     * @brief Which type a window should be (currently only windowed supported)
+    */
     enum class FULLSCREENTYPE
     {
         WINDOWED = 0,
@@ -37,5 +41,21 @@ namespace spic::window {
      * @brief Which mode the window is
     */
     inline FULLSCREENTYPE SELECTOR = FULLSCREENTYPE::WINDOWED;
+
+    /**
+     * @brief gravity used in physics world
+    */
+    inline float GRAVITY = 9.81f;
+
+    /**
+     * @brief Max audio channels used
+     *      To change this value you have to adjust the source code
+    */
+    inline constexpr int MAX_CHANNELS = 32;
+
+    /*
+     * @brief Enables or disables collider visibility.
+    */
+    inline bool COLLIDER_VISIBILITY = false;
 }
-#endif // WINDOWINFO_H_
+#endif // SETTINGS_H_

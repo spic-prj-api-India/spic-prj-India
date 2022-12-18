@@ -15,8 +15,12 @@
 #include "AudioManager.hpp"
 #include "NetworkingReceiveSystem.hpp"
 #include "NetworkingSendSystem.hpp"
+#include "InternalTime.hpp"
+#include "Renderer.hpp"
+#include "AudioFacade.hpp"
 #include "GameEngine.hpp"
 #include "PhysicsExtension1.hpp"
+#include "Debug.hpp"
 
 using namespace spic;
 using namespace spic::internal;
@@ -31,20 +35,30 @@ EntityManager::EntityManager() : CustomSystemDefaultPriority{ 1 }, scene{ nullpt
 }
 
 EntityManager::~EntityManager()
-{}
+{
+	try
+	{
+		spic::internal::audio::AudioFacade::DestroyAudio();
+	}
+	catch (std::exception& ex)
+	{
+		const std::string& message = ex.what();
+		spic::debug::LogError("Audio destroy failed: " + message);
+	}
+}
 
 EntityManager* EntityManager::GetInstance()
 {
 	std::lock_guard<std::mutex> lock(mutex_);
 	if (pinstance_ == nullptr)
-	{
 		pinstance_ = new EntityManager();
-	}
+	
 	return pinstance_;
 }
 
 void EntityManager::Init()
 {
+	spic::internal::audio::AudioFacade::CreateAudio();
 	std::unique_ptr<systems::InputSystem> inputSystem = std::make_unique<systems::InputSystem>();
 	std::unique_ptr<systems::PhysicsSystem> physicsSystem = std::make_unique<systems::PhysicsSystem>();
 	std::unique_ptr<systems::RenderingSystem> renderingSystem = std::make_unique<systems::RenderingSystem>();
@@ -53,8 +67,8 @@ void EntityManager::Init()
 	std::unique_ptr<systems::NetworkingReceiveSystem> networkRecieve = std::make_unique<systems::NetworkingReceiveSystem>();
 	std::unique_ptr<systems::NetworkingSendSystem> networkSend = std::make_unique<systems::NetworkingSendSystem>();
 	AddInternalSystem(std::move(networkRecieve), 0);
-	AddInternalSystem(std::move(inputSystem), 1);
-	AddInternalSystem(std::move(physicsSystem), 2);
+	AddInternalSystem(std::move(inputSystem), 2);
+	AddInternalSystem(std::move(physicsSystem), 1);
 	AddInternalSystem(std::move(dataSystem), 3);
     AddInternalSystem(std::move(aiSystem), 4);
 	AddInternalSystem(std::move(networkSend), 5);
@@ -69,7 +83,8 @@ void EntityManager::Reset()
 	scene = nullptr;
 }
 
-std::vector<std::shared_ptr<spic::GameObject>> EntityManager::GetEntities() {
+std::vector<std::shared_ptr<spic::GameObject>> EntityManager::GetEntities() 
+{
 	return entities;
 }
 
@@ -77,7 +92,8 @@ void EntityManager::AddEntity(std::shared_ptr<spic::GameObject> entity)
 {
 	if (entity->Name().empty())
 		throw std::exception("Entity requires a name.");
-	entities.push_back(std::move(entity));
+
+	entities.emplace_back(std::move(entity));
 }
 
 void spic::internal::EntityManager::AddEntityAlsoToScene(const std::shared_ptr<spic::GameObject>& entity)
@@ -86,16 +102,18 @@ void spic::internal::EntityManager::AddEntityAlsoToScene(const std::shared_ptr<s
 	scene->AddContent(entity);
 }
 
-void EntityManager::RemoveEntity(const std::shared_ptr<spic::GameObject>& entity) {
+void EntityManager::RemoveEntity(const std::shared_ptr<spic::GameObject>& entity) 
+{
 	entities.erase(
 		std::remove(entities.begin(), entities.end(), entity),
 		entities.end());
 }
 
-void EntityManager::RegisterScene(const std::string& sceneName, std::shared_ptr<Scene> scene)
+void EntityManager::RegisterScene(const std::string& sceneName, std::function<spic::Scene* ()> scene)
 {
 	if (scenes.count(sceneName))
 		throw std::exception("Scene with this name already exists.");
+
 	scenes[sceneName] = scene;
 }
 
@@ -108,7 +126,9 @@ std::shared_ptr<Scene> EntityManager::GetScene(const std::string& sceneName)
 {
 	if (!scenes.count(sceneName))
 		return nullptr;
-	return scenes[sceneName];
+
+	auto scene = std::shared_ptr<spic::Scene>(scenes[sceneName]());
+	return std::move(scene);
 }
 
 void EntityManager::SetScene(const std::string& sceneName)
@@ -116,21 +136,17 @@ void EntityManager::SetScene(const std::string& sceneName)
 	if (!scenes.count(sceneName))
 		throw std::exception("Scene does not exist.");
 
-	if (currentSceneName != sceneName)
-	{
-		scene = scenes[sceneName];
-		currentSceneName = sceneName;
-		SetScene(scene);
-	}
+	auto scene = std::shared_ptr<spic::Scene>(scenes[sceneName]());
+	SetScene(std::move(scene));
 }
 
 void EntityManager::SetScene(std::shared_ptr<Scene> newScene)
 {
 	if (&newScene->Camera() == nullptr)
 		throw std::exception("No camera defined.");
+
 	DestroyScene();
-	scene = newScene;
-	entities.clear();
+	scene = std::move(newScene);
 
 	for (auto& entity : scene->Contents())
 	{
@@ -138,12 +154,8 @@ void EntityManager::SetScene(std::shared_ptr<Scene> newScene)
 	}
 
 	for (const auto& systemsMap : systems)
-	{
 		for (const auto& system : systemsMap.second)
-		{
 			system->Start(entities, *scene);
-		}
-	}
 
 	const TileMap* tileMap = scene->TileMap();
 	if (tileMap != nullptr) {
@@ -154,32 +166,30 @@ void EntityManager::SetScene(std::shared_ptr<Scene> newScene)
 		}
 	}
 
-	spic::internal::audio::AudioManager::GetInstance()->Reset();
+	spic::internal::audio::AudioFacade::Reset();
+	spic::internal::Rendering::NewScene();
+
 
 	for (auto& entity : entities)
 	{
 		if (entity->Active())
 			entity->Active(true);
 	}
+	using namespace spic::internal::time;
+
+	InternalTime::SetStartValues();
 }
 
 void EntityManager::DestroyScene(bool forceDelete)
 {
 	scene = nullptr;
 	if (forceDelete)
-	{
 		entities.clear();
-	}
 	else
-	{
-		for (auto& entity : entities)
-		{
-			if (!entity->DontDestroyOnLoad())
-			{
-				entities.erase(std::remove(entities.begin(), entities.end(), entity), entities.end());
-			}
-		}
-	}
+		entities.erase(std::remove_if(entities.begin(), entities.end()
+			, [](const std::shared_ptr<spic::GameObject>& x){
+				return !x->DontDestroyOnLoad(); 
+			}), entities.end());
 }
 
 void EntityManager::AddSystem(std::unique_ptr<spic::systems::ISystem> system)
@@ -193,14 +203,11 @@ void EntityManager::AddSystem(std::unique_ptr<spic::systems::ISystem> system)
 
 bool spic::internal::EntityManager::CheckIfNameExists(const std::string& name) const
 {
-	for (auto& s : scenes)
+	for (auto& entity : this->entities)
 	{
-		for (auto& entity : s.second->Contents())
-		{
-			auto children = entity->GetChildren();
-			if (spic::GameObject::CheckIfNameExists(children, name))
-				return true;
-		}
+		auto children = entity->GetChildren();
+		if (spic::GameObject::CheckIfNameExists(children, name))
+			return true;	
 	}
 	
 	return false;
@@ -209,19 +216,31 @@ bool spic::internal::EntityManager::CheckIfNameExists(const std::string& name) c
 void EntityManager::AddInternalSystem(std::unique_ptr<spic::systems::ISystem> system, int priority)
 {
 	if (!systems.count(priority))
-	{
 		systems[priority];
-	}
+
 	systems[priority].emplace_back(std::move(system));
+}
+
+/**
+ * @brief Keeps the entities alive for the duration of the frame.
+ * @param systems The current active systems.
+ * @param vectorCopy The current active enties.
+ * @param scene The current scene.
+*/
+void UpdateSave(std::map<int, std::vector<std::unique_ptr<spic::systems::ISystem>>>& systems
+	, std::vector<std::shared_ptr<spic::GameObject>>& vectorCopy
+	, std::shared_ptr<spic::Scene> scene)
+{
+	for (const auto& systemsMap : systems)
+		for (const auto& system : systemsMap.second)
+			system->Update(vectorCopy, *scene);
 }
 
 void EntityManager::Update()
 {
-	for (const auto& systemsMap : systems)
-	{
-		for (const auto& system : systemsMap.second)
-		{
-			system->Update(entities, *scene);
-		}
-	}
+	std::vector<std::shared_ptr<spic::GameObject>> tempVect;
+
+	std::copy(entities.begin(), entities.end(), std::back_inserter(tempVect));
+	
+	UpdateSave(this->systems,tempVect,scene);
 }

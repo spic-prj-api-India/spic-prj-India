@@ -20,9 +20,7 @@ void UpdateRecursion(std::vector<std::shared_ptr<spic::GameObject>>& entities, s
 		auto components = ent->GetComponents<spic::SocketScript>();
 
 		for (auto componet : components)
-		{
 			componet->Send(ent);
-		}
 	}
 }
 
@@ -33,8 +31,6 @@ void spic::internal::systems::NetworkingSendSystem::Update(std::vector<std::shar
 	for (auto& socketWeak : sockets)
 	{
 		if (const auto& socket = socketWeak.lock(); socket != nullptr)
-		{
 			socket->SendData();
-		}
 	}
 }

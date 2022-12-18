@@ -80,9 +80,11 @@ void spic::SocketScript::Retrieve(const spic::NetworkPacket* packet, std::shared
 		case spic::UPDATE:
 			this->UpdateEntity(packet, entity);
 			break;
+
 		case spic::SYNC:
 			this->SyncEntity(packet, entity);
 			break;
+
 		default:
 			break;
 	}

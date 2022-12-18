@@ -1,10 +1,13 @@
 #include "RenderingSystem.hpp"
 #include "Renderer.hpp"
 #include "TypeHelper.hpp"
+#include "InternalTime.hpp"
+#include "Input.hpp"
 #include "Debug.hpp"
 #include "BoxCollider.hpp"
 #include "GameEngine.hpp"
 #include "IPhysicsExtension.hpp"
+#include "Settings.hpp"
 
 namespace spic::internal::systems {
 	RenderingSystem::RenderingSystem()
@@ -19,7 +22,8 @@ namespace spic::internal::systems {
 
 	void RenderingSystem::Start(std::vector<std::shared_ptr<spic::GameObject>>& entities, Scene& currentScene)
 	{
-
+		this->fps.reset(new FPSListener());
+		Input::Subscribe(spic::Input::KeyCode::TAB, this->fps);
 	}
 
 	void RenderingSystem::Update(std::vector<std::shared_ptr<spic::GameObject>>& entities, Scene& currentScene)
@@ -41,18 +45,25 @@ namespace spic::internal::systems {
 		{
 			spic::internal::Rendering::Draw(entity.get());
 		}
-		if(Debug::DEBUG && Debug::COLLIDER_VISIBILITY)
+
+		if(debug::DEBUG_MODE && spic::settings::COLLIDER_VISIBILITY)
 			DrawColliders();
-		if (Debug::DEBUG)
+		if (debug::DEBUG_MODE)
 			spic::internal::Rendering::DrawDebugShapes();
+	
+		if(this->fps->renderFps)
+			spic::internal::Rendering::DrawFps();
+		
 		spic::internal::Rendering::Render();
 	}
 
-	std::vector<std::vector<std::shared_ptr<spic::GameObject>>> RenderingSystem::GetFilteredEntities(const std::vector<std::shared_ptr<spic::GameObject>>& entities) const
+	std::vector<std::vector<std::shared_ptr<spic::GameObject>>> RenderingSystem::GetFilteredEntities(
+		const std::vector<std::shared_ptr<spic::GameObject>>& entities) const
 	{
 		std::vector<std::shared_ptr<spic::GameObject>> nonUIEntities;
 		std::vector<std::shared_ptr<spic::GameObject>> uiEntities;
-		for (const auto& entity : entities) {
+		for (const auto& entity : entities) 
+		{
 			if (spic::TypeHelper::SharedPtrIsOfType<UIObject>(entity))
 				uiEntities.emplace_back(entity);
 			else
@@ -65,9 +76,8 @@ namespace spic::internal::systems {
 	void RenderingSystem::DrawColliders()
 	{
 		GameEngine* engine = GameEngine::GetInstance();
-		for (const auto& weakExtension : engine->GetExtensions<spic::extensions::IPhysicsExtension>()) {
+		for (const auto& weakExtension : engine->GetExtensions<spic::extensions::IPhysicsExtension>())
 			if (const auto& physicsExtension = weakExtension.lock())
 				physicsExtension->DrawColliders();
-		}
 	}
 }

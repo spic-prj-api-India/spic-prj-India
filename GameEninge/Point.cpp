@@ -17,10 +17,12 @@ namespace spic {
 	float Point::Normalize()
 	{
 		const float length = Length();
+
 		if (length < FLT_EPSILON)
 		{
 			return 0.0f;
 		}
+
 		const float invLength = 1.0f / length;
 		x *= invLength;
 		y *= invLength;
@@ -40,16 +42,16 @@ namespace spic {
 
 	float Point::Rotation() const
 	{
-		if (y <= 0) {
-			return asinf(x / sqrtf(x * x + y * y)) * 180.f / spic::internal::Defaults::PI;
-		}
-		if (x == 0) {
+		if (y <= 0) 
+			return asinf(x / sqrtf(x * x + y * y)) * 180.f / spic::internal::defaults::PI;
+		
+		if (x == 0) 
 			return 180.f;
-		}
-		if (x > 0) {
-			return atanf(y / x) * 180.f / spic::internal::Defaults::PI + 90.f;
-		}
-		return atanf(y / x) * 180.f / spic::internal::Defaults::PI - 90.f;
+		
+		if (x > 0) 
+			return atanf(y / x) * 180.f / spic::internal::defaults::PI + 90.f;
+		
+		return atanf(y / x) * 180.f / spic::internal::defaults::PI - 90.f;
 	}
 
 	bool Point::Accumulate(Point& force, const float maxForce)
