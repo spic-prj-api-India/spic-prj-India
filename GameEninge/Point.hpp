@@ -35,10 +35,10 @@ namespace spic {
 		float Distance(const Point& point) const;
 
 		/**
-		 * @brief Returns side of 2D Vector.
+		 * @brief Returns a 2D Vector perpendicular to this 2D Vector.
 		 * @return spic::Point
 		*/
-		Point Side() const;
+		Point Perp() const;
 
 		/**
 		 * @brief Returns rotation of 2D Vector.
@@ -176,7 +176,7 @@ namespace spic {
 		 * @param point Point used as multiplier
 		 * @return float
 		*/
-		float DotProduct(const Point& point);
+		float Dot(const Point& point);
 	};
 }
 

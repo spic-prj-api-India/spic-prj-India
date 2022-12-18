@@ -184,6 +184,9 @@
     <Filter Include="Source Files\extensions\networking">
       <UniqueIdentifier>{0bcd053c-995f-4ec2-a250-a85a668d77cd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\models\shapes">
+      <UniqueIdentifier>{be5d6bd1-a075-46ce-8200-fa6f80fb6003}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AudioSource.hpp">
@@ -321,9 +324,6 @@
     <ClInclude Include="InputImpl.hpp">
       <Filter>Header Files\core\models</Filter>
     </ClInclude>
-    <ClInclude Include="Point.hpp">
-      <Filter>Header Files\models</Filter>
-    </ClInclude>
     <ClInclude Include="Time.hpp">
       <Filter>Header Files\models</Filter>
     </ClInclude>
@@ -393,9 +393,6 @@
     <ClInclude Include="Bounds.hpp">
       <Filter>Header Files\models</Filter>
     </ClInclude>
-    <ClInclude Include="Rect.hpp">
-      <Filter>Header Files\models</Filter>
-    </ClInclude>
     <ClInclude Include="Matrix.hpp">
       <Filter>Header Files\core\math</Filter>
     </ClInclude>
@@ -410,6 +407,21 @@
     </ClInclude>
     <ClInclude Include="Transform.hpp">
       <Filter>Header Files\models</Filter>
+    </ClInclude>
+    <ClInclude Include="Obstacle.hpp">
+      <Filter>Header Files\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Line.hpp">
+      <Filter>Header Files\models\shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="Point.hpp">
+      <Filter>Header Files\models\shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="Rect.hpp">
+      <Filter>Header Files\models\shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="Circle.hpp">
+      <Filter>Header Files\models\shapes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

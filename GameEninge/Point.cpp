@@ -33,7 +33,7 @@ namespace spic {
 		return sqrtf(powf(this->x - point.x, 2) + powf(this->y - point.y, 2));
 	}
 
-	Point Point::Side() const
+	Point Point::Perp() const
 	{
 		return { -y, x };
 	}
@@ -177,7 +177,7 @@ namespace spic {
 		return Length() < cp.Length();
 	}
 
-	float Point::DotProduct(const Point& point)
+	float Point::Dot(const Point& point)
 	{
 		return this->x * point.x + this->y * point.y;
 	}

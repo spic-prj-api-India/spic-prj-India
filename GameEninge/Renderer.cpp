@@ -21,34 +21,29 @@ void spic::internal::Rendering::UpdateCamera(Camera* camera)
 	spic::internal::rendering::RendererImpl::GetInstance()->UpdateCamera(camera);
 }
 
-void spic::internal::Rendering::DrawRect(const spic::Rect& rect, const double angle, const spic::Color& color)
+void spic::internal::Rendering::AddDebugLine(const spic::Line& line, const spic::Color& color)
 {
-	spic::internal::rendering::RendererImpl::GetInstance()->DrawRect(rect, angle, color);
+	spic::internal::rendering::RendererImpl::GetInstance()->AddDebugLine(line, color);
 }
 
-void spic::internal::Rendering::DrawCircle(const spic::Point& center, const float radius, const spic::Color& color, const float pixelGap)
+void spic::internal::Rendering::AddDebugRect(const spic::Rect& rect, const double angle, const spic::Color& color)
 {
-	spic::internal::rendering::RendererImpl::GetInstance()->DrawCircle(center, radius, pixelGap, color);
+	spic::internal::rendering::RendererImpl::GetInstance()->AddDebugRect(rect, angle, color);
 }
 
-void spic::internal::Rendering::DrawPoint(const spic::Point& point, const spic::Color& color)
+void spic::internal::Rendering::AddDebugCircle(const spic::Circle& circle, const spic::Color& color, const float pixelGap)
 {
-	spic::internal::rendering::RendererImpl::GetInstance()->DrawPoint(point, color);
+	spic::internal::rendering::RendererImpl::GetInstance()->AddDebugCircle(circle, color, pixelGap);
 }
 
-void spic::internal::Rendering::DrawLine(const spic::Point& start, const spic::Point& end, const spic::Color& color)
+void spic::internal::Rendering::AddDebugPoint(const spic::Point& point, const spic::Color& color)
 {
-	spic::internal::rendering::RendererImpl::GetInstance()->DrawLine(start, end, color);
+	spic::internal::rendering::RendererImpl::GetInstance()->AddDebugPoint(point, color);
 }
 
-void spic::internal::Rendering::AddDebugLine(const spic::Point& start, const spic::Point& end)
+void spic::internal::Rendering::DrawDebugShapes()
 {
-	spic::internal::rendering::RendererImpl::GetInstance()->AddDebugLine(start, end);
-}
-
-void spic::internal::Rendering::DrawDebugLines()
-{
-	spic::internal::rendering::RendererImpl::GetInstance()->DrawDebugLines();
+	spic::internal::rendering::RendererImpl::GetInstance()->DrawDebugShapes();
 }
 
 void spic::internal::Rendering::DrawSprite(const Transform* position, Sprite* sprite)

@@ -7,6 +7,7 @@
 #include "Box.h"
 #include <Input.hpp>
 #include "AimListener.h"
+#include "CircleObstacle.h"
 
 FlockingScene::FlockingScene() : Scene()
 {
@@ -26,6 +27,7 @@ void FlockingScene::SetCamera()
 
 void FlockingScene::SetContents()
 {
+	/* Rocket launcher setup */
 	std::shared_ptr<spic::GameObject> rocketLauncher = std::make_shared<spic::GameObject>();
 	std::string rocketLauncherName = "rocketLauncher";
 	std::shared_ptr<spic::Transform> rocketLauncherTransform = std::make_shared<spic::Transform>();
@@ -39,5 +41,10 @@ void FlockingScene::SetContents()
 	std::shared_ptr<AimListener> aimListener = std::make_shared<AimListener>(rocketLauncher);
 	spic::Input::Subscribe(spic::Input::MouseButton::LEFT, aimListener);
 
+	/* Obstacles setup */
+	spic::Point obstaclePosition = { 300.0f, 200.0f };
+	std::shared_ptr<CircleObstacle> obstacle = std::make_shared<CircleObstacle>("blade1", obstaclePosition);
+
 	AddContent(rocketLauncher);
+	AddContent(obstacle);
 }

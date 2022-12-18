@@ -19,8 +19,8 @@
 #include "ForceDriven.hpp"
 #include "Defaults.hpp"
 #include "TileLayer.hpp"
-#include "Renderer.hpp"
 #include "GameEngineInfo.hpp"
+#include "Debug.hpp"
 
 using namespace spic::extensions::PhysicsValues;
 using namespace spic::window;
@@ -453,7 +453,7 @@ namespace spic::extensions {
 				position.y,
 				size.x * MET2PIX,
 				size.y * MET2PIX);
-			spic::internal::Rendering::DrawRect(rect, rotation, spic::Color::red());
+			spic::Debug::DrawRect(rect, rotation, spic::Color::red());
 		}
 
 		/**
@@ -469,8 +469,9 @@ namespace spic::extensions {
 			size += OFFSET;
 			const float radius = (size.x / 2.0f) * MET2PIX;
 
-			spic::Point center = { position.x + radius, position.y + radius };
-			spic::internal::Rendering::DrawCircle(center, radius, spic::Color::red());
+			const spic::Point center = { position.x + radius, position.y + radius };
+			spic::Circle circle = { center, radius };
+			spic::Debug::DrawCircle(circle, spic::Color::red());
 		}
 
 		/**
@@ -485,7 +486,7 @@ namespace spic::extensions {
 			ConvertCoordinateToPixels(endVec);
 			Point startPoint = { startVec.x, startVec.y };
 			Point endPoint = { endVec.x, endVec.y };
-			spic::internal::Rendering::DrawLine(startPoint, endPoint, spic::Color::red());
+			spic::Debug::DrawLine(startPoint, endPoint, spic::Color::red());
 		}
 	private:
 		std::unique_ptr<b2World> world;

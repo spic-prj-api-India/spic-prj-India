@@ -148,6 +148,7 @@
   <ItemGroup>
     <ClCompile Include="CameraMovementScript.cpp" />
     <ClCompile Include="AimListener.cpp" />
+    <ClCompile Include="CircleObstacle.cpp" />
     <ClCompile Include="CollisionDetectionScript.cpp" />
     <ClCompile Include="FlockingScene.cpp" />
     <ClCompile Include="Ball.cpp" />
@@ -173,6 +174,7 @@
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="KeyListener.h" />
     <ClInclude Include="FollowMouseListener.h" />
+    <ClInclude Include="CircleObstacle.h" />
     <ClInclude Include="PlayerMovementScript.h" />
     <ClInclude Include="Rocket.h" />
     <ClInclude Include="MenuScene.h" />

@@ -1,6 +1,5 @@
 #include "Ball.h"
 #include <Sprite.hpp>
-#include <Point.cpp>
 #include <CircleCollider.hpp>
 #include "RigidBody.hpp"
 

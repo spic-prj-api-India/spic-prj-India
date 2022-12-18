@@ -178,6 +178,7 @@
     <ClInclude Include="Camera.hpp" />
     <ClInclude Include="CastException.hpp" />
     <ClInclude Include="Chunk.hpp" />
+    <ClInclude Include="Circle.hpp" />
     <ClInclude Include="CircleCollider.hpp" />
     <ClInclude Include="Collider.hpp" />
     <ClInclude Include="Box2DCollisionListener.hpp" />
@@ -202,11 +203,13 @@
     <ClInclude Include="InputManager.hpp" />
     <ClInclude Include="InputSystem.hpp" />
     <ClInclude Include="IPhysicsExtension.hpp" />
+    <ClInclude Include="Line.hpp" />
     <ClInclude Include="Matrix.hpp" />
     <ClInclude Include="INetworkExtension.hpp" />
     <ClInclude Include="NetworkingHelper.hpp" />
     <ClInclude Include="NetworkingReceiveSystem.hpp" />
     <ClInclude Include="NetworkingSendSystem.hpp" />
+    <ClInclude Include="Obstacle.hpp" />
     <ClInclude Include="Persistable.hpp" />
     <ClInclude Include="ForceDriven.hpp" />
     <ClInclude Include="PhysicsExtension1.hpp" />

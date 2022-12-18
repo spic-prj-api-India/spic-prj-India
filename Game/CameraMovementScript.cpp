@@ -18,7 +18,6 @@ void CameraMovementScript::OnInput() {
 
 	if (spic::Input::GetKeyDown(spic::Input::KeyCode::UP_ARROW))
 		transform->position.y = transform->position.y - 10.0f;
-	if (spic::Input::GetKeyDown(spic::Input::KeyCode::DOWN_ARROW) 
-		&& (transform->position.y + 10.0f) <= 0.0f)
+	if (spic::Input::GetKeyDown(spic::Input::KeyCode::DOWN_ARROW))
 		transform->position.y = transform->position.y + 10.0f;
 }

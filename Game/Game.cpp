@@ -37,7 +37,7 @@ void InitGame() {
 	engine->RegisterScene("credits", std::make_shared<CreditsScene>());
 
 	spic::Debug::COLLIDER_VISIBILITY = true;
-	spic::Debug::FEELER_VISIBILITY = true;
+	spic::Debug::WALL_AVOIDANCE_FEELERS_VISIBILITY = false;
 }
 
 void StartGame()

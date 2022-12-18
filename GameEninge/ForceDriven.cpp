@@ -15,7 +15,7 @@ namespace spic {
 		sumMethod{ sumMethod }, maxSteeringForce{ maxSteeringForce }, maxSpeed{ maxSpeed },
 		angleSensitivity{ angleSensitivity }, paused{ true }, useWallAvoidance{ false },
 		useObstacleAvoidance{ false }, useSeperation{ false }, useAlignment{ false },
-		useCohesion{ false }, useTarget{ false }
+		useCohesion{ false }, useWander{ false }, deceleration{ spic::Deceleration::NORMAL }
 	{
 		this->steeringBehavioursIncludingTargets;
 	}
@@ -37,48 +37,42 @@ namespace spic {
 		return body->Mass();
 	}
 
-	void ForceDriven::AddTarget(SteeringBehaviour steeringBehaviour, Point& target, const float targetWeight)
+	void ForceDriven::SetObstacles(std::vector<std::shared_ptr<spic::GameObject>> obstacles)
 	{
-		if (this->steeringBehavioursIncludingTargets.count(steeringBehaviour) == 0)
-			steeringBehavioursIncludingTargets[steeringBehaviour] = {};
-		this->steeringBehavioursIncludingTargets[steeringBehaviour][target] = targetWeight;
+		obstacles = std::move(obstacles);
 	}
 
-	void ForceDriven::RemoveTarget(SteeringBehaviour steeringBehaviour, Point& target)
+	void ForceDriven::AddTarget(TargetBehaviour targetBehaviour, Point& target, const float targetWeight)
 	{
-		if (this->steeringBehavioursIncludingTargets.count(steeringBehaviour) == 0)
+		if (this->steeringBehavioursIncludingTargets.count(targetBehaviour) == 0)
+			steeringBehavioursIncludingTargets[targetBehaviour] = {};
+		this->steeringBehavioursIncludingTargets[targetBehaviour][target] = targetWeight;
+	}
+
+	void ForceDriven::RemoveTarget(TargetBehaviour targetBehaviour, Point& target)
+	{
+		if (this->steeringBehavioursIncludingTargets.count(targetBehaviour) == 0)
 			return;
-		if (this->steeringBehavioursIncludingTargets[steeringBehaviour].count(target) == 0)
+		if (this->steeringBehavioursIncludingTargets[targetBehaviour].count(target) == 0)
 			return;
-		this->steeringBehavioursIncludingTargets[steeringBehaviour].erase(target);
+		this->steeringBehavioursIncludingTargets[targetBehaviour].erase(target);
 	}
 
-	void ForceDriven::RemoveSteeringBehaviour(SteeringBehaviour steeringBehaviour)
+	void ForceDriven::RemoveTargetBehaviour(TargetBehaviour targetBehaviour)
 	{
-		if (this->steeringBehavioursIncludingTargets.count(steeringBehaviour) == 0)
+		if (this->steeringBehavioursIncludingTargets.count(targetBehaviour) == 0)
 			return;
-		this->steeringBehavioursIncludingTargets.erase(steeringBehaviour);
+		this->steeringBehavioursIncludingTargets.erase(targetBehaviour);
 	}
 
-	void ForceDriven::UseSeek(std::map<std::reference_wrapper<Point>, float, std::less<Point>> targets)
+	void ForceDriven::SetDeceleration(Deceleration deceleration)
 	{
-		this->steeringBehavioursIncludingTargets[SteeringBehaviour::SEEK] = targets;
-	}
-
-	void ForceDriven::UseFlee(std::map<std::reference_wrapper<Point>, float, std::less<Point>> targets)
-	{
-		this->steeringBehavioursIncludingTargets[SteeringBehaviour::FLEE] = targets;
-	}
-
-	void ForceDriven::UseArrival(std::map<std::reference_wrapper<Point>, float, std::less<Point>> targets, Deceleration deceleration)
-	{
-		this->steeringBehavioursIncludingTargets[SteeringBehaviour::ARRIVAL] = targets;
 		this->deceleration = deceleration;
 	}
 
-	void ForceDriven::UseWander(const float wanderWeight, const float wanderRadius, const float wanderDistance, const float wanderJitter)
+	void ForceDriven::Wander(const float wanderWeight, const float wanderRadius, const float wanderDistance, const float wanderJitter)
 	{
-		steeringBehavioursIncludingTargets[SteeringBehaviour::WANDER] = {};
+		this->useWander = true;
 		this->wanderWeight = wanderWeight;
 		this->wanderRadius = wanderRadius;
 		this->wanderDistance = wanderDistance;
@@ -93,11 +87,11 @@ namespace spic {
 		this->bounds = bounds;
 	}
 
-	void ForceDriven::ObstacleAvoidance(const float obstacleAvoidanceWeight, const float feelerLength)
+	void ForceDriven::ObstacleAvoidance(const float obstacleAvoidanceWeight, const float boxLength)
 	{
 		this->useObstacleAvoidance = true;
 		this->obstacleAvoidanceWeight = obstacleAvoidanceWeight;
-		this->feelerLength = feelerLength;
+		this->boxLength = boxLength;
 	}
 
 	void ForceDriven::Seperation(const float seperationWeight, const float desiredSeparation)
@@ -185,6 +179,15 @@ namespace spic {
 			force = ObstacleAvoidance() * obstacleAvoidanceWeight;
 			steeringForce += force;
 		}
+		if (useWander)
+		{
+			force = Wander() * wanderWeight;
+			steeringForce += force;
+		}
+		AddSteeringForces([this, &steeringForce](Point force) {
+			steeringForce += force;
+			return false;
+			});
 		if (useSeperation)
 		{
 			force = Seperate() * seperationWeight;
@@ -200,10 +203,6 @@ namespace spic {
 			force = Cohere() * cohesionWeight;
 			steeringForce += force;
 		}
-		AddSteeringForces([this, &steeringForce](Point force) {
-			steeringForce += force;
-			return false;
-			});
 		if (steeringForce.Length() > maxSteeringForce) {
 			steeringForce.Normalize();
 			steeringForce *= maxSteeringForce;
@@ -226,6 +225,15 @@ namespace spic {
 			force = ObstacleAvoidance() * obstacleAvoidanceWeight;
 			if (!steeringForce.Accumulate(force, maxSteeringForce)) return steeringForce;
 		}
+		if (useWander)
+		{
+			force = Wander() * wanderWeight;
+			if (!steeringForce.Accumulate(force, maxSteeringForce)) return steeringForce;
+		}
+		AddSteeringForces([this, &steeringForce](Point force) {
+			if (!steeringForce.Accumulate(force, maxSteeringForce)) return true;
+			return false;
+			});
 		if (useSeperation)
 		{
 			force = Seperate() * seperationWeight;
@@ -241,10 +249,6 @@ namespace spic {
 			force = Cohere() * cohesionWeight;
 			if (!steeringForce.Accumulate(force, maxSteeringForce)) return steeringForce;
 		}
-		AddSteeringForces([this, &steeringForce](Point force) {
-			if (!steeringForce.Accumulate(force, maxSteeringForce)) return true;
-			return false;
-			});
 		return steeringForce;
 	}
 
@@ -252,26 +256,20 @@ namespace spic {
 	{
 		Point force;
 		for (const auto& steeringBehaviourIncludingTargets : steeringBehavioursIncludingTargets) {
-			SteeringBehaviour steeringBehaviour = steeringBehaviourIncludingTargets.first;
+			TargetBehaviour steeringBehaviour = steeringBehaviourIncludingTargets.first;
 			const auto& targets = steeringBehaviourIncludingTargets.second;
-			if (steeringBehaviour == SteeringBehaviour::WANDER) {
-				force = Wander() * wanderWeight;
-				if (addSteeringForceCallback(force))
-					return;
-				continue;
-			}
 			for (const auto& targetWithWeight : targets) {
 				const spic::Point& target = targetWithWeight.first;
 				const float targetWeight = targetWithWeight.second;
 
 				switch (steeringBehaviour) {
-				case SteeringBehaviour::ARRIVAL:
+				case TargetBehaviour::ARRIVAL:
 					force = Arrival(target) * targetWeight;
 					break;
-				case SteeringBehaviour::FLEE:
+				case TargetBehaviour::FLEE:
 					force = Flee(target) * targetWeight;
 					break;
-				case SteeringBehaviour::SEEK:
+				case TargetBehaviour::SEEK:
 					force = Seek(target) * targetWeight;
 					break;
 				default: continue;
@@ -347,13 +345,18 @@ namespace spic {
 
 		target *= wanderRadius;
 
-		Point targetLocal = target + Point(wanderDistance, 0.0f);
+		const Point targetLocal = target + Point(wanderDistance, 0.0f);
 
 		Point targetWorld = PointToWorldSpace(targetLocal,
 			heading,
-			heading.Side(),
+			heading.Perp(),
 			location);
-		return targetWorld - location;
+
+		Point desiredVelocity = targetWorld - location;
+		desiredVelocity.Normalize();
+		desiredVelocity *= maxSpeed;
+
+		return (desiredVelocity - Velocity());
 	}
 
 	Point ForceDriven::WallAvoidance()
@@ -374,7 +377,7 @@ namespace spic {
 		RotateAroundOrigin(temp, spic::internal::Defaults::HALF_PI * 0.5f);
 		feelers[2] = top + (temp * wallDetectionFeelerLength);
 
-		if (Debug::FEELER_VISIBILITY) {
+		if (Debug::WALL_AVOIDANCE_FEELERS_VISIBILITY) {
 			Debug::DrawLine(top, feelers[0]);
 			Debug::DrawLine(top, feelers[1]);
 			Debug::DrawLine(top, feelers[2]);
@@ -434,109 +437,109 @@ namespace spic {
 
 	Point ForceDriven::ObstacleAvoidance()
 	{
-		//float realBoxLength = m_dDBoxLength;
+		Point location = Transform()->position;
+		float radius = GetComponent<Collider>()->Size().x / 2;
+		float realBoxLength = boxLength;
 
-		//GameObject* closestIntersectingObstacle = NULL;
+		std::shared_ptr<GameObject> closestIntersectingObstacle = NULL;
 
-		////this will be used to track the distance to the CIB
-		//float distToClosestIP = MaxFloat;
+		//this will be used to track the distance to the CIB
+		float distToClosestIP = MaxFloat;
 
-		////this will record the transformed local coordinates of the CIB
-		//Point localPosOfClosestObstacle;
+		//this will record the transformed local coordinates of the CIB
+		Point localPosOfClosestObstacle;
 
-		//while (curOb != endOb)
-		//{
+		for(const auto& obstacle: obstacles)
+		{
+			Point obstacleLocation = obstacle->Transform()->position;
+			float obstacleRadius = obstacle->GetComponent<Collider>()->Size().x / 2;
+			Point to = obstacleLocation - location;
 
-		//	Obstacle* obst = (*curOb);
+			float range = realBoxLength + obstacleRadius;
 
-		//	Point to = obst->Pos() - Transform()->position;
+			//if entity within range, tag for further consideration. (working in
+			//distance-squared space to avoid sqrts)
+			if ((to.LengthSq() < range * range))
+			{
 
-		//	double range = realBoxLength + obst->BRadius();
+				//calculate this obstacle's position in local space
+				Point localPos = PointToLocalSpace(obstacleLocation,
+					heading,
+					heading.Perp(),
+					location);
 
-		//	//if entity within range, tag for further consideration. (working in
-		//	//distance-squared space to avoid sqrts)
-		//	if ((to.LengthSq() < range * range))
-		//	{
+				//if the local position has a negative x value then it must lay
+				//behind the agent. (in which case it can be ignored)
+				if (localPos.x >= 0)
+				{
+					//if the distance from the x axis to the object's position is less
+					//than its radius + half the width of the detection box then there
+					//is a potential intersection.
+					float expandedRadius = obstacleRadius + radius;
 
-		//		//calculate this obstacle's position in local space
-		//		Point LocalPos = PointToLocalSpace(obst->Pos(),
-		//			heading,
-		//			Transform()->position);
+					/*if (fabs(LocalPos.y) < ExpandedRadius)
+					{*/
+					//now to do a line/circle intersection test. The center of the 
+					//circle is represented by (cX, cY). The intersection points are 
+					//given by the formula x = cX +/-sqrt(r^2-cY^2) for y=0. 
+					//We only need to look at the smallest positive value of x because
+					//that will be the closest point of intersection.
+					float cX = localPos.x;
+					float cY = localPos.y;
 
-		//		//if the local position has a negative x value then it must lay
-		//		//behind the agent. (in which case it can be ignored)
-		//		if (LocalPos.x >= 0)
-		//		{
-		//			//if the distance from the x axis to the object's position is less
-		//			//than its radius + half the width of the detection box then there
-		//			//is a potential intersection.
-		//			double ExpandedRadius = obst->BRadius() + m_pMovingEntity->BRadius();
+					//we only need to calculate the sqrt part of the above equation once
+					float SqrtPart = sqrt(expandedRadius * expandedRadius - cY * cY);
 
-		//			/*if (fabs(LocalPos.y) < ExpandedRadius)
-		//			{*/
-		//			//now to do a line/circle intersection test. The center of the 
-		//			//circle is represented by (cX, cY). The intersection points are 
-		//			//given by the formula x = cX +/-sqrt(r^2-cY^2) for y=0. 
-		//			//We only need to look at the smallest positive value of x because
-		//			//that will be the closest point of intersection.
-		//			double cX = LocalPos.x;
-		//			double cY = LocalPos.y;
+					float ip = cX - SqrtPart;
 
-		//			//we only need to calculate the sqrt part of the above equation once
-		//			double SqrtPart = sqrt(ExpandedRadius * ExpandedRadius - cY * cY);
+					if (ip <= 0.0)
+					{
+						ip = cX + SqrtPart;
+					}
 
-		//			double ip = cX - SqrtPart;
+					//test to see if this is the closest so far. If it is keep a
+					//record of the obstacle and its local coordinates
+					if (ip < distToClosestIP)
+					{
+						distToClosestIP = ip;
 
-		//			if (ip <= 0.0)
-		//			{
-		//				ip = cX + SqrtPart;
-		//			}
+						closestIntersectingObstacle = obstacle;
 
-		//			//test to see if this is the closest so far. If it is keep a
-		//			//record of the obstacle and its local coordinates
-		//			if (ip < distToClosestIP)
-		//			{
-		//				distToClosestIP = ip;
+						localPosOfClosestObstacle = localPos;
+					}
+				}
+			}
+		}
 
-		//				closestIntersectingObstacle = obst;
+		//if we have found an intersecting obstacle, calculate a steering 
+		//force away from it
+		Point steeringForce;
 
-		//				localPosOfClosestObstacle = LocalPos;
-		//			}
-		//		}
-		//		//}
-		//	}
+		if (closestIntersectingObstacle)
+		{
+			//the closer the agent is to an object, the stronger the 
+			//steering force should be
+			float multiplier = 1.0f + (boxLength - localPosOfClosestObstacle.x) /
+				boxLength;
 
-		//	++curOb;
-		//}
+			//calculate the lateral force
+			float obstacleRadius = closestIntersectingObstacle->GetComponent<Collider>()->Size().x / 2;
+			steeringForce.y = (obstacleRadius -
+				localPosOfClosestObstacle.y) * multiplier;
 
-		////if we have found an intersecting obstacle, calculate a steering 
-		////force away from it
-		//Point steeringForce;
+			//apply a braking force proportional to the obstacles distance from
+			//the MovingEntity. 
+			const float brakingWeight = 0.2f;
 
-		//if (closestIntersectingObstacle)
-		//{
-		//	//the closer the agent is to an object, the stronger the 
-		//	//steering force should be
-		//	float multiplier = 1.0 + (m_dDBoxLength - localPosOfClosestObstacle.x) /
-		//		m_dDBoxLength;
+			steeringForce.x = (obstacleRadius -
+				localPosOfClosestObstacle.x) *
+				brakingWeight;
+		}
 
-		//	//calculate the lateral force
-		//	steeringForce.y = (closestIntersectingObstacle->BRadius() -
-		//		localPosOfClosestObstacle.y) * multiplier;
-
-		//	//apply a braking force proportional to the obstacles distance from
-		//	//the MovingEntity. 
-		//	const float brakingWeight = 0.2f;
-
-		//	steeringForce.x = (closestIntersectingObstacle->BRadius() -
-		//		localPosOfClosestObstacle.x) *
-		//		brakingWeight;
-		//}
-
-		////finally, convert the steering vector from local to world space
-		//return VectorToWorldSpace(steeringForce,
-		//	heading);
-		return {};
+		//finally, convert the steering vector from local to world space
+		return VectorToWorldSpace(steeringForce,
+			heading,
+			heading.Perp());
 	}
 
 	Point ForceDriven::Seperate()
