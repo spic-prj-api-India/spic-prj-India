@@ -62,14 +62,12 @@ void EntityManager::Init()
 	std::unique_ptr<systems::InputSystem> inputSystem = std::make_unique<systems::InputSystem>();
 	std::unique_ptr<systems::PhysicsSystem> physicsSystem = std::make_unique<systems::PhysicsSystem>();
 	std::unique_ptr<systems::RenderingSystem> renderingSystem = std::make_unique<systems::RenderingSystem>();
-	std::unique_ptr<systems::DataSystem> dataSystem = std::make_unique<systems::DataSystem>();
 	std::unique_ptr<systems::AISystem> aiSystem = std::make_unique<systems::AISystem>();
 	std::unique_ptr<systems::NetworkingReceiveSystem> networkRecieve = std::make_unique<systems::NetworkingReceiveSystem>();
 	std::unique_ptr<systems::NetworkingSendSystem> networkSend = std::make_unique<systems::NetworkingSendSystem>();
 	AddInternalSystem(std::move(networkRecieve), 0);
 	AddInternalSystem(std::move(inputSystem), 2);
 	AddInternalSystem(std::move(physicsSystem), 1);
-	AddInternalSystem(std::move(dataSystem), 3);
     AddInternalSystem(std::move(aiSystem), 4);
 	AddInternalSystem(std::move(networkSend), 5);
 	AddInternalSystem(std::move(renderingSystem), 6);

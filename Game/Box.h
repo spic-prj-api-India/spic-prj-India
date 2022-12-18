@@ -2,21 +2,9 @@
 #include <GameObject.hpp>
 #include "Persistable.hpp"
 
-class Box : public spic::Persistable
+class Box : public spic::GameObject, public spic::Persistable
 {
 public:
-	Box() : Persistable()
-	{
-		Name("Box");
-	}
-
-	void Load() override
-	{
-
-	}
-
-	void Save() override
-	{
-
-	}
+	Box(const std::string& name, const spic::Point& position);
+	void SetAttributes(const spic::Point& position);
 };

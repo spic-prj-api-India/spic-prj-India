@@ -146,6 +146,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Box.cpp" />
     <ClCompile Include="CameraMovementScript.cpp" />
     <ClCompile Include="AimListener.cpp" />
     <ClCompile Include="CollisionDetectionScript.cpp" />
