@@ -1,13 +1,9 @@
-#include <codeanalysis\warnings.h>
-#pragma warning( push )
-#pragma warning ( disable : ALL_CODE_ANALYSIS_WARNINGS )
-#include "SDL2/SDL.h"
-#pragma warning( pop )
 #include "GameEngine.hpp"
 #include "EntityManager.hpp"
 #include "Input.hpp"
 #include "Renderer.hpp"
 #include "DataHandler.hpp"
+#include "InternalTime.hpp"
 
 namespace spic {
 	GameEngine* GameEngine::pinstance_{ nullptr };
@@ -24,10 +20,12 @@ namespace spic {
 	GameEngine* GameEngine::GetInstance()
 	{
 		std::lock_guard<std::mutex> lock(mutex_);
+
 		if (pinstance_ == nullptr)
 		{
 			pinstance_ = new GameEngine();
 		}
+
 		return pinstance_;
 	}
 
@@ -35,10 +33,11 @@ namespace spic {
 	{
 		if (_types.count(typeName) == 0)
 			throw std::exception("Type not registered.");
+
 		return _types[typeName]();
 	}
 
-	void GameEngine::RegisterScene(const std::string& sceneName, std::shared_ptr<Scene> scene)
+	void GameEngine::RegisterScene(const std::string& sceneName, std::function<spic::Scene* ()> scene)
 	{
 		internal::EntityManager::GetInstance()->RegisterScene(sceneName, scene);
 	}
@@ -65,7 +64,7 @@ namespace spic {
 
 	void GameEngine::LoadScene(std::shared_ptr<Scene> scene)
 	{
-		spic::internal::EntityManager::GetInstance()->SetScene(scene);
+		spic::internal::EntityManager::GetInstance()->SetScene(std::move(scene));
 	}
 
 	void GameEngine::DestroyScene(bool forceDelete)
@@ -80,30 +79,23 @@ namespace spic {
 
 	std::shared_ptr<Scene> GameEngine::GetSceneByName(const std::string& sceneName)
 	{
-		return internal::EntityManager::GetInstance()->GetScene(sceneName);
+		return std::move(internal::EntityManager::GetInstance()->GetScene(sceneName));
 	}
 
-	void GameEngine::Start(const spic::window::WindowValues* values)
+	void GameEngine::Start()
 	{
-		const int FPS = 60;
-		const int frameDelay = 1000 / FPS;
+		spic::internal::Rendering::Start();
 
-		Uint32 frameStart;
-		int frameTime;
-
-		spic::internal::Rendering::Start(values);
-
-		while (!quit) {
-			frameStart = SDL_GetTicks();
-
+		while (!quit) 
+		{
+			using namespace spic::internal::time;
+			InternalTime::BeginFrame();
+	
 			internal::EntityManager::GetInstance()->Update();
 
-			// make the program sleep for the alotted time so nothing occurs within the excess frames and we can efficiently use the computers processing power.
-			frameTime = SDL_GetTicks() - frameStart;
-			if (frameDelay > frameTime)
-			{
-				SDL_Delay(frameDelay - frameTime);
-			}
+			InternalTime::EndFrame();
+
+			InternalTime::Delay();
 		}
 	}
 

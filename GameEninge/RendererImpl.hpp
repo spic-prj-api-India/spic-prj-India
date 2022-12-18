@@ -13,16 +13,17 @@
 #include "Time.hpp"
 #include <SDL2/SDL_ttf.h>
 #include "Text.hpp"
-#include "WindowValues.hpp"
+#include "Rect.hpp"
 
 // needs to be used for SDL
 #undef main
+
+#define KEEP_TEXTURES_AND_FONTS_LOADED true
 
 /**
  * @brief The internal rendering namespace
 */
 namespace spic::internal::rendering {
-
 	/**
 	 * @brief Deleters for SDL stuff
 	*/
@@ -57,14 +58,6 @@ namespace spic::internal::rendering {
 		 * operator.
 		*/
 	private:
-		static RendererImpl* pinstance_;
-		static std::mutex mutex_;
-
-		/**
-		 * @brief Time related
-		*/
-		double lastTick;
-		double deltatime;
 
 		/**
 		 * @brief World camera settings
@@ -80,7 +73,7 @@ namespace spic::internal::rendering {
 		/**
 		 * @brief sdl window ptr
 		*/
-		WindowPtr window;
+		WindowPtr settings;
 
 		/**
 		 * @brief sdl renderer ptr
@@ -97,7 +90,7 @@ namespace spic::internal::rendering {
 		/**
 		 * @brief Font Map
 		*/
-		std::map<std::string, FontPtr> fonts;
+		std::map<std::pair<std::string, int>, FontPtr> fonts;
 
 		/**
 		 * @brief Camera of the window
@@ -109,7 +102,7 @@ namespace spic::internal::rendering {
 		*/
 		std::mutex mutex_rendering;
 
-	protected:
+	public:
 		RendererImpl() noexcept(false);
 		~RendererImpl();
 
@@ -219,9 +212,8 @@ namespace spic::internal::rendering {
 
 		/**
 		 * @brief Sets up aditional window values like name
-		 * @param values
 		*/
-		void UpdateWindow(const spic::window::WindowValues* values);
+		void UpdateWindow();
 	public:
 		/**
 		 * Singletons should not be cloneable or assignable.
@@ -230,22 +222,6 @@ namespace spic::internal::rendering {
 		RendererImpl(RendererImpl&& other) noexcept = delete; // move constructor
 		RendererImpl& operator=(const RendererImpl& other) = delete; // copy assignment
 		RendererImpl& operator=(RendererImpl&& other) noexcept = delete;// move assignment
-
-
-		/**
-		 * This is the static method that controls the access to the singleton
-		 * instance. On the first run, it creates a singleton object and places it
-		 * into the static field. On subsequent runs, it returns the client existing
-		 * object stored in the static field.
-		*/
-
-		static RendererImpl* GetInstance();
-
-		/**
-		 * Finally, any singleton should define some business logic, which can be
-		 * executed on its instance.
-		*/
-
 
 		/**
 		 * @brief Draws all related components of an gameobject
@@ -267,20 +243,50 @@ namespace spic::internal::rendering {
 		void UpdateCamera(Camera* camera);
 
 		/**
-		 * @brief Draws an rectangle in window space
+		 * @brief Draws an rectangle in world space
+		 * @details Rectangle is not drawn when rectangle is not in camera view.
 		 * @param rect The x, y, width, height of rectangle
 		 * @param angle The angle of the square
-		 * @param colour The colour of the square
+		 * @param color The color of the square
 		*/
-		void DrawRect(const SDL_FRect* rect, const double angle, const Color* colour);
+		void DrawRect(const spic::Rect& rect, const double angle, const spic::Color& color);
 
 		/**
-		 * @brief Draws an line in window space
+		 * @brief Draws an circle in world space 
+					using the mid point circle algorithm https://en.wikipedia.org/w/index.php?title=Midpoint_circle_algorithm
+		 * @details Circle is not drawn when circle is not in camera view.
+		 * @param center The center of the circle
+		 * @param angle The radius of the circle
+		 * @param pixelGap The gap (in pixels) between each point in the circle
+		 * @param color The color of the circle
+		*/
+		void DrawCircle(const spic::Point& center, const float radius, const float pixelGap, const spic::Color& color);
+
+		/**
+		 * @brief Draws a point in world space. 
+		 * @details Point is not drawn when x or y are not in camera view.
+		 * @param x of point
+		 * @param y of point
+		 * @param color The color of the point
+		*/
+		void DrawPoint(const spic::Point& point, const spic::Color& color);
+
+		/**
+		 * @brief Draws a point in world space
+		 * @details Point is not drawn when x or y are not in camera view.
+		 * @param x of point
+		 * @param y of point
+		*/
+		void DrawPoint(const float x, const float y);
+
+		/**
+		 * @brief Draws an line in world space
+		 * @details Line is not drawn when line is not in camera view.
 		 * @param start The start point of an line
 		 * @param end The end point of an line
 		 * @param colour The colour of the line
 		*/
-		void DrawLine(const Point* start, const Point* end, const Color* colour);
+		void DrawLine(const spic::Point& start, const spic::Point& end, const spic::Color& color);
 
 		/**
 		 * @brief Draws an ui sprite
@@ -311,13 +317,17 @@ namespace spic::internal::rendering {
 		/**
 		 * @brief Renders evrything in internal buffer to screen
 		*/
-		void Render();
+		void Render() const;
 
 		/**
 		 * @brief Start up an new window
-		 * @param values All windowValues
 		*/
-		void Start(const spic::window::WindowValues* values);
+		void Start();
+
+		/**
+		 * @brief Renders the fps counter
+		*/
+		void RenderFps();
 	};
 }
 #endif // RENDERERIMPL_H_

@@ -10,7 +10,7 @@ namespace spic
 	class TileMap
 	{
 	public:
-		TileMap();
+		TileMap(const int collisionLayerIndex);
 
 		/**
 		 * @brief Adds tile layer
@@ -26,21 +26,14 @@ namespace spic
 		 * @return TileLayer.
 		 * @spicapi
 		 */
-		const TileLayer& GetLayer(int index);
+		const TileLayer& GetLayer(const int index) const;
 
 		/**
-		 * @brief Adds collision entity.
-		 * @param entity Collision entity.
+		 * @brief Returns collision layer.
+		 * @return TileLayer.
 		 * @spicapi
 		 */
-		void AddCollisionEntity(const std::shared_ptr<spic::GameObject> entity);
-
-		/**
-		 * @brief Returns collision entities.
-		 * @return list with collision entities.
-		 * @spicapi
-		 */
-		std::vector<std::shared_ptr<spic::GameObject>> CollisionEntities() const;
+		const TileLayer& GetCollisionLayer() const;
 
 		/**
 		 * @brief Renders all tile layers.
@@ -50,6 +43,7 @@ namespace spic
 	private:
 		std::map<int, std::unique_ptr<TileLayer>> tileLayers;
 		std::vector<std::shared_ptr<spic::GameObject>> collisionEntities;
+		int collisionLayerIndex;
 	};
 }
 

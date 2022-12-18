@@ -5,7 +5,6 @@
 #include <string>
 
 namespace spic {
-
     /**
      * @brief Component which can play audio.
      */

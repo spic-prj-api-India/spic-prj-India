@@ -1,6 +1,8 @@
 #include "Scene.hpp"
 #include "MapParser.hpp"
 #include "EntityManager.hpp"
+#include "Debug.hpp"
+
 namespace spic
 {
 	Scene::Scene() : setting{ UpdateSetting::ALWAYS }
@@ -32,14 +34,14 @@ namespace spic
 		}
 		catch (std::exception& ex)
 		{
-			std::cerr << ex.what() << std::endl;
+			debug::LogError(ex.what());
 		}
 	}
 
 	void Scene::LoadTileMap(const std::string& newTileMapPath, const int newCollisionLayerIndex)
 	{
-		std::unique_ptr<spic::internal::MapParser> mapParser = std::make_unique<spic::internal::MapParser>();
-		tileMap = mapParser->Parse(newTileMapPath, newCollisionLayerIndex);
+		std::unique_ptr<spic::internal::MapParser> mapParser = std::make_unique<spic::internal::MapParser>(newCollisionLayerIndex);
+		tileMap = mapParser->Parse(newTileMapPath);
 	}
 
 	const TileMap* Scene::TileMap() const

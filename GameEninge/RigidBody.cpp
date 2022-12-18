@@ -19,6 +19,20 @@ namespace spic {
 		return gravityScale;
 	}
 
+	Point RigidBody::Velocity() const
+	{
+		GameEngine* engine = GameEngine::GetInstance();
+		const bool exists = engine->HasExtension<extensions::PhysicsExtension1>();
+		if (!exists)
+			return { 0.0f, 0.0f };
+
+		std::weak_ptr<extensions::PhysicsExtension1> physicsExtension = engine->GetExtension<extensions::PhysicsExtension1>();
+		if (const auto& box2DExtension = physicsExtension.lock())
+			return box2DExtension->GetLinearVelocity(this->gameObject->Name());
+
+		return { 0.0f, 0.0f };
+	}
+
 	BodyType RigidBody::BodyType() const
 	{
 		return bodyType;
@@ -27,12 +41,14 @@ namespace spic {
 	void RigidBody::Mass(const float newMass) {
 		if (newMass < 0.0f)
 			throw std::range_error("Mass can't be below zero");
+
 		mass = newMass;
 	}
 
 	void RigidBody::GravityScale(const float newGravityScale) {
 		if (newGravityScale < 0.0f)
 			throw std::range_error("Gravity scale can't be below zero");
+
 		gravityScale = newGravityScale;
 	}
 
@@ -40,14 +56,15 @@ namespace spic {
 		bodyType = newBodyType;
 	}
 
-	void RigidBody::AddForce(std::shared_ptr<spic::GameObject> entity, const Point& forceDirection)
+	void RigidBody::AddForce(const Point& forceDirection)
 	{
 		GameEngine* engine = GameEngine::GetInstance();
-		bool exists = engine->HasExtension<extensions::PhysicsExtension1>();
+		const bool exists = engine->HasExtension<extensions::PhysicsExtension1>();
 		if (!exists)
 			return;
+
 		std::weak_ptr<extensions::PhysicsExtension1> physicsExtension = engine->GetExtension<extensions::PhysicsExtension1>();
-		if (auto box2DExtension = physicsExtension.lock())
-			box2DExtension->AddForce(entity, forceDirection);
+		if (const auto& box2DExtension = physicsExtension.lock())
+			box2DExtension->AddForce(GameObject::Find(this->gameObject->Name()), forceDirection);
 	}
 }

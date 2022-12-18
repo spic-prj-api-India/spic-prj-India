@@ -2,10 +2,9 @@
 #define TILELAYER_H_
 
 #include <vector>
-#include <iostream>
 #include "TileSet.hpp"
 #include "Point.hpp"
-#include "GameObject.hpp"
+#include "Sprite.hpp"
 
 namespace spic
 {

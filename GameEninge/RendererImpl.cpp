@@ -10,18 +10,19 @@
 #include <filesystem>
 #include "TypeHelper.hpp"
 #include "StringHelper.hpp"
+#include "Defaults.hpp"
+#include "Settings.hpp"
+#include "Debug.hpp"
+#include "InternalTime.hpp"
 
 using namespace spic;
-using namespace spic::window;
 using namespace spic::internal::rendering;
-using namespace spic::GeneralHelper;
+using namespace spic::general_helper;
+
 #define UINT_8_BEGIN 0
 #define UINT_8_END 255
 
-RendererImpl* RendererImpl::pinstance_{ nullptr };
-std::mutex RendererImpl::mutex_;
-
-RendererImpl::RendererImpl() noexcept(false) : camera{ 0, 0, 0, 0 }, backgroundColor{ 0,0,0,1 }, backgroundImage{""}, scaling{1}, rotation{0}
+RendererImpl::RendererImpl() noexcept(false) : camera{ 0, 0, 0, 0 }, backgroundColor{ 0,0,0,1 }, backgroundImage{ "" }, scaling{ 1 }, rotation{ 0 }
 {
 }
 
@@ -33,51 +34,36 @@ RendererImpl::~RendererImpl()
 	}
 	catch (...)
 	{
-
 	}
 }
 
-RendererImpl* RendererImpl::GetInstance()
-{
-	std::lock_guard<std::mutex> lock(mutex_);
-	if (pinstance_ == nullptr)
-	{
-		pinstance_ = new RendererImpl();
-	}
-	return pinstance_;
-}
-
-void RendererImpl::Start(const spic::window::WindowValues* values)
+void RendererImpl::Start()
 {
 	//Exit(); // does nothing if it has not been called yet
 
 	// sets up video
 	if (SDL_Init(SDL_INIT_VIDEO != 0))
 	{
-		std::cout << SDL_GetError() << std::endl;
+		spic::debug::LogError(SDL_GetError());
 		exit(-1);
 	}
-
-	// for deltatime 
-	lastTick = SDL_GetTicks();
-	deltatime = 0;
 
 	// TODO: Zet in CreateWindow
 	const SDL_WindowFlags w_flags = SDL_WindowFlags(SDL_WINDOW_ALLOW_HIGHDPI | SDL_WINDOW_RESIZABLE);
-	window = WindowPtr(SDL_CreateWindow(values->WindowName.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, values->ScreenWidth, values->ScreenHeight, w_flags));
-	if (window.get() == nullptr) {
-		std::cerr << SDL_GetError() << std::endl;
+	settings = WindowPtr(SDL_CreateWindow(spic::settings::WINDOW_NAME.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, spic::settings::WINDOW_WIDTH, spic::settings::WINDOW_HEIGHT, w_flags));
+	if (settings.get() == nullptr) {
+		spic::debug::LogError(SDL_GetError());
 		exit(-1);
 	}
 
-	SDL_SetWindowAlwaysOnTop(window.get(),
-		(SDL_bool)values->SetOnTop);
+	SDL_SetWindowAlwaysOnTop(settings.get(),
+		(SDL_bool)spic::settings::SET_ON_TOP);
 
 	// TODO: Zet in CreateRenderer
-	SDL_RendererFlags rendererFlags = (SDL_RendererFlags)(SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-	renderer = RendererPtr(SDL_CreateRenderer(window.get(), -1, rendererFlags));
+	SDL_RendererFlags rendererFlags = (SDL_RendererFlags)(SDL_RENDERER_ACCELERATED);
+	renderer = RendererPtr(SDL_CreateRenderer(settings.get(), -1, rendererFlags));
 	if (renderer.get() == nullptr) {
-		std::cerr << SDL_GetError() << std::endl;
+		spic::debug::LogError(SDL_GetError());
 		exit(-1);
 	}
 
@@ -87,20 +73,37 @@ void RendererImpl::Start(const spic::window::WindowValues* values)
 		exit(-1);
 	}
 
-	this->UpdateWindow(values);
+	this->UpdateWindow();
 
 
-	auto tmp_sprites = SurfacePtr(IMG_Load("assets/textures/missing_texture.png"));
+	auto tmp_sprites = SurfacePtr(IMG_Load(spic::internal::defaults::MISSING_TEXTURE.c_str()));
 	if (!tmp_sprites.get())
 		return;
 
 	missingTexture = TexturePtr(SDL_CreateTextureFromSurface(renderer.get(), tmp_sprites.get()));
 }
 
+
+void spic::internal::rendering::RendererImpl::RenderFps()
+{
+	using namespace spic::internal::time;
+	auto frameRate = std::to_string(InternalTime::frameRate);
+
+	auto defaultText = spic::internal::defaults::TEXT_FONT;
+
+	auto font = this->LoadFont(defaultText, 10);
+
+	SDL_Color orange = SDL_Color{ 255,255,0,255 };
+	this->RenderMultiLineText(font,frameRate, orange,0,0,100,100,0,spic::Alignment::CENTER);
+
+	if (!KEEP_TEXTURES_AND_FONTS_LOADED)
+		this->fonts.clear();
+}
+
 void RendererImpl::Exit()
 {
 	renderer.release();
-	window.release();
+	settings.release();
 	SDL_Quit();
 }
 
@@ -135,7 +138,7 @@ void RendererImpl::DrawSprites(GameObject* gameObject, const bool isUIObject)
 {
 	const auto transform = gameObject->Transform();
 	auto _sprites = gameObject->GetComponents<Sprite>();
-	std::sort(_sprites.begin(), _sprites.end(), spic::GeneralHelper::SpriteSorting);
+	std::sort(_sprites.begin(), _sprites.end(), spic::general_helper::SpriteSorting);
 	UIObject* uiObject = nullptr;
 	if (isUIObject)
 		uiObject = TypeHelper::CastPtrToType<UIObject>(gameObject);
@@ -151,7 +154,6 @@ void RendererImpl::DrawSprites(GameObject* gameObject, const bool isUIObject)
 void RendererImpl::DrawAnimators(GameObject* gameObject, const bool isUiObject)
 {
 	auto _animator = gameObject->GetComponents<Animator>();
-		
 
 	for (auto& animator : _animator)
 	{
@@ -164,27 +166,22 @@ void RendererImpl::DrawAnimator(Animator* animator, const Transform* transform, 
 	if (!animator->IsRunning())
 		return;
 
-	auto sprites = animator->Sprites();
+ 	auto sprites = animator->Sprites();
 
-	const auto framesAmount = sprites.back()->OrderInLayer();
+	const auto framesAmount = sprites.back()->OrderInLayer() + 1;
+	using namespace spic::internal::time;
 
-	const int fps = 1000;
+	uint64_t current = SDL_GetTicks();
+	double dT = (current - animator->LastUpdate()) / InternalTime::averageFrameTimeMilliseconds;
 
-	//const auto frame = static_cast<uint64_t>(SDL_GetTicks() / ((static_cast<double>(fps) / animator->Fps()) * Time::TimeScale())) % framesAmount;
 
-	const auto frame = static_cast<uint64_t>(SDL_GetTicks() / (1000 / animator->Fps() * Time::TimeScale())) % framesAmount+1;
-
-	
-	for (auto& sprite : sprites)
+	if (dT > InternalTime::frameRate / (animator->Fps() * Time::TimeScale()) && !animator->IsFrozen())
 	{
-		if (sprite->OrderInLayer() == frame && !animator->IsFrozen())
-		{
-			DrawSprite(sprite.get(), transform, isUIObject);
-		}
-		else if (sprite->OrderInLayer() == animator->Index() && animator->IsFrozen()) {
-			DrawSprite(sprite.get(), transform, isUIObject);
-		}
+		animator->IncreaseIndex();
+		animator->LastUpdate(current);
 	}
+	
+	DrawSprite(sprites[animator->Index() - 1].get(), transform, isUIObject);
 }
 
 void RendererImpl::DrawUISprite(const float width, const float height, const Sprite* sprite, const Transform* transform)
@@ -204,6 +201,9 @@ void RendererImpl::DrawUISprite(const float width, const float height, const Spr
 		return;
 
 	DrawSprite(sprite, transform, texture, &dstRect, NULL);
+
+	if (!KEEP_TEXTURES_AND_FONTS_LOADED)
+		this->textures.clear();
 }
 
 void RendererImpl::DrawSprite(const Sprite* sprite, const Transform* transform, bool isUiOject)
@@ -245,6 +245,9 @@ void RendererImpl::DrawSprite(const Sprite* sprite, const Transform* transform, 
 		return;
 
 	DrawSprite(sprite, transform, texture, &dstRect, &sourceRect);
+
+	if (!KEEP_TEXTURES_AND_FONTS_LOADED)
+		this->textures.clear();
 }
 
 void RendererImpl::DrawSprite(const Sprite* sprite, const Transform* transform, SDL_Texture* texture, SDL_FRect* dstRect, SDL_Rect* sourceRect) {
@@ -263,7 +266,7 @@ void RendererImpl::DrawSprite(const Sprite* sprite, const Transform* transform, 
 	double angle = RAD2DEG<double>(transform->rotation);
 	if (texture == nullptr) {
 		SDL_RenderCopyExF(renderer.get(), NULL, sourceRect, dstRect, angle, NULL, flip);
-		std::cout << SDL_GetError() << std::endl;
+		spic::debug::LogError(SDL_GetError());
 		return;
 	}
 	SDL_RenderCopyExF(renderer.get(), texture, sourceRect, dstRect, angle, NULL, flip);
@@ -315,11 +318,11 @@ void RendererImpl::DrawUI(UIObject* gameObject)
 
 void RendererImpl::DrawText(Text* text)
 {
-	const std::string  font = text->Font();
-	const char* filePath = font.c_str();
+	const std::string  fontPath = text->Font();
+	const char* filePath = fontPath.c_str();
 	if (std::filesystem::exists(filePath))
 	{
-		auto font = TTF_OpenFont(filePath, text->Size());
+		auto font = this->LoadFont(fontPath, text->Size());
 		auto transform = text->Transform().get();
 		auto colour = SDL_Color{ static_cast<unsigned char>(PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, text->Color().R())))
 			, static_cast<unsigned char>(PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, text->Color().G())))
@@ -331,9 +334,10 @@ void RendererImpl::DrawText(Text* text)
 		const float x = transform->position.x + (parent != nullptr ? parent->Transform()->position.x : 0);
 		const float y = transform->position.y + (parent != nullptr ? parent->Transform()->position.y : 0);
 		this->RenderMultiLineText(font, texts, colour, x, y, text->Width(), text->Height(), 2, text->Alignment());
-
-		TTF_CloseFont(font);
 	}
+
+	if (!KEEP_TEXTURES_AND_FONTS_LOADED)
+		this->fonts.clear();
 }
 
 void RendererImpl::Wrap(const TTF_Font* pFont, std::string& input, const float width)
@@ -367,9 +371,10 @@ void RendererImpl::Wrap(const TTF_Font* pFont, std::string& input, const float w
 			current = 0;
 		}
 	}
-	catch (...)
+	catch (const std::exception& ex)
 	{
-
+		const std::string& message = ex.what();
+		spic::debug::LogError("Wrap text failed: " + message);
 	}
 
 	delete w;
@@ -385,6 +390,7 @@ void RendererImpl::RenderMultiLineText(const TTF_Font* pFont, std::string& rText
 	if (rText.empty())
 		return;
 	Wrap(pFont, rText, width);
+
 	try
 	{
 		SurfacePtr pSurface;
@@ -423,7 +429,7 @@ void RendererImpl::RenderMultiLineText(const TTF_Font* pFont, std::string& rText
 			{
 				const float textWidth = static_cast<float>(pSurface->w);
 				const float textHeight = static_cast<float>(pSurface->h);
-				const float nextY = yPosition + ((textHeight + distanceBetweenLines) * currentLine);
+				const float nextY = yPosition + ((textHeight + distanceBetweenLines) * (currentLine-1));
 
 				totalLength = ((textHeight + distanceBetweenLines) * currentLine);
 
@@ -450,7 +456,6 @@ void RendererImpl::RenderMultiLineText(const TTF_Font* pFont, std::string& rText
 				PositionQuad.w = textWidth;
 				PositionQuad.h = textHeight;
 
-
 				SDL_RenderCopyF(this->renderer.get(), pTexture.get(), NULL, &PositionQuad);
 
 				// Avoid memory leak
@@ -461,25 +466,28 @@ void RendererImpl::RenderMultiLineText(const TTF_Font* pFont, std::string& rText
 			pSurface.reset(NULL);
 		}
 	}
-	catch (...)
+	catch (const std::exception& ex)
 	{
-		return;
+		const std::string& message = ex.what();
+		spic::debug::LogError("Multiline render failed: " + message);
 	}
 }
 
 TTF_Font* RendererImpl::LoadFont(const std::string& font, const int size)
 {
+	auto key = std::make_pair(font, size);
 	if (font.empty())
 		return nullptr;
-	bool exists = fonts.find(font) != fonts.end();
+	bool exists = fonts.find(key) != fonts.end();
 	if (exists)
-		return fonts[font].get();
+		return fonts[key].get();
 
 	auto tmp_font = FontPtr(TTF_OpenFont(font.c_str(), size));
 	if (!tmp_font.get())
 		return nullptr;
 
-	return tmp_font.get();
+	fonts.emplace(key, std::move(tmp_font));
+	return  fonts[key].get();
 }
 
 void RendererImpl::NewScene()
@@ -500,30 +508,125 @@ void RendererImpl::SetBackgroundColor()
 	SDL_RenderFillRectF(renderer.get(), &this->windowCamera);
 }
 
-void RendererImpl::DrawRect(const SDL_FRect* rect, const double angle, const Color* colour)
+void RendererImpl::DrawRect(const spic::Rect& rect, const double angle, const spic::Color& color)
 {
-	std::string defaultRectanglePath = StringHelper::GetBasePath() + "\\assets\\textures\\UISprite.png";
-	SDL_Texture* texture = LoadTexture(defaultRectanglePath);
-	SDL_SetRenderDrawColor(renderer.get()
-		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, colour->R()))
-		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, colour->G()))
-		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, colour->B()))
-		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, colour->A())));
-	SDL_RenderCopyExF(renderer.get(), NULL, NULL, rect, angle, NULL, SDL_FLIP_NONE);
+	SDL_FRect dstRect = SDL_FRect(rect.x, rect.y, rect.w, rect.h);
+	if (!SDL_HasIntersectionF(&dstRect, &this->camera))
+		return;
+	dstRect.x = dstRect.x - this->camera.x;
+	dstRect.y = dstRect.y - this->camera.y;
+
+	SDL_Texture* texture = LoadTexture(spic::internal::defaults::RECT_TEXTURE);
+
+	SDL_SetTextureColorMod(texture
+		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, color.R()))
+		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, color.G()))
+		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, color.B())));
+
+	SDL_SetTextureAlphaMod(texture,
+		PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, color.A())));
+
+	const double angleInDeg = spic::general_helper::RAD2DEG<double>(angle);
+	SDL_RenderCopyExF(renderer.get(), texture, NULL, &dstRect, angleInDeg, NULL, SDL_FLIP_NONE);
+
+	if (!KEEP_TEXTURES_AND_FONTS_LOADED)
+		this->textures.clear();
 }
 
-void RendererImpl::DrawLine(const Point* start, const Point* end, const Color* colour)
+void RendererImpl::DrawCircle(const spic::Point& center, const float radius, const float pixelGap, const spic::Color& color)
 {
+	const float diameter = radius * 2.0f;
+	SDL_FRect dstCenter = SDL_FRect(center.x - radius, center.y - radius, diameter, diameter);
+	if (!SDL_HasIntersectionF(&dstCenter, &this->camera))
+		return;
+	dstCenter.x = dstCenter.x + radius - this->camera.x;
+	dstCenter.y = dstCenter.y + radius - this->camera.y;
+
 	SDL_SetRenderDrawColor(renderer.get()
-		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, colour->R()))
-		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, colour->G()))
-		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, colour->B()))
-		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, colour->A())));
-	SDL_RenderDrawLine(renderer.get()
-		, PrecisionRoundingoInt(start->x)
-		, PrecisionRoundingoInt(start->y)
-		, PrecisionRoundingoInt(end->x)
-		, PrecisionRoundingoInt(end->y));
+		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, color.R()))
+		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, color.G()))
+		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, color.B()))
+		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, color.A())));
+
+	// Pixel gap configures how precise the circle is drawn
+	float x = radius - pixelGap;
+	float y = 0.0f;
+	float dx = pixelGap;
+	float dy = pixelGap;
+	// if decision is above zero: y++, otherwise x++
+	float decisionOver2 = dx - diameter;
+
+	while (x >= y)
+	{
+		DrawPoint(dstCenter.x + x, dstCenter.y + y);
+		DrawPoint(dstCenter.x + y, dstCenter.y + x);
+		DrawPoint(dstCenter.x - y, dstCenter.y + x);
+		DrawPoint(dstCenter.x - x, dstCenter.y + y);
+		DrawPoint(dstCenter.x - x, dstCenter.y - y);
+		DrawPoint(dstCenter.x - y, dstCenter.y - x);
+		DrawPoint(dstCenter.x + y, dstCenter.y - x);
+		DrawPoint(dstCenter.x + x, dstCenter.y - y);
+
+		if (decisionOver2 <= 0.0f)
+		{
+			y += pixelGap;
+			decisionOver2 += dy;
+			dy += 2 * pixelGap;
+		}
+		if (decisionOver2 > 0.0f)
+		{
+			x -= pixelGap;
+			dx += 2 * pixelGap;
+			decisionOver2 += (-diameter) + dx;
+		}
+	}
+}
+
+void RendererImpl::DrawPoint(const spic::Point& point, const spic::Color& color)
+{
+	SDL_FPoint dstPoint = { point.x , point.y };
+	if (!SDL_PointInFRect(&dstPoint, &this->camera)) {
+		return;
+	}
+	dstPoint.x = dstPoint.x - this->camera.x;
+	dstPoint.y = dstPoint.y - this->camera.y;
+
+	SDL_SetRenderDrawColor(renderer.get()
+		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, color.R()))
+		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, color.G()))
+		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, color.B()))
+		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, color.A())));
+
+	DrawPoint(dstPoint.x, dstPoint.y);
+}
+
+void RendererImpl::DrawPoint(const float x, const float y) {
+	SDL_RenderDrawPointF(renderer.get(), x, y);
+}
+
+void RendererImpl::DrawLine(const spic::Point& start, const spic::Point& end, const spic::Color& color)
+{
+	SDL_FPoint startPoint = { start.x , start.y };
+	SDL_FPoint endPoint = { end.x , end.y };
+	if (!SDL_PointInFRect(&startPoint, &this->camera) && !SDL_PointInFRect(&endPoint, &this->camera)) {
+		return;
+	}
+	startPoint.x = startPoint.x - this->camera.x;
+	startPoint.y = startPoint.y - this->camera.y;
+	endPoint.x = endPoint.x - this->camera.x;
+	endPoint.y = endPoint.y - this->camera.y;
+
+	SDL_SetRenderDrawColor(renderer.get()
+		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, color.R()))
+		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, color.G()))
+		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, color.B()))
+		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, color.A())));
+
+	SDL_RenderDrawLineF(renderer.get()
+		, startPoint.x
+		, startPoint.y
+		, endPoint.x
+		, endPoint.y);
 }
 
 void RendererImpl::UpdateCamera(Camera* camera)
@@ -534,7 +637,7 @@ void RendererImpl::UpdateCamera(Camera* camera)
 	this->rotation = transform->rotation;
 
 	int width, height = 0;
-	SDL_GetWindowSize(window.get(), &width, &height);
+	SDL_GetWindowSize(settings.get(), &width, &height);
 	this->camera =
 	{ pos.x
 	, pos.y
@@ -559,9 +662,15 @@ void RendererImpl::Clean()
 		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, this->backgroundColor.B()))
 		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, this->backgroundColor.A()))
 	);
+
+	if (!KEEP_TEXTURES_AND_FONTS_LOADED)
+	{
+		this->textures.clear();
+		this->fonts.clear();
+	}
 }
 
-void RendererImpl::Render()
+void RendererImpl::Render() const
 {
 	SDL_SetRenderDrawColor(renderer.get()
 		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, this->backgroundColor.R()))
@@ -573,29 +682,29 @@ void RendererImpl::Render()
 	SDL_RenderPresent(renderer.get());
 }
 
-void RendererImpl::UpdateWindow(const spic::window::WindowValues* values)
+void RendererImpl::UpdateWindow()
 {
 	Uint32 window_flags = -1;
 
-	switch (values->selector)
+	switch (spic::settings::SELECTOR)
 	{
-	case FULLSCREENTYPE::BORDERLESS:
+	case spic::settings::FULLSCREENTYPE::BORDERLESS:
 		window_flags = SDL_WINDOW_FULLSCREEN_DESKTOP;
 		break;
-	case FULLSCREENTYPE::FULLSCREEN:
+	case spic::settings::FULLSCREENTYPE::FULLSCREEN:
 		window_flags = SDL_WINDOW_FULLSCREEN;
 		break;
-	case FULLSCREENTYPE::WINDOWED:
+	case spic::settings::FULLSCREENTYPE::WINDOWED:
 		window_flags = 0;
 		break;
 	}
 
 	if (window_flags != -1)
-		SDL_SetWindowFullscreen(window.get(),
+		SDL_SetWindowFullscreen(settings.get(),
 			window_flags);
 
 	int width, height = 0;
-	SDL_GetWindowSize(window.get(), &width, &height);
+	SDL_GetWindowSize(settings.get(), &width, &height);
 	this->windowCamera = { 0, 0, static_cast<float>(width), static_cast<float>(height) };
 	this->camera.w = static_cast<float>(width);
 	this->camera.h = static_cast<float>(height);

@@ -2,12 +2,10 @@
 #define RIGIDBODY_H_
 
 #include <iostream>
-#include "GameObject.hpp"
 #include "Component.hpp"
 #include "Point.hpp"
 
 namespace spic {
-
     /**
      * @brief Enumeration for different rigid body types
      */
@@ -16,8 +14,6 @@ namespace spic {
         kinematicBody,
         dynamicBody
     };
-
-    class GameObject;
 
     /**
      * @brief A component representing a rigid body.
@@ -39,6 +35,13 @@ namespace spic {
              * @spicapi
              */
             float GravityScale() const;
+
+            /**
+             * @brief Get rigid body's velocity
+             * @return The current velocity
+             * @spicapi
+             */
+            Point Velocity() const;
 
             /**
              * @brief Get rigid body's body type
@@ -74,8 +77,7 @@ namespace spic {
              *        and magnitude of the force to be applied.
              * @spicapi
              */
-            void AddForce(std::shared_ptr<spic::GameObject> entity, const Point& forceDirection);
-
+            void AddForce(const Point& forceDirection);
         private:
             float mass;
             float gravityScale;

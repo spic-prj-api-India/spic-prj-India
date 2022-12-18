@@ -7,7 +7,7 @@
 #include "IEngineExtension.hpp"
 #include "Scene.hpp"
 #include "TypeHelper.hpp"
-#include "WindowValues.hpp"
+#include "Settings.hpp"
 #include <functional>
 
 namespace spic {
@@ -95,11 +95,13 @@ namespace spic {
 		@param The sceneName is the key in the scenes list.
 		@param The scene that will be registered in scenes list.
 		*/
-		void RegisterScene(const std::string& sceneName, std::shared_ptr<Scene> scene);
+		void RegisterScene(const std::string& sceneName, std::function<spic::Scene* ()> scene);
 
 		/*
 		@brief Load the specified scene.
-		@param scene: The scene you want to load.
+		@details Destoys the current scene and sets it to this one even if this scene is already loaded
+		@param scene The scene you want to load.
+		@param sceneName Name of the scene
 		*/
 		void LoadScene(std::shared_ptr<Scene> scene);
 
@@ -146,7 +148,7 @@ namespace spic {
 		* @brief Start game loop
 		* @spicapi
 		*/
-		void Start(const spic::window::WindowValues* values);
+		void Start();
 
 		/*
 		* @brief Stop game loop

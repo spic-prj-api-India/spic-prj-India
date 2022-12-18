@@ -19,31 +19,34 @@ namespace spic::internal::extensions {
     {
     public:
         Box2DCollisionListener();
+
+        /**
+        * @brief Constructor for all callback methods
+        * @param enterCallback Callback that is called when collider enters collision
+        * @param exitCallback Callback that is called when collider exits collision
+        * @param stayCallback Callback that is called when collider stays in collision inside the same frame
+        */
         Box2DCollisionListener(std::function<void(const std::shared_ptr<spic::GameObject>, const std::shared_ptr<spic::Collider>)> enterCallback,
             std::function<void(const std::shared_ptr<spic::GameObject>, const std::shared_ptr<spic::Collider>)> exitCallback,
             std::function<void(const std::shared_ptr<spic::GameObject>, const std::shared_ptr<spic::Collider>)> stayCallback);
 
         /**
         * @brief Is called when body collides with another body
-        * @spicapi
         */
         virtual void BeginContact(b2Contact* contact);
 
         /**
         * @brief Is called when body is not colliding with another body anymore
-        * @spicapi
         */
         virtual void EndContact(b2Contact* contact);
 
         /**
         * @brief Is called when body is still colliding with another body
-        * @spicapi
         */
         virtual void PreSolve(b2Contact* contact, const b2Manifold* oldManifold);
 
         /**
         * @brief Is called when body has stopped colliding with another body
-        * @spicapi
         */
         virtual void PostSolve(b2Contact* contact, const b2ContactImpulse* impulse);
     private:

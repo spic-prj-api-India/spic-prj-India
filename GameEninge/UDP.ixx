@@ -13,6 +13,7 @@ module;
 #include <memory>
 #include <boost/algorithm/string/case_conv.hpp>
 #include <boost/algorithm/string.hpp>
+#include "Debug.hpp"
 
 export module UDP;
 
@@ -36,8 +37,8 @@ struct Client {
 
     void handle_receive(const boost::system::error_code& error, size_t bytes_transferred) {
 
-        if (error) {
-            //std::cout << "Receive failed: " << error.message() << "\n";
+        if (error.failed()) {
+            spic::debug::LogError("Receive failed: " + error.message());
             return;
         }
 
@@ -66,7 +67,7 @@ struct Client {
 std::mutex listenersMutex;
 std::vector<std::unique_ptr<Client>> listeners;
 
-export void Receiver(int UDP_PORT)
+export void Receiver(const int UDP_PORT)
 {
     try {
         listeners.emplace_back(std::make_unique<Client>());
@@ -76,15 +77,12 @@ export void Receiver(int UDP_PORT)
 
         client->wait();
 
-        //std::cerr << "Receiving\n";
         io_service.run();
-        //std::cerr << "Receiver exit\n";
     }
-
     catch (const std::exception& ex) {
-        std::cerr << ex.what() << std::endl;
+        const std::string& message = ex.what();
+        spic::debug::LogError("Receive failed: " + message);
     }
-    
 }
 
 export void StopRunning()
@@ -100,8 +98,9 @@ export void Sender(const std::string& in, const std::string& IPADDRESS, const in
     udp::endpoint remote_endpoint = udp::endpoint(address::from_string(IPADDRESS), UDP_PORT);
     socket.open(udp::v4());
 
-    boost::system::error_code err;
-    auto sent = socket.send_to(boost::asio::buffer(in), remote_endpoint, 0, err);
+    boost::system::error_code error;
+    auto sent = socket.send_to(boost::asio::buffer(in), remote_endpoint, 0, error);
     socket.close();
-    //std::cerr << "Sent Payload --- " << sent << "\n";
+    if(error.failed())
+        spic::debug::LogError("Send failed: " + error.message());
 }

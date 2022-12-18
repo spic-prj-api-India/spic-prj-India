@@ -4,17 +4,10 @@
 #include <iostream>
 #include "Component.hpp"
 #include "Collider.hpp"
-#include "GameObject.hpp"
 
 namespace spic {
     class BehaviourScript : public Component {
         public:
-            /**
-             * @brief Sets game object of Behaviour script
-             * @spicapi
-             */
-            void GameObject(const std::shared_ptr<spic::GameObject> gameObject);
-
             /**
              * @brief Is called once on start
              * @spicapi
@@ -53,12 +46,6 @@ namespace spic {
              * @spicapi
              */
             virtual void OnTriggerStay2D(const Collider& collider);
-    public:
-        /**
-        * @brief Parent of script component
-        * @spicapi
-        */
-        std::shared_ptr<spic::GameObject> gameObject;
     };
 }
 

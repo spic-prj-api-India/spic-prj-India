@@ -1,7 +1,7 @@
-#include "CredditsSceneScript.h"
+#include "CreditsSceneScript.h"
 #include "GameEngine.hpp"
 
-void CredditsSceneScript::OnInput()
+void CreditsSceneScript::OnInput()
 {
 	if (spic::Input::GetKeyDown(spic::Input::KeyCode::SPACE))
 	{
