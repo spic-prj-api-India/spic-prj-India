@@ -46,37 +46,37 @@ namespace spic::internal::InputImpl {
      * @brief Returns true while the user holds down the key identified by keycode.
      * @spicapi
      */
-    bool GetKey(spic::Input::KeyCode key);
+    bool GetKey(spic::input::KeyCode key);
 
     /**
      * @brief Returns true during the frame the user starts pressing down the key identified by keycode.
      * @spicapi
      */
-    bool GetKeyDown(spic::Input::KeyCode key);
+    bool GetKeyDown(spic::input::KeyCode key);
 
     /**
      * @brief Returns true during the frame the user releases the key identified by keycode.
      * @spicapi
      */
-    bool GetKeyUp(spic::Input::KeyCode key);
+    bool GetKeyUp(spic::input::KeyCode key);
 
     /**
      * @brief Returns whether the given mouse button is held down.
      * @spicapi
      */
-    bool GetMouseButton(spic::Input::MouseButton which);
+    bool GetMouseButton(spic::input::MouseButton which);
 
     /**
      * @brief Returns true during the frame the user pressed the given mouse button.
      * @spicapi
      */
-    bool GetMouseButtonDown(spic::Input::MouseButton which);
+    bool GetMouseButtonDown(spic::input::MouseButton which);
 
     /**
      * @brief Returns true during the frame the user releases the given mouse button.
      * @spicapi
      */
-    bool GetMouseButtonUp(spic::Input::MouseButton which);
+    bool GetMouseButtonUp(spic::input::MouseButton which);
 }
 
 #endif // INPUTIMPL_H_

@@ -5,15 +5,33 @@
 #include "Button.hpp"
 #include "TypeHelper.hpp"
 #include "BehaviourScript.hpp"
+#include "IncreaseGameSpeedListener.hpp"
+#include "DecreaseGameSpeedListener.hpp"
+#include "ResetGameSpeedListener.hpp"
+#include "Debug.hpp"
+#include "Settings.hpp"
 
-namespace spic::internal::systems {
+namespace spic::internal::systems 
+{
 	InputSystem::InputSystem() 
-	{}
+	{
+	}
 
 	void InputSystem::Start(std::vector<std::shared_ptr<spic::GameObject>>& entities, Scene& currentScene)
 	{
 		buttonClickListener = std::make_shared<ButtonClickListener>();
-		Input::Subscribe(spic::Input::MouseButton::LEFT, buttonClickListener);
+		spic::input::Subscribe(spic::settings::MOUSEBUTTON_BOUND_TO_BUTTONS, buttonClickListener);
+
+		if (spic::debug::DEBUG_MODE)
+		{
+			auto increase = std::make_shared<spic::internal::input::IncreaseGameSpeedListener>();
+			auto decrease = std::make_shared<spic::internal::input::DecreaseGameSpeedListener>();
+			auto reset = std::make_shared<spic::internal::input::ResetGameSpeedListener>();
+
+			spic::input::Subscribe(spic::settings::INCREASE_SPEED, increase);
+			spic::input::Subscribe(spic::settings::DECREASE_SPEED, decrease);
+			spic::input::Subscribe(spic::settings::RESET_SPEED, reset);
+		}
 
 		auto scripts = this->GetAllScripts(entities);
 		for (auto& script : scripts)

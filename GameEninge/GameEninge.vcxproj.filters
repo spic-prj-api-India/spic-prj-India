@@ -417,6 +417,15 @@
     <ClInclude Include="PhysicsValues.hpp">
       <Filter>Header Files\settings</Filter>
     </ClInclude>
+    <ClInclude Include="IncreaseGameSpeedListener.hpp">
+      <Filter>Header Files\core\systems\input</Filter>
+    </ClInclude>
+    <ClInclude Include="DecreaseGameSpeedListener.hpp">
+      <Filter>Header Files\core\systems\input</Filter>
+    </ClInclude>
+    <ClInclude Include="ResetGameSpeedListener.hpp">
+      <Filter>Header Files\core\systems\input</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sample.cpp">
@@ -607,6 +616,15 @@
     </ClCompile>
     <ClCompile Include="Box2DCollisionListener.cpp">
       <Filter>Source Files\extensions\physics</Filter>
+    </ClCompile>
+    <ClCompile Include="ResetGameSpeedListener.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="IncreaseGameSpeedListener.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DecreaseGameSpeedListener.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

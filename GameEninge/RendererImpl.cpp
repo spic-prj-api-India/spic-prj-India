@@ -39,8 +39,6 @@ RendererImpl::~RendererImpl()
 
 void RendererImpl::Start()
 {
-	//Exit(); // does nothing if it has not been called yet
-
 	// sets up video
 	if (SDL_Init(SDL_INIT_VIDEO != 0))
 	{
@@ -87,16 +85,16 @@ void RendererImpl::Start()
 void spic::internal::rendering::RendererImpl::RenderFps()
 {
 	using namespace spic::internal::time;
-	auto frameRate = std::to_string(InternalTime::frameRate);
+	auto frameRate = std::to_string(static_cast<int>(std::floor(InternalTime::frameRate)));
 
 	auto defaultText = spic::internal::defaults::TEXT_FONT;
 
-	auto font = this->LoadFont(defaultText, 10);
+	auto font = this->LoadFont(defaultText, 20);
 
 	SDL_Color orange = SDL_Color{ 255,255,0,255 };
-	this->RenderMultiLineText(font,frameRate, orange,0,0,100,100,0,spic::Alignment::CENTER);
+	this->RenderMultiLineText(font,frameRate, orange, static_cast<float>(spic::settings::WINDOW_WIDTH - 50), 0, 50, 100, 0, spic::Alignment::CENTER);
 
-	if (!KEEP_TEXTURES_AND_FONTS_LOADED)
+	if (!spic::settings::KEEP_TEXTURES_AND_FONTS_LOADED)
 		this->fonts.clear();
 }
 
@@ -202,7 +200,7 @@ void RendererImpl::DrawUISprite(const float width, const float height, const Spr
 
 	DrawSprite(sprite, transform, texture, &dstRect, NULL);
 
-	if (!KEEP_TEXTURES_AND_FONTS_LOADED)
+	if (!spic::settings::KEEP_TEXTURES_AND_FONTS_LOADED)
 		this->textures.clear();
 }
 
@@ -246,7 +244,7 @@ void RendererImpl::DrawSprite(const Sprite* sprite, const Transform* transform, 
 
 	DrawSprite(sprite, transform, texture, &dstRect, &sourceRect);
 
-	if (!KEEP_TEXTURES_AND_FONTS_LOADED)
+	if (!spic::settings::KEEP_TEXTURES_AND_FONTS_LOADED)
 		this->textures.clear();
 }
 
@@ -336,7 +334,7 @@ void RendererImpl::DrawText(Text* text)
 		this->RenderMultiLineText(font, texts, colour, x, y, text->Width(), text->Height(), 2, text->Alignment());
 	}
 
-	if (!KEEP_TEXTURES_AND_FONTS_LOADED)
+	if (!spic::settings::KEEP_TEXTURES_AND_FONTS_LOADED)
 		this->fonts.clear();
 }
 
@@ -487,7 +485,8 @@ TTF_Font* RendererImpl::LoadFont(const std::string& font, const int size)
 		return nullptr;
 
 	fonts.emplace(key, std::move(tmp_font));
-	return  fonts[key].get();
+
+	return fonts[key].get();
 }
 
 void RendererImpl::NewScene()
@@ -513,6 +512,7 @@ void RendererImpl::DrawRect(const spic::Rect& rect, const double angle, const sp
 	SDL_FRect dstRect = SDL_FRect(rect.x, rect.y, rect.w, rect.h);
 	if (!SDL_HasIntersectionF(&dstRect, &this->camera))
 		return;
+
 	dstRect.x = dstRect.x - this->camera.x;
 	dstRect.y = dstRect.y - this->camera.y;
 
@@ -529,7 +529,7 @@ void RendererImpl::DrawRect(const spic::Rect& rect, const double angle, const sp
 	const double angleInDeg = spic::general_helper::RAD2DEG<double>(angle);
 	SDL_RenderCopyExF(renderer.get(), texture, NULL, &dstRect, angleInDeg, NULL, SDL_FLIP_NONE);
 
-	if (!KEEP_TEXTURES_AND_FONTS_LOADED)
+	if (!spic::settings::KEEP_TEXTURES_AND_FONTS_LOADED)
 		this->textures.clear();
 }
 
@@ -585,7 +585,9 @@ void RendererImpl::DrawCircle(const spic::Point& center, const float radius, con
 void RendererImpl::DrawPoint(const spic::Point& point, const spic::Color& color)
 {
 	SDL_FPoint dstPoint = { point.x , point.y };
-	if (!SDL_PointInFRect(&dstPoint, &this->camera)) {
+
+	if (!SDL_PointInFRect(&dstPoint, &this->camera)) 
+	{
 		return;
 	}
 	dstPoint.x = dstPoint.x - this->camera.x;
@@ -608,9 +610,9 @@ void RendererImpl::DrawLine(const spic::Point& start, const spic::Point& end, co
 {
 	SDL_FPoint startPoint = { start.x , start.y };
 	SDL_FPoint endPoint = { end.x , end.y };
-	if (!SDL_PointInFRect(&startPoint, &this->camera) && !SDL_PointInFRect(&endPoint, &this->camera)) {
+	if (!SDL_PointInFRect(&startPoint, &this->camera) && !SDL_PointInFRect(&endPoint, &this->camera))
 		return;
-	}
+	
 	startPoint.x = startPoint.x - this->camera.x;
 	startPoint.y = startPoint.y - this->camera.y;
 	endPoint.x = endPoint.x - this->camera.x;
@@ -663,7 +665,7 @@ void RendererImpl::Clean()
 		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, this->backgroundColor.A()))
 	);
 
-	if (!KEEP_TEXTURES_AND_FONTS_LOADED)
+	if (!spic::settings::KEEP_TEXTURES_AND_FONTS_LOADED)
 	{
 		this->textures.clear();
 		this->fonts.clear();

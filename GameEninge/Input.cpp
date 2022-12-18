@@ -3,97 +3,97 @@
 #include "InputImpl.hpp"
 
 namespace spic {
-	bool Input::Quit()
+	bool input::Quit()
 	{
 		return spic::internal::InputImpl::Quit();
 	}
 
-	bool Input::AnyKey()
+	bool input::AnyKey()
 	{
 		return spic::internal::InputImpl::AnyKey();
 	}
 
-	bool Input::AnyKeyDown()
+	bool input::AnyKeyDown()
 	{
 		return spic::internal::InputImpl::AnyKeyDown();
 	}
 
-	Point Input::MousePosition()
+	Point input::MousePosition()
 	{
 		return spic::internal::InputImpl::MousePosition();
 	}
 
-	double Input::GetAxis()
+	double input::GetAxis()
 	{
 		return spic::internal::InputImpl::GetAxis();
 	}
 
-	bool Input::GetKey(KeyCode key)
+	bool input::GetKey(KeyCode key)
 	{
 		return spic::internal::InputImpl::GetKey(key);
 	}
 
-	bool Input::GetKeyDown(KeyCode key)
+	bool input::GetKeyDown(KeyCode key)
 	{
 		return spic::internal::InputImpl::GetKeyDown(key);
 	}
 
-	bool Input::GetKeyUp(KeyCode key)
+	bool input::GetKeyUp(KeyCode key)
 	{
 		return spic::internal::InputImpl::GetKeyUp(key);
 	}
 
-	bool Input::GetMouseButton(MouseButton which)
+	bool input::GetMouseButton(MouseButton which)
 	{
 		return spic::internal::InputImpl::GetMouseButton(which);
 	}
 
-	bool Input::GetMouseButtonDown(MouseButton which)
+	bool input::GetMouseButtonDown(MouseButton which)
 	{
 		return spic::internal::InputImpl::GetMouseButtonDown(which);
 	}
 
-	bool Input::GetMouseButtonUp(MouseButton which)
+	bool input::GetMouseButtonUp(MouseButton which)
 	{
 		return spic::internal::InputImpl::GetMouseButtonUp(which);
 	}
 
-	void Input::Subscribe(KeyCode keyEvent, const std::shared_ptr<spic::IKeyListener>& keyListener)
+	void input::Subscribe(KeyCode keyEvent, const std::shared_ptr<spic::IKeyListener>& keyListener)
 	{
 		spic::internal::InputManager::GetInstance()->Subscribe(keyEvent, keyListener);
 	}
 
-	void Input::Subscribe(MouseButton mouseEvent, const std::shared_ptr<spic::IMouseListener>& mouseListener)
+	void input::Subscribe(MouseButton mouseEvent, const std::shared_ptr<spic::IMouseListener>& mouseListener)
 	{
 		spic::internal::InputManager::GetInstance()->Subscribe(mouseEvent, mouseListener);
 	}
 
-	void Input::UnSubscribe(KeyCode keyEvent, const std::shared_ptr<spic::IKeyListener>& keyListener)
+	void input::UnSubscribe(KeyCode keyEvent, const std::shared_ptr<spic::IKeyListener>& keyListener)
 	{
 		spic::internal::InputManager::GetInstance()->UnSubscribe(keyEvent, keyListener);
 	}
 
-	void Input::UnSubscribe(KeyCode keyEvent)
+	void input::UnSubscribe(KeyCode keyEvent)
 	{
 		spic::internal::InputManager::GetInstance()->UnSubscribe(keyEvent);
 	}
 
-	void Input::UnSubscribe(MouseButton mouseEvent, const std::shared_ptr<spic::IMouseListener>& mouseListener)
+	void input::UnSubscribe(MouseButton mouseEvent, const std::shared_ptr<spic::IMouseListener>& mouseListener)
 	{
 		spic::internal::InputManager::GetInstance()->UnSubscribe(mouseEvent, mouseListener);
 	}
 
-	void Input::UnSubscribe(MouseButton mouseEvent)
+	void input::UnSubscribe(MouseButton mouseEvent)
 	{
 		spic::internal::InputManager::GetInstance()->UnSubscribe(mouseEvent);
 	}
 
-	void Input::UnSubscribeAll()
+	void input::UnSubscribeAll()
 	{
 		spic::internal::InputManager::GetInstance()->UnSubscribeAll();
 	}
 
-	void Input::ResetSubscribedEvents()
+	void input::ResetSubscribedEvents()
 	{
 		spic::internal::InputManager::GetInstance()->Reset();
 	}

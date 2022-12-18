@@ -40,7 +40,7 @@ namespace spic::internal::systems {
 		/**
 		 * @brief The keylistiner bound to show fps
 		*/
-		std::shared_ptr<FPSListener> fps;
+		std::shared_ptr<spic::internal::input::FPSListener> fps;
 		/**
 		 * @brief Filters entities between UI and non UI
 		 * @spicapi

@@ -3,7 +3,7 @@
 
 void CreditsSceneScript::OnInput()
 {
-	if (spic::Input::GetKeyDown(spic::Input::KeyCode::SPACE))
+	if (spic::input::GetKeyDown(spic::input::KeyCode::SPACE))
 	{
 		if (start)
 		{
@@ -17,7 +17,7 @@ void CreditsSceneScript::OnInput()
 		}
 	}
 
-	if (spic::Input::GetKeyDown(spic::Input::KeyCode::BACKSPACE))
+	if (spic::input::GetKeyDown(spic::input::KeyCode::BACKSPACE))
 	{
 		spic::GameEngine::GetInstance()->LoadSceneByName("menu");
 	}

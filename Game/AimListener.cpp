@@ -11,11 +11,11 @@ AimListener::AimListener(std::shared_ptr<spic::GameObject> weapon) : rocketCount
 	this->angle = weapon->Transform()->rotation;
 	this->weapon = std::move(weapon);
 
-	spic::Input::Subscribe(spic::Input::MouseButton::LEFT, this->followMouseListener);
+	spic::input::Subscribe(spic::input::MouseButton::LEFT, this->followMouseListener);
 }
 
 void AimListener::OnMouseMoved() {
-	const spic::Point& mousePosition = spic::Input::MousePosition();
+	const spic::Point& mousePosition = spic::input::MousePosition();
 	const spic::Point& weaponPosition = weapon->Transform()->position;
 	const float deltaX = weaponPosition.x - mousePosition.x;
 	const float deltaY = weaponPosition.y - mousePosition.y;
@@ -46,7 +46,7 @@ void AimListener::Shoot()
 	spic::GameObject::Create(rocket);
 	followMouseListener->AddFollower(rocket);
 
-	spic::Point mousePosition = spic::Input::MousePosition();
+	spic::Point mousePosition = spic::input::MousePosition();
 	spic::Point weaponPosition = weapon->Transform()->position;
 	spic::Point force{};
 	force.x = weaponPosition.x - mousePosition.x;
