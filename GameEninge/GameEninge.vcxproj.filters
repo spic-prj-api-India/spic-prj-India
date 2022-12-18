@@ -587,15 +587,6 @@
     <ClCompile Include="DataHandler.cpp">
       <Filter>Source Files\core\models</Filter>
     </ClCompile>
-    <ClCompile Include="FPSlistener.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="InternalTime.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="AudioFacade.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Collider.cpp">
       <Filter>Source Files\components\collider</Filter>
     </ClCompile>
@@ -604,6 +595,15 @@
     </ClCompile>
     <ClCompile Include="Box2DCollisionListener.cpp">
       <Filter>Source Files\extensions\physics</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioFacade.cpp">
+      <Filter>Source Files\components\audio</Filter>
+    </ClCompile>
+    <ClCompile Include="FPSlistener.cpp">
+      <Filter>Source Files\core\systems\rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="InternalTime.cpp">
+      <Filter>Source Files\models</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -75,7 +75,6 @@ void RendererImpl::Start()
 
 	this->UpdateWindow();
 
-
 	auto tmp_sprites = SurfacePtr(IMG_Load(spic::internal::defaults::MISSING_TEXTURE.c_str()));
 	if (!tmp_sprites.get())
 		return;

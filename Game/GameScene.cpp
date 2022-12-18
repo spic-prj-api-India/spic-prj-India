@@ -81,11 +81,9 @@ void GameScene::SetContents()
 	//box->AddComponent<spic::AudioSource>(music);
 	box2->AddComponent<spic::BoxCollider>(boxCollider);
 	box2->AddComponent<spic::RigidBody>(boxRigidBody);
-	box2->AddComponent<spic::BehaviourScript>(script);
 	box2->AddComponent<spic::Sprite>(boxSprite);
 	box3->AddComponent<spic::BoxCollider>(boxCollider);
 	box3->AddComponent<spic::RigidBody>(boxRigidBody);
-	box3->AddComponent<spic::BehaviourScript>(script);
 	box3->AddComponent<spic::Sprite>(boxSprite);
 
 	spic::Point ballPosition = { 400.0f, 24.0f };

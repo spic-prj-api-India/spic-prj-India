@@ -131,9 +131,9 @@ void spic::DataHandler::AddProperties(const std::shared_ptr<spic::GameObject>& e
 	if (scale)
 		memento.properties["scale"] = std::to_string(scale);
 
-	const auto dont_destroy_on_load = entity->DontDestroyOnLoad();
-	if (dont_destroy_on_load || !dont_destroy_on_load)
-		memento.properties["dont_destroy_on_load"] = std::to_string(dont_destroy_on_load);
+	const auto destroy_on_load = entity->DestroyOnLoad();
+	if (destroy_on_load || !destroy_on_load)
+		memento.properties["destroy_on_load"] = std::to_string(destroy_on_load);
 
 	memento.properties["type_name"] = spic::TypeHelper::GetTypeName(entity);
 }
@@ -169,7 +169,7 @@ void spic::DataHandler::AddPropertiesToEntity(const std::shared_ptr<spic::GameOb
 		std::string pos_y = "pos_y";
 		std::string rotation = "rotation";
 		std::string scale = "scale";
-		std::string dont_destroy_on_load = "dont_destroy_on_load";
+		std::string destroy_on_load = "destroy_on_load";
 
 
 		if (att->Name() == active) {
@@ -193,8 +193,8 @@ void spic::DataHandler::AddPropertiesToEntity(const std::shared_ptr<spic::GameOb
 		else if (att->Name() == scale) {
 			entity->Transform()->scale = std::stof(result);
 		}
-		else if (att->Name() == dont_destroy_on_load && (att->ValueStr() == "1" || att->ValueStr() == "0")) {
-			entity->DontDestroyOnLoad(std::stoi(result));
+		else if (att->Name() == destroy_on_load && (att->ValueStr() == "1" || att->ValueStr() == "0")) {
+			entity->DestroyOnLoad(std::stoi(result));
 		}
 	}
 }

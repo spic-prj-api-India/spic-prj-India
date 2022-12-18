@@ -185,7 +185,7 @@ void EntityManager::DestroyScene(bool forceDelete)
 	else
 		entities.erase(std::remove_if(entities.begin(), entities.end()
 			, [](const std::shared_ptr<spic::GameObject>& x){
-				return !x->DontDestroyOnLoad(); 
+				return x->DestroyOnLoad();
 			}), entities.end());
 }
 
