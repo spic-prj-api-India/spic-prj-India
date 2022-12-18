@@ -15,7 +15,7 @@ namespace spic::internal {
 
 	void ButtonClickListener::OnMouseClicked()
 	{
-		spic::Point point = spic::Input::MousePosition();
+		spic::Point point = spic::input::MousePosition();
 		Rect mouseRect = {
 			point.x,
 			point.y,

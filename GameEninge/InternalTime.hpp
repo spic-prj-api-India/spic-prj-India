@@ -75,6 +75,8 @@ namespace spic::internal::time
 		 * @details Uses the std chrono lib
 		*/
 		static void Delay();
+
+		static double TickInMilliseconds();
 	};
 }
 #endif

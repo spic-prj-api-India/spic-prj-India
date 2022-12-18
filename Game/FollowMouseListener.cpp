@@ -3,7 +3,7 @@
 
 FollowMouseListener::FollowMouseListener()
 {
-	const spic::Point mousePosition = spic::Input::MousePosition();
+	const spic::Point mousePosition = spic::input::MousePosition();
 	target = std::make_unique<spic::Point>(mousePosition.x, mousePosition.y);
 	followers;
 }
@@ -17,7 +17,7 @@ void FollowMouseListener::AddFollower(std::shared_ptr<spic::ForceDriven> followe
 }
 
 void FollowMouseListener::OnMouseMoved() {
-	const spic::Point mousePosition = spic::Input::MousePosition();
+	const spic::Point mousePosition = spic::input::MousePosition();
 	this->target->x = mousePosition.x;
 	this->target->y = mousePosition.y;
 }

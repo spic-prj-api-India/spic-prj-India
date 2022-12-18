@@ -4,7 +4,7 @@
 using namespace spic;
 
 double Time::deltaTime {0.0};
-float Time::timeScale {1.0};
+double Time::timeScale {1.0};
 
 
 double spic::Time::DeltaTime()
@@ -16,12 +16,15 @@ double spic::Time::DeltaTime()
     return Time::deltaTime;
 }
 
-float spic::Time::TimeScale()
+double spic::Time::TimeScale()
 {
     return spic::Time::timeScale;
 }
 
-void spic::Time::TimeScale(const float newTimeScale)
+void spic::Time::TimeScale(const double newTimeScale)
 {
+    if (newTimeScale < 0 || 2 < newTimeScale)
+        return;
+
     Time::timeScale = newTimeScale;
 }
