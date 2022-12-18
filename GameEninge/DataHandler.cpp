@@ -137,6 +137,11 @@ void spic::DataHandler::AddProperties(const std::shared_ptr<spic::Persistable>& 
 	}
 }
 
+void spic::DataHandler::AddSettings(const std::map<std::string, std::string> settings)
+{
+
+}
+
 void spic::DataHandler::Save()
 {
 	this->saveDocument->SaveFile();
@@ -218,4 +223,9 @@ void spic::DataHandler::LoadProperties(const std::shared_ptr<spic::Persistable>&
 				setter(attribute.second);
 		}
 	}
+}
+
+void spic::DataHandler::LoadSettings(std::map<std::string, std::string>& values)
+{
+
 }

@@ -29,10 +29,11 @@ namespace spic
 
 		void AddScene(const std::vector<std::shared_ptr<spic::GameObject>>& entities);
 		void AddSettings(const std::map<std::string, std::string> settings);
+
 		void Save();
 
 		void LoadScene(const std::vector<std::shared_ptr<spic::GameObject>>& entities);
-		/*void LoadSettings(std::map<std::string, std::string>& values);*/
+		void LoadSettings(std::map<std::string, std::string>& values);
 	private:
 		void AddContent(bool& isPersistable, const std::shared_ptr<spic::GameObject>& entity, IMemento& memento);
 		void AddProperties(const std::shared_ptr<spic::Persistable>& entity, IMemento& memento);
