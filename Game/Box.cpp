@@ -3,6 +3,10 @@
 #include <RigidBody.hpp>
 #include "BoxCollider.hpp"
 
+Box::Box() : Persistable(this), GameObject()
+{
+}
+
 Box::Box(const std::string& name, const spic::Point& position) : Persistable(this), GameObject(name)
 {
 	SetAttributes(position);

@@ -14,7 +14,7 @@ namespace spic {
 
 	GameObject::GameObject() : active{ true }
 		, layer{ 0 }, parent{ nullptr }
-		, name{ spic::general_helper::GetRandomUUID()}
+		, name{ spic::general_helper::GetRandomUUID()}, destroyOnLoad{ true }
 	{
 		components = {};
 	}
@@ -24,7 +24,7 @@ namespace spic {
 		internal::EntityManager::GetInstance()->AddEntity(std::move(gameObject));
 	}
 
-	GameObject::GameObject(const std::string& name) : active{ true }, layer{ 0 }, parent{ nullptr }, name{name}
+	GameObject::GameObject(const std::string& name) : active{ true }, layer{ 0 }, parent{ nullptr }, name{name}, destroyOnLoad{ true }
 	{
 	}
 
@@ -170,7 +170,7 @@ namespace spic {
 
 	void GameObject::Name(const std::string& newName) 
 	{
-		if (spic::internal::EntityManager::GetInstance()->CheckIfNameExists(newName))
+		if (this->name != newName && spic::internal::EntityManager::GetInstance()->CheckIfNameExists(newName))
 			throw std::runtime_error("Name of current gameobject exists already");
 
 		name = newName;
@@ -244,12 +244,12 @@ namespace spic {
 		return transform->scale;
 	}
 
-	bool GameObject::DontDestroyOnLoad()
+	bool GameObject::DestroyOnLoad() const
 	{
-		return false;
+		return destroyOnLoad;
 	}
 
-	void GameObject::DontDestroyOnLoad(bool destroy)
+	void GameObject::DestroyOnLoad(bool destroy)
 	{
 		destroyOnLoad = destroy;
 	}

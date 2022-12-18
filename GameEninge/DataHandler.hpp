@@ -34,7 +34,7 @@ namespace spic
 		/*void LoadSettings(std::map<std::string, std::string>& values);*/
 
 	private:
-		bool AddContent(const std::shared_ptr<spic::GameObject>& entity, IMemento& memento);
+		void AddContent(bool& isPersistable, const std::shared_ptr<spic::GameObject>& entity, IMemento& memento);
 		void AddProperties(const std::shared_ptr<spic::Persistable>& entity, IMemento& memento);
 		void LoadProperties(const std::shared_ptr<spic::Persistable>& entity, TiXmlElement* element);
 		void GetPersistableEntities(std::map<std::string, std::shared_ptr<spic::Persistable>>&, const std::vector<std::shared_ptr<spic::GameObject>>& entities);

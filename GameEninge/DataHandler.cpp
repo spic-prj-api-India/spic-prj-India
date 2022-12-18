@@ -79,26 +79,29 @@ void spic::DataHandler::AddScene(const std::vector<std::shared_ptr<spic::GameObj
 	for (const auto& entity : entities)
 	{
 		IMemento entityMemento;
-		AddContent(entity, entityMemento);
+		bool isPersistable = false;
+		AddContent(isPersistable, entity, entityMemento);
+		if (!isPersistable)
+			continue;
 		TiXmlElement* contentElement = new TiXmlElement("parent");
 		this->saveDocument->AddContent(entityMemento, contentElement);
 		sceneElement->LinkEndChild(contentElement);
 	}
 }
 
-bool spic::DataHandler::AddContent(const std::shared_ptr<spic::GameObject>& entity, IMemento& memento)
+void spic::DataHandler::AddContent(bool& isPersistable, const std::shared_ptr<spic::GameObject>& entity, IMemento& memento)
 {
 	for (const auto& child : entity->GetChildren())
 	{
 		IMemento subMemento;
-		AddContent(child, subMemento);
+		AddContent(isPersistable, child, subMemento);
 		memento.contents.emplace_back(subMemento);
 	}
+	memento.properties["name"] = entity->Name();
 	if (TypeHelper::SharedPtrIsOfType<Persistable>(entity)) {
 		AddProperties(TypeHelper::CastSharedPtrToType<Persistable>(entity), memento);
-		return true;
+		isPersistable = true;
 	}
-	return false;
 }
 
 void spic::DataHandler::AddProperties(const std::shared_ptr<spic::Persistable>& entity, IMemento& memento)

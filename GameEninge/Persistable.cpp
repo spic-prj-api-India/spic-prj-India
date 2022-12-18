@@ -11,7 +11,6 @@ std::map<std::string, std::function<std::string()>> Persistable::SaveProperties(
 		return {};
 	const auto& transform = gameObject->Transform();
 	return {
-		{"name", [this]() { return gameObject->Name(); }},
 		{"tag", [this]() { return gameObject->Tag(); }},
 		{"active", [this]() { return std::to_string(gameObject->Active()); }},
 		{"layer", [this]() { return  std::to_string(gameObject->Layer()); }},
@@ -19,7 +18,7 @@ std::map<std::string, std::function<std::string()>> Persistable::SaveProperties(
 		{"pos_y", [transform]() { return std::to_string(transform->position.y); }},
 		{"rotation", [transform]() { return std::to_string(transform->rotation); }},
 		{"scale", [transform]() { return std::to_string(transform->scale); }},
-		{"dont_destroy_on_load", [this]() { return std::to_string(gameObject->DontDestroyOnLoad()); }}
+		{"destroy_on_load", [this]() { return std::to_string(gameObject->DestroyOnLoad()); }}
 	};
 }
 
@@ -29,7 +28,6 @@ std::map<std::string, std::function<void(const std::string&)>> Persistable::Load
 		return {};
 	const auto& transform = gameObject->Transform();
 	return {
-		{"name", [this](const std::string& name) { gameObject->Name(name); }},
 		{"tag", [this](const std::string& tag) { gameObject->Tag(tag); }},
 		{"active", [this](const std::string& active) { gameObject->Active(std::stoi(active)); }},
 		{"layer", [this](const std::string& layer) { gameObject->Layer(std::stoi(layer)); }},
@@ -37,6 +35,6 @@ std::map<std::string, std::function<void(const std::string&)>> Persistable::Load
 		{"pos_y", [transform](const std::string& pos_y) { transform->position.y = std::stof(pos_y); }},
 		{"rotation", [transform](const std::string& rotation) { transform->rotation = std::stof(rotation); }},
 		{"scale", [transform](const std::string& scale) { transform->scale = std::stof(scale); }},
-		{"dont_destroy_on_load", [this](const std::string& dont_destroy_on_load) { gameObject->DontDestroyOnLoad(std::stoi(dont_destroy_on_load)); }},
+		{"destroy_on_load", [this](const std::string& dont_destroy_on_load) { gameObject->DestroyOnLoad(std::stoi(dont_destroy_on_load)); }},
 	};
 }
