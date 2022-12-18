@@ -11,7 +11,6 @@
  * @brief Some convenient debugging functions.
 */
 namespace spic::debug {
-   
     /*
     * @brief Sets DEBUG_MODE to true if project is running in Debug mode.
     */

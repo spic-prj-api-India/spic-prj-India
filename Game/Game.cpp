@@ -42,15 +42,12 @@ void InitGame() {
 	engine->RegisterScene("game", std::function<spic::Scene* ()>(GameScene::Start));
 	engine->RegisterScene("credits", std::function<spic::Scene* ()>(CreditsScene::Start));
 	engine->RegisterScene("flock", std::function<spic::Scene* ()>(FlockingScene::Start));
-
-	spic::Debug::COLLIDER_VISIBILITY = true;
-	spic::Debug::WALL_AVOIDANCE_FEELERS_VISIBILITY = false;
 }
 
 void StartGame()
 {
-	// sets collider on or off (defaults to off)
 	spic::settings::COLLIDER_VISIBILITY = true;
+	spic::settings::WALL_AVOIDANCE_FEELERS_VISIBILITY = false;
 	spic::settings::WINDOW_NAME = "Forts 2";
 	spic::settings::WINDOW_WIDTH = 1200;
 	spic::settings::WINDOW_HEIGHT = 800;

@@ -25,19 +25,19 @@ namespace spic {
 			spic::internal::Rendering::AddDebugLine({start, end}, color);
 	}
 
-	void Debug::DrawRect(const Rect& rect, const double angle, const Color& color)
+	void debug::DrawRect(const Rect& rect, const double angle, const Color& color)
 	{
 		if(DEBUG_MODE)
 			spic::internal::Rendering::AddDebugRect(rect, angle, color);
 	}
 
-	void Debug::DrawCircle(const Circle& circle, const Color& color, const float pixelGap)
+	void debug::DrawCircle(const Circle& circle, const Color& color, const float pixelGap)
 	{
 		if(DEBUG_MODE)
 			spic::internal::Rendering::AddDebugCircle(circle, color, pixelGap);
 	}
 
-	void Debug::DrawPoint(const spic::Point& point, const spic::Color& color)
+	void debug::DrawPoint(const spic::Point& point, const spic::Color& color)
 	{
 		if(DEBUG_MODE)
 			spic::internal::Rendering::AddDebugPoint(point, color);

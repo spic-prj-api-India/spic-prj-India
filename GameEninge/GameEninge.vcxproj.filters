@@ -186,6 +186,7 @@
     </Filter>
     <Filter Include="Header Files\models\shapes">
       <UniqueIdentifier>{be5d6bd1-a075-46ce-8200-fa6f80fb6003}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Header Files\settings">
       <UniqueIdentifier>{12d45431-ab90-4d70-9df6-86d1edb87651}</UniqueIdentifier>
     </Filter>
@@ -421,10 +422,8 @@
     </ClInclude>
     <ClInclude Include="Circle.hpp">
       <Filter>Header Files\models\shapes</Filter>
-    <ClInclude Include="Settings.hpp">
-      <Filter>Header Files\settings</Filter>
     </ClInclude>
-    <ClInclude Include="PhysicsValues.hpp">
+    <ClInclude Include="Settings.hpp">
       <Filter>Header Files\settings</Filter>
     </ClInclude>
   </ItemGroup>
@@ -600,15 +599,6 @@
     <ClCompile Include="NetworkingHelper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="FPSlistener.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="InternalTime.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="AudioFacade.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Collider.cpp">
       <Filter>Source Files\components\collider</Filter>
     </ClCompile>
@@ -617,6 +607,15 @@
     </ClCompile>
     <ClCompile Include="Box2DCollisionListener.cpp">
       <Filter>Source Files\extensions\physics</Filter>
+    </ClCompile>
+    <ClCompile Include="InternalTime.cpp">
+      <Filter>Source Files\models</Filter>
+    </ClCompile>
+    <ClCompile Include="FPSlistener.cpp">
+      <Filter>Source Files\core\systems\rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioFacade.cpp">
+      <Filter>Source Files\components\audio</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

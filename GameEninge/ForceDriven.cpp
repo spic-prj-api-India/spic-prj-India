@@ -7,6 +7,7 @@
 #include <functional>
 #include "Debug.hpp"
 #include "Collider.hpp"
+#include "Settings.hpp"
 
 using namespace spic::internal::math;
 
@@ -370,14 +371,14 @@ namespace spic {
 		feelers[0] = top + (heading * wallDetectionFeelerLength);
 
 		Point temp = heading;
-		RotateAroundOrigin(temp, spic::internal::Defaults::HALF_PI * 3.5f);
+		RotateAroundOrigin(temp, spic::internal::defaults::HALF_PI * 3.5f);
 		feelers[1] = top + (temp * wallDetectionFeelerLength);
 
 		temp = heading;
-		RotateAroundOrigin(temp, spic::internal::Defaults::HALF_PI * 0.5f);
+		RotateAroundOrigin(temp, spic::internal::defaults::HALF_PI * 0.5f);
 		feelers[2] = top + (temp * wallDetectionFeelerLength);
 
-		if (debug::WALL_AVOIDANCE_FEELERS_VISIBILITY) {
+		if (settings::WALL_AVOIDANCE_FEELERS_VISIBILITY) {
 			debug::DrawLine(top, feelers[0]);
 			debug::DrawLine(top, feelers[1]);
 			debug::DrawLine(top, feelers[2]);
@@ -403,7 +404,7 @@ namespace spic {
 
 		for (auto& feeler : feelers) {
 			for (int wallIndex = 0; wallIndex < 4; wallIndex++) {
-				if (spic::GeneralHelper::LineIntersection(top,
+				if (spic::general_helper::LineIntersection(top,
 					feeler,
 					walls[wallIndex],
 					walls[wallIndex + 1],
@@ -591,7 +592,7 @@ namespace spic {
 	void ForceDriven::ApplyForce(Point& force) {
 		this->GetComponent<RigidBody>()->AddForce(force / Mass());
 		const float rotationInDeg = Velocity().Rotation();
-		const float desiredRotation = spic::GeneralHelper::DEG2RAD<float>(rotationInDeg);
+		const float desiredRotation = spic::general_helper::DEG2RAD<float>(rotationInDeg);
 		const float angle = abs(this->Transform()->rotation - desiredRotation);
 		if (angle >= this->angleSensitivity) {
 			Transform()->rotation = desiredRotation;

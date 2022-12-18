@@ -241,7 +241,6 @@
     <ClInclude Include="TypeHelper.hpp" />
     <ClInclude Include="UIObject.hpp" />
     <ClInclude Include="RendererImpl.hpp" />
-    <ClInclude Include="PhysicsValues.hpp" />
     <ClInclude Include="Settings.hpp" />
   </ItemGroup>
   <ItemGroup>

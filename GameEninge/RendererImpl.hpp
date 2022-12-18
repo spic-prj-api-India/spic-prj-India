@@ -359,7 +359,7 @@ namespace spic::internal::rendering {
 		/**
 		 * @brief Renders evrything in internal buffer to screen
 		*/
-		void Render() const;
+		void Render();
 
 		/**
 		 * @brief Start up an new window

@@ -716,7 +716,7 @@ void RendererImpl::Clean()
 	}
 }
 
-void RendererImpl::Render() const
+void RendererImpl::Render()
 {
 	SDL_SetRenderDrawColor(renderer.get()
 		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, this->backgroundColor.R()))

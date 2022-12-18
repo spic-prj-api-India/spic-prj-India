@@ -46,7 +46,7 @@ namespace spic::internal::systems {
 			spic::internal::Rendering::Draw(entity.get());
 		}
 
-		if(debug::DEBUG_MODE && spic::settings::COLLIDER_VISIBILITY)
+		if(debug::DEBUG_MODE && settings::COLLIDER_VISIBILITY)
 			DrawColliders();
 		if (debug::DEBUG_MODE)
 			spic::internal::Rendering::DrawDebugShapes();
