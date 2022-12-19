@@ -16,7 +16,7 @@
 namespace spic::helper_functions
 {
     /**
-     * @brief Contains hulpfull network helper(s)
+     * @brief Contains helpfull network helper(s)
     */
     namespace networking_helper
     {

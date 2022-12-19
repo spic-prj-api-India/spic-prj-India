@@ -32,6 +32,12 @@ namespace spic::helper_functions
             return keys;
         }
 
+        /**
+         * @brief Finds element in vector with find function
+         * @param vector Vector to search in
+         * @param findFunction Lambda function that checks if element is right element
+         * @return shared_ptr or nullptr
+        */
         template <typename T>
         std::shared_ptr<T> Find(const std::vector<std::shared_ptr<T>>& vector, std::function<bool(std::shared_ptr<T>)> findFunction) {
             auto it = find_if(vector.begin(), vector.end(), [&findFunction](std::shared_ptr<T> element) {
@@ -45,6 +51,12 @@ namespace spic::helper_functions
             return vector[index];
         }
 
+        /**
+         * @brief Finds element in vector with find function and converts element to given type
+         * @param vector Vector to search in
+         * @param findFunction Lambda function that checks if element is right element
+         * @return shared_ptr or nullptr
+        */
         template <typename T, typename C>
         std::shared_ptr<C> FindAndConvert(const std::vector<std::shared_ptr<T>>& vector, std::function<bool(std::shared_ptr<T>)> findFunction) {
             auto it = find_if(vector.begin(), vector.end(), [&findFunction](std::shared_ptr<T> element) {
