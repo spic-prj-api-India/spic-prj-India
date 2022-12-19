@@ -38,7 +38,9 @@ void GameScene::SetContents()
 	std::shared_ptr<Box> box2 = std::make_shared<Box>("box2", box2Position);
 	spic::Point box3Position = { 500.0f, 50.0f };
 	std::shared_ptr<Box> box3 = std::make_shared<Box>("box3", box3Position);
-	
+	box1->AddChild(box2);
+	box2->AddChild(box3);
+
 	std::shared_ptr<CollisionDetectionScript> collisionScript = std::make_shared<CollisionDetectionScript>();
 	std::shared_ptr<PlayerMovementScript> movementScript = std::make_shared<PlayerMovementScript>();
 	auto music = std::make_shared<spic::AudioSource>("assets/music/file_example_MP3_700KB.mp3", true, true, 1.0f);

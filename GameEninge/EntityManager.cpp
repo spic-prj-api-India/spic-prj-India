@@ -11,7 +11,6 @@
 #include "PhysicsSystem.hpp"
 #include "AISystem.hpp"
 #include "RenderingSystem.hpp"
-#include "DataSystem.hpp"
 #include "AudioManager.hpp"
 #include "NetworkingReceiveSystem.hpp"
 #include "NetworkingSendSystem.hpp"
