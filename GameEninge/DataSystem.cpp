@@ -25,15 +25,16 @@ namespace spic::internal::systems {
 	std::vector<std::shared_ptr<spic::Persistable>> DataSystem::GetPersistableEntities(const std::vector<std::shared_ptr<spic::GameObject>>& entities) const
 	{
 		// Eerst alle childs in de lijst, daarna pas omhoog werken en parent toevoegen
+		using namespace spic::helper_functions::type_helper;
 		std::vector<std::shared_ptr<spic::Persistable>> persistableEntities;
 		for (const auto& entity : entities) 
 		{
-			if (spic::TypeHelper::SharedPtrIsOfType<spic::Persistable>(entity))
-				persistableEntities.emplace_back(spic::TypeHelper::CastSharedPtrToType<spic::Persistable>(entity));
+			if (SharedPtrIsOfType<spic::Persistable>(entity))
+				persistableEntities.emplace_back(CastSharedPtrToType<spic::Persistable>(entity));
 
 			for (const auto& child : entity->GetChildren()) 
-				if (spic::TypeHelper::SharedPtrIsOfType<spic::Persistable>(child))
-					persistableEntities.emplace_back(spic::TypeHelper::CastSharedPtrToType<spic::Persistable>(child));
+				if (SharedPtrIsOfType<spic::Persistable>(child))
+					persistableEntities.emplace_back(CastSharedPtrToType<spic::Persistable>(child));
 		}
 
 		return persistableEntities;

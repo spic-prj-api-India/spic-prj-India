@@ -3,6 +3,9 @@
 
 #include "IKeyListener.hpp"
 
+/**
+ * @brief Contains internal button/mouse listener
+*/
 namespace spic::internal::input
 {
     /**

@@ -4,6 +4,13 @@
 #include <ctime>
 
 /**
+ * @brief Contains all internal methods and third party library calls
+*/
+namespace spic::internal // only used for doxgen generation
+{
+	
+}
+/**
  * @brief Contains internal timing classes
 */
 namespace spic::internal::time

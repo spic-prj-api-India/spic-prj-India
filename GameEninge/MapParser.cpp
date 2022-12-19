@@ -8,6 +8,8 @@
 
 namespace spic::internal
 {
+	using namespace spic::tiled;
+
 	MapParser::MapParser(const int collisionLayerIndex)
 	{
 		tileMap = std::make_unique<TileMap>(collisionLayerIndex);
@@ -105,7 +107,7 @@ namespace spic::internal
 
 		const TiXmlElement& image = *tileSetData.FirstChildElement();
 		tileset.source = image.Attribute("source");
-		spic::StringHelper::Replace(tileset.source, "..", "assets");
+		spic::helper_functions::string_helper::Replace(tileset.source, "..", "assets");
 
 		return tileset;
 	}

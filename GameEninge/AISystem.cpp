@@ -25,8 +25,8 @@ namespace spic::internal::systems {
 	{
 		for (const auto& entity : entities) 
 		{
-			if (spic::TypeHelper::SharedPtrIsOfType<spic::ForceDriven>(entity))
-				forceDrivenEntities.emplace_back(spic::TypeHelper::CastSharedPtrToType<spic::ForceDriven>(entity));	
+			if (spic::helper_functions::type_helper::SharedPtrIsOfType<spic::ForceDriven>(entity))
+				forceDrivenEntities.emplace_back(spic::helper_functions::type_helper::CastSharedPtrToType<spic::ForceDriven>(entity));
 
 			GetForceDrivenEntities(forceDrivenEntities, entity->GetChildren());
 		}

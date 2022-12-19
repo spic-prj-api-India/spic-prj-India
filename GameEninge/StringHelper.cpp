@@ -1,6 +1,6 @@
 #include "StringHelper.hpp"
 
-bool spic::StringHelper::Replace(std::string& str, const std::string& from, const std::string& to) {
+bool spic::helper_functions::string_helper::Replace(std::string& str, const std::string& from, const std::string& to) {
 	size_t start_pos = str.find(from);
 
 	if (start_pos == std::string::npos)
@@ -10,7 +10,7 @@ bool spic::StringHelper::Replace(std::string& str, const std::string& from, cons
 	return true;
 }
 
-std::string  spic::StringHelper::GetBasePath()
+std::string spic::helper_functions::string_helper::GetBasePath()
 {
 	std::string filePath = __FILE__;
 	std::string searchFor = "GameEninge";

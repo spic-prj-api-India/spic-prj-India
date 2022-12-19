@@ -77,7 +77,7 @@ namespace spic {
 		template<typename T>
 		void RegisterType() 
 		{
-			const std::string typeName = TypeHelper::GetTypeName<T>();
+			const std::string typeName = spic::helper_functions::type_helper::GetTypeName<T>();
 			if (_types.count(typeName) != 0)
 				throw std::exception("Type is already registered.");
 			const std::function createInstance = GameObject::CreateInstance<T>;
@@ -153,13 +153,13 @@ namespace spic {
 	template <typename T>
 	void GameEngine::AddExtension(std::shared_ptr<T> extension)
 	{
-		_extensions[TypeHelper::GetTypeName<T>()] = extension;
+		_extensions[spic::helper_functions::type_helper::GetTypeName<T>()] = extension;
 	}
 
 	template <typename T>
 	std::weak_ptr<T> GameEngine::GetExtension()
 	{
-		return std::dynamic_pointer_cast<T>(_extensions[TypeHelper::GetTypeName<T>()]);
+		return std::dynamic_pointer_cast<T>(_extensions[spic::helper_functions::type_helper::GetTypeName<T>()]);
 	}
 
 	template <typename T>
@@ -178,13 +178,13 @@ namespace spic {
 	template <typename T>
 	bool GameEngine::HasExtension()
 	{
-		return _extensions.count(TypeHelper::GetTypeName<T>());
+		return _extensions.count(spic::helper_functions::type_helper::GetTypeName<T>());
 	}
 
 	template <typename T>
 	void GameEngine::RemoveExtension()
 	{
-		std::string typeName = TypeHelper::GetTypeName<T>();
+		std::string typeName = spic::helper_functions::type_helper::GetTypeName<T>();
 		std::shared_ptr<T> deletePtr = std::dynamic_pointer_cast<T>(_extensions[typeName]);
 		_extensions.erase(typeName);
 		do {

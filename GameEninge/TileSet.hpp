@@ -5,13 +5,22 @@
 
 namespace spic 
 {
-    struct TileSet
+    /**
+     * @brief Contains all tiled related classes
+    */
+    namespace tiled
     {
-        int rowCount, columnCount;
-        int firstId, lastId;
-        std::string source;
-        int tileCount, tileSize;
-    };
+        /**
+         * @brief An struct which contains what an TileSet needs
+        */
+        struct TileSet
+        {
+            int rowCount, columnCount;
+            int firstId, lastId;
+            std::string source;
+            int tileCount, tileSize;
+        };
+    }
 }
 
 #endif // TILESET_H_

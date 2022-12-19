@@ -44,7 +44,7 @@ namespace spic::internal {
 			TriggerMouseMoved();
 		}
 
-		for (const auto& key : ContainerHelper::GetKeys(keyEvents)) {
+		for (const auto& key : helper_functions::container::GetKeys(keyEvents)) {
 			bool value = keyEvents[key];
 			if (spic::input::GetKeyDown(key) && value == false) {
 				keyEvents[key] = true;
@@ -57,7 +57,7 @@ namespace spic::internal {
 			}
 		}
 
-		for (const auto& key : ContainerHelper::GetKeys(mouseEvents)) 
+		for (const auto& key : helper_functions::container::GetKeys(mouseEvents))
 		{
 			bool value = mouseEvents[key];
 			if (spic::input::GetMouseButtonDown(key) && value == false) {
@@ -168,7 +168,7 @@ namespace spic::internal {
 
 	void InputManager::TriggerMouseMoved()
 	{
-		for (const auto& key : ContainerHelper::GetKeys(mouseListeners))
+		for (const auto& key : helper_functions::container::GetKeys(mouseListeners))
 			for (const std::shared_ptr<spic::IMouseListener>& mouseListener : mouseListeners[key]) 
 				mouseListener->OnMouseMoved();
 	}

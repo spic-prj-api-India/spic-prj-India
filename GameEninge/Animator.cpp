@@ -57,7 +57,7 @@ void spic::Animator::AddSprite(const std::shared_ptr<Sprite> sprite)
 {
     this->sprites.push_back(sprite);
 
-    std::sort(sprites.begin(), sprites.end(), spic::general_helper::SpriteSorting);
+    std::sort(sprites.begin(), sprites.end(), spic::helper_functions::general_helper::SpriteSorting);
 }
 
 const std::vector<std::shared_ptr<spic::Sprite>> spic::Animator::Sprites() const
