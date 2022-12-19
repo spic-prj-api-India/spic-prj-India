@@ -147,7 +147,7 @@ void spic::DataHandler::AddSettings(const std::map<std::string, std::string>& se
 		settingsElement = new TiXmlElement("settings");
 		this->saveDocument->LinkEndChild(settingsElement);
 	}
-	
+
 	for (const auto& settingsPair : settings)
 	{
 		const std::string name = settingsPair.first;
@@ -247,14 +247,8 @@ void spic::DataHandler::LoadProperties(const std::shared_ptr<spic::Persistable>&
 void spic::DataHandler::LoadSettings(std::map<std::string, std::string>& values)
 {
 	const TiXmlElement& settingsElement = *this->saveDocument->FirstChildElement();
-	for (const auto& settingsPair : values)
+	for (const TiXmlAttribute* att = settingsElement.FirstAttribute(); att != nullptr; att = att->Next())
 	{
-		for (const TiXmlAttribute* att = settingsElement.FirstAttribute(); att != nullptr; att = att->Next())
-		{
-
-			const std::string name = settingsPair.first;
-			const std::string value = settingsPair.second;
-			values[att->Name()] = att->Value();
-		}
+		values[att->Name()] = att->Value();
 	}
 }

@@ -8,6 +8,7 @@
 #include "GameScene.h"
 #include "SettingsScene.h"
 #include "DataHandler.hpp"
+#include "Text.hpp"
 
 SettingsScene::SettingsScene() : Scene()
 {
@@ -32,18 +33,24 @@ void SettingsScene::SetCamera()
 
 void SettingsScene::SetContents()
 {
-	AddButton("Background music", [this]() {
+	auto backgroundMusicText = std::make_shared<spic::Text>(1200.0f, 900.0f
+		, "Settings"
+		, ""
+		, 50
+		, spic::Alignment::CENTER
+		, spic::Color::white());
+
+	backgroundMusicText->Transform(std::make_shared<spic::Transform>(spic::Point(0.0f, 0.0f), 0.0f, 1.0f));
+	AddContent(backgroundMusicText);
+
+	AddButton("Background music ON", [this]() {
 			spic::input::UnSubscribeAll();
-			settings["background_music"] = "1";
 			spic::DataHandler dataHandler = spic::DataHandler("settings");
+			dataHandler.LoadSettings(settings);
+			settings["background_music"] == "1" ? settings["background_music"] = "0" : settings["background_music"] = "1";
 			dataHandler.AddSettings(settings);
 			dataHandler.Save();
-		}, 0.0f);
-}
-
-std::map<std::string, std::string> SettingsScene::Settings()
-{
-	return settings;
+		}, 50.0f);
 }
 
 void SettingsScene::AddButton(const std::string& text, std::function<void()> callback, const float offset)

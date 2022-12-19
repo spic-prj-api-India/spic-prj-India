@@ -11,7 +11,6 @@ public:
 private:
 	void SetCamera();
 	void SetContents();
-	std::map<std::string, std::string> Settings();
 	void AddButton(const std::string& text, std::function<void()> callback, const float offset);
 private:
 	std::map<std::string, std::string> settings;
