@@ -58,6 +58,12 @@ namespace spic::extensions{
 		* @spicapi
 		*/
 		virtual void DrawColliders() = 0;
+
+		/**
+		 * @brief Amount of times other systems should run
+		 * @return 
+		*/
+		virtual int RunTimes() = 0;
 	};
 }
 

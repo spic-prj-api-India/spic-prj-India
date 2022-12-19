@@ -9,21 +9,20 @@
 #include "IPhysicsExtension.hpp"
 #include "Settings.hpp"
 
-namespace spic::internal::systems {
+namespace spic::internal::systems 
+{
 	RenderingSystem::RenderingSystem()
 	{
-
 	}
 
 	RenderingSystem::~RenderingSystem()
 	{
-
 	}
 
 	void RenderingSystem::Start(std::vector<std::shared_ptr<spic::GameObject>>& entities, Scene& currentScene)
 	{
-		this->fps.reset(new FPSListener());
-		Input::Subscribe(spic::Input::KeyCode::TAB, this->fps);
+		this->fps.reset(new spic::internal::input::FPSListener());
+		spic::input::Subscribe(spic::settings::BOUND_BUTTON_FPS_COUNTER, this->fps);
 	}
 
 	void RenderingSystem::Update(std::vector<std::shared_ptr<spic::GameObject>>& entities, Scene& currentScene)

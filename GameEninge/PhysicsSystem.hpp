@@ -5,7 +5,8 @@
 #include "ISystem.hpp"
 #include "IEngineExtension.hpp"
 #include "Collider.hpp"
-
+#include "Time.hpp"
+#include "InternalTime.hpp"
 /**
 * @brief A system that calls all physics extensions and triggers collision script methods
 */

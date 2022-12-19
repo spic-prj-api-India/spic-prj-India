@@ -17,10 +17,10 @@ namespace spic::internal {
 
 		spic::Point currentMousePosition;
 
-		std::map<spic::Input::KeyCode, bool> keyEvents;
-		std::map<spic::Input::MouseButton, bool> mouseEvents;
-		std::map<spic::Input::KeyCode, std::vector<std::shared_ptr<spic::IKeyListener>>> keyListeners;
-		std::map<spic::Input::MouseButton, std::vector<std::shared_ptr<spic::IMouseListener>>> mouseListeners;
+		std::map<spic::input::KeyCode, bool> keyEvents;
+		std::map<spic::input::MouseButton, bool> mouseEvents;
+		std::map<spic::input::KeyCode, std::vector<std::shared_ptr<spic::IKeyListener>>> keyListeners;
+		std::map<spic::input::MouseButton, std::vector<std::shared_ptr<spic::IMouseListener>>> mouseListeners;
 	public:
 		InputManager(InputManager& other) = delete;
 		InputManager(InputManager&& other) = delete;
@@ -44,37 +44,37 @@ namespace spic::internal {
 		* @brief Subscribes a key listener for a specific key event
 		* @spicapi
 		*/
-		void Subscribe(spic::Input::KeyCode keyEvent, const std::shared_ptr<spic::IKeyListener> keyListener);
+		void Subscribe(spic::input::KeyCode keyEvent, const std::shared_ptr<spic::IKeyListener> keyListener);
 
 		/**
 		* @brief Subscribes a mouse listener for a specific mouse event
 		* @spicapi
 		*/
-		void Subscribe(spic::Input::MouseButton mouseEvent, const std::shared_ptr<spic::IMouseListener> mouseListener);
+		void Subscribe(spic::input::MouseButton mouseEvent, const std::shared_ptr<spic::IMouseListener> mouseListener);
 
 		/**
 		* @brief Unsubscribes a key listener for a specific key event
 		* @spicapi
 		*/
-		void UnSubscribe(spic::Input::KeyCode keyEvent, const std::shared_ptr<spic::IKeyListener> keyListener);
+		void UnSubscribe(spic::input::KeyCode keyEvent, const std::shared_ptr<spic::IKeyListener> keyListener);
 
 		/**
 		* @brief Unsubscribes all listeners for a specific key event
 		* @spicapi
 		*/
-		void UnSubscribe(spic::Input::KeyCode keyEvent);
+		void UnSubscribe(spic::input::KeyCode keyEvent);
 
 		/**
 		* @brief Unsubscribes a mouse listener for a specific mouse event
 		* @spicapi
 		*/
-		void UnSubscribe(spic::Input::MouseButton mouseEvent, const std::shared_ptr<spic::IMouseListener> mouseListener);
+		void UnSubscribe(spic::input::MouseButton mouseEvent, const std::shared_ptr<spic::IMouseListener> mouseListener);
 	
 		/**
 		* @brief Unsubscribes all listeners for a specific mouse event
 		* @spicapi
 		*/
-		void UnSubscribe(spic::Input::MouseButton mouseEvent);
+		void UnSubscribe(spic::input::MouseButton mouseEvent);
 
 		/**
 		* @brief Unsubscribes all listeners
@@ -86,13 +86,13 @@ namespace spic::internal {
 		* @brief Calls method OnKeyPressed of all key listeners for specific key event
 		* @spicapi
 		*/
-		void TriggerKeyPressed(spic::Input::KeyCode keyEvent);
+		void TriggerKeyPressed(spic::input::KeyCode keyEvent);
 
 		/**
 		* @brief Calls method OnKeyPressed of all key listeners for specific key event
 		* @spicapi
 		*/
-		void TriggerKeyReleased(spic::Input::KeyCode keyEvent);
+		void TriggerKeyReleased(spic::input::KeyCode keyEvent);
 
 		/**
 		* @brief Calls method OnMouseMoved of all mouse listeners
@@ -104,19 +104,19 @@ namespace spic::internal {
 		* @brief Calls method OnMouseClicked of all mouse listeners for specific mouse event
 		* @spicapi
 		*/
-		void TriggerMouseClicked(spic::Input::MouseButton mouseEvent);
+		void TriggerMouseClicked(spic::input::MouseButton mouseEvent);
 
 		/**
 		* @brief Calls method OnMousePressed of all mouse listeners for specific mouse event
 		* @spicapi
 		*/
-		void TriggerMousePressed(spic::Input::MouseButton mouseEvent);
+		void TriggerMousePressed(spic::input::MouseButton mouseEvent);
 
 		/**
 		* @brief Calls method OnMouseReleased of all mouse listeners for specific mouse event
 		* @spicapi
 		*/
-		void TriggerMouseReleased(spic::Input::MouseButton mouseEvent);
+		void TriggerMouseReleased(spic::input::MouseButton mouseEvent);
 	};
 }
 

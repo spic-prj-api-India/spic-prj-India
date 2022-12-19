@@ -43,7 +43,7 @@ void FlockingScene::SetContents()
 	rocketLauncher->Transform(rocketLauncherTransform);
 	rocketLauncher->AddComponent<spic::Sprite>(rocketLauncherSprite);
 	std::shared_ptr<AimListener> aimListener = std::make_shared<AimListener>(rocketLauncher);
-	spic::Input::Subscribe(spic::Input::MouseButton::LEFT, aimListener);
+	spic::input::Subscribe(spic::input::MouseButton::LEFT, aimListener);
 
 	AddContent(rocketLauncher);
 }

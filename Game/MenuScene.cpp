@@ -32,20 +32,20 @@ void MenuScene::SetCamera()
 void MenuScene::SetContents()
 {
 	AddButton("Start Game", []() {
-		spic::Input::UnSubscribeAll();
+		spic::input::UnSubscribeAll();
 		spic::GameEngine::GetInstance()->LoadSceneByName("game");
 		}, 0.0f);
 	AddButton("Load Game", []() {
-		spic::Input::UnSubscribeAll();
+		spic::input::UnSubscribeAll();
 		std::shared_ptr<GameScene> sceneToLoad = std::make_shared<GameScene>();
 		spic::GameEngine::GetInstance()->LoadSceneBySaveFile(sceneToLoad, "game");
 		}, 100.0f);
 	AddButton("Start Flocking", []() {
-		spic::Input::UnSubscribeAll();
+		spic::input::UnSubscribeAll();
 		spic::GameEngine::GetInstance()->LoadSceneByName("flock");
 		}, 200.0f);
 	AddButton("Credits", []() {
-		spic::Input::UnSubscribeAll();
+		spic::input::UnSubscribeAll();
 		spic::GameEngine::GetInstance()->LoadSceneByName("credits");
 		}, 300.0f);
 }

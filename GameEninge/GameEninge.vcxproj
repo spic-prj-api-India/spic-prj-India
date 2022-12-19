@@ -187,6 +187,7 @@
     <ClInclude Include="ConvertListToBytes.hpp" />
     <ClInclude Include="DataHandler.hpp" />
     <ClInclude Include="Debug.hpp" />
+    <ClInclude Include="DecreaseGameSpeedListener.hpp" />
     <ClInclude Include="Defaults.hpp" />
     <ClInclude Include="FPSlistener.hpp" />
     <ClInclude Include="GameEngine.hpp" />
@@ -197,6 +198,7 @@
     <ClInclude Include="IEngineExtension.hpp" />
     <ClInclude Include="IKeyListener.hpp" />
     <ClInclude Include="IMouseListener.hpp" />
+    <ClInclude Include="IncreaseGameSpeedListener.hpp" />
     <ClInclude Include="Input.hpp" />
     <ClInclude Include="InputImpl.hpp" />
     <ClInclude Include="InputManager.hpp" />
@@ -219,6 +221,7 @@
     <ClInclude Include="Random.hpp" />
     <ClInclude Include="Renderer.hpp" />
     <ClInclude Include="RenderingSystem.hpp" />
+    <ClInclude Include="ResetGameSpeedListener.hpp" />
     <ClInclude Include="Serializer.hpp" />
     <ClInclude Include="SocketScript.hpp" />
     <ClInclude Include="StringHelper.hpp" />
@@ -256,10 +259,12 @@
     <ClCompile Include="Box2DCollisionListener.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="DataHandler.cpp" />
+    <ClCompile Include="DecreaseGameSpeedListener.cpp" />
     <ClCompile Include="FPSlistener.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="Debug.cpp" />
     <ClCompile Include="GeneralHelper.cpp" />
+    <ClCompile Include="IncreaseGameSpeedListener.cpp" />
     <ClCompile Include="InternalTime.cpp" />
     <ClCompile Include="IPhysicsExtension.cpp" />
     <ClCompile Include="MapParser.cpp" />
@@ -278,6 +283,7 @@
     <ClCompile Include="Point.cpp" />
     <ClCompile Include="Random.cpp" />
     <ClCompile Include="Renderer.cpp" />
+    <ClCompile Include="ResetGameSpeedListener.cpp" />
     <ClCompile Include="SocketScript.cpp" />
     <ClCompile Include="SocketUDPExtension.cpp" />
     <ClCompile Include="Sprite.cpp" />

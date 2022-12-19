@@ -49,16 +49,17 @@ void GameScene::SetContents()
 	spic::Point ballPosition = { 400.0f, 24.0f };
 	std::shared_ptr<Ball> football = std::make_shared<Ball>("football", ballPosition, "assets/textures/football.png", 0.09765625f);
 	auto moveFootballScript = std::make_shared<PlayerMovementScript>(
-		spic::Input::KeyCode::J, spic::Input::KeyCode::L, spic::Input::KeyCode::I);
+		spic::input::KeyCode::J, spic::input::KeyCode::L, spic::input::KeyCode::I);
 	football->AddComponent<spic::BehaviourScript>(moveFootballScript);
 
 	//UI test
 	std::shared_ptr<spic::Button> button = std::make_shared<spic::Button>(200.0f, 100.0f, "Save scene");
 	button->Transform(std::make_shared<spic::Transform>(spic::Point(20.0f, 20.0f), 0.0f, 1.0f));
 	button->OnClick([]() {
-		spic::GameEngine::GetInstance()->SaveScene("game");
 		std::cout << "Scene saved!" << std::endl;
-		spic::Input::UnSubscribeAll();
+		spic::GameEngine::GetInstance()->SaveScene("game");
+		spic::input::UnSubscribeAll();
+
 		spic::GameEngine::GetInstance()->LoadSceneByName("menu");
 		});
 

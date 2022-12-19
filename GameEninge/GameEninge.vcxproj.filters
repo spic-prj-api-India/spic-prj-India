@@ -411,6 +411,15 @@
     <ClInclude Include="DataHandler.hpp">
       <Filter>Header Files\models</Filter>
     </ClInclude>
+    <ClInclude Include="IncreaseGameSpeedListener.hpp">
+      <Filter>Header Files\core\systems\input</Filter>
+    </ClInclude>
+    <ClInclude Include="DecreaseGameSpeedListener.hpp">
+      <Filter>Header Files\core\systems\input</Filter>
+    </ClInclude>
+    <ClInclude Include="ResetGameSpeedListener.hpp">
+      <Filter>Header Files\core\systems\input</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sample.cpp">
@@ -590,20 +599,20 @@
     <ClCompile Include="Box2DCollisionListener.cpp">
       <Filter>Source Files\extensions\physics</Filter>
     </ClCompile>
-    <ClCompile Include="AudioFacade.cpp">
-      <Filter>Source Files\components\audio</Filter>
-    </ClCompile>
-    <ClCompile Include="FPSlistener.cpp">
-      <Filter>Source Files\core\systems\rendering</Filter>
-    </ClCompile>
-    <ClCompile Include="InternalTime.cpp">
-      <Filter>Source Files\models</Filter>
-    </ClCompile>
     <ClCompile Include="Persistable.cpp">
       <Filter>Source Files\objects</Filter>
     </ClCompile>
     <ClCompile Include="DataHandler.cpp">
       <Filter>Source Files\models</Filter>
+    </ClCompile>
+    <ClCompile Include="ResetGameSpeedListener.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="IncreaseGameSpeedListener.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DecreaseGameSpeedListener.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

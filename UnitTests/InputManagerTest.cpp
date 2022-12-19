@@ -30,8 +30,8 @@ TEST(InputManagerTest, SubscribeSuccess) {
 
 	//2. Act
 	//3. Assert
-	inputManager->Subscribe(spic::Input::MouseButton::LEFT, mouseListener);
-	inputManager->Subscribe(spic::Input::KeyCode::A, keyListener);
+	inputManager->Subscribe(spic::input::MouseButton::LEFT, mouseListener);
+	inputManager->Subscribe(spic::input::KeyCode::A, keyListener);
 }
 
 TEST(InputManagerTest, UnSubscribeKeySuccess) {
@@ -39,11 +39,11 @@ TEST(InputManagerTest, UnSubscribeKeySuccess) {
 	spic::internal::InputManager* inputManager = spic::internal::InputManager::GetInstance();
 	inputManager->Reset();
 	std::shared_ptr<TestKeyListener> keyListener = std::make_shared<TestKeyListener>();
-	inputManager->Subscribe(spic::Input::KeyCode::A, keyListener);
+	inputManager->Subscribe(spic::input::KeyCode::A, keyListener);
 
 	//2. Act
 	//3. Assert
-	inputManager->UnSubscribe(spic::Input::KeyCode::A, keyListener);
+	inputManager->UnSubscribe(spic::input::KeyCode::A, keyListener);
 }
 TEST(InputManagerTest, UnSubscribeKeyFailed) {
 	//1. Arrange
@@ -56,7 +56,7 @@ TEST(InputManagerTest, UnSubscribeKeyFailed) {
 	EXPECT_THROW({
 		try
 		{
-			inputManager->UnSubscribe(spic::Input::KeyCode::A, keyListener);
+			inputManager->UnSubscribe(spic::input::KeyCode::A, keyListener);
 		}
 		catch (std::exception e)
 		{
@@ -72,11 +72,11 @@ TEST(InputManagerTest, UnSubscribeMouseSuccess) {
 	spic::internal::InputManager* inputManager = spic::internal::InputManager::GetInstance();
 	inputManager->Reset();
 	std::shared_ptr<TestMouseListener> mouseListener = std::make_shared<TestMouseListener>();
-	inputManager->Subscribe(spic::Input::MouseButton::LEFT, mouseListener);
+	inputManager->Subscribe(spic::input::MouseButton::LEFT, mouseListener);
 
 	//2. Act
 	//3. Assert
-	inputManager->UnSubscribe(spic::Input::MouseButton::LEFT, mouseListener);
+	inputManager->UnSubscribe(spic::input::MouseButton::LEFT, mouseListener);
 }
 TEST(InputManagerTest, UnSubscribeMouseFailed) {
 	//1. Arrange
@@ -89,7 +89,7 @@ TEST(InputManagerTest, UnSubscribeMouseFailed) {
 	EXPECT_THROW({
 		try
 		{
-			inputManager->UnSubscribe(spic::Input::MouseButton::LEFT, mouseListener);
+			inputManager->UnSubscribe(spic::input::MouseButton::LEFT, mouseListener);
 		}
 		catch (std::exception e)
 		{
