@@ -190,6 +190,7 @@
     <ClInclude Include="Debug.hpp" />
     <ClInclude Include="DecreaseGameSpeedListener.hpp" />
     <ClInclude Include="Defaults.hpp" />
+    <ClInclude Include="Flocking.hpp" />
     <ClInclude Include="FPSlistener.hpp" />
     <ClInclude Include="GameEngine.hpp" />
     <ClInclude Include="EntityManager.hpp" />
@@ -227,6 +228,7 @@
     <ClInclude Include="ResetGameSpeedListener.hpp" />
     <ClInclude Include="Serializer.hpp" />
     <ClInclude Include="SocketScript.hpp" />
+    <ClInclude Include="Steering.hpp" />
     <ClInclude Include="StringHelper.hpp" />
     <ClInclude Include="RigidBody.hpp" />
     <ClInclude Include="Sample.hpp" />
@@ -262,6 +264,7 @@
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="DataSystem.cpp" />
     <ClCompile Include="DecreaseGameSpeedListener.cpp" />
+    <ClCompile Include="Flocking.cpp" />
     <ClCompile Include="FPSlistener.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="Debug.cpp" />
@@ -288,6 +291,7 @@
     <ClCompile Include="SocketScript.cpp" />
     <ClCompile Include="SocketUDPExtension.cpp" />
     <ClCompile Include="Sprite.cpp" />
+    <ClCompile Include="Steering.cpp" />
     <ClCompile Include="StringHelper.cpp" />
     <ClCompile Include="Text.cpp" />
     <ClCompile Include="Transformations.cpp" />

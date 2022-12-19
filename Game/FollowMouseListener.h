@@ -14,6 +14,5 @@ public:
 
     void AddFollower(std::shared_ptr<spic::ForceDriven> follower);
 private:
-    std::vector<std::shared_ptr<spic::ForceDriven>> followers;
     std::unique_ptr<spic::Point> target;
 };

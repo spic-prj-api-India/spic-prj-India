@@ -196,6 +196,12 @@
     <Filter Include="Header Files\core\systems\input\listeners">
       <UniqueIdentifier>{055be8db-a115-4fc9-baf5-dfa68a05eb96}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\components\ai">
+      <UniqueIdentifier>{be9fb6d8-0071-409f-8681-ccff1afbf0cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\components\ai">
+      <UniqueIdentifier>{c42afdc9-063b-486a-9745-e94117bd7230}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AudioSource.hpp">
@@ -441,6 +447,12 @@
     <ClInclude Include="ResetGameSpeedListener.hpp">
       <Filter>Header Files\core\systems\input\listeners</Filter>
     </ClInclude>
+    <ClInclude Include="Flocking.hpp">
+      <Filter>Header Files\components\ai</Filter>
+    </ClInclude>
+    <ClInclude Include="Steering.hpp">
+      <Filter>Header Files\components\ai</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sample.cpp">
@@ -640,6 +652,12 @@
     </ClCompile>
     <ClCompile Include="ResetGameSpeedListener.cpp">
       <Filter>Source Files\core\systems\input\listeners</Filter>
+    </ClCompile>
+    <ClCompile Include="Flocking.cpp">
+      <Filter>Source Files\components\ai</Filter>
+    </ClCompile>
+    <ClCompile Include="Steering.cpp">
+      <Filter>Source Files\components\ai</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

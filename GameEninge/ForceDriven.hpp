@@ -18,18 +18,6 @@ namespace spic {
      */
     enum class SumMethod { WEIGHTED_AVERAGE, PRIORITIZED };
 
-    enum class TargetBehaviour {
-        SEEK,
-        FLEE,
-        ARRIVAL
-    };
-
-    /**
-     * @brief Deceleration of force driven entity, is used for arrival behaviour.
-     * @spicapi
-     */
-    enum class Deceleration { SLOW = 3, NORMAL = 2, FAST = 1 };
-
     /**
      * @brief Force driven entity only moves with force.
      */
@@ -45,6 +33,13 @@ namespace spic {
         Point Velocity() const;
 
         /**
+         * @brief Returns max speed of force driven entity.
+         * @return spic::Point.
+         * @spicapi
+        */
+        float MaxSpeed() const;
+
+        /**
          * @brief Returns direction that force driven entity is going to.
          * @return spic::Point.
          * @spicapi
@@ -57,94 +52,6 @@ namespace spic {
          * @spicapi
         */
         float Mass() const;
-
-        /**
-        * @brief Sets obstacles
-        * @param obstacles Obstacles are used for Obstacle avoidance.
-        * @spicapi
-        */
-        void SetObstacles(std::vector<std::shared_ptr<spic::GameObject>> obstacles);
-
-        /**
-        * @brief Sets Deceleration for Arrival steering behaviour.
-        * @param deceleration Deceleration that is used when force driven entity arrives at target.
-        * @spicapi
-        */
-        void SetDeceleration(Deceleration deceleration = Deceleration::NORMAL);
-
-        /**
-         * @brief Adds target with targetWeight for specific SteeringBehaviour.
-         * @param targetBehaviour SteeringBehaviour that is used for target.
-         * @param target Desired target.
-         * @param targetWeight Weight that shows how much target steering behaviour influences the steering force.
-         * @spicapi
-        */
-        void AddTarget(TargetBehaviour targetBehaviour, Point& target, const float targetWeight);
-
-        /**
-         * @brief Removes target for specific SteeringBehaviour.
-         * @param targetBehaviour SteeringBehaviour that is used for target.
-         * @param target Desired target to remove.
-         * @spicapi
-        */
-        void RemoveTarget(TargetBehaviour targetBehaviour, Point& target);
-
-        /**
-         * @brief Removes steering behaviour and all underlying targets.
-         * @param targetBehaviour TargetBehaviour to remove.
-         * @spicapi
-        */
-        void RemoveTargetBehaviour(TargetBehaviour targetBehaviour);
-
-        /**
-         * @brief Activates wander behaviour for force driven entity.
-         * @param wanderRadius The radius of the constraining circle for the wander behaviour.
-         * @param wanderDistance The distance the wander circle is projected in front of the agent.
-         * @param wanderJitter The maximum amount of displacement along the circle each frame.
-         * @spicapi
-        */
-        void Wander(const float wanderWeight, const float wanderRadius = 1.0f, const float wanderDistance = 6.0f, const float wanderJitter = 60.0f);
-
-        /**
-        * @brief Activates wall avoidance for force driven entity.
-        * @param wallAvoidanceWeight The weight of the behaviour.
-        * @param wallDetectionFeelerLength The length of the 3 feelers that are attached to the front of the force driven entity.
-        * @param bounds The bounds were the force driven entity needs to be kept in.
-        * @spicapi
-        */
-        void WallAvoidance(const float wallAvoidanceWeight, const float wallDetectionFeelerLength, const Bounds& bounds);
-        
-        /**
-         * @brief Activates obstacle avoidance for force driven entity.
-         * @param obstacleAvoidanceWeight The weight of the behaviour.
-         * @param feelerLength The length of the 3 feelers that are attached to the front of the force driven entity.
-         * @spicapi
-        */
-        void ObstacleAvoidance(const float obstacleAvoidanceWeight, const  float boxLength);
-
-        /**
-         * @brief Activates seperation for force driven entity
-         * @param seperationWeight The weight of the behaviour.
-         * @param desiredSeparation The desperation space between force driven entities.
-         * @spicapi
-        */
-        void Seperation(const float seperationWeight, const float desiredSeparation);
-
-        /**
-         * @brief Activates alignment for force driven entity.
-         * @param alignmentWeight The weight of the behaviour.
-         * @param viewRadius The radius where the entity searches for neighbors.
-         * @spicapi
-        */
-        void Alignment(const float alignmentWeight, const float viewRadius);
-
-        /**
-         * @brief Activates cohesion for force driven entity.
-         * @param cohesionWeight The weight of the behaviour.
-         * @param viewRadius The radius where the entity searches for neighbors.
-         * @spicapi
-        */
-        void Cohesion(const float cohesionWeight, const float viewRadius);
 
         /**
          * @brief Starts force driven entity if steering behaviour is defined.
@@ -168,13 +75,6 @@ namespace spic {
         void StopForceDrivenEntity();
     private:
         /**
-        * @brief Tags all nearby neigbors.
-        * @param forceDrivenEntities The list of all force driven entities that are active.
-        * @spicapi
-        */
-        void TagNeighbors(const std::vector<std::shared_ptr<ForceDriven>>& forceDrivenEntities);
-
-        /**
         * @brief Calculates steering force.
         * @return spic::Point Steering force.
         * @spicapi
@@ -196,79 +96,10 @@ namespace spic {
         Point CalculatePrioritized();
 
         /**
-         * @brief Add all steering forces to steering force.
-         * @param addSteeringForceCallback Callback that adds forces to steering force.
+         * @brief Applies steering force to force driven entity.
+         * @param spic::Point Steering force.
          * @spicapi
         */
-        void AddSteeringForces(std::function<bool(Point force)> addSteeringForceCallback);
-
-        /* -------------------------------- Steering behaviours -------------------------------- */
-
-        /**
-         * @brief Seek to target and return steering force.
-         * @return spic::Point Steering force.
-         * @spicapi
-        */
-        Point Seek(Point target);
-
-        /**
-        * @brief Flee from target and return steering force.
-        * @return spic::Point Steering force.
-        * @spicapi
-        */
-        Point Flee(Point target);
-
-        /**
-        * @brief Arrive at target and return steering force.
-        * @return spic::Point Steering force.
-        * @spicapi
-        */
-        Point Arrival(Point target);
-
-        /**
-        * @brief Wander randomly around scene and return steering force.
-        * @return spic::Point Steering force.
-        * @spicapi
-        */
-        Point Wander();
-
-        /**
-        * @brief Calculates steering force to avoid walls.
-        * @return spic::Point Steering force.
-        * @spicapi
-        */
-        Point WallAvoidance();
-
-        /**
-        * @brief Calculates steering force to avoid obstacles.
-        * @return spic::Point Steering force.
-        * @spicapi
-        */
-        Point ObstacleAvoidance();
-
-        /* -------------------------------- Group behaviours -------------------------------- */
-
-        /**
-        * @brief Calculates steering force to seperate from force driven entities.
-        * @return spic::Point Steering force.
-        * @spicapi
-        */
-        Point Seperate();
-
-        /**
-        * @brief Calculates steering force to align force driven entities.
-        * @return spic::Point Steering force.
-        * @spicapi
-        */
-        Point Align();
-
-        /**
-        * @brief Calculates steering force to cohere force driven entities together.
-        * @return spic::Point Steering force.
-        * @spicapi
-        */
-        Point Cohere();
-
         void ApplyForce(Point& force);
     private:
         /**
@@ -280,68 +111,6 @@ namespace spic {
         float angleSensitivity; // in rad
         bool paused;
         Point heading;
-        std::vector<std::shared_ptr<ForceDriven>> neighbors;
-
-        /**
-        * @brief Target properties.
-        *       Every steering force has a map with a target as a key and a target weight as value.
-        */
-        std::map<spic::TargetBehaviour, std::map<std::reference_wrapper<Point>, float, std::less<Point>>> steeringBehavioursIncludingTargets;
-
-        /**
-        * @brief Seperation properties.
-        */
-        float seperationWeight;
-        float desiredSeparation;
-
-        /**
-        * @brief Alignment properties.
-        */
-        float alignmentWeight;
-
-        /**
-        * @brief Cohesion properties.
-        */
-        float cohesionWeight;
-        float viewRadius;
-
-        /**
-        * @brief Wall avoidance properties.
-        */
-        float wallAvoidanceWeight;
-        float wallDetectionFeelerLength;
-        Bounds bounds;
-
-        /**
-        * @brief Obstacle avoidance properties. 
-                When feeler reaches certain treshold start aplying obstacle avoidance force
-        */
-        float obstacleAvoidanceWeight;
-        std::vector<std::shared_ptr<spic::GameObject>> obstacles;
-        float boxLength;
-
-        /**
-        * @brief Wander properties.
-        */
-        float wanderWeight;
-        float wanderRadius;
-        float wanderDistance;
-        float wanderJitter;
-
-        /**
-        * @brief Arrival properties.
-        */
-        Deceleration deceleration;
-
-        /**
-        * @brief Using forces properties.
-        */
-        bool useWander;
-        bool useWallAvoidance;
-        bool useObstacleAvoidance;
-        bool useSeperation;
-        bool useAlignment;
-        bool useCohesion;
     };
 }
 
