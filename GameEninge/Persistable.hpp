@@ -5,25 +5,43 @@
 #include <map>
 #include <functional>
 
-namespace spic {
+namespace spic 
+{
 	class Persistable
 	{
 	public:
-		Persistable(GameObject* gameObject, std::string typeName);
 		/**
-		 * @brief Needs to declare virtual destructor,
-		 *			otherwise can't be used as interface
+		 * @brief Makes a GameObject persistable, so that it can be loaded back in later on.
 		 */
+		Persistable(GameObject* gameObject, std::string typeName);
 		virtual ~Persistable() = default;
 		Persistable(const Persistable& other) = delete;
 		Persistable(Persistable&& other) = delete;
 		Persistable& operator=(const Persistable& other) = delete;
 		Persistable& operator=(Persistable&& other) = delete;
 
+		/**
+		 * @brief Saves the properties of the GameObject.
+		 * @return A map containing the properties of the GameObject, or an empty map if the GameObject is nullptr.
+		 */
 		virtual std::map<std::string, std::function<std::string()>> SaveProperties();
+		
+		/**
+		 * @brief Loads the properties of the GameObject.
+		 * @return A map used for passing the properties of the GameObject, which are then set to the GameObject. Or an empty map if the GameObject is nullptr.
+		 */
 		virtual std::map<std::string, std::function<void(const std::string&)>> LoadProperties();
+		
 	private:
+
+		/**
+		* @brief The GameObject to make persistable.
+		*/
 		GameObject* gameObject;
+		
+		/**
+		* @brief The Type of the GameObject.
+		*/
 		std::string typeName;
 	};
 }
