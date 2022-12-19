@@ -84,6 +84,11 @@ namespace spic::helper_functions
 		*/
 		bool CalculateWithinSquare(const Point& point, std::array<Point, 4>& square);
 
+		/**
+		 * @brief Calculates if two rects intersect with eachother
+		 * @param rect1 Rectangle to check
+		 * @param rect2 Rectangle to check
+		*/
 		bool RectIntersection(const Rect& rect1, const Rect& rect2);
 
 		/**

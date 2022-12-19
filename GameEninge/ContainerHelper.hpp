@@ -55,7 +55,7 @@ namespace spic::helper_functions
                 return nullptr;
 
             auto index = std::distance(vector.begin(), it);
-            return TypeHelper::CastSharedPtrToType<C>(vector[index]);
+            return helper_functions::type_helper::CastSharedPtrToType<C>(vector[index]);
         }
     }
 }

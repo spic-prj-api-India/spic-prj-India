@@ -10,6 +10,7 @@
 
 namespace spic {
 	using namespace internal::math;
+	using namespace helper_functions;
 
 	Steering::Steering(ForceDriven* agent) : agent{ agent }, useWallAvoidance { false },
 		useObstacleAvoidance{ false }, useWander{ false }, deceleration{ spic::Deceleration::NORMAL }
@@ -248,7 +249,7 @@ namespace spic {
 
 		for (auto& feeler : feelers) {
 			for (int wallIndex = 0; wallIndex < 4; wallIndex++) {
-				if (spic::general_helper::LineIntersection(top,
+				if (general_helper::LineIntersection(top,
 					feeler,
 					walls[wallIndex],
 					walls[wallIndex + 1],
@@ -298,7 +299,7 @@ namespace spic {
 		for (const auto& obstacle : obstacles)
 		{
 			Point obstacleLocation = obstacle->Transform()->position;
-			float obstacleRadius = spic::TypeHelper::CastSharedPtrToType<Obstacle>(obstacle)->BRadius();
+			float obstacleRadius = type_helper::CastSharedPtrToType<Obstacle>(obstacle)->BRadius();
 			const Point to = obstacleLocation - location;
 
 			const float range = realBoxLength + obstacleRadius;

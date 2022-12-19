@@ -149,8 +149,8 @@ namespace spic {
 	std::weak_ptr<T> GameEngine::GetExtension()
 	{
 		for (const auto& extension : _extensions) {
-			if (TypeHelper::SharedPtrIsOfType<T>(extension))
-				return TypeHelper::CastSharedPtrToWeakType<T>(extension);
+			if (helper_functions::type_helper::SharedPtrIsOfType<T>(extension))
+				return helper_functions::type_helper::CastSharedPtrToWeakType<T>(extension);
 		}
 		return std::dynamic_pointer_cast<T>(std::make_shared<extensions::IEngineExtension>());
 	}
@@ -160,8 +160,8 @@ namespace spic {
 	{
 		std::vector<std::weak_ptr<T>> extensions;
 		for (const auto& extension : _extensions) {
-			if (TypeHelper::SharedPtrIsOfType<T>(extension))
-				extensions.emplace_back(TypeHelper::CastSharedPtrToWeakType<T>(extension));
+			if (helper_functions::type_helper::SharedPtrIsOfType<T>(extension))
+				extensions.emplace_back(helper_functions::type_helper::CastSharedPtrToWeakType<T>(extension));
 		}
 		return extensions;
 	}
@@ -170,7 +170,7 @@ namespace spic {
 	bool GameEngine::HasExtension()
 	{
 		for (const auto& extension : _extensions) {
-			if (TypeHelper::SharedPtrIsOfType<T>(extension))
+			if (helper_functions::type_helper::SharedPtrIsOfType<T>(extension))
 				return true;
 		}
 		return false;
@@ -180,9 +180,9 @@ namespace spic {
 	void GameEngine::RemoveExtension()
 	{
 		auto findFunction = [](std::shared_ptr<extensions::IEngineExtension> ext) {
-			return TypeHelper::SharedPtrIsOfType<T>(ext);
+			return helper_functions::type_helper::SharedPtrIsOfType<T>(ext);
 		};
-		std::shared_ptr<T> deletePtr = ContainerHelper::FindAndConvert<T>(_extensions, findFunction);
+		std::shared_ptr<T> deletePtr = helper_functions::container::FindAndConvert<T>(_extensions, findFunction);
 		_extensions.erase(deletePtr);
 		do {
 			deletePtr.reset();
@@ -192,7 +192,7 @@ namespace spic {
 	template<typename T>
 	void GameEngine::RegisterType()
 	{
-		const std::string typeName = TypeHelper::GetTypeName<T>();
+		const std::string typeName = helper_functions::type_helper::GetTypeName<T>();
 		if (_types.count(typeName) != 0)
 			throw std::exception("Type is already registered.");
 		const std::function createInstance = GameObject::CreateInstance<T>;
