@@ -199,6 +199,17 @@ namespace spic::extensions
 			body->ApplyForce(force, body->GetWorldCenter(), true);
 		}
 
+		void RemoveEntity(const std::string& name)
+		{
+			while (world != nullptr && world->IsLocked())
+				std::this_thread::sleep_for(std::chrono::milliseconds(1));
+			if (bodies.count(name) != 0) {
+				b2Body* body = bodies[name];
+				bodies.erase(name);
+				world->DestroyBody(body);
+			}
+		}
+
 		/**
 		* @brief Gets linear velocty of entity
 		* @spicapi
@@ -669,6 +680,11 @@ namespace spic::extensions
 	void spic::extensions::PhysicsExtension1::AddForce(const std::shared_ptr<GameObject>& entity, const spic::Point& forceDirection)
 	{
 		physicsImpl->AddForce(std::move(entity), forceDirection);
+	}
+
+	void spic::extensions::PhysicsExtension1::RemoveEntity(const std::string& name)
+	{
+		physicsImpl->RemoveEntity(name);
 	}
 
 	Point spic::extensions::PhysicsExtension1::GetLinearVelocity(const std::string& entityName)

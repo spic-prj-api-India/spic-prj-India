@@ -45,7 +45,6 @@ void GameScene::SetContents()
 	boxCollider->Width(50.0f);
 	boxCollider->Height(50.0f);
 	std::shared_ptr<spic::RigidBody> boxRigidBody = std::make_shared<spic::RigidBody>(10.0f, 1.0f, spic::BodyType::dynamicBody);
-	std::shared_ptr<CollisionDetectionScript> collisionScript = std::make_shared<CollisionDetectionScript>();
 	std::shared_ptr<PlayerMovementScript> movementScript = std::make_shared<PlayerMovementScript>();
 	auto boxSprite = std::make_shared<spic::Sprite>("assets/textures/box.png", 1);
 	auto music = std::make_shared<spic::AudioSource>("assets/music/file_example_MP3_700KB.mp3", true, true, 1.0f);
@@ -54,7 +53,6 @@ void GameScene::SetContents()
 	box->Transform(boxTransform);
 	box->AddComponent<spic::BoxCollider>(boxCollider);
 	box->AddComponent<spic::RigidBody>(boxRigidBody);
-	box->AddComponent<spic::BehaviourScript>(collisionScript);
 	box->AddComponent<spic::BehaviourScript>(movementScript);
 	box->AddComponent<spic::Sprite>(boxSprite);
 	//box->AddComponent<spic::AudioSource>(music);

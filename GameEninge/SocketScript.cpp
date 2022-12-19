@@ -40,9 +40,9 @@ void spic::SocketScript::UpdatePosition(const spic::NetworkPacket* packet, spic:
 	gameobject->Transform()->Deserialize(test);
 }
 
-void spic::SocketScript::RemoveEntity(std::shared_ptr<spic::GameObject> entity)
+void spic::SocketScript::RemoveEntity(const std::string& name)
 {
-	spic::internal::EntityManager::GetInstance()->RemoveEntity(std::move(entity));
+	spic::internal::EntityManager::GetInstance()->RemoveEntity(name);
 }
 
 

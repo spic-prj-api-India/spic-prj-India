@@ -279,6 +279,7 @@
     <ClCompile Include="NetworkingReceiveSystem.cpp" />
     <ClCompile Include="NetworkingSendSystem.cpp" />
     <ClCompile Include="NetworkPacket.cpp" />
+    <ClCompile Include="Obstacle.cpp" />
     <ClCompile Include="PhysicsExtension1.cpp" />
     <ClCompile Include="BoxCollider.cpp" />
     <ClCompile Include="CastException.cpp" />

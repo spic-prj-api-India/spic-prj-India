@@ -6,6 +6,7 @@
 #include "Transformations.hpp"
 #include "Settings.hpp"
 #include "Debug.hpp"
+#include "Obstacle.hpp"
 
 namespace spic {
 	using namespace internal::math;
@@ -179,6 +180,7 @@ namespace spic {
 		Point target;
 		const Point& location = this->agent->Transform()->position;
 		const Point& heading = this->agent->Heading();
+		const Point& side = this->agent->Side();
 
 		target += Point(ClampedRandomFloat() * wanderJitter,
 			ClampedRandomFloat() * wanderJitter);
@@ -191,7 +193,7 @@ namespace spic {
 
 		Point targetWorld = PointToWorldSpace(targetLocal,
 			heading,
-			heading.Perp(),
+			side,
 			location);
 
 		Point desiredVelocity = targetWorld - location;
@@ -282,7 +284,7 @@ namespace spic {
 	{
 		Point location = this->agent->Transform()->position;
 		const Point& heading = this->agent->Heading();
-		float radius = this->agent->GetComponent<Collider>()->Size().x / 2;
+		const Point& side = this->agent->Side();
 		float realBoxLength = boxLength;
 
 		std::shared_ptr<GameObject> closestIntersectingObstacle = nullptr;
@@ -296,7 +298,7 @@ namespace spic {
 		for (const auto& obstacle : obstacles)
 		{
 			Point obstacleLocation = obstacle->Transform()->position;
-			float obstacleRadius = obstacle->GetComponent<Collider>()->Size().x / 2;
+			float obstacleRadius = spic::TypeHelper::CastSharedPtrToType<Obstacle>(obstacle)->BRadius();
 			const Point to = obstacleLocation - location;
 
 			const float range = realBoxLength + obstacleRadius;
@@ -309,7 +311,7 @@ namespace spic {
 				//calculate this obstacle's position in local space
 				Point localPos = PointToLocalSpace(obstacleLocation,
 					heading,
-					heading.Perp(),
+					side,
 					location);
 
 				//if the local position has a negative x value then it must lay
@@ -319,7 +321,7 @@ namespace spic {
 					//if the distance from the x axis to the object's position is less
 					//than its radius + half the width of the detection box then there
 					//is a potential intersection.
-					const float expandedRadius = obstacleRadius + radius;
+					const float expandedRadius = obstacleRadius + this->agent->BRadius();
 
 					/*if (fabs(LocalPos.y) < ExpandedRadius)
 					{*/
@@ -348,7 +350,7 @@ namespace spic {
 						distToClosestIP = ip;
 
 						closestIntersectingObstacle = obstacle;
-						debug::DrawLine(localPos, obstacleLocation, Color::red());
+						//debug::DrawLine(localPos, obstacleLocation, Color::red());
 						localPosOfClosestObstacle = localPos;
 					}
 				}
@@ -383,6 +385,6 @@ namespace spic {
 		//finally, convert the steering vector from local to world space
 		return VectorToWorldSpace(steeringForce,
 			heading,
-			heading.Perp());
+			side);
 	}
 }

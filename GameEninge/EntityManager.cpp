@@ -78,6 +78,7 @@ void EntityManager::Init()
 void EntityManager::Reset()
 {
 	entities.clear();
+	removeEntities.clear();
 	systems.clear();
 	scenes.clear();
 	scene = nullptr;
@@ -102,11 +103,9 @@ void spic::internal::EntityManager::AddEntityAlsoToScene(const std::shared_ptr<s
 	scene->AddContent(entity);
 }
 
-void EntityManager::RemoveEntity(const std::shared_ptr<spic::GameObject>& entity) 
+void EntityManager::RemoveEntity(const std::string& name)
 {
-	entities.erase(
-		std::remove(entities.begin(), entities.end(), entity),
-		entities.end());
+	removeEntities.emplace_back(name);
 }
 
 void EntityManager::RegisterScene(const std::string& sceneName, std::function<spic::Scene* ()> scene)
@@ -236,8 +235,28 @@ void UpdateSave(std::map<int, std::vector<std::unique_ptr<spic::systems::ISystem
 			system->Update(vectorCopy, *scene);
 }
 
+void RemoveEntities(std::vector<std::string>& removeEntities, std::vector<std::shared_ptr<spic::GameObject>>& entities)
+{
+	GameEngine* engine = GameEngine::GetInstance();
+	auto extensions = engine->GetExtensions<spic::extensions::IPhysicsExtension>();
+	for (const std::string& entityName : removeEntities) {
+		GameEngine* engine = GameEngine::GetInstance();
+		for (const auto& weakExtension : extensions) {
+			if (const auto& physicsExtension = weakExtension.lock())
+				physicsExtension->RemoveEntity(entityName);
+		}
+		entities.erase(std::remove_if(entities.begin(), entities.end()
+			, [entityName](const std::shared_ptr<spic::GameObject>& x) {
+				return x->Name() == entityName;
+			}), entities.end());
+	}
+	removeEntities.clear();
+}
+
 void EntityManager::Update()
 {
+	RemoveEntities(removeEntities, entities);
+
 	std::vector<std::shared_ptr<spic::GameObject>> tempVect;
 
 	std::copy(entities.begin(), entities.end(), std::back_inserter(tempVect));

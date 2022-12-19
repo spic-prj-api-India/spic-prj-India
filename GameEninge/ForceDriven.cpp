@@ -14,9 +14,10 @@
 using namespace spic::internal::math;
 
 namespace spic {
-	ForceDriven::ForceDriven(SumMethod sumMethod, const float maxSteeringForce, const float maxSpeed, const float angleSensitivity) : GameObject(),
+	ForceDriven::ForceDriven(SumMethod sumMethod, const float maxSteeringForce, 
+		const float maxSpeed, const float maxTurnRate, const float boundingRadius) : GameObject(),
 		sumMethod{ sumMethod }, maxSteeringForce{ maxSteeringForce }, maxSpeed{ maxSpeed },
-		angleSensitivity{ angleSensitivity }, paused{ true }
+		maxTurnRate{ maxTurnRate }, boundingRadius{ boundingRadius }, paused{ true }
 	{
 	}
 
@@ -36,10 +37,20 @@ namespace spic {
 		return heading;
 	}
 
+	Point ForceDriven::Side() const
+	{
+		return heading.Perp();
+	}
+
 	float ForceDriven::Mass() const
 	{
 		std::shared_ptr<RigidBody> body = this->GetComponent<RigidBody>();
 		return body->Mass();
+	}
+
+	float ForceDriven::BRadius() const
+	{
+		return boundingRadius;
 	}
 
 	void ForceDriven::StartForceDrivenEntity()
@@ -118,7 +129,7 @@ namespace spic {
 		const float rotationInDeg = Velocity().Rotation();
 		const float desiredRotation = spic::general_helper::DEG2RAD<float>(rotationInDeg);
 		const float angle = abs(this->Transform()->rotation - desiredRotation);
-		if (angle >= this->angleSensitivity) {
+		if (angle >= this->maxTurnRate) {
 			Transform()->rotation = desiredRotation;
 			heading = { sin(desiredRotation), -cosf(desiredRotation) };
 		}

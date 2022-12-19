@@ -659,6 +659,9 @@
     <ClCompile Include="Steering.cpp">
       <Filter>Source Files\components\ai</Filter>
     </ClCompile>
+    <ClCompile Include="Obstacle.cpp">
+      <Filter>Source Files\objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

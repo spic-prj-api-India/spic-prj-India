@@ -46,7 +46,7 @@ void InitGame() {
 
 void StartGame()
 {
-	spic::settings::COLLIDER_VISIBILITY = true;
+	spic::settings::COLLIDER_VISIBILITY = false;
 	spic::settings::WALL_AVOIDANCE_FEELERS_VISIBILITY = false;
 	spic::settings::WINDOW_NAME = "Forts 2";
 	spic::settings::WINDOW_WIDTH = 1200;

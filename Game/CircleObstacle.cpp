@@ -3,14 +3,14 @@
 #include <CircleCollider.hpp>
 #include "RigidBody.hpp"
 
-CircleObstacle::CircleObstacle(const std::string& name, const spic::Point& position) : GameObject(name)
+CircleObstacle::CircleObstacle(const std::string& name, const spic::Point& position) : GameObject(name), Obstacle(80.0f)
 {
 	SetAttributes(position);
 }
 
 void CircleObstacle::SetAttributes(const spic::Point& position)
 {
-	Tag("ball");
+	Tag("obstacle");
 	auto circleCollider = std::make_shared<spic::CircleCollider>(60.0f);
 	Transform(std::make_shared<spic::Transform>(position, 0.0f, 1.0f));
 	AddComponent<spic::CircleCollider>(std::move(circleCollider));

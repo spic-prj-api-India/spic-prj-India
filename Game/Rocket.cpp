@@ -4,7 +4,7 @@
 #include <Flocking.hpp>
 #include <Steering.hpp>
 
-Rocket::Rocket(const std::string& name, const spic::Point& position, const float angle) : ForceDriven(spic::SumMethod::WEIGHTED_AVERAGE, 0.5f, 1.5f, 0.122173048f)
+Rocket::Rocket(const std::string& name, const spic::Point& position, const float angle) : ForceDriven(spic::SumMethod::WEIGHTED_AVERAGE, 0.5f, 1.5f, 0.122173048f, 40.0f)
 {
 	SetAttributes(name, position, angle);
 	SetSteeringBehaviours();
@@ -31,15 +31,15 @@ void Rocket::SetSteeringBehaviours()
 	steering->SetDeceleration(spic::Deceleration::SLOW);
 	//steering->WanderOn(.5f, 1.1f, 6.0f, 60.0f);
 	steering->WallAvoidanceOn(3.0f, 80.0f, spic::Point(1200.0f, 800.0f));
-	steering->ObstacleAvoidanceOn(3.0f, 80.0f);
+	steering->ObstacleAvoidanceOn(3.0f, 120.0f);
 	AddComponent<spic::Steering>(steering);
 }
 
 void Rocket::SetGroupBehaviours()
 {
 	std::shared_ptr<spic::Flocking> flocking = std::make_shared<spic::Flocking>(this);
-	flocking->SeperationOn(1.0f, 40.0f);
-	flocking->AlignmentOn(0.5f, 125.0f);
-	flocking->CohesionOn(0.5f, 125.0f);
+	flocking->SeperationOn(0.20f, 60.0f);
+	flocking->AlignmentOn(0.20f, 125.0f);
+	flocking->CohesionOn(0.20f, 125.0f);
 	AddComponent<spic::Flocking>(flocking);
 }

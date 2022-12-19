@@ -15,65 +15,70 @@ namespace spic::internal::extensions {
 
 	void Box2DCollisionListener::BeginContact(b2Contact* contact)
 	{
-		// Check if fixture A is a entity
-		uintptr_t bodyData = contact->GetFixtureA()->GetBody()->GetUserData().pointer;
-		if (bodyData) 
+		// Check if fixture A and B are an entity
+		uintptr_t bodyDataA = contact->GetFixtureA()->GetBody()->GetUserData().pointer;
+		uintptr_t bodyDataB = contact->GetFixtureB()->GetBody()->GetUserData().pointer;
+		if (bodyDataA && bodyDataB)
 		{
-			spic::GameObject* entity = reinterpret_cast<spic::GameObject*>(bodyData);
-			std::shared_ptr<spic::GameObject> sharedPtr = std::make_shared<spic::GameObject>(*entity);
-			std::shared_ptr<spic::Collider> collider = entity->GetComponent<spic::Collider>();
-			onEnterCallback(sharedPtr, collider);
-		}
+			// Convert to game object
+			spic::GameObject* entityA = reinterpret_cast<spic::GameObject*>(bodyDataA);
+			spic::GameObject* entityB = reinterpret_cast<spic::GameObject*>(bodyDataB);
+			std::shared_ptr<spic::GameObject> sharedPtrA = std::make_shared<spic::GameObject>(*entityA);
+			std::shared_ptr<spic::GameObject> sharedPtrB = std::make_shared<spic::GameObject>(*entityB);
 
-		// Check if fixture B is a entity
-		bodyData = contact->GetFixtureB()->GetBody()->GetUserData().pointer;
-		if (bodyData) {
-			spic::GameObject* entity = reinterpret_cast<spic::GameObject*>(bodyData);
-			std::shared_ptr<spic::GameObject> sharedPtr = std::make_shared<spic::GameObject>(*entity);
-			std::shared_ptr<spic::Collider> collider = entity->GetComponent<spic::Collider>();
-			onEnterCallback(sharedPtr, collider);
+			// Get colliders
+			std::shared_ptr<spic::Collider> colliderA = entityA->GetComponent<spic::Collider>();
+			std::shared_ptr<spic::Collider> colliderB = entityB->GetComponent<spic::Collider>();
+
+			// Call callbacks
+			onEnterCallback(sharedPtrA, colliderB);
+			onEnterCallback(sharedPtrB, colliderA);
 		}
 	}
 
 	void Box2DCollisionListener::EndContact(b2Contact* contact)
 	{
-		// Check if fixture A is a entity
-		uintptr_t bodyData = contact->GetFixtureA()->GetBody()->GetUserData().pointer;
-		if (bodyData) {
-			spic::GameObject* entity = reinterpret_cast<spic::GameObject*>(bodyData);
-			std::shared_ptr<spic::GameObject> sharedPtr = std::make_shared<spic::GameObject>(*entity);
-			std::shared_ptr<spic::Collider> collider = entity->GetComponent<spic::Collider>();
-			onExitCallback(sharedPtr, collider);
-		}
+		// Check if fixture A and B are an entity
+		uintptr_t bodyDataA = contact->GetFixtureA()->GetBody()->GetUserData().pointer;
+		uintptr_t bodyDataB = contact->GetFixtureB()->GetBody()->GetUserData().pointer;
+		if (bodyDataA && bodyDataB)
+		{
+			// Convert to game object
+			spic::GameObject* entityA = reinterpret_cast<spic::GameObject*>(bodyDataA);
+			spic::GameObject* entityB = reinterpret_cast<spic::GameObject*>(bodyDataB);
+			std::shared_ptr<spic::GameObject> sharedPtrA = std::make_shared<spic::GameObject>(*entityA);
+			std::shared_ptr<spic::GameObject> sharedPtrB = std::make_shared<spic::GameObject>(*entityB);
 
-		// Check if fixture B is a entity
-		bodyData = contact->GetFixtureB()->GetBody()->GetUserData().pointer;
-		if (bodyData) {
-			spic::GameObject* entity = reinterpret_cast<spic::GameObject*>(bodyData);
-			std::shared_ptr<spic::GameObject> sharedPtr = std::make_shared<spic::GameObject>(*entity);
-			std::shared_ptr<spic::Collider> collider = entity->GetComponent<spic::Collider>();
-			onExitCallback(sharedPtr, collider);
+			// Get colliders
+			std::shared_ptr<spic::Collider> colliderA = entityA->GetComponent<spic::Collider>();
+			std::shared_ptr<spic::Collider> colliderB = entityB->GetComponent<spic::Collider>();
+
+			// Call callbacks
+			onExitCallback(sharedPtrA, colliderB);
+			onExitCallback(sharedPtrB, colliderA);
 		}
 	}
 
 	void Box2DCollisionListener::PreSolve(b2Contact* contact, const b2Manifold* oldManifold)
 	{
-		// Check if fixture A is a entity
-		uintptr_t bodyData = contact->GetFixtureA()->GetBody()->GetUserData().pointer;
-		if (bodyData) {
-			spic::GameObject* entity = reinterpret_cast<spic::GameObject*>(bodyData);
-			std::shared_ptr<spic::GameObject> sharedPtr = std::make_shared<spic::GameObject>(*entity);
-			std::shared_ptr<spic::Collider> collider = entity->GetComponent<spic::Collider>();
-			onStayCallback(sharedPtr, collider);
-		}
+		// Check if fixture A and B are an entity
+		uintptr_t bodyDataA = contact->GetFixtureA()->GetBody()->GetUserData().pointer;
+		uintptr_t bodyDataB = contact->GetFixtureB()->GetBody()->GetUserData().pointer;
+		if (bodyDataA && bodyDataB)
+		{
+			// Convert to game object
+			spic::GameObject* entityA = reinterpret_cast<spic::GameObject*>(bodyDataA);
+			spic::GameObject* entityB = reinterpret_cast<spic::GameObject*>(bodyDataB);
+			std::shared_ptr<spic::GameObject> sharedPtrA = std::make_shared<spic::GameObject>(*entityA);
+			std::shared_ptr<spic::GameObject> sharedPtrB = std::make_shared<spic::GameObject>(*entityB);
 
-		// Check if fixture B is a entity
-		bodyData = contact->GetFixtureB()->GetBody()->GetUserData().pointer;
-		if (bodyData) {
-			spic::GameObject* entity = reinterpret_cast<spic::GameObject*>(bodyData);
-			std::shared_ptr<spic::GameObject> sharedPtr = std::make_shared<spic::GameObject>(*entity);
-			std::shared_ptr<spic::Collider> collider = entity->GetComponent<spic::Collider>();
-			onStayCallback(sharedPtr, collider);
+			// Get colliders
+			std::shared_ptr<spic::Collider> colliderA = entityA->GetComponent<spic::Collider>();
+			std::shared_ptr<spic::Collider> colliderB = entityB->GetComponent<spic::Collider>();
+
+			// Call callbacks
+			onStayCallback(sharedPtrA, colliderB);
+			onStayCallback(sharedPtrB, colliderA);
 		}
 	}
 

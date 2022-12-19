@@ -51,6 +51,13 @@ namespace spic::extensions {
 		void AddForce(const std::shared_ptr<GameObject>& entity, const spic::Point& forceDirection) override;
 
 		/**
+		* @brief Removes entity from physics
+		* @param name Name of entity that will be removed
+		* @spicapi
+		*/
+		void RemoveEntity(const std::string& name) override;
+
+		/**
 		* @brief Gets linear velocity of entity with name
 		* @spicapi
 		*/

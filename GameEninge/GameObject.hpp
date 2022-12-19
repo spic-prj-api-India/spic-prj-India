@@ -218,11 +218,10 @@ namespace spic {
 		 * @brief Removes a GameObject from the administration.
 		 * @details Child GameObjects will be destroyed, too, as well as
 		 *          Components owned by the GameObject.
-		 * @param obj The GameObject to be destroyed. Must be a valid pointer to existing Game Object.
-		 * @exception A std::runtime_exception is thrown when the pointer is not valid.
+		 * @param name The name of the GameObject to be destroyed.
 		 * @spicapi
 		 */
-		static void Destroy(std::shared_ptr<GameObject> obj);
+		static void Destroy(const std::string& name);
 
 		/**
 		 * @brief Removes a Component.

@@ -23,7 +23,7 @@ namespace spic {
      */
     class ForceDriven : public spic::GameObject {  
     public:
-        ForceDriven(SumMethod sumMethod, const float maxSteeringForce, const float maxSpeed, const float angleSensitivity);
+        ForceDriven(SumMethod sumMethod, const float maxSteeringForce, const float maxSpeed, const float maxTurnRate, const float boundingRadius);
 
         /**
          * @brief Returns velocity of force driven entity.
@@ -47,11 +47,25 @@ namespace spic {
         Point Heading() const;
 
         /**
+         * @brief Returns vector perpendicular to heading.
+         * @return spic::Point.
+         * @spicapi
+        */
+        Point Side() const;
+
+        /**
          * @brief Returns mass of force driven entity.
          * @return float.
          * @spicapi
         */
         float Mass() const;
+
+        /**
+         * @brief Returns bounding radius of force driven entity.
+         * @return float.
+         * @spicapi
+        */
+        float BRadius() const;
 
         /**
          * @brief Starts force driven entity if steering behaviour is defined.
@@ -108,9 +122,10 @@ namespace spic {
         SumMethod sumMethod;
         float maxSteeringForce;
         float maxSpeed;
-        float angleSensitivity; // in rad
+        float maxTurnRate; // in rad
         bool paused;
         Point heading;
+        float boundingRadius;
     };
 }
 
