@@ -40,7 +40,7 @@ namespace spic {
 
 	void ForceDriven::SetObstacles(std::vector<std::shared_ptr<spic::GameObject>> obstacles)
 	{
-		obstacles = std::move(obstacles);
+		this->obstacles = obstacles;
 	}
 
 	void ForceDriven::AddTarget(TargetBehaviour targetBehaviour, Point& target, const float targetWeight)
@@ -442,7 +442,7 @@ namespace spic {
 		float radius = GetComponent<Collider>()->Size().x / 2;
 		float realBoxLength = boxLength;
 
-		std::shared_ptr<GameObject> closestIntersectingObstacle = NULL;
+		std::shared_ptr<GameObject> closestIntersectingObstacle = nullptr;
 
 		//this will be used to track the distance to the CIB
 		float distToClosestIP = MaxFloat;
@@ -454,9 +454,9 @@ namespace spic {
 		{
 			Point obstacleLocation = obstacle->Transform()->position;
 			float obstacleRadius = obstacle->GetComponent<Collider>()->Size().x / 2;
-			Point to = obstacleLocation - location;
+			const Point to = obstacleLocation - location;
 
-			float range = realBoxLength + obstacleRadius;
+			const float range = realBoxLength + obstacleRadius;
 
 			//if entity within range, tag for further consideration. (working in
 			//distance-squared space to avoid sqrts)
@@ -467,7 +467,7 @@ namespace spic {
 				Point localPos = PointToLocalSpace(obstacleLocation,
 					heading,
 					heading.Perp(),
-					location);
+					location);	
 
 				//if the local position has a negative x value then it must lay
 				//behind the agent. (in which case it can be ignored)
@@ -476,7 +476,7 @@ namespace spic {
 					//if the distance from the x axis to the object's position is less
 					//than its radius + half the width of the detection box then there
 					//is a potential intersection.
-					float expandedRadius = obstacleRadius + radius;
+					const float expandedRadius = obstacleRadius + radius;
 
 					/*if (fabs(LocalPos.y) < ExpandedRadius)
 					{*/
@@ -485,17 +485,17 @@ namespace spic {
 					//given by the formula x = cX +/-sqrt(r^2-cY^2) for y=0. 
 					//We only need to look at the smallest positive value of x because
 					//that will be the closest point of intersection.
-					float cX = localPos.x;
-					float cY = localPos.y;
+					const float cX = localPos.x;
+					const float cY = localPos.y;
 
 					//we only need to calculate the sqrt part of the above equation once
-					float SqrtPart = sqrt(expandedRadius * expandedRadius - cY * cY);
+					const float sqrtPart = sqrt(expandedRadius * expandedRadius - cY * cY);
 
-					float ip = cX - SqrtPart;
+					float ip = cX - sqrtPart;
 
 					if (ip <= 0.0)
 					{
-						ip = cX + SqrtPart;
+						ip = cX + sqrtPart;
 					}
 
 					//test to see if this is the closest so far. If it is keep a
@@ -505,7 +505,7 @@ namespace spic {
 						distToClosestIP = ip;
 
 						closestIntersectingObstacle = obstacle;
-
+						debug::DrawLine(localPos, obstacleLocation, Color::red());
 						localPosOfClosestObstacle = localPos;
 					}
 				}
@@ -516,11 +516,11 @@ namespace spic {
 		//force away from it
 		Point steeringForce;
 
-		if (closestIntersectingObstacle)
+		if (closestIntersectingObstacle != nullptr)
 		{
 			//the closer the agent is to an object, the stronger the 
 			//steering force should be
-			float multiplier = 1.0f + (boxLength - localPosOfClosestObstacle.x) /
+			const float multiplier = 1.0f + (boxLength - localPosOfClosestObstacle.x) /
 				boxLength;
 
 			//calculate the lateral force

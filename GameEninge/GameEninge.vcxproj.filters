@@ -190,6 +190,12 @@
     <Filter Include="Header Files\settings">
       <UniqueIdentifier>{12d45431-ab90-4d70-9df6-86d1edb87651}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\core\systems\input\listeners">
+      <UniqueIdentifier>{8b5c0621-d3ee-4cf9-8407-8cb7e315b50c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\core\systems\input\listeners">
+      <UniqueIdentifier>{055be8db-a115-4fc9-baf5-dfa68a05eb96}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AudioSource.hpp">
@@ -339,9 +345,6 @@
     <ClInclude Include="ContainerHelper.hpp">
       <Filter>Header Files\helpers</Filter>
     </ClInclude>
-    <ClInclude Include="ButtonClickListener.hpp">
-      <Filter>Header Files\core\systems\input</Filter>
-    </ClInclude>
     <ClInclude Include="Defaults.hpp">
       <Filter>Header Files\core</Filter>
     </ClInclude>
@@ -426,14 +429,17 @@
     <ClInclude Include="Settings.hpp">
       <Filter>Header Files\settings</Filter>
     </ClInclude>
-    <ClInclude Include="IncreaseGameSpeedListener.hpp">
-      <Filter>Header Files\core\systems\input</Filter>
+    <ClInclude Include="ButtonClickListener.hpp">
+      <Filter>Header Files\core\systems\input\listeners</Filter>
     </ClInclude>
     <ClInclude Include="DecreaseGameSpeedListener.hpp">
-      <Filter>Header Files\core\systems\input</Filter>
+      <Filter>Header Files\core\systems\input\listeners</Filter>
+    </ClInclude>
+    <ClInclude Include="IncreaseGameSpeedListener.hpp">
+      <Filter>Header Files\core\systems\input\listeners</Filter>
     </ClInclude>
     <ClInclude Include="ResetGameSpeedListener.hpp">
-      <Filter>Header Files\core\systems\input</Filter>
+      <Filter>Header Files\core\systems\input\listeners</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -545,9 +551,6 @@
     <ClCompile Include="StringHelper.cpp">
       <Filter>Source Files\helpers</Filter>
     </ClCompile>
-    <ClCompile Include="ButtonClickListener.cpp">
-      <Filter>Source Files\core\systems\input</Filter>
-    </ClCompile>
     <ClCompile Include="Button.cpp">
       <Filter>Source Files\objects</Filter>
     </ClCompile>
@@ -626,14 +629,17 @@
     <ClCompile Include="AudioFacade.cpp">
       <Filter>Source Files\components\audio</Filter>
     </ClCompile>
-    <ClCompile Include="ResetGameSpeedListener.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="IncreaseGameSpeedListener.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="ButtonClickListener.cpp">
+      <Filter>Source Files\core\systems\input\listeners</Filter>
     </ClCompile>
     <ClCompile Include="DecreaseGameSpeedListener.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\core\systems\input\listeners</Filter>
+    </ClCompile>
+    <ClCompile Include="IncreaseGameSpeedListener.cpp">
+      <Filter>Source Files\core\systems\input\listeners</Filter>
+    </ClCompile>
+    <ClCompile Include="ResetGameSpeedListener.cpp">
+      <Filter>Source Files\core\systems\input\listeners</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

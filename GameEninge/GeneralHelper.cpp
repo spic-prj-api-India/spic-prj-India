@@ -110,8 +110,8 @@ bool spic::general_helper::RectIntersection(const Rect& rect1, const Rect& rect2
 	return xOverlap && yOverlap;
 }
 
-bool spic::general_helper::LineIntersection(Point sPoint1
-	, Point ePoint1
+bool spic::general_helper::LineIntersection(const Point& sPoint1
+	, const Point& ePoint1
 	, const Point& sPoint2
 	, const Point& ePoint2
 	, Point& intersectPoint

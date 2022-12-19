@@ -90,7 +90,7 @@ namespace spic::general_helper
 	 * @param distance Distance to intersection, is reference so that distance between lines can be used outside function
 	 * @return
 	*/
-	bool LineIntersection(Point sPoint1, Point ePoint1, const Point& sPoint2, const Point& ePoint2, Point& intersectPoint, float& distance);
+	bool LineIntersection(const Point& sPoint1, const Point& ePoint1, const Point& sPoint2, const Point& ePoint2, Point& intersectPoint, float& distance);
 	
 	/**
 	 * @brief 

@@ -60,7 +60,7 @@ namespace spic {
 		 * @param point Point that will be added
 		 * @return spic::Point
 		*/
-		Point operator +(const Point& point);
+		Point operator +(const Point& point) const;
 
 		/**
 		 * @brief operator for adding Point
@@ -73,7 +73,7 @@ namespace spic {
 		 * @param point Point that will be substracted
 		 * @return spic::Point
 		*/
-		Point operator -(const Point& point);
+		Point operator -(const Point& point) const;
 
 		/**
 		 * @brief operator for substracting Point
@@ -86,7 +86,7 @@ namespace spic {
 		 * @param point Point used as multiplier
 		 * @return spic::Point
 		*/
-		Point operator *(const Point& point);
+		Point operator *(const Point& point) const;
 
 		/**
 		 * @brief operator for multipling Point
@@ -99,7 +99,7 @@ namespace spic {
 		 * @param point Point used as divider
 		 * @return spic::Point
 		*/
-		Point operator /(const Point& point);
+		Point operator /(const Point& point) const;
 
 		/**
 		 * @brief operator for dividing Point
@@ -112,7 +112,7 @@ namespace spic {
 		 * @param value Value that will be added
 		 * @return spic::Point
 		*/
-		Point operator +(const float value);
+		Point operator +(const float value) const;
 
 		/**
 		 * @brief operator for adding Point
@@ -125,7 +125,7 @@ namespace spic {
 		 * @param value Value that will be substracted
 		 * @return spic::Point
 		*/
-		Point operator -(const float value);
+		Point operator -(const float value) const;
 
 		/**
 		 * @brief operator for substracting Point
@@ -138,7 +138,7 @@ namespace spic {
 		 * @param value Value used as multiplier
 		 * @return spic::Point
 		*/
-		Point operator *(const float value);
+		Point operator *(const float value) const;
 
 		/**
 		 * @brief operator for multipling Point
@@ -151,7 +151,7 @@ namespace spic {
 		 * @param value Value used as divider
 		 * @return spic::Point
 		*/
-		Point operator /(const float value);
+		Point operator /(const float value) const;
 
 		/**
 		 * @brief operator for dividing Point
@@ -163,7 +163,7 @@ namespace spic {
 		 * @brief operator for checking if points are equal
 		 * @param value Value used for checking
 		*/
-		bool operator==(const Point value);
+		bool operator==(const Point value) const;
 
 		/**
 		 * @brief operator for using Point as key in map
@@ -176,7 +176,7 @@ namespace spic {
 		 * @param point Point used as multiplier
 		 * @return float
 		*/
-		float Dot(const Point& point);
+		float Dot(const Point& point) const;
 	};
 }
 

@@ -81,7 +81,7 @@ namespace spic {
 		return true;
 	}
 
-	Point Point::operator +(const Point& point)
+	Point Point::operator +(const Point& point) const
 	{
 		return Point(this->x + point.x, this->y + point.y);
 	}
@@ -92,7 +92,7 @@ namespace spic {
 		this->y += point.y;
 	}
 
-	Point Point::operator -(const Point& point)
+	Point Point::operator -(const Point& point) const
 	{
 		return Point(this->x - point.x, this->y - point.y);
 	}
@@ -103,7 +103,7 @@ namespace spic {
 		this->y -= point.y;
 	}
 
-	Point Point::operator*(const Point& point)
+	Point Point::operator*(const Point& point) const
 	{
 		return Point(this->x * point.x, this->y * point.y);
 	}
@@ -114,7 +114,7 @@ namespace spic {
 		this->y *= point.y;
 	}
 
-	Point Point::operator /(const Point& point)
+	Point Point::operator /(const Point& point) const
 	{
 		return Point(this->x / point.x, this->y / point.y);
 	}
@@ -125,7 +125,7 @@ namespace spic {
 		this->y /= point.y;
 	}
 
-	Point Point::operator +(const float value)
+	Point Point::operator +(const float value) const
 	{
 		return Point(this->x + value, this->y + value);
 	}
@@ -136,7 +136,7 @@ namespace spic {
 		this->y += value;
 	}
 
-	Point Point::operator -(const float value)
+	Point Point::operator -(const float value) const
 	{
 		return Point(this->x - value, this->y - value);
 	}
@@ -147,7 +147,7 @@ namespace spic {
 		this->y -= value;
 	}
 
-	Point Point::operator*(const float value)
+	Point Point::operator*(const float value) const
 	{
 		return Point(this->x * value, this->y * value);
 	}
@@ -158,7 +158,7 @@ namespace spic {
 		this->y *= value;
 	}
 
-	Point Point::operator /(const float value)
+	Point Point::operator /(const float value) const
 	{
 		return Point(this->x / value, this->y / value);
 	}
@@ -169,7 +169,7 @@ namespace spic {
 		this->y /= value;
 	}
 
-	bool Point::operator==(const Point value)
+	bool Point::operator==(const Point value) const
 	{
 		return this->x == value.x && this->y == value.y;
 	}
@@ -179,7 +179,7 @@ namespace spic {
 		return Length() < cp.Length();
 	}
 
-	float Point::Dot(const Point& point)
+	float Point::Dot(const Point& point) const
 	{
 		return this->x * point.x + this->y * point.y;
 	}
