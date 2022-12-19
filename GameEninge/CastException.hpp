@@ -3,6 +3,9 @@
 
 #include <iostream>
 
+/**
+ * @brief Contains custom exceptions
+*/
 namespace spic::internal::exceptions {
     /**
      * @brief Throw this exception when class can not be casted to specific type

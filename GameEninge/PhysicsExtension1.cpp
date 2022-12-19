@@ -24,6 +24,10 @@
 
 namespace spic::extensions 
 {
+	using namespace spic::tiled;
+	/**
+	 * @brief Contains the box2d implementation
+	 */
 	class PhysicsExtensionImpl1 
 	{
 	public:
@@ -90,8 +94,8 @@ namespace spic::extensions
 		* @brief Add collision layer in world
 		* @spicapi
 		*/
-		void AddCollisionLayer(const spic::TileLayer& collisionLayer) {
-			const float tileSize = static_cast<float>(collisionLayer.GetTilesize());
+		void AddCollisionLayer(const TileLayer& collisionLayer) {
+			const float tileSize = static_cast<float>(collisionLayer.GetTileSize());
 			Matrix matrix = collisionLayer.GetMatrix();
 			const Point size = collisionLayer.GetSize();
 			for (int rowIndex = 0; rowIndex < size.y; rowIndex++)
@@ -167,14 +171,13 @@ namespace spic::extensions
 				// Update entity
 				entity->Transform()->position.x = position.x;
 				entity->Transform()->position.y = position.y;
-				if (!spic::TypeHelper::SharedPtrIsOfType<ForceDriven>(entity))
+				if (!spic::helper_functions::type_helper::SharedPtrIsOfType<ForceDriven>(entity))
 					entity->Transform()->rotation = rotation;
 			}
 		}
 
 		/**
 		* @brief Registers collision listener in world
-		* @spicapi
 		*/
 		void RegisterListener(std::unique_ptr<ICollisionListener> listener)
 		{
@@ -185,7 +188,6 @@ namespace spic::extensions
 
 		/**
 		* @brief Adds force to an entity
-		* @spicapi
 		*/
 		void AddForce(const std::shared_ptr<GameObject>& entity, const spic::Point& forceDirection)
 		{
@@ -201,7 +203,6 @@ namespace spic::extensions
 
 		/**
 		* @brief Gets linear velocty of entity
-		* @spicapi
 		*/
 		Point GetLinearVelocity(const std::string& name) {
 			if (bodies.count(name) == 0)
@@ -214,7 +215,6 @@ namespace spic::extensions
 
 		/**
 		* @brief Draw all colliders in world
-		* @spicapi
 		*/
 		void DrawColliders()
 		{
@@ -349,7 +349,6 @@ namespace spic::extensions
 
 		/**
 		* @brief Creates body, fixture and shape and adds body to box2d world
-		* @spicapi
 		*/
 		void CreateEntity(const std::shared_ptr<spic::GameObject>& entity)
 		{
@@ -374,7 +373,6 @@ namespace spic::extensions
 
 		/**
 		* @brief Creates box2d body with RigidBody of entity
-		* @spicapi
 		*/
 		b2Body* CreateBody(const std::shared_ptr<spic::GameObject>& entity
 			, const std::shared_ptr<spic::RigidBody>& rigidBody)
@@ -394,7 +392,6 @@ namespace spic::extensions
 
 		/**
 		* @brief Creates box2d fixture with RigidBody of entity
-		* @spicapi
 		*/
 		void CreateFixture(b2Body& body, const std::shared_ptr<spic::GameObject>& entity
 			, const float mass)
@@ -412,7 +409,6 @@ namespace spic::extensions
 		/**
 		* @brief Set box2d shape with Colliders of entity
 		* @return bool Shape is enabled
-		* @spicapi
 		*/
 		std::shared_ptr<spic::Collider> SetShape(b2FixtureDef& fixtureDef
 			, const std::shared_ptr<spic::GameObject>& entity, const float mass)
@@ -468,7 +464,6 @@ namespace spic::extensions
 		/**
 		* @brief Updates position and rotation for box2d body if transform of entity has
 		*		been changed outside extension
-		* @spicapi
 		*/
 		void UpdateEntity(const std::shared_ptr<spic::GameObject>& entity)
 		{
@@ -656,7 +651,7 @@ namespace spic::extensions
 		physicsImpl->RegisterListener(std::move(listener));
 	}
 
-	void spic::extensions::PhysicsExtension1::AddCollisionLayer(const spic::TileLayer& collisionLayer)
+	void spic::extensions::PhysicsExtension1::AddCollisionLayer(const TileLayer& collisionLayer)
 	{
 		physicsImpl->AddCollisionLayer(collisionLayer);
 	}

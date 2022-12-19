@@ -1,21 +1,16 @@
 #include "GeneralHelper.hpp"
 #include <random>
 
+using namespace spic::helper_functions::general_helper;
 using namespace spic;
 
-void spic::general_helper::RotatePoint(const Point& org, float angle, Point& p) noexcept
+void spic::helper_functions::general_helper::RotatePoint(const Point& org, float angle, Point& p) noexcept
 {
 	p = Point{ std::cos(angle) * (p.x - org.x) - std::sin(angle) * (p.y - org.y) + org.x,
 		std::sin(angle) * (p.x - org.x) + std::cos(angle) * (p.y - org.y) + org.y };
 }
 
-spic::Point spic::general_helper::GetsPointY(Point& pointX, const Point& rotation
-	, const float angle, float height, float width, float scaling) noexcept
-{
-	return Point{ pointX.x * scaling, pointX.y * height * scaling };
-}
-
-std::string spic::general_helper::GetRandomUUID()
+std::string spic::helper_functions::general_helper::GetRandomUUID()
 {
 	static std::random_device dev;
 	static std::mt19937 rng(dev());
@@ -34,7 +29,7 @@ std::string spic::general_helper::GetRandomUUID()
 	return res;
 }
 
-bool spic::general_helper::SpriteSorting(const std::shared_ptr<Sprite> a, const std::shared_ptr<Sprite> b)
+bool spic::helper_functions::general_helper::SpriteSorting(const std::shared_ptr<Sprite> a, const std::shared_ptr<Sprite> b)
 {
 	if (a->OrderInLayer() < b->OrderInLayer())
 		return true;
@@ -51,7 +46,7 @@ bool spic::general_helper::SpriteSorting(const std::shared_ptr<Sprite> a, const 
 	return false;
 }
 
-bool spic::general_helper::NetworkPacketSorting(const NetworkPacket& a, const NetworkPacket& b)
+bool spic::helper_functions::general_helper::NetworkPacketSorting(const NetworkPacket& a, const NetworkPacket& b)
 {
 	if (a.timeSpan < b.timeSpan)
 		return true;
@@ -59,7 +54,7 @@ bool spic::general_helper::NetworkPacketSorting(const NetworkPacket& a, const Ne
 	return false;
 }
 
-std::array<Point, 4> spic::general_helper::GetPoints(const Point& orgin
+std::array<Point, 4> spic::helper_functions::general_helper::GetPoints(const Point& orgin
 	, const float angle, const float aspectWidth, const float aspectHeight)
 {
 	Point center{ (orgin.x + aspectWidth) / 2, (orgin.y + aspectHeight) / 2 };
@@ -70,16 +65,12 @@ std::array<Point, 4> spic::general_helper::GetPoints(const Point& orgin
 	, Point{orgin.x + aspectWidth, orgin.y + aspectHeight} };
 
 	for (auto value : returnValue)
-	{
-		RotatePoint(center, angle, value);
-	}
+		spic::helper_functions::general_helper::RotatePoint(center, angle, value);
 
 	return returnValue;
 }
 
-
-
-bool spic::general_helper::CalculateWithinSquare(const Point& point, std::array<Point, 4>& square)
+bool spic::helper_functions::general_helper::CalculateWithinSquare(const Point& point, std::array<Point, 4>& square)
 {
 	auto am = square[0].DotProduct(point);
 	auto ab = square[0].DotProduct(square[1]);
@@ -99,7 +90,7 @@ bool ValueInRange(float value, float min, float max)
 	return (value >= min) && (value <= max);
 }
 
-bool spic::general_helper::RectIntersection(const Rect& rect1, const Rect& rect2) 
+bool spic::helper_functions::general_helper::RectIntersection(const Rect& rect1, const Rect& rect2)
 {
 	const bool xOverlap = ValueInRange(rect1.x, rect2.x, rect2.x + rect2.w) ||
 		ValueInRange(rect2.x, rect1.x, rect1.x + rect1.w);
@@ -110,7 +101,7 @@ bool spic::general_helper::RectIntersection(const Rect& rect1, const Rect& rect2
 	return xOverlap && yOverlap;
 }
 
-bool spic::general_helper::LineIntersection(Point sPoint1
+bool spic::helper_functions::general_helper::LineIntersection(Point sPoint1
 	, Point ePoint1
 	, const Point& sPoint2
 	, const Point& ePoint2
@@ -151,7 +142,7 @@ bool spic::general_helper::LineIntersection(Point sPoint1
 	return false;
 }
 
-Point spic::general_helper::GetCenter(const Point& point, const float aspectWidth, const float aspectHeight)
+Point spic::helper_functions::general_helper::GetCenter(const Point& point, const float aspectWidth, const float aspectHeight)
 {
 	return Point{ (point.x + aspectWidth) / 2, (point.y + aspectHeight) / 2 };
 }

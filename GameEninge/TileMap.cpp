@@ -1,6 +1,6 @@
 #include "TileMap.hpp"
 
-namespace spic
+namespace spic::tiled
 {
 	TileMap::TileMap(const int collisionLayerIndex)
 	{

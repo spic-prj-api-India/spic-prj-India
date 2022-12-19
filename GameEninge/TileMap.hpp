@@ -7,44 +7,54 @@
 
 namespace spic
 {
-	class TileMap
+	/**
+	 * @brief Contains all tiled related classes
+	*/
+	namespace tiled
 	{
-	public:
-		TileMap(const int collisionLayerIndex);
-
 		/**
-		 * @brief Adds tile layer
-		 * @param layer Layer index.
-		 * @param tileLayer TileLayer.
-		 * @spicapi
-		 */
-		void AddTileLayer(const int layer, const std::unique_ptr<TileLayer> tileLayer);
+		 * @brief An object which contains all TileLayers and 
+		*/
+		class TileMap
+		{
+		public:
+			/**
+			 * @brief Constructor
+			 * @param collisionLayerIndex Which layer it collisions with
+			*/
+			TileMap(const int collisionLayerIndex);
 
-		/**
-		 * @brief Returns layer from list of layers using index.
-		 * @param index Layer index.
-		 * @return TileLayer.
-		 * @spicapi
-		 */
-		const TileLayer& GetLayer(const int index) const;
+			/**
+			 * @brief Adds an tile layer to the map
+			 * @param layer Layer index of the layer
+			 * @param tileLayer An unique_ptr TileLayer object
+			 * @spicapi
+			 */
+			void AddTileLayer(const int layer, const std::unique_ptr<TileLayer> tileLayer);
 
-		/**
-		 * @brief Returns collision layer.
-		 * @return TileLayer.
-		 * @spicapi
-		 */
-		const TileLayer& GetCollisionLayer() const;
+			/**
+			 * @brief Returns an collision layer based on the index
+			 * @param index Layer index.
+			 * @return TileLayer.
+			 */
+			const TileLayer& GetLayer(const int index) const;
 
-		/**
-		 * @brief Renders all tile layers.
-		 * @spicapi
-		 */
-		void Render() const;
-	private:
-		std::map<int, std::unique_ptr<TileLayer>> tileLayers;
-		std::vector<std::shared_ptr<spic::GameObject>> collisionEntities;
-		int collisionLayerIndex;
-	};
+			/**
+			 * @brief Returns an collision layer based on the current collisionLayerIndex.
+			 * @return TileLayer.
+			 */
+			const TileLayer& GetCollisionLayer() const;
+
+			/**
+			 * @brief Renders all tile layers.
+			 */
+			void Render() const;
+		private:
+			std::map<int, std::unique_ptr<TileLayer>> tileLayers;
+			std::vector<std::shared_ptr<spic::GameObject>> collisionEntities;
+			int collisionLayerIndex;
+		};
+	}
 }
 
 #endif // TILEMAP_H_

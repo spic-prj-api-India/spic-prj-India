@@ -122,9 +122,9 @@ void spic::DataHandler::AddContent(bool& isPersistable, const std::shared_ptr<sp
 		memento.contents.emplace_back(subMemento);
 	}
 	memento.properties["name"] = entity->Name();
-	if (TypeHelper::SharedPtrIsOfType<Persistable>(entity))
+	if (helper_functions::type_helper::SharedPtrIsOfType<Persistable>(entity))
 	{
-		AddProperties(TypeHelper::CastSharedPtrToType<Persistable>(entity), memento);
+		AddProperties(helper_functions::type_helper::CastSharedPtrToType<Persistable>(entity), memento);
 		isPersistable = true;
 	}
 }
@@ -190,7 +190,7 @@ void spic::DataHandler::LoadScene(const std::vector<std::shared_ptr<spic::GameOb
 	for (const auto& parent : scene)
 	{
 		const std::string& name = parent.properties.at("name");
-		auto entity = ContainerHelper::Find<GameObject>(entities, [name](std::shared_ptr<GameObject> entity) {return entity->Name() == name; });
+		auto entity = helper_functions::container::Find<GameObject>(entities, [name](std::shared_ptr<GameObject> entity) {return entity->Name() == name; });
 		auto loadedEntity = LoadContent(parent, entity);
 		if (entity == nullptr)
 			spic::internal::EntityManager::GetInstance()->AddEntity(loadedEntity);
@@ -211,15 +211,15 @@ std::shared_ptr<spic::GameObject> spic::DataHandler::LoadContent(IMemento parent
 		}
 	}
 	// if entity is persistable load properties
-	if (spic::TypeHelper::SharedPtrIsOfType<Persistable>(entity))
-		LoadProperties(spic::TypeHelper::CastSharedPtrToType<Persistable>(entity), parent.properties);
+	if (helper_functions::type_helper::SharedPtrIsOfType<Persistable>(entity))
+		LoadProperties(helper_functions::type_helper::CastSharedPtrToType<Persistable>(entity), parent.properties);
 
 	// Add/Update all children to/of entity
 	auto children = entity->GetChildren();
 	for (const auto& child : parent.contents)
 	{
 		const std::string& name = child.properties.at("name");
-		auto childEntity = ContainerHelper::Find<GameObject>(children, [name](std::shared_ptr<GameObject> entity) {return entity->Name() == name; });
+		auto childEntity = helper_functions::container::Find<GameObject>(children, [name](std::shared_ptr<GameObject> entity) {return entity->Name() == name; });
 		auto loadedChild = LoadContent(child, childEntity);
 		if (childEntity == nullptr)
 			entity->AddChild(loadedChild);

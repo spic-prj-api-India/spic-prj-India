@@ -24,6 +24,7 @@
 using namespace spic;
 using namespace spic::internal;
 using namespace spic::systems;
+using namespace spic::tiled;
 
 EntityManager* EntityManager::pinstance_{ nullptr };
 std::mutex EntityManager::mutex_;

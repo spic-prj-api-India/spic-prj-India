@@ -3,7 +3,8 @@
 #include "GameEngine.hpp"
 #include "GeneralHelper.hpp"
 
-namespace spic::internal {
+namespace spic::internal::input
+{
 	ButtonClickListener::ButtonClickListener()
 	{
 		buttons;
@@ -30,7 +31,9 @@ namespace spic::internal {
 				button->Width() * transform->scale,
 				button->Height() * transform->scale
 			};
-			if (spic::general_helper::RectIntersection(mouseRect, buttonRect)) {
+			if (spic::helper_functions::general_helper::RectIntersection(mouseRect, buttonRect)) 
+			{
+				std::cerr << "creddits: " << button << std::endl;
 				button->Click();
 				return;
 			}

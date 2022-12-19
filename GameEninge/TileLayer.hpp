@@ -9,64 +9,82 @@
 namespace spic
 {
     /**
-    * @brief Using mask named Matrix for vector with vector<int>
-    * @spicapi
+     * @brief Contains all tiled related classes
     */
-    using Matrix = std::vector<std::vector<int>>;
-
-    class TileLayer
+    namespace tiled
     {
-    public:
-        TileLayer(const int layerIndex, const int tilesize, const std::vector<TileSet> tilesets);
-
-        virtual ~TileLayer();
-
         /**
-        * @brief Renders tile layer with Renderer
-        * @spicapi
+         * @brief Using mask named Matrix for vector with vector<int>
         */
-        void Render();
+        using Matrix = std::vector<std::vector<int>>;
 
         /**
-        * @brief Sets matrix of Tilelayer.
-        * @param matrix Desired value.
-        * @spicapi
+         * @brief Defines a tilelayer (from Tiled)
         */
-        void SetMatrix(const Matrix& matrix);
+        class TileLayer
+        {
+        public:
 
-        /**
-         * @brief Returns matrix of Tilelayer.
-         * @return Matrix.
-         * @spicapi
-         */
-        Matrix GetMatrix() const;
+            /**
+             * @brief Constructor
+             * @param layerIndex The layer index for this layer
+             * @param tilesize The size in pixels of 1 tile
+             * @param tilesets All TileSet objects of this layer
+            */
+            TileLayer(const int layerIndex, const int tilesize, const std::vector<TileSet> tilesets);
 
-        /**
-         * @brief Returns tile size of tile in tile layer.
-         * @return int.
-         * @spicapi
-         */
-        int GetTilesize() const;
+            virtual ~TileLayer();
 
-        /**
-         * @brief Returns size of tile layer.
-         * @return spic::Point.
-         * @spicapi
-         */
-        Point GetSize() const;
-    private:
-        /**
-         * @brief Returns sprite with tile data.
-         * @return spic::Sprite.
-         * @spicapi
-         */
-        std::unique_ptr<Sprite> GetSprite(const TileSet& tileSet, const int x, const int y, const int tileSize);
-    private:
-        int tileSize;
-        int layerIndex;
-        Matrix tileMatrix;
-        std::vector<TileSet> tilesets;
-    };
+            /**
+            * @brief Renders the tile layer
+            */
+            void Render();
+
+            /**
+            * @brief Sets matrix of Tilelayer.
+            * @param matrix Desired new matrix.
+            */
+            void SetMatrix(const Matrix& matrix);
+
+            /**
+             * @brief Getter
+             * @return Returns matrix of Tilelayer (see allias).
+             */
+            Matrix GetMatrix() const;
+
+            /**
+             * @brief Getter
+             * @return tileSize
+            */
+            int GetTileSize() const;
+
+            /**
+             * @brief Getter
+             * @return An Point which contains the collum and row size [row, collum].
+             */
+            Point GetSize() const;
+        private:
+
+            /**
+             * @brief Creates an sprite based on the informatation given
+             * @param tileSet Contains the sprite texture
+             * @param x Sets the x coordinate of the sprite
+             * @param y Sets the y coordinate of the sprite
+             * @param tileSize The size 
+             * @return Unique_ptr which contains an Sprite object
+            */
+            std::unique_ptr<Sprite> GetSprite(const TileSet& tileSet, const int x, const int y, const int tileSize);
+        private:
+
+            /**
+             * @brief The size in pixels of 1 tile in this tileLayer
+            */
+            int tileSize;
+            int layerIndex;
+            Matrix tileMatrix;
+            std::vector<TileSet> tilesets;
+        };
+    }
 }
 
 #endif // TILELAYER_H_

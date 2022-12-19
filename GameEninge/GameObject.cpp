@@ -14,7 +14,7 @@ namespace spic {
 
 	GameObject::GameObject() : active{ true }
 		, layer{ 0 }, parent{ nullptr }
-		, name{ spic::general_helper::GetRandomUUID() }, destroyOnLoad{ true }
+		, name{ spic::helper_functions::general_helper::GetRandomUUID() }, destroyOnLoad{ true }
 	{
 		components = {};
 		Point position{ 0.0f, 0.0f };
@@ -109,14 +109,14 @@ namespace spic {
 
 	void GameObject::Destroy(Component* obj)
 	{
-		std::string typeName = TypeHelper::GetTypeName(obj);
+		std::string typeName = spic::helper_functions::type_helper::GetTypeName(obj);
 
 		for (const auto& gameObject : spic::internal::EntityManager::GetInstance()->GetEntities())
 		{
 			gameObject->components.erase(std::remove_if(gameObject->components.begin()
 				, gameObject->components.end(), [typeName](std::shared_ptr<Component> component)
 				{
-					return typeName == TypeHelper::GetTypeName(component);
+					return typeName == spic::helper_functions::type_helper::GetTypeName(component);
 				}));
 		}
 	}
