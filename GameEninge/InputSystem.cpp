@@ -52,7 +52,7 @@ namespace spic::internal::systems
 			for (auto& script : currentScene.Camera().GetComponents<spic::BehaviourScript>()) {
 				script->OnInput();
 			}
-			
+
 			for (auto& script : scripts)
 			{
 				script->OnInput();

@@ -56,26 +56,25 @@ namespace spic {
 
 	bool Point::Accumulate(Point& force, const float maxForce)
 	{
-		const float magnitudeSoFar = Length();
-		//calculate how much steering force remains to be used by this vehicle
-		float magnitudeRemaining = maxForce - magnitudeSoFar;
-		//return false if there is no more force left to use
-		if (magnitudeRemaining <= 0.0) return false;
-		//calculate the magnitude of the force we want to add
-		const float magnitudeToAdd = force.Length();
-		//if the magnitude of the sum of ForceToAdd and the running total
-		//does not exceed the maximum force available to this vehicle, just
-		//add together. Otherwise add as much of the ForceToAdd vector as
-		//possible without going over the max.
-		if (magnitudeToAdd >= magnitudeRemaining)
+		const float forceSoFar = Length();
+		// Calculate how much force remains to be used
+		const float forceRemaining = maxForce - forceSoFar;
+		// Return false if there is no more force left to use
+		if (forceRemaining <= 0.0) return false;
+		// Calculate the force to add with the force we want to add
+		const float forceToAdd = force.Length();
+		// If the forceToAdd is lower then forceRemaining. Add all forceToAdd, 
+		// otherwise add as much of the forceToAdd vector without goinger of the remaining force.
+		
+		if (forceToAdd >= forceRemaining)
 		{
 			force.Normalize();
-			force *= magnitudeRemaining;
+			force *= forceRemaining;
 			this->x += force.x;
 			this->y += force.y;
 			return false;
 		}
-		//add the remaining magnitude
+		//add the remaining force
 		this->x += force.x;
 		this->y += force.y;
 		return true;

@@ -21,11 +21,30 @@ namespace spic::internal
 
 		const int CustomSystemDefaultPriority;
 
+		/**
+		 * @brief Entities that are send to systems
+		*/
 		std::vector<std::shared_ptr<spic::GameObject>> entities;
-		std::map<int, std::vector<std::unique_ptr<spic::systems::ISystem>>> systems;
-		std::map<std::string, std::function<spic::Scene* ()>> scenes;
-		std::shared_ptr<Scene> scene;
+
+		/**
+		 * @brief Entities that need to be removed in next update
+		*/
 		std::vector<std::string> removeEntities;
+
+		/**
+		 * @brief Systems of engine
+		*/
+		std::map<int, std::vector<std::unique_ptr<spic::systems::ISystem>>> systems;
+
+		/**
+		 * @brief Registered scenes
+		*/
+		std::map<std::string, std::function<spic::Scene* ()>> scenes;
+
+		/**
+		 * @brief Current scene
+		*/
+		std::shared_ptr<Scene> scene;
 	protected:
 		EntityManager();
 		~EntityManager();

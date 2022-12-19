@@ -62,17 +62,15 @@ void EntityManager::Init()
 	std::unique_ptr<systems::InputSystem> inputSystem = std::make_unique<systems::InputSystem>();
 	std::unique_ptr<systems::PhysicsSystem> physicsSystem = std::make_unique<systems::PhysicsSystem>();
 	std::unique_ptr<systems::RenderingSystem> renderingSystem = std::make_unique<systems::RenderingSystem>();
-	std::unique_ptr<systems::DataSystem> dataSystem = std::make_unique<systems::DataSystem>();
 	std::unique_ptr<systems::AISystem> aiSystem = std::make_unique<systems::AISystem>();
 	std::unique_ptr<systems::NetworkingReceiveSystem> networkRecieve = std::make_unique<systems::NetworkingReceiveSystem>();
 	std::unique_ptr<systems::NetworkingSendSystem> networkSend = std::make_unique<systems::NetworkingSendSystem>();
 	AddInternalSystem(std::move(networkRecieve), 0);
-	AddInternalSystem(std::move(inputSystem), 2);
-	AddInternalSystem(std::move(physicsSystem), 1);
-	AddInternalSystem(std::move(dataSystem), 3);
-    AddInternalSystem(std::move(aiSystem), 4);
-	AddInternalSystem(std::move(networkSend), 5);
-	AddInternalSystem(std::move(renderingSystem), 6);
+	AddInternalSystem(std::move(inputSystem), 1);
+	AddInternalSystem(std::move(physicsSystem), 2);
+    AddInternalSystem(std::move(aiSystem), 3);
+	AddInternalSystem(std::move(networkSend), 4);
+	AddInternalSystem(std::move(renderingSystem), 5);
 }
 
 void EntityManager::Reset()
@@ -182,6 +180,7 @@ void EntityManager::SetScene(std::shared_ptr<Scene> newScene)
 void EntityManager::DestroyScene(bool forceDelete)
 {
 	scene = nullptr;
+	removeEntities.clear();
 	if (forceDelete)
 		entities.clear();
 	else
@@ -260,6 +259,6 @@ void EntityManager::Update()
 	std::vector<std::shared_ptr<spic::GameObject>> tempVect;
 
 	std::copy(entities.begin(), entities.end(), std::back_inserter(tempVect));
-	
-	UpdateSave(this->systems,tempVect,scene);
+
+	UpdateSave(this->systems, tempVect, scene);
 }

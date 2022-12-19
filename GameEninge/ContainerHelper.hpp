@@ -3,6 +3,8 @@
 
 #include <map>
 #include <vector>
+#include <functional>
+#include "TypeHelper.hpp"
 
 namespace spic::ContainerHelper {
     /**
@@ -18,6 +20,32 @@ namespace spic::ContainerHelper {
             keys.emplace_back(keypair.first);
         }
         return keys;
+    }
+
+    template <typename T>
+    std::shared_ptr<T> Find(const std::vector<std::shared_ptr<T>>& vector, std::function<bool(std::shared_ptr<T>)> findFunction) {
+        auto it = find_if(vector.begin(), vector.end(), [&findFunction](std::shared_ptr<T> element) {
+            return findFunction(element);
+            });
+
+        if (it == vector.end())
+            return nullptr;
+
+        auto index = std::distance(vector.begin(), it);
+        return vector[index];
+    }
+
+    template <typename T, typename C>
+    std::shared_ptr<C> FindAndConvert(const std::vector<std::shared_ptr<T>>& vector, std::function<bool(std::shared_ptr<T>)> findFunction) {
+        auto it = find_if(vector.begin(), vector.end(), [&findFunction](std::shared_ptr<T> element) {
+            return findFunction(element);
+            });
+
+        if (it == vector.end())
+            return nullptr;
+
+        auto index = std::distance(vector.begin(), it);
+        return TypeHelper::CastSharedPtrToType<C>(vector[index]);
     }
 }
 

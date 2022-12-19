@@ -1,17 +1,8 @@
 #include "ForceDriven.hpp"
-#include "RigidBody.hpp"
-#include "GeneralHelper.hpp"
-#include "Defaults.hpp"
-#include "Transformations.hpp"
-#include "Random.hpp"
-#include <functional>
-#include "Debug.hpp"
-#include "Collider.hpp"
-#include "Settings.hpp"
 #include "Flocking.hpp"
 #include "Steering.hpp"
-
-using namespace spic::internal::math;
+#include "RigidBody.hpp"
+#include "GeneralHelper.hpp"
 
 namespace spic {
 	ForceDriven::ForceDriven(SumMethod sumMethod, const float maxSteeringForce, 
@@ -129,9 +120,9 @@ namespace spic {
 		const float rotationInDeg = Velocity().Rotation();
 		const float desiredRotation = spic::general_helper::DEG2RAD<float>(rotationInDeg);
 		const float angle = abs(this->Transform()->rotation - desiredRotation);
+		heading = { sin(desiredRotation), -cosf(desiredRotation) };
 		if (angle >= this->maxTurnRate) {
 			Transform()->rotation = desiredRotation;
-			heading = { sin(desiredRotation), -cosf(desiredRotation) };
 		}
 	}
 }

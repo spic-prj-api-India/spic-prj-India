@@ -1,5 +1,4 @@
 #include "CreditsSceneScript.h"
-#include "GameEngine.hpp"
 
 void CreditsSceneScript::OnInput()
 {
@@ -15,10 +14,5 @@ void CreditsSceneScript::OnInput()
 			this->ani->Stop();
 			start = true;
 		}
-	}
-
-	if (spic::input::GetKeyDown(spic::input::KeyCode::BACKSPACE))
-	{
-		spic::GameEngine::GetInstance()->LoadSceneByName("menu");
 	}
 }

@@ -2,6 +2,9 @@
 #define OBSTACLE_H_
 
 namespace spic {
+	/**
+	 * @brief Obstacle can be used for obstacle avoidance
+	*/
 	class Obstacle {
 	public:
 		Obstacle(const float boundingRadius);
@@ -23,6 +26,9 @@ namespace spic {
 		*/
 		float BRadius() const;
 	private:
+		/**
+		 * @brief Bounding radius is used for obstacle avoidance
+		*/
 		float boundingRadius;
 	};
 }

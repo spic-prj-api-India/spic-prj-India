@@ -8,6 +8,7 @@
 #include <Input.hpp>
 #include "AimListener.h"
 #include "CircleObstacle.h"
+#include "BackScript.h"
 
 FlockingScene::FlockingScene() : Scene()
 {
@@ -46,6 +47,8 @@ void FlockingScene::SetContents()
 	rocketLauncher->AddComponent<spic::Sprite>(rocketLauncherSprite);
 	std::shared_ptr<AimListener> aimListener = std::make_shared<AimListener>(rocketLauncher);
 	spic::input::Subscribe(spic::input::MouseButton::LEFT, aimListener);
+
+	rocketLauncher->AddComponent<spic::BehaviourScript>(std::make_shared<BackScript>());
 
 	/* Obstacles setup */
 	spic::Point obstaclePosition = { 300.0f, 200.0f };

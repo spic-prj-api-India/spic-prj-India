@@ -156,13 +156,15 @@ namespace spic {
 		const float Scale() const;
 
 		/*
-		@brief Set this GameObject to get destroyed upon loading a new scene.
+		* @brief Set this GameObject to get destroyed upon loading a new scene.
+		* @sharedapi
 		*/
 		bool DontDestroyOnLoad();
 
 		/*
-		@brief Set this GameObject to (not) get destroyed upon loading a new scene.
-		@param destroyOnLoad: Wether you want to set this GameObject to be destroyed or not upon loading a new scene.
+		* @brief Set this GameObject to (not) get destroyed upon loading a new scene.
+		* @param destroyOnLoad: Wether you want to set this GameObject to be destroyed or not upon loading a new scene.
+		* @sharedapi
 		*/
 		void DontDestroyOnLoad(bool destroyOnLoad);
 
@@ -219,7 +221,7 @@ namespace spic {
 		 * @details Child GameObjects will be destroyed, too, as well as
 		 *          Components owned by the GameObject.
 		 * @param name The name of the GameObject to be destroyed.
-		 * @spicapi
+		 * @sharedapi
 		 */
 		static void Destroy(const std::string& name);
 

@@ -51,6 +51,16 @@ namespace spic::TypeHelper {
 	}
 
 	/**
+	* @brief Casts shared ptr to certain type
+	* @spicapi
+	*/
+	template <typename T, typename P>
+	std::weak_ptr<T> CastSharedPtrToWeakType(std::shared_ptr<P> pointer)
+	{
+		return std::dynamic_pointer_cast<T>(pointer);
+	}
+
+	/**
 	* @brief Casts ptr to certain type
 	* @spicapi
 	*/

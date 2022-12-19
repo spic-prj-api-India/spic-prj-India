@@ -199,6 +199,11 @@ namespace spic::extensions
 			body->ApplyForce(force, body->GetWorldCenter(), true);
 		}
 
+		/**
+		* @brief Removes entity from box2d world
+		* @param name Name of entity that will be removed
+		* @spicapi
+		*/
 		void RemoveEntity(const std::string& name)
 		{
 			while (world != nullptr && world->IsLocked())

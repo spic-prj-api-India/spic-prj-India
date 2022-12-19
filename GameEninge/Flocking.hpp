@@ -12,7 +12,21 @@ namespace spic {
      */
     class Flocking : public Component {
     public:
+        /**
+         * @brief Constructor
+         * @param agent 
+        */
         Flocking(ForceDriven* agent);
+
+        /**
+         * @brief Constructor
+         * @param agent 
+         * @param viewRadius 
+         * @param seperationWeight 
+         * @param desiredSeparation 
+         * @param alignmentWeight 
+         * @param cohesionWeight 
+        */
         Flocking(ForceDriven* agent, const float viewRadius, const  float seperationWeight, const float desiredSeparation,
             const float alignmentWeight, const float cohesionWeight);
 
@@ -82,8 +96,19 @@ namespace spic {
         */
         Point Cohere();
     private:
+        /**
+         * @brief agent used for flocking
+        */
         const ForceDriven* agent;
+
+        /**
+         * @brief Neigbors of agent
+        */
         std::vector<std::shared_ptr<ForceDriven>> neighbors;
+
+        /**
+         * @brief View radius of agent
+        */
         float viewRadius;
 
         /**

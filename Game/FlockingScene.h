@@ -8,4 +8,5 @@ public:
 	static spic::Scene* Start();
 	void SetCamera();
 	void SetContents();
+	void SetListeners();
 };
