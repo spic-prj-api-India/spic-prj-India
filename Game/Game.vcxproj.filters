@@ -84,6 +84,9 @@
     <ClCompile Include="Box.cpp">
       <Filter>Source Files\objects</Filter>
     </ClCompile>
+    <ClCompile Include="SettingsScene.cpp">
+      <Filter>Source Files\scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CollisionDetectionScript.h">
@@ -127,6 +130,9 @@
     </ClInclude>
     <ClInclude Include="CreditsSceneScript.h">
       <Filter>Header Files\scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="SettingsScene.h">
+      <Filter>Header Files\scenes</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

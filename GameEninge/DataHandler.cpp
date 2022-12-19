@@ -6,7 +6,7 @@
 #include "GameEngine.hpp"
 #include "ContainerHelper.hpp"
 
-class spic::SaveDocument 
+class spic::SaveDocument
 {
 public:
 	SaveDocument(const std::string& fileName)
@@ -122,7 +122,7 @@ void spic::DataHandler::AddContent(bool& isPersistable, const std::shared_ptr<sp
 		memento.contents.emplace_back(subMemento);
 	}
 	memento.properties["name"] = entity->Name();
-	if (TypeHelper::SharedPtrIsOfType<Persistable>(entity)) 
+	if (TypeHelper::SharedPtrIsOfType<Persistable>(entity))
 	{
 		AddProperties(TypeHelper::CastSharedPtrToType<Persistable>(entity), memento);
 		isPersistable = true;
@@ -131,7 +131,7 @@ void spic::DataHandler::AddContent(bool& isPersistable, const std::shared_ptr<sp
 
 void spic::DataHandler::AddProperties(const std::shared_ptr<spic::Persistable>& entity, IMemento& memento)
 {
-	for (const auto& propertyPair : entity->SaveProperties()) 
+	for (const auto& propertyPair : entity->SaveProperties())
 	{
 		const std::string name = propertyPair.first;
 		const std::string& value = propertyPair.second();
@@ -142,9 +142,12 @@ void spic::DataHandler::AddProperties(const std::shared_ptr<spic::Persistable>& 
 
 void spic::DataHandler::AddSettings(const std::map<std::string, std::string>& settings)
 {
-	TiXmlElement* settingsElement = new TiXmlElement("settings");;
-	this->saveDocument->LinkEndChild(settingsElement);
-
+	TiXmlElement* settingsElement = this->saveDocument->FirstChildElement();
+	if (settingsElement == nullptr) {
+		settingsElement = new TiXmlElement("settings");
+		this->saveDocument->LinkEndChild(settingsElement);
+	}
+	
 	for (const auto& settingsPair : settings)
 	{
 		const std::string name = settingsPair.first;
@@ -184,12 +187,12 @@ void spic::DataHandler::LoadScene(const std::vector<std::shared_ptr<spic::GameOb
 	}
 
 	// Update and create entities with data
-	for (const auto& parent : scene) 
+	for (const auto& parent : scene)
 	{
 		const std::string& name = parent.properties.at("name");
 		auto entity = ContainerHelper::Find<GameObject>(entities, [name](std::shared_ptr<GameObject> entity) {return entity->Name() == name; });
 		auto loadedEntity = LoadContent(parent, entity);
-		if(entity == nullptr)
+		if (entity == nullptr)
 			spic::internal::EntityManager::GetInstance()->AddEntity(loadedEntity);
 	}
 }
@@ -197,11 +200,11 @@ void spic::DataHandler::LoadScene(const std::vector<std::shared_ptr<spic::GameOb
 std::shared_ptr<spic::GameObject> spic::DataHandler::LoadContent(IMemento parent, std::shared_ptr<spic::GameObject> entity)
 {
 	// Find or create entity if not exist
-	if (entity == nullptr) 
+	if (entity == nullptr)
 	{
 		const std::string& name = parent.properties["name"];
 		entity = GameObject::Find(name);
-		if (entity == nullptr) 
+		if (entity == nullptr)
 		{
 			entity = spic::GameEngine::GetInstance()->CreateType(parent.properties["type_name"]);
 			entity->Name(parent.properties["name"]);
@@ -210,10 +213,10 @@ std::shared_ptr<spic::GameObject> spic::DataHandler::LoadContent(IMemento parent
 	// if entity is persistable load properties
 	if (spic::TypeHelper::SharedPtrIsOfType<Persistable>(entity))
 		LoadProperties(spic::TypeHelper::CastSharedPtrToType<Persistable>(entity), parent.properties);
-	
+
 	// Add/Update all children to/of entity
 	auto children = entity->GetChildren();
-	for (const auto& child : parent.contents) 
+	for (const auto& child : parent.contents)
 	{
 		const std::string& name = child.properties.at("name");
 		auto childEntity = ContainerHelper::Find<GameObject>(children, [name](std::shared_ptr<GameObject> entity) {return entity->Name() == name; });
@@ -230,7 +233,7 @@ void spic::DataHandler::LoadProperties(const std::shared_ptr<spic::Persistable>&
 	auto loadProperties = entity->LoadProperties();
 	for (const auto& attribute : attributes)
 	{
-		for (const auto& propertyPair : loadProperties) 
+		for (const auto& propertyPair : loadProperties)
 		{
 			const std::string name = propertyPair.first;
 			auto setter = propertyPair.second;
@@ -243,5 +246,15 @@ void spic::DataHandler::LoadProperties(const std::shared_ptr<spic::Persistable>&
 
 void spic::DataHandler::LoadSettings(std::map<std::string, std::string>& values)
 {
+	const TiXmlElement& settingsElement = *this->saveDocument->FirstChildElement();
+	for (const auto& settingsPair : values)
+	{
+		for (const TiXmlAttribute* att = settingsElement.FirstAttribute(); att != nullptr; att = att->Next())
+		{
 
+			const std::string name = settingsPair.first;
+			const std::string value = settingsPair.second;
+			values[att->Name()] = att->Value();
+		}
+	}
 }

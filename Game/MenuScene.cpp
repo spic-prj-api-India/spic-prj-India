@@ -48,6 +48,10 @@ void MenuScene::SetContents()
 		spic::input::UnSubscribeAll();
 		spic::GameEngine::GetInstance()->LoadSceneByName("credits");
 		}, 300.0f);
+	AddButton("Settings", []() {
+		spic::input::UnSubscribeAll();
+		spic::GameEngine::GetInstance()->LoadSceneByName("settings");
+		}, 400.0f);
 }
 
 void MenuScene::SetMatchMenu()
