@@ -24,7 +24,7 @@ void spic::internal::systems::NetworkingReceiveSystem::Update(std::vector<std::s
 		packets.insert(packets.end(), temp.begin(), temp.end());
 	}
 
-	std::sort(packets.begin(), packets.end(), spic::general_helper::NetworkPacketSorting);
+	std::sort(packets.begin(), packets.end(), spic::helper_functions::general_helper::NetworkPacketSorting);
 	for (auto& packet : packets)
 	{
 		auto object = GameObject::Find(packet.name);

@@ -3,6 +3,9 @@
 
 #include "AudioSource.hpp"
 
+/**
+ * @brief The internal audio namespace wich contains all audio related content
+*/
 namespace spic::internal::audio {
 
     /**

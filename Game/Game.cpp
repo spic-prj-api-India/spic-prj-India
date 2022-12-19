@@ -31,7 +31,7 @@ void InitGame() {
 	// Creates a SocketUDPExtension and adds it to the extension list
 	auto socket = std::make_shared<spic::extensions::SocketUDPExtension>();
 	socket->InitListener(13251);
-	socket->InitSender(spic::networkingHelper::GetParsedIPConfigData("IPv4 Address"), 13251);
+	socket->InitSender(spic::helper_functions::networking_helper::GetParsedIPConfigData("IPv4 Address"), 13251);
 	engine->AddExtension(std::move(socket));
 
 	// Register object types

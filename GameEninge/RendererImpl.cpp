@@ -17,7 +17,7 @@
 
 using namespace spic;
 using namespace spic::internal::rendering;
-using namespace spic::general_helper;
+using namespace spic::helper_functions::general_helper;
 
 #define UINT_8_BEGIN 0
 #define UINT_8_END 255
@@ -136,10 +136,12 @@ void RendererImpl::DrawSprites(GameObject* gameObject, const bool isUIObject)
 {
 	const auto transform = gameObject->Transform();
 	auto _sprites = gameObject->GetComponents<Sprite>();
-	std::sort(_sprites.begin(), _sprites.end(), spic::general_helper::SpriteSorting);
+	std::sort(_sprites.begin(), _sprites.end(), SpriteSorting);
 	UIObject* uiObject = nullptr;
+
 	if (isUIObject)
-		uiObject = TypeHelper::CastPtrToType<UIObject>(gameObject);
+		uiObject = spic::helper_functions::type_helper::CastPtrToType<UIObject>(gameObject);
+
 	for (auto& sprite : _sprites)
 	{
 		if (isUIObject)
@@ -526,7 +528,7 @@ void RendererImpl::DrawRect(const spic::Rect& rect, const double angle, const sp
 	SDL_SetTextureAlphaMod(texture,
 		PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, color.A())));
 
-	const double angleInDeg = spic::general_helper::RAD2DEG<double>(angle);
+	const double angleInDeg = RAD2DEG<double>(angle);
 	SDL_RenderCopyExF(renderer.get(), texture, NULL, &dstRect, angleInDeg, NULL, SDL_FLIP_NONE);
 
 	if (!spic::settings::KEEP_TEXTURES_AND_FONTS_LOADED)

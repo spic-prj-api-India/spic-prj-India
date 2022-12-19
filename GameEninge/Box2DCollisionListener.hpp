@@ -11,6 +11,9 @@
 #include "Collider.hpp"
 #include "ICollisionListener.hpp"
 
+/**
+ * @brief Contains internal methods which are added to the public extensions
+*/
 namespace spic::internal::extensions {
     /**
     * @brief A listener that listens if an Box2D collides with another Box2D body

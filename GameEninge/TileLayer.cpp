@@ -3,7 +3,7 @@
 #include "BoxCollider.hpp"
 #include "EntityManager.hpp"
 
-namespace spic
+namespace spic::tiled
 {
 	TileLayer::TileLayer(const  int layerIndex, const int tilesize, const std::vector<TileSet> tilesets) :
 		layerIndex{ layerIndex }, tileSize(tilesize), tilesets(tilesets)
@@ -28,7 +28,7 @@ namespace spic
 				if (tileId == 0) continue;
 
 				tileId--;
-				spic::TileSet& useTileset = tilesets[0];
+				TileSet& useTileset = tilesets[0];
 
 				if (tilesets.size() > 1) {
 					for (int tilesetIndex = 1; tilesetIndex < tilesets.size(); tilesetIndex++)
@@ -76,7 +76,7 @@ namespace spic
 		return tileMatrix;
 	}
 
-	int TileLayer::GetTilesize() const
+	int TileLayer::GetTileSize() const
 	{
 		return tileSize;
 	}

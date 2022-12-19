@@ -44,7 +44,7 @@ namespace spic
 		tileMap = mapParser->Parse(newTileMapPath);
 	}
 
-	const TileMap* Scene::TileMap() const
+	const spic::tiled::TileMap* Scene::TileMap() const
 	{
 		return tileMap.get();
 	}

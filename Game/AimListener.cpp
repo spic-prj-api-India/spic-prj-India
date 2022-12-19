@@ -5,6 +5,8 @@
 #include "Rocket.h"
 #include <GeneralHelper.hpp>
 
+using namespace spic::helper_functions::general_helper;
+
 AimListener::AimListener(std::shared_ptr<spic::GameObject> weapon) : rocketCount{ 0 }
 {
 	this->followMouseListener = std::make_shared<FollowMouseListener>();
@@ -20,7 +22,7 @@ void AimListener::OnMouseMoved() {
 	const float deltaX = weaponPosition.x - mousePosition.x;
 	const float deltaY = weaponPosition.y - mousePosition.y;
 	const float angleDeg = (atan2(deltaY, deltaX) * 180.0000f) / 3.1416f;
-	this->angle = spic::general_helper::DEG2RAD<float>(angleDeg);
+	this->angle = DEG2RAD<float>(angleDeg);
 	this->weapon->Transform()->rotation = angle;
 }
 
@@ -37,8 +39,8 @@ void AimListener::OnMouseReleased() {
 
 void AimListener::Shoot()
 {
-	const float angleDeg = spic::general_helper::RAD2DEG<float>(this->angle) + 90.0f;
-	const float desiredAngle = spic::general_helper::DEG2RAD<float>(angleDeg);
+	const float angleDeg = RAD2DEG<float>(this->angle) + 90.0f;
+	const float desiredAngle = DEG2RAD<float>(angleDeg);
 	const std::string name = "Rocket" + std::to_string(rocketCount);
 	std::shared_ptr<Rocket> rocket = std::make_shared<Rocket>(name, weapon->Transform()->position, desiredAngle);
 	rocket->StartForceDrivenEntity();

@@ -3,6 +3,9 @@
 
 #include <string>
 
+/**
+ * @brief Contains default values
+*/
 namespace spic::internal::defaults {
 	/**
 	 * @brief Default button texture

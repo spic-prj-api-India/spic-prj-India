@@ -5,7 +5,7 @@
 namespace spic
 {
     /**
-     * @brief An custom rai classe for threads
+     * @brief An rai class so threads can be moved and be joined when it go's out of scope
      * @details This thread has support for threads with zero, one and two variables
     */
     class ThreadWrapper

@@ -21,7 +21,7 @@ namespace spic::internal
          * @param fileName File name of tmx file.
          * @spicapi
          */
-        std::unique_ptr<spic::TileMap> Parse(const std::string fileName);
+        std::unique_ptr<spic::tiled::TileMap> Parse(const std::string fileName);
     private:
         /**
          * @brief Parse tile layer and add layer to tile map.
@@ -30,7 +30,7 @@ namespace spic::internal
          * @return layer index.
          * @spicapi
          */
-        int ParseLayer(const TiXmlElement& tileLayerData, const std::vector<spic::TileSet>& tilesets);
+        int ParseLayer(const TiXmlElement& tileLayerData, const std::vector<spic::tiled::TileSet>& tilesets);
 
         /**
          * @brief Parse tile matrix.
@@ -38,7 +38,7 @@ namespace spic::internal
          * @return Matrix
          * @spicapi
          */
-        spic::Matrix ParseMatrix(const TiXmlElement& tileLayerData);
+        spic::tiled::Matrix ParseMatrix(const TiXmlElement& tileLayerData);
 
         /**
          * @brief Parse tile set.
@@ -46,7 +46,7 @@ namespace spic::internal
          * @return TileSet
          * @spicapi
          */
-        spic::TileSet ParseTileSet(const TiXmlElement& tileSetData);
+        spic::tiled::TileSet ParseTileSet(const TiXmlElement& tileSetData);
 
         /**
          * @brief Creates collision entities with layer and tilesets.
@@ -54,7 +54,7 @@ namespace spic::internal
          * @param tilesets Tilesets.
          * @spicapi
          */
-        void CreateCollisionEntities(const int collisionLayerIndex, const std::vector<TileSet>& tilesets);
+        void CreateCollisionEntities(const int collisionLayerIndex, const std::vector<spic::tiled::TileSet>& tilesets);
 
         /**
          * @brief Creates entity with tile data and adds to tile map.
@@ -65,7 +65,7 @@ namespace spic::internal
         void CreateEntity(const float x, const float y, const std::string& name, int tileSize) const;
     private:
         int tileSize, rowCount, colCount;
-        std::unique_ptr<spic::TileMap> tileMap;
+        std::unique_ptr<spic::tiled::TileMap> tileMap;
     };
 }
 
