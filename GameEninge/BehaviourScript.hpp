@@ -5,17 +5,23 @@
 #include "Component.hpp"
 #include "Collider.hpp"
 
-namespace spic {
-    class BehaviourScript : public Component {
+namespace spic 
+{
+    /**
+     * @brief Contains the beheviours of an object
+     * @details Onupdate is used for code that should run every second and OnInput is for behaviour based on the input
+    */
+    class BehaviourScript : public Component 
+    {
         public:
             /**
-             * @brief Is called once on start
+             * @brief Is called once on the start of a new scene
              * @spicapi
              */
             virtual void OnStart();
 
             /**
-             * @brief Is called every tick
+             * @brief Is called every game tick
              * @spicapi
              */
             virtual void OnUpdate();

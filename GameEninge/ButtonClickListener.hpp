@@ -5,11 +5,15 @@
 #include "Button.hpp"
 #include <vector>
 
-namespace spic::internal {
+/**
+ * @brief Contains internal button/mouse listener
+*/
+namespace spic::internal::input
+{
     /**
-       * @brief Listens to Button click, when button is clicked. 
-       *        method "Click" of Button is called.
-    */
+     * @brief Listens to Button click, when button is clicked. 
+     *        method "Click" of Button is called.
+     */
     class ButtonClickListener : public spic::IMouseListener {
     public:
         ButtonClickListener();
@@ -22,7 +26,6 @@ namespace spic::internal {
         /**
         * @brief Sets buttons of listener.
         * @param buttons Active buttons in scene.
-        * @spicapi
         */
         void SetButtons(std::vector<std::shared_ptr<spic::Button>> buttons);
     private:

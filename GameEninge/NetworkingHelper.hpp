@@ -10,16 +10,23 @@
 #include <fstream>
 #include <string>
 
-namespace spic::networkingHelper
+/**
+ * @brief Contains helpfull preprogrammed functions
+*/
+namespace spic::helper_functions
 {
-
     /**
-     * @brief Gets parsed info from ipconfig commands (windows only)
-     * @details to get ip4 address use "IPv4 Address" as parameter
-     * @param Columb Which parameter you want
-     * @return 
+     * @brief Contains hulpfull network helper(s)
     */
-    std::string GetParsedIPConfigData(const std::string& Columb);
-   
+    namespace networking_helper
+    {
+        /**
+         * @brief Gets parsed info from ipconfig commands (windows only)
+         * @details To get ip4 address use "IPv4 Address" as parameter
+         * @param Columb Which parameter you want
+         * @return Your private ip address
+        */
+        std::string GetParsedIPConfigData(const std::string& Columb);
+    }
 };
 #endif

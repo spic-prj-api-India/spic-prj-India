@@ -7,7 +7,9 @@
 #include <boost/serialization/map.hpp>
 #include <boost/serialization/string.hpp>
 
-
+/**
+ * @brief contains methods which can encode an vector to bytes which can be send over the internet
+*/
 namespace spic::internal::networking
 {
     /**

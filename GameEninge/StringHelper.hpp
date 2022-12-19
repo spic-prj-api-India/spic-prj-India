@@ -3,22 +3,30 @@
 
 #include <string>
 
-namespace spic::StringHelper {
+/**
+ * @brief Contains helpfull preprogrammed functions
+*/
+namespace spic::helper_functions
+{
     /**
-     * @brief Replaces certain string in string with other string
-     * @param str Base string.
-     * @param from String that needs to be replaced.
-     * @param to Replacement string.
-     * @return bool
-     * @spicapi
-     */
-    bool Replace(std::string& str, const std::string& from, const std::string& to);
-
-    /**
-    * @brief Gets base path of engine
-    * @spicapi
+     * @brief Contains hulpfull string functions
     */
-    std::string GetBasePath();
+    namespace string_helper
+    {
+        /**
+         * @brief Replaces certain string in string with other string
+         * @param str Base string.
+         * @param from String that needs to be replaced.
+         * @param to Replacement string.
+         * @return bool If it has succeeded
+         */
+        bool Replace(std::string& str, const std::string& from, const std::string& to);
+
+        /**
+        * @brief Gets base path of engine (only usefull in develop cause it points to source code folder)
+        */
+        std::string GetBasePath();
+    }
 }
 
 #endif // STRINGHELPER_H_

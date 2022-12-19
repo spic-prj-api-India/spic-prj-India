@@ -19,8 +19,8 @@ namespace spic::internal::systems
 
 	void InputSystem::Start(std::vector<std::shared_ptr<spic::GameObject>>& entities, Scene& currentScene)
 	{
-		buttonClickListener = std::make_shared<ButtonClickListener>();
-		spic::input::Subscribe(spic::settings::MOUSEBUTTON_BOUND_TO_BUTTONS, buttonClickListener);
+		buttonClickListener = std::make_shared<spic::internal::input::ButtonClickListener>();
+		spic::input::Subscribe(spic::settings::MOUSEBUTTON_BOUND_TO_BUTTONS, this->buttonClickListener);
 
 		if (spic::debug::DEBUG_MODE)
 		{
@@ -42,7 +42,7 @@ namespace spic::internal::systems
 
 	void InputSystem::Update(std::vector<std::shared_ptr<spic::GameObject>>& entities, Scene& currentScene)
 	{
-		buttonClickListener->SetButtons(GetButtons(entities));
+		buttonClickListener->SetButtons(std::move(GetButtons(entities)));
 		auto scripts = this->GetAllScripts(entities);
 
 		while (InputImpl::Poll()) 
@@ -67,11 +67,12 @@ namespace spic::internal::systems
 
 	std::vector<std::shared_ptr<spic::Button>> InputSystem::GetButtons(std::vector<std::shared_ptr<spic::GameObject>>& entities)
 	{
+		using namespace spic::helper_functions::type_helper;
 		std::vector<std::shared_ptr<spic::Button>> buttons;
 		for (const auto& entity : entities) 
 		{
-			if (spic::TypeHelper::SharedPtrIsOfType<spic::Button>(entity))
-				buttons.emplace_back(TypeHelper::CastSharedPtrToType<spic::Button>(entity));
+			if (SharedPtrIsOfType<spic::Button>(entity))
+				buttons.emplace_back(CastSharedPtrToType<spic::Button>(entity));
 
 			auto childeren = entity->GetChildren();
 			auto temp = this->GetButtons(childeren);

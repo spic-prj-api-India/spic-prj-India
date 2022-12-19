@@ -118,7 +118,7 @@ namespace spic {
 	void ForceDriven::ApplyForce(Point& force) {
 		this->GetComponent<RigidBody>()->AddForce(force / Mass());
 		const float rotationInDeg = Velocity().Rotation();
-		const float desiredRotation = spic::general_helper::DEG2RAD<float>(rotationInDeg);
+		const float desiredRotation = spic::helper_functions::general_helper::DEG2RAD<float>(rotationInDeg);
 		const float angle = abs(this->Transform()->rotation - desiredRotation);
 		heading = { sin(desiredRotation), -cosf(desiredRotation) };
 		if (angle >= this->maxTurnRate) {

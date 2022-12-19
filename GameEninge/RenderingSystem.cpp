@@ -11,6 +11,8 @@
 
 namespace spic::internal::systems 
 {
+	using namespace spic::tiled;
+
 	RenderingSystem::RenderingSystem()
 	{
 	}
@@ -30,7 +32,7 @@ namespace spic::internal::systems
 		spic::internal::Rendering::Clean();
 		spic::internal::Rendering::UpdateCamera(&currentScene.Camera());
 		auto filteredEntities = GetFilteredEntities(entities);
-		const spic::TileMap* tileMap = currentScene.TileMap();
+		const TileMap* tileMap = currentScene.TileMap();
 
 		if (tileMap != nullptr)
 			tileMap->Render();
@@ -63,7 +65,7 @@ namespace spic::internal::systems
 		std::vector<std::shared_ptr<spic::GameObject>> uiEntities;
 		for (const auto& entity : entities) 
 		{
-			if (spic::TypeHelper::SharedPtrIsOfType<UIObject>(entity))
+			if (spic::helper_functions::type_helper::SharedPtrIsOfType<UIObject>(entity))
 				uiEntities.emplace_back(entity);
 			else
 				nonUIEntities.emplace_back(entity);

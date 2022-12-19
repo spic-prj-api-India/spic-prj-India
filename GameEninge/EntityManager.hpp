@@ -165,7 +165,7 @@ namespace spic::internal
 
 	template <typename T>
 	void EntityManager::RemoveSystem() {
-		std::string typeName = spic::TypeHelper::GetTypeName<T>();
+		std::string typeName = spic::helper_functions::type_helper::GetTypeName<T>();
 		for (auto& systemPair : systems) {
 			auto& vec = systemPair.second;
 			auto start_junk = std::remove_if(

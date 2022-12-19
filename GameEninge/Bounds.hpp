@@ -2,7 +2,8 @@
 #ifndef BOUNDS_H_
 #define BOUNDS_H_
 
-namespace spic {
+namespace spic 
+{
 	/**
 	 * @brief Bounds is a defined area with a width, height, top, bottom, right and left.
 	 *			Which can used to define an area where an entity must stay in. 

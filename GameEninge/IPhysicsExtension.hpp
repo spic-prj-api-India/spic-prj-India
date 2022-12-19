@@ -33,7 +33,7 @@ namespace spic::extensions{
 		* @brief Add collision layer to physic world
 		* @spicapi
 		*/
-		virtual void AddCollisionLayer(const spic::TileLayer& collisionLayer) = 0;
+		virtual void AddCollisionLayer(const spic::tiled::TileLayer& collisionLayer) = 0;
 
 		/**
 		* @brief Add and updates entities with physics

@@ -3,7 +3,11 @@
 
 #include "Point.hpp"
 
-namespace spic::internal::math {
+/**
+ * @brief Contains math related classes and function(s)
+*/
+namespace spic::internal::math 
+{
     /**
      * @brief Matrix that can be used to translate and rotate matrixes.
     */

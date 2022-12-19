@@ -7,6 +7,10 @@
 #include "Point.hpp"
 
 namespace spic::extensions {
+
+	/**
+	 * @brief Contains the box2d implementation
+	*/
 	class PhysicsExtensionImpl1;
 
 	/**
@@ -36,7 +40,7 @@ namespace spic::extensions {
 		* @brief Add collision layer to physic world
 		* @spicapi
 		*/
-		void AddCollisionLayer(const spic::TileLayer& collisionLayer) override;
+		void AddCollisionLayer(const spic::tiled::TileLayer& collisionLayer) override;
 
 		/**
 		* @brief Add and updates physic bodies

@@ -10,11 +10,13 @@
 #include "Sample.hpp"
 #include "Chunk.hpp"
 
-/// @brief The internal audio namespace wich contains all audio related content
+/**
+ * @brief The internal audio namespace which contains all the audio implementation details
+*/
 namespace spic::internal::audio::impl {
 
     /**
-     * @brief Manages the audio samples and loaded songs(chunks). Is an singelton
+     * @brief Manages the audio samples and loaded songs(chunks).
     */
     class AudioManager
     {   
@@ -29,11 +31,6 @@ namespace spic::internal::audio::impl {
          * @brief Holds all loaded audio chunks
         */
         std::map<std::string, std::shared_ptr<Chunk>> chunks;
-
-        /**
-         * @brief Mutex for making the private instance of this class thread safe
-        */
-        
         
         /**
          * @brief Adds a loaded chunk object to the chunks mpap
