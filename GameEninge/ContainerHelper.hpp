@@ -39,7 +39,7 @@ namespace spic::helper_functions
 		 * @return Vector of values.
 		*/
 		template <typename K, typename V>
-		std::vector<V> GetValues(std::map<K, V> map) {
+		std::vector<V> Values(std::map<K, V> map) {
 			std::vector<V> keys;
 			for (const auto& keypair : map) {
 				keys.emplace_back(keypair.second);

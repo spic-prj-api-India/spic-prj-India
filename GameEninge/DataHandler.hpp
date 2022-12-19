@@ -45,7 +45,7 @@ namespace spic
 		void Save();
 
 		/**
-		* @brief Gets the latest saved scene, loads xml data, updates and creates entitites with the xml data
+		* @brief Gets the latest saved scene, loads xml data, updates and creates entities with the xml data
 		* @param entities List of entities
 		*/
 		void LoadScene(const std::vector<std::shared_ptr<spic::GameObject>>& entities);

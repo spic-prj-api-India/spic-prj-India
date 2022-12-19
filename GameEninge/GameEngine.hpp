@@ -125,13 +125,6 @@ namespace spic {
 		void LoadSceneBySaveFile(std::shared_ptr<Scene> scene, const std::string& fileName);
 
 		/*
-		@brief Load the specified settings.
-		@param settins: The settings you want to load.
-		@param fileName: The file name.
-		*/
-		void LoadSettingsBySaveFile(const std::string& fileName);
-
-		/*
 		@brief Destroy the current scene.
 		@param forceDelete: Whether you also want to delete all GameObjects in the scene which are set to not be destroyed on load.
 		*/

@@ -171,13 +171,11 @@ const TiXmlElement* GetLastestSavedScene(const TiXmlElement& scenes)
 
 void spic::DataHandler::LoadScene(const std::vector<std::shared_ptr<spic::GameObject>>& entities)
 {
-	// Get latest saved scene
 	const TiXmlElement& scenes = *this->saveDocument->FirstChildElement();
 	const TiXmlElement* sceneElement = GetLastestSavedScene(scenes);
 	if (sceneElement == nullptr)
 		return;
 
-	// Load xml data into struct
 	std::vector<IMemento> scene;
 	for (const TiXmlElement* parentElement = sceneElement->FirstChildElement(); parentElement != nullptr; parentElement = parentElement->NextSiblingElement())
 	{
@@ -186,7 +184,6 @@ void spic::DataHandler::LoadScene(const std::vector<std::shared_ptr<spic::GameOb
 		scene.emplace_back(parentMemento);
 	}
 
-	// Update and create entities with data
 	for (const auto& parent : scene)
 	{
 		const std::string& name = parent.properties.at("name");
@@ -199,7 +196,6 @@ void spic::DataHandler::LoadScene(const std::vector<std::shared_ptr<spic::GameOb
 
 std::shared_ptr<spic::GameObject> spic::DataHandler::LoadContent(IMemento parent, std::shared_ptr<spic::GameObject> entity)
 {
-	// Find or create entity if not exist
 	if (entity == nullptr)
 	{
 		const std::string& name = parent.properties["name"];
@@ -210,11 +206,10 @@ std::shared_ptr<spic::GameObject> spic::DataHandler::LoadContent(IMemento parent
 			entity->Name(parent.properties["name"]);
 		}
 	}
-	// if entity is persistable load properties
+
 	if (helper_functions::type_helper::SharedPtrIsOfType<Persistable>(entity))
 		LoadProperties(helper_functions::type_helper::CastSharedPtrToType<Persistable>(entity), parent.properties);
 
-	// Add/Update all children to/of entity
 	auto children = entity->GetChildren();
 	for (const auto& child : parent.contents)
 	{

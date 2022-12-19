@@ -3,6 +3,7 @@
 #include "Scene.hpp"
 #include <functional>
 #include "DataHandler.hpp"
+#include <Button.hpp>
 
 class SettingsScene : public spic::Scene {
 public:
@@ -11,7 +12,8 @@ public:
 private:
 	void SetCamera();
 	void SetContents();
-	void AddButton(const std::string& text, std::function<void()> callback, const float offset);
+	void RestoreSettings();
+	void AddButton(const std::string& name, const std::string& text, std::function<void()> callback, const float offset);
 private:
 	std::map<std::string, std::string> settings;
 };
