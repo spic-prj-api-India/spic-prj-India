@@ -9,24 +9,25 @@ using namespace spic::input;
 
 void BoxSpawnerScript::OnStart() {
 	leftPressed = false;
+	rightPressed = false;
 }
 
 void BoxSpawnerScript::OnUpdate() {
-	if (leftPressed)
+	if (rightPressed)
 	{
 		boxCount++;
 		spic::Point mousePosition = MousePosition();
 		std::shared_ptr<BoxPersistable> boxPresistable = std::make_shared<BoxPersistable>("box" + std::to_string(boxCount), mousePosition);
 		spic::GameObject::Create(boxPresistable);
-		leftPressed = false;
+		rightPressed = false;
 	}
-	else if (rightPressed)
+	else if (leftPressed)
 	{
 		boxCount++;
 		spic::Point mousePosition = MousePosition();
 		std::shared_ptr<BoxNotPersistable> boxNotPresistable = std::make_shared<BoxNotPersistable>("box" + std::to_string(boxCount), mousePosition);
 		spic::GameObject::Create(boxNotPresistable);
-		rightPressed = false;
+		leftPressed = false;
 	}
 }
 

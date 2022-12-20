@@ -3,7 +3,6 @@
 #include "CameraMovementScript.h"
 #include "CollisionDetectionScript.h"
 #include "AudioSource.hpp"
-#include "BoxPersistable.h"
 #include "Ball.h"
 #include "PlayerMovementScript.h"
 #include <GameEngine.hpp>
@@ -36,15 +35,6 @@ void GameScene::SetCamera()
 
 void GameScene::SetContents()
 {
-	spic::Point box1Position = { 75.0f, 24.0f };
-	std::shared_ptr<BoxPersistable> box1 = std::make_shared<BoxPersistable>("box1", box1Position);
-	spic::Point box2Position = { 400.0f, 50.0f };
-	std::shared_ptr<BoxPersistable> box2 = std::make_shared<BoxPersistable>("box2", box2Position);
-	spic::Point box3Position = { 500.0f, 50.0f };
-	std::shared_ptr<BoxPersistable> box3 = std::make_shared<BoxPersistable>("box3", box3Position);
-	box1->AddChild(box2);
-	box2->AddChild(box3);
-
 	std::shared_ptr<CollisionDetectionScript> collisionScript = std::make_shared<CollisionDetectionScript>();
 	std::shared_ptr<PlayerMovementScript> movementScript = std::make_shared<PlayerMovementScript>();
 	auto music = std::make_shared<spic::AudioSource>("assets/music/file_example_MP3_700KB.mp3", true, true, 1.0f);
@@ -67,9 +57,6 @@ void GameScene::SetContents()
 		spic::GameEngine::GetInstance()->LoadSceneByName("menu");
 		});
 
-	AddContent(box1);
-	AddContent(box2);
-	AddContent(box3);
 	AddContent(football);
 	AddContent(button);
 }
