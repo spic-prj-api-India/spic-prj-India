@@ -93,6 +93,9 @@
     <ClCompile Include="BackScript.cpp">
       <Filter>Source Files\scripts</Filter>
     </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Source Files\objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CollisionDetectionScript.h">
@@ -145,6 +148,9 @@
     </ClInclude>
     <ClInclude Include="BackScript.h">
       <Filter>Header Files\scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Header Files\objects</Filter>
     </ClInclude>
     <ClInclude Include="GlobalSettings.h">
       <Filter>Header Files</Filter>
