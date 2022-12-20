@@ -5,9 +5,10 @@
 #include "EntityManager.hpp"
 #include "GameEngine.hpp"
 #include "ContainerHelper.hpp"
+#include "Debug.hpp"
 
 /**
-* @brief Wrapper class for xml functions.
+* @brief Wrapper class for xml functions. 
 */
 class spic::internal::SaveDocument
 {
@@ -119,7 +120,15 @@ spic::DataHandler::DataHandler(const std::string& fileName)
 
 spic::DataHandler::~DataHandler()
 {
-	delete saveDocument;
+	try
+	{
+		delete saveDocument;
+	}
+	catch (const std::exception& ex)
+	{
+		const std::string& message = ex.what();
+		spic::debug::LogError("Saving failed: " + message);
+	}
 }
 
 void spic::DataHandler::AddScene(const std::vector<std::shared_ptr<spic::GameObject>>& entities)

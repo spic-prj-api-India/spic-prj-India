@@ -10,7 +10,7 @@ namespace spic
 	namespace internal
 	{
 		/**
-		* @brief Wrapper class for xml functions.
+		* @brief Wrapper class for xml functions. Gets destroyed in the destructor of the DataHandler.
 		*/
 		class SaveDocument;
 	}
