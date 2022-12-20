@@ -185,7 +185,7 @@
     <ClInclude Include="Component.hpp" />
     <ClInclude Include="ContainerHelper.hpp" />
     <ClInclude Include="ConvertListToBytes.hpp" />
-    <ClInclude Include="DataSystem.hpp" />
+    <ClInclude Include="DataHandler.hpp" />
     <ClInclude Include="Debug.hpp" />
     <ClInclude Include="DecreaseGameSpeedListener.hpp" />
     <ClInclude Include="Defaults.hpp" />
@@ -258,7 +258,7 @@
     <ClCompile Include="BehaviourScript.cpp" />
     <ClCompile Include="Box2DCollisionListener.cpp" />
     <ClCompile Include="Collider.cpp" />
-    <ClCompile Include="DataSystem.cpp" />
+    <ClCompile Include="DataHandler.cpp" />
     <ClCompile Include="DecreaseGameSpeedListener.cpp" />
     <ClCompile Include="FPSlistener.cpp" />
     <ClCompile Include="Component.cpp" />
@@ -274,6 +274,7 @@
     <ClCompile Include="NetworkingReceiveSystem.cpp" />
     <ClCompile Include="NetworkingSendSystem.cpp" />
     <ClCompile Include="NetworkPacket.cpp" />
+    <ClCompile Include="Persistable.cpp" />
     <ClCompile Include="PhysicsExtension1.cpp" />
     <ClCompile Include="BoxCollider.cpp" />
     <ClCompile Include="CastException.cpp" />
@@ -321,6 +322,11 @@
   </ImportGroup>
   <ItemGroup>
     <Content Include="defaults\**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="save_files\**">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
