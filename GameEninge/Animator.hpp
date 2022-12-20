@@ -16,7 +16,7 @@ namespace spic {
             /**
              * @brief Running is on by default
              * @param fps Playing speed (amount of frames show each second)
-             * @spicapi
+             * @sharedapi
             */
             Animator(const int fps);
 
@@ -30,24 +30,25 @@ namespace spic {
             /**
              * @brief Stop playing the image sequence. Whatever sprite was displayed
              *        last will remain shown.
-             * @spicapi
+             * @sharedapi
              */
             const void Freeze();
             
             /**
-             * @brief Getter if the animator is frozen
-             * @spicapi
-             * @return 
+             * @brief Getter 
+             * @return If the animator is frozen
+             * @sharedapi
             */
             const bool IsFrozen() const;
 
             /**
-             * @brief 
+             * @brief If the sprite animation on the sprite sheet is horizontal,
+             *      it does the sprite settings automaticly. 
              * @param width Width of an individual sprite in a vertical spriteSheet 
              * @param height Heigth of an individual sprite in a vertical spriteSheet 
              * @param yOffsett Starting place on the y axis
              * @param xOffsett Starting place on the x axis
-             * @spicapi
+             * @sharedapi
             */
             void InitHorizontalSpriteSheet(
                 const std::string& spriteSheet
@@ -59,7 +60,7 @@ namespace spic {
 
             /**
              * @brief Stops the animator frow drawing frames
-             * @spicapi
+             * @sharedapi
             */
             void Stop();
             
@@ -68,77 +69,77 @@ namespace spic {
              *      The last orderlayer is amount of sprite frames so it is advised to start the first sprite 
              *      with orderlayer 1 and keep increasing from there.
              * @param sprite 
+             * @sharedapi
             */
             void AddSprite(const std::shared_ptr<Sprite> sprite);
             
             /**
              * @brief Getter
-             * @return sprite list
-             * @spicapi
+             * @return The current sprite list
+             * @sharedapi
             */
             const std::vector<std::shared_ptr<Sprite>> Sprites() const;
             
             /**
              * @brief Getter
              * @return Animation speed
-             * @spicapi
+             * @sharedapi
             */
             const int Fps() const;
             
             /**
              * @brief Setter
              * @param fps Animation speed
-             * @spicapi
+             * @sharedapi
             */
             void Fps(const int fps);
             
             /**
-             * @brief getter
-             * @return if the animator is looping
-             * @spicapi
+             * @brief Getter
+             * @return If the animator is looping
+             * @sharedapi
             */
             const bool Looping() const;
             
             /**
              * @brief getter
              * @return current frame index
-             * @spicapi
+             * @sharedapi
             */
             const int Index() const;
             
             /**
              * @brief setter
              * @param index 
-             * @spicapi
+             * @sharedapi
             */
             void Index(const int index);
 
             /**
              * @brief increase index by 1 (includes wrapping)
-             * @spicapi
+             * @sharedapi
             */
             void IncreaseIndex();
 
             /**
              * @brief If the animator is playing
-             * @spicapi
+             * @sharedapi
             */
             bool IsRunning() const;
 
             /**
-             * @brief Lastupdate in miliseconds
-             * @return 
-             * @spicapi
+             * @brief Getter
+             * @return Lastupdate in miliseconds
+             * @sharedapi
             */
             uint64_t LastUpdate() const;
 
             /**
-             * @brief Setter for last update
+             * @brief Setter 
              * @param lastUpdate 
-             * @spicapi
+             * @sharedapi
             */
             void LastUpdate(const uint64_t lastUpdate);
-
         private:
             /**
              * @brief frames per second (playing speed)
@@ -148,37 +149,37 @@ namespace spic {
 
             /**
              * @brief If this is true only the current frame will show
-             * @spicapi
+             * @sharedapi
             */
             bool freeze;
 
             /**
              * @brief If this animator is running
-             * @spicapi
+             * @sharedapi
             */
             bool running;
 
             /**
              * @brief The index of the current frame
-             * @spicapi
+             * @sharedapi
             */
             int index;
 
             /**
              * @brief If the animation should loop
-             * @spicapi
+             * @sharedapi
             */
             bool looping;
 
             /**
              * @brief sprites collection
-             * @spicapi
+             * @sharedapi
             */
             std::vector<std::shared_ptr<Sprite>> sprites;
 
             /**
              * @brief Last update
-             * @spicapi
+             * @sharedapi
             */
             uint64_t lastUpdate = 0;
     };

@@ -94,9 +94,7 @@ namespace spic {
 		static Color _magenta;
 		static Color _yellow;
 		static Color _black;
-		// ... more standard color here
 	};
-
 }
 
 #endif // COLOR_H_

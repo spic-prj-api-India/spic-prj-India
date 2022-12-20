@@ -29,20 +29,28 @@ void MenuScene::SetCamera()
 	Camera(std::move(camera));
 }
 
+void Game()
+{
+	spic::input::UnSubscribeAll();
+	spic::GameEngine::GetInstance()->LoadSceneByName("game");
+}
+
+void Creddits()
+{
+	spic::input::UnSubscribeAll();
+	spic::GameEngine::GetInstance()->LoadSceneByName("credits");
+}
+
 void MenuScene::SetContents()
 {
-	AddButton("Start Game", []() {
-		spic::input::UnSubscribeAll();
-		spic::GameEngine::GetInstance()->LoadSceneByName("game");
-		}, 0.0f);
+
+	AddButton("Start Game", Game, 0.0f);
 	AddButton("Start Flocking", []() {
 		spic::input::UnSubscribeAll();
 		spic::GameEngine::GetInstance()->LoadSceneByName("flock");
 		}, 100.0f);
-	AddButton("Credits", []() {
-		spic::input::UnSubscribeAll();
-		spic::GameEngine::GetInstance()->LoadSceneByName("credits");
-		}, 200.0f);
+
+	AddButton("Credits", Creddits, 200.0f);
 }
 
 void MenuScene::SetMatchMenu()
