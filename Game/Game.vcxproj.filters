@@ -146,5 +146,8 @@
     <ClInclude Include="BackScript.h">
       <Filter>Header Files\scripts</Filter>
     </ClInclude>
+    <ClInclude Include="GlobalSettings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

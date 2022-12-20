@@ -9,18 +9,25 @@
 #include "AimListener.h"
 #include "CircleObstacle.h"
 #include "BackScript.h"
+#include <DataHandler.hpp>
 
 FlockingScene::FlockingScene() : Scene()
 {
 	SetCamera();
-	SetContents();
 	LoadTileMap("assets/maps/map.tmx", 3);
 }
 
 spic::Scene* FlockingScene::Start()
 {
 	FlockingScene* a = new FlockingScene();
+	a->RestoreSettings();
 	return a;
+}
+
+void FlockingScene::RestoreSettings()
+{
+	
+	//dataHandler.LoadSettings(settings);
 }
 
 void FlockingScene::SetCamera()
@@ -33,7 +40,7 @@ void FlockingScene::SetCamera()
 	Camera(std::move(camera));
 }
 
-void FlockingScene::SetContents()
+void FlockingScene::SetContentsPlayer1()
 {
 	/* Rocket launcher setup */
 	std::shared_ptr<spic::GameObject> rocketLauncher = std::make_shared<spic::GameObject>();
@@ -55,4 +62,8 @@ void FlockingScene::SetContents()
 
 	AddContent(rocketLauncher);
 	AddContent(obstacle);
+}
+
+void FlockingScene::SetContentsPlayer2()
+{
 }

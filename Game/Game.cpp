@@ -59,6 +59,11 @@ void StartGame()
 
 int main()
 {
-	InitGame();
-	StartGame();
+	//InitGame();
+	//StartGame();
+
+	spic::DataHandler dataHandler = spic::DataHandler("settings");
+	std::map<std::string, std::string> a{ {"player1", "145.49.91.250"}, {"player2", "145.49.91.251" } };
+	dataHandler.AddSettings(a);
+	dataHandler.Save();
 }

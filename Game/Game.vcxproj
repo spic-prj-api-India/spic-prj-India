@@ -177,6 +177,7 @@
     <ClInclude Include="CreditsScene.h" />
     <ClInclude Include="CreditsSceneScript.h" />
     <ClInclude Include="GameScene.h" />
+    <ClInclude Include="GlobalSettings.h" />
     <ClInclude Include="KeyListener.h" />
     <ClInclude Include="FollowMouseListener.h" />
     <ClInclude Include="CircleObstacle.h" />
