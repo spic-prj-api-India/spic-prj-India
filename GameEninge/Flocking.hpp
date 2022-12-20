@@ -8,7 +8,7 @@
 namespace spic
 {
     /**
-     * @brief The base class for all colliders.
+     * @brief The flocking component is used for implementing flocking for a force driven entity
      */
     class Flocking : public Component {
     public:

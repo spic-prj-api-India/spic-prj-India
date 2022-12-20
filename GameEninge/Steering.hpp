@@ -6,6 +6,9 @@
 
 namespace spic 
 {
+	/**
+	 * @brief Target behaviour are the steering behaviours that can be used for targets.
+	*/
 	enum class TargetBehaviour {
 		SEEK,
 		FLEE,
@@ -17,6 +20,9 @@ namespace spic
 	 */
 	enum class Deceleration { SLOW = 3, NORMAL = 2, FAST = 1 };
 
+	/**
+	 * @brief Steering component is used for implementing steering forces on a force driven entity.
+	*/
 	class Steering : public Component {
 	public:
 		Steering(ForceDriven* agent);
