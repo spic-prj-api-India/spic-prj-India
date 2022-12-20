@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Source Files">
@@ -81,7 +81,7 @@
     <ClCompile Include="CreditsSceneScript.cpp">
       <Filter>Source Files\scripts</Filter>
     </ClCompile>
-    <ClCompile Include="Box.cpp">
+    <ClCompile Include="BoxPersistable.cpp">
       <Filter>Source Files\objects</Filter>
     </ClCompile>
     <ClCompile Include="SettingsScene.cpp">
@@ -92,6 +92,12 @@
     </ClCompile>
     <ClCompile Include="BackScript.cpp">
       <Filter>Source Files\scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="BoxSpawnerScript.cpp">
+      <Filter>Source Files\scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="BoxNotPersistable.cpp">
+      <Filter>Source Files\objects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -104,7 +110,7 @@
     <ClInclude Include="FollowMouseListener.h">
       <Filter>Header Files\listeners</Filter>
     </ClInclude>
-    <ClInclude Include="Box.h">
+    <ClInclude Include="BoxPersistable.h">
       <Filter>Header Files\objects</Filter>
     </ClInclude>
     <ClInclude Include="CameraMovementScript.h">
@@ -145,6 +151,12 @@
     </ClInclude>
     <ClInclude Include="BackScript.h">
       <Filter>Header Files\scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="BoxSpawnerScript.h">
+      <Filter>Header Files\scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="BoxNotPersistable.h">
+      <Filter>Header Files\objects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
