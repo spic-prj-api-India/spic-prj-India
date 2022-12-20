@@ -34,6 +34,9 @@ namespace spic::internal::systems
 		}
 
 		auto scripts = this->GetAllScripts(entities);
+		for (auto& script : currentScene.Camera().GetComponents<spic::BehaviourScript>()) {
+			scripts.emplace_back(script);
+		}
 		for (auto& script : scripts)
 		{
 			script->OnStart();
@@ -42,16 +45,15 @@ namespace spic::internal::systems
 
 	void InputSystem::Update(std::vector<std::shared_ptr<spic::GameObject>>& entities, Scene& currentScene)
 	{
-		buttonClickListener->SetButtons(std::move(GetButtons(entities)));
+		this->buttonClickListener->SetButtons(std::move(GetButtons(entities)));
 		auto scripts = this->GetAllScripts(entities);
+		for (auto& script : currentScene.Camera().GetComponents<spic::BehaviourScript>()) {
+			scripts.emplace_back(script);
+		}
 
 		while (spic::internal::input::impl::Poll())
 		{
 			InputManager::GetInstance()->Listen();
-
-			for (auto& script : currentScene.Camera().GetComponents<spic::BehaviourScript>()) {
-				script->OnInput();
-			}
 
 			for (auto& script : scripts)
 			{

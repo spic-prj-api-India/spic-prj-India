@@ -29,6 +29,7 @@ void FlockingScene::SetCamera()
 	camera->Transform(std::make_shared<spic::Transform>(spic::Point(0.0f, 0.0f), 0.0f, 1.0f));
 	camera->BackgroundColor(spic::Color::blue());
 	camera->AddComponent(std::make_shared<CameraMovementScript>());
+	camera->AddComponent<spic::BehaviourScript>(std::make_shared<BackScript>());
 	Camera(std::move(camera));
 }
 
@@ -47,8 +48,6 @@ void FlockingScene::SetContents()
 	rocketLauncher->AddComponent<spic::Sprite>(rocketLauncherSprite);
 	std::shared_ptr<AimListener> aimListener = std::make_shared<AimListener>(rocketLauncher);
 	spic::input::Subscribe(spic::input::MouseButton::LEFT, aimListener);
-
-	rocketLauncher->AddComponent<spic::BehaviourScript>(std::make_shared<BackScript>());
 
 	/* Obstacles setup */
 	spic::Point obstaclePosition = { 300.0f, 200.0f };
