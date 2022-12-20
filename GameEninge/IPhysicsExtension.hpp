@@ -72,6 +72,11 @@ namespace spic::extensions{
 		 * @return int 
 		*/
 		virtual int RunTimes() = 0;
+
+		/**
+		 * @brief Clears all current forces
+		*/
+		virtual void ClearForces() = 0;
 	};
 }
 

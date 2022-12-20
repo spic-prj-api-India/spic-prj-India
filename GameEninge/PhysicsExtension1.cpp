@@ -281,6 +281,15 @@ namespace spic::extensions
 		{
 			return this->stepsAmount;
 		}
+
+		/**
+		 * @brief Clears all forces from box2d
+		*/
+		void ClearForces() noexcept
+		{
+			if (auto temp = world.get(); temp != nullptr)
+				temp->ClearForces();
+		}
 	private:
 		/**
 		 * @brief Convert coordinate from pixels to meters
@@ -611,6 +620,7 @@ namespace spic::extensions
 			Point endPoint = { endVec.x, endVec.y };
 			spic::debug::DrawLine(startPoint, endPoint, spic::Color::red());
 		}
+
 	private:
 		std::unique_ptr<b2World> world;
 		std::map<spic::BodyType, b2BodyType> bodyTypeConvertions;
@@ -724,5 +734,10 @@ namespace spic::extensions
 	int spic::extensions::PhysicsExtension1::RunTimes()
 	{
 		return physicsImpl->CanRun();
+	}
+
+	void spic::extensions::PhysicsExtension1::ClearForces()
+	{
+		physicsImpl->ClearForces();
 	}
 }
