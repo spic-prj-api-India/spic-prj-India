@@ -305,6 +305,7 @@ SDL_RendererFlip RendererImpl::GetFlip(const bool flipX, const bool flipY)
 		return SDL_FLIP_HORIZONTAL;
 	else if (flipY)
 		return SDL_FLIP_VERTICAL;
+
 	return SDL_FLIP_NONE;
 }
 
