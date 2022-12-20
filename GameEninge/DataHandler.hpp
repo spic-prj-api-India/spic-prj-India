@@ -101,7 +101,6 @@ namespace spic
 		void LoadProperties(const std::shared_ptr<spic::Persistable>& entity, const std::map<std::string, std::string> attributes);
 		
 	private:
-
 		/**
 		* @brief Wrapper class for TinyXml functions.
 		*/
