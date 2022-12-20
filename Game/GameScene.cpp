@@ -2,13 +2,10 @@
 #include <Button.hpp>
 #include "CameraMovementScript.h"
 #include "CollisionDetectionScript.h"
-#include <BoxCollider.hpp>
 #include "AudioSource.hpp"
 #include "Box.h"
-#include <RigidBody.hpp>
-#include "PlayerMovementScript.h"
-#include <CircleCollider.hpp>
 #include "Ball.h"
+#include "PlayerMovementScript.h"
 #include <GameEngine.hpp>
 
 GameScene::GameScene() : Scene()
@@ -35,28 +32,18 @@ void GameScene::SetCamera()
 
 void GameScene::SetContents()
 {
-	std::shared_ptr<spic::GameObject> box = std::make_shared<spic::GameObject>();
-	std::string boxName = "box";
-	std::shared_ptr<spic::Transform> boxTransform = std::make_shared<spic::Transform>();
-	boxTransform->position = { 180.0f, 24.0f };
-	boxTransform->rotation = 0.0f;
-	boxTransform->scale = 5.0f;
-	std::shared_ptr<spic::BoxCollider> boxCollider = std::make_shared<spic::BoxCollider>();
-	boxCollider->Width(50.0f);
-	boxCollider->Height(50.0f);
-	std::shared_ptr<spic::RigidBody> boxRigidBody = std::make_shared<spic::RigidBody>(10.0f, 1.0f, spic::BodyType::dynamicBody);
+	spic::Point box1Position = { 75.0f, 24.0f };
+	std::shared_ptr<Box> box1 = std::make_shared<Box>("box1", box1Position);
+	spic::Point box2Position = { 400.0f, 50.0f };
+	std::shared_ptr<Box> box2 = std::make_shared<Box>("box2", box2Position);
+	spic::Point box3Position = { 500.0f, 50.0f };
+	std::shared_ptr<Box> box3 = std::make_shared<Box>("box3", box3Position);
+	box1->AddChild(box2);
+	box2->AddChild(box3);
+
 	std::shared_ptr<CollisionDetectionScript> collisionScript = std::make_shared<CollisionDetectionScript>();
 	std::shared_ptr<PlayerMovementScript> movementScript = std::make_shared<PlayerMovementScript>();
-	auto boxSprite = std::make_shared<spic::Sprite>("assets/textures/box.png", 1);
 	auto music = std::make_shared<spic::AudioSource>("assets/music/file_example_MP3_700KB.mp3", true, true, 1.0f);
-
-	box->Name(boxName);
-	box->Transform(boxTransform);
-	box->AddComponent<spic::BoxCollider>(boxCollider);
-	box->AddComponent<spic::RigidBody>(boxRigidBody);
-	box->AddComponent<spic::BehaviourScript>(collisionScript);
-	box->AddComponent<spic::BehaviourScript>(movementScript);
-	box->AddComponent<spic::Sprite>(boxSprite);
 	//box->AddComponent<spic::AudioSource>(music);
 
 	spic::Point ballPosition = { 400.0f, 24.0f };
@@ -66,16 +53,19 @@ void GameScene::SetContents()
 	football->AddComponent<spic::BehaviourScript>(moveFootballScript);
 
 	//UI test
-	std::shared_ptr<spic::Button> button = std::make_shared<spic::Button>(200.0f, 100.0f, "Menu");
+	std::shared_ptr<spic::Button> button = std::make_shared<spic::Button>(200.0f, 100.0f, "Save scene");
 	button->Transform(std::make_shared<spic::Transform>(spic::Point(20.0f, 20.0f), 0.0f, 1.0f));
 	button->OnClick([]() {
+		std::cout << "Scene saved!" << std::endl;
+		spic::GameEngine::GetInstance()->SaveScene("game");
 		spic::input::UnSubscribeAll();
 
 		spic::GameEngine::GetInstance()->LoadSceneByName("menu");
 		});
 
-	AddContent(box);
+	AddContent(box1);
+	AddContent(box2);
+	AddContent(box3);
 	AddContent(football);
 	AddContent(button);
-	AddContent(std::make_shared<Box>());
 }

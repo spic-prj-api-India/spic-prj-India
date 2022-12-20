@@ -85,8 +85,9 @@ namespace spic {
 		}
 
 		/*
-		@brief Creates GameObject of type.
+		@brief Creates GameObject of type.s
 		@param The typeName is the key in the types list.
+		@return A newly created GameObject if the type does not exist. Otherwise, the GameObject of the specified type will be returned.
 		*/
 		std::shared_ptr<spic::GameObject> CreateType(const std::string& typeName);
 
@@ -110,6 +111,19 @@ namespace spic {
 		@param sceneName: The name of the scene you want to load.
 		*/
 		void LoadSceneByName(const std::string& sceneName);
+
+		/*
+		@brief Save the current scene.
+		@param fileName: The file name.
+		*/
+		void SaveScene(const std::string& fileName);
+
+		/*
+		@brief Load the specified scene.
+		@param scene: The scene you want to load.
+		@param fileName: The file name.
+		*/
+		void LoadSceneBySaveFile(std::shared_ptr<Scene> scene, const std::string& fileName);
 
 		/*
 		@brief Destroy the current scene.
