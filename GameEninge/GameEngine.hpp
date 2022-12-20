@@ -85,8 +85,9 @@ namespace spic {
 		}
 
 		/*
-		@brief Creates GameObject of type.
+		@brief Creates GameObject of type.s
 		@param The typeName is the key in the types list.
+		@return A newly created GameObject if the type does not exist. Otherwise, the GameObject of the specified type will be returned.
 		*/
 		std::shared_ptr<spic::GameObject> CreateType(const std::string& typeName);
 

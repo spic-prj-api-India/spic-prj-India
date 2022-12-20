@@ -7,11 +7,16 @@
 
 namespace spic 
 {
+	/**
+	 * @brief Makes a GameObject persistable, so that it can be loaded back in later on.
+	 */
 	class Persistable
 	{
 	public:
 		/**
 		 * @brief Makes a GameObject persistable, so that it can be loaded back in later on.
+		 * @param gameObject The GameObject te make persistable.
+		 * @param typeName The type of the GameObject.
 		 */
 		Persistable(GameObject* gameObject, std::string typeName);
 		virtual ~Persistable() = default;

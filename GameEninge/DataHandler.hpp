@@ -3,23 +3,35 @@
 
 #include "GameObject.hpp"
 #include <map>
-#include "tinyxml.h"
 #include "Persistable.hpp"
 
 namespace spic
 {
+	/**
+	* @brief Wrapper class for TinyXml functions.
+	*/
 	class SaveDocument;
 
+	/**
+	 * @brief The memento which serves as a snapshot, containing the objects and their properties to be saved.
+	*/
 	struct IMemento
 	{
 		std::vector<IMemento> contents;
 		std::map<std::string, std::string> properties;
 	};
 
+	/**
+	 * @brief Handles various methods for saving and loading values to/from local save files.
+	*/
 	class DataHandler
 	{
 
 	public:
+		/**
+		 * @brief Handles various methods for saving and loading values to/from local save files.
+		 * @param fileName The name of the save file to be saved/loaded.
+		*/
 		DataHandler(const std::string& fileName);
 		~DataHandler();
 		DataHandler(const DataHandler& other) = delete;
