@@ -18,10 +18,10 @@ namespace spic {
 		 *			otherwise can't be used as interface
 		 */
 		virtual ~Obstacle() = default;
-		Obstacle(const Obstacle& other) = delete;
-		Obstacle(Obstacle&& other) = delete;
-		Obstacle& operator=(const Obstacle& other) = delete;
-		Obstacle& operator=(Obstacle&& other) = delete;
+		Obstacle(const Obstacle& other) = default;
+		Obstacle(Obstacle&& other) = default;
+		virtual Obstacle& operator=(const Obstacle& other) = default;
+		virtual Obstacle& operator=(Obstacle&& other) = default;
 
 		/**
 		 * @brief Returns bounding radius of force driven entity.

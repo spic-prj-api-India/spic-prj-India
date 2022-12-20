@@ -22,6 +22,15 @@ namespace spic {
      */
     class ForceDriven : public spic::GameObject {  
     public:
+        /**
+         * @brief Constructor
+         * @param sumMethod SumMethod is method for summing forces
+         * @param maxSteeringForce Max steering force
+         * @param maxSpeed Max speed of force driven entity
+         * @param maxTurnRate Max angle that force driven entity can turn in radians
+         * @param boundingRadius Bounding radius is radius of the bounds around force driven entity. 
+                    Is used for collision avoidance.
+        */
         ForceDriven(SumMethod sumMethod, const float maxSteeringForce, const float maxSpeed, const float maxTurnRate, const float boundingRadius);
 
         /**
@@ -103,15 +112,40 @@ namespace spic {
         void ApplyForce(Point& force);
     private:
         /**
-        * @brief Default properties.
+        * @brief SumMethod is method for summing forces.
         */
         SumMethod sumMethod;
+
+        /**
+         * @brief Max steering force that can be added to force driven entity.
+        */
         float maxSteeringForce;
+
+        /**
+         * @brief Max speed of entity.
+        */
         float maxSpeed;
-        float maxTurnRate; // in rad
-        bool paused;
+
+        /**
+         * @brief Max angle that entity can turn in radians.
+        */
+        float maxTurnRate;
+
+        /**
+         * @brief Vector entity is heading towards
+        */
         Point heading;
+
+        /**
+         * @brief Bounding radius is the radius of the bounds around entity.
+                    Bouding radius is used for obstacle avoidance
+        */
         float boundingRadius;
+
+        /**
+         * @brief Bool if forces need to be added to entity.
+        */
+        bool paused;
     };
 }
 

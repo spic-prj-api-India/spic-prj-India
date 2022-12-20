@@ -14,18 +14,18 @@ namespace spic
     public:
         /**
          * @brief Constructor
-         * @param agent 
+         * @param agent Agent used for flocking
         */
         Flocking(ForceDriven* agent);
 
         /**
          * @brief Constructor
-         * @param agent 
-         * @param viewRadius 
-         * @param seperationWeight 
-         * @param desiredSeparation 
-         * @param alignmentWeight 
-         * @param cohesionWeight 
+         * @param agent Agent used for flocking
+         * @param viewRadius The radius where the agent searches for neighbors.
+         * @param seperationWeight Weight that is used to calculate impact of seperation
+         * @param desiredSeparation Desired separation between agents
+         * @param alignmentWeight Weight that is used to calculate impact of alignment
+         * @param cohesionWeight Weight that is used to calculate impact of cohesion
         */
         Flocking(ForceDriven* agent, const float viewRadius, const  float seperationWeight, const float desiredSeparation,
             const float alignmentWeight, const float cohesionWeight);
@@ -40,14 +40,14 @@ namespace spic
         /**
          * @brief Activates alignment for force driven entity.
          * @param alignmentWeight The weight of the behaviour.
-         * @param viewRadius The radius where the entity searches for neighbors.
+         * @param viewRadius The radius where the agent searches for neighbors.
         */
         void AlignmentOn(const float alignmentWeight, const float viewRadius);
 
         /**
          * @brief Activates cohesion for force driven entity.
          * @param cohesionWeight The weight of the behaviour.
-         * @param viewRadius The radius where the entity searches for neighbors.
+         * @param viewRadius The radius where the agent searches for neighbors.
         */
         void CohesionOn(const float cohesionWeight, const float viewRadius);
 
@@ -98,7 +98,7 @@ namespace spic
         std::vector<std::shared_ptr<ForceDriven>> neighbors;
 
         /**
-         * @brief View radius of agent
+         * @brief The radius where the agent searches for neighbors.
         */
         float viewRadius;
 
