@@ -47,7 +47,7 @@ void RendererImpl::Start()
 	}
 
 	// TODO: Zet in CreateWindow
-	const SDL_WindowFlags w_flags = SDL_WindowFlags(SDL_WINDOW_ALLOW_HIGHDPI | SDL_WINDOW_RESIZABLE);
+	const SDL_WindowFlags w_flags = SDL_WindowFlags(SDL_WINDOW_ALLOW_HIGHDPI);
 	settings = WindowPtr(SDL_CreateWindow(spic::settings::WINDOW_NAME.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, spic::settings::WINDOW_WIDTH, spic::settings::WINDOW_HEIGHT, w_flags));
 	if (settings.get() == nullptr) {
 		spic::debug::LogError(SDL_GetError());
