@@ -100,7 +100,6 @@ namespace spic::internal::rendering {
 		/**
 		 * @brief Mutex for making the private instance of this class thread safe
 		*/
-		std::mutex mutex_rendering;
 
 		/**
 		 * @brief Debug shapes

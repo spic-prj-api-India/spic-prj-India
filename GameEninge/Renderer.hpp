@@ -9,7 +9,8 @@
 #include "Circle.hpp"
 #include "Line.hpp"
 
-namespace spic::internal {
+namespace spic::internal 
+{
 
     struct Rendering
     {        
