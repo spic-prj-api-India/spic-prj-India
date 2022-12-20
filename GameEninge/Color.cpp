@@ -12,5 +12,5 @@ Color Color::_yellow  {1.0, 1.0, 0.0, 1.0};
 Color Color::_black   {0.0, 0.0, 0.0, 1.0};
 // ... more standard colors here
 
-Color::Color(double red, double green, double blue, double alpha)
+Color::Color(float red, float green, float blue, float alpha)
     : r {red}, g {green}, b {blue}, a {alpha} {}

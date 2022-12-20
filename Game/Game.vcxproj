@@ -79,10 +79,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(solutiondir)GameEninge;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(solutiondir)x64/Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>GameEngine.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -93,12 +96,15 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(solutiondir)GameEninge;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(solutiondir)x64/Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>GameEngine.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -108,10 +114,15 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>$(solutiondir)GameEninge;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -122,18 +133,69 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(solutiondir)GameEninge;</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(solutiondir)$(IntDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>GameEngine.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Box.cpp" />
+    <ClCompile Include="BackScript.cpp" />
+    <ClCompile Include="CameraMovementScript.cpp" />
+    <ClCompile Include="AimListener.cpp" />
+    <ClCompile Include="CircleObstacle.cpp" />
+    <ClCompile Include="CollisionDetectionScript.cpp" />
+    <ClCompile Include="FlockingScene.cpp" />
+    <ClCompile Include="Ball.cpp" />
+    <ClCompile Include="CreditsScene.cpp" />
+    <ClCompile Include="CreditsSceneScript.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameScene.cpp" />
+    <ClCompile Include="KeyListener.cpp" />
+    <ClCompile Include="MenuScene.cpp" />
+    <ClCompile Include="FollowMouseListener.cpp" />
+    <ClCompile Include="PlayerMovementScript.cpp" />
+    <ClCompile Include="Rocket.cpp" />
+    <ClCompile Include="SettingsScene.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AimListener.h" />
+    <ClInclude Include="BackScript.h" />
+    <ClInclude Include="Box.h" />
+    <ClInclude Include="CameraMovementScript.h" />
+    <ClInclude Include="CollisionDetectionScript.h" />
+    <ClInclude Include="FlockingScene.h" />
+    <ClInclude Include="Ball.h" />
+    <ClInclude Include="CreditsScene.h" />
+    <ClInclude Include="CreditsSceneScript.h" />
+    <ClInclude Include="GameScene.h" />
+    <ClInclude Include="KeyListener.h" />
+    <ClInclude Include="FollowMouseListener.h" />
+    <ClInclude Include="CircleObstacle.h" />
+    <ClInclude Include="PlayerMovementScript.h" />
+    <ClInclude Include="Rocket.h" />
+    <ClInclude Include="MenuScene.h" />
+    <ClInclude Include="SettingsScene.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GameEninge\GameEninge.vcxproj">
+      <Project>{a165f967-67ee-4270-9cdf-6db5b53f3e2d}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
+  <ItemGroup>
+    <Content Include="assets\**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
 </Project>

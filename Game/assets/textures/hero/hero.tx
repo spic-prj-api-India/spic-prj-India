@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<textures>
+    <texture id="hero_idle0" source="assets/textures/hero/idle/adventurer-idle-2-00.png"/>
+    <texture id="hero_idle1" source="assets/textures/hero/idle/adventurer-idle-2-01.png"/>
+    <texture id="hero_idle2" source="assets/textures/hero/idle/adventurer-idle-2-02.png"/>
+    <texture id="hero_idle3" source="assets/textures/hero/idle/adventurer-idle-2-03.png"/>
+
+    <texture id="hero_run0" source="assets/textures/hero/run/adventurer-run-00.png"/>
+    <texture id="hero_run1" source="assets/textures/hero/run/adventurer-run-01.png"/>
+    <texture id="hero_run2" source="assets/textures/hero/run/adventurer-run-02.png"/>
+    <texture id="hero_run3" source="assets/textures/hero/run/adventurer-run-03.png"/>
+    <texture id="hero_run4" source="assets/textures/hero/run/adventurer-run-04.png"/>
+    <texture id="hero_run5" source="assets/textures/hero/run/adventurer-run-05.png"/>
+
+    <texture id="hero_jump0" source="assets/textures/hero/jump/adventurer-jump-00.png"/>
+    <texture id="hero_jump1" source="assets/textures/hero/jump/adventurer-jump-01.png"/>
+    <texture id="hero_jump2" source="assets/textures/hero/jump/adventurer-jump-02.png"/>
+    <texture id="hero_jump3" source="assets/textures/hero/jump/adventurer-jump-03.png"/>
+
+    <texture id="hero_attack1_0" source="assets/textures/hero/attack1/adventurer-attack1-00.png"/>
+    <texture id="hero_attack1_1" source="assets/textures/hero/attack1/adventurer-attack1-01.png"/>
+    <texture id="hero_attack1_2" source="assets/textures/hero/attack1/adventurer-attack1-02.png"/>
+    <texture id="hero_attack1_3" source="assets/textures/hero/attack1/adventurer-attack1-03.png"/>
+    <texture id="hero_attack1_4" source="assets/textures/hero/attack1/adventurer-attack1-04.png"/>
+
+    <texture id="hero_attack2_0" source="assets/textures/hero/attack2/adventurer-attack2-00.png"/>
+    <texture id="hero_attack2_1" source="assets/textures/hero/attack2/adventurer-attack2-01.png"/>
+    <texture id="hero_attack2_2" source="assets/textures/hero/attack2/adventurer-attack2-02.png"/>
+    <texture id="hero_attack2_3" source="assets/textures/hero/attack2/adventurer-attack2-03.png"/>
+    <texture id="hero_attack2_4" source="assets/textures/hero/attack2/adventurer-attack2-04.png"/>
+    <texture id="hero_attack2_5" source="assets/textures/hero/attack2/adventurer-attack2-05.png"/>
+
+    <texture id="hero_attack3_0" source="assets/textures/hero/attack3/adventurer-attack3-00.png"/>
+    <texture id="hero_attack3_1" source="assets/textures/hero/attack3/adventurer-attack3-01.png"/>
+    <texture id="hero_attack3_2" source="assets/textures/hero/attack3/adventurer-attack3-02.png"/>
+    <texture id="hero_attack3_3" source="assets/textures/hero/attack3/adventurer-attack3-03.png"/>
+    <texture id="hero_attack3_4" source="assets/textures/hero/attack3/adventurer-attack3-04.png"/>
+    <texture id="hero_attack3_5" source="assets/textures/hero/attack3/adventurer-attack3-05.png"/>
+
+    <texture id="hero_hurt0" source="assets/textures/hero/hurt/adventurer-hurt-00.png"/>
+    <texture id="hero_hurt1" source="assets/textures/hero/hurt/adventurer-hurt-01.png"/>
+    <texture id="hero_hurt2" source="assets/textures/hero/hurt/adventurer-hurt-02.png"/>
+
+</textures>

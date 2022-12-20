@@ -75,6 +75,26 @@
     <CodeAnalysisRuleSet>..\coreguide.ruleset</CodeAnalysisRuleSet>
     <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
     <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
+    <ExecutablePath>$(VC_ExecutablePath_x64);$(CommonExecutablePath);$(ExecutablePath)</ExecutablePath>
+    <ReferencePath>$(VC_ReferencesPath_x64);$(ReferencePath)</ReferencePath>
+    <ExcludePath>$(VC_ExecutablePath_x64);$(VC_LibraryPath_x64);$(ExcludePath)</ExcludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ExecutablePath>$(VC_ExecutablePath_x64);$(CommonExecutablePath);$(ExecutablePath)</ExecutablePath>
+    <ReferencePath>$(VC_ReferencesPath_x64);$(ReferencePath)</ReferencePath>
+    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
+    <ExcludePath>$(VC_ExecutablePath_x64);$(VC_LibraryPath_x64);$(ExcludePath)</ExcludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ExecutablePath>$(VC_ExecutablePath_x64);$(CommonExecutablePath);$(ExecutablePath)</ExecutablePath>
+    <ReferencePath>$(VC_ReferencesPath_x64);$(ReferencePath)</ReferencePath>
+    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
+    <ExcludePath>$(VC_ExecutablePath_x64);$(VC_LibraryPath_x64);$(ExcludePath)</ExcludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ExecutablePath>$(VC_ExecutablePath_x64);$(CommonExecutablePath);$(ExecutablePath)</ExecutablePath>
+    <ReferencePath>$(VC_ReferencesPath_x64);$(ReferencePath)</ReferencePath>
+    <ExcludePath>$(VC_ExecutablePath_x64);$(VC_LibraryPath_x64);$(ExcludePath)</ExcludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -82,6 +102,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -97,6 +118,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -113,6 +135,7 @@
       <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <DisableSpecificWarnings>26472;26446;</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -131,6 +154,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -141,39 +165,176 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AISystem.hpp" />
     <ClInclude Include="Animator.hpp" />
+    <ClInclude Include="AudioFacade.hpp" />
+    <ClInclude Include="AudioManager.hpp" />
     <ClInclude Include="AudioSource.hpp" />
     <ClInclude Include="BehaviourScript.hpp" />
+    <ClInclude Include="Bounds.hpp" />
     <ClInclude Include="BoxCollider.hpp" />
     <ClInclude Include="Button.hpp" />
+    <ClInclude Include="ButtonClickListener.hpp" />
     <ClInclude Include="Camera.hpp" />
+    <ClInclude Include="CastException.hpp" />
+    <ClInclude Include="Chunk.hpp" />
+    <ClInclude Include="Circle.hpp" />
     <ClInclude Include="CircleCollider.hpp" />
     <ClInclude Include="Collider.hpp" />
+    <ClInclude Include="Box2DCollisionListener.hpp" />
     <ClInclude Include="Color.hpp" />
     <ClInclude Include="Component.hpp" />
+    <ClInclude Include="ContainerHelper.hpp" />
+    <ClInclude Include="ConvertListToBytes.hpp" />
+    <ClInclude Include="DataHandler.hpp" />
     <ClInclude Include="Debug.hpp" />
-    <ClInclude Include="GameEngineAPI.h" />
+    <ClInclude Include="DecreaseGameSpeedListener.hpp" />
+    <ClInclude Include="Defaults.hpp" />
+    <ClInclude Include="Flocking.hpp" />
+    <ClInclude Include="FPSlistener.hpp" />
+    <ClInclude Include="GameEngine.hpp" />
+    <ClInclude Include="EntityManager.hpp" />
     <ClInclude Include="GameObject.hpp" />
+    <ClInclude Include="GeneralHelper.hpp" />
+    <ClInclude Include="ICollisionListener.hpp" />
+    <ClInclude Include="IEngineExtension.hpp" />
     <ClInclude Include="IKeyListener.hpp" />
     <ClInclude Include="IMouseListener.hpp" />
+    <ClInclude Include="IncreaseGameSpeedListener.hpp" />
     <ClInclude Include="Input.hpp" />
+    <ClInclude Include="InputImpl.hpp" />
+    <ClInclude Include="InputManager.hpp" />
+    <ClInclude Include="InputSystem.hpp" />
+    <ClInclude Include="InternalTime.hpp" />
+    <ClInclude Include="IPhysicsExtension.hpp" />
+    <ClInclude Include="Line.hpp" />
+    <ClInclude Include="Matrix.hpp" />
+    <ClInclude Include="INetworkExtension.hpp" />
+    <ClInclude Include="NetworkingHelper.hpp" />
+    <ClInclude Include="NetworkingReceiveSystem.hpp" />
+    <ClInclude Include="NetworkingSendSystem.hpp" />
+    <ClInclude Include="Obstacle.hpp" />
+    <ClInclude Include="Persistable.hpp" />
+    <ClInclude Include="ForceDriven.hpp" />
+    <ClInclude Include="PhysicsExtension1.hpp" />
+    <ClInclude Include="PhysicsSystem.hpp" />
+    <ClInclude Include="ISystem.hpp" />
+    <ClInclude Include="MapParser.hpp" />
     <ClInclude Include="Point.hpp" />
+    <ClInclude Include="Rect.hpp" />
+    <ClInclude Include="Random.hpp" />
+    <ClInclude Include="Renderer.hpp" />
+    <ClInclude Include="RenderingSystem.hpp" />
+    <ClInclude Include="ResetGameSpeedListener.hpp" />
+    <ClInclude Include="Serializer.hpp" />
+    <ClInclude Include="SocketScript.hpp" />
+    <ClInclude Include="Steering.hpp" />
+    <ClInclude Include="StringHelper.hpp" />
     <ClInclude Include="RigidBody.hpp" />
+    <ClInclude Include="Sample.hpp" />
     <ClInclude Include="Scene.hpp" />
+    <ClInclude Include="SocketUDPExtension.hpp" />
     <ClInclude Include="Sprite.hpp" />
     <ClInclude Include="Text.hpp" />
+    <ClInclude Include="ThreadWrapper.hpp" />
+    <ClInclude Include="TileLayer.hpp" />
+    <ClInclude Include="TileMap.hpp" />
+    <ClInclude Include="TileSet.hpp" />
     <ClInclude Include="Time.hpp" />
     <ClInclude Include="Transform.hpp" />
+    <ClInclude Include="Transformations.hpp" />
+    <ClInclude Include="TypeHelper.hpp" />
     <ClInclude Include="UIObject.hpp" />
+    <ClInclude Include="RendererImpl.hpp" />
+    <ClInclude Include="Settings.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AISystem.cpp" />
+    <ClCompile Include="Animator.cpp" />
+    <ClCompile Include="AudioFacade.cpp" />
+    <ClCompile Include="AudioManager.cpp" />
+    <ClCompile Include="AudioSource.cpp" />
+    <ClCompile Include="Bounds.cpp" />
+    <ClCompile Include="Button.cpp" />
+    <ClCompile Include="ButtonClickListener.cpp" />
+    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Chunk.cpp" />
+    <ClCompile Include="BehaviourScript.cpp" />
+    <ClCompile Include="Box2DCollisionListener.cpp" />
+    <ClCompile Include="Collider.cpp" />
+    <ClCompile Include="DataHandler.cpp" />
+    <ClCompile Include="DecreaseGameSpeedListener.cpp" />
+    <ClCompile Include="Flocking.cpp" />
+    <ClCompile Include="FPSlistener.cpp" />
+    <ClCompile Include="Component.cpp" />
+    <ClCompile Include="Debug.cpp" />
+    <ClCompile Include="GeneralHelper.cpp" />
+    <ClCompile Include="IncreaseGameSpeedListener.cpp" />
+    <ClCompile Include="InternalTime.cpp" />
+    <ClCompile Include="IPhysicsExtension.cpp" />
+    <ClCompile Include="MapParser.cpp" />
+    <ClCompile Include="ForceDriven.cpp" />
+    <ClCompile Include="Matrix.cpp" />
+    <ClCompile Include="NetworkingHelper.cpp" />
+    <ClCompile Include="NetworkingReceiveSystem.cpp" />
+    <ClCompile Include="NetworkingSendSystem.cpp" />
+    <ClCompile Include="NetworkPacket.cpp" />
+    <ClCompile Include="Persistable.cpp" />
+    <ClCompile Include="Obstacle.cpp" />
+    <ClCompile Include="PhysicsExtension1.cpp" />
+    <ClCompile Include="BoxCollider.cpp" />
+    <ClCompile Include="CastException.cpp" />
+    <ClCompile Include="CircleCollider.cpp" />
     <ClCompile Include="Color.cpp" />
+    <ClCompile Include="Point.cpp" />
+    <ClCompile Include="Random.cpp" />
+    <ClCompile Include="Renderer.cpp" />
+    <ClCompile Include="ResetGameSpeedListener.cpp" />
+    <ClCompile Include="SocketScript.cpp" />
+    <ClCompile Include="SocketUDPExtension.cpp" />
+    <ClCompile Include="Sprite.cpp" />
+    <ClCompile Include="Steering.cpp" />
+    <ClCompile Include="StringHelper.cpp" />
+    <ClCompile Include="Text.cpp" />
+    <ClCompile Include="Transformations.cpp" />
+    <ClCompile Include="ThreadWrapper.cpp" />
+    <ClCompile Include="Transform.cpp" />
+    <ClCompile Include="UDP.ixx" />
+    <ClCompile Include="UIObject.cpp" />
+    <ClCompile Include="RendererImpl.cpp" />
+    <ClCompile Include="EntityManager.cpp" />
+    <ClCompile Include="RenderingSystem.cpp" />
+    <ClCompile Include="Sample.cpp" />
+    <ClCompile Include="GameEngine.cpp" />
+    <ClCompile Include="ICollisionListener.cpp" />
+    <ClCompile Include="Input.cpp" />
+    <ClCompile Include="InputImpl.cpp" />
+    <ClCompile Include="InputManager.cpp" />
+    <ClCompile Include="InputSystem.cpp" />
+    <ClCompile Include="PhysicsSystem.cpp" />
+    <ClCompile Include="RigidBody.cpp" />
+    <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="TileLayer.cpp" />
+    <ClCompile Include="TileMap.cpp" />
     <ClCompile Include="Time.cpp" />
+    <ClCompile Include="GameObject.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="NetworkPacket.hpp" />
     <None Include="packages.config" />
+    <None Include="UISprite.qrc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
+  <ItemGroup>
+    <Content Include="defaults\**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="save_files\**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
 </Project>

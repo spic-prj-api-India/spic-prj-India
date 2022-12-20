@@ -2,6 +2,8 @@
 #define TRANSFORM_H_
 
 #include "Point.hpp"
+#include <string>
+#include <sstream> 
 
 namespace spic {
     /**
@@ -10,8 +12,20 @@ namespace spic {
      */
     struct Transform {
         Point position; // Translation (shift)
-        double rotation; // Rotation, in radians
-        double scale; // Multiplication factor
+        float rotation; // Rotation, in radians
+        float scale; // Multiplication factor
+
+        /**
+         * @brief Serialize Transform into a string so it can be send trough the network
+         * @return 
+        */
+        std::stringstream Serialize() const;
+
+        /**
+         * @brief Desserialeze an string into a current transform object
+         * @param in 
+        */
+        void Deserialize(const std::string& in);
     };
 }
 

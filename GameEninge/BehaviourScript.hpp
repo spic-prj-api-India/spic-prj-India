@@ -1,24 +1,37 @@
 #ifndef BEHAVIOURSCRIPT_H_
 #define BEHAVIOURSCRIPT_H_
 
+#include <iostream>
 #include "Component.hpp"
 #include "Collider.hpp"
 
-namespace spic {
-
-    class BehaviourScript : public Component {
+namespace spic 
+{
+    /**
+     * @brief Contains the beheviours of an object
+     * @details Onupdate is used for code that should run every second. 
+     *      OnInput is for behaviour based on the input
+    */
+    class BehaviourScript : public Component 
+    {
         public:
             /**
-             * @brief TODO
+             * @brief Is called once on the start of a new scene
              * @spicapi
              */
             virtual void OnStart();
 
             /**
-             * @brief TODO
+             * @brief Is called every game tick
              * @spicapi
              */
             virtual void OnUpdate();
+
+            /**
+             * @brief Is called every input event
+             * @sharedapi
+             */
+            virtual void OnInput();
 
             /**
              * @brief Sent when another object enters a trigger collider
@@ -41,7 +54,6 @@ namespace spic {
              */
             virtual void OnTriggerStay2D(const Collider& collider);
     };
-
 }
 
 #endif // BEHAVIOURSCRIPT_H_

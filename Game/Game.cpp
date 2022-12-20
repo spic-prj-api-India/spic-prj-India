@@ -2,19 +2,63 @@
 //
 
 #include <iostream>
+#include "GameEngine.hpp"
+#include <PhysicsExtension1.hpp>
+#include "MenuScene.h"
+#include "Box.h"
+#include "Debug.hpp"
+#include "SocketUdpExtension.hpp"
+#include <NetworkPacket.hpp>
+#include "NetworkingHelper.hpp"
+#include "GameScene.h"
+#include "FlockingScene.h"
+#include "CreditsScene.h"
+#include "MenuScene.h"
+#include "CreditsScene.h"
+#include "SettingsScene.h"
+
+
+void InitGame() {
+
+	// Creates GameEngine instance 
+	spic::GameEngine* engine = spic::GameEngine::GetInstance();
+
+	// Creates box2d physics extension and adds it to the extension list
+	std::shared_ptr<spic::extensions::PhysicsExtension1> physicsExtension 
+		= std::make_shared<spic::extensions::PhysicsExtension1>(0.0023f, 4, 2);
+	engine->AddExtension(std::move(physicsExtension));
+
+	// Creates a SocketUDPExtension and adds it to the extension list
+	auto socket = std::make_shared<spic::extensions::SocketUDPExtension>();
+	socket->InitListener(13251);
+	socket->InitSender(spic::helper_functions::networking_helper::GetParsedIPConfigData("IPv4 Address"), 13251);
+	engine->AddExtension(std::move(socket));
+
+	// Register object types
+	engine->RegisterType<Box>();
+
+	// Register scenes
+	engine->RegisterScene("menu", std::function<spic::Scene* ()>(MenuScene::Start));
+	engine->RegisterScene("game", std::function<spic::Scene* ()>(GameScene::Start));
+	engine->RegisterScene("credits", std::function<spic::Scene* ()>(CreditsScene::Start));
+	engine->RegisterScene("flock", std::function<spic::Scene* ()>(FlockingScene::Start));
+	engine->RegisterScene("settings", std::function<spic::Scene* ()>(SettingsScene::Start));
+}
+
+void StartGame()
+{
+	spic::settings::COLLIDER_VISIBILITY = false;
+	spic::settings::WALL_AVOIDANCE_FEELERS_VISIBILITY = false;
+	spic::settings::WINDOW_NAME = "Forts 2";
+	spic::settings::WINDOW_WIDTH = 1200;
+	spic::settings::WINDOW_HEIGHT = 800;
+	spic::GameEngine* engine = spic::GameEngine::GetInstance();
+	engine->LoadSceneByName("menu");
+	engine->Start();
+}
 
 int main()
 {
-    std::cout << "Hello World!\n";
+	InitGame();
+	StartGame();
 }
-
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
-
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file

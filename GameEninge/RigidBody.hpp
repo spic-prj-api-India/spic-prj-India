@@ -1,11 +1,11 @@
 #ifndef RIGIDBODY_H_
 #define RIGIDBODY_H_
 
+#include <iostream>
 #include "Component.hpp"
 #include "Point.hpp"
 
 namespace spic {
-
     /**
      * @brief Enumeration for different rigid body types
      */
@@ -20,6 +20,57 @@ namespace spic {
      */
     class RigidBody : public Component {
         public:
+            RigidBody(const float mass, const float gravityScale, const BodyType bodyType);
+
+            /**
+             * @brief Get rigid body's mass
+             * @return The current mass
+             * @spicapi
+             */
+            float Mass() const;
+
+            /**
+             * @brief Get rigid body's gravity scale
+             * @return The current gravity scale
+             * @spicapi
+             */
+            float GravityScale() const;
+
+            /**
+             * @brief Get rigid body's velocity
+             * @return The current velocity
+             * @spicapi
+             */
+            Point Velocity() const;
+
+            /**
+             * @brief Get rigid body's body type
+             * @return The current body type
+             * @spicapi
+             */
+            BodyType BodyType() const;
+
+            /**
+             * @brief Set rigid body's body mass
+             * @param newMass The desired mass
+             * @spicapi
+             */
+            void Mass(const float newMass);
+
+            /**
+             * @brief Set rigid body's gravity scale
+             * @param newGravityScale The desired gravity scale
+             * @spicapi
+             */
+            void GravityScale(const float newGravityScale);
+
+            /**
+             * @brief Set rigid body's body type
+             * @param newBodyType The desired body type
+             * @spicapi
+             */
+            void BodyType(const spic::BodyType newBodyType);
+
             /**
              * @brief Apply force to this rigid body.
              * @param forceDirection A point, used as a vector to indicate direction
@@ -27,11 +78,10 @@ namespace spic {
              * @spicapi
              */
             void AddForce(const Point& forceDirection);
-
         private:
-            double mass;
-            double gravityScale;
-            BodyType bodyType;
+            float mass;
+            float gravityScale;
+            spic::BodyType bodyType;
     };
 
 }

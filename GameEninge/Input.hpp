@@ -1,16 +1,18 @@
 #ifndef INPUT_H_
 #define INPUT_H_
 
-#include "Point.hpp"
+#include <iostream>
 #include <string>
+#include "Point.hpp"
+#include "IKeyListener.hpp"
+#include "IMouseListener.hpp"   
 
 namespace spic {
 
     /**
      * @brief Some convenient input functions.
      */
-    namespace Input {
-
+    namespace input {
         /**
          * @brief An enumeration describing the different keyboard keycodes.
          *
@@ -270,6 +272,12 @@ namespace spic {
         };
 
         /**
+         * @brief Has quited? (Read Only)
+         * @spicapi
+         */
+        bool Quit();
+
+        /**
          * @brief Is any key or mouse button currently held down? (Read Only)
          * @spicapi
          */
@@ -329,8 +337,54 @@ namespace spic {
          */
         bool GetMouseButtonUp(MouseButton which);
 
-    }
+        /**
+        * @brief Subscribes a key listener for a specific key event
+        * @spicapi
+        */
+        void Subscribe(KeyCode keyEvent, const std::shared_ptr<spic::IKeyListener>& keyListener);
 
+        /**
+        * @brief Subscribes a mouse listener for a specific mouse event
+        * @spicapi
+        */
+        void Subscribe(MouseButton mouseEvent, const std::shared_ptr<spic::IMouseListener>& mouseListener);
+        
+        /**
+        * @brief Unsubscribes a key listener for a specific key event
+        * @spicapi
+        */
+        void UnSubscribe(KeyCode keyEvent, const std::shared_ptr<spic::IKeyListener>& keyListener);
+
+        /**
+        * @brief Unsubscribes all listeners for a specific key event
+        * @spicapi
+        */
+        void UnSubscribe(KeyCode keyEvent);
+
+        /**
+        * @brief Unsubscribes a mouse listener for a specific mouse event
+        * @spicapi
+        */
+        void UnSubscribe(MouseButton mouseEvent, const std::shared_ptr<spic::IMouseListener>& mouseListener);
+
+        /**
+        * @brief Unsubscribes all listeners for a specific mouse event
+        * @spicapi
+        */
+        void UnSubscribe(MouseButton mouseEvent);
+
+        /**
+        * @brief Unsubscribes all listeners
+        * @spicapi
+        */
+        void UnSubscribeAll();
+
+        /**
+        * @brief Unsubscribes all key and mouse events
+        * @spicapi
+        */
+        void ResetSubscribedEvents();
+    }
 }
 
 #endif // INPUT_H_

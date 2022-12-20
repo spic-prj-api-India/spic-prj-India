@@ -56,6 +56,7 @@ finally{
 	.\vcpkg\vcpkg install boost:x64-windows 
 	.\vcpkg\vcpkg install boost-asio:x64-windows
 	.\vcpkg\vcpkg install tinyxml:x64-windows
+	.\vcpkg\vcpkg install box2d:x64-windows
 }
 
 
