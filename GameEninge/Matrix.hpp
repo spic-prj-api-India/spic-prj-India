@@ -48,6 +48,18 @@ namespace spic::internal::math
          * @param point Point that transformation is applied on.
         */
         void TransformPoints(spic::Point& point);
+
+        void _11(float val) { matrix._11 = val; }
+        void _12(float val) { matrix._12 = val; }
+        void _13(float val) { matrix._13 = val; }
+
+        void _21(float val) { matrix._21 = val; }
+        void _22(float val) { matrix._22 = val; }
+        void _23(float val) { matrix._23 = val; }
+
+        void _31(float val) { matrix._31 = val; }
+        void _32(float val) { matrix._32 = val; }
+        void _33(float val) { matrix._33 = val; }
     private:
         struct Matrix
         {

@@ -47,8 +47,8 @@ void InitGame() {
 
 void StartGame()
 {
-	// sets collider on or off (defaults to off)
-	spic::settings::COLLIDER_VISIBILITY = true;
+	spic::settings::COLLIDER_VISIBILITY = false;
+	spic::settings::WALL_AVOIDANCE_FEELERS_VISIBILITY = false;
 	spic::settings::WINDOW_NAME = "Forts 2";
 	spic::settings::WINDOW_WIDTH = 1200;
 	spic::settings::WINDOW_HEIGHT = 800;

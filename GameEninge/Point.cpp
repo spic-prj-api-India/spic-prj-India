@@ -35,7 +35,7 @@ namespace spic {
 		return sqrtf(powf(this->x - point.x, 2) + powf(this->y - point.y, 2));
 	}
 
-	Point Point::Side() const
+	Point Point::Perp() const
 	{
 		return { -y, x };
 	}
@@ -56,39 +56,31 @@ namespace spic {
 
 	bool Point::Accumulate(Point& force, const float maxForce)
 	{
-		const float MagnitudeSoFar = Length();
-
-		//calculate how much steering force remains to be used by this vehicle
-		float MagnitudeRemaining = maxForce - MagnitudeSoFar;
-
-		//return false if there is no more force left to use
-		if (MagnitudeRemaining <= 0.0) return false;
-
-		//calculate the magnitude of the force we want to add
-		const float MagnitudeToAdd = force.Length();
-
-		//if the magnitude of the sum of ForceToAdd and the running total
-		//does not exceed the maximum force available to this vehicle, just
-		//add together. Otherwise add as much of the ForceToAdd vector as
-		//possible without going over the max.
-		if (MagnitudeToAdd < MagnitudeRemaining)
+		const float forceSoFar = Length();
+		// Calculate how much force remains to be used
+		const float forceRemaining = maxForce - forceSoFar;
+		// Return false if there is no more force left to use
+		if (forceRemaining <= 0.0) return false;
+		// Calculate the force to add with the force we want to add
+		const float forceToAdd = force.Length();
+		// If the forceToAdd is lower then forceRemaining. Add all forceToAdd, 
+		// otherwise add as much of the forceToAdd vector without goinger of the remaining force.
+		
+		if (forceToAdd >= forceRemaining)
 		{
-			this->x += force.x;
-			this->y += force.y;
-		}
-		else
-		{
-			//add it to the steering force
 			force.Normalize();
-			Point force = force * MagnitudeRemaining;
+			force *= forceRemaining;
 			this->x += force.x;
 			this->y += force.y;
+			return false;
 		}
-
+		//add the remaining force
+		this->x += force.x;
+		this->y += force.y;
 		return true;
 	}
 
-	Point Point::operator +(const Point& point)
+	Point Point::operator +(const Point& point) const
 	{
 		return Point(this->x + point.x, this->y + point.y);
 	}
@@ -99,7 +91,7 @@ namespace spic {
 		this->y += point.y;
 	}
 
-	Point Point::operator -(const Point& point)
+	Point Point::operator -(const Point& point) const
 	{
 		return Point(this->x - point.x, this->y - point.y);
 	}
@@ -110,7 +102,7 @@ namespace spic {
 		this->y -= point.y;
 	}
 
-	Point Point::operator*(const Point& point)
+	Point Point::operator*(const Point& point) const
 	{
 		return Point(this->x * point.x, this->y * point.y);
 	}
@@ -121,7 +113,7 @@ namespace spic {
 		this->y *= point.y;
 	}
 
-	Point Point::operator /(const Point& point)
+	Point Point::operator /(const Point& point) const
 	{
 		return Point(this->x / point.x, this->y / point.y);
 	}
@@ -132,7 +124,7 @@ namespace spic {
 		this->y /= point.y;
 	}
 
-	Point Point::operator +(const float value)
+	Point Point::operator +(const float value) const
 	{
 		return Point(this->x + value, this->y + value);
 	}
@@ -143,7 +135,7 @@ namespace spic {
 		this->y += value;
 	}
 
-	Point Point::operator -(const float value)
+	Point Point::operator -(const float value) const
 	{
 		return Point(this->x - value, this->y - value);
 	}
@@ -154,7 +146,7 @@ namespace spic {
 		this->y -= value;
 	}
 
-	Point Point::operator*(const float value)
+	Point Point::operator*(const float value) const
 	{
 		return Point(this->x * value, this->y * value);
 	}
@@ -165,7 +157,7 @@ namespace spic {
 		this->y *= value;
 	}
 
-	Point Point::operator /(const float value)
+	Point Point::operator /(const float value) const
 	{
 		return Point(this->x / value, this->y / value);
 	}
@@ -176,7 +168,7 @@ namespace spic {
 		this->y /= value;
 	}
 
-	bool Point::operator==(const Point value)
+	bool Point::operator==(const Point value) const
 	{
 		return this->x == value.x && this->y == value.y;
 	}
@@ -186,7 +178,7 @@ namespace spic {
 		return Length() < cp.Length();
 	}
 
-	float Point::DotProduct(const Point& point)
+	float Point::Dot(const Point& point) const
 	{
 		return this->x * point.x + this->y * point.y;
 	}

@@ -14,6 +14,8 @@
 #include <SDL2/SDL_ttf.h>
 #include "Text.hpp"
 #include "Rect.hpp"
+#include "Line.hpp"
+#include "Circle.hpp"
 
 // needs to be used for SDL
 #undef main
@@ -98,7 +100,14 @@ namespace spic::internal::rendering {
 		/**
 		 * @brief Mutex for making the private instance of this class thread safe
 		*/
-		std::mutex mutex_rendering;
+
+		/**
+		 * @brief Debug shapes
+		*/
+		std::vector<std::pair<spic::Line, spic::Color>> debugLines;
+		std::vector<std::pair<std::pair<spic::Rect, double>, spic::Color>> debugRects;
+		std::vector<std::pair<std::pair<spic::Circle, float>, spic::Color>> debugCircles;
+		std::vector<std::pair<spic::Point, spic::Color>> debugPoints;
 
 	public:
 		RendererImpl() noexcept(false);
@@ -183,6 +192,51 @@ namespace spic::internal::rendering {
 		void DrawText(Text* text);
 
 		/**
+		 * @brief Draws an rectangle in world space
+		 * @details Rectangle is not drawn when rectangle is not in camera view.
+		 * @param rect The x, y, width, height of rectangle
+		 * @param angle The angle of the square
+		 * @param color The color of the square
+		*/
+		void DrawRect(const spic::Rect& rect, const double angle, const spic::Color& color);
+
+		/**
+		 * @brief Draws an circle in world space
+					using the mid point circle algorithm https://en.wikipedia.org/w/index.php?title=Midpoint_circle_algorithm
+		 * @details Circle is not drawn when circle is not in camera view.
+		 * @param circle Circle to be drawn
+		 * @param pixelGap The gap (in pixels) between each point in the circle
+		 * @param color The color of the circle
+		*/
+		void DrawCircle(const spic::Circle& circle, const float pixelGap, const spic::Color& color);
+
+		/**
+		 * @brief Draws a point in world space.
+		 * @details Point is not drawn when x or y are not in camera view.
+		 * @param x of point
+		 * @param y of point
+		 * @param color The color of the point
+		*/
+		void DrawPoint(const spic::Point& point, const spic::Color& color);
+
+		/**
+		 * @brief Draws a point in world space
+		 * @details Point is not drawn when x or y are not in camera view.
+		 * @param x of point
+		 * @param y of point
+		*/
+		void DrawPoint(const float x, const float y);
+
+		/**
+		 * @brief Draws an line in world space
+		 * @details Line is not drawn when line is not in camera view.
+		 * @param start The start point of an line
+		 * @param end The end point of an line
+		 * @param colour The colour of the line
+		*/
+		void DrawLine(const spic::Point& start, const spic::Point& end, const spic::Color& color);
+
+		/**
 		 * @brief Wraps text in string depending on font and size of font
 		 * @param pFont The font
 		 * @param input The string
@@ -241,52 +295,6 @@ namespace spic::internal::rendering {
 		void UpdateCamera(Camera* camera);
 
 		/**
-		 * @brief Draws an rectangle in world space
-		 * @details Rectangle is not drawn when rectangle is not in camera view.
-		 * @param rect The x, y, width, height of rectangle
-		 * @param angle The angle of the square
-		 * @param color The color of the square
-		*/
-		void DrawRect(const spic::Rect& rect, const double angle, const spic::Color& color);
-
-		/**
-		 * @brief Draws an circle in world space 
-					using the mid point circle algorithm https://en.wikipedia.org/w/index.php?title=Midpoint_circle_algorithm
-		 * @details Circle is not drawn when circle is not in camera view.
-		 * @param center The center of the circle
-		 * @param angle The radius of the circle
-		 * @param pixelGap The gap (in pixels) between each point in the circle
-		 * @param color The color of the circle
-		*/
-		void DrawCircle(const spic::Point& center, const float radius, const float pixelGap, const spic::Color& color);
-
-		/**
-		 * @brief Draws a point in world space. 
-		 * @details Point is not drawn when x or y are not in camera view.
-		 * @param x of point
-		 * @param y of point
-		 * @param color The color of the point
-		*/
-		void DrawPoint(const spic::Point& point, const spic::Color& color);
-
-		/**
-		 * @brief Draws a point in world space
-		 * @details Point is not drawn when x or y are not in camera view.
-		 * @param x of point
-		 * @param y of point
-		*/
-		void DrawPoint(const float x, const float y);
-
-		/**
-		 * @brief Draws an line in world space
-		 * @details Line is not drawn when line is not in camera view.
-		 * @param start The start point of an line
-		 * @param end The end point of an line
-		 * @param colour The colour of the line
-		*/
-		void DrawLine(const spic::Point& start, const spic::Point& end, const spic::Color& color);
-
-		/**
 		 * @brief Draws an ui sprite
 		 * @param width The width of the ui object
 		 * @param height The height of the ui object
@@ -303,6 +311,40 @@ namespace spic::internal::rendering {
 		void DrawSprite(const Sprite* sprite, const Transform* transform, bool isUiOject = false);
 
 		/**
+		 * @brief Add debug line to renderer, line will be drawn at the end of the render
+		 * @param line Line that will be drawn
+		 * @param color Color of this line
+		*/
+		void AddDebugLine(const spic::Line& line, const spic::Color& color);
+
+		/**
+		 * @brief Add debug rectangle to renderer, rectangle will be drawn at the end of the render
+		 * @param rect Rectangle that will be drawn
+		 * @param color Color of this line
+		*/
+		void AddDebugRect(const spic::Rect& rect, const double angle, const spic::Color& color);
+
+		/**
+		 * @brief Add debug circle to renderer, circle will be drawn at the end of the render
+		 * @param circle Circle that will be drawn
+		 * @param color Color of this line
+		*/
+		void AddDebugCircle(const spic::Circle& circle, const spic::Color& color, const float pixelGap);
+
+		/**
+		 * @brief Add debug point to renderer, point will be drawn at the end of the render
+		 * @param point Point that will be drawn
+		 * @param color Color of this line
+		*/
+		void AddDebugPoint(const spic::Point& point, const spic::Color& color);
+
+		/**
+		 * @brief Draws all added debug shapes
+		 * @details Shapes are not drawn when rectangle is not in camera view.
+		*/
+		void DrawDebugShapes();
+
+		/**
 		 * @brief Cleans the render class before drawing it.
 		*/
 		void Clean();
@@ -313,9 +355,10 @@ namespace spic::internal::rendering {
 		void NewScene();
 
 		/**
-		 * @brief Renders evrything in internal buffer to screen
+		 * @brief Renders everything in internal buffer to screen
+		 * @details Debug shapes will be reset in this function
 		*/
-		void Render() const;
+		void Render();
 
 		/**
 		 * @brief Start up an new window

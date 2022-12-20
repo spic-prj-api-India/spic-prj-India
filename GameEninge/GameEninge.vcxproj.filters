@@ -178,8 +178,23 @@
     <Filter Include="Source Files\extensions\networking">
       <UniqueIdentifier>{0bcd053c-995f-4ec2-a250-a85a668d77cd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\models\shapes">
+      <UniqueIdentifier>{be5d6bd1-a075-46ce-8200-fa6f80fb6003}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Header Files\settings">
       <UniqueIdentifier>{12d45431-ab90-4d70-9df6-86d1edb87651}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\core\systems\input\listeners">
+      <UniqueIdentifier>{8b5c0621-d3ee-4cf9-8407-8cb7e315b50c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\core\systems\input\listeners">
+      <UniqueIdentifier>{055be8db-a115-4fc9-baf5-dfa68a05eb96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\components\ai">
+      <UniqueIdentifier>{be9fb6d8-0071-409f-8681-ccff1afbf0cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\components\ai">
+      <UniqueIdentifier>{c42afdc9-063b-486a-9745-e94117bd7230}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -312,9 +327,6 @@
     <ClInclude Include="InputImpl.hpp">
       <Filter>Header Files\core\models</Filter>
     </ClInclude>
-    <ClInclude Include="Point.hpp">
-      <Filter>Header Files\models</Filter>
-    </ClInclude>
     <ClInclude Include="Time.hpp">
       <Filter>Header Files\models</Filter>
     </ClInclude>
@@ -329,9 +341,6 @@
     </ClInclude>
     <ClInclude Include="ContainerHelper.hpp">
       <Filter>Header Files\helpers</Filter>
-    </ClInclude>
-    <ClInclude Include="ButtonClickListener.hpp">
-      <Filter>Header Files\core\systems\input</Filter>
     </ClInclude>
     <ClInclude Include="Defaults.hpp">
       <Filter>Header Files\core</Filter>
@@ -384,9 +393,6 @@
     <ClInclude Include="Bounds.hpp">
       <Filter>Header Files\models</Filter>
     </ClInclude>
-    <ClInclude Include="Rect.hpp">
-      <Filter>Header Files\models</Filter>
-    </ClInclude>
     <ClInclude Include="Matrix.hpp">
       <Filter>Header Files\core\math</Filter>
     </ClInclude>
@@ -402,23 +408,44 @@
     <ClInclude Include="Transform.hpp">
       <Filter>Header Files\models</Filter>
     </ClInclude>
+    <ClInclude Include="Obstacle.hpp">
+      <Filter>Header Files\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Line.hpp">
+      <Filter>Header Files\models\shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="Point.hpp">
+      <Filter>Header Files\models\shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="Rect.hpp">
+      <Filter>Header Files\models\shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="Circle.hpp">
+      <Filter>Header Files\models\shapes</Filter>
+    </ClInclude>
     <ClInclude Include="Settings.hpp">
       <Filter>Header Files\settings</Filter>
     </ClInclude>
-    <ClInclude Include="PhysicsValues.hpp">
-      <Filter>Header Files\settings</Filter>
+    <ClInclude Include="ButtonClickListener.hpp">
+      <Filter>Header Files\core\systems\input\listeners</Filter>
     </ClInclude>
     <ClInclude Include="DataHandler.hpp">
       <Filter>Header Files\models</Filter>
     </ClInclude>
-    <ClInclude Include="IncreaseGameSpeedListener.hpp">
-      <Filter>Header Files\core\systems\input</Filter>
-    </ClInclude>
     <ClInclude Include="DecreaseGameSpeedListener.hpp">
-      <Filter>Header Files\core\systems\input</Filter>
+     <Filter>Header Files\core\systems\input\listeners</Filter>
+    </ClInclude>
+    <ClInclude Include="IncreaseGameSpeedListener.hpp">
+      <Filter>Header Files\core\systems\input\listeners</Filter>
     </ClInclude>
     <ClInclude Include="ResetGameSpeedListener.hpp">
-      <Filter>Header Files\core\systems\input</Filter>
+      <Filter>Header Files\core\systems\input\listeners</Filter>
+    </ClInclude>
+    <ClInclude Include="Flocking.hpp">
+      <Filter>Header Files\components\ai</Filter>
+    </ClInclude>
+    <ClInclude Include="Steering.hpp">
+      <Filter>Header Files\components\ai</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -530,9 +557,6 @@
     <ClCompile Include="StringHelper.cpp">
       <Filter>Source Files\helpers</Filter>
     </ClCompile>
-    <ClCompile Include="ButtonClickListener.cpp">
-      <Filter>Source Files\core\systems\input</Filter>
-    </ClCompile>
     <ClCompile Include="Button.cpp">
       <Filter>Source Files\objects</Filter>
     </ClCompile>
@@ -608,11 +632,35 @@
     <ClCompile Include="ResetGameSpeedListener.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="IncreaseGameSpeedListener.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="InternalTime.cpp">
+      <Filter>Source Files\models</Filter>
+    </ClCompile>
+    <ClCompile Include="FPSlistener.cpp">
+      <Filter>Source Files\core\systems\rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioFacade.cpp">
+      <Filter>Source Files\components\audio</Filter>
+    </ClCompile>
+    <ClCompile Include="ButtonClickListener.cpp">
+      <Filter>Source Files\core\systems\input\listeners</Filter>
     </ClCompile>
     <ClCompile Include="DecreaseGameSpeedListener.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\core\systems\input\listeners</Filter>
+    </ClCompile>
+    <ClCompile Include="IncreaseGameSpeedListener.cpp">
+      <Filter>Source Files\core\systems\input\listeners</Filter>
+    </ClCompile>
+    <ClCompile Include="ResetGameSpeedListener.cpp">
+      <Filter>Source Files\core\systems\input\listeners</Filter>
+    </ClCompile>
+    <ClCompile Include="Flocking.cpp">
+      <Filter>Source Files\components\ai</Filter>
+    </ClCompile>
+    <ClCompile Include="Steering.cpp">
+      <Filter>Source Files\components\ai</Filter>
+    </ClCompile>
+    <ClCompile Include="Obstacle.cpp">
+      <Filter>Source Files\objects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

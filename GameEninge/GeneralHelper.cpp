@@ -72,9 +72,9 @@ std::array<Point, 4> spic::helper_functions::general_helper::GetPoints(const Poi
 
 bool spic::helper_functions::general_helper::CalculateWithinSquare(const Point& point, std::array<Point, 4>& square)
 {
-	auto am = square[0].DotProduct(point);
-	auto ab = square[0].DotProduct(square[1]);
-	auto ad = square[0].DotProduct(square[4]);
+	auto am = square[0].Dot(point);
+	auto ab = square[0].Dot(square[1]);
+	auto ad = square[0].Dot(square[4]);
 
 	auto calc1 = am * ab;
 	auto calc2 = am * ad;
@@ -101,8 +101,8 @@ bool spic::helper_functions::general_helper::RectIntersection(const Rect& rect1,
 	return xOverlap && yOverlap;
 }
 
-bool spic::helper_functions::general_helper::LineIntersection(Point sPoint1
-	, Point ePoint1
+bool spic::helper_functions::general_helper::LineIntersection(const Point& sPoint1
+	, const Point& ePoint1
 	, const Point& sPoint2
 	, const Point& ePoint2
 	, Point& intersectPoint

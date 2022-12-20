@@ -1,21 +1,15 @@
 #include "ForceDriven.hpp"
+#include "Flocking.hpp"
+#include "Steering.hpp"
 #include "RigidBody.hpp"
 #include "GeneralHelper.hpp"
-#include "Defaults.hpp"
-#include "Transformations.hpp"
-#include "Random.hpp"
-#include <functional>
-
-using namespace spic::internal::math;
 
 namespace spic {
-	ForceDriven::ForceDriven(SumMethod sumMethod, const float maxSteeringForce, const float maxSpeed, const float angleSensitivity) : GameObject(),
+	ForceDriven::ForceDriven(SumMethod sumMethod, const float maxSteeringForce, 
+		const float maxSpeed, const float maxTurnRate, const float boundingRadius) : GameObject(),
 		sumMethod{ sumMethod }, maxSteeringForce{ maxSteeringForce }, maxSpeed{ maxSpeed },
-		angleSensitivity{ angleSensitivity }, paused{ true }, useWallAvoidance{ false },
-		useObstacleAvoidance{ false }, useSeperation{ false }, useAlignment{ false },
-		useCohesion{ false }, useTarget{ false }
+		maxTurnRate{ maxTurnRate }, boundingRadius{ boundingRadius }, paused{ true }
 	{
-		this->steeringBehavioursIncludingTargets;
 	}
 
 	Point ForceDriven::Velocity() const
@@ -24,9 +18,19 @@ namespace spic {
 		return body->Velocity();
 	}
 
+	float ForceDriven::MaxSpeed() const
+	{
+		return this->maxSpeed;
+	}
+
 	Point ForceDriven::Heading() const
 	{
 		return heading;
+	}
+
+	Point ForceDriven::Side() const
+	{
+		return heading.Perp();
 	}
 
 	float ForceDriven::Mass() const
@@ -35,88 +39,9 @@ namespace spic {
 		return body->Mass();
 	}
 
-	void ForceDriven::AddTarget(SteeringBehaviour steeringBehaviour, Point& target, const float targetWeight)
+	float ForceDriven::BRadius() const
 	{
-		if (this->steeringBehavioursIncludingTargets.count(steeringBehaviour) == 0)
-			steeringBehavioursIncludingTargets[steeringBehaviour] = {};
-		this->steeringBehavioursIncludingTargets[steeringBehaviour][target] = targetWeight;
-	}
-
-	void ForceDriven::RemoveTarget(SteeringBehaviour steeringBehaviour, Point& target)
-	{
-		if (this->steeringBehavioursIncludingTargets.count(steeringBehaviour) == 0)
-			return;
-		if (this->steeringBehavioursIncludingTargets[steeringBehaviour].count(target) == 0)
-			return;
-		this->steeringBehavioursIncludingTargets[steeringBehaviour].erase(target);
-	}
-
-	void ForceDriven::RemoveSteeringBehaviour(SteeringBehaviour steeringBehaviour)
-	{
-		if (this->steeringBehavioursIncludingTargets.count(steeringBehaviour) == 0)
-			return;
-		this->steeringBehavioursIncludingTargets.erase(steeringBehaviour);
-	}
-
-	void ForceDriven::UseSeek(std::map<std::reference_wrapper<Point>, float, std::less<Point>> targets)
-	{
-		this->steeringBehavioursIncludingTargets[SteeringBehaviour::SEEK] = targets;
-	}
-
-	void ForceDriven::UseFlee(std::map<std::reference_wrapper<Point>, float, std::less<Point>> targets)
-	{
-		this->steeringBehavioursIncludingTargets[SteeringBehaviour::FLEE] = targets;
-	}
-
-	void ForceDriven::UseArrival(std::map<std::reference_wrapper<Point>, float, std::less<Point>> targets, Deceleration deceleration)
-	{
-		this->steeringBehavioursIncludingTargets[SteeringBehaviour::ARRIVAL] = targets;
-		this->deceleration = deceleration;
-	}
-
-	void ForceDriven::UseWander(const float wanderWeight, const float wanderRadius, const float wanderDistance, const float wanderJitter)
-	{
-		steeringBehavioursIncludingTargets[SteeringBehaviour::WANDER] = {};
-		this->wanderWeight = wanderWeight;
-		this->wanderRadius = wanderRadius;
-		this->wanderDistance = wanderDistance;
-		this->wanderJitter = wanderJitter;
-	}
-
-	void ForceDriven::WallAvoidance(const float wallAvoidanceWeight, const float wallDetectionFeelerLength, const Bounds& bounds)
-	{
-		this->useWallAvoidance = true;
-		this->wallAvoidanceWeight = wallAvoidanceWeight;
-		this->wallDetectionFeelerLength = wallDetectionFeelerLength;
-		this->bounds = bounds;
-	}
-
-	void ForceDriven::ObstacleAvoidance(const float obstacleAvoidanceWeight, const float feelerLength)
-	{
-		this->useObstacleAvoidance = true;
-		this->obstacleAvoidanceWeight = obstacleAvoidanceWeight;
-		this->feelerLength = feelerLength;
-	}
-
-	void ForceDriven::Seperation(const float seperationWeight, const float desiredSeparation)
-	{
-		this->useSeperation = true;
-		this->seperationWeight = seperationWeight;
-		this->desiredSeparation = desiredSeparation;
-	}
-
-	void ForceDriven::Alignment(const float alignmentWeight, const float viewRadius)
-	{
-		this->useAlignment = true;
-		this->alignmentWeight = alignmentWeight;
-		this->viewRadius = viewRadius;
-	}
-
-	void ForceDriven::Cohesion(const float cohesionWeight, const float viewRadius)
-	{
-		this->useCohesion = true;
-		this->cohesionWeight = cohesionWeight;
-		this->viewRadius = viewRadius;
+		return boundingRadius;
 	}
 
 	void ForceDriven::StartForceDrivenEntity()
@@ -128,10 +53,9 @@ namespace spic {
 	{
 		if (paused)
 			return;
-		if (useSeperation || useAlignment || useCohesion)
-		{
-			TagNeighbors(forceDrivenEntities);
-		}
+		const auto& flocking = GetComponent<Flocking>();
+		if (flocking != nullptr)
+			flocking->TagNeighbors(forceDrivenEntities);
 		Point steeringForce = Calculate();
 		ApplyForce(steeringForce);
 	}
@@ -139,21 +63,6 @@ namespace spic {
 	void ForceDriven::StopForceDrivenEntity()
 	{
 		paused = true;
-	}
-
-	void ForceDriven::TagNeighbors(const std::vector<std::shared_ptr<ForceDriven>>& forceDrivenEntities)
-	{
-		neighbors = {};
-		for (const auto& forceDrivenEntity : forceDrivenEntities) {
-			if (forceDrivenEntity.get() == this)
-				continue;
-			Point toAgent = Transform()->position - forceDrivenEntity->Transform()->position;
-			const float distance = toAgent.Length();
-
-			if (distance > 0.0f && distance < viewRadius) {
-				neighbors.emplace_back(forceDrivenEntity);
-			}
-		}
 	}
 
 	Point ForceDriven::Calculate()
@@ -172,36 +81,16 @@ namespace spic {
 	{
 		Point steeringForce{};
 
-		Point force;
-		if (useWallAvoidance)
-		{
-			force = WallAvoidance() * wallAvoidanceWeight;
+		auto addSteeringForceCallback = [this, &steeringForce](Point force) {
 			steeringForce += force;
-		}
-		if (useObstacleAvoidance)
-		{
-			force = ObstacleAvoidance() * obstacleAvoidanceWeight;
-			steeringForce += force;
-		}
-		if (useSeperation)
-		{
-			force = Seperate() * seperationWeight;
-			steeringForce += force;
-		}
-		if (useAlignment)
-		{
-			force = Align() * alignmentWeight;
-			steeringForce += force;
-		}
-		if (useCohesion)
-		{
-			force = Cohere() * cohesionWeight;
-			steeringForce += force;
-		}
-		AddSteeringForces([this, &steeringForce](Point force) {
-			steeringForce += force;
-			return false;
-			});
+			return true;
+		};
+		const auto& steering = GetComponent<Steering>();
+		if (steering != nullptr)
+			steering->Calculate(addSteeringForceCallback);
+		const auto& flocking = GetComponent<Flocking>();
+		if (flocking != nullptr)
+			flocking->Calculate(addSteeringForceCallback);
 		if (steeringForce.Length() > maxSteeringForce) {
 			steeringForce.Normalize();
 			steeringForce *= maxSteeringForce;
@@ -213,369 +102,27 @@ namespace spic {
 	{
 		Point steeringForce{};
 
-		Point force;
-		if (useWallAvoidance)
-		{
-			force = WallAvoidance() * wallAvoidanceWeight;
-			if (!steeringForce.Accumulate(force, maxSteeringForce)) return steeringForce;
-		}
-		if (useObstacleAvoidance)
-		{
-			force = ObstacleAvoidance() * obstacleAvoidanceWeight;
-			if (!steeringForce.Accumulate(force, maxSteeringForce)) return steeringForce;
-		}
-		if (useSeperation)
-		{
-			force = Seperate() * seperationWeight;
-			if (!steeringForce.Accumulate(force, maxSteeringForce)) return steeringForce;
-		}
-		if (useAlignment)
-		{
-			force = Align() * alignmentWeight;
-			if (!steeringForce.Accumulate(force, maxSteeringForce)) return steeringForce;
-		}
-		if (useCohesion)
-		{
-			force = Cohere() * cohesionWeight;
-			if (!steeringForce.Accumulate(force, maxSteeringForce)) return steeringForce;
-		}
-		AddSteeringForces([this, &steeringForce](Point force) {
-			if (!steeringForce.Accumulate(force, maxSteeringForce)) return true;
-			return false;
-			});
-		return steeringForce;
-	}
-
-	void ForceDriven::AddSteeringForces(std::function<bool(Point force)> addSteeringForceCallback)
-	{
-		Point force;
-		for (const auto& steeringBehaviourIncludingTargets : steeringBehavioursIncludingTargets) {
-			SteeringBehaviour steeringBehaviour = steeringBehaviourIncludingTargets.first;
-			const auto& targets = steeringBehaviourIncludingTargets.second;
-			if (steeringBehaviour == SteeringBehaviour::WANDER) {
-				force = Wander() * wanderWeight;
-				if (addSteeringForceCallback(force))
-					return;
-				continue;
-			}
-			for (const auto& targetWithWeight : targets) {
-				const spic::Point& target = targetWithWeight.first;
-				const float targetWeight = targetWithWeight.second;
-
-				switch (steeringBehaviour) {
-				case SteeringBehaviour::ARRIVAL:
-					force = Arrival(target) * targetWeight;
-					break;
-				case SteeringBehaviour::FLEE:
-					force = Flee(target) * targetWeight;
-					break;
-				case SteeringBehaviour::SEEK:
-					force = Seek(target) * targetWeight;
-					break;
-				default: continue;
-				}
-			}
-			if (addSteeringForceCallback(force))
-				return;
-		}
-	}
-
-	Point ForceDriven::Seek(Point target)
-	{
-		const Point& location = this->Transform()->position;
-
-		Point desiredVelocity = target - location;
-
-		if (desiredVelocity.Length() == 0.0f)
-			return {};
-
-		desiredVelocity.Normalize();
-		desiredVelocity *= maxSpeed;
-
-		return (desiredVelocity - Velocity());
-	}
-
-	Point ForceDriven::Flee(Point target)
-	{
-		Point& location = this->Transform()->position;
-
-		Point desiredVelocity = location - target;
-
-		if (desiredVelocity.Length() == 0.0f)
-			return {};
-
-		desiredVelocity.Normalize();
-		desiredVelocity *= maxSpeed;
-
-		return (desiredVelocity - Velocity());
-	}
-
-	Point ForceDriven::Arrival(Point target)
-	{
-		Point& location = this->Transform()->position;
-
-		Point desiredVelocity = target - location;
-		const float distance = desiredVelocity.Length();
-
-		if (distance <= 5.f)
-			return {};
-
-		const float decelerationTweaker = 0.3f;
-
-		float speed = distance / ((float)deceleration * decelerationTweaker);
-
-		speed = std::min(speed, maxSpeed);
-
-		desiredVelocity *= speed;
-		// Can't be zero, because of distance check
-		desiredVelocity /= distance;
-
-		return (desiredVelocity - Velocity());
-	}
-
-	Point ForceDriven::Wander()
-	{
-		Point target;
-		const Point& location = this->Transform()->position;
-
-		target += Point(ClampedRandomFloat() * wanderJitter,
-			ClampedRandomFloat() * wanderJitter);
-
-		target.Normalize();
-
-		target *= wanderRadius;
-
-		Point targetLocal = target + Point(wanderDistance, 0.0f);
-
-		Point targetWorld = PointToWorldSpace(targetLocal,
-			heading,
-			heading.Side(),
-			location);
-		return targetWorld - location;
-	}
-
-	Point ForceDriven::WallAvoidance()
-	{
-		std::vector<Point> feelers(3);
-
-		feelers[0] = Transform()->position + (heading * wallDetectionFeelerLength);
-
-		Point temp = heading;
-		RotateAroundOrigin(temp, spic::internal::defaults::HALF_PI * 3.5f);
-		feelers[1] = Transform()->position + (heading * (wallDetectionFeelerLength / 2.0f)) * temp;
-
-		temp = heading;
-		RotateAroundOrigin(temp, spic::internal::defaults::HALF_PI * 0.5f);
-		feelers[2] = Transform()->position + (heading * (wallDetectionFeelerLength / 2.0f)) * temp;
-
-		float distToThisIP = 0.0;
-		float distToClosestIP = std::numeric_limits<float>::max();
-
-		Point walls[5] = { Point(bounds.Left(), bounds.Top()),
-			Point(bounds.Left(), bounds.Top() + bounds.Height()),
-			Point(bounds.Left() + bounds.Width(), bounds.Top() + bounds.Height()),
-			Point(bounds.Left() + bounds.Width(), bounds.Top()),
-			Point(bounds.Left(), bounds.Top())
+		auto addSteeringForceCallback = [this, &steeringForce](Point force) {
+			if (!steeringForce.Accumulate(force, maxSteeringForce)) return false;
+			return true;
 		};
-
-		int closestWallIndex = -1;
-
-		Point steeringForce, point, closestPoint;
-
-		for (auto& feeler : feelers) {
-			for (int wallIndex = 0; wallIndex < 4; wallIndex++) {
-				if (spic::helper_functions::general_helper::LineIntersection(Transform()->position,
-					feeler,
-					walls[wallIndex],
-					walls[wallIndex + 1],
-					point,
-					distToThisIP))
-				{
-					if (distToThisIP < distToClosestIP)
-					{
-						distToClosestIP = distToThisIP;
-
-						closestWallIndex = wallIndex;
-
-						closestPoint = point;
-					}
-				}
-			}
-
-			if (closestWallIndex != -1)
-			{
-				const Point overShoot = feeler - closestPoint;
-
-				Point temp = (walls[closestWallIndex] - walls[closestWallIndex + 1]);
-				temp.Normalize();
-				Point normal(-temp.y, temp.x);
-
-				steeringForce = normal * overShoot.Length();
-			}
-		}
-		return steeringForce;
-	}
-
-	Point ForceDriven::ObstacleAvoidance()
-	{
-		//float realBoxLength = m_dDBoxLength;
-
-		//GameObject* closestIntersectingObstacle = NULL;
-
-		////this will be used to track the distance to the CIB
-		//float distToClosestIP = MaxFloat;
-
-		////this will record the transformed local coordinates of the CIB
-		//Point localPosOfClosestObstacle;
-
-		//while (curOb != endOb)
-		//{
-
-		//	Obstacle* obst = (*curOb);
-
-		//	Point to = obst->Pos() - Transform()->position;
-
-		//	double range = realBoxLength + obst->BRadius();
-
-		//	//if entity within range, tag for further consideration. (working in
-		//	//distance-squared space to avoid sqrts)
-		//	if ((to.LengthSq() < range * range))
-		//	{
-
-		//		//calculate this obstacle's position in local space
-		//		Point LocalPos = PointToLocalSpace(obst->Pos(),
-		//			heading,
-		//			Transform()->position);
-
-		//		//if the local position has a negative x value then it must lay
-		//		//behind the agent. (in which case it can be ignored)
-		//		if (LocalPos.x >= 0)
-		//		{
-		//			//if the distance from the x axis to the object's position is less
-		//			//than its radius + half the width of the detection box then there
-		//			//is a potential intersection.
-		//			double ExpandedRadius = obst->BRadius() + m_pMovingEntity->BRadius();
-
-		//			/*if (fabs(LocalPos.y) < ExpandedRadius)
-		//			{*/
-		//			//now to do a line/circle intersection test. The center of the 
-		//			//circle is represented by (cX, cY). The intersection points are 
-		//			//given by the formula x = cX +/-sqrt(r^2-cY^2) for y=0. 
-		//			//We only need to look at the smallest positive value of x because
-		//			//that will be the closest point of intersection.
-		//			double cX = LocalPos.x;
-		//			double cY = LocalPos.y;
-
-		//			//we only need to calculate the sqrt part of the above equation once
-		//			double SqrtPart = sqrt(ExpandedRadius * ExpandedRadius - cY * cY);
-
-		//			double ip = cX - SqrtPart;
-
-		//			if (ip <= 0.0)
-		//			{
-		//				ip = cX + SqrtPart;
-		//			}
-
-		//			//test to see if this is the closest so far. If it is keep a
-		//			//record of the obstacle and its local coordinates
-		//			if (ip < distToClosestIP)
-		//			{
-		//				distToClosestIP = ip;
-
-		//				closestIntersectingObstacle = obst;
-
-		//				localPosOfClosestObstacle = LocalPos;
-		//			}
-		//		}
-		//		//}
-		//	}
-
-		//	++curOb;
-		//}
-
-		////if we have found an intersecting obstacle, calculate a steering 
-		////force away from it
-		//Point steeringForce;
-
-		//if (closestIntersectingObstacle)
-		//{
-		//	//the closer the agent is to an object, the stronger the 
-		//	//steering force should be
-		//	float multiplier = 1.0 + (m_dDBoxLength - localPosOfClosestObstacle.x) /
-		//		m_dDBoxLength;
-
-		//	//calculate the lateral force
-		//	steeringForce.y = (closestIntersectingObstacle->BRadius() -
-		//		localPosOfClosestObstacle.y) * multiplier;
-
-		//	//apply a braking force proportional to the obstacles distance from
-		//	//the MovingEntity. 
-		//	const float brakingWeight = 0.2f;
-
-		//	steeringForce.x = (closestIntersectingObstacle->BRadius() -
-		//		localPosOfClosestObstacle.x) *
-		//		brakingWeight;
-		//}
-
-		////finally, convert the steering vector from local to world space
-		//return VectorToWorldSpace(steeringForce,
-		//	heading);
-		return {};
-	}
-
-	Point ForceDriven::Seperate()
-	{
-		Point steeringForce;
-		for (const auto& neighbor : neighbors) {
-			Point toAgent = Transform()->position - neighbor->Transform()->position;
-			const float distance = toAgent.Length();
-
-			if (distance > 0.0f && distance < desiredSeparation) {
-				toAgent.Normalize();
-				steeringForce += toAgent / distance;
-			}
-		}
-		return steeringForce;
-	}
-
-	Point ForceDriven::Align()
-	{
-		Point averageHeading;
-		float neighborCount = static_cast<float>(neighbors.size());
-		for (const auto& neighbor : neighbors) {
-			averageHeading += neighbor->Heading();
-		}
-		if (neighborCount > 0.0f)
-		{
-			averageHeading /= neighborCount;
-			averageHeading -= Velocity();
-		}
-		return averageHeading;
-	}
-
-	Point ForceDriven::Cohere()
-	{
-		Point centerOfMass, steeringForce;
-		float neighborCount = static_cast<float>(neighbors.size());
-
-		for (const auto& neighbor : neighbors) {
-			centerOfMass += neighbor->Transform()->position;
-		}
-		if (neighborCount > 0.0f)
-		{
-			centerOfMass /= neighborCount;
-			steeringForce = Seek(centerOfMass);
-		}
+		const auto& steering = GetComponent<Steering>();
+		if (steering != nullptr)
+			steering->Calculate(addSteeringForceCallback);
+		const auto& flocking = GetComponent<Flocking>();
+		if (flocking != nullptr)
+			flocking->Calculate(addSteeringForceCallback);
 		return steeringForce;
 	}
 
 	void ForceDriven::ApplyForce(Point& force) {
 		this->GetComponent<RigidBody>()->AddForce(force / Mass());
-		const float desiredRotation = spic::helper_functions::general_helper::DEG2RAD<float>(Velocity().Rotation());
+		const float rotationInDeg = Velocity().Rotation();
+		const float desiredRotation = spic::helper_functions::general_helper::DEG2RAD<float>(rotationInDeg);
 		const float angle = abs(this->Transform()->rotation - desiredRotation);
-		if (angle >= this->angleSensitivity) {
+		heading = { sin(desiredRotation), -cosf(desiredRotation) };
+		if (angle >= this->maxTurnRate) {
 			Transform()->rotation = desiredRotation;
-			heading = { cosf(desiredRotation) , sin(desiredRotation) };
 		}
 	}
 }

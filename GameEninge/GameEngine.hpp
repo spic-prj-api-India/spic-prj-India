@@ -2,11 +2,13 @@
 #define GAMEENGINE_H_
 
 #include <map>
+#include <vector>
 #include <memory>
 #include <mutex>
 #include "IEngineExtension.hpp"
 #include "Scene.hpp"
 #include "TypeHelper.hpp"
+#include "ContainerHelper.hpp"
 #include "Settings.hpp"
 #include <functional>
 
@@ -23,7 +25,7 @@ namespace spic {
 		GameEngine();
 		~GameEngine();
 
-		std::map<std::string, std::shared_ptr<spic::extensions::IEngineExtension>> _extensions;
+		std::vector<std::shared_ptr<extensions::IEngineExtension>> _extensions;
 		std::map<std::string, std::function<std::shared_ptr<spic::GameObject>()>> _types;
 		bool quit;
 	public:
@@ -41,7 +43,6 @@ namespace spic {
 		*/
 		template <typename T>
 		void AddExtension(std::shared_ptr<T> extension);
-
 
 		/**
 		* @brief Gets extension of type IEngineExtension.
@@ -75,14 +76,7 @@ namespace spic {
 		@brief Registers GameObject type in engine.
 		*/
 		template<typename T>
-		void RegisterType() 
-		{
-			const std::string typeName = spic::helper_functions::type_helper::GetTypeName<T>();
-			if (_types.count(typeName) != 0)
-				throw std::exception("Type is already registered.");
-			const std::function createInstance = GameObject::CreateInstance<T>;
-			_types[typeName] = createInstance;
-		}
+		void RegisterType();
 
 		/*
 		@brief Creates GameObject of type.s
@@ -155,25 +149,24 @@ namespace spic {
 		* @spicapi
 		*/
 		void Quit();
-	private:
-		/**
-		* @brief Checks if type is of type IEngineExtension
-		* @spicapi
-		*/
-		template <typename T>
-		bool IsEngineExtension(std::shared_ptr<T> extension) const;
 	};
 
 	template <typename T>
 	void GameEngine::AddExtension(std::shared_ptr<T> extension)
 	{
-		_extensions[spic::helper_functions::type_helper::GetTypeName<T>()] = extension;
+		if (HasExtension<T>())
+			return;
+		_extensions.emplace_back(extension);
 	}
 
 	template <typename T>
 	std::weak_ptr<T> GameEngine::GetExtension()
 	{
-		return std::dynamic_pointer_cast<T>(_extensions[spic::helper_functions::type_helper::GetTypeName<T>()]);
+		for (const auto& extension : _extensions) {
+			if (helper_functions::type_helper::SharedPtrIsOfType<T>(extension))
+				return helper_functions::type_helper::CastSharedPtrToWeakType<T>(extension);
+		}
+		return std::dynamic_pointer_cast<T>(std::make_shared<extensions::IEngineExtension>());
 	}
 
 	template <typename T>
@@ -181,10 +174,8 @@ namespace spic {
 	{
 		std::vector<std::weak_ptr<T>> extensions;
 		for (const auto& extension : _extensions) {
-			std::weak_ptr<T> weakExtension = std::dynamic_pointer_cast<T>(extension.second);
-			bool isOfType = weakExtension.lock() != nullptr;
-			if (isOfType)
-				extensions.emplace_back(weakExtension);
+			if (helper_functions::type_helper::SharedPtrIsOfType<T>(extension))
+				extensions.emplace_back(helper_functions::type_helper::CastSharedPtrToWeakType<T>(extension));
 		}
 		return extensions;
 	}
@@ -192,25 +183,34 @@ namespace spic {
 	template <typename T>
 	bool GameEngine::HasExtension()
 	{
-		return _extensions.count(spic::helper_functions::type_helper::GetTypeName<T>());
+		for (const auto& extension : _extensions) {
+			if (helper_functions::type_helper::SharedPtrIsOfType<T>(extension))
+				return true;
+		}
+		return false;
 	}
 
 	template <typename T>
 	void GameEngine::RemoveExtension()
 	{
-		std::string typeName = spic::helper_functions::type_helper::GetTypeName<T>();
-		std::shared_ptr<T> deletePtr = std::dynamic_pointer_cast<T>(_extensions[typeName]);
-		_extensions.erase(typeName);
+		auto findFunction = [](std::shared_ptr<extensions::IEngineExtension> ext) {
+			return helper_functions::type_helper::SharedPtrIsOfType<T>(ext);
+		};
+		std::shared_ptr<T> deletePtr = helper_functions::container::FindAndConvert<T>(_extensions, findFunction);
+		_extensions.erase(deletePtr);
 		do {
 			deletePtr.reset();
 		} while (deletePtr.use_count() != 0);
 	}
 
-	template <typename T>
-	bool GameEngine::IsEngineExtension(std::shared_ptr<T> extension) const
+	template<typename T>
+	void GameEngine::RegisterType()
 	{
-		auto castedEngineExtension = std::dynamic_pointer_cast<spic::extensions::IEngineExtension>(extension);
-		return castedEngineExtension != nullptr;
+		const std::string typeName = helper_functions::type_helper::GetTypeName<T>();
+		if (_types.count(typeName) != 0)
+			throw std::exception("Type is already registered.");
+		const std::function createInstance = GameObject::CreateInstance<T>;
+		_types[typeName] = createInstance;
 	}
 }
 

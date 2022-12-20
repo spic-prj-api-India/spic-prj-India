@@ -11,7 +11,7 @@
 namespace spic::helper_functions
 {
 	/**
-	 * @brief Contains hulpfull type functions
+	 * @brief Contains helpfull type functions
 	*/
 	namespace type_helper
 	{
@@ -69,11 +69,26 @@ namespace spic::helper_functions
 		}
 
 		/**
-		 * @brief Try's to cast a pointer to another pointer
+		 * @brief Try's to cast a pointer to weak pointer
 		 * @tparam T A Base class
 		 * @tparam P A derived or base class
 		 * @param pointer An pointer
 		 * @return A pointer of type T or a nullptr
+		* @spicapi
+		*/
+		template <typename T, typename P>
+		std::weak_ptr<T> CastSharedPtrToWeakType(std::shared_ptr<P> pointer)
+		{
+			return std::dynamic_pointer_cast<T>(pointer);
+		}
+
+		/**
+		 * @brief Casts ptr to certain type
+		 * @tparam T A Base class
+		 * @tparam P A derived or base class
+		 * @param pointer An pointer
+		 * @return A pointer of type T or a nullptr
+		 * @spicapi
 		*/
 		template <typename T, typename P>
 		T* CastPtrToType(P* pointer)

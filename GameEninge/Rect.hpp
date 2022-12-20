@@ -3,7 +3,8 @@
 
 namespace spic {
 	/**
-	* @brief A rectangle, with the origin at the upper left (floating point).
+	* @brief A rectangle, with the origin at the upper left (floating point). 
+	*			Is used for drawing debug rectangles.
 	*/
 	struct Rect
 	{

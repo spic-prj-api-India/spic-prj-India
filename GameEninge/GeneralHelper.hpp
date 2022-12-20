@@ -20,7 +20,7 @@
 namespace spic::helper_functions
 {
 	/**
-	 * @brief Contains functions which are general hulpfull
+	 * @brief Contains functions which are general helpfull
 	*/
 	namespace general_helper
 	{
@@ -31,7 +31,7 @@ namespace spic::helper_functions
 		 * @param p Point that rotates
 		*/
 		void RotatePoint(const Point& org, float angle, Point& p) noexcept;
-
+		
 		/**
 		 * @brief Gets an random unique uuid
 		 * @return An unique uuid
@@ -63,7 +63,7 @@ namespace spic::helper_functions
 		 * @return An array with all 4 corner points of a rectangle
 		*/
 		std::array<Point, 4> GetPoints(const Point& orgin, const float angle, const float aspectWidth, const float aspectHeight);
-
+		
 		/**
 		 * @brief Calculates if a point is within a square (https://math.stackexchange.com/a/190373)
 		 * @param point The point to check
@@ -73,9 +73,9 @@ namespace spic::helper_functions
 		bool CalculateWithinSquare(const Point& point, std::array<Point, 4>& square);
 
 		/**
-		 * @brief If an rectangle intersects another rectangle
-		 * @param rect1 
-		 * @param rect2 
+		 * @brief Calculates if two rects intersect with eachother
+		 * @param rect1 Rectangle to check
+		 * @param rect2 Rectangle to check
 		 * @return If it intersects with each other
 		*/
 		bool RectIntersection(const Rect& rect1, const Rect& rect2);
@@ -91,8 +91,8 @@ namespace spic::helper_functions
 		 * @param distance Distance to intersection, is reference so that distance between lines can be used outside function
 		 * @return
 		*/
-		bool LineIntersection(Point sPoint1, Point ePoint1, const Point& sPoint2, const Point& ePoint2, Point& intersectPoint, float& distance);
-
+		bool LineIntersection(const Point& sPoint1, const Point& ePoint1, const Point& sPoint2, const Point& ePoint2, Point& intersectPoint, float& distance);
+		
 		/**
 		 * @brief Gets the center of a rectangle based on the size of the rectangle and the left upper corner (no rotation)
 		 * @param point The upper left corner
@@ -101,7 +101,7 @@ namespace spic::helper_functions
 		 * @return The center point
 		*/
 		Point GetCenter(const Point& point, const float aspectWidth, const float aspectHeight);
-
+		
 		/**
 		 * @brief Precision rounds an floating value to an int
 		 * @tparam T An floating value
@@ -118,8 +118,8 @@ namespace spic::helper_functions
 		 * @brief Convert a degree to radians
 		 * @tparam T The return type
 		 * @tparam R Any primitive which can contain degrees
-		 * @param DEG The amout of degrees
-		 * @return The amount of radians
+		 * @param DEG The amount of degrees
+		 * @return The converted radians
 		*/
 		template <typename T, typename R>
 		T DEG2RAD(R DEG)
@@ -132,7 +132,7 @@ namespace spic::helper_functions
 		 * @tparam T A value which can contain degrees
 		 * @tparam R An floating type primitive
 		 * @param RAD The amount of radians
-		 * @return The degrees converted to radians
+		 * @return The converted degrees
 		*/
 		template <typename T, typename R>
 		T RAD2DEG(R RAD)

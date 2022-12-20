@@ -7,6 +7,7 @@
 #include "Ball.h"
 #include "PlayerMovementScript.h"
 #include <GameEngine.hpp>
+#include "BackScript.h"
 
 GameScene::GameScene() : Scene()
 {
@@ -27,6 +28,7 @@ void GameScene::SetCamera()
 	camera->Transform(std::make_shared<spic::Transform>(spic::Point(0.0f, 0.0f), 0.0f, 1.0f));
 	camera->BackgroundColor(spic::Color::blue());
 	camera->AddComponent(std::make_shared<CameraMovementScript>());
+	camera->AddComponent<spic::BehaviourScript>(std::make_shared<BackScript>());
 	Camera(std::move(camera));
 }
 

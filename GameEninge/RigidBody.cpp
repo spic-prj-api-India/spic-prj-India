@@ -22,13 +22,13 @@ namespace spic {
 	Point RigidBody::Velocity() const
 	{
 		GameEngine* engine = GameEngine::GetInstance();
-		const bool exists = engine->HasExtension<extensions::PhysicsExtension1>();
+		const bool exists = engine->HasExtension<extensions::IPhysicsExtension>();
 		if (!exists)
 			return { 0.0f, 0.0f };
 
-		std::weak_ptr<extensions::PhysicsExtension1> physicsExtension = engine->GetExtension<extensions::PhysicsExtension1>();
-		if (const auto& box2DExtension = physicsExtension.lock())
-			return box2DExtension->GetLinearVelocity(this->gameObject->Name());
+		std::weak_ptr<extensions::IPhysicsExtension> extension = engine->GetExtension<extensions::IPhysicsExtension>();
+		if (const auto& physicsExtension = extension.lock())
+			return physicsExtension->GetLinearVelocity(this->gameObject->Name());
 
 		return { 0.0f, 0.0f };
 	}
@@ -59,12 +59,16 @@ namespace spic {
 	void RigidBody::AddForce(const Point& forceDirection)
 	{
 		GameEngine* engine = GameEngine::GetInstance();
-		const bool exists = engine->HasExtension<extensions::PhysicsExtension1>();
+		const bool exists = engine->HasExtension<extensions::IPhysicsExtension>();
 		if (!exists)
 			return;
 
-		std::weak_ptr<extensions::PhysicsExtension1> physicsExtension = engine->GetExtension<extensions::PhysicsExtension1>();
-		if (const auto& box2DExtension = physicsExtension.lock())
-			box2DExtension->AddForce(GameObject::Find(this->gameObject->Name()), forceDirection);
+		std::weak_ptr<extensions::IPhysicsExtension> extension = engine->GetExtension<extensions::IPhysicsExtension>();
+		if (const auto& physicsExtension = extension.lock()) {
+			const auto& existingGameObject = GameObject::Find(this->gameObject->Name());
+			if (existingGameObject == nullptr)
+				return;
+			physicsExtension->AddForce(existingGameObject, forceDirection);
+		}
 	}
 }

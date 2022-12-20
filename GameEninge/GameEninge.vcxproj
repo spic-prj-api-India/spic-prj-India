@@ -178,6 +178,7 @@
     <ClInclude Include="Camera.hpp" />
     <ClInclude Include="CastException.hpp" />
     <ClInclude Include="Chunk.hpp" />
+    <ClInclude Include="Circle.hpp" />
     <ClInclude Include="CircleCollider.hpp" />
     <ClInclude Include="Collider.hpp" />
     <ClInclude Include="Box2DCollisionListener.hpp" />
@@ -189,6 +190,7 @@
     <ClInclude Include="Debug.hpp" />
     <ClInclude Include="DecreaseGameSpeedListener.hpp" />
     <ClInclude Include="Defaults.hpp" />
+    <ClInclude Include="Flocking.hpp" />
     <ClInclude Include="FPSlistener.hpp" />
     <ClInclude Include="GameEngine.hpp" />
     <ClInclude Include="EntityManager.hpp" />
@@ -205,11 +207,13 @@
     <ClInclude Include="InputSystem.hpp" />
     <ClInclude Include="InternalTime.hpp" />
     <ClInclude Include="IPhysicsExtension.hpp" />
+    <ClInclude Include="Line.hpp" />
     <ClInclude Include="Matrix.hpp" />
     <ClInclude Include="INetworkExtension.hpp" />
     <ClInclude Include="NetworkingHelper.hpp" />
     <ClInclude Include="NetworkingReceiveSystem.hpp" />
     <ClInclude Include="NetworkingSendSystem.hpp" />
+    <ClInclude Include="Obstacle.hpp" />
     <ClInclude Include="Persistable.hpp" />
     <ClInclude Include="ForceDriven.hpp" />
     <ClInclude Include="PhysicsExtension1.hpp" />
@@ -224,6 +228,7 @@
     <ClInclude Include="ResetGameSpeedListener.hpp" />
     <ClInclude Include="Serializer.hpp" />
     <ClInclude Include="SocketScript.hpp" />
+    <ClInclude Include="Steering.hpp" />
     <ClInclude Include="StringHelper.hpp" />
     <ClInclude Include="RigidBody.hpp" />
     <ClInclude Include="Sample.hpp" />
@@ -241,7 +246,6 @@
     <ClInclude Include="TypeHelper.hpp" />
     <ClInclude Include="UIObject.hpp" />
     <ClInclude Include="RendererImpl.hpp" />
-    <ClInclude Include="PhysicsValues.hpp" />
     <ClInclude Include="Settings.hpp" />
   </ItemGroup>
   <ItemGroup>
@@ -260,6 +264,7 @@
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="DataHandler.cpp" />
     <ClCompile Include="DecreaseGameSpeedListener.cpp" />
+    <ClCompile Include="Flocking.cpp" />
     <ClCompile Include="FPSlistener.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="Debug.cpp" />
@@ -275,6 +280,7 @@
     <ClCompile Include="NetworkingSendSystem.cpp" />
     <ClCompile Include="NetworkPacket.cpp" />
     <ClCompile Include="Persistable.cpp" />
+    <ClCompile Include="Obstacle.cpp" />
     <ClCompile Include="PhysicsExtension1.cpp" />
     <ClCompile Include="BoxCollider.cpp" />
     <ClCompile Include="CastException.cpp" />
@@ -287,6 +293,7 @@
     <ClCompile Include="SocketScript.cpp" />
     <ClCompile Include="SocketUDPExtension.cpp" />
     <ClCompile Include="Sprite.cpp" />
+    <ClCompile Include="Steering.cpp" />
     <ClCompile Include="StringHelper.cpp" />
     <ClCompile Include="Text.cpp" />
     <ClCompile Include="Transformations.cpp" />

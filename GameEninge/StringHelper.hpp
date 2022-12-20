@@ -9,7 +9,7 @@
 namespace spic::helper_functions
 {
     /**
-     * @brief Contains hulpfull string functions
+     * @brief Contains helpfull string functions
     */
     namespace string_helper
     {

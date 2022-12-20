@@ -78,10 +78,10 @@ namespace spic {
         void UpdatePosition(const spic::NetworkPacket* packet, spic::GameObject* gameobject) const;
 
         /**
-         * @brief Adds a new gamobject to an registration
-         * @param entity
+         * @brief Removes a gameobject from the registration
+         * @param name Name of entity that will be removed
         */
-        void RemoveEntity(std::shared_ptr<spic::GameObject> entity);
+        void RemoveEntity(const std::string& name);
 
         /**
          * @brief Sends the network packet to the included socket;
@@ -90,7 +90,7 @@ namespace spic {
         void SendPacket(const spic::NetworkPacket& packet);
 
         /**
-         * @brief Adds new gameobject to registration
+         * @brief Adds new gameobject to the registration
          * @param entity
         */
         void RegisterNewEntity(std::shared_ptr<spic::GameObject> entity) const;

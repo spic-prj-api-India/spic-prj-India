@@ -102,9 +102,9 @@ namespace spic {
 		return nullptr;
 	}
 
-	void GameObject::Destroy(std::shared_ptr<GameObject> obj)
+	void GameObject::Destroy(const std::string& name)
 	{
-		spic::internal::EntityManager::GetInstance()->RemoveEntity(obj);
+		spic::internal::EntityManager::GetInstance()->RemoveEntity(name);
 	}
 
 	void GameObject::Destroy(Component* obj)

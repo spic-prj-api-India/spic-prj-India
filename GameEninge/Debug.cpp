@@ -22,7 +22,25 @@ namespace spic {
 	void debug::DrawLine(const spic::Point& start, const spic::Point& end, const spic::Color& color)
 	{
 		if(DEBUG_MODE)
-			spic::internal::Rendering::DrawLine(start, end, color);
+			spic::internal::Rendering::AddDebugLine({start, end}, color);
+	}
+
+	void debug::DrawRect(const Rect& rect, const double angle, const Color& color)
+	{
+		if(DEBUG_MODE)
+			spic::internal::Rendering::AddDebugRect(rect, angle, color);
+	}
+
+	void debug::DrawCircle(const Circle& circle, const Color& color, const float pixelGap)
+	{
+		if(DEBUG_MODE)
+			spic::internal::Rendering::AddDebugCircle(circle, color, pixelGap);
+	}
+
+	void debug::DrawPoint(const spic::Point& point, const spic::Color& color)
+	{
+		if(DEBUG_MODE)
+			spic::internal::Rendering::AddDebugPoint(point, color);
 	}
 
 	void debug::Log(const std::string& message)

@@ -1,11 +1,14 @@
 #include "Rocket.h"
 #include <BoxCollider.hpp>
 #include <Sprite.hpp>
+#include <Flocking.hpp>
+#include <Steering.hpp>
 
-Rocket::Rocket(const std::string& name, const spic::Point& position, const float angle) : ForceDriven(spic::SumMethod::WEIGHTED_AVERAGE, 0.15f, 1.0f, 0.122173048f)
+Rocket::Rocket(const std::string& name, const spic::Point& position, const float angle) : ForceDriven(spic::SumMethod::WEIGHTED_AVERAGE, 0.5f, 1.5f, 0.122173048f, 40.0f)
 {
 	SetAttributes(name, position, angle);
-	SetWeights();
+	SetSteeringBehaviours();
+	SetGroupBehaviours();
 }
 
 void Rocket::SetAttributes(const std::string& name, const spic::Point& position, const float angle)
@@ -16,20 +19,27 @@ void Rocket::SetAttributes(const std::string& name, const spic::Point& position,
 	boxCollider->Disable();
 	Transform(std::make_shared<spic::Transform>(position, angle, 0.125f));
 	AddComponent<spic::BoxCollider>(std::move(boxCollider));
-	rigidBody = std::make_shared<spic::RigidBody>(3.0f, 1.0f, spic::BodyType::dynamicBody);
+	rigidBody = std::make_shared<spic::RigidBody>(3.0f, 0.0f, spic::BodyType::dynamicBody);
 	AddComponent<spic::RigidBody>(rigidBody);
 	AddComponent<spic::Sprite>(std::make_shared<spic::Sprite>("assets/textures/missile.png", 1));
 }
 
-void Rocket::SetWeights()
+void Rocket::SetSteeringBehaviours()
 {
-	//UseArrival({}, spic::Deceleration::NORMAL);
-	UseSeek({});
-	//UseFlee({});
-	//UseWander(1.0f, 1.0f, 1.1f, 60.0f);
+	std::shared_ptr<spic::Steering> steering = std::make_shared<spic::Steering>(this);
 
-	Seperation(1.0f, 24.0f);
-	Alignment(0.25f, 125.0f);
-	Cohesion(0.25f, 125.0f);
-	WallAvoidance(1.5f, 20.0f, spic::Point(1200.0f, 800.0f));
+	steering->SetDeceleration(spic::Deceleration::SLOW);
+	//steering->WanderOn(.5f, 1.1f, 6.0f, 60.0f);
+	steering->WallAvoidanceOn(3.0f, 80.0f, spic::Point(1200.0f, 800.0f));
+	steering->ObstacleAvoidanceOn(3.0f, 120.0f);
+	AddComponent<spic::Steering>(steering);
+}
+
+void Rocket::SetGroupBehaviours()
+{
+	std::shared_ptr<spic::Flocking> flocking = std::make_shared<spic::Flocking>(this);
+	flocking->SeperationOn(0.20f, 60.0f);
+	flocking->AlignmentOn(0.20f, 125.0f);
+	flocking->CohesionOn(0.20f, 125.0f);
+	AddComponent<spic::Flocking>(flocking);
 }

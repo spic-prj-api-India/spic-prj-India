@@ -156,13 +156,15 @@ namespace spic {
 		const float Scale() const;
 
 		/*
-		@brief Set this GameObject to get destroyed upon loading a new scene.
+		* @brief Set this GameObject to get destroyed upon loading a new scene.
+		* @sharedapi
 		*/
 		bool DestroyOnLoad() const;
 
 		/*
-		@brief Set this GameObject to (not) get destroyed upon loading a new scene.
-		@param destroyOnLoad: Wether you want to set this GameObject to be destroyed or not upon loading a new scene.
+		* @brief Set this GameObject to (not) get destroyed upon loading a new scene.
+		* @param destroyOnLoad: Wether you want to set this GameObject to be destroyed or not upon loading a new scene.
+		* @sharedapi
 		*/
 		void DestroyOnLoad(bool destroyOnLoad);
 
@@ -218,11 +220,10 @@ namespace spic {
 		 * @brief Removes a GameObject from the administration.
 		 * @details Child GameObjects will be destroyed, too, as well as
 		 *          Components owned by the GameObject.
-		 * @param obj The GameObject to be destroyed. Must be a valid pointer to existing Game Object.
-		 * @exception A std::runtime_exception is thrown when the pointer is not valid.
-		 * @spicapi
+		 * @param name The name of the GameObject to be destroyed.
+		 * @sharedapi
 		 */
-		static void Destroy(std::shared_ptr<GameObject> obj);
+		static void Destroy(const std::string& name);
 
 		/**
 		 * @brief Removes a Component.

@@ -54,10 +54,15 @@ namespace spic::settings {
     inline constexpr int MAX_CHANNELS = 32;
 
     /*
-     * @brief Enables or disables collider visibility.
+    * @brief Enables or disables collider visibility. Default false.
     */
     inline bool COLLIDER_VISIBILITY = false;
 
+    /*
+    * @brief Enables or disables feelers visibility for wall avoidance. Default false.
+    */
+    inline bool WALL_AVOIDANCE_FEELERS_VISIBILITY = false;
+    
     /**
      * @brief Standard game speed cannot be lower then 0 and higer then 2;
     */

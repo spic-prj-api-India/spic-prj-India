@@ -7,6 +7,8 @@
 #include "Box.h"
 #include <Input.hpp>
 #include "AimListener.h"
+#include "CircleObstacle.h"
+#include "BackScript.h"
 
 FlockingScene::FlockingScene() : Scene()
 {
@@ -27,11 +29,13 @@ void FlockingScene::SetCamera()
 	camera->Transform(std::make_shared<spic::Transform>(spic::Point(0.0f, 0.0f), 0.0f, 1.0f));
 	camera->BackgroundColor(spic::Color::blue());
 	camera->AddComponent(std::make_shared<CameraMovementScript>());
+	camera->AddComponent<spic::BehaviourScript>(std::make_shared<BackScript>());
 	Camera(std::move(camera));
 }
 
 void FlockingScene::SetContents()
 {
+	/* Rocket launcher setup */
 	std::shared_ptr<spic::GameObject> rocketLauncher = std::make_shared<spic::GameObject>();
 	std::string rocketLauncherName = "rocketLauncher";
 	std::shared_ptr<spic::Transform> rocketLauncherTransform = std::make_shared<spic::Transform>();
@@ -45,5 +49,10 @@ void FlockingScene::SetContents()
 	std::shared_ptr<AimListener> aimListener = std::make_shared<AimListener>(rocketLauncher);
 	spic::input::Subscribe(spic::input::MouseButton::LEFT, aimListener);
 
+	/* Obstacles setup */
+	spic::Point obstaclePosition = { 300.0f, 200.0f };
+	std::shared_ptr<CircleObstacle> obstacle = std::make_shared<CircleObstacle>("blade1", obstaclePosition);
+
 	AddContent(rocketLauncher);
+	AddContent(obstacle);
 }

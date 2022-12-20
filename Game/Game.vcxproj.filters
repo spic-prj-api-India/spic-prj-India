@@ -87,6 +87,12 @@
     <ClCompile Include="SettingsScene.cpp">
       <Filter>Source Files\scenes</Filter>
     </ClCompile>
+    <ClCompile Include="CircleObstacle.cpp">
+      <Filter>Source Files\objects</Filter>
+    </ClCompile>
+    <ClCompile Include="BackScript.cpp">
+      <Filter>Source Files\scripts</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CollisionDetectionScript.h">
@@ -133,6 +139,12 @@
     </ClInclude>
     <ClInclude Include="SettingsScene.h">
       <Filter>Header Files\scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="CircleObstacle.h">
+      <Filter>Header Files\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="BackScript.h">
+      <Filter>Header Files\scripts</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

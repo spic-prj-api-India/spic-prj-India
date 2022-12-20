@@ -1,19 +1,19 @@
 #include "FollowMouseListener.h"
 #include "Input.hpp"
+#include <Steering.hpp>
 
 FollowMouseListener::FollowMouseListener()
 {
 	const spic::Point mousePosition = spic::input::MousePosition();
 	target = std::make_unique<spic::Point>(mousePosition.x, mousePosition.y);
-	followers;
 }
 
 void FollowMouseListener::AddFollower(std::shared_ptr<spic::ForceDriven> follower)
 {
-	//follower->AddTarget(spic::SteeringBehaviour::FLEE, *target.get(), 1.0f);
-	follower->AddTarget(spic::SteeringBehaviour::SEEK, *target.get(), 1.0f);
-	//follower->AddTarget(spic::SteeringBehaviour::ARRIVAL, *target.get(), 1.0f);
-	this->followers.emplace_back(std::move(follower));
+	const auto& steering = follower->GetComponent<spic::Steering>();
+	//steering->AddTarget(spic::TargetBehaviour::FLEE, *target.get(), 1.0f);
+	steering->AddTarget(spic::TargetBehaviour::SEEK, *target.get(), 1.0f);
+	//steering->AddTarget(spic::TargetBehaviour::ARRIVAL, *target.get(), 1.0f);
 }
 
 void FollowMouseListener::OnMouseMoved() {

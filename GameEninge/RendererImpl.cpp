@@ -535,14 +535,14 @@ void RendererImpl::DrawRect(const spic::Rect& rect, const double angle, const sp
 		this->textures.clear();
 }
 
-void RendererImpl::DrawCircle(const spic::Point& center, const float radius, const float pixelGap, const spic::Color& color)
+void RendererImpl::DrawCircle(const spic::Circle& circle, const float pixelGap, const spic::Color& color)
 {
-	const float diameter = radius * 2.0f;
-	SDL_FRect dstCenter = SDL_FRect(center.x - radius, center.y - radius, diameter, diameter);
+	const float diameter = circle.radius * 2.0f;
+	SDL_FRect dstCenter = SDL_FRect(circle.center.x - circle.radius, circle.center.y - circle.radius, diameter, diameter);
 	if (!SDL_HasIntersectionF(&dstCenter, &this->camera))
 		return;
-	dstCenter.x = dstCenter.x + radius - this->camera.x;
-	dstCenter.y = dstCenter.y + radius - this->camera.y;
+	dstCenter.x = dstCenter.x + circle.radius - this->camera.x;
+	dstCenter.y = dstCenter.y + circle.radius - this->camera.y;
 
 	SDL_SetRenderDrawColor(renderer.get()
 		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, color.R()))
@@ -551,7 +551,7 @@ void RendererImpl::DrawCircle(const spic::Point& center, const float radius, con
 		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, color.A())));
 
 	// Pixel gap configures how precise the circle is drawn
-	float x = radius - pixelGap;
+	float x = circle.radius - pixelGap;
 	float y = 0.0f;
 	float dx = pixelGap;
 	float dy = pixelGap;
@@ -633,6 +633,52 @@ void RendererImpl::DrawLine(const spic::Point& start, const spic::Point& end, co
 		, endPoint.y);
 }
 
+void RendererImpl::AddDebugLine(const spic::Line& line, const spic::Color& color)
+{
+	std::pair<spic::Line, spic::Color> debugLine = { line, color };
+	debugLines.emplace_back(debugLine);
+}
+
+void RendererImpl::AddDebugRect(const spic::Rect& rect, const double angle, const spic::Color& color)
+{
+	std::pair<std::pair<spic::Rect, double>, spic::Color> debugRect = { { rect, angle }, color };
+	debugRects.emplace_back(debugRect);
+}
+
+void RendererImpl::AddDebugCircle(const spic::Circle& circle, const spic::Color& color, const float pixelGap)
+{
+	std::pair<std::pair<spic::Circle, float>, spic::Color> debugCircle = { { circle, pixelGap }, color };
+	debugCircles.emplace_back(debugCircle);
+}
+
+void RendererImpl::AddDebugPoint(const spic::Point& point, const spic::Color& color)
+{
+	std::pair<spic::Point, spic::Color> debugPoint = { point, color };
+	debugPoints.emplace_back(debugPoint);
+}
+
+void RendererImpl::DrawDebugShapes()
+{
+	for (const auto& debugLine : debugLines) {
+		const Line& line = debugLine.first;
+		DrawLine(line.start, line.end, debugLine.second);
+	}
+	for (const auto& debugRect : debugRects) {
+		const Rect& rect = debugRect.first.first;
+		const double angle = debugRect.first.second;
+		DrawRect(rect, angle, debugRect.second);
+	}
+	for (const auto& debugCircle : debugCircles) {
+		const Circle& circle = debugCircle.first.first;
+		const float pixelGap = debugCircle.first.second;
+		DrawCircle(circle, pixelGap, debugCircle.second);
+	}
+	for (const auto& debugPoint : debugPoints) {
+		const Point& point = debugPoint.first;
+		DrawPoint(point, debugPoint.second);
+	}
+}
+
 void RendererImpl::UpdateCamera(Camera* camera)
 {
 	auto transform = camera->Transform().get();
@@ -674,7 +720,7 @@ void RendererImpl::Clean()
 	}
 }
 
-void RendererImpl::Render() const
+void RendererImpl::Render()
 {
 	SDL_SetRenderDrawColor(renderer.get()
 		, PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, this->backgroundColor.R()))
@@ -684,6 +730,11 @@ void RendererImpl::Render() const
 	);
 
 	SDL_RenderPresent(renderer.get());
+
+	debugLines = {};
+	debugRects = {};
+	debugCircles = {};
+	debugPoints = {};
 }
 
 void RendererImpl::UpdateWindow()

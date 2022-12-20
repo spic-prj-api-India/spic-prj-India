@@ -6,8 +6,11 @@
 #include "Text.hpp"
 #include "Scene.hpp"
 #include "Rect.hpp"
+#include "Circle.hpp"
+#include "Line.hpp"
 
-namespace spic::internal {
+namespace spic::internal 
+{
 
     struct Rendering
     {        
@@ -35,37 +38,43 @@ namespace spic::internal {
         static void UpdateCamera(Camera* camera);
 
         /**
-         * @brief Draws an rectangle in window space
-         * @param rect The x, y, width, height of rectangle
-         * @param angle The angle of the square
-         * @param colour The colour of the square
-        */
-        static void DrawRect(const spic::Rect& rect, const double angle, const spic::Color& color);
-
-        /**
-         * @brief Draws an circle in window space
-                    using the mid point circle algorithm https://en.wikipedia.org/w/index.php?title=Midpoint_circle_algorithm
-         * @param center The center of the circle
-         * @param angle The radius of the circle
-         * @param pixelGap The gap (in pixels) between each point in the circle
-         * @param color The color of the circle
-        */
-        static void DrawCircle(const spic::Point& center, const float radius, const spic::Color& color, const float pixelGap = 1.0f);
-
-        /**
-         * @brief Draws a point in window space
-         * @param point Point to be drawn
-         * @param color The color of the point
-        */
-        static void DrawPoint(const spic::Point& point, const spic::Color& color);
-
-        /**
-         * @brief Draws a line from start to end
-         * @param start Start point of the line
-         * @param end End point of the line
+         * @brief Add debug line to renderer, line will be drawn at the end of the render in world space.
+         * @details Line is not drawn when line is not in camera view.
+         * @param line Line that will be drawn
          * @param color Color of this line
         */
-        static void DrawLine(const spic::Point& start, const spic::Point& end, const spic::Color& color);
+        static void AddDebugLine(const spic::Line& line, const spic::Color& color);
+
+        /**
+         * @brief Add debug rectangle to renderer, rectangle will be drawn at the end of the render in world space.
+         * @details Rectangle is not drawn when rectangle is not in camera view.
+         * @param rect Rectangle that will be drawn
+         * @param color Color of this line
+        */
+        static void AddDebugRect(const spic::Rect& rect, const double angle, const spic::Color& color);
+
+        /**
+         * @brief Add debug circle to renderer, circle will be drawn at the end of the render in world space.
+         * @details Circle is not drawn when circle is not in camera view.
+         * @param circle Circle that will be drawn
+         * @param pixelGap The gap (in pixels) between each point in the circle
+         * @param color Color of this line
+        */
+        static void AddDebugCircle(const spic::Circle& circle, const spic::Color& color, const float pixelGap = 1.0f);
+
+        /**
+         * @brief Add debug point to renderer, point will be drawn at the end of the render in world space.
+         * @details Point is not drawn when point is not in camera view.
+         * @param point Point that will be drawn
+         * @param color Color of this line
+        */
+        static void AddDebugPoint(const spic::Point& point, const spic::Color& color);
+
+        /**
+         * @brief Draws all added debug shapes
+         * @details Shapes are not drawn when rectangle is not in camera view.
+        */
+        static void DrawDebugShapes();
         
         /**
          * @brief Draws a sprite as an ui object
@@ -88,7 +97,8 @@ namespace spic::internal {
         static void NewScene();
         
         /**
-         * @brief Renders all bufferd entities
+         * @brief Renders all buffered entities
+		 * @details Debug shapes will be reset in this function
         */
         static void Render();
         

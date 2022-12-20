@@ -4,6 +4,7 @@
 #include <RigidBody.hpp>
 #include "Rocket.h"
 #include <GeneralHelper.hpp>
+#include "CollisionDetectionScript.h"
 
 using namespace spic::helper_functions::general_helper;
 
@@ -42,7 +43,9 @@ void AimListener::Shoot()
 	const float angleDeg = RAD2DEG<float>(this->angle) + 90.0f;
 	const float desiredAngle = DEG2RAD<float>(angleDeg);
 	const std::string name = "Rocket" + std::to_string(rocketCount);
+	std::shared_ptr<CollisionDetectionScript> collisionScript = std::make_shared<CollisionDetectionScript>();
 	std::shared_ptr<Rocket> rocket = std::make_shared<Rocket>(name, weapon->Transform()->position, desiredAngle);
+	rocket->AddComponent<spic::BehaviourScript>(collisionScript);
 	rocket->StartForceDrivenEntity();
 
 	spic::GameObject::Create(rocket);
@@ -54,5 +57,6 @@ void AimListener::Shoot()
 	force.x = weaponPosition.x - mousePosition.x;
 	force.y = weaponPosition.y - mousePosition.y;
 	force.Normalize();
+	force *= 0.5f;
 	rocket->rigidBody->AddForce(force);
 }

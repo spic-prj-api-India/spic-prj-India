@@ -3,6 +3,7 @@
 
 #include "ISystem.hpp"
 #include "ForceDriven.hpp"
+#include "Obstacle.hpp"
 
 /**
 * @brief A system that calls the Start and Update method in scripts of entities
@@ -16,21 +17,19 @@ namespace spic::internal::systems {
 
 		/**
 		* @brief Initiliazes system.
-		* @spicapi
 		*/
 		void Start(std::vector<std::shared_ptr<spic::GameObject>>& entities, Scene& currentScene) override;
 
 		/**
 		* @brief Updates force driven entities.
-		* @spicapi
 		*/
 		void Update(std::vector<std::shared_ptr<spic::GameObject>>& entities, Scene& currentScene) override;
 	private:
 		/**
-		* @brief Filters all Force driven entities from entities list recursively.
-		* @spicapi
+		* @brief Filters all Force driven entities and obstacles from entities list recursively.
 		*/
-		void GetForceDrivenEntities(std::vector<std::shared_ptr<spic::ForceDriven>>& forceDrivenEntities, 
+		void FilterEntities(std::vector<std::shared_ptr<spic::ForceDriven>>& forceDrivenEntities, 
+			std::vector<std::shared_ptr<spic::GameObject>>& obstacles,
 			const std::vector<std::shared_ptr<spic::GameObject>>& entities);
 	};
 }
