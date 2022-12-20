@@ -5,7 +5,8 @@
 #include <SDL2/SDL_events.h>
 #pragma warning( pop )
 
-namespace spic::internal::InputImpl {
+namespace spic::internal::input::impl 
+{
 	SDL_Event ev;
 
 	std::vector<SDL_Keycode> ToSDLKeyCodes(spic::input::KeyCode key) 
@@ -486,57 +487,57 @@ namespace spic::internal::InputImpl {
 		return { SDLK_UNKNOWN };
 	}
 
-	int InputImpl::Poll() 
+	int Poll() 
 	{
 		return SDL_PollEvent(&ev);
 	}
 
-	bool InputImpl::Quit()
+	bool Quit()
 	{
 		return ev.type == SDL_QUIT;
 	}
 
-	bool InputImpl::AnyKey() 
+	bool AnyKey() 
 	{
 		return ev.type == SDL_KEYDOWN || ev.type == SDL_KEYUP;
 	}
 
-	bool InputImpl::AnyKeyDown() 
+	bool AnyKeyDown() 
 	{
 		return ev.type == SDL_KEYDOWN;
 	}
 
-	spic::Point InputImpl::MousePosition() 
+	spic::Point MousePosition() 
 	{
 		int x, y;
 		SDL_GetMouseState(&x, &y);
 		return spic::Point{ static_cast<float>(x),static_cast<float>(y) };
 	}
 
-	double InputImpl::GetAxis() 
+	double GetAxis() 
 	{
 		return 2;
 	}
 
-	bool InputImpl::GetKey(spic::input::KeyCode key) 
+	bool GetKey(spic::input::KeyCode key) 
 	{
 		const std::vector<SDL_Keycode> keyCodes = ToSDLKeyCodes(key);
 		return std::find(keyCodes.begin(), keyCodes.end(), ev.key.keysym.sym) != keyCodes.end();
 	}
 
-	bool InputImpl::GetKeyDown(spic::input::KeyCode key) 
+	bool GetKeyDown(spic::input::KeyCode key) 
 	{
 		const std::vector<SDL_Keycode> keyCodes = ToSDLKeyCodes(key);
 		return ev.type == SDL_KEYDOWN && std::find(keyCodes.begin(), keyCodes.end(), ev.key.keysym.sym) != keyCodes.end();
 	}
 
-	bool InputImpl::GetKeyUp(spic::input::KeyCode key) 
+	bool GetKeyUp(spic::input::KeyCode key) 
 	{
 		const std::vector<SDL_Keycode> keyCodes = ToSDLKeyCodes(key);
 		return ev.type == SDL_KEYUP && std::find(keyCodes.begin(), keyCodes.end(), ev.key.keysym.sym) != keyCodes.end();
 	}
 
-	bool InputImpl::GetMouseButton(spic::input::MouseButton which) 
+	bool GetMouseButton(spic::input::MouseButton which) 
 	{
 		if (which == spic::input::MouseButton::LEFT)
 			return ev.button.button == SDL_BUTTON_LEFT;
@@ -547,7 +548,7 @@ namespace spic::internal::InputImpl {
 		return ev.button.button == SDL_BUTTON_RIGHT;
 	}
 
-	bool InputImpl::GetMouseButtonDown(spic::input::MouseButton which) 
+	bool GetMouseButtonDown(spic::input::MouseButton which) 
 	{
 		if (ev.type != SDL_MOUSEBUTTONDOWN)
 			return false;
@@ -561,7 +562,7 @@ namespace spic::internal::InputImpl {
 		return ev.button.button == SDL_BUTTON_RIGHT;
 	}
 
-	bool InputImpl::GetMouseButtonUp(spic::input::MouseButton which) 
+	bool GetMouseButtonUp(spic::input::MouseButton which) 
 	{
 		if (ev.type != SDL_MOUSEBUTTONUP)
 			return false;

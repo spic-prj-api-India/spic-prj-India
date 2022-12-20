@@ -1,8 +1,7 @@
 #include "Camera.hpp"
-
+#include "Settings.hpp"
 spic::Camera::Camera() : backgroundColor{ Color::black() }, GameObject()
 {
-	//retrieve aspectWidth and aspectHeight
 }
 
 void spic::Camera::BackgroundColor(const Color& color)
@@ -27,10 +26,10 @@ const std::string spic::Camera::BackgroundImage() const
 
 const float spic::Camera::AspectWidth() const
 {
-	return -1;
+	return static_cast<float>(spic::settings::WINDOW_WIDTH);
 }
 
 const float spic::Camera::AspectHeight() const
 {
-	return -1;
+	return static_cast<float>(spic::settings::WINDOW_HEIGHT);
 }

@@ -12,6 +12,9 @@ namespace spic {
      */
     class Button : public UIObject {
         public:
+            /**
+             * @brief Default constructor
+            */
             Button();
 
             /**
@@ -21,7 +24,7 @@ namespace spic {
              * @param text Text inside button, if empty no Text UIbject is created.
              * @param color Color of button
              * @param texturePath Path to texture, if empty default texture will be used.
-             * @spicapi
+             * @sharedapi
              */
             Button(const float width, const float height, const std::string& text = "", Color color = Color::white(), const std::string& texturePath = "");
             
@@ -43,11 +46,13 @@ namespace spic {
         private:
             /**
              * @brief When false, the button will not react to clicks.
+             * @spicapi
              */
             bool interactable;
 
             /**
              * @brief The registered click handler.
+             * @spicapi
              */
             std::function<void()> onClick;
     };

@@ -23,7 +23,7 @@ namespace spic::internal::time
 		/**
 		 * @brief Converts clock_t to milliseconds
 		 * @details units/(units/time) => time (seconds) * 1000 = milliseconds
-		 * @param ticks 
+		 * @param ticks An clock_t value
 		 * @return The amount of miliseconds
 		*/
 		static constexpr double clockToMilliseconds(clock_t ticks) 
@@ -32,12 +32,12 @@ namespace spic::internal::time
 		}
 
 		/**
-		 * @brief Start time of an begin frame
+		 * @brief Start time of a begin frame
 		*/
 		static clock_t beginFrame;
 
 		/**
-		 * @brief Start time of an end frame
+		 * @brief Start time of a end frame
 		*/
 		static clock_t endFrame;
 
@@ -83,6 +83,10 @@ namespace spic::internal::time
 		*/
 		static void Delay();
 
+		/**
+		 * @brief Getter
+		 * @return Gets the current tick in miliseconds
+		*/
 		static double TickInMilliseconds();
 	};
 }

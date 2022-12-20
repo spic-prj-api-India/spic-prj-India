@@ -9,7 +9,8 @@ namespace spic
 {
     /**
      * @brief Contains the beheviours of an object
-     * @details Onupdate is used for code that should run every second and OnInput is for behaviour based on the input
+     * @details Onupdate is used for code that should run every second. 
+     *      OnInput is for behaviour based on the input
     */
     class BehaviourScript : public Component 
     {
@@ -28,7 +29,7 @@ namespace spic
 
             /**
              * @brief Is called every input event
-             * @spicapi
+             * @sharedapi
              */
             virtual void OnInput();
 
