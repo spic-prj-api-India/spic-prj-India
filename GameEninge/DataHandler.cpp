@@ -5,10 +5,18 @@
 #include "EntityManager.hpp"
 #include "GameEngine.hpp"
 #include "ContainerHelper.hpp"
+#include "Debug.hpp"
 
-class spic::SaveDocument
+/**
+* @brief Wrapper class for xml functions. 
+*/
+class spic::internal::SaveDocument
 {
 public:
+	/**
+	 * @brief Initialise the save file.
+	 * @param fileName The name of the save file.
+	*/
 	SaveDocument(const std::string& fileName)
 	{
 		this->path = "save_files/" + fileName + ".save";
@@ -22,16 +30,29 @@ public:
 		}
 	}
 
+	/**
+	 * @brief Get the first child element of the save file.
+	 * @return The first element of the save file.
+	*/
 	TiXmlElement* FirstChildElement()
 	{
 		return this->xmlDoc.FirstChildElement();
 	}
 
+	/**
+	 * @brief Adds a child element past the last child element.
+	 * @param child The child element to add.
+	*/
 	void LinkEndChild(TiXmlElement* child)
 	{
 		this->xmlDoc.LinkEndChild(child);
 	}
 
+	/**
+	 * @brief Add the correct elements to the save file.
+	 * @param memento The memento containing the objects and properties.
+	 * @param root The root element of the save file.
+	*/
 	void AddContent(const spic::IMemento& memento, TiXmlElement* root)
 	{
 		TiXmlElement* contents = new TiXmlElement("children");
@@ -50,6 +71,11 @@ public:
 		root->LinkEndChild(properties);
 	}
 
+	/**
+	 * @brief Load the GameObjects and set their properties from a save file.
+	 * @param parentMemento The parent memento containing the objects and their properties of a parent GameObject.
+	 * @param parentElement The element of a parent GameObject.
+	*/
 	void LoadContent(spic::IMemento& parentMemento, const TiXmlElement& parentElement)
 	{
 		const TiXmlElement& contents = *parentElement.FirstChildElement();
@@ -66,6 +92,9 @@ public:
 		}
 	}
 
+	/**
+	 * @brief Save a local save file.
+	*/
 	void SaveFile()
 	{
 		if (!xmlDoc.NoChildren())
@@ -73,18 +102,33 @@ public:
 	}
 
 private:
+	/**
+	 * @brief The xml document which will serve as the save file.
+	*/
 	TiXmlDocument xmlDoc;
+	
+	/**
+	 * @brief The relative path to the local destination of the save file.
+	*/
 	std::string path;
 };
 
 spic::DataHandler::DataHandler(const std::string& fileName)
 {
-	this->saveDocument = new spic::SaveDocument(fileName);
+	this->saveDocument = new spic::internal::SaveDocument(fileName);
 }
 
 spic::DataHandler::~DataHandler()
 {
-	delete saveDocument;
+	try
+	{
+		delete saveDocument;
+	}
+	catch (const std::exception& ex)
+	{
+		const std::string& message = ex.what();
+		spic::debug::LogError("Delete save document failed: " + message);
+	}
 }
 
 void spic::DataHandler::AddScene(const std::vector<std::shared_ptr<spic::GameObject>>& entities)
