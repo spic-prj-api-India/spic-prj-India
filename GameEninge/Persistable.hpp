@@ -38,7 +38,6 @@ namespace spic
 		virtual std::map<std::string, std::function<void(const std::string&)>> LoadProperties();
 		
 	private:
-
 		/**
 		* @brief The GameObject to make persistable.
 		*/
