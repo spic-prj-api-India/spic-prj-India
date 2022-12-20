@@ -114,6 +114,12 @@
     <ClCompile Include="SyncScript.cpp">
       <Filter>Source Files\scripts\networking</Filter>
     </ClCompile>
+    <ClCompile Include="TargetReceiveScript.cpp">
+      <Filter>Source Files\scripts\networking</Filter>
+    </ClCompile>
+    <ClCompile Include="TargetSendScript.cpp">
+      <Filter>Source Files\scripts\networking</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CollisionDetectionScript.h">
@@ -183,6 +189,12 @@
       <Filter>Header Files\scripts\networking</Filter>
     </ClInclude>
     <ClInclude Include="SyncScript.h">
+      <Filter>Header Files\scripts\networking</Filter>
+    </ClInclude>
+    <ClInclude Include="TargetReceiveScript.h">
+      <Filter>Header Files\scripts\networking</Filter>
+    </ClInclude>
+    <ClInclude Include="TargetSendScript.h">
       <Filter>Header Files\scripts\networking</Filter>
     </ClInclude>
   </ItemGroup>

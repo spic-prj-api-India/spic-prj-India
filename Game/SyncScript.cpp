@@ -2,6 +2,8 @@
 #include "GameEngine.hpp"
 #include "ShooterSendScript.h"
 #include "ShooterReceiveScript.h"
+#include "TargetReceiveScript.h"
+#include "TargetSendScript.h"
 
 void SyncScript::Send(std::shared_ptr<spic::GameObject> entity)
 {
@@ -31,13 +33,13 @@ void SyncScript::SyncEntity(const spic::NetworkPacket* packet, std::shared_ptr<s
 		SendPacket(networkPacket);
 		entity->AddComponent<spic::SocketScript>(std::make_shared<ShooterReceiveScript>());
 		auto target = spic::GameObject::Find("target");
-		//target->AddComponent<spic::SocketScript>(std::make_shared<TargetSendScript>())
+		target->AddComponent<spic::SocketScript>(std::make_shared<TargetSendScript>());
 	}
 	if (packet->data.count("isShooter") && !isTarget && isShooter) {
 		isShooter = true;
 		entity->AddComponent<spic::SocketScript>(std::make_shared<ShooterSendScript>());
 		auto target = spic::GameObject::Find("target");
-		//target->AddComponent<spic::SocketScript>(std::make_shared<TargetReceiveScript>())
+		target->AddComponent<spic::SocketScript>(std::make_shared<TargetReceiveScript>());
 	}
 }
 

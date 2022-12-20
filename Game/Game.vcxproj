@@ -170,6 +170,8 @@
     <ClCompile Include="ShooterSendScript.cpp" />
     <ClCompile Include="SyncScript.cpp" />
     <ClCompile Include="Target.cpp" />
+    <ClCompile Include="TargetReceiveScript.cpp" />
+    <ClCompile Include="TargetSendScript.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AimListener.h" />
@@ -195,6 +197,8 @@
     <ClInclude Include="ShooterSendScript.h" />
     <ClInclude Include="SyncScript.h" />
     <ClInclude Include="Target.h" />
+    <ClInclude Include="TargetReceiveScript.h" />
+    <ClInclude Include="TargetSendScript.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GameEninge\GameEninge.vcxproj">
