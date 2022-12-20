@@ -32,12 +32,12 @@ namespace spic::internal::time
 		}
 
 		/**
-		 * @brief Start time of an begin frame
+		 * @brief Start time of a begin frame
 		*/
 		static clock_t beginFrame;
 
 		/**
-		 * @brief Start time of an end frame
+		 * @brief Start time of a end frame
 		*/
 		static clock_t endFrame;
 
