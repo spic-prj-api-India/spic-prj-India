@@ -4,6 +4,12 @@
 #include "ShooterReceiveScript.h"
 #include "TargetReceiveScript.h"
 #include "TargetSendScript.h"
+#include "SocketUDPExtension.hpp"
+
+SyncScript::SyncScript() : SocketScript()
+{
+	this->AddSocket(spic::GameEngine::GetInstance()->GetExtensions<spic::extensions::SocketUDPExtension>()[0]);
+}
 
 void SyncScript::Send(std::shared_ptr<spic::GameObject> entity)
 {
