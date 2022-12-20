@@ -105,7 +105,6 @@ namespace spic
 		* @brief Wrapper class for TinyXml functions.
 		*/
 		spic::SaveDocument* saveDocument;
-
 	};
 }
 
