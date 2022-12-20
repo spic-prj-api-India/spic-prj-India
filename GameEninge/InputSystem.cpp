@@ -45,7 +45,7 @@ namespace spic::internal::systems
 		buttonClickListener->SetButtons(std::move(GetButtons(entities)));
 		auto scripts = this->GetAllScripts(entities);
 
-		while (InputImpl::Poll()) 
+		while (spic::internal::input::impl::Poll())
 		{
 			InputManager::GetInstance()->Listen();
 

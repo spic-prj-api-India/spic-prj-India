@@ -4,7 +4,8 @@
 #include <vector>
 #include "Input.hpp"
 
-namespace spic::internal::InputImpl {
+namespace spic::internal::input::impl 
+{
 
     /**
     * @brief Polls all input events, needs to be used to update input events

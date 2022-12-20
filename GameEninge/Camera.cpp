@@ -26,10 +26,10 @@ const std::string spic::Camera::BackgroundImage() const
 
 const float spic::Camera::AspectWidth() const
 {
-	return spic::settings::WINDOW_WIDTH;
+	return static_cast<float>(spic::settings::WINDOW_WIDTH);
 }
 
 const float spic::Camera::AspectHeight() const
 {
-	return spic::settings::WINDOW_HEIGHT;
+	return static_cast<float>(spic::settings::WINDOW_HEIGHT);
 }
