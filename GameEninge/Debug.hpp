@@ -8,7 +8,7 @@
 #include <string>
 
 /**
- * @brief Some convenient debugging functions.
+ * @brief Some convenient debugging functions. Function are only run in Debug mode.
 */
 namespace spic::debug {
     /*
@@ -21,7 +21,8 @@ namespace spic::debug {
     #endif
 
     /**
-    * @brief Draws a colored line between specified start and end points.
+    * @brief Draws a colored line between specified start and end points in world space.
+    * @details Line is not drawn when line is not in camera view.
     * @param start The starting point.
     * @param end The end point.
     * @param color The line color, defaults to white.
@@ -30,28 +31,31 @@ namespace spic::debug {
     void DrawLine(const Point& start, const Point& end, const Color& color = Color::white());
 
     /**
-    * @brief Draws a colored rectangle with a specified angle.
+    * @brief Draws a colored rectangle with a specified angle in world space.
+    * @details Rectangle is not drawn when rectangle is not in camera view.
     * @param rect The rectangle.
     * @param angle The angle of the rectangle in radians.
     * @param color The rectangle color, defaults to white.
-    * @spicapi
+    * @sharedapi
     */
     void DrawRect(const Rect& rect, const double angle, const Color& color = Color::white());
 
     /**
-    * @brief Draws a colored circle.
+    * @brief Draws a colored circle in world space.
+    * @details Circle is not drawn when circle is not in camera view.
     * @param circle The circle.
     * @param color The circle color, defaults to white.
     * @param pixelGap The gap (in pixels) between each point in the circle
-    * @spicapi
+    * @sharedapi
     */
     void DrawCircle(const Circle& circle, const Color& color = Color::white(), const float pixelGap = 1.0f);
 
     /**
-    * @brief Draws a colored point.
+    * @brief Draws a colored point in world space.
+    * @details Point is not drawn when point is not in camera view.
     * @param point The point.
     * @param color The line color, defaults to white.
-    * @spicapi
+    * @sharedapi
     */
     void DrawPoint(const spic::Point& point, const spic::Color& color);
 

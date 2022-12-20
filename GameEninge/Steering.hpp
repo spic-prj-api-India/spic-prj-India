@@ -4,7 +4,8 @@
 #include "Component.hpp"
 #include "ForceDriven.hpp"
 
-namespace spic {
+namespace spic 
+{
 	enum class TargetBehaviour {
 		SEEK,
 		FLEE,
@@ -13,7 +14,6 @@ namespace spic {
 
 	/**
 	 * @brief Deceleration of force driven entity, is used for arrival behaviour.
-	 * @spicapi
 	 */
 	enum class Deceleration { SLOW = 3, NORMAL = 2, FAST = 1 };
 
@@ -24,14 +24,12 @@ namespace spic {
 		/**
 		* @brief Sets obstacles
 		* @param obstacles Obstacles are used for Obstacle avoidance.
-		* @spicapi
 		*/
 		void SetObstacles(std::vector<std::shared_ptr<spic::GameObject>> obstacles);
 
 		/**
 		* @brief Sets Deceleration for Arrival steering behaviour.
 		* @param deceleration Deceleration that is used when force driven entity arrives at target.
-		* @spicapi
 		*/
 		void SetDeceleration(Deceleration deceleration = Deceleration::NORMAL);
 
@@ -40,7 +38,6 @@ namespace spic {
 		 * @param targetBehaviour SteeringBehaviour that is used for target.
 		 * @param target Desired target.
 		 * @param targetWeight Weight that shows how much target steering behaviour influences the steering force.
-		 * @spicapi
 		*/
 		void AddTarget(TargetBehaviour targetBehaviour, Point& target, const float targetWeight);
 
@@ -48,14 +45,12 @@ namespace spic {
 		 * @brief Removes target for specific SteeringBehaviour.
 		 * @param targetBehaviour SteeringBehaviour that is used for target.
 		 * @param target Desired target to remove.
-		 * @spicapi
 		*/
 		void RemoveTarget(TargetBehaviour targetBehaviour, Point& target);
 
 		/**
 		 * @brief Removes steering behaviour and all underlying targets.
 		 * @param targetBehaviour TargetBehaviour to remove.
-		 * @spicapi
 		*/
 		void RemoveTargetBehaviour(TargetBehaviour targetBehaviour);
 
@@ -64,7 +59,6 @@ namespace spic {
 		 * @param wanderRadius The radius of the constraining circle for the wander behaviour.
 		 * @param wanderDistance The distance the wander circle is projected in front of the agent.
 		 * @param wanderJitter The maximum amount of displacement along the circle each frame.
-		 * @spicapi
 		*/
 		void WanderOn(const float wanderWeight, const float wanderRadius = 1.0f, const float wanderDistance = 6.0f, const float wanderJitter = 60.0f);
 
@@ -73,71 +67,61 @@ namespace spic {
 		* @param wallAvoidanceWeight The weight of the behaviour.
 		* @param wallDetectionFeelerLength The length of the 3 feelers that are attached to the front of the force driven entity.
 		* @param bounds The bounds were the force driven entity needs to be kept in.
-		* @spicapi
 		*/
 		void WallAvoidanceOn(const float wallAvoidanceWeight, const float wallDetectionFeelerLength, const Bounds& bounds);
 
 		/**
 		 * @brief Activates obstacle avoidance for force driven entity.
 		 * @param obstacleAvoidanceWeight The weight of the behaviour.
-		 * @param feelerLength The length of the 3 feelers that are attached to the front of the force driven entity.
-		 * @spicapi
+		 * @param boxLength The length of the box that is attached to the force driven entity.
 		*/
 		void ObstacleAvoidanceOn(const float obstacleAvoidanceWeight, const  float boxLength);
 
 		/**
 		* @brief Calculates steering force.
 		* @param addSteeringForceCallback Callback that adds forces to steering force.
-		* @spicapi
 		*/
 		void Calculate(std::function<bool(Point force)> addSteeringForceCallback);
 	private:
 		/**
 		 * @brief Add all target forces to steering force.
 		 * @param addSteeringForceCallback Callback that adds forces to steering force.
-		 * @spicapi
 		*/
 		void AddTargetForces(std::function<bool(Point force)> addSteeringForceCallback);
 
 		/**
 		 * @brief Seek to target and return steering force.
 		 * @return spic::Point Steering force.
-		 * @spicapi
 		*/
 		Point Seek(Point target);
 
 		/**
 		* @brief Flee from target and return steering force.
 		* @return spic::Point Steering force.
-		* @spicapi
 		*/
 		Point Flee(Point target);
 
 		/**
 		* @brief Arrive at target and return steering force.
 		* @return spic::Point Steering force.
-		* @spicapi
 		*/
 		Point Arrival(Point target);
 
 		/**
 		* @brief Wander randomly around scene and return steering force.
 		* @return spic::Point Steering force.
-		* @spicapi
 		*/
 		Point Wander();
 
 		/**
 		* @brief Calculates steering force to avoid walls.
 		* @return spic::Point Steering force.
-		* @spicapi
 		*/
 		Point WallAvoidance();
 
 		/**
 		* @brief Calculates steering force to avoid obstacles.
 		* @return spic::Point Steering force.
-		* @spicapi
 		*/
 		Point ObstacleAvoidance();
 	private:

@@ -116,8 +116,9 @@ namespace spic::helper_functions
 
 		/**
 		 * @brief Convert a degree to radians
-		 * @tparam T A floating type
-		 * @param DEG 
+		 * @tparam T The return type
+		 * @tparam R Any primitive which can contain degrees
+		 * @param DEG The amount of degrees
 		 * @return The converted radians
 		*/
 		template <typename T, typename R>
@@ -128,8 +129,9 @@ namespace spic::helper_functions
 
 		/**
 		 * @brief Convert radians to a degree
-		 * @tparam T A floating type
-		 * @param RAD 
+		 * @tparam T A value which can contain degrees
+		 * @tparam R An floating type primitive
+		 * @param RAD The amount of radians
 		 * @return The converted degrees
 		*/
 		template <typename T, typename R>

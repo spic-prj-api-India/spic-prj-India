@@ -1,6 +1,7 @@
 #include "Flocking.hpp"
 
-namespace spic {
+namespace spic 
+{
 	Flocking::Flocking(ForceDriven* agent) : agent{ agent },
 		useSeperation{ false }, useAlignment{ false }, useCohesion{ false }
 	{

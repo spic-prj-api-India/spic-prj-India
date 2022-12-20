@@ -37,21 +37,24 @@ namespace spic::internal {
         static void UpdateCamera(Camera* camera);
 
         /**
-         * @brief Add debug line to renderer, line will be drawn at the end of the render
+         * @brief Add debug line to renderer, line will be drawn at the end of the render in world space.
+         * @details Line is not drawn when line is not in camera view.
          * @param line Line that will be drawn
          * @param color Color of this line
         */
         static void AddDebugLine(const spic::Line& line, const spic::Color& color);
 
         /**
-         * @brief Add debug rectangle to renderer, rectangle will be drawn at the end of the render
+         * @brief Add debug rectangle to renderer, rectangle will be drawn at the end of the render in world space.
+         * @details Rectangle is not drawn when rectangle is not in camera view.
          * @param rect Rectangle that will be drawn
          * @param color Color of this line
         */
         static void AddDebugRect(const spic::Rect& rect, const double angle, const spic::Color& color);
 
         /**
-         * @brief Add debug circle to renderer, circle will be drawn at the end of the render
+         * @brief Add debug circle to renderer, circle will be drawn at the end of the render in world space.
+         * @details Circle is not drawn when circle is not in camera view.
          * @param circle Circle that will be drawn
          * @param pixelGap The gap (in pixels) between each point in the circle
          * @param color Color of this line
@@ -59,7 +62,8 @@ namespace spic::internal {
         static void AddDebugCircle(const spic::Circle& circle, const spic::Color& color, const float pixelGap = 1.0f);
 
         /**
-         * @brief Add debug point to renderer, point will be drawn at the end of the render
+         * @brief Add debug point to renderer, point will be drawn at the end of the render in world space.
+         * @details Point is not drawn when point is not in camera view.
          * @param point Point that will be drawn
          * @param color Color of this line
         */
@@ -67,6 +71,7 @@ namespace spic::internal {
 
         /**
          * @brief Draws all added debug shapes
+         * @details Shapes are not drawn when rectangle is not in camera view.
         */
         static void DrawDebugShapes();
         
@@ -91,7 +96,8 @@ namespace spic::internal {
         static void NewScene();
         
         /**
-         * @brief Renders all bufferd entities
+         * @brief Renders all buffered entities
+		 * @details Debug shapes will be reset in this function
         */
         static void Render();
         

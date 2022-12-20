@@ -33,6 +33,22 @@ namespace spic::helper_functions
         }
 
         /**
+         * @brief Converts map to list with values.
+         * @tparam K Can be any value.
+         * @tparam V Can be any value.
+         * @param map Map with keyvalue pairs.
+         * @return Vector of values.
+        */
+        template <typename K, typename V>
+        std::vector<V> GetValues(std::map<K, V> map) {
+            std::vector<V> values;
+            for (const auto& keypair : map) {
+                values.emplace_back(keypair.second);
+            }
+            return values;
+        }
+
+        /**
          * @brief Finds element in vector with find function
          * @param vector Vector to search in
          * @param findFunction Lambda function that checks if element is right element

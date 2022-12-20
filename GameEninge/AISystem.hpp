@@ -17,19 +17,16 @@ namespace spic::internal::systems {
 
 		/**
 		* @brief Initiliazes system.
-		* @spicapi
 		*/
 		void Start(std::vector<std::shared_ptr<spic::GameObject>>& entities, Scene& currentScene) override;
 
 		/**
 		* @brief Updates force driven entities.
-		* @spicapi
 		*/
 		void Update(std::vector<std::shared_ptr<spic::GameObject>>& entities, Scene& currentScene) override;
 	private:
 		/**
 		* @brief Filters all Force driven entities and obstacles from entities list recursively.
-		* @spicapi
 		*/
 		void FilterEntities(std::vector<std::shared_ptr<spic::ForceDriven>>& forceDrivenEntities, 
 			std::vector<std::shared_ptr<spic::GameObject>>& obstacles,

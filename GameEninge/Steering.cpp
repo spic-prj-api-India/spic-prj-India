@@ -8,7 +8,8 @@
 #include "Debug.hpp"
 #include "Obstacle.hpp"
 
-namespace spic {
+namespace spic 
+{
 	using namespace internal::math;
 	using namespace helper_functions;
 

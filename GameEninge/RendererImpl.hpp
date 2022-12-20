@@ -341,6 +341,7 @@ namespace spic::internal::rendering {
 
 		/**
 		 * @brief Draws all added debug shapes
+		 * @details Shapes are not drawn when rectangle is not in camera view.
 		*/
 		void DrawDebugShapes();
 
@@ -355,7 +356,8 @@ namespace spic::internal::rendering {
 		void NewScene();
 
 		/**
-		 * @brief Renders evrything in internal buffer to screen
+		 * @brief Renders everything in internal buffer to screen
+		 * @details Debug shapes will be reset in this function
 		*/
 		void Render();
 

@@ -75,7 +75,6 @@ namespace spic::extensions
 
 		/**
 		* @brief Resets all physic bodies in world
-		* @spicapi
 		*/
 		void Reset()
 		{
@@ -91,8 +90,8 @@ namespace spic::extensions
 		}
 
 		/**
-		* @brief Add collision layer in world
-		* @spicapi
+		 * @brief Add collision layer to physic world
+		 * @param collisionLayer Tiled layer that is used for collision
 		*/
 		void AddCollisionLayer(const TileLayer& collisionLayer) {
 			const float tileSize = static_cast<float>(collisionLayer.GetTileSize());
@@ -116,8 +115,8 @@ namespace spic::extensions
 		}
 
 		/**
-		* @brief Add and updates physic bodies in world
-		* @spicapi
+		 * @brief Add and updates physic bodies in world and entities
+		 * @param entities Entities to update
 		*/
 		void Update(std::vector<std::shared_ptr<spic::GameObject>>& entities)
 		{
@@ -177,7 +176,8 @@ namespace spic::extensions
 		}
 
 		/**
-		* @brief Registers collision listener in world
+		 * @brief Registers collision listener in world
+		 * @param listener Collision listener, is called when two bodies collide
 		*/
 		void RegisterListener(std::unique_ptr<ICollisionListener> listener)
 		{
@@ -187,7 +187,9 @@ namespace spic::extensions
 		}
 
 		/**
-		* @brief Adds force to an entity
+		 * @brief Adds force to an entity
+		 * @param entity Entity were force will be added to
+		 * @param forceDirection Force that will be applied
 		*/
 		void AddForce(const std::shared_ptr<GameObject>& entity, const spic::Point& forceDirection)
 		{
@@ -202,9 +204,8 @@ namespace spic::extensions
 		}
 
 		/**
-		* @brief Removes entity from box2d world
-		* @param name Name of entity that will be removed
-		* @spicapi
+		 * @brief Removes entity from box2d world
+		 * @param name Name of entity that will be removed
 		*/
 		void RemoveEntity(const std::string& name)
 		{
@@ -218,7 +219,8 @@ namespace spic::extensions
 		}
 
 		/**
-		* @brief Gets linear velocty of entity
+		 * @brief Gets linear velocity of entity with name
+		 * @return Point Returns Linear velocity
 		*/
 		Point GetLinearVelocity(const std::string& name) {
 			if (bodies.count(name) == 0)
@@ -230,7 +232,7 @@ namespace spic::extensions
 		}
 
 		/**
-		* @brief Draw all colliders in world
+		* @brief Draw all colliders in world space
 		*/
 		void DrawColliders()
 		{
@@ -267,9 +269,20 @@ namespace spic::extensions
 				currentBody = currentBody->GetNext();
 			}
 		}
+
+		/**
+		 * @brief Returns amount of steps
+		 * @return int
+		*/
+		int CanRun()
+		{
+			return this->stepsAmount;
+		}
 	private:
 		/**
 		 * @brief Convert coordinate from pixels to meters
+		 * @param coordinate Coordinate that will be converted
+		 * @param size Size of collider
 		*/
 		void ConvertCoordinateToMeters(Point& coordinate, Point size) 
 		{
@@ -283,6 +296,8 @@ namespace spic::extensions
 
 		/**
 		 * @brief Convert coordinate from meters to pixels
+		 * @param coordinate Coordinate that will be converted
+		 * @param size Size of collider
 		*/
 		void ConvertCoordinateToPixels(b2Vec2& coordinate, Point size) 
 		{
@@ -296,6 +311,7 @@ namespace spic::extensions
 
 		/**
 		 * @brief Convert coordinate from pixels to meters
+		 * @param coordinate Coordinate that will be converted
 		*/
 		void ConvertCoordinateToMeters(Point& coordinate) 
 		{
@@ -307,6 +323,7 @@ namespace spic::extensions
 
 		/**
 		 * @brief Convert coordinate from meters to pixels
+		 * @param coordinate Coordinate that will be converted
 		*/
 		void ConvertCoordinateToPixels(b2Vec2& coordinate) 
 		{
@@ -364,7 +381,8 @@ namespace spic::extensions
 		}
 
 		/**
-		* @brief Creates body, fixture and shape and adds body to box2d world
+		 * @brief Creates body, fixture and shape and adds body to box2d world
+		 * @param entity Entity used for data
 		*/
 		void CreateEntity(const std::shared_ptr<spic::GameObject>& entity)
 		{
@@ -388,7 +406,10 @@ namespace spic::extensions
 		}
 
 		/**
-		* @brief Creates box2d body with RigidBody of entity
+		 * @brief Creates box2d body with RigidBody of entity
+		 * @param entity Entity used for data
+		 * @param rigidBody Rigid body of entity
+		 * @return b2Body Box2d body
 		*/
 		b2Body* CreateBody(const std::shared_ptr<spic::GameObject>& entity
 			, const std::shared_ptr<spic::RigidBody>& rigidBody)
@@ -407,7 +428,10 @@ namespace spic::extensions
 		}
 
 		/**
-		* @brief Creates box2d fixture with RigidBody of entity
+		 * @brief Creates box2d fixture
+		 * @param body Box2d body
+		 * @param entity Entity used for data
+		 * @param mass Mass of entity
 		*/
 		void CreateFixture(b2Body& body, const std::shared_ptr<spic::GameObject>& entity
 			, const float mass)
@@ -423,8 +447,11 @@ namespace spic::extensions
 		}
 
 		/**
-		* @brief Set box2d shape with Colliders of entity
-		* @return bool Shape is enabled
+		 * @brief Set box2d shape with Collider of entity
+		 * @param fixtureDef Box2d fixture
+		 * @param entity Entity used for data
+		 * @param mass Mass of entity, used for density
+		 * @return bool Collider exists
 		*/
 		std::shared_ptr<spic::Collider> SetShape(b2FixtureDef& fixtureDef
 			, const std::shared_ptr<spic::GameObject>& entity, const float mass)
@@ -478,8 +505,9 @@ namespace spic::extensions
 		}
 
 		/**
-		* @brief Updates position and rotation for box2d body if transform of entity has
-		*		been changed outside extension
+		 * @brief Updates position and rotation for box2d body if transform of entity has
+		 *		been changed outside extension
+		 * @param entity Entity that will is used for updating box2d body
 		*/
 		void UpdateEntity(const std::shared_ptr<spic::GameObject>& entity)
 		{
@@ -580,13 +608,6 @@ namespace spic::extensions
 			Point endPoint = { endVec.x, endVec.y };
 			spic::debug::DrawLine(startPoint, endPoint, spic::Color::red());
 		}
-
-		public:
-		int CanRun()
-		{
-			return this->stepsAmount;
-		}
-
 	private:
 		std::unique_ptr<b2World> world;
 		std::map<spic::BodyType, b2BodyType> bodyTypeConvertions;

@@ -27,12 +27,12 @@ namespace spic::internal::extensions {
 			std::shared_ptr<spic::GameObject> sharedPtrB = std::make_shared<spic::GameObject>(*entityB);
 
 			// Get colliders
-			std::shared_ptr<spic::Collider> colliderA = entityA->GetComponent<spic::Collider>();
-			std::shared_ptr<spic::Collider> colliderB = entityB->GetComponent<spic::Collider>();
+			std::shared_ptr<spic::Collider> colliderA = std::move(entityA->GetComponent<spic::Collider>());
+			std::shared_ptr<spic::Collider> colliderB = std::move(entityB->GetComponent<spic::Collider>());
 
 			// Call callbacks
-			onEnterCallback(sharedPtrA, colliderB);
-			onEnterCallback(sharedPtrB, colliderA);
+			onEnterCallback(std::move(sharedPtrA), std::move(colliderB));
+			onEnterCallback(std::move(sharedPtrB), std::move(colliderA));
 		}
 	}
 
@@ -50,12 +50,12 @@ namespace spic::internal::extensions {
 			std::shared_ptr<spic::GameObject> sharedPtrB = std::make_shared<spic::GameObject>(*entityB);
 
 			// Get colliders
-			std::shared_ptr<spic::Collider> colliderA = entityA->GetComponent<spic::Collider>();
-			std::shared_ptr<spic::Collider> colliderB = entityB->GetComponent<spic::Collider>();
+			std::shared_ptr<spic::Collider> colliderA = std::move(entityA->GetComponent<spic::Collider>());
+			std::shared_ptr<spic::Collider> colliderB = std::move(entityB->GetComponent<spic::Collider>());
 
 			// Call callbacks
-			onExitCallback(sharedPtrA, colliderB);
-			onExitCallback(sharedPtrB, colliderA);
+			onExitCallback(std::move(sharedPtrA), std::move(colliderB));
+			onExitCallback(std::move(sharedPtrB), std::move(colliderA));
 		}
 	}
 
@@ -73,12 +73,12 @@ namespace spic::internal::extensions {
 			std::shared_ptr<spic::GameObject> sharedPtrB = std::make_shared<spic::GameObject>(*entityB);
 
 			// Get colliders
-			std::shared_ptr<spic::Collider> colliderA = entityA->GetComponent<spic::Collider>();
-			std::shared_ptr<spic::Collider> colliderB = entityB->GetComponent<spic::Collider>();
+			std::shared_ptr<spic::Collider> colliderA = std::move(entityA->GetComponent<spic::Collider>());
+			std::shared_ptr<spic::Collider> colliderB = std::move(entityB->GetComponent<spic::Collider>());
 
 			// Call callbacks
-			onStayCallback(sharedPtrA, colliderB);
-			onStayCallback(sharedPtrB, colliderA);
+			onStayCallback(std::move(sharedPtrA), std::move(colliderB));
+			onStayCallback(std::move(sharedPtrB), std::move(colliderA));
 		}
 	}
 

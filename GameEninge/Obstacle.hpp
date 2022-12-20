@@ -7,6 +7,10 @@ namespace spic {
 	*/
 	class Obstacle {
 	public:
+		/**
+		 * @brief Constructor
+		 * @param boundingRadius Bounding radius is radius of the bounds around entity
+		*/
 		Obstacle(const float boundingRadius);
 
 		/**
@@ -27,7 +31,8 @@ namespace spic {
 		float BRadius() const;
 	private:
 		/**
-		 * @brief Bounding radius is used for obstacle avoidance
+		 * @brief Bounding radius is the radius of the bounds around entity.
+					Bouding radius is used for obstacle avoidance
 		*/
 		float boundingRadius;
 	};
