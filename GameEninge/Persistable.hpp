@@ -36,7 +36,6 @@ namespace spic
 		 * @return A map used for passing the properties of the GameObject, which are then set to the GameObject. Or an empty map if the GameObject is nullptr.
 		 */
 		virtual std::map<std::string, std::function<void(const std::string&)>> LoadProperties();
-		
 	private:
 		/**
 		* @brief The GameObject to make persistable.
