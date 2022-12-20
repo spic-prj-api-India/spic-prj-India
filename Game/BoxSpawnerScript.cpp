@@ -3,9 +3,11 @@
 #include <GameEngine.hpp>
 #include "BoxPersistable.h"
 #include "BoxNotPersistable.h"
+#include "GeneralHelper.hpp"
 
 using namespace spic;
 using namespace spic::input;
+using namespace spic::helper_functions::general_helper;
 
 void BoxSpawnerScript::OnStart() {
 	leftPressed = false;
@@ -15,17 +17,15 @@ void BoxSpawnerScript::OnStart() {
 void BoxSpawnerScript::OnUpdate() {
 	if (rightPressed)
 	{
-		boxCount++;
 		spic::Point mousePosition = MousePosition();
-		std::shared_ptr<BoxPersistable> boxPresistable = std::make_shared<BoxPersistable>("box" + std::to_string(boxCount), mousePosition);
+		std::shared_ptr<BoxPersistable> boxPresistable = std::make_shared<BoxPersistable>("box-" + GetRandomUUID(), mousePosition);
 		spic::GameObject::Create(boxPresistable);
 		rightPressed = false;
 	}
 	else if (leftPressed)
 	{
-		boxCount++;
 		spic::Point mousePosition = MousePosition();
-		std::shared_ptr<BoxNotPersistable> boxNotPresistable = std::make_shared<BoxNotPersistable>("box" + std::to_string(boxCount), mousePosition);
+		std::shared_ptr<BoxNotPersistable> boxNotPresistable = std::make_shared<BoxNotPersistable>("box" + GetRandomUUID(), mousePosition);
 		spic::GameObject::Create(boxNotPresistable);
 		leftPressed = false;
 	}

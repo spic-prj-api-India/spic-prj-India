@@ -10,5 +10,4 @@ public:
 private:
 	bool leftPressed;
 	bool rightPressed;
-	int boxCount;
 };
