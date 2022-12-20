@@ -147,8 +147,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Box.cpp" />
+    <ClCompile Include="BoxPersistable.cpp" />
     <ClCompile Include="BackScript.cpp" />
+    <ClCompile Include="BoxNotPersistable.cpp" />
+    <ClCompile Include="BoxSpawnerScript.cpp" />
     <ClCompile Include="CameraMovementScript.cpp" />
     <ClCompile Include="AimListener.cpp" />
     <ClCompile Include="CircleObstacle.cpp" />
@@ -169,7 +171,9 @@
   <ItemGroup>
     <ClInclude Include="AimListener.h" />
     <ClInclude Include="BackScript.h" />
-    <ClInclude Include="Box.h" />
+    <ClInclude Include="BoxPersistable.h" />
+    <ClInclude Include="BoxNotPersistable.h" />
+    <ClInclude Include="BoxSpawnerScript.h" />
     <ClInclude Include="CameraMovementScript.h" />
     <ClInclude Include="CollisionDetectionScript.h" />
     <ClInclude Include="FlockingScene.h" />
