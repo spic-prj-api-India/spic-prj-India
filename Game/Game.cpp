@@ -17,7 +17,6 @@
 #include "CreditsScene.h"
 #include "SettingsScene.h"
 
-
 void InitGame() {
 
 	// Creates GameEngine instance 

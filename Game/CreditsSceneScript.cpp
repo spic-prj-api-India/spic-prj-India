@@ -4,15 +4,11 @@ void CreditsSceneScript::OnInput()
 {
 	if (spic::input::GetKeyDown(spic::input::KeyCode::SPACE))
 	{
-		if (start)
+		if (true)
 		{
 			this->ani->Play(false);
-			start = false;
-		}
-		else
-		{
-			this->ani->Stop();
-			start = true;
+			this->source->Play(false);
+
 		}
 	}
 }

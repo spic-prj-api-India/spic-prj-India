@@ -100,6 +100,13 @@ namespace spic {
              * @sharedapi
             */
             const bool Looping() const;
+
+            /**
+             * @brief Setter
+             * @param looping If the animator should loop
+             * @sharedapi
+             */
+            void Looping(const bool looping);
             
             /**
              * @brief getter
