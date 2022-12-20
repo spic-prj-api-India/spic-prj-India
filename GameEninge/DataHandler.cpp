@@ -127,7 +127,7 @@ spic::DataHandler::~DataHandler()
 	catch (const std::exception& ex)
 	{
 		const std::string& message = ex.what();
-		spic::debug::LogError("Saving failed: " + message);
+		spic::debug::LogError("Delete save document failed: " + message);
 	}
 }
 
