@@ -80,6 +80,11 @@ const bool spic::Animator::Looping() const
     return this->looping;
 }
 
+void spic::Animator::Looping(const bool looping)
+{
+    this->looping = looping;
+}
+
 const int spic::Animator::Index() const
 {
     return this->index;
@@ -93,7 +98,13 @@ void spic::Animator::Index(const int index)
 void spic::Animator::IncreaseIndex()
 {
     if (++this->index > sprites.back()->OrderInLayer() + 1)
+    {
         this->index = 1;
+
+        if (!this->looping)
+            this->running = false;
+    }
+       
 }
 
 bool spic::Animator::IsRunning() const

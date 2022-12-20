@@ -3,7 +3,7 @@
 #include "Animator.hpp"
 #include "CreditsSceneScript.h"
 #include "BackScript.h"
-
+#include "AudioSource.hpp"
 CreditsScene::CreditsScene()
 {
 	SetCamera();
@@ -29,8 +29,10 @@ void CreditsScene::SetContents()
 		, spic::Alignment::CENTER
 		, spic::Color::white());
 
-	credits->Transform(std::make_shared<spic::Transform>(spic::Point(0.0f, 0.0f), 0.0f, 1.0f));
+	auto music = std::make_shared<spic::AudioSource>("assets/music/1-03 Strepitoso Fight.mp3", true, true, 0.2);
 
+	credits->Transform(std::make_shared<spic::Transform>(spic::Point(0.0f, 0.0f), 0.0f, 1.0f));
+	credits->AddComponent(music);
 
 	auto animatorObject1 = std::make_shared<spic::GameObject>();
 	animatorObject1->Transform(std::make_shared<spic::Transform>(spic::Point(0.0f, 200.0f), 0.0f, 0.5f));
@@ -39,14 +41,18 @@ void CreditsScene::SetContents()
 	animator1->Stop();
 
 	auto script1 = std::make_shared<CreditsSceneScript>();
+
+	auto music1 = std::make_shared<spic::AudioSource>("assets/music/mi_explosion_03_hpx.mp3", false, false, 1);
 	script1->ani = animator1.get();
+	script1->source = music1.get();
+	animatorObject1->AddComponent(std::move(music1));
 	animatorObject1->AddComponent(std::move(animator1));
 	animatorObject1->AddComponent(std::move(script1));
-
-
 	credits->AddChild(std::move(animatorObject1));
 
-	auto animatorObject2 = std::make_shared<spic::GameObject>();
+
+
+	/*auto animatorObject2 = std::make_shared<spic::GameObject>();
 	animatorObject2->Transform(std::make_shared<spic::Transform>(spic::Point(700.0f, 200.0f), 0.0f, 0.5f));
 	auto animator2 = std::make_shared<spic::Animator>(20);
 	animator2->InitHorizontalSpriteSheet("assets/textures/animated-explosion/Explosion_9/spritesheet.png", 10, 800, 800);
@@ -54,11 +60,15 @@ void CreditsScene::SetContents()
 
 	auto script2 = std::make_shared<CreditsSceneScript>();
 	script2->ani = animator2.get();
+	auto music2 = std::make_shared<spic::AudioSource>("assets/music/mi_explosion_03_hpx.mp3", false, false, 1);
+	script2->source = music2.get();
 
+	
 	animatorObject2->AddComponent(std::move(animator2));
 	animatorObject2->AddComponent(std::move(script2));
+	animatorObject2->AddComponent(std::move(music2));
 	credits->AddChild(std::move(animatorObject2));
-
+	*/
 	this->AddContent(credits);
 }
 
