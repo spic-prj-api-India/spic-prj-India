@@ -50,9 +50,8 @@ void SettingsScene::SetContents()
 
 		}, -50.0f);
 
-	AddButton("backgroundMusicButton", "Background music ON", [this]() {
+	AddButton("backgroundMusicButton", "Background music", [this]() {
 		spic::DataHandler dataHandler = spic::DataHandler("settings");
-	dataHandler.LoadSettings(settings);
 	settings["background_music"] == "1" ? settings["background_music"] = "0" : settings["background_music"] = "1";
 	dataHandler.AddSettings(settings);
 	dataHandler.Save();
@@ -67,10 +66,9 @@ void SettingsScene::SetContents()
 void SettingsScene::RestoreSettings()
 {
 	spic::DataHandler dataHandler = spic::DataHandler("settings");
-	dataHandler.LoadSettings(settings);
-	settings["background_music"] == "1" ? settings["background_music"] = "0" : settings["background_music"] = "1";
+	dataHandler.LoadSettings(settings);;
 	std::shared_ptr<spic::GameObject> bgMusicBtn = std::shared_ptr<spic::Button>()->Find("backgroundMusicButton");
-	settings["background_music"] == "1" ? bgMusicBtn->GetComponent<Sprite>()->Color(spic::Color::green()) : bgMusicBtn->GetComponent<Sprite>()->Color(spic::Color::white());
+	settings["background_music"] == "0" ? bgMusicBtn->GetComponent<Sprite>()->Color(spic::Color::white()) : bgMusicBtn->GetComponent<Sprite>()->Color(spic::Color::green());
 }
 
 void SettingsScene::AddButton(const std::string& name, const std::string& text, std::function<void()> callback, const float offset)

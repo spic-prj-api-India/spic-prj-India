@@ -68,13 +68,10 @@ public:
 
 	void SaveFile()
 	{
-		this->xmlDoc.SaveFile(this->path);
+		if (!xmlDoc.NoChildren())
+			this->xmlDoc.SaveFile(this->path);
 	}
 
-	std::string Path()
-	{
-		return this->path;
-	}
 private:
 	TiXmlDocument xmlDoc;
 	std::string path;
