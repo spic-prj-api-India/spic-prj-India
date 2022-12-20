@@ -46,7 +46,7 @@ namespace spic {
          * @param packet 
          * @param entityy 
         */
-        virtual void DestroyEntity(const spic::NetworkPacket* packet, std::shared_ptr<spic::GameObject> entityy) = 0;
+        virtual void DestroyEntity(const spic::NetworkPacket* packet, std::shared_ptr<spic::GameObject> entity) = 0;
 
         /**
          * @brief Writes own code for syncing an entity

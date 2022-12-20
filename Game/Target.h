@@ -1,15 +1,13 @@
 #pragma once
 #include <GameObject.hpp>
 
-class Player : public spic::GameObject
+class Target : public spic::GameObject
 {
 public:
-	Player();
-	Player(const spic::Point& position, const bool isShooter = true);
+	Target();
+	Target(const spic::Point& position);
 	void SetAttributes(const spic::Point& position);
 	void SetContent(std::map<std::string, std::string>& data) override;
 
-	bool IsShooter() const;
-private:
-	bool isShooter;
+	void SetListener();
 };

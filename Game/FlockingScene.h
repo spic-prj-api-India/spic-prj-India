@@ -6,11 +6,9 @@ class FlockingScene : public spic::Scene {
 public:
 	FlockingScene();
 	static spic::Scene* Start();
-	void RestoreSettings();
 	void SetCamera();
 
-	void SetContentsPlayer1();
-	void SetContentsPlayer2();
+	void SetContents();
 private:
 	std::map<std::string, std::string> settings;
 };
