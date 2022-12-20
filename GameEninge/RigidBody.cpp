@@ -64,7 +64,11 @@ namespace spic {
 			return;
 
 		std::weak_ptr<extensions::IPhysicsExtension> extension = engine->GetExtension<extensions::IPhysicsExtension>();
-		if (const auto& physicsExtension = extension.lock())
-			physicsExtension->AddForce(GameObject::Find(this->gameObject->Name()), forceDirection);
+		if (const auto& physicsExtension = extension.lock()) {
+			const auto& existingGameObject = GameObject::Find(this->gameObject->Name());
+			if (existingGameObject == nullptr)
+				return;
+			physicsExtension->AddForce(existingGameObject, forceDirection);
+		}
 	}
 }
