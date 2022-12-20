@@ -7,10 +7,13 @@
 
 namespace spic
 {
-	/**
-	* @brief Wrapper class for TinyXml functions.
-	*/
-	class SaveDocument;
+	namespace internal
+	{
+		/**
+		* @brief Wrapper class for xml functions.
+		*/
+		class SaveDocument;
+	}
 
 	/**
 	 * @brief The memento which serves as a snapshot, containing the objects and their properties to be saved.
@@ -44,7 +47,7 @@ namespace spic
 		* @param entities List of entities
 		*/
 		void AddScene(const std::vector<std::shared_ptr<spic::GameObject>>& entities);
-		
+
 		/**
 		* @brief Adds custom settings to be saved to a save file.
 		* @param settings The map with keys and values to be saved.
@@ -67,7 +70,7 @@ namespace spic
 		* @param entities The values to load
 		*/
 		void LoadSettings(std::map<std::string, std::string>& values);
-		
+
 	private:
 
 		/**
@@ -84,7 +87,7 @@ namespace spic
 		* @param memento The temporary memento
 		*/
 		void AddProperties(const std::shared_ptr<spic::Persistable>& entity, IMemento& memento);
-		
+
 		/**
 		* @brief Loads an entity.
 		* @param memento The temporary memento in which to place the entity to be loaded.
@@ -99,12 +102,12 @@ namespace spic
 		* @param attributes The map containing the properties to be set to the entity.
 		*/
 		void LoadProperties(const std::shared_ptr<spic::Persistable>& entity, const std::map<std::string, std::string> attributes);
-		
+
 	private:
 		/**
 		* @brief Wrapper class for TinyXml functions.
 		*/
-		spic::SaveDocument* saveDocument;
+		spic::internal::SaveDocument* saveDocument;
 	};
 }
 
