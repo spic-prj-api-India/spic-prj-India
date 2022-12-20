@@ -33,7 +33,6 @@ namespace spic::internal::input
 			};
 			if (spic::helper_functions::general_helper::RectIntersection(mouseRect, buttonRect)) 
 			{
-				std::cerr << "creddits: " << button << std::endl;
 				button->Click();
 				return;
 			}

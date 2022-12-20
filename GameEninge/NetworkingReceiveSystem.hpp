@@ -6,10 +6,12 @@
 #include "IEngineExtension.hpp"
 #include "INetworkExtension.hpp"
 
-/**
-* @brief A system that calls all physics extensions and triggers collision script methods
-*/
+
 namespace spic::internal::systems {
+
+    /**
+     * @brief A system that retrieves all info from an socket and processes it
+     */
     class NetworkingReceiveSystem :
         public spic::systems::ISystem
     {

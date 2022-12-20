@@ -13,6 +13,9 @@
 
 namespace spic::internal
 {
+	/**
+	 * @brief Manages all entities and scenes
+	*/
 	class EntityManager
 	{
 	private:
@@ -46,6 +49,9 @@ namespace spic::internal
 		*/
 		std::shared_ptr<Scene> scene;
 	protected:
+		/**
+		 * @brief Calls the init method
+		*/
 		EntityManager();
 		~EntityManager();
 

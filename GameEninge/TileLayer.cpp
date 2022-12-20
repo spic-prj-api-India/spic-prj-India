@@ -7,7 +7,8 @@ namespace spic::tiled
 {
 	TileLayer::TileLayer(const  int layerIndex, const int tilesize, const std::vector<TileSet> tilesets) :
 		layerIndex{ layerIndex }, tileSize(tilesize), tilesets(tilesets)
-	{}
+	{
+	}
 
 	TileLayer::~TileLayer()
 	{

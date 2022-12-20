@@ -1,6 +1,7 @@
 #include "Obstacle.hpp"
 
-namespace spic {
+namespace spic 
+{
 	Obstacle::Obstacle(const float boundingRadius) : boundingRadius{ boundingRadius }
 	{
 	}

@@ -6,9 +6,11 @@
 #include "BehaviourScript.hpp"
 #include "RigidBody.hpp"
 
-namespace spic::internal::systems {
+namespace spic::internal::systems 
+{
 	PhysicsSystem::PhysicsSystem() 
-	{}
+	{
+	}
 
 	void PhysicsSystem::Start(std::vector<std::shared_ptr<spic::GameObject>>& entities, Scene& currentScene)
 	{

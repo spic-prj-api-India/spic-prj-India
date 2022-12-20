@@ -20,6 +20,13 @@ namespace spic {
      */
     class RigidBody : public Component {
         public:
+
+            /**
+             * @brief Default constructor
+             * @param mass The much mass a rigidbody has
+             * @param gravityScale How big of an effect gravity has on a RigidBody
+             * @param bodyType 
+            */
             RigidBody(const float mass, const float gravityScale, const BodyType bodyType);
 
             /**
