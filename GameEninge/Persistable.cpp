@@ -3,7 +3,8 @@
 using namespace spic;
 
 Persistable::Persistable(GameObject* gameObject, std::string typeName) : gameObject{ gameObject }, typeName{typeName}
-{}
+{
+}
 
 std::map<std::string, std::function<std::string()>> Persistable::SaveProperties()
 {

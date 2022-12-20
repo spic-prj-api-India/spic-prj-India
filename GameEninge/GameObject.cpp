@@ -6,7 +6,8 @@
 #include <string>
 #include "GeneralHelper.hpp"
 
-namespace spic {
+namespace spic 
+{
 	std::vector<std::shared_ptr<GameObject>> GameObject::GetGameObjects()
 	{
 		return spic::internal::EntityManager::GetInstance()->GetEntities();

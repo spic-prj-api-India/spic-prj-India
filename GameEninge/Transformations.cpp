@@ -1,7 +1,8 @@
 #include "Transformations.hpp"
 #include "Matrix.hpp"
 
-namespace spic::internal::math {
+namespace spic::internal::math 
+{
 	spic::Point PointToWorldSpace(const spic::Point& point,
 		const spic::Point& agentHeading,
 		const spic::Point& agentSide,

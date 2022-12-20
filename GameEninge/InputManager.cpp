@@ -3,7 +3,8 @@
 #include "GameEngine.hpp"
 #include "ContainerHelper.hpp"
 
-namespace spic::internal {
+namespace spic::internal 
+{
 	InputManager* InputManager::pinstance_{ nullptr };
 	std::mutex InputManager::mutex_;
 
@@ -129,6 +130,7 @@ namespace spic::internal {
 		mouseListeners[mouseEvent].erase(
 			std::remove(mouseListeners[mouseEvent].begin(), mouseListeners[mouseEvent].end(), mouseListener),
 			mouseListeners[mouseEvent].end());
+
 		if (mouseListeners[mouseEvent].size() == 0) {
 			mouseListeners.erase(mouseListeners.find(mouseEvent));
 			mouseEvents.erase(mouseEvents.find(mouseEvent));

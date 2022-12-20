@@ -50,6 +50,9 @@ namespace spic::internal::audio::impl {
         void ResetChunks();
 
     public:
+        /**
+         * @brief Sets up the audio devices
+        */
         AudioManager();
         ~AudioManager();
     

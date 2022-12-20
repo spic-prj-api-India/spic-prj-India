@@ -41,42 +41,36 @@ namespace spic {
 		/**
 		 * @brief Gets texture path of Sprite.
 		 * @return string.
-		 * @spicapi
 		 */
 		const std::string _Sprite() const;
 
 		/**
 		 * @brief Sets texture path of Sprite.
 		 * @param sprite Desired value.
-		 * @spicapi
 		 */
 		void _Sprite(const std::string& sprite);
 
 		/**
 		 * @brief Gets color of Sprite.
 		 * @return spic::Color.
-		 * @spicapi
 		 */
 		const spic::Color Color() const;
 
 		/**
 		 * @brief Sets color of Sprite.
 		 * @param color Desired value.
-		 * @spicapi
 		 */
 		void Color(const spic::Color& color);
 
 		/**
 		 * @brief Gets flip x of Sprite.
 		 * @return bool.
-		 * @spicapi
 		 */
 		const bool FlipX() const;
 
 		/**
 		* @brief Sets flip x of Sprite.
 		* @param flipX Desired value.
-		* @spicapi
 		*/
 		void FlipX(const bool flipX);
 

@@ -1,6 +1,7 @@
 #include "Component.hpp"
 
-namespace spic {
+namespace spic 
+{
 	void Component::Parent(spic::GameObject& gameObject)
 	{
 		this->gameObject = &gameObject;

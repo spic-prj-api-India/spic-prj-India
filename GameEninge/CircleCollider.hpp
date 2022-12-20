@@ -9,6 +9,9 @@ namespace spic {
      */
     class CircleCollider : public Collider {
         public:
+            /**
+             * @brief Default constructor
+            */
             CircleCollider();
 
             /*

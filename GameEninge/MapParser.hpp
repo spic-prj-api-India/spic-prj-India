@@ -8,6 +8,9 @@
 
 namespace spic::internal
 {
+    /**
+     * @brief Parses an tilemap from tiled into gameobjects
+    */
     class MapParser
     {
     public:
@@ -47,22 +50,6 @@ namespace spic::internal
          * @spicapi
          */
         spic::tiled::TileSet ParseTileSet(const TiXmlElement& tileSetData);
-
-        /**
-         * @brief Creates collision entities with layer and tilesets.
-         * @param collisionLayerIndex Collision layer index.
-         * @param tilesets Tilesets.
-         * @spicapi
-         */
-        void CreateCollisionEntities(const int collisionLayerIndex, const std::vector<spic::tiled::TileSet>& tilesets);
-
-        /**
-         * @brief Creates entity with tile data and adds to tile map.
-         * @param collisionLayerIndex Collision layer index.
-         * @param tilesets Tilesets.
-         * @spicapi
-         */
-        void CreateEntity(const float x, const float y, const std::string& name, int tileSize) const;
     private:
         int tileSize, rowCount, colCount;
         std::unique_ptr<spic::tiled::TileMap> tileMap;

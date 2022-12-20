@@ -6,8 +6,8 @@
 #include "IPhysicsExtension.hpp"
 #include "Point.hpp"
 
-namespace spic::extensions {
-
+namespace spic::extensions 
+{
 	/**
 	 * @brief Contains the box2d implementation
 	*/

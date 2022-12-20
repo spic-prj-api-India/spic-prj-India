@@ -4,7 +4,8 @@
 #include "Defaults.hpp"
 #include "Sprite.hpp"
 
-namespace spic {
+namespace spic 
+{
 	Button::Button() : Button(0.0f, 0.0f)
 	{
 	}

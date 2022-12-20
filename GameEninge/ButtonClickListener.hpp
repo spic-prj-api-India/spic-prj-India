@@ -6,7 +6,7 @@
 #include <vector>
 
 /**
- * @brief Contains internal button/mouse listener
+ * @brief Contains internal button/mouse listeners and the input implementation
 */
 namespace spic::internal::input
 {
