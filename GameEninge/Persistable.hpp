@@ -50,5 +50,4 @@ namespace spic
 		std::string typeName;
 	};
 }
-
 #endif // PERSISTABLE_H_
