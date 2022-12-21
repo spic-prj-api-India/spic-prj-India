@@ -2,9 +2,9 @@
 
 #include "Scene.hpp"
 
-class GameScene : public spic::Scene {
+class WinScene : public spic::Scene {
 public:
-	GameScene();
+	WinScene();
 
 	static spic::Scene* Start();
 private:

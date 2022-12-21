@@ -19,12 +19,6 @@ SettingsScene::SettingsScene() : Scene()
 	SetContents();
 }
 
-spic::Scene* SettingsScene::Start()
-{
-	SettingsScene* a = new SettingsScene();
-	return a;
-}
-
 void SettingsScene::SetCamera()
 {
 	std::unique_ptr<spic::Camera> camera = std::make_unique<spic::Camera>();
@@ -80,4 +74,11 @@ void SettingsScene::AddButton(const std::string& name, const std::string& text, 
 	textTransform->position.y = 35.0f;
 	button->OnClick(callback);
 	AddContent(button);
+}
+
+spic::Scene* SettingsScene::Start()
+{
+	spic::input::ResetSubscribedEvents();
+	SettingsScene* a = new SettingsScene();
+	return a;
 }

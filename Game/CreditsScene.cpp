@@ -74,6 +74,7 @@ void CreditsScene::SetContents()
 
 spic::Scene* CreditsScene::Start()
 {
+	spic::input::ResetSubscribedEvents();
 	CreditsScene* a = new CreditsScene();
 	return a;
 }

@@ -16,12 +16,6 @@ GameScene::GameScene() : Scene()
 	LoadTileMap("assets/maps/map.tmx", 3);
 }
 
-spic::Scene* GameScene::Start()
-{
-	GameScene* a = new GameScene();
-	return a;
-}
-
 void GameScene::SetCamera()
 {
 	std::unique_ptr<spic::Camera> camera = std::make_unique<spic::Camera>();
@@ -59,4 +53,11 @@ void GameScene::SetContents()
 
 	AddContent(football);
 	AddContent(button);
+}
+
+spic::Scene* GameScene::Start()
+{
+	spic::input::ResetSubscribedEvents();
+	GameScene* a = new GameScene();
+	return a;
 }

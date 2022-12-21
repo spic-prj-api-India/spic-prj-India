@@ -16,6 +16,8 @@
 #include "MenuScene.h"
 #include "CreditsScene.h"
 #include "SettingsScene.h"
+#include "LoseScene.h"
+#include "WinScene.h"
 
 void InitGame() {
 
@@ -28,9 +30,15 @@ void InitGame() {
 	engine->AddExtension(std::move(physicsExtension));
 
 	// Creates a SocketUDPExtension and adds it to the extension list
+	const std::string& ownIp = spic::helper_functions::networking_helper::GetParsedIPConfigData("IPv4 Address");
+	spic::DataHandler dataHandler = spic::DataHandler("networking");
+	std::map<std::string, std::string> networkSettings;
+	dataHandler.LoadSettings(networkSettings);
+	const std::string& opponentIp = (networkSettings["player1"] == ownIp ? networkSettings["player2"] : networkSettings["player1"]);
+
 	auto socket = std::make_shared<spic::extensions::SocketUDPExtension>();
-	socket->InitListener(13251);
-	socket->InitSender(spic::helper_functions::networking_helper::GetParsedIPConfigData("IPv4 Address"), 13251);
+	socket->InitListener(13252);
+	socket->InitSender(opponentIp, 13252);
 	engine->AddExtension(std::move(socket));
 
 	// Register object types
@@ -41,6 +49,8 @@ void InitGame() {
 	engine->RegisterScene("game", std::function<spic::Scene* ()>(GameScene::Start));
 	engine->RegisterScene("credits", std::function<spic::Scene* ()>(CreditsScene::Start));
 	engine->RegisterScene("flock", std::function<spic::Scene* ()>(FlockingScene::Start));
+	engine->RegisterScene("won", std::function<spic::Scene* ()>(WinScene::Start));
+	engine->RegisterScene("lost", std::function<spic::Scene* ()>(LoseScene::Start));
 	engine->RegisterScene("settings", std::function<spic::Scene* ()>(SettingsScene::Start));
 }
 

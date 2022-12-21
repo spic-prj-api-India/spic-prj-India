@@ -7,7 +7,10 @@
 #include <Input.hpp>
 #include "AimListener.h"
 #include "CircleObstacle.h"
-#include "BackScript.h"
+#include <DataHandler.hpp>
+#include "Shooter.h"
+#include "SyncScript.h"
+#include "Target.h"
 
 FlockingScene::FlockingScene() : Scene()
 {
@@ -16,42 +19,39 @@ FlockingScene::FlockingScene() : Scene()
 	LoadTileMap("assets/maps/map.tmx", 3);
 }
 
-spic::Scene* FlockingScene::Start()
-{
-	FlockingScene* a = new FlockingScene();
-	return a;
-}
-
 void FlockingScene::SetCamera()
 {
 	std::unique_ptr<spic::Camera> camera = std::make_unique<spic::Camera>();
 	camera->Transform(std::make_shared<spic::Transform>(spic::Point(0.0f, 0.0f), 0.0f, 1.0f));
 	camera->BackgroundColor(spic::Color::blue());
 	camera->AddComponent(std::make_shared<CameraMovementScript>());
-	camera->AddComponent<spic::BehaviourScript>(std::make_shared<BackScript>());
 	Camera(std::move(camera));
 }
 
 void FlockingScene::SetContents()
 {
-	/* Rocket launcher setup */
-	std::shared_ptr<spic::GameObject> rocketLauncher = std::make_shared<spic::GameObject>();
-	std::string rocketLauncherName = "rocketLauncher";
-	std::shared_ptr<spic::Transform> rocketLauncherTransform = std::make_shared<spic::Transform>();
-	rocketLauncherTransform->rotation = 0.0f;
-	rocketLauncherTransform->position = { 700.0f, 375.0f };
-	rocketLauncherTransform->scale = 0.25f;
-	auto rocketLauncherSprite = std::make_shared<spic::Sprite>("assets/textures/rocket-launcher.png", 1);
-	rocketLauncher->Name(rocketLauncherName);
-	rocketLauncher->Transform(rocketLauncherTransform);
-	rocketLauncher->AddComponent<spic::Sprite>(rocketLauncherSprite);
-	std::shared_ptr<AimListener> aimListener = std::make_shared<AimListener>(rocketLauncher);
-	spic::input::Subscribe(spic::input::MouseButton::LEFT, aimListener);
+	/* Shooter setup */
+	spic::Point shooterPosition = { 700.0f, 375.0f };
+	std::shared_ptr<Shooter> shooter = std::make_shared<Shooter>(shooterPosition);
+	auto script = std::make_shared<SyncScript>();
+	shooter->AddComponent<spic::SocketScript>(script);
+
+	/* Target setup */
+	spic::Point targetPosition = { 50.0f, 50.0f };
+	std::shared_ptr<Target> target = std::make_shared<Target>(targetPosition);
 
 	/* Obstacles setup */
 	spic::Point obstaclePosition = { 300.0f, 200.0f };
 	std::shared_ptr<CircleObstacle> obstacle = std::make_shared<CircleObstacle>("blade1", obstaclePosition);
 
-	AddContent(rocketLauncher);
+	AddContent(shooter);
+	AddContent(target);
 	AddContent(obstacle);
+}
+
+spic::Scene* FlockingScene::Start()
+{
+	spic::input::ResetSubscribedEvents();
+	FlockingScene* a = new FlockingScene();
+	return a;
 }
