@@ -31,7 +31,7 @@ void Target::SetContent(std::map<std::string, std::string>& data)
 
 }
 
-void Target::SetListener()
+void Target::Init()
 {
 	spic::input::Subscribe(spic::input::MouseButton::LEFT, std::make_shared<FollowMouseListener>(Transform()->position));
 }

@@ -14,9 +14,12 @@
 
 using namespace spic::helper_functions::general_helper;
 
-AimListener::AimListener(const spic::GameObject* weapon) : rocketCount{ 0 }, maxRockets{ 5 }, angle{ weapon->Transform()->rotation }, sceneLoaded{false}
+AimListener::AimListener(const spic::GameObject* weapon, std::shared_ptr<spic::Text> counter) : 
+	rocketCount{ 0 }, maxRockets{ 5 }, angle{ weapon->Transform()->rotation }, sceneLoaded{false}
 {
 	this->weapon = weapon;
+	this->counter = std::move(counter);
+	this->counter->_Text("Rockets left: " + std::to_string(this->maxRockets-this->rocketCount));
 }
 
 void AimListener::OnMouseMoved() {
@@ -35,6 +38,7 @@ void AimListener::OnMouseClicked() {
 		return;
 	Shoot();
 	rocketCount++;
+	this->counter->_Text("Rockets left: " + std::to_string(this->maxRockets - this->rocketCount));
 	CheckLoseCondition();
 }
 

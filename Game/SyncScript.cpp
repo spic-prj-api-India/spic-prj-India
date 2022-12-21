@@ -42,7 +42,7 @@ void SyncScript::SyncEntity(const spic::NetworkPacket* packet, std::shared_ptr<s
 		entity->AddComponent<spic::SocketScript>(std::make_shared<GameStatusSendScript>());
 		auto target = spic::GameObject::Find("Target");
 		target->AddComponent<spic::SocketScript>(std::make_shared<TargetReceiveScript>());
-		spic::helper_functions::type_helper::CastSharedPtrToType<Shooter>(entity)->SetListener();
+		spic::helper_functions::type_helper::CastSharedPtrToType<Shooter>(entity)->Init();
 	}
 	if (packet->data.count("ping") != 0 && isTarget)
 	{
@@ -63,7 +63,7 @@ void SyncScript::SyncEntity(const spic::NetworkPacket* packet, std::shared_ptr<s
 		entity->AddComponent<spic::SocketScript>(std::make_shared<GameStatusReceiveScript>());
 		auto target = spic::GameObject::Find("Target");
 		target->AddComponent<spic::SocketScript>(std::make_shared<TargetSendScript>());
-		spic::helper_functions::type_helper::CastSharedPtrToType<Target>(target)->SetListener();
+		spic::helper_functions::type_helper::CastSharedPtrToType<Target>(target)->Init();
 	}
 }
 

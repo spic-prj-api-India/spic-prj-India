@@ -21,7 +21,7 @@ void WinScene::SetCamera()
 void WinScene::SetContents()
 {
 	auto text = std::make_shared<spic::Text>(1200.0f, 900.0f
-		, "Congratulations\nYou have won the game\n"
+		, "Congratulations\nYou have won the game\nPress backspace to return to menu"
 		, ""
 		, 50
 		, spic::Alignment::CENTER

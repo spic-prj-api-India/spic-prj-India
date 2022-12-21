@@ -21,7 +21,7 @@ void LoseScene::SetCamera()
 void LoseScene::SetContents()
 {
 	auto text = std::make_shared<spic::Text>(1200.0f, 900.0f
-		, "Congratulations\nYou've played yourself\n"
+		, "Congratulations\nYou've played yourself\nPress backspace to return to menu"
 		, ""
 		, 50
 		, spic::Alignment::CENTER

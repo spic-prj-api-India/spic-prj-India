@@ -9,5 +9,5 @@ public:
 	void SetAttributes(const spic::Point& position);
 	void SetContent(std::map<std::string, std::string>& data) override;
 
-	void SetListener();
+	void Init();
 };
