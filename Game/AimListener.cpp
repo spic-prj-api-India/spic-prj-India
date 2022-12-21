@@ -2,19 +2,18 @@
 #include "Input.hpp"
 #include <BoxCollider.hpp>
 #include <RigidBody.hpp>
-#include "Rocket.h"
+#include "SeekingRocket.h"
 #include <GeneralHelper.hpp>
 #include "CollisionDetectionScript.h"
+#include <Steering.hpp>
+#include "RocketSendScript.h"
 
 using namespace spic::helper_functions::general_helper;
 
-AimListener::AimListener(std::shared_ptr<spic::GameObject> weapon) : rocketCount{ 0 }
+AimListener::AimListener(const std::string& entityName) : rocketCount{ 0 }
 {
-	this->followMouseListener = std::make_shared<FollowMouseListener>();
-	this->angle = weapon->Transform()->rotation;
-	this->weapon = std::move(weapon);
-
-	spic::input::Subscribe(spic::input::MouseButton::LEFT, this->followMouseListener);
+	this->weapon = std::move(spic::GameObject::Find(entityName));
+	this->angle = this->weapon->Transform()->rotation;
 }
 
 void AimListener::OnMouseMoved() {
@@ -31,32 +30,39 @@ void AimListener::OnMouseClicked() {
 	Shoot();
 	rocketCount++;
 }
+
 void AimListener::OnMousePressed() {
 
 }
+
 void AimListener::OnMouseReleased() {
 
 }
 
 void AimListener::Shoot()
 {
-	const float angleDeg = RAD2DEG<float>(this->angle) + 90.0f;
-	const float desiredAngle = DEG2RAD<float>(angleDeg);
-	const std::string name = "Rocket" + std::to_string(rocketCount);
-	std::shared_ptr<CollisionDetectionScript> collisionScript = std::make_shared<CollisionDetectionScript>();
-	std::shared_ptr<Rocket> rocket = std::make_shared<Rocket>(name, weapon->Transform()->position, desiredAngle);
-	rocket->AddComponent<spic::BehaviourScript>(collisionScript);
-	rocket->StartForceDrivenEntity();
+	const auto& targetObject = spic::GameObject::Find("Target");
+	if (targetObject != nullptr) {
+		const float angleDeg = RAD2DEG<float>(this->angle) + 90.0f;
+		const float desiredAngle = DEG2RAD<float>(angleDeg);
+		const std::string name = "Rocket" + std::to_string(rocketCount);
+		std::shared_ptr<SeekingRocket> rocket = std::make_shared<SeekingRocket>(name, weapon->Transform()->position, desiredAngle);
+		rocket->AddComponent<spic::BehaviourScript>(std::make_shared<CollisionDetectionScript>());
+		rocket->AddComponent<spic::SocketScript>(std::make_shared<RocketSendScript>());
+		rocket->StartForceDrivenEntity();
 
-	spic::GameObject::Create(rocket);
-	followMouseListener->AddFollower(rocket);
+		const auto& steering = rocket->GetComponent<spic::Steering>();
+		steering->AddTarget(spic::TargetBehaviour::SEEK, targetObject->Transform()->position, 1.0f);
 
-	spic::Point mousePosition = spic::input::MousePosition();
-	spic::Point weaponPosition = weapon->Transform()->position;
-	spic::Point force{};
-	force.x = weaponPosition.x - mousePosition.x;
-	force.y = weaponPosition.y - mousePosition.y;
-	force.Normalize();
-	force *= 0.5f;
-	rocket->rigidBody->AddForce(force);
+		spic::GameObject::Create(rocket);
+
+		const spic::Point mousePosition = spic::input::MousePosition();
+		const spic::Point weaponPosition = weapon->Transform()->position;
+		spic::Point force{};
+		force.x = weaponPosition.x - mousePosition.x;
+		force.y = weaponPosition.y - mousePosition.y;
+		force.Normalize();
+		force *= 0.5f;
+		rocket->rigidBody->AddForce(force);
+	}
 }

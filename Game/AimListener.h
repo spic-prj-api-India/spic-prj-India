@@ -6,7 +6,7 @@
 
 class AimListener : public spic::IMouseListener {
 public:
-    AimListener(std::shared_ptr<spic::GameObject> weapon);
+    AimListener(const std::string& entityName);
 
     void OnMouseMoved() override;
     void OnMouseClicked() override;
@@ -15,7 +15,6 @@ public:
 
     void Shoot();
 private:
-    std::shared_ptr<FollowMouseListener> followMouseListener;
     std::shared_ptr<spic::GameObject> weapon;
     float angle;
     int rocketCount;

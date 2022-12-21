@@ -37,6 +37,12 @@
     <Filter Include="Header Files\scripts">
       <UniqueIdentifier>{ae407631-ead0-46b5-86ae-554f2f8b33e1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\scripts\networking">
+      <UniqueIdentifier>{404f3690-9376-41af-abdf-421d6b46ba6e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\scripts\networking">
+      <UniqueIdentifier>{bbfb6ff0-626a-4493-b657-6596e0db45d5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CollisionDetectionScript.cpp">
@@ -99,6 +105,36 @@
     <ClCompile Include="BoxNotPersistable.cpp">
       <Filter>Source Files\objects</Filter>
     </ClCompile>
+    <ClCompile Include="Shooter.cpp">
+      <Filter>Source Files\objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Target.cpp">
+      <Filter>Source Files\objects</Filter>
+    </ClCompile>
+    <ClCompile Include="ShooterSendScript.cpp">
+      <Filter>Source Files\scripts\networking</Filter>
+    </ClCompile>
+    <ClCompile Include="ShooterReceiveScript.cpp">
+      <Filter>Source Files\scripts\networking</Filter>
+    </ClCompile>
+    <ClCompile Include="SyncScript.cpp">
+      <Filter>Source Files\scripts\networking</Filter>
+    </ClCompile>
+    <ClCompile Include="TargetReceiveScript.cpp">
+      <Filter>Source Files\scripts\networking</Filter>
+    </ClCompile>
+    <ClCompile Include="TargetSendScript.cpp">
+      <Filter>Source Files\scripts\networking</Filter>
+    </ClCompile>
+    <ClCompile Include="RocketSendScript.cpp">
+      <Filter>Source Files\scripts\networking</Filter>
+    </ClCompile>
+    <ClCompile Include="RocketReceiveScript.cpp">
+      <Filter>Source Files\scripts\networking</Filter>
+    </ClCompile>
+    <ClCompile Include="SeekingRocket.cpp">
+      <Filter>Source Files\objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CollisionDetectionScript.h">
@@ -156,6 +192,39 @@
       <Filter>Header Files\scripts</Filter>
     </ClInclude>
     <ClInclude Include="BoxNotPersistable.h">
+      <Filter>Header Files\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Shooter.h">
+      <Filter>Header Files\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalSettings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Target.h">
+      <Filter>Header Files\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="ShooterSendScript.h">
+      <Filter>Header Files\scripts\networking</Filter>
+    </ClInclude>
+    <ClInclude Include="ShooterReceiveScript.h">
+      <Filter>Header Files\scripts\networking</Filter>
+    </ClInclude>
+    <ClInclude Include="SyncScript.h">
+      <Filter>Header Files\scripts\networking</Filter>
+    </ClInclude>
+    <ClInclude Include="TargetReceiveScript.h">
+      <Filter>Header Files\scripts\networking</Filter>
+    </ClInclude>
+    <ClInclude Include="TargetSendScript.h">
+      <Filter>Header Files\scripts\networking</Filter>
+    </ClInclude>
+    <ClInclude Include="RocketSendScript.h">
+      <Filter>Header Files\scripts\networking</Filter>
+    </ClInclude>
+    <ClInclude Include="RocketReceiveScript.h">
+      <Filter>Header Files\scripts\networking</Filter>
+    </ClInclude>
+    <ClInclude Include="SeekingRocket.h">
       <Filter>Header Files\objects</Filter>
     </ClInclude>
   </ItemGroup>

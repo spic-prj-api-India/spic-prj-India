@@ -28,6 +28,8 @@ void spic::internal::systems::NetworkingReceiveSystem::Update(std::vector<std::s
 	for (auto& packet : packets)
 	{
 		auto object = GameObject::Find(packet.name);
+		if (object == nullptr)
+			continue;
 		auto components = object->GetComponents<spic::SocketScript>();
 
 		for (auto component : components)

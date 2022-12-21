@@ -28,9 +28,15 @@ void InitGame() {
 	engine->AddExtension(std::move(physicsExtension));
 
 	// Creates a SocketUDPExtension and adds it to the extension list
+	const std::string& ownIp = spic::helper_functions::networking_helper::GetParsedIPConfigData("IPv4 Address");
+	spic::DataHandler dataHandler = spic::DataHandler("networking");
+	std::map<std::string, std::string> networkSettings;
+	dataHandler.LoadSettings(networkSettings);
+	const std::string& opponentIp = ("192.168.178.89" == ownIp ? networkSettings["player2"] : networkSettings["player1"]);
+
 	auto socket = std::make_shared<spic::extensions::SocketUDPExtension>();
-	socket->InitListener(13251);
-	socket->InitSender(spic::helper_functions::networking_helper::GetParsedIPConfigData("IPv4 Address"), 13251);
+	socket->InitListener(13252);
+	socket->InitSender(opponentIp, 13251);
 	engine->AddExtension(std::move(socket));
 
 	// Register object types

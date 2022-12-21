@@ -7,6 +7,8 @@ public:
 	FlockingScene();
 	static spic::Scene* Start();
 	void SetCamera();
+
 	void SetContents();
-	void SetListeners();
+private:
+	std::map<std::string, std::string> settings;
 };
