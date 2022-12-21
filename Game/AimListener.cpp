@@ -1,16 +1,12 @@
 #include "AimListener.h"
 #include "Input.hpp"
-#include <BoxCollider.hpp>
-#include <RigidBody.hpp>
 #include "SeekingRocket.h"
 #include <GeneralHelper.hpp>
 #include "CollisionDetectionScript.h"
-#include <Steering.hpp>
 #include "RocketSendScript.h"
-#include "Debug.hpp"
 #include "ShooterSendScript.h"
-#include <GameEngine.hpp>
 #include "GameStatusSendScript.h"
+#include <Steering.hpp>
 
 using namespace spic::helper_functions::general_helper;
 
