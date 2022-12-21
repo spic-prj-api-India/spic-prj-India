@@ -28,6 +28,9 @@ namespace spic {
 
 	GameObject::GameObject(const std::string& name) : active{ true }, layer{ 0 }, parent{ nullptr }, name{ name }, destroyOnLoad{ true }
 	{
+		components = {};
+		Point position{ 0.0f, 0.0f };
+		transform = std::make_shared<spic::Transform>(position, 0.0f, 1.0f);
 	}
 
 	std::shared_ptr<GameObject> FindRecursion(const std::vector<std::shared_ptr<GameObject>>& objects, const std::string& name)

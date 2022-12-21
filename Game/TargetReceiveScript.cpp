@@ -1,5 +1,11 @@
 #include "TargetReceiveScript.h"
 #include "GameEngine.hpp"
+#include <SocketUDPExtension.hpp>
+
+TargetReceiveScript::TargetReceiveScript() : SocketScript()
+{
+	this->AddSocket(spic::GameEngine::GetInstance()->GetExtension<spic::extensions::SocketUDPExtension>());
+}
 
 void TargetReceiveScript::Send(std::shared_ptr<spic::GameObject> entity)
 {

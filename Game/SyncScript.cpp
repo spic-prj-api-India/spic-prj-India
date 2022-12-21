@@ -5,10 +5,12 @@
 #include "TargetReceiveScript.h"
 #include "TargetSendScript.h"
 #include "SocketUDPExtension.hpp"
+#include "Target.h"
+#include "Shooter.h"
 
 SyncScript::SyncScript() : SocketScript()
 {
-	this->AddSocket(spic::GameEngine::GetInstance()->GetExtensions<spic::extensions::SocketUDPExtension>()[0]);
+	this->AddSocket(spic::GameEngine::GetInstance()->GetExtension<spic::extensions::SocketUDPExtension>());
 }
 
 void SyncScript::Send(std::shared_ptr<spic::GameObject> entity)
@@ -30,7 +32,14 @@ void SyncScript::DestroyEntity(const spic::NetworkPacket* packet, std::shared_pt
 
 void SyncScript::SyncEntity(const spic::NetworkPacket* packet, std::shared_ptr<spic::GameObject> entity)
 {
-	if (packet->data.count("ping") != 0 && !isShooter && isTarget) {
+	if (packet->data.count("isShooter") != 0 && !isTarget && !isShooter) {
+		isShooter = true;
+		entity->AddComponent<spic::SocketScript>(std::make_shared<ShooterSendScript>());
+		auto target = spic::GameObject::Find("Target");
+		target->AddComponent<spic::SocketScript>(std::make_shared<TargetReceiveScript>());
+		spic::helper_functions::type_helper::CastSharedPtrToType<Shooter>(entity)->SetListener();
+	}
+	if (packet->data.count("ping") != 0 && !isShooter && !isTarget) {
 		isTarget = true;
 		spic::NetworkPacket networkPacket = spic::NetworkPacket();
 		networkPacket.name = entity->Name();
@@ -38,14 +47,9 @@ void SyncScript::SyncEntity(const spic::NetworkPacket* packet, std::shared_ptr<s
 		networkPacket.typeMessage = spic::MessageType::SYNC;
 		SendPacket(networkPacket);
 		entity->AddComponent<spic::SocketScript>(std::make_shared<ShooterReceiveScript>());
-		auto target = spic::GameObject::Find("target");
+		auto target = spic::GameObject::Find("Target");
 		target->AddComponent<spic::SocketScript>(std::make_shared<TargetSendScript>());
-	}
-	if (packet->data.count("isShooter") && !isTarget && isShooter) {
-		isShooter = true;
-		entity->AddComponent<spic::SocketScript>(std::make_shared<ShooterSendScript>());
-		auto target = spic::GameObject::Find("target");
-		target->AddComponent<spic::SocketScript>(std::make_shared<TargetReceiveScript>());
+		spic::helper_functions::type_helper::CastSharedPtrToType<Target>(target)->SetListener();
 	}
 }
 

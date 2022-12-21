@@ -162,6 +162,9 @@
     <ClCompile Include="KeyListener.cpp" />
     <ClCompile Include="MenuScene.cpp" />
     <ClCompile Include="FollowMouseListener.cpp" />
+    <ClCompile Include="RocketReceiveScript.cpp" />
+    <ClCompile Include="RocketSendScript.cpp" />
+    <ClCompile Include="SeekingRocket.cpp" />
     <ClCompile Include="Shooter.cpp" />
     <ClCompile Include="PlayerMovementScript.cpp" />
     <ClCompile Include="Rocket.cpp" />
@@ -188,6 +191,9 @@
     <ClInclude Include="KeyListener.h" />
     <ClInclude Include="FollowMouseListener.h" />
     <ClInclude Include="CircleObstacle.h" />
+    <ClInclude Include="RocketReceiveScript.h" />
+    <ClInclude Include="RocketSendScript.h" />
+    <ClInclude Include="SeekingRocket.h" />
     <ClInclude Include="Shooter.h" />
     <ClInclude Include="PlayerMovementScript.h" />
     <ClInclude Include="Rocket.h" />

@@ -9,7 +9,7 @@ FollowMouseListener::FollowMouseListener(spic::Point& targetPosition) : target{ 
 void FollowMouseListener::OnMouseMoved() {
 	const spic::Point mousePosition = spic::input::MousePosition();
 	this->target.x = mousePosition.x;
-	this->target.x = mousePosition.y;
+	this->target.y = mousePosition.y;
 }
 
 void FollowMouseListener::OnMouseClicked() {

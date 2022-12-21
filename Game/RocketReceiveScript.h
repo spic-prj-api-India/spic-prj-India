@@ -1,10 +1,10 @@
 #pragma once
 #include <SocketScript.hpp>
 
-class ShooterSendScript :
+class RocketReceiveScript :
 	public spic::SocketScript {
 public:
-	ShooterSendScript();
+	RocketReceiveScript();
 	virtual void Send(std::shared_ptr<spic::GameObject> entity) override;
 	virtual void CreateEntity(const spic::NetworkPacket* packet, std::shared_ptr<spic::GameObject> entity) override;
 	virtual void DestroyEntity(const spic::NetworkPacket* packet, std::shared_ptr<spic::GameObject> entity) override;

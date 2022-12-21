@@ -1,5 +1,11 @@
 #include "ShooterSendScript.h"
 #include "GameEngine.hpp"
+#include <SocketUDPExtension.hpp>
+
+ShooterSendScript::ShooterSendScript() : SocketScript()
+{
+	this->AddSocket(spic::GameEngine::GetInstance()->GetExtension<spic::extensions::SocketUDPExtension>());
+}
 
 void ShooterSendScript::Send(std::shared_ptr<spic::GameObject> entity)
 {
@@ -7,6 +13,7 @@ void ShooterSendScript::Send(std::shared_ptr<spic::GameObject> entity)
 	networkPacket.name = entity->Name();
 	networkPacket.data["rotation"] = std::to_string(entity->Transform()->rotation);
 	networkPacket.typeMessage = spic::MessageType::UPDATE;
+	SendPacket(networkPacket);
 }
 
 void ShooterSendScript::CreateEntity(const spic::NetworkPacket* packet, std::shared_ptr<spic::GameObject> entity)
