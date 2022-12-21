@@ -6,7 +6,8 @@
 #include <string>
 #include "GeneralHelper.hpp"
 
-namespace spic {
+namespace spic 
+{
 	std::vector<std::shared_ptr<GameObject>> GameObject::GetGameObjects()
 	{
 		return spic::internal::EntityManager::GetInstance()->GetEntities();
@@ -54,6 +55,12 @@ namespace spic {
 		return nullptr;
 	}
 
+	/**
+	 * @brief Hulper function for gameobject which uses recursion
+	 * @param objects List of gameobjects
+	 * @param tag Objects of tag
+	 * @return All objects which uses this tag
+	*/
 	std::vector<std::shared_ptr<GameObject>> FindGameObjectsWithTagRecursion(const std::vector<std::shared_ptr<GameObject>>& objects, const std::string& tag)
 	{
 		std::vector<std::shared_ptr<GameObject>> gameObjects;
@@ -82,27 +89,28 @@ namespace spic {
 		return gameObjects;
 	}
 
+	/**
+	 * @brief Hulper function for gameobject which uses recursion
+	 * @param objects List of gameobjects
+	 * @param tag Objects of tag
+	 * @return The first object that uses this tag
+	*/
 	std::shared_ptr<GameObject> FindWithTagRecusion(const std::vector<std::shared_ptr<GameObject>>& objects, const std::string& tag)
 	{
-		for (const auto& gameObject : spic::internal::EntityManager::GetInstance()->GetEntities())
+		for (const auto& gameObject : objects)
+		{
 			if (gameObject->Tag() == tag)
 				return gameObject;
 
+			if (auto i = FindWithTagRecusion(gameObject->GetChildren(), tag); i != nullptr)
+				return i;
+		}
 		return nullptr;
 	}
 
-
 	std::shared_ptr<GameObject> GameObject::FindWithTag(const std::string& tag)
 	{
-		for (const auto& gameObject : spic::internal::EntityManager::GetInstance()->GetEntities())
-		{
-			if (gameObject->tag == tag)
-				return gameObject;
-
-			if (auto i = FindWithTagRecusion(gameObject->children, tag); i.get() != nullptr)
-				return gameObject;
-		}
-		return nullptr;
+		return FindWithTagRecusion(spic::internal::EntityManager::GetInstance()->GetEntities(), tag);
 	}
 
 	void GameObject::Destroy(const std::string& name)

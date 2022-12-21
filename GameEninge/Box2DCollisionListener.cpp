@@ -1,6 +1,7 @@
 #include "Box2DCollisionListener.hpp"
 
-namespace spic::internal::extensions {
+namespace spic::internal::extensions 
+{
 	Box2DCollisionListener::Box2DCollisionListener() : Box2DCollisionListener(nullptr, nullptr, nullptr)
 	{
 	}

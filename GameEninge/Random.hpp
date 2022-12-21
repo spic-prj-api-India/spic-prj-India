@@ -3,8 +3,14 @@
 
 #include <limits>
 
+/**
+ * @brief Contains math related classes and function(s)
+*/
 namespace spic::internal::math 
 {
+	/**
+	 * @brief The limit of what an float can be
+	*/
 	constexpr float MaxFloat = (std::numeric_limits<float>::max)();
 
 	/**

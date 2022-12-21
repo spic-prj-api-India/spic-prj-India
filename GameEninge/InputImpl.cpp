@@ -5,6 +5,9 @@
 #include <SDL2/SDL_events.h>
 #pragma warning( pop )
 
+/**
+ * @brief Contains the implementation details from the input class.
+*/
 namespace spic::internal::input::impl 
 {
 	SDL_Event ev;

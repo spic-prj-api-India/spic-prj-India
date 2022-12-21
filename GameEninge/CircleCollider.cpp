@@ -1,7 +1,8 @@
 #include "CircleCollider.hpp"
 #include <stdexcept>
 
-namespace spic {
+namespace spic 
+{
 	CircleCollider::CircleCollider() : CircleCollider(0.0f)
 	{
 	}

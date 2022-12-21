@@ -1,6 +1,7 @@
 #include "Bounds.hpp"
 
-namespace spic {
+namespace spic
+{
 	Bounds::Bounds() 
 		: width{ 0.0f }
 		, height{ 0.0f }
@@ -8,7 +9,8 @@ namespace spic {
 		, right{ 0.0f }
 		, bottom{ 0.0f }
 		, left{0.0f}
-	{}
+	{
+	}
 
 	Bounds::Bounds(const Point& v) 
 		: width{ v.x }
@@ -17,7 +19,8 @@ namespace spic {
 		, right{ v.x }
 		, bottom{ v.y }
 		, left{ 0.0f }
-	{}
+	{
+	}
 
 	Bounds::Bounds(const float x, const float y, const float w, const float h) 
 		: width{ w }
@@ -26,7 +29,8 @@ namespace spic {
 		, right{ x + w }
 		, bottom{ y + height }
 		, left{ x }
-	{}
+	{
+	}
 
 	float Bounds::Width() const
 	{

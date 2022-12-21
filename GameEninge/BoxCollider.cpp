@@ -1,9 +1,11 @@
 #include "BoxCollider.hpp"
 #include <stdexcept>
 
-namespace spic {
+namespace spic 
+{
 	BoxCollider::BoxCollider() : BoxCollider(0.0f, 0.0f)
-	{}
+	{
+	}
 
 	BoxCollider::BoxCollider(const float width, const float height) : Collider()
 	{

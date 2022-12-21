@@ -282,8 +282,10 @@ void spic::DataHandler::LoadProperties(const std::shared_ptr<spic::Persistable>&
 
 void spic::DataHandler::LoadSettings(std::map<std::string, std::string>& values)
 {
-	const TiXmlElement& settingsElement = *this->saveDocument->FirstChildElement();
-	for (const TiXmlAttribute* att = settingsElement.FirstAttribute(); att != nullptr; att = att->Next())
+	const TiXmlElement* settingsElement = this->saveDocument->FirstChildElement();
+	if (settingsElement == nullptr)
+		return;
+	for (const TiXmlAttribute* att = settingsElement->FirstAttribute(); att != nullptr; att = att->Next())
 	{
 		values[att->Name()] = att->Value();
 	}

@@ -9,6 +9,10 @@
 * @brief A system that calls the Start and Update method in scripts of entities
 */
 namespace spic::internal::systems {
+
+	/**
+	 * @brief Updates the AI related entities (force driven entities)
+	*/
 	class AISystem :
 		public spic::systems::ISystem
 	{

@@ -5,7 +5,7 @@
 #include "GameEngine.hpp"
 #include <PhysicsExtension1.hpp>
 #include "MenuScene.h"
-#include "Box.h"
+#include "BoxPersistable.h"
 #include "Debug.hpp"
 #include "SocketUdpExtension.hpp"
 #include <NetworkPacket.hpp>
@@ -18,7 +18,6 @@
 #include "SettingsScene.h"
 #include "LoseScene.h"
 #include "WinScene.h"
-
 
 void InitGame() {
 
@@ -43,7 +42,7 @@ void InitGame() {
 	engine->AddExtension(std::move(socket));
 
 	// Register object types
-	engine->RegisterType<Box>();
+	engine->RegisterType<BoxPersistable>();
 
 	// Register scenes
 	engine->RegisterScene("menu", std::function<spic::Scene* ()>(MenuScene::Start));

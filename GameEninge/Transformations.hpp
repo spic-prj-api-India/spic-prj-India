@@ -3,6 +3,9 @@
 
 #include "Point.hpp"
 
+/**
+ * @brief Contains math related classes and function(s)
+*/
 namespace spic::internal::math {
 	/**
 	 * @brief Transforms a point from the agent's local space into world space.

@@ -4,7 +4,6 @@
 #include "CollisionDetectionScript.h"
 #include <BoxCollider.hpp>
 #include "AudioSource.hpp"
-#include "Box.h"
 #include <Input.hpp>
 #include "AimListener.h"
 #include "CircleObstacle.h"

@@ -4,7 +4,8 @@
 #include "RigidBody.hpp"
 #include "GeneralHelper.hpp"
 
-namespace spic {
+namespace spic 
+{
 	ForceDriven::ForceDriven(SumMethod sumMethod, const float maxSteeringForce, 
 		const float maxSpeed, const float maxTurnRate, const float boundingRadius) : GameObject(),
 		sumMethod{ sumMethod }, maxSteeringForce{ maxSteeringForce }, maxSpeed{ maxSpeed },

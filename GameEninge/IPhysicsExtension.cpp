@@ -1,6 +1,7 @@
 #include "IPhysicsExtension.hpp"
 
-namespace spic::extensions {
+namespace spic::extensions 
+{
 	IPhysicsExtension::IPhysicsExtension()
 	{
 	}

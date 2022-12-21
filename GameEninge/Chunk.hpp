@@ -8,8 +8,6 @@ struct Mix_Chunk;
 
 namespace spic::internal::audio::impl {
 	/// @brief Holds a loaded audio chunk
-
-	
 	class Chunk
 	{
 	private:

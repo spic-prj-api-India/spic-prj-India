@@ -2,7 +2,8 @@
 #include "GameEngine.hpp"
 #include "PhysicsExtension1.hpp"
 
-namespace spic {
+namespace spic 
+{
 	RigidBody::RigidBody(const float mass, const float gravityScale, const spic::BodyType _bodyType) : bodyType{ _bodyType }
 	{
 		Mass(mass);
