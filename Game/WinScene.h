@@ -6,8 +6,8 @@ class WinScene : public spic::Scene {
 public:
 	WinScene();
 
+	static spic::Scene* Start();
+private:
 	void SetCamera();
 	void SetContents();
-
-	static spic::Scene* Start();
 };

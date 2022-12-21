@@ -11,14 +11,6 @@ MenuScene::MenuScene() : Scene()
 {
 	SetCamera();
 	SetContents();
-	SetInputListeners();
-}
-
-spic::Scene* MenuScene::Start()
-{
-	spic::input::ResetSubscribedEvents();
-	MenuScene* a = new MenuScene();
-	return a;
 }
 
 void MenuScene::SetCamera()
@@ -32,14 +24,14 @@ void MenuScene::SetCamera()
 
 void MenuScene::SetContents()
 {
-	AddButton("Start Game", []() {
+	AddButton("Save Demo", []() {
 		spic::GameEngine::GetInstance()->LoadSceneByName("game");
 		}, 0.0f);
-	AddButton("Load Game", []() {
+	AddButton("Load save demo", []() {
 		std::shared_ptr<GameScene> sceneToLoad = std::make_shared<GameScene>();
 		spic::GameEngine::GetInstance()->LoadSceneBySaveFile(sceneToLoad, "game");
 		}, 100.0f);
-	AddButton("Start Flocking", []() {
+	AddButton("Flock/Network Demo", []() {
 		spic::GameEngine::GetInstance()->LoadSceneByName("flock");
 		}, 200.0f);
 	AddButton("Credits", []() {
@@ -50,20 +42,19 @@ void MenuScene::SetContents()
 		}, 400.0f);
 }
 
-void MenuScene::SetMatchMenu()
-{
-}
-
-void MenuScene::SetInputListeners()
-{
-}
-
 void MenuScene::AddButton(const std::string& text, std::function<void()> callback, const float offset)
 {
-	std::shared_ptr<spic::Button> button = std::make_shared<spic::Button>(200.0f, 100.0f, text, spic::Color::white(), "assets/textures/buttons/Button22.png");
+	std::shared_ptr<spic::Button> button = std::make_shared<spic::Button>(300.0f, 100.0f, text, spic::Color::white(), "assets/textures/buttons/Button22.png");
 	button->Transform(std::make_shared<spic::Transform>(spic::Point(500.0f, 150.0f+offset), 0.0f, 1.0f));
 	auto textTransform = button->GetChild<spic::Text>()->Transform();
 	textTransform->position.y = 35.0f;
 	button->OnClick(callback);
 	AddContent(button);
+}
+
+spic::Scene* MenuScene::Start()
+{
+	spic::input::ResetSubscribedEvents();
+	MenuScene* a = new MenuScene();
+	return a;
 }
