@@ -17,11 +17,13 @@ SyncScript::SyncScript() : SocketScript()
 
 void SyncScript::Send(std::shared_ptr<spic::GameObject> entity)
 {
-	spic::NetworkPacket networkPacket = spic::NetworkPacket();
-	networkPacket.name = entity->Name();
-	networkPacket.data["ping"] = "";
-	networkPacket.typeMessage = spic::MessageType::SYNC;
-	SendPacket(networkPacket);
+	if (!isTarget && !isShooter) {
+		spic::NetworkPacket networkPacket = spic::NetworkPacket();
+		networkPacket.name = entity->Name();
+		networkPacket.data["ping"] = "";
+		networkPacket.typeMessage = spic::MessageType::SYNC;
+		SendPacket(networkPacket);
+	}
 }
 
 void SyncScript::CreateEntity(const spic::NetworkPacket* packet, std::shared_ptr<spic::GameObject> entity)
@@ -41,6 +43,14 @@ void SyncScript::SyncEntity(const spic::NetworkPacket* packet, std::shared_ptr<s
 		auto target = spic::GameObject::Find("Target");
 		target->AddComponent<spic::SocketScript>(std::make_shared<TargetReceiveScript>());
 		spic::helper_functions::type_helper::CastSharedPtrToType<Shooter>(entity)->SetListener();
+	}
+	if (packet->data.count("ping") != 0 && isTarget)
+	{
+		spic::NetworkPacket networkPacket = spic::NetworkPacket();
+		networkPacket.name = entity->Name();
+		networkPacket.data["isShooter"] = "";
+		networkPacket.typeMessage = spic::MessageType::SYNC;
+		SendPacket(networkPacket);
 	}
 	if (packet->data.count("ping") != 0 && !isShooter && !isTarget) {
 		isTarget = true;
