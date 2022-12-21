@@ -30,7 +30,7 @@ void SettingsScene::SetCamera()
 	std::unique_ptr<spic::Camera> camera = std::make_unique<spic::Camera>();
 	camera->Transform(std::make_shared<spic::Transform>(spic::Point(0.0f, 0.0f), 0.0f, 1.0f));
 	camera->BackgroundColor(spic::Color::magenta());
-	camera->BackgroundImage("assets/textures/backgrounds/BG_1.png");
+	camera->BackgroundImage("assets/textures/backgrounds/bg2.png");
 	camera->AddComponent<spic::BehaviourScript>(std::make_shared<BackScript>());
 	Camera(std::move(camera));
 }
