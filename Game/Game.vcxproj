@@ -193,7 +193,6 @@
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="GameStatusReceiveScript.h" />
     <ClInclude Include="GameStatusSendScript.h" />
-    <ClInclude Include="GlobalSettings.h" />
     <ClInclude Include="KeyListener.h" />
     <ClInclude Include="FollowMouseListener.h" />
     <ClInclude Include="CircleObstacle.h" />
