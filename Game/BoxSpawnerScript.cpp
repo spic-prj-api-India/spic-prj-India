@@ -20,13 +20,15 @@ void BoxSpawnerScript::OnUpdate() {
 		spic::Point mousePosition = MousePosition();
 		std::shared_ptr<BoxPersistable> boxPresistable = std::make_shared<BoxPersistable>("box-" + GetRandomUUID(), mousePosition);
 		spic::GameObject::Create(boxPresistable);
+		this->bloopAudio->Play(false);
 		rightPressed = false;
 	}
 	else if (leftPressed)
 	{
 		spic::Point mousePosition = MousePosition();
-		std::shared_ptr<BoxNotPersistable> boxNotPresistable = std::make_shared<BoxNotPersistable>("box" + GetRandomUUID(), mousePosition);
+		std::shared_ptr<BoxNotPersistable> boxNotPresistable = std::make_shared<BoxNotPersistable>("box-" + GetRandomUUID(), mousePosition);
 		spic::GameObject::Create(boxNotPresistable);
+		this->bloopAudio->Play(false);
 		leftPressed = false;
 	}
 }
