@@ -9,18 +9,12 @@ RocketSendScript::RocketSendScript() : SocketScript()
 
 void RocketSendScript::Send(std::shared_ptr<spic::GameObject> entity)
 {
-	spic::NetworkPacket networkCreatePacket = spic::NetworkPacket();
-	const std::string& transformSerialized = entity->Transform()->Serialize().str();
-	networkCreatePacket.name = "Shooter";
-	networkCreatePacket.typeMessage = spic::MessageType::CREATE;
-	networkCreatePacket.data["rocket_name"] = entity->Name();
-	networkCreatePacket.data["transform"] = transformSerialized;
-	spic::NetworkPacket networkUpdatePacket = spic::NetworkPacket();
-	networkUpdatePacket.name = entity->Name();
-	networkUpdatePacket.data["transform"] = transformSerialized;
-	networkUpdatePacket.typeMessage = spic::MessageType::UPDATE;
-	SendPacket(networkCreatePacket);
-	SendPacket(networkUpdatePacket);
+	spic::NetworkPacket networkPacket = PositionPacket(entity.get());
+	networkPacket.typeMessage = spic::MessageType::UPDATE;
+	SendPacket(networkPacket);
+	networkPacket.typeMessage = spic::MessageType::CREATE;
+	networkPacket.data["rocket_name"] = entity->Name();
+	SendPacket(networkPacket);
 }
 
 void RocketSendScript::Destroy(DestroyType type)

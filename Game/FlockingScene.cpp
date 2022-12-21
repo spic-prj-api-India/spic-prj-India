@@ -51,7 +51,7 @@ void FlockingScene::SetContents()
 
 spic::Scene* FlockingScene::Start()
 {
-	spic::input::ResetSubscribedEvents();
+	spic::input::UnSubscribeAll();
 	FlockingScene* a = new FlockingScene();
 	return a;
 }

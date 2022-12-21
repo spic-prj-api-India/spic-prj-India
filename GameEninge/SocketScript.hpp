@@ -18,7 +18,7 @@ namespace spic {
          * @brief Adds a socket to the SocketScript
          * @param socketTypname 
         */
-        void AddSocket(std::weak_ptr<spic::extensions::INetworkExtension> socketTypname);
+        void AddSocket(std::weak_ptr<spic::extensions::INetworkExtension> socketType);
 
         /**
          * @brief Creates a new message and calls SendPacket at the end

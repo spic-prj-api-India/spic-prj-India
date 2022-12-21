@@ -115,6 +115,11 @@ namespace spic::internal::rendering {
 
 	private:
 		/**
+		 * @brief Sets up aditional window values like name
+		*/
+		void UpdateWindow();
+
+		/**
 		 * @brief Sets the backgroundColour
 		 * @details should be called first after clean
 		*/
@@ -162,7 +167,7 @@ namespace spic::internal::rendering {
 		SDL_Point GetTextureSize(SDL_Texture* texture) const;
 
 		/**
-		 * @brief Draws uiobject stuff
+		 * @brief Draws uiobject 
 		 * @details only text supported at the moment
 		 * @param gameObject
 		*/
@@ -190,6 +195,39 @@ namespace spic::internal::rendering {
 		 * @param text The text object
 		*/
 		void DrawText(Text* text);
+
+		/**
+		 * @brief Wraps text in string depending on font and size of font
+		 * @param pFont The font
+		 * @param input The string
+		 * @param width The size of the font
+		*/
+		void Wrap(const TTF_Font* pFont, std::string& input, const float width);
+
+		/**
+		 * @brief                           Render a multi-line text
+		 * @param pFont                     The font to render the text with
+		 * @param rText                     The text to render
+		 * @param rTextColor                The text color
+		 * @param XPosition                 The horizontal position of the text lines (defaults to 0)
+		 * @param YPosition                 The vertical position of the first line of text
+		 * @param Width                     The width of a textbox
+		 * @param Height                    The vertical position of the first line of text
+		 * @param DistanceBetweenLines      The distance between each line of text
+		 * @param Align                     An enum specifying how the text has to be alligned
+		*/
+		void RenderMultiLineText(const TTF_Font* pFont, std::string& rText
+			, const SDL_Color& rTextColor, float xPosition, float yPosition, const float width
+			, const float height, const int distanceBetweenLines, const Alignment align);
+
+		/**
+		 * @brief Draws an line in world space
+		 * @details Line is not drawn when line is not in camera view.
+		 * @param start The start point of an line
+		 * @param end The end point of an line
+		 * @param colour The colour of the line
+		*/
+		void DrawLine(const spic::Point& start, const spic::Point& end, const spic::Color& color);
 
 		/**
 		 * @brief Draws an rectangle in world space
@@ -226,46 +264,6 @@ namespace spic::internal::rendering {
 		 * @param y of point
 		*/
 		void DrawPoint(const float x, const float y);
-
-		/**
-		 * @brief Draws an line in world space
-		 * @details Line is not drawn when line is not in camera view.
-		 * @param start The start point of an line
-		 * @param end The end point of an line
-		 * @param colour The colour of the line
-		*/
-		void DrawLine(const spic::Point& start, const spic::Point& end, const spic::Color& color);
-
-		/**
-		 * @brief Wraps text in string depending on font and size of font
-		 * @param pFont The font
-		 * @param input The string
-		 * @param width The size of the font
-		*/
-		void Wrap(const TTF_Font* pFont, std::string& input, const float width);
-
-		/**
-		 * @brief                           Render a multi-line text
-		 * @param pFont                     The font to render the text with
-		 * @param rText                     The text to render
-		 * @param rTextColor                The text color
-		 * @param XPosition                 The horizontal position of the text lines (defaults to 0)
-		 * @param YPosition                 The vertical position of the first line of text
-		 * @param Width                     The width of a textbox
-		 * @param Height                    The vertical position of the first line of text
-		 * @param DistanceBetweenLines      The distance between each line of text
-		 * @param Align                     An enum specifying how the text has to be alligned
-		*/
-		void RenderMultiLineText(const TTF_Font* pFont, std::string& rText
-			, const SDL_Color& rTextColor, float xPosition, float yPosition, const float width
-			, const float height, const int distanceBetweenLines, const Alignment align);
-
-		SDL_RendererFlip GetFlip(const bool flipX, const bool flipY);
-
-		/**
-		 * @brief Sets up aditional window values like name
-		*/
-		void UpdateWindow();
 	public:
 		/**
 		 * Singletons should not be cloneable or assignable.
@@ -276,23 +274,41 @@ namespace spic::internal::rendering {
 		RendererImpl& operator=(RendererImpl&& other) noexcept = delete;// move assignment
 
 		/**
-		 * @brief Draws all related components of an gameobject
-		 * @details Uses recursing
-		 * @param gameObject
-		 * @param isUiOject Defines if the object has to be drawn on world space or window space. Is false by default.
+		 * @brief Gets renderer flip
+		 * @param flipX 
+		 * @param flipY 
+		 * @return SDL_RendererFlip
 		*/
-		void DrawGameObject(GameObject* gameObject, bool isUiOject = false);
+		SDL_RendererFlip GetFlip(const bool flipX, const bool flipY);
 
 		/**
-		 * @brief Closes window
+		 * @brief Start up an new window
 		*/
-		void Exit();
+		void Start();
+
+		/**
+		 * @brief Cleans the render class before drawing it.
+		*/
+		void Clean();
+
+		/**
+		 * @brief Resets internal texture and font maps
+		*/
+		void NewScene();
 
 		/**
 		 * @brief Updates internal parameters width parameters in camera
 		 * @param camera
 		*/
 		void UpdateCamera(Camera* camera);
+
+		/**
+		 * @brief Draws all related components of an gameobject
+		 * @details Uses recursing
+		 * @param gameObject
+		 * @param isUiOject Defines if the object has to be drawn on world space or window space. Is false by default.
+		*/
+		void DrawGameObject(GameObject* gameObject, bool isUiOject = false);
 
 		/**
 		 * @brief Draws an ui sprite
@@ -309,6 +325,11 @@ namespace spic::internal::rendering {
 		 * @param transform Contains position and rotation
 		*/
 		void DrawSprite(const Sprite* sprite, const Transform* transform, bool isUiOject = false);
+
+		/**
+		 * @brief Renders the fps counter
+		*/
+		void DrawFps();
 
 		/**
 		 * @brief Add debug line to renderer, line will be drawn at the end of the render
@@ -345,30 +366,15 @@ namespace spic::internal::rendering {
 		void DrawDebugShapes();
 
 		/**
-		 * @brief Cleans the render class before drawing it.
-		*/
-		void Clean();
-
-		/**
-		 * @brief Resets internal texture and font maps
-		*/
-		void NewScene();
-
-		/**
 		 * @brief Renders everything in internal buffer to screen
 		 * @details Debug shapes will be reset in this function
 		*/
 		void Render();
 
 		/**
-		 * @brief Start up an new window
+		 * @brief Closes window
 		*/
-		void Start();
-
-		/**
-		 * @brief Renders the fps counter
-		*/
-		void RenderFps();
+		void Exit();
 	};
 }
 #endif // RENDERERIMPL_H_

@@ -91,7 +91,7 @@ void SettingsScene::AddSettingButton(const std::string& name, const std::string&
 
 spic::Scene* SettingsScene::Start()
 {
-	spic::input::ResetSubscribedEvents();
+	spic::input::UnSubscribeAll();
 	SettingsScene* a = new SettingsScene();
 	return a;
 }

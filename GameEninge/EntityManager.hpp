@@ -90,6 +90,7 @@ namespace spic::internal
 		* @param entity The entity that will be added
 		*/
 		void AddEntityAlsoToScene(const std::shared_ptr<spic::GameObject>& entity);
+		
 		/*
 		* @brief Remove entity.
 		* @param name The name of the entity that will be removed

@@ -33,11 +33,6 @@ namespace spic::internal {
 		static InputManager* GetInstance();
 
 		/**
-		* @brief Removes all listeners
-		*/
-		void Reset();
-
-		/**
 		* @brief Listen to key and mouse listeners
 		*/
 		void Listen();

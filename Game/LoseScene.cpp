@@ -33,7 +33,7 @@ void LoseScene::SetContents()
 
 spic::Scene* LoseScene::Start()
 {
-	spic::input::ResetSubscribedEvents();
+	spic::input::UnSubscribeAll();
 	LoseScene* a = new LoseScene();
 	return a;
 }

@@ -33,7 +33,7 @@ void WinScene::SetContents()
 
 spic::Scene* WinScene::Start()
 {
-	spic::input::ResetSubscribedEvents();
+	spic::input::UnSubscribeAll();
 	WinScene* a = new WinScene();
 	return a;
 }

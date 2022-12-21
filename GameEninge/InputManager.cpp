@@ -25,14 +25,6 @@ namespace spic::internal
 		return pinstance_;
 	}
 
-	void InputManager::Reset()
-	{
-		keyEvents = {};
-		mouseEvents = {};
-		keyListeners = {};
-		mouseListeners = {};
-	}
-
 	void InputManager::Listen()
 	{
 		if (spic::input::Quit())

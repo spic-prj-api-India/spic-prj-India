@@ -20,35 +20,6 @@ namespace spic::internal::audio::impl {
     */
     class AudioManager
     {   
-    private:
-
-        /**
-         * @brief Holds all samples where the key is an audiosource
-        */
-        std::map<AudioSource*, std::unique_ptr<Sample>> samples;
-
-        /**
-         * @brief Holds all loaded audio chunks
-        */
-        std::map<std::string, std::shared_ptr<Chunk>> chunks;
-        
-        /**
-         * @brief Adds a loaded chunk object to the chunks mpap
-         * @param path The path to the song(mp3, flac, of wav)
-        */
-        void AddChunk(const std::string& path);
-        
-        /**
-         * @brief Checks and removes chunk if there is only 1 loaded in the chunks map 
-         * @param path 
-        */
-        void TrimChunk(const std::string& path);
-
-        /**
-         * @brief Clears the chunks map
-        */
-        void ResetChunks();
-
     public:
         /**
          * @brief Sets up the audio devices
@@ -112,6 +83,34 @@ namespace spic::internal::audio::impl {
          * @brief Clears the vector list samples and chunks
         */
         void Reset();
+    private:
+        /**
+         * @brief Adds a loaded chunk object to the chunks mpap
+         * @param path The path to the song(mp3, flac, of wav)
+        */
+        void AddChunk(const std::string& path);
+
+        /**
+         * @brief Checks and removes chunk if there is only 1 loaded in the chunks map
+         * @param path
+        */
+        void TrimChunk(const std::string& path);
+
+        /**
+         * @brief Clears the chunks map
+        */
+        void ResetChunks();
+    private:
+
+        /**
+         * @brief Holds all samples where the key is an audiosource
+        */
+        std::map<AudioSource*, std::unique_ptr<Sample>> samples;
+
+        /**
+         * @brief Holds all loaded audio chunks
+        */
+        std::map<std::string, std::shared_ptr<Chunk>> chunks;
     };
 }
 #endif // AUDIOMANAGER_H_

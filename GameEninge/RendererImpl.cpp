@@ -82,7 +82,7 @@ void RendererImpl::Start()
 }
 
 
-void spic::internal::rendering::RendererImpl::RenderFps()
+void spic::internal::rendering::RendererImpl::DrawFps()
 {
 	using namespace spic::internal::time;
 	auto frameRate = std::to_string(static_cast<int>(std::floor(InternalTime::frameRate)));

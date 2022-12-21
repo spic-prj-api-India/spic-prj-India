@@ -374,16 +374,10 @@ namespace spic {
         void UnSubscribe(MouseButton mouseEvent);
 
         /**
-        * @brief Unsubscribes all listeners (only call this when loading a new scene)
+        * @brief Unsubscribes all key and mouse listeners (only call this when loading a new scene)
         * @sharedapi
         */
         void UnSubscribeAll();
-
-        /**
-        * @brief Unsubscribes all key and mouse events
-        * @sharedapi
-        */
-        void ResetSubscribedEvents();
     }
 }
 

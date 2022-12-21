@@ -29,7 +29,7 @@ void CreditsScene::SetContents()
 		, spic::Alignment::CENTER
 		, spic::Color::white());
 
-	auto music = std::make_shared<spic::AudioSource>("assets/music/1-03 Strepitoso Fight.mp3", true, true, 0.2);
+	auto music = std::make_shared<spic::AudioSource>("assets/music/1-03 Strepitoso Fight.mp3", true, true, 0.2f);
 
 	credits->Transform(std::make_shared<spic::Transform>(spic::Point(0.0f, 0.0f), 0.0f, 1.0f));
 	credits->AddComponent(music);
@@ -42,7 +42,7 @@ void CreditsScene::SetContents()
 
 	auto script1 = std::make_shared<CreditsSceneScript>();
 
-	auto music1 = std::make_shared<spic::AudioSource>("assets/music/mi_explosion_03_hpx.mp3", false, false, 1);
+	auto music1 = std::make_shared<spic::AudioSource>("assets/music/mi_explosion_03_hpx.mp3", false, false, 1.0f);
 	script1->ani = animator1.get();
 	script1->source = music1.get();
 	animatorObject1->AddComponent(std::move(music1));
@@ -50,31 +50,12 @@ void CreditsScene::SetContents()
 	animatorObject1->AddComponent(std::move(script1));
 	credits->AddChild(std::move(animatorObject1));
 
-
-
-	/*auto animatorObject2 = std::make_shared<spic::GameObject>();
-	animatorObject2->Transform(std::make_shared<spic::Transform>(spic::Point(700.0f, 200.0f), 0.0f, 0.5f));
-	auto animator2 = std::make_shared<spic::Animator>(20);
-	animator2->InitHorizontalSpriteSheet("assets/textures/animated-explosion/Explosion_9/spritesheet.png", 10, 800, 800);
-	animator2->Stop();
-
-	auto script2 = std::make_shared<CreditsSceneScript>();
-	script2->ani = animator2.get();
-	auto music2 = std::make_shared<spic::AudioSource>("assets/music/mi_explosion_03_hpx.mp3", false, false, 1);
-	script2->source = music2.get();
-
-	
-	animatorObject2->AddComponent(std::move(animator2));
-	animatorObject2->AddComponent(std::move(script2));
-	animatorObject2->AddComponent(std::move(music2));
-	credits->AddChild(std::move(animatorObject2));
-	*/
 	this->AddContent(credits);
 }
 
 spic::Scene* CreditsScene::Start()
 {
-	spic::input::ResetSubscribedEvents();
+	spic::input::UnSubscribeAll();
 	CreditsScene* a = new CreditsScene();
 	return a;
 }

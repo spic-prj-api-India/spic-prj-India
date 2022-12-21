@@ -51,7 +51,6 @@ namespace spic
 			void Render() const;
 		private:
 			std::map<int, std::unique_ptr<TileLayer>> tileLayers;
-			std::vector<std::shared_ptr<spic::GameObject>> collisionEntities;
 			int collisionLayerIndex;
 		};
 	}

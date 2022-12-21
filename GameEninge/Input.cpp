@@ -93,9 +93,4 @@ namespace spic
 	{
 		spic::internal::InputManager::GetInstance()->UnSubscribeAll();
 	}
-
-	void input::ResetSubscribedEvents()
-	{
-		spic::internal::InputManager::GetInstance()->Reset();
-	}
 }

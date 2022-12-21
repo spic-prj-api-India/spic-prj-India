@@ -226,7 +226,6 @@
     <ClInclude Include="Renderer.hpp" />
     <ClInclude Include="RenderingSystem.hpp" />
     <ClInclude Include="ResetGameSpeedListener.hpp" />
-    <ClInclude Include="Serializer.hpp" />
     <ClInclude Include="SocketScript.hpp" />
     <ClInclude Include="Steering.hpp" />
     <ClInclude Include="StringHelper.hpp" />
@@ -320,6 +319,7 @@
     <ClCompile Include="GameObject.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram.cd" />
     <None Include="NetworkPacket.hpp" />
     <None Include="packages.config" />
     <None Include="UISprite.qrc" />

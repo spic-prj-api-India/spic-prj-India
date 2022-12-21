@@ -62,7 +62,7 @@ void GameScene::SetContents()
 
 spic::Scene* GameScene::Start()
 {
-	spic::input::ResetSubscribedEvents();
+	spic::input::UnSubscribeAll();
 	GameScene* a = new GameScene();
 	return a;
 }

@@ -54,7 +54,7 @@ void MenuScene::AddButton(const std::string& text, std::function<void()> callbac
 
 spic::Scene* MenuScene::Start()
 {
-	spic::input::ResetSubscribedEvents();
+	spic::input::UnSubscribeAll();
 	MenuScene* a = new MenuScene();
 	return a;
 }

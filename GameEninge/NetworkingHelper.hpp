@@ -26,7 +26,7 @@ namespace spic::helper_functions
          * @param Columb Which parameter you want
          * @return Your private ip address
         */
-        std::string GetParsedIPConfigData(const std::string& Columb);
+        std::string GetParsedIPConfigData(const std::string& columb);
     }
 };
 #endif
