@@ -5,7 +5,7 @@
 #include "RocketReceiveScript.h"
 #include "CollisionDetectionScript.h"
 
-ShooterReceiveScript::ShooterReceiveScript() : SocketScript()
+ShooterReceiveScript::ShooterReceiveScript() : SocketScript(), sceneLoaded{false}
 {
 	this->AddSocket(spic::GameEngine::GetInstance()->GetExtension<spic::extensions::SocketUDPExtension>());
 }
@@ -36,6 +36,13 @@ void ShooterReceiveScript::DestroyEntity(const spic::NetworkPacket* packet, std:
 
 void ShooterReceiveScript::SyncEntity(const spic::NetworkPacket* packet, std::shared_ptr<spic::GameObject> entity)
 {
+	if (packet->data.count("won") == 0 || sceneLoaded)
+		return;
+	bool won = std::stoi(packet->data.at("won"));
+	if(won)
+		spic::GameEngine::GetInstance()->LoadSceneByName("won");
+	else
+		spic::GameEngine::GetInstance()->LoadSceneByName("lost");
 }
 
 void ShooterReceiveScript::UpdateEntity(const spic::NetworkPacket* packet, std::shared_ptr<spic::GameObject> entity)

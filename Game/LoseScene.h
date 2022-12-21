@@ -2,9 +2,9 @@
 
 #include "Scene.hpp"
 
-class FlockingScene : public spic::Scene {
+class LoseScene : public spic::Scene {
 public:
-	FlockingScene();
+	LoseScene();
 
 	void SetCamera();
 	void SetContents();

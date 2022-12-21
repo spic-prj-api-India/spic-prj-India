@@ -50,7 +50,6 @@ namespace spic::extensions
 			if (auto& w = world; w != nullptr)
 				while (world->IsLocked())
 					std::this_thread::sleep_for(std::chrono::milliseconds(1));
-			
 		}
 
 		PhysicsExtensionImpl1(const PhysicsExtensionImpl1& rhs)
@@ -141,6 +140,9 @@ namespace spic::extensions
 
 			for (auto& entity : entities) 
 			{
+				if (spic::GameObject::Find(entity->Name()) == nullptr)
+					continue;
+
 				bool exists = bodies.find(entity->Name()) != bodies.end();
 
 				if (exists)
@@ -158,6 +160,9 @@ namespace spic::extensions
 			// Update entities
 			for (auto& entity : entities) 
 			{
+				if (bodies.count(entity->Name()) == 0)
+					continue;
+
 				// Get body
 				b2Body* body = bodies[entity->Name()];
 

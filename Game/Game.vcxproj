@@ -159,7 +159,10 @@
     <ClCompile Include="CreditsSceneScript.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameScene.cpp" />
+    <ClCompile Include="GameStatusReceiveScript.cpp" />
+    <ClCompile Include="GameStatusSendScript.cpp" />
     <ClCompile Include="KeyListener.cpp" />
+    <ClCompile Include="LoseScene.cpp" />
     <ClCompile Include="MenuScene.cpp" />
     <ClCompile Include="FollowMouseListener.cpp" />
     <ClCompile Include="RocketReceiveScript.cpp" />
@@ -175,6 +178,7 @@
     <ClCompile Include="Target.cpp" />
     <ClCompile Include="TargetReceiveScript.cpp" />
     <ClCompile Include="TargetSendScript.cpp" />
+    <ClCompile Include="WinScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AimListener.h" />
@@ -187,10 +191,13 @@
     <ClInclude Include="CreditsScene.h" />
     <ClInclude Include="CreditsSceneScript.h" />
     <ClInclude Include="GameScene.h" />
+    <ClInclude Include="GameStatusReceiveScript.h" />
+    <ClInclude Include="GameStatusSendScript.h" />
     <ClInclude Include="GlobalSettings.h" />
     <ClInclude Include="KeyListener.h" />
     <ClInclude Include="FollowMouseListener.h" />
     <ClInclude Include="CircleObstacle.h" />
+    <ClInclude Include="LoseScene.h" />
     <ClInclude Include="RocketReceiveScript.h" />
     <ClInclude Include="RocketSendScript.h" />
     <ClInclude Include="SeekingRocket.h" />
@@ -205,6 +212,7 @@
     <ClInclude Include="Target.h" />
     <ClInclude Include="TargetReceiveScript.h" />
     <ClInclude Include="TargetSendScript.h" />
+    <ClInclude Include="WinScene.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GameEninge\GameEninge.vcxproj">

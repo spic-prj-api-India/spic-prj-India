@@ -3,7 +3,7 @@
 #include "GameEngine.hpp"
 #include <SocketUDPExtension.hpp>
 
-RocketReceiveScript::RocketReceiveScript() : SocketScript()
+RocketReceiveScript::RocketReceiveScript() : SocketScript(), sceneLoaded{ false }
 {
 	this->AddSocket(spic::GameEngine::GetInstance()->GetExtension<spic::extensions::SocketUDPExtension>());
 }

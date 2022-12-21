@@ -16,6 +16,8 @@
 #include "MenuScene.h"
 #include "CreditsScene.h"
 #include "SettingsScene.h"
+#include "LoseScene.h"
+#include "WinScene.h"
 
 
 void InitGame() {
@@ -48,6 +50,8 @@ void InitGame() {
 	engine->RegisterScene("game", std::function<spic::Scene* ()>(GameScene::Start));
 	engine->RegisterScene("credits", std::function<spic::Scene* ()>(CreditsScene::Start));
 	engine->RegisterScene("flock", std::function<spic::Scene* ()>(FlockingScene::Start));
+	engine->RegisterScene("won", std::function<spic::Scene* ()>(WinScene::Start));
+	engine->RegisterScene("lost", std::function<spic::Scene* ()>(LoseScene::Start));
 	engine->RegisterScene("settings", std::function<spic::Scene* ()>(SettingsScene::Start));
 }
 

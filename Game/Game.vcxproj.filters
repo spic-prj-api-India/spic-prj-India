@@ -43,6 +43,36 @@
     <Filter Include="Source Files\scripts\networking">
       <UniqueIdentifier>{bbfb6ff0-626a-4493-b657-6596e0db45d5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\scenes\rocket game">
+      <UniqueIdentifier>{2a72a701-7e33-47e5-828c-303298795db0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\scenes\Rocket game">
+      <UniqueIdentifier>{44eacc49-2b9f-421c-9395-ee64340b89f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\scripts\networking\game_status">
+      <UniqueIdentifier>{dcce1192-4d17-4a27-bb42-de15b00a44d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\scripts\networking\shooter">
+      <UniqueIdentifier>{410e76e9-62ad-4254-bd43-db6768ee72f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\scripts\networking\target">
+      <UniqueIdentifier>{265799e7-f22a-4c7d-80b9-9616dab7ceb7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\scripts\networking\match_making">
+      <UniqueIdentifier>{b8cbd115-2076-4d5f-b1a4-910733816d3a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\scripts\networking\game_status">
+      <UniqueIdentifier>{2a0b2406-5b76-4e1d-8a39-89e76673cc8b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\scripts\networking\match_making">
+      <UniqueIdentifier>{ab6773b6-8bee-4bbf-9892-7941082bb104}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\scripts\networking\shooter">
+      <UniqueIdentifier>{84cff0b3-c0b8-4950-b101-d3150aa771e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\scripts\networking\target">
+      <UniqueIdentifier>{f5bc1b3f-1350-41ea-9a04-7ab73a9e93ad}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CollisionDetectionScript.cpp">
@@ -71,9 +101,6 @@
     </ClCompile>
     <ClCompile Include="Game.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="FlockingScene.cpp">
-      <Filter>Source Files\scenes</Filter>
     </ClCompile>
     <ClCompile Include="PlayerMovementScript.cpp">
       <Filter>Source Files\scripts</Filter>
@@ -105,29 +132,44 @@
     <ClCompile Include="Target.cpp">
       <Filter>Source Files\objects</Filter>
     </ClCompile>
-    <ClCompile Include="ShooterSendScript.cpp">
-      <Filter>Source Files\scripts\networking</Filter>
-    </ClCompile>
-    <ClCompile Include="ShooterReceiveScript.cpp">
-      <Filter>Source Files\scripts\networking</Filter>
-    </ClCompile>
-    <ClCompile Include="SyncScript.cpp">
-      <Filter>Source Files\scripts\networking</Filter>
-    </ClCompile>
-    <ClCompile Include="TargetReceiveScript.cpp">
-      <Filter>Source Files\scripts\networking</Filter>
-    </ClCompile>
-    <ClCompile Include="TargetSendScript.cpp">
-      <Filter>Source Files\scripts\networking</Filter>
-    </ClCompile>
-    <ClCompile Include="RocketSendScript.cpp">
-      <Filter>Source Files\scripts\networking</Filter>
-    </ClCompile>
-    <ClCompile Include="RocketReceiveScript.cpp">
-      <Filter>Source Files\scripts\networking</Filter>
-    </ClCompile>
     <ClCompile Include="SeekingRocket.cpp">
       <Filter>Source Files\objects</Filter>
+    </ClCompile>
+    <ClCompile Include="FlockingScene.cpp">
+      <Filter>Source Files\scenes\Rocket game</Filter>
+    </ClCompile>
+    <ClCompile Include="WinScene.cpp">
+      <Filter>Source Files\scenes\Rocket game</Filter>
+    </ClCompile>
+    <ClCompile Include="LoseScene.cpp">
+      <Filter>Source Files\scenes\Rocket game</Filter>
+    </ClCompile>
+    <ClCompile Include="GameStatusSendScript.cpp">
+      <Filter>Source Files\scripts\networking\game_status</Filter>
+    </ClCompile>
+    <ClCompile Include="ShooterReceiveScript.cpp">
+      <Filter>Source Files\scripts\networking\shooter</Filter>
+    </ClCompile>
+    <ClCompile Include="ShooterSendScript.cpp">
+      <Filter>Source Files\scripts\networking\shooter</Filter>
+    </ClCompile>
+    <ClCompile Include="TargetReceiveScript.cpp">
+      <Filter>Source Files\scripts\networking\target</Filter>
+    </ClCompile>
+    <ClCompile Include="TargetSendScript.cpp">
+      <Filter>Source Files\scripts\networking\target</Filter>
+    </ClCompile>
+    <ClCompile Include="RocketReceiveScript.cpp">
+      <Filter>Source Files\scripts\networking\shooter</Filter>
+    </ClCompile>
+    <ClCompile Include="RocketSendScript.cpp">
+      <Filter>Source Files\scripts\networking\shooter</Filter>
+    </ClCompile>
+    <ClCompile Include="SyncScript.cpp">
+      <Filter>Source Files\scripts\networking\match_making</Filter>
+    </ClCompile>
+    <ClCompile Include="GameStatusReceiveScript.cpp">
+      <Filter>Source Files\scripts\networking\game_status</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -157,9 +199,6 @@
     </ClInclude>
     <ClInclude Include="Rocket.h">
       <Filter>Header Files\objects</Filter>
-    </ClInclude>
-    <ClInclude Include="FlockingScene.h">
-      <Filter>Header Files\scenes</Filter>
     </ClInclude>
     <ClInclude Include="PlayerMovementScript.h">
       <Filter>Header Files\scripts</Filter>
@@ -191,29 +230,44 @@
     <ClInclude Include="Target.h">
       <Filter>Header Files\objects</Filter>
     </ClInclude>
-    <ClInclude Include="ShooterSendScript.h">
-      <Filter>Header Files\scripts\networking</Filter>
-    </ClInclude>
-    <ClInclude Include="ShooterReceiveScript.h">
-      <Filter>Header Files\scripts\networking</Filter>
-    </ClInclude>
-    <ClInclude Include="SyncScript.h">
-      <Filter>Header Files\scripts\networking</Filter>
-    </ClInclude>
-    <ClInclude Include="TargetReceiveScript.h">
-      <Filter>Header Files\scripts\networking</Filter>
-    </ClInclude>
-    <ClInclude Include="TargetSendScript.h">
-      <Filter>Header Files\scripts\networking</Filter>
-    </ClInclude>
-    <ClInclude Include="RocketSendScript.h">
-      <Filter>Header Files\scripts\networking</Filter>
-    </ClInclude>
-    <ClInclude Include="RocketReceiveScript.h">
-      <Filter>Header Files\scripts\networking</Filter>
-    </ClInclude>
     <ClInclude Include="SeekingRocket.h">
       <Filter>Header Files\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="FlockingScene.h">
+      <Filter>Header Files\scenes\rocket game</Filter>
+    </ClInclude>
+    <ClInclude Include="WinScene.h">
+      <Filter>Header Files\scenes\rocket game</Filter>
+    </ClInclude>
+    <ClInclude Include="LoseScene.h">
+      <Filter>Header Files\scenes\rocket game</Filter>
+    </ClInclude>
+    <ClInclude Include="GameStatusSendScript.h">
+      <Filter>Header Files\scripts\networking\game_status</Filter>
+    </ClInclude>
+    <ClInclude Include="SyncScript.h">
+      <Filter>Header Files\scripts\networking\match_making</Filter>
+    </ClInclude>
+    <ClInclude Include="GameStatusReceiveScript.h">
+      <Filter>Header Files\scripts\networking\game_status</Filter>
+    </ClInclude>
+    <ClInclude Include="ShooterReceiveScript.h">
+      <Filter>Header Files\scripts\networking\shooter</Filter>
+    </ClInclude>
+    <ClInclude Include="RocketReceiveScript.h">
+      <Filter>Header Files\scripts\networking\shooter</Filter>
+    </ClInclude>
+    <ClInclude Include="RocketSendScript.h">
+      <Filter>Header Files\scripts\networking\shooter</Filter>
+    </ClInclude>
+    <ClInclude Include="ShooterSendScript.h">
+      <Filter>Header Files\scripts\networking\shooter</Filter>
+    </ClInclude>
+    <ClInclude Include="TargetReceiveScript.h">
+      <Filter>Header Files\scripts\networking\target</Filter>
+    </ClInclude>
+    <ClInclude Include="TargetSendScript.h">
+      <Filter>Header Files\scripts\networking\target</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

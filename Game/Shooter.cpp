@@ -29,6 +29,6 @@ void Shooter::SetContent(std::map<std::string, std::string>& data)
 
 void Shooter::SetListener()
 {
-	std::shared_ptr<AimListener> aimListener = std::make_shared<AimListener>(Name());
+	std::shared_ptr<AimListener> aimListener = std::make_shared<AimListener>(this);
 	spic::input::Subscribe(spic::input::MouseButton::LEFT, aimListener);
 }

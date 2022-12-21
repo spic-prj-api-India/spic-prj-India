@@ -21,6 +21,7 @@ SettingsScene::SettingsScene() : Scene()
 
 spic::Scene* SettingsScene::Start()
 {
+	spic::input::ResetSubscribedEvents();
 	SettingsScene* a = new SettingsScene();
 	return a;
 }

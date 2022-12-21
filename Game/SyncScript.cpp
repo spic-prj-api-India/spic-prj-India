@@ -7,6 +7,8 @@
 #include "SocketUDPExtension.hpp"
 #include "Target.h"
 #include "Shooter.h"
+#include "GameStatusSendScript.h"
+#include "GameStatusReceiveScript.h"
 
 SyncScript::SyncScript() : SocketScript()
 {
@@ -35,6 +37,7 @@ void SyncScript::SyncEntity(const spic::NetworkPacket* packet, std::shared_ptr<s
 	if (packet->data.count("isShooter") != 0 && !isTarget && !isShooter) {
 		isShooter = true;
 		entity->AddComponent<spic::SocketScript>(std::make_shared<ShooterSendScript>());
+		entity->AddComponent<spic::SocketScript>(std::make_shared<GameStatusSendScript>());
 		auto target = spic::GameObject::Find("Target");
 		target->AddComponent<spic::SocketScript>(std::make_shared<TargetReceiveScript>());
 		spic::helper_functions::type_helper::CastSharedPtrToType<Shooter>(entity)->SetListener();
@@ -47,6 +50,7 @@ void SyncScript::SyncEntity(const spic::NetworkPacket* packet, std::shared_ptr<s
 		networkPacket.typeMessage = spic::MessageType::SYNC;
 		SendPacket(networkPacket);
 		entity->AddComponent<spic::SocketScript>(std::make_shared<ShooterReceiveScript>());
+		entity->AddComponent<spic::SocketScript>(std::make_shared<GameStatusReceiveScript>());
 		auto target = spic::GameObject::Find("Target");
 		target->AddComponent<spic::SocketScript>(std::make_shared<TargetSendScript>());
 		spic::helper_functions::type_helper::CastSharedPtrToType<Target>(target)->SetListener();

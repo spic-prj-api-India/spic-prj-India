@@ -7,28 +7,35 @@
 #include "CollisionDetectionScript.h"
 #include <Steering.hpp>
 #include "RocketSendScript.h"
+#include "Debug.hpp"
+#include "ShooterSendScript.h"
+#include <GameEngine.hpp>
+#include "GameStatusSendScript.h"
 
 using namespace spic::helper_functions::general_helper;
 
-AimListener::AimListener(const std::string& entityName) : rocketCount{ 0 }
+AimListener::AimListener(const spic::GameObject* weapon) : rocketCount{ 0 }, maxRockets{ 5 }, angle{ weapon->Transform()->rotation }, sceneLoaded{false}
 {
-	this->weapon = std::move(spic::GameObject::Find(entityName));
-	this->angle = this->weapon->Transform()->rotation;
+	this->weapon = weapon;
 }
 
 void AimListener::OnMouseMoved() {
+	if (weapon == nullptr)
+		return;
 	const spic::Point& mousePosition = spic::input::MousePosition();
 	const spic::Point& weaponPosition = weapon->Transform()->position;
 	const float deltaX = weaponPosition.x - mousePosition.x;
 	const float deltaY = weaponPosition.y - mousePosition.y;
 	const float angleDeg = (atan2(deltaY, deltaX) * 180.0000f) / 3.1416f;
-	this->angle = DEG2RAD<float>(angleDeg);
-	this->weapon->Transform()->rotation = angle;
+	this->weapon->Transform()->rotation = DEG2RAD<float>(angleDeg);
 }
 
 void AimListener::OnMouseClicked() {
+	if (weapon == nullptr)
+		return;
 	Shoot();
 	rocketCount++;
+	CheckLoseCondition();
 }
 
 void AimListener::OnMousePressed() {
@@ -64,5 +71,13 @@ void AimListener::Shoot()
 		force.Normalize();
 		force *= 0.5f;
 		rocket->rigidBody->AddForce(force);
+	}
+}
+
+void AimListener::CheckLoseCondition()
+{
+	if (rocketCount > maxRockets && !sceneLoaded) {
+		sceneLoaded = true;
+		this->weapon->GetComponent<GameStatusSendScript>()->SetGameStatus(GameStatus::LOST);
 	}
 }

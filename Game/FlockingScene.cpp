@@ -8,7 +8,6 @@
 #include <Input.hpp>
 #include "AimListener.h"
 #include "CircleObstacle.h"
-#include "BackScript.h"
 #include <DataHandler.hpp>
 #include "Shooter.h"
 #include "SyncScript.h"
@@ -21,19 +20,12 @@ FlockingScene::FlockingScene() : Scene()
 	LoadTileMap("assets/maps/map.tmx", 3);
 }
 
-spic::Scene* FlockingScene::Start()
-{
-	FlockingScene* a = new FlockingScene();
-	return a;
-}
-
 void FlockingScene::SetCamera()
 {
 	std::unique_ptr<spic::Camera> camera = std::make_unique<spic::Camera>();
 	camera->Transform(std::make_shared<spic::Transform>(spic::Point(0.0f, 0.0f), 0.0f, 1.0f));
 	camera->BackgroundColor(spic::Color::blue());
 	camera->AddComponent(std::make_shared<CameraMovementScript>());
-	camera->AddComponent<spic::BehaviourScript>(std::make_shared<BackScript>());
 	Camera(std::move(camera));
 }
 
@@ -56,4 +48,11 @@ void FlockingScene::SetContents()
 	AddContent(shooter);
 	AddContent(target);
 	AddContent(obstacle);
+}
+
+spic::Scene* FlockingScene::Start()
+{
+	spic::input::ResetSubscribedEvents();
+	FlockingScene* a = new FlockingScene();
+	return a;
 }
