@@ -1,4 +1,5 @@
 #include "RocketReceiveScript.h"
+#include "RocketSendScript.h"
 #include "GameEngine.hpp"
 #include <SocketUDPExtension.hpp>
 
@@ -17,6 +18,7 @@ void RocketReceiveScript::CreateEntity(const spic::NetworkPacket* packet, std::s
 
 void RocketReceiveScript::DestroyEntity(const spic::NetworkPacket* packet, std::shared_ptr<spic::GameObject> entity)
 {
+	spic::GameObject::Destroy(entity->Name());
 }
 
 void RocketReceiveScript::SyncEntity(const spic::NetworkPacket* packet, std::shared_ptr<spic::GameObject> entity)

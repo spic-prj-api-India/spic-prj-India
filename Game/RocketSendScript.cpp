@@ -23,6 +23,15 @@ void RocketSendScript::Send(std::shared_ptr<spic::GameObject> entity)
 	SendPacket(networkUpdatePacket);
 }
 
+void RocketSendScript::Destroy(DestroyType type)
+{
+	spic::NetworkPacket networkDestroyPacket = spic::NetworkPacket();
+	networkDestroyPacket.name = this->gameObject->Name();
+	networkDestroyPacket.data["destroy_type"] = std::to_string(type);
+	networkDestroyPacket.typeMessage = spic::MessageType::DESTROY;
+	SendPacket(networkDestroyPacket);
+}
+
 void RocketSendScript::CreateEntity(const spic::NetworkPacket* packet, std::shared_ptr<spic::GameObject> entity)
 {
 }

@@ -26,7 +26,6 @@ void ShooterReceiveScript::CreateEntity(const spic::NetworkPacket* packet, std::
 		return;
 	rocket = std::make_shared<Rocket>(rocketName);
 	rocket->Transform()->Deserialize(packet->data.at("transform"));
-	rocket->AddComponent<spic::BehaviourScript>(std::make_shared<CollisionDetectionScript>());
 	rocket->AddComponent<spic::SocketScript>(std::make_shared<RocketReceiveScript>());
 	spic::GameObject::Create(rocket);
 }
