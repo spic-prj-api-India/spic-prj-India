@@ -42,7 +42,7 @@ void GameScene::SetContents()
 		spic::input::KeyCode::J, spic::input::KeyCode::L, spic::input::KeyCode::I);
 	football->AddComponent<spic::BehaviourScript>(moveFootballScript);
 	
-	auto music = std::make_shared<spic::AudioSource>("assets/music/8-bit soundtrack.mp3", true, true, 0.3);
+	auto music = std::make_shared<spic::AudioSource>("assets/music/8-bit soundtrack.mp3", true, true, 0.3f);
 	football->AddComponent(music);
 
 	//UI test
