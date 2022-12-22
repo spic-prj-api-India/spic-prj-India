@@ -1,6 +1,6 @@
 #include "Shooter.h"
 #include <Sprite.hpp>
-#include "AimListener.h"
+#include "NetAimListener.h"
 #include <Input.hpp>
 #include <Text.hpp>
 
@@ -39,6 +39,6 @@ void Shooter::Init()
 
 	text->Transform(std::make_shared<spic::Transform>(spic::Point(0.0f, 0.0f), 0.0f, 1.0f));
 	GameObject::Create(text);
-	std::shared_ptr<AimListener> aimListener = std::make_shared<AimListener>(this, text);
+	std::shared_ptr<NetAimListener> aimListener = std::make_shared<NetAimListener>(this, text);
 	spic::input::Subscribe(spic::input::MouseButton::LEFT, aimListener);
 }

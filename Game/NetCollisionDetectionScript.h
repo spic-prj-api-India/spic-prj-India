@@ -3,8 +3,8 @@
 #include <BehaviourScript.hpp>
 #include <GameObject.hpp>
 
-class CollisionDetectionScript :
-    public spic::BehaviourScript {
+class NetCollisionDetectionScript :
+	public spic::BehaviourScript {
 public:
     virtual void OnTriggerEnter2D(const spic::Collider& collider) override;
     virtual void OnTriggerExit2D(const spic::Collider& collider) override;

@@ -8,7 +8,7 @@
 #include <GameEngine.hpp>
 #include "BackScript.h"
 #include "BoxSpawnerScript.h"
-#include "Settings.h"
+#include <DataHandler.hpp>
 
 GameScene::GameScene() : Scene()
 {
@@ -43,7 +43,11 @@ void GameScene::SetContents()
 		spic::input::KeyCode::J, spic::input::KeyCode::L, spic::input::KeyCode::I);
 	football->AddComponent<spic::BehaviourScript>(moveFootballScript);
 	
-	if (background_music)
+	std::map<std::string, std::string> settings;
+	spic::DataHandler dataHandler = spic::DataHandler("settings");
+	dataHandler.LoadSettings(settings);
+	bool backgroundMusic = std::stoi(settings["background_music"]);
+	if (backgroundMusic)
 	{
 		auto music = std::make_shared<spic::AudioSource>("assets/music/8-bit soundtrack.mp3", true, true, 0.3f);
 		football->AddComponent(music);

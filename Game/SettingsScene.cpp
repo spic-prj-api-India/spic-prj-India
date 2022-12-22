@@ -4,13 +4,11 @@
 #include <Text.hpp>
 #include "KeyListener.h"
 #include <Input.hpp>
-#include "FlockingScene.h"
 #include "GameScene.h"
 #include "SettingsScene.h"
 #include "DataHandler.hpp"
 #include "Text.hpp"
 #include "BackScript.h"
-#include "Settings.h"
 
 using namespace spic;
 
@@ -52,12 +50,51 @@ void SettingsScene::SetContents()
 		settings["background_music"] == "1" ? settings["background_music"] = "0" : settings["background_music"] = "1";
 		dataHandler.AddSettings(settings);
 		dataHandler.Save();
-		background_music = !background_music;
 
 		settings["background_music"] == "1" ? 
 			settingButtons["background_music"]->GetComponent<Sprite>()->Color(Color::green()) :
 			settingButtons["background_music"]->GetComponent<Sprite>()->Color(Color::white());
-		}, 50.0f);
+		}, 40.0f);
+	AddSettingButton("use_wander", "Use wander", [this]() {
+		spic::DataHandler dataHandler = spic::DataHandler("settings");
+		settings["use_wander"] == "1" ? settings["use_wander"] = "0" : settings["use_wander"] = "1";
+		dataHandler.AddSettings(settings);
+		dataHandler.Save();
+
+		settings["use_wander"] == "1" ?
+			settingButtons["use_wander"]->GetComponent<Sprite>()->Color(Color::green()) :
+			settingButtons["use_wander"]->GetComponent<Sprite>()->Color(Color::white());
+		}, 130.0f);
+	AddSettingButton("use_seek", "Use seek", [this]() {
+		spic::DataHandler dataHandler = spic::DataHandler("settings");
+		settings["use_seek"] == "1" ? settings["use_seek"] = "0" : settings["use_seek"] = "1";
+		dataHandler.AddSettings(settings);
+		dataHandler.Save();
+
+		settings["use_seek"] == "1" ?
+			settingButtons["use_seek"]->GetComponent<Sprite>()->Color(Color::green()) :
+			settingButtons["use_seek"]->GetComponent<Sprite>()->Color(Color::white());
+		}, 220.0f);
+	AddSettingButton("use_flee", "Use flee", [this]() {
+		spic::DataHandler dataHandler = spic::DataHandler("settings");
+		settings["use_flee"] == "1" ? settings["use_flee"] = "0" : settings["use_flee"] = "1";
+		dataHandler.AddSettings(settings);
+		dataHandler.Save();
+
+		settings["use_flee"] == "1" ?
+			settingButtons["use_flee"]->GetComponent<Sprite>()->Color(Color::green()) :
+			settingButtons["use_flee"]->GetComponent<Sprite>()->Color(Color::white());
+		}, 310.0f);
+	AddSettingButton("use_arrival", "Use arrival", [this]() {
+		spic::DataHandler dataHandler = spic::DataHandler("settings");
+		settings["use_arrival"] == "1" ? settings["use_arrival"] = "0" : settings["use_arrival"] = "1";
+		dataHandler.AddSettings(settings);
+		dataHandler.Save();
+
+		settings["use_arrival"] == "1" ?
+			settingButtons["use_arrival"]->GetComponent<Sprite>()->Color(Color::green()) :
+			settingButtons["use_arrival"]->GetComponent<Sprite>()->Color(Color::white());
+		}, 400.0f);
 }
 
 void SettingsScene::RestoreSettings()
@@ -67,6 +104,18 @@ void SettingsScene::RestoreSettings()
 	settings["background_music"] == "0" ? 
 		settingButtons["background_music"]->GetComponent<Sprite>()->Color(spic::Color::white()) : 
 		settingButtons["background_music"]->GetComponent<Sprite>()->Color(spic::Color::green());
+	settings["use_wander"] == "0" ?
+		settingButtons["use_wander"]->GetComponent<Sprite>()->Color(spic::Color::white()) :
+		settingButtons["use_wander"]->GetComponent<Sprite>()->Color(spic::Color::green());
+	settings["use_seek"] == "0" ?
+		settingButtons["use_seek"]->GetComponent<Sprite>()->Color(spic::Color::white()) :
+		settingButtons["use_seek"]->GetComponent<Sprite>()->Color(spic::Color::green());
+	settings["use_flee"] == "0" ?
+		settingButtons["use_flee"]->GetComponent<Sprite>()->Color(spic::Color::white()) :
+		settingButtons["use_flee"]->GetComponent<Sprite>()->Color(spic::Color::green());
+	settings["use_arrival"] == "0" ?
+		settingButtons["use_arrival"]->GetComponent<Sprite>()->Color(spic::Color::white()) :
+		settingButtons["use_arrival"]->GetComponent<Sprite>()->Color(spic::Color::green());
 }
 
 void SettingsScene::AddButton(const std::string& name, const std::string& text, std::function<void()> callback, const float offset)

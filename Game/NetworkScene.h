@@ -2,9 +2,9 @@
 
 #include "Scene.hpp"
 
-class FlockingScene : public spic::Scene {
+class NetworkScene : public spic::Scene {
 public:
-	FlockingScene();
+	NetworkScene();
 
 	static spic::Scene* Start();
 private:
