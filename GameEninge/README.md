@@ -49,9 +49,14 @@ Input is a crucial aspect of creating interactive and engaging games. It allows 
 **Saving Settings:** 
 You can use the ability to save game settings to store player preferences and customise their gameplay experience. You can save settings such as background music, player type, and difficulty level in a local save file. These settings can be restored at any time during the game, allowing players to customise their experience and pick up where they left off. By using the save game settings feature, you can create a more personalised gameplay experience for your players.
 
+**FPS Counter**
+The engine includes by default the ability to show and hide the fps counter. By default it is bound to tab but it is completly possible to change it to another key by changing the relevant settting in the settings namespace.
+
 **Advanced Features:** 
 	- **Networking (Multiplayer):** The engine includes built-in support for multiplayer gameplay, allowing you to create multiplayer experiences that can be played across multiple devices. With multiplayer support, you can synchronise GameObjects and events happening in-game across all connected devices. With multiplayer support, you can create a wide range of multiplayer experiences, such as cooperative or competitive games, real-time multiplayer simulations, and social multiplayer experiences.
 
 	- **Extensions:** The engine includes support for custom extensions for physics and networking, allowing you to tailor the physics and multiplayer functionality of your project to fit your specific needs. This can be particularly useful if you need to implement custom physics or networking systems that are not provided out-of-the-box by the engine. Note that only one physics extension can be implemented at a time.
+
+If you are developing the game everything contained in the namespace internal is not for you.
 
 # Copyright (c) 2022 Avans Hogeschool, 's-Hertogenbosch. 

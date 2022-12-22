@@ -18,8 +18,39 @@
 #include "SettingsScene.h"
 #include "LoseScene.h"
 #include "WinScene.h"
+#include "Settings.h"
 
-void InitGame() {
+bool stob(std::string s, bool throw_on_error = true)
+{
+	auto result = false;    // failure to assert is false
+
+	std::istringstream is(s);
+	// first try simple integer conversion
+	is >> result;
+
+	if (is.fail())
+	{
+		// simple integer failed; try boolean
+		is.clear();
+		is >> std::boolalpha >> result;
+	}
+
+	if (is.fail() && throw_on_error)
+	{
+		throw std::invalid_argument(s.append(" is not convertable to bool"));
+	}
+
+	return result;
+}
+
+void InitGame() 
+{
+
+	spic::DataHandler settingsHandler = spic::DataHandler("settings");
+	std::map<std::string, std::string> settings;
+	settingsHandler.LoadSettings(settings);
+
+	background_music = stob(settings["background_music"]);
 
 	// Creates GameEngine instance 
 	spic::GameEngine* engine = spic::GameEngine::GetInstance();
@@ -34,7 +65,7 @@ void InitGame() {
 	spic::DataHandler dataHandler = spic::DataHandler("networking");
 	std::map<std::string, std::string> networkSettings;
 	dataHandler.LoadSettings(networkSettings);
-	const std::string& opponentIp = (networkSettings["player1"] == ownIp ? networkSettings["player2"] : networkSettings["player1"]);
+	const std::string& opponentIp = (networkSettings["opponent"]);
 
 	auto socket = std::make_shared<spic::extensions::SocketUDPExtension>();
 	socket->InitListener(13252);

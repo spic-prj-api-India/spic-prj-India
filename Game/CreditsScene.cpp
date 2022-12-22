@@ -4,6 +4,7 @@
 #include "CreditsSceneScript.h"
 #include "BackScript.h"
 #include "AudioSource.hpp"
+#include "Settings.h"
 CreditsScene::CreditsScene()
 {
 	SetCamera();
@@ -29,10 +30,15 @@ void CreditsScene::SetContents()
 		, spic::Alignment::CENTER
 		, spic::Color::white());
 
-	auto music = std::make_shared<spic::AudioSource>("assets/music/1-03 Strepitoso Fight.mp3", true, true, 0.2f);
+
+	if (background_music)
+	{
+		auto music = std::make_shared<spic::AudioSource>("assets/music/1-03 Strepitoso Fight.mp3", true, true, 0.2f);
+		credits->AddComponent(music);
+	}
 
 	credits->Transform(std::make_shared<spic::Transform>(spic::Point(0.0f, 0.0f), 0.0f, 1.0f));
-	credits->AddComponent(music);
+	
 
 	auto animatorObject1 = std::make_shared<spic::GameObject>();
 	animatorObject1->Transform(std::make_shared<spic::Transform>(spic::Point(0.0f, 200.0f), 0.0f, 0.5f));

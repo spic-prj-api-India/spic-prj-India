@@ -10,6 +10,7 @@
 #include "DataHandler.hpp"
 #include "Text.hpp"
 #include "BackScript.h"
+#include "Settings.h"
 
 using namespace spic;
 
@@ -51,6 +52,8 @@ void SettingsScene::SetContents()
 		settings["background_music"] == "1" ? settings["background_music"] = "0" : settings["background_music"] = "1";
 		dataHandler.AddSettings(settings);
 		dataHandler.Save();
+		background_music = !background_music;
+
 		settings["background_music"] == "1" ? 
 			settingButtons["background_music"]->GetComponent<Sprite>()->Color(Color::green()) :
 			settingButtons["background_music"]->GetComponent<Sprite>()->Color(Color::white());

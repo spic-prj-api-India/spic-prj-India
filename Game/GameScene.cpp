@@ -8,6 +8,7 @@
 #include <GameEngine.hpp>
 #include "BackScript.h"
 #include "BoxSpawnerScript.h"
+#include "Settings.h"
 
 GameScene::GameScene() : Scene()
 {
@@ -42,8 +43,12 @@ void GameScene::SetContents()
 		spic::input::KeyCode::J, spic::input::KeyCode::L, spic::input::KeyCode::I);
 	football->AddComponent<spic::BehaviourScript>(moveFootballScript);
 	
-	auto music = std::make_shared<spic::AudioSource>("assets/music/8-bit soundtrack.mp3", true, true, 0.3f);
-	football->AddComponent(music);
+	if (background_music)
+	{
+		auto music = std::make_shared<spic::AudioSource>("assets/music/8-bit soundtrack.mp3", true, true, 0.3f);
+		football->AddComponent(music);
+	}
+
 
 	//UI test
 	std::shared_ptr<spic::Button> button = std::make_shared<spic::Button>(200.0f, 100.0f, "Save scene");
