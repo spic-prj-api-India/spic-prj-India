@@ -1,16 +1,21 @@
 #pragma once
 
 #include <IMouseListener.hpp>
-#include "Point.hpp"
+#pragma once
+
+#include <IMouseListener.hpp>
+#include "ForceDriven.hpp"
 
 class FollowMouseListener : public spic::IMouseListener {
 public:
-    FollowMouseListener(spic::Point& targetPosition);
+    FollowMouseListener();
 
     void OnMouseMoved() override;
     void OnMouseClicked() override;
     void OnMousePressed() override;
     void OnMouseReleased() override;
+
+    void AddFollower(std::shared_ptr<spic::ForceDriven> follower);
 private:
-    spic::Point& target;
+    std::unique_ptr<spic::Point> target;
 };

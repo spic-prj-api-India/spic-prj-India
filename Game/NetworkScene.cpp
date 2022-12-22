@@ -1,34 +1,32 @@
-#include "FlockingScene.h"
+#include "NetworkScene.h"
 #include <Button.hpp>
 #include "CameraMovementScript.h"
 #include "CollisionDetectionScript.h"
 #include <BoxCollider.hpp>
 #include "AudioSource.hpp"
 #include <Input.hpp>
-#include "AimListener.h"
 #include "CircleObstacle.h"
 #include <DataHandler.hpp>
 #include "Shooter.h"
 #include "SyncScript.h"
 #include "Target.h"
 
-FlockingScene::FlockingScene() : Scene()
+NetworkScene::NetworkScene() : Scene()
 {
 	SetCamera();
 	SetContents();
 	LoadTileMap("assets/maps/map.tmx", 3);
 }
 
-void FlockingScene::SetCamera()
+void NetworkScene::SetCamera()
 {
 	std::unique_ptr<spic::Camera> camera = std::make_unique<spic::Camera>();
 	camera->Transform(std::make_shared<spic::Transform>(spic::Point(0.0f, 0.0f), 0.0f, 1.0f));
 	camera->BackgroundColor(spic::Color::blue());
-	camera->AddComponent(std::make_shared<CameraMovementScript>());
 	Camera(std::move(camera));
 }
 
-void FlockingScene::SetContents()
+void NetworkScene::SetContents()
 {
 	/* Shooter setup */
 	spic::Point shooterPosition = { 700.0f, 375.0f };
@@ -49,9 +47,9 @@ void FlockingScene::SetContents()
 	AddContent(obstacle);
 }
 
-spic::Scene* FlockingScene::Start()
+spic::Scene* NetworkScene::Start()
 {
 	spic::input::UnSubscribeAll();
-	FlockingScene* a = new FlockingScene();
+	NetworkScene* a = new NetworkScene();
 	return a;
 }

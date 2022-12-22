@@ -4,7 +4,8 @@
 #include "CreditsSceneScript.h"
 #include "BackScript.h"
 #include "AudioSource.hpp"
-#include "Settings.h"
+#include <DataHandler.hpp>
+
 CreditsScene::CreditsScene()
 {
 	SetCamera();
@@ -31,7 +32,11 @@ void CreditsScene::SetContents()
 		, spic::Color::white());
 
 
-	if (background_music)
+	std::map<std::string, std::string> settings;
+	spic::DataHandler dataHandler = spic::DataHandler("settings");
+	dataHandler.LoadSettings(settings);
+	bool backgroundMusic = std::stoi(settings["background_music"]);
+	if (backgroundMusic)
 	{
 		auto music = std::make_shared<spic::AudioSource>("assets/music/1-03 Strepitoso Fight.mp3", true, true, 0.2f);
 		credits->AddComponent(music);

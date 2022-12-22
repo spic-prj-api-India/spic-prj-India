@@ -1,5 +1,5 @@
 #include "Target.h"
-#include "FollowMouseListener.h"
+#include "NetFollowMouseListener.h"
 #include <Input.hpp>
 #include <Sprite.hpp>
 #include <CircleCollider.hpp>
@@ -33,5 +33,5 @@ void Target::SetContent(std::map<std::string, std::string>& data)
 
 void Target::Init()
 {
-	spic::input::Subscribe(spic::input::MouseButton::LEFT, std::make_shared<FollowMouseListener>(Transform()->position));
+	spic::input::Subscribe(spic::input::MouseButton::LEFT, std::make_shared<NetFollowMouseListener>(Transform()->position));
 }
