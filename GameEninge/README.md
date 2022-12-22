@@ -59,7 +59,7 @@ The engine includes by default the ability to show and hide the fps counter. By 
 
 If you are developing an game with this engine everything contained in the namespace internal is not for you.
 
-# Instalation
+# Installation
 The game engine is a static library, so this library must be statically linked to your project. Furthermore it is not out of the box compatible with CMake. Instead, it uses a Visual studio solution file.
 
 Run these lines in powershell (width admin rights) to install the libraries used by the game engine (using the package manager VCPKG):
