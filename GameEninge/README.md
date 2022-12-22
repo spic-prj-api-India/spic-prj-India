@@ -57,6 +57,28 @@ The engine includes by default the ability to show and hide the fps counter. By 
 
 	- **Extensions:** The engine includes support for custom extensions for physics and networking, allowing you to tailor the physics and multiplayer functionality of your project to fit your specific needs. This can be particularly useful if you need to implement custom physics or networking systems that are not provided out-of-the-box by the engine. Note that only one physics extension can be implemented at a time.
 
-If you are developing the game everything contained in the namespace internal is not for you.
+If you are developing an game with this engine everything contained in the namespace internal is not for you.
+
+# Instalation
+The game engine is a static library, so this library must be statically linked to your project. Furthermore it is not out of the box compatible with CMake. Instead, it uses a Visual studio solution file.
+
+Run these lines in powershell (width admin rights) to install the libraries used by the game engine (using the package manager VCPKG):
+```
+$path = "C:\dev\vcpkg"
+Set-Location $path
+git clone https://github.com/microsoft/vcpkg
+.\vcpkg\bootstrap-vcpkg.bat
+.\vcpkg\vcpkg integrate install
+.\vcpkg\vcpkg install sdl2:x64-windows sdl2-image:x64-windows sdl2-mixer:x64-windows sdl2-ttf:x64-windows
+.\vcpkg\vcpkg install boost:x64-windows 
+.\vcpkg\vcpkg install boost-asio:x64-windows
+.\vcpkg\vcpkg install tinyxml:x64-windows
+.\vcpkg\vcpkg install box2d:x64-windows
+```
+
+Follow these steps to install/use the game engine:
+Place the game engine folder in a logical place in your project, for example in a folder “external”.
+Link the static game library with your game. If you do not know how to do this you can follow the guide [here](https://learn.microsoft.com/en-us/cpp/build/walkthrough-creating-and-using-a-static-library-cpp?view=msvc-170).
+Now you can start coding. This website always has the latest information about the engine. 
 
 # Copyright (c) 2022 Avans Hogeschool, 's-Hertogenbosch. 
