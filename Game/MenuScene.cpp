@@ -4,7 +4,6 @@
 #include <Text.hpp>
 #include "KeyListener.h"
 #include <Input.hpp>
-#include "FlockingScene.h"
 #include "GameScene.h"
 
 MenuScene::MenuScene() : Scene()
@@ -31,15 +30,18 @@ void MenuScene::SetContents()
 		std::shared_ptr<GameScene> sceneToLoad = std::make_shared<GameScene>();
 		spic::GameEngine::GetInstance()->LoadSceneBySaveFile(sceneToLoad, "game");
 		}, 100.0f);
-	AddButton("Flock/Network Demo", []() {
-		spic::GameEngine::GetInstance()->LoadSceneByName("flock");
+	AddButton("Network Demo", []() {
+		spic::GameEngine::GetInstance()->LoadSceneByName("network");
 		}, 200.0f);
+	AddButton("Flock/Steering Demo", []() {
+		spic::GameEngine::GetInstance()->LoadSceneByName("steering");
+		}, 300.0f);
 	AddButton("Credits", []() {
 		spic::GameEngine::GetInstance()->LoadSceneByName("credits");
-		}, 300.0f);
+		}, 400.0f);
 	AddButton("Settings", []() {
 		spic::GameEngine::GetInstance()->LoadSceneByName("settings");
-		}, 400.0f);
+		}, 500.0f);
 }
 
 void MenuScene::AddButton(const std::string& text, std::function<void()> callback, const float offset)

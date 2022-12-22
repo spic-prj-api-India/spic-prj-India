@@ -3,11 +3,10 @@
 #include <IMouseListener.hpp>
 #include "GameObject.hpp"
 #include "FollowMouseListener.h"
-#include <Text.hpp>
 
 class AimListener : public spic::IMouseListener {
 public:
-    AimListener(const spic::GameObject* weapon, std::shared_ptr<spic::Text> counter);
+    AimListener(std::shared_ptr<spic::GameObject> weapon);
 
     void OnMouseMoved() override;
     void OnMouseClicked() override;
@@ -15,13 +14,9 @@ public:
     void OnMouseReleased() override;
 
     void Shoot();
-
-    void CheckLoseCondition();
 private:
-    const spic::GameObject* weapon;
-    std::shared_ptr<spic::Text> counter;
-    float& angle;
-    int maxRockets;
+    std::shared_ptr<FollowMouseListener> followMouseListener;
+    std::shared_ptr<spic::GameObject> weapon;
+    float angle;
     int rocketCount;
-    bool sceneLoaded;
 };

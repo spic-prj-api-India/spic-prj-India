@@ -11,52 +11,22 @@
 #include <NetworkPacket.hpp>
 #include "NetworkingHelper.hpp"
 #include "GameScene.h"
-#include "FlockingScene.h"
+#include "NetworkScene.h"
 #include "CreditsScene.h"
 #include "MenuScene.h"
 #include "CreditsScene.h"
 #include "SettingsScene.h"
 #include "LoseScene.h"
 #include "WinScene.h"
-#include "Settings.h"
-
-bool stob(std::string s, bool throw_on_error = true)
-{
-	auto result = false;    // failure to assert is false
-
-	std::istringstream is(s);
-	// first try simple integer conversion
-	is >> result;
-
-	if (is.fail())
-	{
-		// simple integer failed; try boolean
-		is.clear();
-		is >> std::boolalpha >> result;
-	}
-
-	if (is.fail() && throw_on_error)
-	{
-		throw std::invalid_argument(s.append(" is not convertable to bool"));
-	}
-
-	return result;
-}
+#include "SteeringScene.h"
 
 void InitGame() 
 {
-
-	spic::DataHandler settingsHandler = spic::DataHandler("settings");
-	std::map<std::string, std::string> settings;
-	settingsHandler.LoadSettings(settings);
-
-	background_music = stob(settings["background_music"]);
-
 	// Creates GameEngine instance 
 	spic::GameEngine* engine = spic::GameEngine::GetInstance();
 
 	// Creates box2d physics extension and adds it to the extension list
-	std::shared_ptr<spic::extensions::PhysicsExtension1> physicsExtension 
+	std::shared_ptr<spic::extensions::PhysicsExtension1> physicsExtension
 		= std::make_shared<spic::extensions::PhysicsExtension1>(0.0023f, 4, 2);
 	engine->AddExtension(std::move(physicsExtension));
 
@@ -79,7 +49,8 @@ void InitGame()
 	engine->RegisterScene("menu", std::function<spic::Scene* ()>(MenuScene::Start));
 	engine->RegisterScene("game", std::function<spic::Scene* ()>(GameScene::Start));
 	engine->RegisterScene("credits", std::function<spic::Scene* ()>(CreditsScene::Start));
-	engine->RegisterScene("flock", std::function<spic::Scene* ()>(FlockingScene::Start));
+	engine->RegisterScene("network", std::function<spic::Scene* ()>(NetworkScene::Start));
+	engine->RegisterScene("steering", std::function<spic::Scene* ()>(SteeringScene::Start));
 	engine->RegisterScene("won", std::function<spic::Scene* ()>(WinScene::Start));
 	engine->RegisterScene("lost", std::function<spic::Scene* ()>(LoseScene::Start));
 	engine->RegisterScene("settings", std::function<spic::Scene* ()>(SettingsScene::Start));
