@@ -5,7 +5,8 @@
 #include "InternalTime.hpp"
 #include "DataHandler.hpp"
 
-namespace spic {
+namespace spic 
+{
 	GameEngine* GameEngine::pinstance_{ nullptr };
 	std::mutex GameEngine::mutex_;
 

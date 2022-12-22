@@ -52,12 +52,13 @@ namespace spic::extensions{
 
 		/**
 		 * @brief Removes entity from physics
-		 * @param name Name of entity that will be removed
+		 * @param entityName Name of entity that will be removed
 		*/
-		virtual void RemoveEntity(const std::string& name) = 0;
+		virtual void RemoveEntity(const std::string& entityName) = 0;
 
 		/**
 		 * @brief Gets linear velocity of entity with name
+		 * @param entityName Name of entity that will be removed
 		 * @return Point Returns Linear velocity
 		*/
 		virtual Point GetLinearVelocity(const std::string& entityName) = 0;
@@ -72,6 +73,11 @@ namespace spic::extensions{
 		 * @return int 
 		*/
 		virtual int RunTimes() = 0;
+
+		/**
+		 * @brief Clears all current forces
+		*/
+		virtual void ClearForces() = 0;
 	};
 }
 

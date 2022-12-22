@@ -17,6 +17,9 @@ namespace spic
 	 */
 	enum class Deceleration { SLOW = 3, NORMAL = 2, FAST = 1 };
 
+	/**
+	 * @brief Calculates all steering forces
+	*/
 	class Steering : public Component {
 	public:
 		Steering(ForceDriven* agent);

@@ -339,51 +339,45 @@ namespace spic {
 
         /**
         * @brief Subscribes a key listener for a specific key event
-        * @spicapi
+        * @sharedapi
         */
         void Subscribe(KeyCode keyEvent, const std::shared_ptr<spic::IKeyListener>& keyListener);
 
         /**
         * @brief Subscribes a mouse listener for a specific mouse event
-        * @spicapi
+        * @sharedapi
         */
         void Subscribe(MouseButton mouseEvent, const std::shared_ptr<spic::IMouseListener>& mouseListener);
         
         /**
         * @brief Unsubscribes a key listener for a specific key event
-        * @spicapi
+        * @sharedapi
         */
         void UnSubscribe(KeyCode keyEvent, const std::shared_ptr<spic::IKeyListener>& keyListener);
 
         /**
         * @brief Unsubscribes all listeners for a specific key event
-        * @spicapi
+        * @sharedapi
         */
         void UnSubscribe(KeyCode keyEvent);
 
         /**
         * @brief Unsubscribes a mouse listener for a specific mouse event
-        * @spicapi
+        * @sharedapi
         */
         void UnSubscribe(MouseButton mouseEvent, const std::shared_ptr<spic::IMouseListener>& mouseListener);
 
         /**
         * @brief Unsubscribes all listeners for a specific mouse event
-        * @spicapi
+        * @sharedapi
         */
         void UnSubscribe(MouseButton mouseEvent);
 
         /**
-        * @brief Unsubscribes all listeners
-        * @spicapi
+        * @brief Unsubscribes all key and mouse listeners (only call this when loading a new scene)
+        * @sharedapi
         */
         void UnSubscribeAll();
-
-        /**
-        * @brief Unsubscribes all key and mouse events
-        * @spicapi
-        */
-        void ResetSubscribedEvents();
     }
 }
 

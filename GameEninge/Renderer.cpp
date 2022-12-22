@@ -78,5 +78,5 @@ std::pair<float, float> spic::internal::Rendering::GetAspects()
 
 void spic::internal::Rendering::DrawFps()
 {
-	impl->RenderFps();
+	impl->DrawFps();
 }

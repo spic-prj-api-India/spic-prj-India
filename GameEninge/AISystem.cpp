@@ -2,7 +2,8 @@
 #include "TypeHelper.hpp"
 #include "Steering.hpp"
 
-namespace spic::internal::systems {
+namespace spic::internal::systems 
+{
 	AISystem::AISystem()
 	{
 	}

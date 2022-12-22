@@ -55,7 +55,7 @@ namespace spic {
 		 * @brief Checks if name exists in colection
 		 * @param gameobjects 
 		 * @param name 
-		 * @return 
+		 * @return Returns if name exist
 		*/
 		static bool CheckIfNameExists(const std::vector<std::shared_ptr<GameObject>> objects, const std::string& name);
 
@@ -356,19 +356,19 @@ namespace spic {
 		void AddChild(std::shared_ptr<T> gameObject);
 
 		/**
-		 * @brief Gets all the children of this object
-		 * @param includeInactive If you want to include inactive children
-		 * @return A vector of gameobjects
-		*/
-		std::vector<std::shared_ptr<GameObject>> GetChildren(bool includeInactive = false) const;
-
-		/**
 		 * @brief Gets first child with given type
 		 * @return GameObject of type T
 		 * @spicapi
 		*/
 		template<class T>
 		std::shared_ptr<T> GetChild() const;
+
+		/**
+		 * @brief Gets all the children of this object
+		 * @param includeInactive If you want to include inactive children
+		 * @return A vector of gameobjects
+		*/
+		std::vector<std::shared_ptr<GameObject>> GetChildren(bool includeInactive = false) const;
 
 		/**
 		 * @brief Gets the current parent

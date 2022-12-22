@@ -1,7 +1,7 @@
 #include "NetworkingHelper.hpp"
 
 
-std::string spic::helper_functions::networking_helper::GetParsedIPConfigData(const std::string& Columb)
+std::string spic::helper_functions::networking_helper::GetParsedIPConfigData(const std::string& columb)
 {
     //Set up command file path and command line command
     std::string APPDATA = getenv("APPDATA");
@@ -32,7 +32,7 @@ std::string spic::helper_functions::networking_helper::GetParsedIPConfigData(con
 
         for (int arrayindex = 0; arrayindex <= arrayCount; arrayindex++)
         {
-            std::string s = Columb;
+            std::string s = columb;
             std::string s2 = ":";
 
             //Search all lines and get pos

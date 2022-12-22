@@ -102,7 +102,7 @@ namespace spic::internal::audio::impl {
         mutable std::mutex mutex_;
 
         /**
-         * @brief 
+         * @brief Todo comment
         */
         std::shared_ptr<Chunk> chunk;
 

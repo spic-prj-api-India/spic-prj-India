@@ -147,8 +147,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Box.cpp" />
+    <ClCompile Include="BoxPersistable.cpp" />
     <ClCompile Include="BackScript.cpp" />
+    <ClCompile Include="BoxNotPersistable.cpp" />
+    <ClCompile Include="BoxSpawnerScript.cpp" />
     <ClCompile Include="CameraMovementScript.cpp" />
     <ClCompile Include="AimListener.cpp" />
     <ClCompile Include="CircleObstacle.cpp" />
@@ -159,17 +161,33 @@
     <ClCompile Include="CreditsSceneScript.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameScene.cpp" />
+    <ClCompile Include="GameStatusReceiveScript.cpp" />
+    <ClCompile Include="GameStatusSendScript.cpp" />
     <ClCompile Include="KeyListener.cpp" />
+    <ClCompile Include="LoseScene.cpp" />
     <ClCompile Include="MenuScene.cpp" />
     <ClCompile Include="FollowMouseListener.cpp" />
+    <ClCompile Include="RocketReceiveScript.cpp" />
+    <ClCompile Include="RocketSendScript.cpp" />
+    <ClCompile Include="SeekingRocket.cpp" />
+    <ClCompile Include="Shooter.cpp" />
     <ClCompile Include="PlayerMovementScript.cpp" />
     <ClCompile Include="Rocket.cpp" />
     <ClCompile Include="SettingsScene.cpp" />
+    <ClCompile Include="ShooterReceiveScript.cpp" />
+    <ClCompile Include="ShooterSendScript.cpp" />
+    <ClCompile Include="SyncScript.cpp" />
+    <ClCompile Include="Target.cpp" />
+    <ClCompile Include="TargetReceiveScript.cpp" />
+    <ClCompile Include="TargetSendScript.cpp" />
+    <ClCompile Include="WinScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AimListener.h" />
     <ClInclude Include="BackScript.h" />
-    <ClInclude Include="Box.h" />
+    <ClInclude Include="BoxPersistable.h" />
+    <ClInclude Include="BoxNotPersistable.h" />
+    <ClInclude Include="BoxSpawnerScript.h" />
     <ClInclude Include="CameraMovementScript.h" />
     <ClInclude Include="CollisionDetectionScript.h" />
     <ClInclude Include="FlockingScene.h" />
@@ -177,13 +195,28 @@
     <ClInclude Include="CreditsScene.h" />
     <ClInclude Include="CreditsSceneScript.h" />
     <ClInclude Include="GameScene.h" />
+    <ClInclude Include="GameStatusReceiveScript.h" />
+    <ClInclude Include="GameStatusSendScript.h" />
     <ClInclude Include="KeyListener.h" />
     <ClInclude Include="FollowMouseListener.h" />
     <ClInclude Include="CircleObstacle.h" />
+    <ClInclude Include="LoseScene.h" />
+    <ClInclude Include="RocketReceiveScript.h" />
+    <ClInclude Include="RocketSendScript.h" />
+    <ClInclude Include="SeekingRocket.h" />
+    <ClInclude Include="Settings.h" />
+    <ClInclude Include="Shooter.h" />
     <ClInclude Include="PlayerMovementScript.h" />
     <ClInclude Include="Rocket.h" />
     <ClInclude Include="MenuScene.h" />
     <ClInclude Include="SettingsScene.h" />
+    <ClInclude Include="ShooterReceiveScript.h" />
+    <ClInclude Include="ShooterSendScript.h" />
+    <ClInclude Include="SyncScript.h" />
+    <ClInclude Include="Target.h" />
+    <ClInclude Include="TargetReceiveScript.h" />
+    <ClInclude Include="TargetSendScript.h" />
+    <ClInclude Include="WinScene.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GameEninge\GameEninge.vcxproj">

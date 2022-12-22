@@ -25,7 +25,7 @@ namespace spic::helper_functions
 	namespace general_helper
 	{
 		/**
-		 * @brief Rotats point p on point org by the radians contained in angle
+		 * @brief Rotate point p on point org by the radians contained in angle
 		 * @param org The point to rotate around
 		 * @param angle The angle to rotate (in radians)
 		 * @param p Point that rotates
@@ -62,7 +62,7 @@ namespace spic::helper_functions
 		 * @param aspectHeight The height of the rectangle
 		 * @return An array with all 4 corner points of a rectangle
 		*/
-		std::array<Point, 4> GetPoints(const Point& orgin, const float angle, const float aspectWidth, const float aspectHeight);
+		std::array<Point, 4> GetPoints(const Point& origin, const float angle, const float aspectWidth, const float aspectHeight);
 		
 		/**
 		 * @brief Calculates if a point is within a square (https://math.stackexchange.com/a/190373)
@@ -121,8 +121,8 @@ namespace spic::helper_functions
 		 * @param DEG The amount of degrees
 		 * @return The converted radians
 		*/
-		template <typename T, typename R>
-		T DEG2RAD(R DEG)
+		template <typename T, typename D>
+		T DEG2RAD(D DEG)
 		{
 			return static_cast<T>(DEG * M_PI / 180.0);
 		}

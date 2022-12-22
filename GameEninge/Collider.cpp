@@ -3,7 +3,8 @@
 using namespace spic;
 
 Collider::Collider() : Collider(0.3f, 0.5f)
-{}
+{
+}
 
 Collider::Collider(const float friction, const float bounciness, const bool enabled) : friction{ friction }, enabled{ enabled }
 {

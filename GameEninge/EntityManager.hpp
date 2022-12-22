@@ -13,6 +13,9 @@
 
 namespace spic::internal
 {
+	/**
+	 * @brief Manages all entities and scenes
+	*/
 	class EntityManager
 	{
 	private:
@@ -46,6 +49,9 @@ namespace spic::internal
 		*/
 		std::shared_ptr<Scene> scene;
 	protected:
+		/**
+		 * @brief Calls the init method
+		*/
 		EntityManager();
 		~EntityManager();
 
@@ -84,6 +90,7 @@ namespace spic::internal
 		* @param entity The entity that will be added
 		*/
 		void AddEntityAlsoToScene(const std::shared_ptr<spic::GameObject>& entity);
+		
 		/*
 		* @brief Remove entity.
 		* @param name The name of the entity that will be removed

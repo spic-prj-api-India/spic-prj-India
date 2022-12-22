@@ -60,9 +60,9 @@ void spic::SocketScript::RegisterNewEntity(std::shared_ptr<spic::GameObject> ent
 	manger->AddEntityAlsoToScene(std::move(entity));
 }
 
-void spic::SocketScript::AddSocket(std::weak_ptr<spic::extensions::INetworkExtension> socketTypname)
+void spic::SocketScript::AddSocket(std::weak_ptr<spic::extensions::INetworkExtension> socketType)
 {
-	this->socket = std::move(socketTypname);
+	this->socket = std::move(socketType);
 }
 
 void spic::SocketScript::Retrieve(const spic::NetworkPacket* packet, std::shared_ptr<spic::GameObject> entity)

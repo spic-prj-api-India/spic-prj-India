@@ -18,7 +18,7 @@ namespace spic {
          * @brief Adds a socket to the SocketScript
          * @param socketTypname 
         */
-        void AddSocket(std::weak_ptr<spic::extensions::INetworkExtension> socketTypname);
+        void AddSocket(std::weak_ptr<spic::extensions::INetworkExtension> socketType);
 
         /**
          * @brief Creates a new message and calls SendPacket at the end
@@ -46,7 +46,7 @@ namespace spic {
          * @param packet 
          * @param entityy 
         */
-        virtual void DestroyEntity(const spic::NetworkPacket* packet, std::shared_ptr<spic::GameObject> entityy) = 0;
+        virtual void DestroyEntity(const spic::NetworkPacket* packet, std::shared_ptr<spic::GameObject> entity) = 0;
 
         /**
          * @brief Writes own code for syncing an entity

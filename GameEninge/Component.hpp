@@ -25,19 +25,6 @@ namespace spic {
 
 		void Parent(spic::GameObject& gameObject);
 
-		/**
-		 * @brief Getter for active status.
-		 * @return true if active, false otherwise.
-		 * @spicapi
-		 */
-		bool Active() const;
-
-		/**
-		 * @brief flag New active status.
-		 * @spicapi
-		 */
-		void Active(bool flag);
-
 
 		bool IsChanged() const;
 	public:
@@ -46,12 +33,6 @@ namespace spic {
 		* @spicapi
 		*/
 		spic::GameObject* gameObject;
-	private:
-		/**
-		 * @brief Active status.
-		 */
-		bool active;
-		bool isChanged;
 	};
 }
 

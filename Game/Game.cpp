@@ -5,7 +5,7 @@
 #include "GameEngine.hpp"
 #include <PhysicsExtension1.hpp>
 #include "MenuScene.h"
-#include "Box.h"
+#include "BoxPersistable.h"
 #include "Debug.hpp"
 #include "SocketUdpExtension.hpp"
 #include <NetworkPacket.hpp>
@@ -16,9 +16,41 @@
 #include "MenuScene.h"
 #include "CreditsScene.h"
 #include "SettingsScene.h"
+#include "LoseScene.h"
+#include "WinScene.h"
+#include "Settings.h"
 
+bool stob(std::string s, bool throw_on_error = true)
+{
+	auto result = false;    // failure to assert is false
 
-void InitGame() {
+	std::istringstream is(s);
+	// first try simple integer conversion
+	is >> result;
+
+	if (is.fail())
+	{
+		// simple integer failed; try boolean
+		is.clear();
+		is >> std::boolalpha >> result;
+	}
+
+	if (is.fail() && throw_on_error)
+	{
+		throw std::invalid_argument(s.append(" is not convertable to bool"));
+	}
+
+	return result;
+}
+
+void InitGame() 
+{
+
+	spic::DataHandler settingsHandler = spic::DataHandler("settings");
+	std::map<std::string, std::string> settings;
+	settingsHandler.LoadSettings(settings);
+
+	background_music = stob(settings["background_music"]);
 
 	// Creates GameEngine instance 
 	spic::GameEngine* engine = spic::GameEngine::GetInstance();
@@ -29,19 +61,27 @@ void InitGame() {
 	engine->AddExtension(std::move(physicsExtension));
 
 	// Creates a SocketUDPExtension and adds it to the extension list
+	const std::string& ownIp = spic::helper_functions::networking_helper::GetParsedIPConfigData("IPv4 Address");
+	spic::DataHandler dataHandler = spic::DataHandler("networking");
+	std::map<std::string, std::string> networkSettings;
+	dataHandler.LoadSettings(networkSettings);
+	const std::string& opponentIp = (networkSettings["opponent"]);
+
 	auto socket = std::make_shared<spic::extensions::SocketUDPExtension>();
-	socket->InitListener(13251);
-	socket->InitSender(spic::helper_functions::networking_helper::GetParsedIPConfigData("IPv4 Address"), 13251);
+	socket->InitListener(13252);
+	socket->InitSender(opponentIp, 13252);
 	engine->AddExtension(std::move(socket));
 
 	// Register object types
-	engine->RegisterType<Box>();
+	engine->RegisterType<BoxPersistable>();
 
 	// Register scenes
 	engine->RegisterScene("menu", std::function<spic::Scene* ()>(MenuScene::Start));
 	engine->RegisterScene("game", std::function<spic::Scene* ()>(GameScene::Start));
 	engine->RegisterScene("credits", std::function<spic::Scene* ()>(CreditsScene::Start));
 	engine->RegisterScene("flock", std::function<spic::Scene* ()>(FlockingScene::Start));
+	engine->RegisterScene("won", std::function<spic::Scene* ()>(WinScene::Start));
+	engine->RegisterScene("lost", std::function<spic::Scene* ()>(LoseScene::Start));
 	engine->RegisterScene("settings", std::function<spic::Scene* ()>(SettingsScene::Start));
 }
 

@@ -11,7 +11,9 @@
 
 namespace spic::internal 
 {
-
+    /**
+     * @brief Facade for the rendering interface
+    */
     struct Rendering
     {        
         /**

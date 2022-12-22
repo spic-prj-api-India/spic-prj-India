@@ -50,7 +50,6 @@ namespace spic::extensions
 			if (auto& w = world; w != nullptr)
 				while (world->IsLocked())
 					std::this_thread::sleep_for(std::chrono::milliseconds(1));
-			
 		}
 
 		PhysicsExtensionImpl1(const PhysicsExtensionImpl1& rhs)
@@ -86,7 +85,7 @@ namespace spic::extensions
 			sizes = {};
 			bodies = {};
 			this->accumultator = 0;
-			this->lastTickTime = spic::internal::time::InternalTime::TickInMilliseconds() / CLOCKS_PER_SEC;
+			this->lastTickTime = 0;
 		}
 
 		/**
@@ -120,12 +119,15 @@ namespace spic::extensions
 		*/
 		void Update(std::vector<std::shared_ptr<spic::GameObject>>& entities)
 		{
+			if (entities.size() < 1)
+				return;
 
 			this->stepsAmount = 0;
 
 			// get current time double
 			auto currentTime = spic::internal::time::InternalTime::TickInMilliseconds() / CLOCKS_PER_SEC;
-			if (!this->lastTickTime)
+
+			if (currentTime - this->lastTickTime > 5)
 				this->lastTickTime = currentTime;
 
 			this->accumultator += (currentTime - this->lastTickTime) * spic::Time::TimeScale();
@@ -141,6 +143,9 @@ namespace spic::extensions
 
 			for (auto& entity : entities) 
 			{
+				if (spic::GameObject::Find(entity->Name()) == nullptr)
+					continue;
+
 				bool exists = bodies.find(entity->Name()) != bodies.end();
 
 				if (exists)
@@ -158,6 +163,9 @@ namespace spic::extensions
 			// Update entities
 			for (auto& entity : entities) 
 			{
+				if (bodies.count(entity->Name()) == 0)
+					continue;
+
 				// Get body
 				b2Body* body = bodies[entity->Name()];
 
@@ -277,6 +285,15 @@ namespace spic::extensions
 		int CanRun()
 		{
 			return this->stepsAmount;
+		}
+
+		/**
+		 * @brief Clears all forces from box2d
+		*/
+		void ClearForces() noexcept
+		{
+			if (auto temp = world.get(); temp != nullptr)
+				temp->ClearForces();
 		}
 	private:
 		/**
@@ -608,6 +625,7 @@ namespace spic::extensions
 			Point endPoint = { endVec.x, endVec.y };
 			spic::debug::DrawLine(startPoint, endPoint, spic::Color::red());
 		}
+
 	private:
 		std::unique_ptr<b2World> world;
 		std::map<spic::BodyType, b2BodyType> bodyTypeConvertions;
@@ -721,5 +739,10 @@ namespace spic::extensions
 	int spic::extensions::PhysicsExtension1::RunTimes()
 	{
 		return physicsImpl->CanRun();
+	}
+
+	void spic::extensions::PhysicsExtension1::ClearForces()
+	{
+		physicsImpl->ClearForces();
 	}
 }

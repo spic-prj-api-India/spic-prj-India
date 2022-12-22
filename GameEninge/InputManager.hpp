@@ -7,6 +7,10 @@
 #include <vector>
 
 namespace spic::internal {
+
+	/**
+	 * @brief Manages all events related to keys and mouses
+	*/
 	class InputManager {
 	private:
 		static InputManager* pinstance_;
@@ -29,92 +33,72 @@ namespace spic::internal {
 		static InputManager* GetInstance();
 
 		/**
-		* @brief Removes all listeners
-		* @spicapi
-		*/
-		void Reset();
-
-		/**
 		* @brief Listen to key and mouse listeners
-		* @spicapi
 		*/
 		void Listen();
 
 		/**
 		* @brief Subscribes a key listener for a specific key event
-		* @spicapi
 		*/
 		void Subscribe(spic::input::KeyCode keyEvent, const std::shared_ptr<spic::IKeyListener> keyListener);
 
 		/**
 		* @brief Subscribes a mouse listener for a specific mouse event
-		* @spicapi
 		*/
 		void Subscribe(spic::input::MouseButton mouseEvent, const std::shared_ptr<spic::IMouseListener> mouseListener);
 
 		/**
 		* @brief Unsubscribes a key listener for a specific key event
-		* @spicapi
 		*/
 		void UnSubscribe(spic::input::KeyCode keyEvent, const std::shared_ptr<spic::IKeyListener> keyListener);
 
 		/**
 		* @brief Unsubscribes all listeners for a specific key event
-		* @spicapi
 		*/
 		void UnSubscribe(spic::input::KeyCode keyEvent);
 
 		/**
 		* @brief Unsubscribes a mouse listener for a specific mouse event
-		* @spicapi
 		*/
 		void UnSubscribe(spic::input::MouseButton mouseEvent, const std::shared_ptr<spic::IMouseListener> mouseListener);
 	
 		/**
 		* @brief Unsubscribes all listeners for a specific mouse event
-		* @spicapi
 		*/
 		void UnSubscribe(spic::input::MouseButton mouseEvent);
 
 		/**
 		* @brief Unsubscribes all listeners
-		* @spicapi
 		*/
 		void UnSubscribeAll();
 	private:
 		/**
 		* @brief Calls method OnKeyPressed of all key listeners for specific key event
-		* @spicapi
 		*/
 		void TriggerKeyPressed(spic::input::KeyCode keyEvent);
 
 		/**
 		* @brief Calls method OnKeyPressed of all key listeners for specific key event
-		* @spicapi
 		*/
 		void TriggerKeyReleased(spic::input::KeyCode keyEvent);
 
 		/**
 		* @brief Calls method OnMouseMoved of all mouse listeners
-		* @spicapi
 		*/
 		void TriggerMouseMoved();
 
 		/**
 		* @brief Calls method OnMouseClicked of all mouse listeners for specific mouse event
-		* @spicapi
 		*/
 		void TriggerMouseClicked(spic::input::MouseButton mouseEvent);
 
 		/**
 		* @brief Calls method OnMousePressed of all mouse listeners for specific mouse event
-		* @spicapi
 		*/
 		void TriggerMousePressed(spic::input::MouseButton mouseEvent);
 
 		/**
 		* @brief Calls method OnMouseReleased of all mouse listeners for specific mouse event
-		* @spicapi
 		*/
 		void TriggerMouseReleased(spic::input::MouseButton mouseEvent);
 	};

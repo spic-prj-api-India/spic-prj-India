@@ -1,7 +1,8 @@
 #include "BehaviourScript.hpp"
 
 
-namespace spic {
+namespace spic 
+{
 	void BehaviourScript::OnStart() 
 	{
 	}

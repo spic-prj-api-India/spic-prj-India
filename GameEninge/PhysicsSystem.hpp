@@ -7,10 +7,12 @@
 #include "Collider.hpp"
 #include "Time.hpp"
 #include "InternalTime.hpp"
-/**
-* @brief A system that calls all physics extensions and triggers collision script methods
-*/
-namespace spic::internal::systems {
+
+namespace spic::internal::systems 
+{
+    /**
+     * @brief A system that calls all physics extensions and triggers collision script methods
+     */
     class PhysicsSystem :
         public spic::systems::ISystem
     {

@@ -19,8 +19,8 @@ void UpdateRecursion(std::vector<std::shared_ptr<spic::GameObject>>& entities, s
 
 		auto components = ent->GetComponents<spic::SocketScript>();
 
-		for (auto componet : components)
-			componet->Send(ent);
+		for (auto component : components)
+			component->Send(ent);
 	}
 }
 

@@ -68,18 +68,6 @@ namespace spic
              * @sharedapi
             */
             std::string backgroundImage;
-
-            /**
-             * @brief The current width of the camera
-             * @sharedapi
-            */
-            float aspectWidth;
-
-            /**
-             * @brief The current height of the camera
-             * @sharedapi
-            */
-            float aspectHeight;  
     };
 }
 #endif // CAMERA_H_

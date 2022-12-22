@@ -26,7 +26,7 @@ void spic::internal::time::InternalTime::EndFrame()
 	deltaTime += endFrame - beginFrame;
 	frames++;
 
-	if (InternalTime::clockToMilliseconds(deltaTime) > 1000.0) //every second
+	if (InternalTime::ClockToMilliseconds(deltaTime) > 1000.0) //every second
 	{ 
 		frameRate = (double)frames * 0.5 + frameRate * 0.5; //more stable framerate
 		frames = 0;
@@ -46,7 +46,7 @@ void spic::internal::time::InternalTime::Delay()
 
 double spic::internal::time::InternalTime::TickInMilliseconds()
 {
-	return InternalTime::clockToMilliseconds( clock() );
+	return InternalTime::ClockToMilliseconds( clock() );
 }
 
 void spic::internal::time::InternalTime::BeginFrame()

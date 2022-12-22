@@ -6,8 +6,8 @@
 #include "IPhysicsExtension.hpp"
 #include "Point.hpp"
 
-namespace spic::extensions {
-
+namespace spic::extensions 
+{
 	/**
 	 * @brief Contains the box2d implementation
 	*/
@@ -76,6 +76,11 @@ namespace spic::extensions {
 		 * @return int
 		*/
 		int RunTimes() override;
+
+		/**
+		 * @brief Clears all current forces
+		*/
+		void ClearForces() override;
 	private:
         std::unique_ptr<PhysicsExtensionImpl1> physicsImpl;
 	};

@@ -1,23 +1,9 @@
 #include "Component.hpp"
 
-namespace spic {
+namespace spic 
+{
 	void Component::Parent(spic::GameObject& gameObject)
 	{
 		this->gameObject = &gameObject;
-	}
-
-	bool Component::Active() const
-	{
-		return this->active;
-	}
-
-	void Component::Active(bool flag)
-	{
-		this->active = flag;
-	}
-
-	bool Component::IsChanged() const
-	{
-		return this->isChanged;
 	}
 }

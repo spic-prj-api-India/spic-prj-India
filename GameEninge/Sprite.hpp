@@ -7,7 +7,9 @@
 
 namespace spic {
     /**
-     * @brief A component representing a sprite (small image)
+     * @brief A component representing a sprite (small image).
+	 *		Color in this case represents color modulation. 
+			This means that if it's white there is no color modulation
      * @spicapi
      */
     class Sprite : public Component {
@@ -41,42 +43,36 @@ namespace spic {
 		/**
 		 * @brief Gets texture path of Sprite.
 		 * @return string.
-		 * @spicapi
 		 */
 		const std::string _Sprite() const;
 
 		/**
 		 * @brief Sets texture path of Sprite.
 		 * @param sprite Desired value.
-		 * @spicapi
 		 */
 		void _Sprite(const std::string& sprite);
 
 		/**
-		 * @brief Gets color of Sprite.
+		 * @brief Gets color modulation of Sprite.
 		 * @return spic::Color.
-		 * @spicapi
 		 */
 		const spic::Color Color() const;
 
 		/**
-		 * @brief Sets color of Sprite.
+		 * @brief Sets color modulation of Sprite.
 		 * @param color Desired value.
-		 * @spicapi
 		 */
 		void Color(const spic::Color& color);
 
 		/**
 		 * @brief Gets flip x of Sprite.
 		 * @return bool.
-		 * @spicapi
 		 */
 		const bool FlipX() const;
 
 		/**
 		* @brief Sets flip x of Sprite.
 		* @param flipX Desired value.
-		* @spicapi
 		*/
 		void FlipX(const bool flipX);
 
@@ -178,15 +174,55 @@ namespace spic {
 		*/
 		const void Width(int newWidth);
 	private:
+
+		/**
+		 * @brief The location where the sprite is
+		*/
 		std::string sprite;
+
+		/**
+		 * @brief Color modulation. White means no modulation
+		*/
 		spic::Color color;
+
+		/**
+		 * @brief If the texture is flipped in the x direction
+		*/
 		bool flipX;
+
+		/**
+		 * @brief If the texture is flipped in the y direction
+		*/
 		bool flipY;
+
+		/**
+		 * @brief Which position it gets after it gets sorted into orders
+		*/
 		int sortingLayer;
+
+		/**
+		 * @brief Which postion it gets
+		*/
 		int orderInLayer;
+
+		/**
+		 * @brief X pos in sprite sheet
+		*/
 		int x;
+
+		/**
+		 * @brief Y pos in sprite sheet
+		*/
 		int y;
+
+		/**
+		 * @brief Height of sprite in sprite sheet
+		*/
 		int height;
+
+		/**
+		 * @brief Width of sprite in sprite sheet
+		*/
 		int width;
 	};
 

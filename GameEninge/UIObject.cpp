@@ -1,6 +1,7 @@
 #include "UIObject.hpp"
 
-namespace spic {
+namespace spic 
+{
 	UIObject::UIObject() : GameObject(), width{ 0.0f }, height{ 0.0f }
 	{
 	}

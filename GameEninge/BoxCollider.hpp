@@ -9,6 +9,9 @@ namespace spic {
      */
     class BoxCollider : public Collider {
         public:
+            /**
+             * @brief Default constructor
+             */
             BoxCollider();
 
             /*

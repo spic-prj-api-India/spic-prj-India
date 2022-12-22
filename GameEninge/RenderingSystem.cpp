@@ -49,6 +49,7 @@ namespace spic::internal::systems
 
 		if(debug::DEBUG_MODE && settings::COLLIDER_VISIBILITY)
 			DrawColliders();
+
 		if (debug::DEBUG_MODE)
 			spic::internal::Rendering::DrawDebugShapes();
 	

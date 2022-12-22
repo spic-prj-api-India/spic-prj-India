@@ -21,17 +21,6 @@ namespace spic::internal::time
 	struct InternalTime
 	{
 		/**
-		 * @brief Converts clock_t to milliseconds
-		 * @details units/(units/time) => time (seconds) * 1000 = milliseconds
-		 * @param ticks An clock_t value
-		 * @return The amount of miliseconds
-		*/
-		static constexpr double clockToMilliseconds(clock_t ticks) 
-		{
-			return (ticks / (double)CLOCKS_PER_SEC) * 1000.0;
-		}
-
-		/**
 		 * @brief Start time of a begin frame
 		*/
 		static clock_t beginFrame;
@@ -61,6 +50,17 @@ namespace spic::internal::time
 		 * @brief The average frame time of a single frame.
 		*/
 		static double averageFrameTimeMilliseconds;
+
+		/**
+		 * @brief Converts clock_t to milliseconds
+		 * @details units/(units/time) => time (seconds) * 1000 = milliseconds
+		 * @param ticks An clock_t value
+		 * @return The amount of miliseconds
+		*/
+		static constexpr double ClockToMilliseconds(clock_t ticks)
+		{
+			return (ticks / (double)CLOCKS_PER_SEC) * 1000.0;
+		}
 
 		/**
 		 * @brief Sets the startValues of a new scene to 60 fps

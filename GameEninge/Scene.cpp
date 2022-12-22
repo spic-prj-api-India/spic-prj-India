@@ -6,7 +6,8 @@
 namespace spic
 {
 	Scene::Scene() : setting{ UpdateSetting::ALWAYS }
-	{}
+	{
+	}
 
 	Scene::Scene(std::unique_ptr<spic::Camera> newCamera, spic::UpdateSetting setting) :
 		setting{ setting }

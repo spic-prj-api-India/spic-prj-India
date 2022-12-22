@@ -360,9 +360,6 @@
     <ClInclude Include="SocketScript.hpp">
       <Filter>Header Files\components\socket</Filter>
     </ClInclude>
-    <ClInclude Include="Serializer.hpp">
-      <Filter>Header Files\components</Filter>
-    </ClInclude>
     <ClInclude Include="SocketUDPExtension.hpp">
       <Filter>Header Files\extensions\networking</Filter>
     </ClInclude>
@@ -433,7 +430,7 @@
       <Filter>Header Files\models</Filter>
     </ClInclude>
     <ClInclude Include="DecreaseGameSpeedListener.hpp">
-     <Filter>Header Files\core\systems\input\listeners</Filter>
+      <Filter>Header Files\core\systems\input\listeners</Filter>
     </ClInclude>
     <ClInclude Include="IncreaseGameSpeedListener.hpp">
       <Filter>Header Files\core\systems\input\listeners</Filter>
@@ -669,5 +666,6 @@
     <None Include="NetworkPacket.hpp">
       <Filter>Header Files\components\socket</Filter>
     </None>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>

@@ -3,7 +3,8 @@
 #include <corecrt_math.h>
 #include "Defaults.hpp"
 
-namespace spic {
+namespace spic 
+{
 	float Point::Length() const
 	{
 		return sqrtf(x * x + y * y);
