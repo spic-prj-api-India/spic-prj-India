@@ -84,7 +84,7 @@ namespace spic::internal
          * @param position The coordinates of the UI
          * @param sprite The sprite to Draw
         */
-        static void DrawSprite(const Transform* position, Sprite* sprite);
+        static void DrawSprite(const Transform& position, Sprite* sprite);
         
         /**
          * @brief Cleans the frame

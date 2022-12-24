@@ -157,6 +157,7 @@
     <ClCompile Include="FlockSettingsScene.cpp" />
     <ClCompile Include="FollowMouseListener.cpp" />
     <ClCompile Include="InputTypeListener.cpp" />
+    <ClCompile Include="LoadingAnimation.cpp" />
     <ClCompile Include="NetAimListener.cpp" />
     <ClCompile Include="CircleObstacle.cpp" />
     <ClCompile Include="NetCollisionDetectionScript.cpp" />
@@ -198,6 +199,7 @@
     <ClInclude Include="FlockSettingsScene.h" />
     <ClInclude Include="FollowMouseListener.h" />
     <ClInclude Include="InputTypeListener.h" />
+    <ClInclude Include="LoadingAnimation.h" />
     <ClInclude Include="NetAimListener.h" />
     <ClInclude Include="BackScript.h" />
     <ClInclude Include="BoxPersistable.h" />

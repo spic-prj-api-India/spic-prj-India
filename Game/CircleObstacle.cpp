@@ -20,6 +20,4 @@ void CircleObstacle::SetAttributes(const spic::Point& position)
 	animator->InitHorizontalSpriteSheet("assets/textures/circular_saw_spritesheet.png", 4, 548, 552);
 	animator->Play(true);
 	AddComponent<spic::Animator>(std::move(animator));
-	//auto sprite = std::make_shared<spic::Sprite>("assets/textures/circular_saw_spritesheet.png", 1, 0, spic::Color::white(), false, false, 0, 0, 548, 552);
-	//AddComponent<spic::Sprite>(std::move(sprite));
 }

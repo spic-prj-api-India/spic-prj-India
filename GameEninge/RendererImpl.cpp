@@ -134,7 +134,7 @@ void RendererImpl::DrawGameObject(GameObject* gameObject, bool isUiOject)
 
 void RendererImpl::DrawSprites(GameObject* gameObject, const bool isUIObject)
 {
-	const auto transform = gameObject->Transform();
+	const auto transform = gameObject->RealTransform();
 	auto _sprites = gameObject->GetComponents<Sprite>();
 	std::sort(_sprites.begin(), _sprites.end(), SpriteSorting);
 	UIObject* uiObject = nullptr;
@@ -145,9 +145,9 @@ void RendererImpl::DrawSprites(GameObject* gameObject, const bool isUIObject)
 	for (auto& sprite : _sprites)
 	{
 		if (isUIObject)
-			DrawUISprite(uiObject->Width(), uiObject->Height(), sprite.get(), transform.get());
+			DrawUISprite(uiObject->Width(), uiObject->Height(), sprite.get(), transform);
 		else
-			DrawSprite(sprite.get(), transform.get());
+			DrawSprite(sprite.get(), transform);
 	}
 }
 
@@ -157,11 +157,11 @@ void RendererImpl::DrawAnimators(GameObject* gameObject, const bool isUiObject)
 
 	for (auto& animator : _animator)
 	{
-		DrawAnimator(animator.get(), gameObject->Transform().get(), isUiObject);
+		DrawAnimator(animator.get(), gameObject->RealTransform(), isUiObject);
 	}
 }
 
-void RendererImpl::DrawAnimator(Animator* animator, const Transform* transform, const bool isUIObject)
+void RendererImpl::DrawAnimator(Animator* animator, const Transform& transform, const bool isUIObject)
 {
 	if (!animator->IsRunning())
 		return;
@@ -184,18 +184,15 @@ void RendererImpl::DrawAnimator(Animator* animator, const Transform* transform, 
 	DrawSprite(sprites[animator->Index() - 1].get(), transform, isUIObject);
 }
 
-void RendererImpl::DrawUISprite(const float width, const float height, const Sprite* sprite, const Transform* transform)
+void RendererImpl::DrawUISprite(const float width, const float height, const Sprite* sprite, const Transform& transform)
 {
-	if (transform == nullptr)
-		return;
-
 	SDL_Texture* texture = LoadTexture(sprite->_Sprite());
 	auto textureSize = GetTextureSize(texture);
 
-	SDL_FRect dstRect = { transform->position.x
-		, transform->position.y
-		, width * transform->scale
-		, height * transform->scale };
+	SDL_FRect dstRect = { transform.position.x
+		, transform.position.y
+		, width * transform.scale
+		, height * transform.scale };
 
 	if (!SDL_HasIntersectionF(&dstRect, &this->windowCamera))
 		return;
@@ -206,20 +203,17 @@ void RendererImpl::DrawUISprite(const float width, const float height, const Spr
 		this->textures.clear();
 }
 
-void RendererImpl::DrawSprite(const Sprite* sprite, const Transform* transform, bool isUiOject)
+void RendererImpl::DrawSprite(const Sprite* sprite, const Transform& transform, bool isUiOject)
 {
-	if (transform == nullptr)
-		return;
-
 	SDL_Texture* texture = LoadTexture(sprite->_Sprite());
 	auto textureSize = GetTextureSize(texture);
 
 	const int width = (sprite->Width() == 0) ? textureSize.x : sprite->Width();
 	const int height = (sprite->Height() == 0) ? textureSize.y : sprite->Height();
-	SDL_FRect dstRect = { transform->position.x
-		, transform->position.y
-		, width * transform->scale * this->scaling
-		, height * transform->scale * this->scaling };
+	SDL_FRect dstRect = { transform.position.x
+		, transform.position.y
+		, width * transform.scale * this->scaling
+		, height * transform.scale * this->scaling };
 
 	SDL_Rect sourceRect = { PrecisionRoundingoInt(sprite->X())
 		, PrecisionRoundingoInt(sprite->Y())
@@ -250,7 +244,7 @@ void RendererImpl::DrawSprite(const Sprite* sprite, const Transform* transform, 
 		this->textures.clear();
 }
 
-void RendererImpl::DrawSprite(const Sprite* sprite, const Transform* transform, SDL_Texture* texture, SDL_FRect* dstRect, SDL_Rect* sourceRect) {
+void RendererImpl::DrawSprite(const Sprite* sprite, const Transform& transform, SDL_Texture* texture, SDL_FRect* dstRect, SDL_Rect* sourceRect) {
 	const auto color = sprite->Color();
 
 	SDL_SetTextureColorMod(texture
@@ -263,7 +257,7 @@ void RendererImpl::DrawSprite(const Sprite* sprite, const Transform* transform, 
 
 	SDL_RendererFlip flip = GetFlip(sprite->FlipX(), sprite->FlipY());
 
-	double angle = RAD2DEG<double>(transform->rotation);
+	double angle = RAD2DEG<double>(transform.rotation);
 	if (texture == nullptr) {
 		SDL_RenderCopyExF(renderer.get(), NULL, sourceRect, dstRect, angle, NULL, flip);
 		spic::debug::LogError(SDL_GetError());
@@ -324,16 +318,15 @@ void RendererImpl::DrawText(Text* text)
 	if (std::filesystem::exists(filePath))
 	{
 		auto font = this->LoadFont(fontPath, text->Size());
-		auto transform = text->Transform().get();
+		auto transform = text->RealTransform();
 		auto colour = SDL_Color{ static_cast<unsigned char>(PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, text->Color().R())))
 			, static_cast<unsigned char>(PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, text->Color().G())))
 			, static_cast<unsigned char>(PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, text->Color().B()))) };
 		std::string texts{ text->_Text() };
 		text->Alignment();
 
-		const spic::GameObject* parent = text->GetParent();
-		const float x = transform->position.x + (parent != nullptr ? parent->Transform()->position.x : 0);
-		const float y = transform->position.y + (parent != nullptr ? parent->Transform()->position.y : 0);
+		const float x = transform.position.x;
+		const float y = transform.position.y;
 		this->RenderMultiLineText(font, texts, colour, x, y, text->Width(), text->Height(), 2, text->Alignment());
 	}
 

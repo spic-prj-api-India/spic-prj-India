@@ -225,6 +225,9 @@
     <ClCompile Include="NetworkBackScript.cpp">
       <Filter>Source Files\scripts\network\match_making</Filter>
     </ClCompile>
+    <ClCompile Include="LoadingAnimation.cpp">
+      <Filter>Source Files\objects\network</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KeyListener.h">
@@ -355,6 +358,9 @@
     </ClInclude>
     <ClInclude Include="NetworkBackScript.h">
       <Filter>Header Files\scripts\networking\match_making</Filter>
+    </ClInclude>
+    <ClInclude Include="LoadingAnimation.h">
+      <Filter>Header Files\objects\network</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
