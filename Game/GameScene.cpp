@@ -58,11 +58,11 @@ void GameScene::SetContents()
 	std::shared_ptr<spic::Button> button = std::make_shared<spic::Button>(200.0f, 100.0f, "Save scene");
 	button->Transform(std::make_shared<spic::Transform>(spic::Point(20.0f, 20.0f), 0.0f, 1.0f));
 	button->OnClick([]() {
-		std::cout << "Scene saved!" << std::endl;
-		spic::GameEngine::GetInstance()->SaveScene("game");
+		/*std::cout << "Scene saved!" << std::endl;
+		spic::GameEngine::GetInstance()->SaveScene("game");*/
 		spic::input::UnSubscribeAll();
 
-		spic::GameEngine::GetInstance()->LoadSceneByName("menu");
+		spic::GameEngine::GetInstance()->LoadSceneByName("game");
 		});
 
 	AddContent(football);

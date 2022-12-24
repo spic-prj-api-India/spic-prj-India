@@ -170,7 +170,8 @@ namespace spic::internal
 	void InputManager::TriggerMouseClicked(spic::input::MouseButton mouseEvent)
 	{
 		for (const auto& mouseListener : mouseListeners[mouseEvent]) 
-			mouseListener->OnMouseClicked();
+			if(mouseListener != nullptr)
+				mouseListener->OnMouseClicked();
 	}
 	void InputManager::TriggerMousePressed(spic::input::MouseButton mouseEvent)
 	{

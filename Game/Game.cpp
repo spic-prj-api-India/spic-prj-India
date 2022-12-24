@@ -19,6 +19,7 @@
 #include "LoseScene.h"
 #include "WinScene.h"
 #include "SteeringScene.h"
+#include "Time.hpp"
 
 void InitGame() 
 {
@@ -58,8 +59,8 @@ void InitGame()
 
 void StartGame()
 {
-	spic::settings::COLLIDER_VISIBILITY = false;
-	spic::settings::WALL_AVOIDANCE_FEELERS_VISIBILITY = false;
+	spic::settings::COLLIDER_VISIBILITY = true;
+	spic::settings::WALL_AVOIDANCE_FEELERS_VISIBILITY = true;
 	spic::settings::WINDOW_NAME = "Forts 2";
 	spic::settings::WINDOW_WIDTH = 1200;
 	spic::settings::WINDOW_HEIGHT = 800;

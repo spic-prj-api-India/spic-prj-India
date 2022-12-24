@@ -256,14 +256,18 @@ namespace spic::extensions
 				switch (shape->GetType()) {
 					case b2Shape::e_polygon:
 					{
-						const auto entity = reinterpret_cast<spic::GameObject*>(currentBody->GetUserData().pointer);
+						auto* entity = reinterpret_cast<spic::GameObject*>(currentBody->GetUserData().pointer);
+						if (entity == nullptr)
+							break;
 						auto size = sizes[entity->Name()];
 						DrawBoxCollider(*currentBody, size);
 						break;
 					}
 					case b2Shape::e_circle:
 					{
-						const auto entity = reinterpret_cast<spic::GameObject*>(currentBody->GetUserData().pointer);
+						auto* entity = reinterpret_cast<spic::GameObject*>(currentBody->GetUserData().pointer);
+						if (entity == nullptr)
+							break;
 						auto size = sizes[entity->Name()];
 						DrawCircleCollider(*currentBody, size);
 						break;
