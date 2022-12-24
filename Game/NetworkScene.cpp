@@ -1,9 +1,6 @@
 #include "NetworkScene.h"
 #include <Button.hpp>
-#include "CameraMovementScript.h"
-#include "CollisionDetectionScript.h"
-#include <BoxCollider.hpp>
-#include "AudioSource.hpp"
+#include "NetworkBackScript.h"
 #include <Input.hpp>
 #include "CircleObstacle.h"
 #include <DataHandler.hpp>
@@ -34,8 +31,8 @@ void NetworkScene::SetContents()
 	/* Shooter setup */
 	spic::Point shooterPosition = { 700.0f, 375.0f };
 	std::shared_ptr<Shooter> shooter = std::make_shared<Shooter>(shooterPosition);
-	auto script = std::make_shared<SyncScript>();
-	shooter->AddComponent<spic::SocketScript>(script);
+	shooter->AddComponent<spic::SocketScript>(std::make_shared<SyncScript>());
+	shooter->AddComponent(std::make_shared<NetworkBackScript>());
 
 	/* Target setup */
 	spic::Point targetPosition = { 50.0f, 50.0f };
@@ -46,27 +43,48 @@ void NetworkScene::SetContents()
 	std::shared_ptr<CircleObstacle> obstacle = std::make_shared<CircleObstacle>("blade1", obstaclePosition);
 
 	/* Loading animation */
-	auto animation = std::make_shared<spic::GameObject>("loadingAnimation");
-	animation->Transform(std::make_shared<spic::Transform>(spic::Point(875.0f, 312.5f), 0.0f, .25f));
+	auto loadingAnimation = std::make_shared<spic::GameObject>("loadingAnimation");
+	loadingAnimation->Transform(std::make_shared<spic::Transform>(spic::Point(875.0f, 312.5f), 0.0f, .25f));
 
-	auto feedbackText = std::make_shared<spic::Text>(600.0f, 900.0f
+	auto feedbackText1 = std::make_shared<spic::Text>(600.0f, 900.0f
 		, "Is looking for opponent"
 		, ""
 		, 50
 		, spic::Alignment::CENTER
 		, spic::Color::white());
-	const float x = (spic::settings::WINDOW_WIDTH / 2.0f) - (feedbackText->Width() / 2);
-	feedbackText->Transform(std::make_shared<spic::Transform>(spic::Point(x, 300.0f), 0.0f, 1.0f));
+	float x = (spic::settings::WINDOW_WIDTH / 2.0f) - (feedbackText1->Width() / 2);
+	feedbackText1->Transform(std::make_shared<spic::Transform>(spic::Point(-600.0f, -12.5f), 0.0f, 1.0f));
 	
-	auto animator = std::make_shared<spic::Animator>(60);
-	animator->InitSpriteSheet("assets/textures/load_spritesheet.png", 4, 12, 188, 188);
-	animator->Play(true);
+	auto animator1 = std::make_shared<spic::Animator>(60);
+	animator1->InitSpriteSheet("assets/textures/load_spritesheet.png", 4, 12, 188, 188);
+	animator1->Play(true);
 
-	animation->AddChild(feedbackText);
-	animation->AddComponent(std::move(animator));
-	
+	loadingAnimation->AddChild(feedbackText1);
+	loadingAnimation->AddComponent(std::move(animator1));
+
+	/* exit animation */
+	auto exitAnimation = std::make_shared<spic::GameObject>("exitAnimation");
+	exitAnimation->Transform(std::make_shared<spic::Transform>(spic::Point(875.0f, 312.5f), 0.0f, .25f));
+	exitAnimation->Active(false);
+
+	auto feedbackText2 = std::make_shared<spic::Text>(700.0f, 900.0f
+		, "Opponent left, waiting for opponent"
+		, ""
+		, 40
+		, spic::Alignment::CENTER
+		, spic::Color::white());
+	feedbackText2->Transform(std::make_shared<spic::Transform>(spic::Point(-725.0f, -7.25f), 0.0f, 1.0f));
+
+	auto animator2 = std::make_shared<spic::Animator>(60);
+	animator2->InitSpriteSheet("assets/textures/load_spritesheet.png", 4, 12, 188, 188);
+	animator2->Play(true);
+
+	exitAnimation->AddChild(feedbackText2);
+	exitAnimation->AddComponent(std::move(animator2));
+
 	/* Add contents */
-	AddContent(animation);
+	AddContent(loadingAnimation);
+	AddContent(exitAnimation);
 	AddContent(shooter);
 	AddContent(target);
 	AddContent(obstacle);

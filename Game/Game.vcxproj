@@ -160,6 +160,7 @@
     <ClCompile Include="NetAimListener.cpp" />
     <ClCompile Include="CircleObstacle.cpp" />
     <ClCompile Include="NetCollisionDetectionScript.cpp" />
+    <ClCompile Include="NetworkBackScript.cpp" />
     <ClCompile Include="NetworkScene.cpp" />
     <ClCompile Include="Ball.cpp" />
     <ClCompile Include="CreditsScene.cpp" />
@@ -204,6 +205,7 @@
     <ClInclude Include="BoxSpawnerScript.h" />
     <ClInclude Include="CameraMovementScript.h" />
     <ClInclude Include="NetCollisionDetectionScript.h" />
+    <ClInclude Include="NetworkBackScript.h" />
     <ClInclude Include="NetworkScene.h" />
     <ClInclude Include="Ball.h" />
     <ClInclude Include="CreditsScene.h" />

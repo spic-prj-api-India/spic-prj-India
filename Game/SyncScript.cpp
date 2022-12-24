@@ -45,6 +45,7 @@ void SyncScript::SyncEntity(const spic::NetworkPacket* packet, std::shared_ptr<s
 		target->AddComponent<spic::SocketScript>(std::make_shared<TargetReceiveScript>());
 		spic::helper_functions::type_helper::CastSharedPtrToType<Shooter>(entity)->Init();
 		spic::GameObject::Find("loadingAnimation")->Active(false);
+		spic::GameObject::Find("exitAnimation")->Active(false);
 	}
 
 	/* Send ping to ip to check if opponent is there */
@@ -71,9 +72,28 @@ void SyncScript::SyncEntity(const spic::NetworkPacket* packet, std::shared_ptr<s
 		target->AddComponent<spic::SocketScript>(std::make_shared<TargetSendScript>());
 		spic::helper_functions::type_helper::CastSharedPtrToType<Target>(target)->Init();
 		spic::GameObject::Find("loadingAnimation")->Active(false);
+		spic::GameObject::Find("exitAnimation")->Active(false);
+	}
+
+	/* Check if opponent left the game */
+	if (packet->data.count("exited") != 0 && (isShooter || isTarget)) {
+		spic::GameObject::Find("exitAnimation")->Active(true);
+		isShooter = false;
+		isTarget = false;
 	}
 }
 
 void SyncScript::UpdateEntity(const spic::NetworkPacket* packet, std::shared_ptr<spic::GameObject> entity)
 {
+}
+
+void SyncScript::NotifyExit()
+{
+	if (!isTarget && !isShooter)
+		return;
+	spic::NetworkPacket networkPacket = spic::NetworkPacket();
+	networkPacket.name = gameObject->Name();
+	networkPacket.data["exited"] = "";
+	networkPacket.typeMessage = spic::MessageType::SYNC;
+	SendPacket(networkPacket);
 }
