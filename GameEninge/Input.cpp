@@ -34,7 +34,7 @@ namespace spic
 		return spic::internal::input::impl::GetKey(key);
 	}
 
-	bool input::GetKeyDown(KeyCode key)
+	bool input::GetKeyDown(KeyCode key) 
 	{
 		return spic::internal::input::impl::GetKeyDown(key);
 	}

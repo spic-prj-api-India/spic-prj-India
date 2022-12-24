@@ -85,6 +85,12 @@
     <Filter Include="Source Files\scripts\network\match_making">
       <UniqueIdentifier>{b8cbd115-2076-4d5f-b1a4-910733816d3a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\scenes\settings">
+      <UniqueIdentifier>{411054aa-4221-476b-8685-e23d6923b345}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\scenes\settings">
+      <UniqueIdentifier>{2e65c5f4-e41a-425f-ad24-bf3be44f5921}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="KeyListener.cpp">
@@ -116,9 +122,6 @@
     </ClCompile>
     <ClCompile Include="BoxPersistable.cpp">
       <Filter>Source Files\objects</Filter>
-    </ClCompile>
-    <ClCompile Include="SettingsScene.cpp">
-      <Filter>Source Files\scenes</Filter>
     </ClCompile>
     <ClCompile Include="CircleObstacle.cpp">
       <Filter>Source Files\objects</Filter>
@@ -204,6 +207,21 @@
     <ClCompile Include="CollisionDetectionScript.cpp">
       <Filter>Source Files\scripts</Filter>
     </ClCompile>
+    <ClCompile Include="SettingsScene.cpp">
+      <Filter>Source Files\scenes\settings</Filter>
+    </ClCompile>
+    <ClCompile Include="NetworkSettingsScene.cpp">
+      <Filter>Source Files\scenes\settings</Filter>
+    </ClCompile>
+    <ClCompile Include="FlockSettingsScene.cpp">
+      <Filter>Source Files\scenes\settings</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundSettingsScene.cpp">
+      <Filter>Source Files\scenes\settings</Filter>
+    </ClCompile>
+    <ClCompile Include="InputTypeListener.cpp">
+      <Filter>Source Files\listeners</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KeyListener.h">
@@ -232,9 +250,6 @@
     </ClInclude>
     <ClInclude Include="CreditsSceneScript.h">
       <Filter>Header Files\scripts</Filter>
-    </ClInclude>
-    <ClInclude Include="SettingsScene.h">
-      <Filter>Header Files\scenes</Filter>
     </ClInclude>
     <ClInclude Include="CircleObstacle.h">
       <Filter>Header Files\objects</Filter>
@@ -319,6 +334,21 @@
     </ClInclude>
     <ClInclude Include="CollisionDetectionScript.h">
       <Filter>Header Files\scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="SettingsScene.h">
+      <Filter>Header Files\scenes\settings</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundSettingsScene.h">
+      <Filter>Header Files\scenes\settings</Filter>
+    </ClInclude>
+    <ClInclude Include="NetworkSettingsScene.h">
+      <Filter>Header Files\scenes\settings</Filter>
+    </ClInclude>
+    <ClInclude Include="FlockSettingsScene.h">
+      <Filter>Header Files\scenes\settings</Filter>
+    </ClInclude>
+    <ClInclude Include="InputTypeListener.h">
+      <Filter>Header Files\listeners</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
