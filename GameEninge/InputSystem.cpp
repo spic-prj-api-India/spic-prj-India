@@ -10,6 +10,7 @@
 #include "ResetGameSpeedListener.hpp"
 #include "Debug.hpp"
 #include "Settings.hpp"
+#include "SocketScript.hpp"
 
 namespace spic::internal::systems 
 {
@@ -19,8 +20,22 @@ namespace spic::internal::systems
 
 	void InputSystem::Start(std::vector<std::shared_ptr<spic::GameObject>>& entities, Scene& currentScene)
 	{
+		auto scripts = this->GetAllScripts(entities);
+		for (auto& script : currentScene.Camera().GetComponents<spic::BehaviourScript>()) {
+			scripts.emplace_back(script);
+		}
+		for (auto& script : scripts)
+		{
+			script->OnStart();
+		}
+
 		buttonClickListener = std::make_shared<spic::internal::input::ButtonClickListener>();
 		spic::input::Subscribe(spic::settings::MOUSEBUTTON_BOUND_TO_BUTTONS, this->buttonClickListener);
+
+		if (CheckIfNetworkingIsUsed(entities)) {
+			spic::settings::STANDARD_GAME_SPEED = 1.0;
+			return;
+		}
 
 		if (spic::debug::DEBUG_MODE)
 		{
@@ -31,15 +46,6 @@ namespace spic::internal::systems
 			spic::input::Subscribe(spic::settings::INCREASE_SPEED, increase);
 			spic::input::Subscribe(spic::settings::DECREASE_SPEED, decrease);
 			spic::input::Subscribe(spic::settings::RESET_SPEED, reset);
-		}
-
-		auto scripts = this->GetAllScripts(entities);
-		for (auto& script : currentScene.Camera().GetComponents<spic::BehaviourScript>()) {
-			scripts.emplace_back(script);
-		}
-		for (auto& script : scripts)
-		{
-			script->OnStart();
 		}
 	}
 
@@ -67,6 +73,19 @@ namespace spic::internal::systems
 		}
 	}
 
+	bool InputSystem::CheckIfNetworkingIsUsed(std::vector<std::shared_ptr<spic::GameObject>>& entities)
+	{
+		for (const auto& entity : entities)
+		{
+			if (entity->HasComponent<spic::SocketScript>())
+				return true;
+			auto children = entity->GetChildren();
+			if(CheckIfNetworkingIsUsed(children))
+				return true;
+		}
+		return false;
+	}
+
 	std::vector<std::shared_ptr<spic::Button>> InputSystem::GetButtons(std::vector<std::shared_ptr<spic::GameObject>>& entities)
 	{
 		using namespace spic::helper_functions::type_helper;
@@ -76,8 +95,8 @@ namespace spic::internal::systems
 			if (SharedPtrIsOfType<spic::Button>(entity))
 				buttons.emplace_back(CastSharedPtrToType<spic::Button>(entity));
 
-			auto childeren = entity->GetChildren();
-			auto temp = this->GetButtons(childeren);
+			auto children = entity->GetChildren();
+			auto temp = this->GetButtons(children);
 
 			std::copy(temp.begin(), temp.end(), std::back_inserter(buttons));
 		}
