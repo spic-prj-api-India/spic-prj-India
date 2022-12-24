@@ -2,6 +2,7 @@
 #include <Sprite.hpp>
 #include <CircleCollider.hpp>
 #include "RigidBody.hpp"
+#include <Animator.hpp>
 
 CircleObstacle::CircleObstacle(const std::string& name, const spic::Point& position) : GameObject(name), Obstacle(80.0f)
 {
@@ -11,10 +12,14 @@ CircleObstacle::CircleObstacle(const std::string& name, const spic::Point& posit
 void CircleObstacle::SetAttributes(const spic::Point& position)
 {
 	Tag("obstacle");
-	auto circleCollider = std::make_shared<spic::CircleCollider>(60.0f);
-	Transform(std::make_shared<spic::Transform>(position, 0.0f, 1.0f));
+	auto circleCollider = std::make_shared<spic::CircleCollider>(55.2f);
+	Transform(std::make_shared<spic::Transform>(position, 0.0f, 0.2f));
 	AddComponent<spic::CircleCollider>(std::move(circleCollider));
 	AddComponent<spic::RigidBody>(std::make_shared<spic::RigidBody>(3.0f, 1.0f, spic::BodyType::staticBody));
-	auto sprite = std::make_shared<spic::Sprite>("assets/textures/bladespritesheet.png", 1, 0, spic::Color::white(), false, false, 0,0, 115, 120);
-	AddComponent<spic::Sprite>(std::move(sprite));
+	auto animator = std::make_shared<spic::Animator>(10);
+	animator->InitHorizontalSpriteSheet("assets/textures/circular_saw_spritesheet.png", 4, 548, 552);
+	animator->Play(true);
+	AddComponent<spic::Animator>(std::move(animator));
+	//auto sprite = std::make_shared<spic::Sprite>("assets/textures/circular_saw_spritesheet.png", 1, 0, spic::Color::white(), false, false, 0, 0, 548, 552);
+	//AddComponent<spic::Sprite>(std::move(sprite));
 }
