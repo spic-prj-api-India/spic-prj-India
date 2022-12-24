@@ -22,15 +22,31 @@ const bool spic::Animator::IsFrozen() const
 }
 
 void spic::Animator::InitHorizontalSpriteSheet(const std::string& spriteSheet
-    , const int frames, const int width, const int height, const int yOffsett, const int XOffsett)
+    , const int frames, const int width, const int height, const int yOffsett, const int xOffsett)
 {
     for (size_t i = 0; i < frames; ++i)
     {
         sprites.emplace_back(std::make_shared<spic::Sprite>(spriteSheet,0, static_cast<int>(i)));
         sprites[i]->Height(height);
         sprites[i]->Width(width);
-        sprites[i]->X(width * (static_cast<int>(i) - XOffsett));
+        sprites[i]->X(width * (static_cast<int>(i) - xOffsett));
         sprites[i]->Y(yOffsett);
+    }
+}
+void spic::Animator::InitSpriteSheet(const std::string& spriteSheet, const int rows, 
+    const int cols, const int width, const int height, const int yOffsett, const int xOffsett)
+{
+    for (int y = 0; y < rows; ++y)
+    {
+        for (int x = 0; x < cols; ++x)
+        {
+            auto sprite = std::make_shared<spic::Sprite>(spriteSheet, 0, 1);
+            sprite->Height(height);
+            sprite->Width(width);
+            sprite->X(width * (x - xOffsett));
+            sprite->Y(height * (y - yOffsett));
+            sprites.emplace_back(sprite);
+        }
     }
 }
 
@@ -97,7 +113,7 @@ void spic::Animator::Index(const int index)
 
 void spic::Animator::IncreaseIndex()
 {
-    if (++this->index > sprites.back()->OrderInLayer() + 1)
+    if (++this->index >= sprites.size())
     {
         this->index = 1;
 

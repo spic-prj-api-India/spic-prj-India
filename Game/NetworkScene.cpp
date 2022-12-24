@@ -10,6 +10,9 @@
 #include "Shooter.h"
 #include "SyncScript.h"
 #include "Target.h"
+#include <Text.hpp>
+#include <Animator.hpp>
+#include "Settings.hpp"
 
 NetworkScene::NetworkScene() : Scene()
 {
@@ -42,6 +45,28 @@ void NetworkScene::SetContents()
 	spic::Point obstaclePosition = { 300.0f, 200.0f };
 	std::shared_ptr<CircleObstacle> obstacle = std::make_shared<CircleObstacle>("blade1", obstaclePosition);
 
+	/* Loading animation */
+	auto animation = std::make_shared<spic::GameObject>("loadingAnimation");
+	animation->Transform(std::make_shared<spic::Transform>(spic::Point(875.0f, 312.5f), 0.0f, .25f));
+
+	auto feedbackText = std::make_shared<spic::Text>(600.0f, 900.0f
+		, "Is looking for opponent"
+		, ""
+		, 50
+		, spic::Alignment::CENTER
+		, spic::Color::white());
+	const float x = (spic::settings::WINDOW_WIDTH / 2.0f) - (feedbackText->Width() / 2);
+	feedbackText->Transform(std::make_shared<spic::Transform>(spic::Point(x, 300.0f), 0.0f, 1.0f));
+	
+	auto animator = std::make_shared<spic::Animator>(60);
+	animator->InitSpriteSheet("assets/textures/load_spritesheet.png", 4, 12, 188, 188);
+	animator->Play(true);
+
+	animation->AddChild(feedbackText);
+	animation->AddComponent(std::move(animator));
+	
+	/* Add contents */
+	AddContent(animation);
 	AddContent(shooter);
 	AddContent(target);
 	AddContent(obstacle);

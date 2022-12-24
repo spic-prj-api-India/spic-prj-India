@@ -42,7 +42,7 @@ void InitGame()
 
 	auto socket = std::make_shared<spic::extensions::SocketUDPExtension>();
 	socket->InitListener(13252);
-	socket->InitSender(opponentIp, 13252);
+	socket->InitSender(opponentIp, 13251);
 	engine->AddExtension(std::move(socket));
 
 	// Register object types
