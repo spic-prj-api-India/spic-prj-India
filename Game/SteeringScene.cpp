@@ -13,7 +13,7 @@ SteeringScene::SteeringScene() : Scene()
 {
 	SetCamera();
 	SetContents();
-	LoadTileMap("assets/maps/map.tmx", 3);
+	LoadTileMap("assets/maps/map3.tmx", 1);
 }
 
 void SteeringScene::SetCamera()
@@ -33,8 +33,8 @@ void SteeringScene::SetContents()
 	std::string rocketLauncherName = "rocketLauncher";
 	std::shared_ptr<spic::Transform> rocketLauncherTransform = std::make_shared<spic::Transform>();
 	rocketLauncherTransform->rotation = 0.0f;
-	rocketLauncherTransform->position = { 700.0f, 375.0f };
-	rocketLauncherTransform->scale = 0.25f;
+	rocketLauncherTransform->position = { 600.0f, 475.0f };
+	rocketLauncherTransform->scale = 0.175f;
 	auto rocketLauncherSprite = std::make_shared<spic::Sprite>("assets/textures/rocket-launcher.png", 1);
 	rocketLauncher->Name(rocketLauncherName);
 	rocketLauncher->Transform(rocketLauncherTransform);
