@@ -13,7 +13,7 @@ void LoadingAnimation::SetAttributes(const spic::Point& position, const std::str
 	Active(active);
 	Transform(std::make_shared<spic::Transform>(position, 0.0f, 1.0f));
 
-	int fontSize = _loadingText.size() <= 20 ? 50 : 34;
+	int fontSize = _loadingText.size() <= 25 ? 50 : 34;
 	auto loadingText = std::make_shared<spic::Text>(600.0f, 400.0f
 		, _loadingText
 		, ""
@@ -23,8 +23,9 @@ void LoadingAnimation::SetAttributes(const spic::Point& position, const std::str
 	loadingText->Transform(std::make_shared<spic::Transform>(spic::Point(0.0f, 0.0f), 0.0f, 1.0f));
 
 	auto animatorObject = std::make_shared<spic::GameObject>();
-	const float y = _loadingText.size() <= 20 ? 7.5f : 0.0f;
-	animatorObject->Transform(std::make_shared<spic::Transform>(spic::Point(600.0f, y), 0.0f, .25f));
+	const float x = 600.0f;
+	const float y = _loadingText.size() <= 25 ? 7.5f : 0.0f;
+	animatorObject->Transform(std::make_shared<spic::Transform>(spic::Point(x, y), 0.0f, .25f));
 	auto animator = std::make_shared<spic::Animator>(60);
 	animator->InitSpriteSheet("assets/textures/load_spritesheet.png", 4, 12, 188, 188);
 	animator->Play(true);
