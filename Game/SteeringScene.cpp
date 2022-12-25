@@ -16,7 +16,9 @@ SteeringScene::SteeringScene() : Scene()
 {
 	SetCamera();
 	SetContents();
-	LoadTileMap("assets/maps/map3.tmx", 1);
+	const bool mapSwitch = spic::RandomHelper::GetInstance()->Between<bool>(0, 1);
+	const std::string& map = mapSwitch ? "assets/maps/map3.tmx" : "assets/maps/map4.tmx";
+	LoadTileMap(map, 1);
 }
 
 void SteeringScene::SetCamera()
