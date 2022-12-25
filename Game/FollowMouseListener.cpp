@@ -13,7 +13,7 @@ void FollowMouseListener::AddFollower(std::shared_ptr<spic::ForceDriven> followe
 {
 	const auto& steering = follower->GetComponent<spic::Steering>();
 	std::map<std::string, std::string> settings;
-	spic::DataHandler dataHandler = spic::DataHandler("settings");
+	spic::DataHandler dataHandler = spic::DataHandler("flock_settings");
 	dataHandler.LoadSettings(settings);
 	if (std::stoi(settings["use_flee"]))
 		steering->AddTarget(spic::TargetBehaviour::FLEE, *target.get(), 1.0f);

@@ -444,6 +444,9 @@
     <ClInclude Include="Steering.hpp">
       <Filter>Header Files\components\ai</Filter>
     </ClInclude>
+    <ClInclude Include="RandomHelper.hpp">
+      <Filter>Header Files\helpers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sample.cpp">
@@ -658,6 +661,9 @@
     </ClCompile>
     <ClCompile Include="Obstacle.cpp">
       <Filter>Source Files\objects</Filter>
+    </ClCompile>
+    <ClCompile Include="RandomHelper.cpp">
+      <Filter>Source Files\helpers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

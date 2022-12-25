@@ -4,7 +4,7 @@
 #include "RigidBody.hpp"
 #include <Animator.hpp>
 
-CircleObstacle::CircleObstacle(const std::string& name, const spic::Point& position) : GameObject(name), Obstacle(80.0f)
+CircleObstacle::CircleObstacle(const std::string& name, const spic::Point& position) : GameObject(name), Obstacle(70.0f)
 {
 	SetAttributes(position);
 }

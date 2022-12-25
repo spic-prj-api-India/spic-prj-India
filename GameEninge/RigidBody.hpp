@@ -10,8 +10,17 @@ namespace spic {
      * @brief Enumeration for different rigid body types
      */
     enum class BodyType {
+        /**
+         * @brief zero mass, zero velocity, may be manually moved
+        */
         staticBody,
+        /**
+         * @brief zero mass, non-zero velocity set by user, moved by solver
+        */
         kinematicBody,
+        /**
+         * @brief positive mass, non-zero velocity determined by forces, moved by solver
+        */
         dynamicBody
     };
 

@@ -5,7 +5,8 @@
 #include <Steering.hpp>
 #include <DataHandler.hpp>
 
-SteeringRocket::SteeringRocket(const std::string& name, const spic::Point& position, const float angle) : ForceDriven(spic::SumMethod::WEIGHTED_AVERAGE, 0.5f, 1.5f, 0.122173048f, 40.0f)
+SteeringRocket::SteeringRocket(const std::string& name, const spic::Point& position, const float angle) : 
+	ForceDriven(spic::SumMethod::WEIGHTED_AVERAGE, 0.5f, 1.5f, 0.122173048f, 40.0f)
 {
 	SetAttributes(name, position, angle);
 	SetSteeringBehaviours();

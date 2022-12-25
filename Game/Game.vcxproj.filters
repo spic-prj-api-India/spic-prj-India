@@ -91,6 +91,15 @@
     <Filter Include="Header Files\scenes\settings">
       <UniqueIdentifier>{2e65c5f4-e41a-425f-ad24-bf3be44f5921}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\objects\flock/steering">
+      <UniqueIdentifier>{c006279b-8a50-4812-a920-aec5c4864359}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\objects\flock/steering">
+      <UniqueIdentifier>{23771b13-f0e1-41c5-8f61-5317f7d2e01b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\scripts\flock/steering">
+      <UniqueIdentifier>{c137f0e0-2a17-4d3a-9671-587bb7e43911}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="KeyListener.cpp">
@@ -198,9 +207,6 @@
     <ClCompile Include="FollowMouseListener.cpp">
       <Filter>Source Files\listeners</Filter>
     </ClCompile>
-    <ClCompile Include="SteeringRocket.cpp">
-      <Filter>Source Files\objects</Filter>
-    </ClCompile>
     <ClCompile Include="NetCollisionDetectionScript.cpp">
       <Filter>Source Files\scripts\network\shooter</Filter>
     </ClCompile>
@@ -227,6 +233,12 @@
     </ClCompile>
     <ClCompile Include="LoadingAnimation.cpp">
       <Filter>Source Files\objects\network</Filter>
+    </ClCompile>
+    <ClCompile Include="SteeringRocket.cpp">
+      <Filter>Source Files\objects\flock/steering</Filter>
+    </ClCompile>
+    <ClCompile Include="Alien.cpp">
+      <Filter>Source Files\objects\flock/steering</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -332,14 +344,8 @@
     <ClInclude Include="Target.h">
       <Filter>Header Files\objects\network</Filter>
     </ClInclude>
-    <ClInclude Include="SteeringRocket.h">
-      <Filter>Header Files\objects</Filter>
-    </ClInclude>
     <ClInclude Include="NetCollisionDetectionScript.h">
       <Filter>Header Files\scripts\networking\shooter</Filter>
-    </ClInclude>
-    <ClInclude Include="CollisionDetectionScript.h">
-      <Filter>Header Files\scripts</Filter>
     </ClInclude>
     <ClInclude Include="SettingsScene.h">
       <Filter>Header Files\scenes\settings</Filter>
@@ -361,6 +367,15 @@
     </ClInclude>
     <ClInclude Include="LoadingAnimation.h">
       <Filter>Header Files\objects\network</Filter>
+    </ClInclude>
+    <ClInclude Include="SteeringRocket.h">
+      <Filter>Header Files\objects\flock/steering</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionDetectionScript.h">
+      <Filter>Header Files\scripts\flock/steering</Filter>
+    </ClInclude>
+    <ClInclude Include="Alien.h">
+      <Filter>Header Files\objects\flock/steering</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

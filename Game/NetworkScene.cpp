@@ -16,21 +16,21 @@ NetworkScene::NetworkScene() : Scene()
 {
 	SetCamera();
 	SetContents();
-	LoadTileMap("assets/maps/map.tmx", 3);
+	LoadTileMap("assets/maps/map3.tmx", 1);
 }
 
 void NetworkScene::SetCamera()
 {
 	std::unique_ptr<spic::Camera> camera = std::make_unique<spic::Camera>();
 	camera->Transform(std::make_shared<spic::Transform>(spic::Point(0.0f, 0.0f), 0.0f, 1.0f));
-	camera->BackgroundColor(spic::Color::blue());
+	camera->BackgroundImage("assets/textures/backgrounds/bg3.png");
 	Camera(std::move(camera));
 }
 
 void NetworkScene::SetContents()
 {
 	/* Shooter setup */
-	spic::Point shooterPosition = { 700.0f, 375.0f };
+	spic::Point shooterPosition = { 600.0f, 475.0f };
 	std::shared_ptr<Shooter> shooter = std::make_shared<Shooter>(shooterPosition);
 	shooter->AddComponent<spic::SocketScript>(std::make_shared<SyncScript>());
 	shooter->AddComponent(std::make_shared<NetworkBackScript>());

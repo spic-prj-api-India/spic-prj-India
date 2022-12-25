@@ -148,6 +148,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AimListener.cpp" />
+    <ClCompile Include="Alien.cpp" />
     <ClCompile Include="BoxPersistable.cpp" />
     <ClCompile Include="BackScript.cpp" />
     <ClCompile Include="BoxNotPersistable.cpp" />
@@ -195,6 +196,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AimListener.h" />
+    <ClInclude Include="Alien.h" />
     <ClInclude Include="CollisionDetectionScript.h" />
     <ClInclude Include="FlockSettingsScene.h" />
     <ClInclude Include="FollowMouseListener.h" />

@@ -40,7 +40,7 @@ namespace spic
 	{
 		neighbors = {};
 		for (const auto& forceDrivenEntity : forceDrivenEntities) {
-			if (forceDrivenEntity.get() == this->agent)
+			if (forceDrivenEntity.get() == this->agent || forceDrivenEntity->Tag() != this->agent->Tag())
 				continue;
 			const Point toAgent = this->agent->Transform()->position - forceDrivenEntity->Transform()->position;
 			const float distance = toAgent.Length();

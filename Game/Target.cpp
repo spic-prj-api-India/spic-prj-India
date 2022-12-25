@@ -23,7 +23,7 @@ void Target::SetAttributes(const spic::Point& position)
 	auto mouseSprite = std::make_shared<spic::Sprite>("assets/textures/cursor.png", 1);
 	AddComponent<spic::Sprite>(mouseSprite);
 	AddComponent<spic::RigidBody>(std::make_shared<spic::RigidBody>(1.0f, 1.0f, spic::BodyType::staticBody));
-	AddComponent<spic::CircleCollider>(std::make_shared<spic::CircleCollider>(23.75f));
+	AddComponent<spic::CircleCollider>(std::make_shared<spic::CircleCollider>(15.0f));
 }
 
 void Target::SetContent(std::map<std::string, std::string>& data)
