@@ -528,7 +528,7 @@ namespace spic::internal::input::impl
 		return std::find(keyCodes.begin(), keyCodes.end(), ev.key.keysym.sym) != keyCodes.end();
 	}
 
-	bool GetKeyDown(spic::input::KeyCode key) 
+	bool GetKeyDown(spic::input::KeyCode key)
 	{
 		const std::vector<SDL_Keycode> keyCodes = ToSDLKeyCodes(key);
 		return ev.type == SDL_KEYDOWN && std::find(keyCodes.begin(), keyCodes.end(), ev.key.keysym.sym) != keyCodes.end();
