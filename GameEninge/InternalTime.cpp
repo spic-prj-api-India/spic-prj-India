@@ -28,7 +28,7 @@ void spic::internal::time::InternalTime::EndFrame()
 
 	if (InternalTime::ClockToMilliseconds(deltaTime) > 1000.0) //every second
 	{ 
-		frameRate = frames * 0.5 + frameRate * 0.5; //more stable framerate
+		frameRate = static_cast<double>(frames) * 0.5 + frameRate * 0.5; //more stable framerate
 		frames = 0;
 		deltaTime -= CLOCKS_PER_SEC;
 		averageFrameTimeMilliseconds = 1000.0 / (frameRate == 0 ? 0.001 : frameRate); // second / framerate
