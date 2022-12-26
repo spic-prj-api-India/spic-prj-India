@@ -114,10 +114,10 @@ namespace spic {
 
 		/*
 		@brief Load the specified scene.
-		@param scene: The scene you want to load.
+		@param sceneName: The name of the scene you want to load.
 		@param fileName: The file name.
 		*/
-		void LoadSceneBySaveFile(std::shared_ptr<Scene> scene, const std::string& fileName);
+		void LoadSceneBySaveFile(const std::string& sceneName, const std::string& fileName);
 
 		/*
 		@brief Destroy the current scene.

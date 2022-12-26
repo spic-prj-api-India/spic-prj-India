@@ -244,6 +244,7 @@
     <ClInclude Include="TileMap.hpp" />
     <ClInclude Include="TileSet.hpp" />
     <ClInclude Include="Time.hpp" />
+    <ClInclude Include="Timer.hpp" />
     <ClInclude Include="Transform.hpp" />
     <ClInclude Include="Transformations.hpp" />
     <ClInclude Include="TypeHelper.hpp" />
@@ -303,6 +304,7 @@
     <ClCompile Include="Steering.cpp" />
     <ClCompile Include="StringHelper.cpp" />
     <ClCompile Include="Text.cpp" />
+    <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Transformations.cpp" />
     <ClCompile Include="ThreadWrapper.cpp" />
     <ClCompile Include="Transform.cpp" />

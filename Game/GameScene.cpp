@@ -9,6 +9,8 @@
 #include "BackScript.h"
 #include "BoxSpawnerScript.h"
 #include <DataHandler.hpp>
+#include <Text.hpp>
+#include "TimerScript.h"
 
 GameScene::GameScene() : Scene()
 {
@@ -65,8 +67,21 @@ void GameScene::SetContents()
 		spic::GameEngine::GetInstance()->LoadSceneByName("menu");
 		});
 
+	// Timer
+	auto timerText = std::make_shared<spic::Text>(
+		static_cast<float>(spic::settings::WINDOW_WIDTH)
+		, static_cast<float>(spic::settings::WINDOW_HEIGHT)
+		, ""
+		, ""
+		, 50
+		, spic::Alignment::CENTER
+		, spic::Color::white());
+	timerText->Transform(std::make_shared<spic::Transform>(spic::Point(0.0f, 100.0f), 0.0f, 1.0f));
+	timerText->AddComponent(std::make_shared<TimerScript>(timerText));
+
 	AddContent(football);
 	AddContent(button);
+	AddContent(timerText);
 }
 
 spic::Scene* GameScene::Start()

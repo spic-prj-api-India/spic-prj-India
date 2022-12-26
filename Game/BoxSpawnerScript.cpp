@@ -18,6 +18,7 @@ void BoxSpawnerScript::OnUpdate() {
 	if (rightPressed)
 	{
 		spic::Point mousePosition = MousePosition();
+		mousePosition += this->gameObject->Transform()->position;
 		std::shared_ptr<BoxPersistable> boxPresistable = std::make_shared<BoxPersistable>("box-" + GetRandomUUID(), mousePosition);
 		spic::GameObject::Create(boxPresistable);
 		this->bloopAudio->Play(false);
@@ -26,6 +27,7 @@ void BoxSpawnerScript::OnUpdate() {
 	else if (leftPressed)
 	{
 		spic::Point mousePosition = MousePosition();
+		mousePosition += this->gameObject->Transform()->position;
 		std::shared_ptr<BoxNotPersistable> boxNotPresistable = std::make_shared<BoxNotPersistable>("box-" + GetRandomUUID(), mousePosition);
 		spic::GameObject::Create(boxNotPresistable);
 		this->bloopAudio->Play(false);
