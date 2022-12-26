@@ -12,6 +12,9 @@ namespace spic {
      */
     class Button : public UIObject {
         public:
+            /**
+             * @brief Format: [](){}
+            */
             typedef std::function<void()> ClickCallback;
 
             /**
