@@ -11,7 +11,7 @@ namespace spic
     class ThreadWrapper
     {
         // std::thread object
-        std::thread  threadHandler;
+        std::thread threadHandler;
     public:
         //Delete the copy constructor
         ThreadWrapper(const ThreadWrapper&) = delete;

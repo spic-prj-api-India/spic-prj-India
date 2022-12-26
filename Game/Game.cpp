@@ -20,7 +20,7 @@
 #include "WinScene.h"
 #include "SteeringScene.h"
 
-void InitGame() 
+void InitGame()
 {
 	// Creates GameEngine instance 
 	spic::GameEngine* engine = spic::GameEngine::GetInstance();
