@@ -168,12 +168,10 @@ void RendererImpl::DrawAnimator(Animator* animator, const Transform& transform, 
 
  	auto sprites = animator->Sprites();
 
-	const auto framesAmount = sprites.back()->OrderInLayer() + 1;
 	using namespace spic::internal::time;
 
 	uint64_t current = SDL_GetTicks();
 	double dT = (current - animator->LastUpdate()) / InternalTime::averageFrameTimeMilliseconds;
-
 
 	if (dT > InternalTime::frameRate / (animator->Fps() * Time::TimeScale()) && !animator->IsFrozen())
 	{

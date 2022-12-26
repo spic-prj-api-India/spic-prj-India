@@ -22,12 +22,11 @@ const bool spic::Animator::IsFrozen() const
 }
 
 void spic::Animator::InitHorizontalSpriteSheet(const std::string& spriteSheet
-    , const int frames, const int width, const int height, const int yOffsett
-    , const int xOffsett, const int sortingLayer, const int orderLayer)
+    , const int frames, const int width, const int height, const int yOffsett, const int xOffsett)
 {
     for (int x = 0; x < frames; ++x)
     {
-        auto sprite = std::make_shared<spic::Sprite>(spriteSheet, sortingLayer, orderLayer);
+        auto sprite = std::make_shared<spic::Sprite>(spriteSheet, 0, x);
         sprite->Height(height);
         sprite->Width(width);
         sprite->X(width * (x - xOffsett));
@@ -36,14 +35,13 @@ void spic::Animator::InitHorizontalSpriteSheet(const std::string& spriteSheet
     }
 }
 void spic::Animator::InitSpriteSheet(const std::string& spriteSheet, const int rows
-    , const int cols, const int width, const int height, const int yOffsett
-    , const int xOffsett, const int sortingLayer, const int orderLayer)
+    , const int cols, const int width, const int height, const int yOffsett, const int xOffsett)
 {
     for (int y = 0; y < rows; ++y)
     {
         for (int x = 0; x < cols; ++x)
         {
-            auto sprite = std::make_shared<spic::Sprite>(spriteSheet, sortingLayer, orderLayer);
+            auto sprite = std::make_shared<spic::Sprite>(spriteSheet, y, x);
             sprite->Height(height);
             sprite->Width(width);
             sprite->X(width * (x - xOffsett));
@@ -116,14 +114,13 @@ void spic::Animator::Index(const int index)
 
 void spic::Animator::IncreaseIndex()
 {
-    if (++this->index >= sprites.size())
+    if (++this->index > sprites.back()->OrderInLayer() + 1)
     {
         this->index = 1;
 
         if (!this->looping)
             this->running = false;
     }
-       
 }
 
 bool spic::Animator::IsRunning() const

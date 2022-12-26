@@ -56,9 +56,7 @@ namespace spic {
                 , const int width
                 , const int height
                 , const int yOffsett = 0
-                , const int xOffsett = 0
-                , const int sortingLayer = 0
-                , const int orderLayer = 0);
+                , const int xOffsett = 0);
 
             /**
              * @brief If the sprite animation on the sprite sheet is horizontal,
@@ -76,9 +74,7 @@ namespace spic {
                 , const int width
                 , const int height
                 , const int yOffsett = 0
-                , const int xOffsett = 0
-                , const int sortingLayer = 0
-                , const int orderLayer = 0);
+                , const int xOffsett = 0);
 
             /**
              * @brief Stops the animator frow drawing frames
