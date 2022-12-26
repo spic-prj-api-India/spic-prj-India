@@ -31,9 +31,9 @@ namespace spic::extensions
 		 * @param exitCallback Callback that runs OnTriggerExit2D in behaviour scripts of entity
 		 * @param stayCallback  Callback that runs OnTriggerStay2D in behaviour scripts of entity
 		*/
-		void Reset(std::function<void(const std::shared_ptr<spic::GameObject>&, const std::shared_ptr<spic::Collider>&)> enterCallback,
-			std::function<void(const std::shared_ptr<spic::GameObject>&, const std::shared_ptr<spic::Collider>&)> exitCallback,
-			std::function<void(const std::shared_ptr<spic::GameObject>&, const std::shared_ptr<spic::Collider>&)> stayCallback) override;
+		void Reset(CollisionCallback enterCallback,
+			CollisionCallback exitCallback,
+			CollisionCallback stayCallback) override;
 
 		/**
 		 * @brief Add collision layer to physic world

@@ -7,6 +7,9 @@
 
 namespace spic 
 {
+	typedef std::function<std::string()> SaveFunction;
+	typedef std::function<void(const std::string&)> LoadFunction;
+
 	/**
 	 * @brief Makes a GameObject persistable, so that it can be loaded back in later on.
 	 */
@@ -29,13 +32,13 @@ namespace spic
 		 * @brief Saves the properties of the GameObject.
 		 * @return A map containing the properties of the GameObject, or an empty map if the GameObject is nullptr.
 		 */
-		virtual std::map<std::string, std::function<std::string()>> SaveProperties();
+		virtual std::map<std::string, SaveFunction> SaveProperties();
 		
 		/**
 		 * @brief Loads the properties of the GameObject.
 		 * @return A map used for passing the properties of the GameObject, which are then set to the GameObject. Or an empty map if the GameObject is nullptr.
 		 */
-		virtual std::map<std::string, std::function<void(const std::string&)>> LoadProperties();
+		virtual std::map<std::string, LoadFunction> LoadProperties();
 	private:
 		/**
 		* @brief The GameObject to make persistable.

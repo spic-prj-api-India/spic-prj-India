@@ -38,7 +38,7 @@ namespace spic
 		return _types[typeName]();
 	}
 
-	void GameEngine::RegisterScene(const std::string& sceneName, std::function<spic::Scene* ()> scene)
+	void GameEngine::RegisterScene(const std::string& sceneName, CreateSceneFunction scene)
 	{
 		internal::EntityManager::GetInstance()->RegisterScene(sceneName, scene);
 	}

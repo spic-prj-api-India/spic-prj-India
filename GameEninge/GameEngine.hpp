@@ -13,6 +13,9 @@
 #include <functional>
 
 namespace spic {
+	typedef std::function<spic::Scene*()> CreateSceneFunction;
+	typedef std::function<std::shared_ptr<spic::GameObject>()> CreateGameObjectFunction;
+
 	/**
 	 * @brief The main class of the engine, has multiple functions to configure engine and load scenes.
 	 *				The GameEngine class implements a singleton pattern.
@@ -26,7 +29,7 @@ namespace spic {
 		~GameEngine();
 
 		std::vector<std::shared_ptr<extensions::IEngineExtension>> _extensions;
-		std::map<std::string, std::function<std::shared_ptr<spic::GameObject>()>> _types;
+		std::map<std::string, CreateGameObjectFunction> _types;
 		bool quit;
 	public:
 		GameEngine(GameEngine& other) = delete;
@@ -90,7 +93,7 @@ namespace spic {
 		@param The sceneName is the key in the scenes list.
 		@param The scene that will be registered in scenes list.
 		*/
-		void RegisterScene(const std::string& sceneName, std::function<spic::Scene* ()> scene);
+		void RegisterScene(const std::string& sceneName, CreateSceneFunction scene);
 
 		/*
 		@brief Load the specified scene.

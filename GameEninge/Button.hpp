@@ -12,6 +12,8 @@ namespace spic {
      */
     class Button : public UIObject {
         public:
+            typedef std::function<void()> ClickCallback;
+
             /**
              * @brief Default constructor
             */
@@ -41,7 +43,7 @@ namespace spic {
              *        any kind of callable.
              * @spicapi
              */
-            void OnClick(std::function<void()> callback);
+            void OnClick(ClickCallback callback);
 
         private:
             /**
@@ -54,7 +56,7 @@ namespace spic {
              * @brief The registered click handler.
              * @spicapi
              */
-            std::function<void()> onClick;
+            ClickCallback onClick;
     };
 }
 #endif // BUTTON_H_

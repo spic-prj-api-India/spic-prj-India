@@ -11,6 +11,8 @@ namespace spic::extensions {
 	*/
 	class ICollisionListener {
 	public:
+		typedef std::function<void(const std::shared_ptr<spic::GameObject>&, const std::shared_ptr<spic::Collider>&)> CollisionCallback;
+
 		ICollisionListener();
 
 		/**
@@ -20,9 +22,9 @@ namespace spic::extensions {
 		* @param stayCallback Callback that is called when collider stays in collision
 		* @spicapi
 		*/
-		ICollisionListener(std::function<void(const std::shared_ptr<spic::GameObject>&, const std::shared_ptr<spic::Collider>&)> enterCallback,
-			std::function<void(const std::shared_ptr<spic::GameObject>&, const std::shared_ptr<spic::Collider>&)> exitCallback,
-			std::function<void(const std::shared_ptr<spic::GameObject>&, const std::shared_ptr<spic::Collider>&)> stayCallback);
+		ICollisionListener(CollisionCallback enterCallback,
+			CollisionCallback exitCallback,
+			CollisionCallback stayCallback);
 		virtual ~ICollisionListener() = default;
 		ICollisionListener(const ICollisionListener& other) = delete;
 		ICollisionListener(ICollisionListener&& other) = delete;
