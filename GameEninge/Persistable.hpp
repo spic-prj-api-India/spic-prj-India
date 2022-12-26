@@ -7,7 +7,14 @@
 
 namespace spic 
 {
+	/**
+	 * @brief Format: [](){return string}	
+	*/
 	typedef std::function<std::string()> SaveFunction;
+
+	/**
+	 * @brief Format: [](const std::string&){}
+	*/
 	typedef std::function<void(const std::string&)> LoadFunction;
 
 	/**

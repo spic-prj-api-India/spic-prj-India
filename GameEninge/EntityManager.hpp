@@ -102,7 +102,8 @@ namespace spic::internal
 		/*
 		* @brief Register scene.
 		* @param sceneName This is the key in the scenes list.
-		* @param The scene that will be registered in scenes list.
+		* @param scene Function that creates scene.
+		*			Format: [](){return new Scene()}
 		*/
 		void RegisterScene(const std::string& sceneName, CreateSceneFunction scene);
 

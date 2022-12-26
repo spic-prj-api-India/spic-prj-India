@@ -29,6 +29,10 @@ namespace spic {
 		~GameEngine();
 
 		std::vector<std::shared_ptr<extensions::IEngineExtension>> _extensions;
+
+		/**
+		 * @brief CreateGameObjectFunction, Format: [](){return new Scene()}	
+		*/
 		std::map<std::string, CreateGameObjectFunction> _types;
 		bool quit;
 	public:
@@ -89,9 +93,10 @@ namespace spic {
 		std::shared_ptr<spic::GameObject> CreateType(const std::string& typeName);
 
 		/*
-		@brief Register scene.
-		@param The sceneName is the key in the scenes list.
-		@param The scene that will be registered in scenes list.
+		* @brief Register scene.
+		* @param sceneName The key in the scenes list.
+		* @param scene Function that creates scene.
+		*			Format: [](){return new Scene()}		
 		*/
 		void RegisterScene(const std::string& sceneName, CreateSceneFunction scene);
 

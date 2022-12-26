@@ -16,6 +16,11 @@ namespace spic::helper_functions
 	*/
 	namespace container
 	{
+        /**
+         * @brief Function that is used for finding object in container. 
+         *          Format: [](std::shared_ptr<T>){return true}
+         * @tparam T 
+        */
         template <typename T>
         using FindFunction = std::function<bool(std::shared_ptr<T>)>;
 
@@ -55,6 +60,7 @@ namespace spic::helper_functions
          * @brief Finds element in vector with find function
          * @param vector Vector to search in
          * @param findFunction Lambda function that checks if element is right element
+         *          Format: [](std::shared_ptr<T>){return true}
          * @return shared_ptr or nullptr
         */
         template <typename T>
@@ -76,6 +82,7 @@ namespace spic::helper_functions
          * @brief Finds element in vector with find function and converts element to given type
          * @param vector Vector to search in
          * @param findFunction Lambda function that checks if element is right element
+         *          Format: [](std::shared_ptr<T>){return true}
          * @return shared_ptr or nullptr
         */
         template <typename T, typename C>

@@ -39,8 +39,8 @@ namespace spic {
 
             /**
              * @brief Register the onClick handler to be used when the button is clicked.
-             * @param callback The function to register, usually a lambda. But this can be
-             *        any kind of callable.
+             * @param callback The function to register, usually a lambda. But this can be any kind of callable.
+		     *			Format: [](){}
              * @spicapi
              */
             void OnClick(ClickCallback callback);
@@ -53,7 +53,7 @@ namespace spic {
             bool interactable;
 
             /**
-             * @brief The registered click handler.
+             * @brief The registered click handler. Format: [](){}
              * @spicapi
              */
             ClickCallback onClick;

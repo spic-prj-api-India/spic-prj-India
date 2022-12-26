@@ -25,10 +25,13 @@ namespace spic::internal::extensions
         Box2DCollisionListener();
 
         /**
-        * @brief Constructor for all callback methods
-        * @param enterCallback Callback that is called when collider enters collision
-        * @param exitCallback Callback that is called when collider exits collision
-        * @param stayCallback Callback that is called when collider stays in collision inside the same frame
+         * @brief Constructor for all callback methods
+         * @param enterCallback Callback that runs OnTriggerEnter2D in behaviour scripts of entity if entity enters collision.
+         *			Format: [](const std::shared_ptr<spic::GameObject>&, const std::shared_ptr<spic::Collider>&){}
+         * @param exitCallback Callback that runs OnTriggerExit2D in behaviour scripts of entity if entity exits collision.
+         *			Format: [](const std::shared_ptr<spic::GameObject>&, const std::shared_ptr<spic::Collider>&){}
+         * @param stayCallback  Callback that runs OnTriggerStay2D in behaviour scripts of entity if entity stays collision.
+         *			Format: [](const std::shared_ptr<spic::GameObject>&, const std::shared_ptr<spic::Collider>&){}
         */
         Box2DCollisionListener(CollisionCallback enterCallback,
             CollisionCallback exitCallback,
