@@ -1,6 +1,6 @@
 #include "RandomHelper.hpp"
 
-namespace spic
+namespace spic::helper_functions
 {
 	RandomHelper* RandomHelper::pinstance_{ nullptr };
 	std::mutex RandomHelper::mutex_;

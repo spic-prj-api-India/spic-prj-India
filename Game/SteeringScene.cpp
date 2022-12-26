@@ -12,11 +12,13 @@
 #include "Settings.hpp"
 #include "RandomHelper.hpp"
 
+using namespace spic::helper_functions;
+
 SteeringScene::SteeringScene() : Scene()
 {
 	SetCamera();
 	SetContents();
-	const bool mapSwitch = spic::RandomHelper::GetInstance()->Between<bool>(0, 1);
+	const bool mapSwitch = RandomHelper::GetInstance()->Between<bool>(0, 1);
 	const std::string& map = mapSwitch ? "assets/maps/map3.tmx" : "assets/maps/map4.tmx";
 	LoadTileMap(map, 1);
 }
@@ -54,10 +56,10 @@ void SteeringScene::SetContents()
 	AddContent(obstacle);
 
 	/* Alien setup */
-	int numberOfAliens = spic::RandomHelper::GetInstance()->Between<int>(0, 7);
+	int numberOfAliens = RandomHelper::GetInstance()->Between<int>(0, 7);
 	while (numberOfAliens != 0) {
-		const float x = spic::RandomHelper::GetInstance()->Between<float>(0, spic::settings::WINDOW_WIDTH);
-		const float y = spic::RandomHelper::GetInstance()->Between<float>(0, spic::settings::WINDOW_HEIGHT);
+		const float x = RandomHelper::GetInstance()->Between<float>(0, spic::settings::WINDOW_WIDTH);
+		const float y = RandomHelper::GetInstance()->Between<float>(0, spic::settings::WINDOW_HEIGHT);
 		spic::Point alienPosition = { x, y };
 		std::shared_ptr<Alien> alien = std::make_shared<Alien>("alien" + std::to_string(numberOfAliens), alienPosition, 0.0f);
 		AddContent(alien);

@@ -4,20 +4,20 @@
 #include <random>
 #include <mutex>
 
-template <bool is_integral, typename T> struct uniform_distribution_selector;
-
-template <typename T> struct uniform_distribution_selector<true, T>
+namespace spic::helper_functions
 {
-	using type = typename std::uniform_int_distribution<T>;
-};
+	template <bool is_integral, typename T> struct uniform_distribution_selector;
 
-template <typename T> struct uniform_distribution_selector<false, T>
-{
-	using type = typename std::uniform_real_distribution<T>;
-};
+	template <typename T> struct uniform_distribution_selector<true, T>
+	{
+		using type = typename std::uniform_int_distribution<T>;
+	};
 
-namespace spic
-{
+	template <typename T> struct uniform_distribution_selector<false, T>
+	{
+		using type = typename std::uniform_real_distribution<T>;
+	};
+
 	/**
 	 * @brief Contains  helpfull random functions
 	*/ 

@@ -30,7 +30,8 @@ namespace spic::internal::systems
 		void Update(std::vector<std::shared_ptr<spic::GameObject>>& entities, Scene& currentScene) override;
 	private:
 		/**
-		* @brief Checks if networking is used in scene
+		* @brief Checks if networking is used in scene. 
+		*			Is used for enabling or disabling key listeners for changing gamespeed.
 		* @param bool Network is used
 		*/
 		bool CheckIfNetworkingIsUsed(std::vector<std::shared_ptr<spic::GameObject>>& entities);
