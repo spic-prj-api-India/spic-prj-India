@@ -253,8 +253,14 @@ namespace spic {
 		*/
 		int width;
 
+		/**
+		 * @brief Display height on window
+		*/
 		float displayHeight;
 
+		/**
+		 * @brief Display width on window
+		*/
 		float displayWidth;
 	};
 
