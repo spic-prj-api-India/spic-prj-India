@@ -32,7 +32,7 @@ namespace spic
 		/**
 		 * @brief Starts timer.
 		 * @param interval Delay between every function call.
-		 * @param timeout Function that is called after every interval.
+		 * @param timeout Function that is called after every interval. Is of type function<void(void)>
 		*/
 		void Start(const Interval& interval, const Timeout& timeout);
 
