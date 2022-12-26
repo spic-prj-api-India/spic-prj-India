@@ -15,7 +15,7 @@ namespace spic
 	class Timer {
 	public:
 		/**
-		 * @brief Delay between every function call.
+		 * @brief Delay between every function call in milliseconds.
 		*/
 		typedef std::chrono::milliseconds Interval;
 
@@ -31,7 +31,7 @@ namespace spic
 
 		/**
 		 * @brief Starts timer.
-		 * @param interval Delay between every function call.
+		 * @param interval Delay between every function call in milliseconds.
 		 * @param timeout Function that is called after every interval.
 		*/
 		void Start(const Interval& interval, const Timeout& timeout);
