@@ -11,6 +11,8 @@ spic::Sprite::Sprite()
 	, y{ 0 }
 	, width{ 0 }
 	, height{ 0 }
+	, displayHeight{ 0 }
+	, displayWidth{ 0 }
 {
 }
 
@@ -34,6 +36,8 @@ spic::Sprite::Sprite(const std::string& sprite
 	, y{ y }
 	, width{ width }
 	, height{ height }
+	, displayHeight { 0 }
+	, displayWidth { 0 }
 {
 }
 
@@ -135,4 +139,24 @@ const int spic::Sprite::Width() const
 const void spic::Sprite::Width(int newWidth)
 {
 	this->width = newWidth;
+}
+
+const float spic::Sprite::DisplayHeight() const
+{
+	return this->displayHeight;
+}
+
+const void spic::Sprite::DisplayHeight(float newWidth)
+{
+	this->displayHeight = newWidth;
+}
+
+const float spic::Sprite::DisplayWidth() const
+{
+	return this->displayWidth;
+}
+
+const void spic::Sprite::DisplayWidth(float newWidt)
+{
+	this->displayWidth = newWidt;
 }

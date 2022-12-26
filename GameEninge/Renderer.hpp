@@ -103,18 +103,12 @@ namespace spic::internal
 		 * @details Debug shapes will be reset in this function
         */
         static void Render();
-        
-        /**
-         * @brief Gets the aspect values from the window
-         * @details TODO add functionality
-         * @return Width, Height
-        */
-        static std::pair<float, float> GetAspects();
 
         /**
          * @brief Draws the fps counter
         */
         static void DrawFps();
+           
     };
 }
 #endif

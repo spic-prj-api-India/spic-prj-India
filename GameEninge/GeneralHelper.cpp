@@ -25,7 +25,7 @@ std::string spic::helper_functions::general_helper::GetRandomUUID()
 	return stream.str();
 }
 
-bool spic::helper_functions::general_helper::SpriteSorting(const std::shared_ptr<Sprite> a, const std::shared_ptr<Sprite> b)
+bool spic::helper_functions::general_helper::SpriteSorting(const std::shared_ptr<spic::Sprite> a, const std::shared_ptr<spic::Sprite> b)
 {
 	if (a->OrderInLayer() < b->OrderInLayer())
 		return true;
@@ -38,6 +38,14 @@ bool spic::helper_functions::general_helper::SpriteSorting(const std::shared_ptr
 
 	if (a->SortingLayer() > b->SortingLayer())
 		return false;
+
+	return false;
+}
+
+bool spic::helper_functions::general_helper::GameObjectSorting(const std::shared_ptr<spic::GameObject> a, const std::shared_ptr<spic::GameObject> b)
+{
+	if (a->Layer() < b->Layer())
+		return true;
 
 	return false;
 }

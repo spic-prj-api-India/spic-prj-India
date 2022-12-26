@@ -191,6 +191,8 @@
     <ClInclude Include="DecreaseGameSpeedListener.hpp" />
     <ClInclude Include="Defaults.hpp" />
     <ClInclude Include="Flocking.hpp" />
+    <ClInclude Include="RendererWindow.hpp" />
+    <ClInclude Include="RenderText.hpp" />
     <ClInclude Include="FPSlistener.hpp" />
     <ClInclude Include="GameEngine.hpp" />
     <ClInclude Include="EntityManager.hpp" />
@@ -225,7 +227,9 @@
     <ClInclude Include="Random.hpp" />
     <ClInclude Include="Renderer.hpp" />
     <ClInclude Include="RenderingSystem.hpp" />
+    <ClInclude Include="RenderTextures.hpp" />
     <ClInclude Include="ResetGameSpeedListener.hpp" />
+    <ClInclude Include="SDLPointers.hpp" />
     <ClInclude Include="SocketScript.hpp" />
     <ClInclude Include="Steering.hpp" />
     <ClInclude Include="StringHelper.hpp" />
@@ -245,7 +249,7 @@
     <ClInclude Include="Transformations.hpp" />
     <ClInclude Include="TypeHelper.hpp" />
     <ClInclude Include="UIObject.hpp" />
-    <ClInclude Include="RendererImpl.hpp" />
+    <ClInclude Include="RendererGameObjects.hpp" />
     <ClInclude Include="Settings.hpp" />
   </ItemGroup>
   <ItemGroup>
@@ -289,7 +293,11 @@
     <ClCompile Include="Point.cpp" />
     <ClCompile Include="Random.cpp" />
     <ClCompile Include="Renderer.cpp" />
+    <ClCompile Include="RendererWindow.cpp" />
+    <ClCompile Include="RenderText.cpp" />
+    <ClCompile Include="RenderTextures.cpp" />
     <ClCompile Include="ResetGameSpeedListener.cpp" />
+    <ClCompile Include="SDLPointers.cpp" />
     <ClCompile Include="SocketScript.cpp" />
     <ClCompile Include="SocketUDPExtension.cpp" />
     <ClCompile Include="Sprite.cpp" />
@@ -302,7 +310,7 @@
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="UDP.ixx" />
     <ClCompile Include="UIObject.cpp" />
-    <ClCompile Include="RendererImpl.cpp" />
+    <ClCompile Include="RenderGameObjects.cpp" />
     <ClCompile Include="EntityManager.cpp" />
     <ClCompile Include="RenderingSystem.cpp" />
     <ClCompile Include="Sample.cpp" />
