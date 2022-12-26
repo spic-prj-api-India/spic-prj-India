@@ -34,7 +34,6 @@ void Sample::Play(const bool looping, float volume)
         handlers[temp] = this;
         mutex_.unlock();
 
-        SetVolume(volume);
         running = true;
     }
 }
@@ -50,8 +49,6 @@ void Sample::Play(const int times, float volume)
     
     mutex_.unlock();
 
-    SetVolume(volume);
-
     running = true;
 }
 
@@ -63,6 +60,7 @@ constexpr int ConvertVolume(const float volume, const float begin, const float e
 
 void Sample::SetVolume(const float volume)
 {
+    std::cout << std::to_string(volume) << std::endl;
     Mix_Volume(std::get<0>(channels.back())
         , ConvertVolume(volume, spic::internal::defaults::VOLUME_BEGIN, spic::internal::defaults::VOLUME_END));
 }
