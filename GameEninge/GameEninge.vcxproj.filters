@@ -270,7 +270,7 @@
     <ClInclude Include="TileMap.hpp">
       <Filter>Header Files\core\tilemap</Filter>
     </ClInclude>
-    <ClInclude Include="RendererImpl.hpp">
+    <ClInclude Include="RendererGameObjects.hpp">
       <Filter>Header Files\core\systems\rendering</Filter>
     </ClInclude>
     <ClInclude Include="ContainerHelper.hpp">
@@ -444,6 +444,18 @@
     <ClInclude Include="Steering.hpp">
       <Filter>Header Files\components\ai</Filter>
     </ClInclude>
+    <ClInclude Include="SDLPointers.hpp">
+      <Filter>Header Files\core\systems\rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderText.hpp">
+      <Filter>Header Files\core\systems\rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderTextures.hpp">
+      <Filter>Header Files\core\systems\rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="RendererWindow.hpp">
+      <Filter>Header Files\core\systems\rendering</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sample.cpp">
@@ -479,7 +491,7 @@
     <ClCompile Include="PhysicsSystem.cpp">
       <Filter>Source Files\core\systems\physics</Filter>
     </ClCompile>
-    <ClCompile Include="RendererImpl.cpp">
+    <ClCompile Include="RenderGameObjects.cpp">
       <Filter>Source Files\core\systems\rendering</Filter>
     </ClCompile>
     <ClCompile Include="Sprite.cpp">
@@ -658,6 +670,18 @@
     </ClCompile>
     <ClCompile Include="Obstacle.cpp">
       <Filter>Source Files\objects</Filter>
+    </ClCompile>
+    <ClCompile Include="SDLPointers.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RendererWindow.cpp">
+      <Filter>Source Files\core\systems\rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderText.cpp">
+      <Filter>Source Files\core\systems\rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderTextures.cpp">
+      <Filter>Source Files\core\systems\rendering</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -56,6 +56,13 @@ namespace spic {
 		bool Accumulate(Point& force, const float maxForce);
 
 		/**
+		 * @brief Gets the point in the center between 2 points
+		 * @param point The other end of the point
+		 * @return A Point object with contains the center
+		*/
+		Point MidPoint(const Point& point) const;
+
+		/**
 		 * @brief operator for adding Point
 		 * @param point Point that will be added
 		 * @return spic::Point
