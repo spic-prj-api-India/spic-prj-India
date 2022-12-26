@@ -13,6 +13,9 @@
 
 namespace spic::internal
 {
+	/**
+	 * @brief Format: [](){return new Scene()}
+	*/
 	typedef std::function<spic::Scene*()> CreateSceneFunction;
 
 	/**
@@ -42,7 +45,8 @@ namespace spic::internal
 		std::map<int, std::vector<std::unique_ptr<spic::systems::ISystem>>> systems;
 
 		/**
-		 * @brief Registered scenes
+		 * @brief Registered scenes.
+		 *			CreateSceneFunction format: [](){return new Scene()}
 		*/
 		std::map<std::string, CreateSceneFunction> scenes;
 

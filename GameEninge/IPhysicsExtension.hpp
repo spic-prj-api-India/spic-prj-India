@@ -8,6 +8,9 @@
 #include "TileLayer.hpp"
 
 namespace spic::extensions{
+	/**
+	 * @brief Format: [](const std::shared_ptr<spic::GameObject>&, const std::shared_ptr<spic::Collider>&){}
+	*/
 	typedef std::function<void(const std::shared_ptr<spic::GameObject>&, const std::shared_ptr<spic::Collider>&)> CollisionCallback;
 
 	/**

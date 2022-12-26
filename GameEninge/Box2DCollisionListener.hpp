@@ -33,9 +33,9 @@ namespace spic::internal::extensions
          * @param stayCallback  Callback that runs OnTriggerStay2D in behaviour scripts of entity if entity stays collision.
          *			Format: [](const std::shared_ptr<spic::GameObject>&, const std::shared_ptr<spic::Collider>&){}
         */
-        Box2DCollisionListener(CollisionCallback enterCallback,
-            CollisionCallback exitCallback,
-            CollisionCallback stayCallback);
+        Box2DCollisionListener(spic::extensions::CollisionCallback enterCallback,
+            spic::extensions::CollisionCallback exitCallback,
+            spic::extensions::CollisionCallback stayCallback);
 
         /**
         * @brief Is called when body collides with another body
@@ -57,9 +57,18 @@ namespace spic::internal::extensions
         */
         virtual void PostSolve(b2Contact* contact, const b2ContactImpulse* impulse);
     private:
-        CollisionCallback onEnterCallback;
-        CollisionCallback onExitCallback;
-        CollisionCallback onStayCallback;
+        /**
+         * @brief Format: [](const std::shared_ptr<spic::GameObject>&, const std::shared_ptr<spic::Collider>&){}
+        */
+        spic::extensions::CollisionCallback onEnterCallback;
+        /**
+         * @brief Format: [](const std::shared_ptr<spic::GameObject>&, const std::shared_ptr<spic::Collider>&){}
+        */
+        spic::extensions::CollisionCallback onExitCallback;
+        /**
+         * @brief Format: [](const std::shared_ptr<spic::GameObject>&, const std::shared_ptr<spic::Collider>&){}
+        */
+        spic::extensions::CollisionCallback onStayCallback;
     };
 }
 

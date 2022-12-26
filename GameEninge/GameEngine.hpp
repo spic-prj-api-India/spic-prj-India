@@ -13,7 +13,14 @@
 #include <functional>
 
 namespace spic {
+	/**
+	 * @brief Format: [](){return new Scene()}	
+	*/
 	typedef std::function<spic::Scene*()> CreateSceneFunction;
+
+	/**
+	 * @brief Format: [](){return std::shared_ptr<spic::GameObject>}	
+	*/
 	typedef std::function<std::shared_ptr<spic::GameObject>()> CreateGameObjectFunction;
 
 	/**
@@ -31,7 +38,7 @@ namespace spic {
 		std::vector<std::shared_ptr<extensions::IEngineExtension>> _extensions;
 
 		/**
-		 * @brief CreateGameObjectFunction, Format: [](){return new Scene()}	
+		 * @brief CreateGameObjectFunction format: [](){return std::shared_ptr<spic::GameObject>}	
 		*/
 		std::map<std::string, CreateGameObjectFunction> _types;
 		bool quit;
