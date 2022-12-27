@@ -8,7 +8,7 @@
 
 using namespace spic;
 using namespace spic::input;
-using namespace spic::helper_functions::general_helper;
+using namespace spic::helper_functions;
 
 BoxSpawnerScript::BoxSpawnerScript()
 {
@@ -19,7 +19,7 @@ BoxSpawnerScript::BoxSpawnerScript()
 }
 
 void BoxSpawnerScript::OnStart() {
-	int delay = spic::helper_functions::RandomHelper::GetInstance()->Between<int>(2000, 5000);
+	int delay = RandomHelper::GetInstance()->Between<int>(2000, 5000);
 	timer->Start(std::chrono::milliseconds(delay), [this]() mutable {
 		switcher = !switcher;
 		});
@@ -31,7 +31,7 @@ void BoxSpawnerScript::OnUpdate() {
 		spic::Point mousePosition = MousePosition();
 		mousePosition += this->gameObject->Transform()->position;
 		mousePosition -= 25.0f;
-		std::shared_ptr<BoxPersistable> boxPresistable = std::make_shared<BoxPersistable>("box-" + GetRandomUUID(), mousePosition);
+		std::shared_ptr<BoxPersistable> boxPresistable = std::make_shared<BoxPersistable>("box-" + general_helper::GetRandomUUID(), mousePosition);
 		spic::GameObject::Create(boxPresistable);
 		this->bloopAudio->Play(false);
 		if (switcher)
@@ -44,7 +44,7 @@ void BoxSpawnerScript::OnUpdate() {
 		spic::Point mousePosition = MousePosition();
 		mousePosition += this->gameObject->Transform()->position;
 		mousePosition -= 25.0f;
-		std::shared_ptr<BoxNotPersistable> boxNotPresistable = std::make_shared<BoxNotPersistable>("box-" + GetRandomUUID(), mousePosition);
+		std::shared_ptr<BoxNotPersistable> boxNotPresistable = std::make_shared<BoxNotPersistable>("box-" + general_helper::GetRandomUUID(), mousePosition);
 		spic::GameObject::Create(boxNotPresistable);
 		this->bloopAudio->Play(false);
 		if (switcher)

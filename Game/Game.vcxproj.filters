@@ -127,15 +127,18 @@
     <Filter Include="Header Files\scenes\settings">
       <UniqueIdentifier>{2e65c5f4-e41a-425f-ad24-bf3be44f5921}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\scenes\Jenga game">
+      <UniqueIdentifier>{47721503-bc58-4c7c-8a60-3a59c088a006}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\scenes\Jenga game">
+      <UniqueIdentifier>{be91afa3-ab1a-431b-84b9-c6102580f75d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="KeyListener.cpp">
       <Filter>Source Files\listeners</Filter>
     </ClCompile>
     <ClCompile Include="MenuScene.cpp">
-      <Filter>Source Files\scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="GameScene.cpp">
       <Filter>Source Files\scenes</Filter>
     </ClCompile>
     <ClCompile Include="Game.cpp">
@@ -279,15 +282,21 @@
     <ClCompile Include="NetCollisionDetectionScript.cpp">
       <Filter>Source Files\scripts\Rocket game\shooter</Filter>
     </ClCompile>
+    <ClCompile Include="GameScene.cpp">
+      <Filter>Source Files\scenes\Jenga game</Filter>
+    </ClCompile>
+    <ClCompile Include="SaveScene.cpp">
+      <Filter>Source Files\scenes\Jenga game</Filter>
+    </ClCompile>
+    <ClCompile Include="CheckWinConditionScript.cpp">
+      <Filter>Source Files\scripts\Jenga game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KeyListener.h">
       <Filter>Header Files\listeners</Filter>
     </ClInclude>
     <ClInclude Include="MenuScene.h">
-      <Filter>Header Files\scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="GameScene.h">
       <Filter>Header Files\scenes</Filter>
     </ClInclude>
     <ClInclude Include="CreditsScene.h">
@@ -418,6 +427,15 @@
     </ClInclude>
     <ClInclude Include="NetCollisionDetectionScript.h">
       <Filter>Header Files\scripts\Rocket game\shooter</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene.h">
+      <Filter>Header Files\scenes\Jenga game</Filter>
+    </ClInclude>
+    <ClInclude Include="SaveScene.h">
+      <Filter>Header Files\scenes\Jenga game</Filter>
+    </ClInclude>
+    <ClInclude Include="CheckWinConditionScript.h">
+      <Filter>Header Files\scripts\Jenga game</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -23,23 +23,23 @@ void MenuScene::SetCamera()
 
 void MenuScene::SetContents()
 {
-	AddButton("Save Demo", []() {
-		spic::GameEngine::GetInstance()->LoadSceneByName("game");
+	AddButton("Jenga game", []() {
+		spic::GameEngine::GetInstance()->LoadSceneByName("jenga");
 		}, 0.0f);
-	AddButton("Load save demo", []() {
-	spic::GameEngine::GetInstance()->LoadSceneBySaveFile("game", "game");
-		}, 100.0f);
-	AddButton("Network Demo", []() {
+	AddButton("Rocket game", []() {
 		spic::GameEngine::GetInstance()->LoadSceneByName("network");
-		}, 200.0f);
+		}, 100.0f);
 	AddButton("Flock/Steering Demo", []() {
 		spic::GameEngine::GetInstance()->LoadSceneByName("steering");
-		}, 300.0f);
+		}, 200.0f);
 	AddButton("Credits", []() {
 		spic::GameEngine::GetInstance()->LoadSceneByName("credits");
-		}, 400.0f);
+		}, 300.0f);
 	AddButton("Settings", []() {
 		spic::GameEngine::GetInstance()->LoadSceneByName("settings");
+		}, 400.0f);
+	AddButton("Load save demo", []() {
+		spic::GameEngine::GetInstance()->LoadSceneBySaveFile("jenga", "jenga");
 		}, 500.0f);
 }
 

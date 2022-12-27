@@ -1,4 +1,4 @@
-#include "GameScene.h"
+#include "SaveScene.h"
 #include <Button.hpp>
 #include "CameraMovementScript.h"
 #include "CollisionDetectionScript.h"
@@ -10,27 +10,22 @@
 #include "BoxSpawnerScript.h"
 #include <DataHandler.hpp>
 #include <Text.hpp>
-#include "TimerScript.h"
+#include "CheckWinConditionScript.h"
 
-GameScene::GameScene() : Scene()
+SaveScene::SaveScene() : Scene()
 {
 	SetCamera();
 	SetContents();
 	LoadTileMap("assets/maps/map.tmx", 3);
 }
 
-void GameScene::SetCamera()
+void SaveScene::SetCamera()
 {
 	std::unique_ptr<spic::Camera> camera = std::make_unique<spic::Camera>();
 	camera->Transform(std::make_shared<spic::Transform>(spic::Point(0.0f, 0.0f), 0.0f, 1.0f));
 	camera->BackgroundColor(spic::Color::blue());
 	camera->AddComponent(std::make_shared<CameraMovementScript>());
 	camera->AddComponent<spic::BehaviourScript>(std::make_shared<BackScript>());
-	auto bloopAudioEffect = std::make_shared<spic::AudioSource>("assets/music/BLOOP_SOUND_EFFECT.mp3", false, false, 0.2f);
-	auto script1 = std::make_shared<BoxSpawnerScript>();
-	script1->bloopAudio = bloopAudioEffect.get();
-	camera->AddComponent(std::move(bloopAudioEffect));
-	camera->AddComponent(std::move(script1));
 
 	// Load music setting
 	std::map<std::string, std::string> settings;
@@ -46,7 +41,7 @@ void GameScene::SetCamera()
 	Camera(std::move(camera));
 }
 
-void GameScene::SetContents()
+void SaveScene::SetContents()
 {
 	std::shared_ptr<CollisionDetectionScript> collisionScript = std::make_shared<CollisionDetectionScript>();
 	std::shared_ptr<PlayerMovementScript> movementScript = std::make_shared<PlayerMovementScript>();
@@ -67,15 +62,15 @@ void GameScene::SetContents()
 		, spic::Alignment::CENTER
 		, spic::Color::white());
 	timerText->Transform(std::make_shared<spic::Transform>(spic::Point(0.0f, 100.0f), 0.0f, 1.0f));
-	timerText->AddComponent(std::make_shared<TimerScript>(timerText));
+	timerText->AddComponent(std::make_shared<CheckWinConditionScript>(timerText));
 
 	AddContent(football);
 	AddContent(timerText);
 }
 
-spic::Scene* GameScene::Start()
+spic::Scene* SaveScene::Start()
 {
 	spic::input::UnSubscribeAll();
-	GameScene* a = new GameScene();
+	SaveScene* a = new SaveScene();
 	return a;
 }

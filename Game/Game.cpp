@@ -22,6 +22,7 @@
 #include "LoseScene.h"
 #include "WinScene.h"
 #include "SteeringScene.h"
+#include "SaveScene.h"
 
 void InitGame()
 {
@@ -50,7 +51,8 @@ void InitGame()
 
 	// Register scenes
 	engine->RegisterScene("menu", std::function<spic::Scene* ()>(MenuScene::Start));
-	engine->RegisterScene("game", std::function<spic::Scene* ()>(GameScene::Start));
+	engine->RegisterScene("jenga", std::function<spic::Scene* ()>(GameScene::Start));
+	engine->RegisterScene("jenga-save", std::function<spic::Scene* ()>(SaveScene::Start));
 	engine->RegisterScene("credits", std::function<spic::Scene* ()>(CreditsScene::Start));
 	engine->RegisterScene("network", std::function<spic::Scene* ()>(NetworkScene::Start));
 	engine->RegisterScene("steering", std::function<spic::Scene* ()>(SteeringScene::Start));
