@@ -1,8 +1,15 @@
 #include "GeneralHelper.hpp"
-#include <random>
+#include <boost/uuid/uuid.hpp>				// uuid class
+#include <boost/uuid/uuid_generators.hpp>	// generators
+#include <boost/uuid/uuid_io.hpp>			// streaming operators etc.
+#include <iostream>
+#pragma comment(lib, "bcrypt.lib")		 	// Makes it not compatible on non windows machines. boos
 
 using namespace spic::helper_functions::general_helper;
 using namespace spic;
+
+
+boost::uuids::random_generator generator;
 
 void spic::helper_functions::general_helper::RotatePoint(const Point& org, float angle, Point& p) noexcept
 {
@@ -12,21 +19,10 @@ void spic::helper_functions::general_helper::RotatePoint(const Point& org, float
 
 std::string spic::helper_functions::general_helper::GetRandomUUID()
 {
-	static std::random_device dev;
-	static std::mt19937 rng(dev());
-
-	std::uniform_int_distribution<int> dist(0, 15);
-
-	const char* v = "0123456789abcdef";
-	const bool dash[] = { 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0 };
-
-	std::string res;
-	for (int i = 0; i < 16; i++) {
-		if (dash[i]) res += "-";
-		res += v[dist(rng)];
-		res += v[dist(rng)];
-	}
-	return res;
+	boost::uuids::uuid uuid = generator();
+	std::stringstream stream;
+	stream << uuid << std::endl;
+	return stream.str();
 }
 
 bool spic::helper_functions::general_helper::SpriteSorting(const std::shared_ptr<Sprite> a, const std::shared_ptr<Sprite> b)

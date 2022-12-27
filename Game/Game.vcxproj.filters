@@ -37,53 +37,89 @@
     <Filter Include="Header Files\scripts">
       <UniqueIdentifier>{ae407631-ead0-46b5-86ae-554f2f8b33e1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\scripts\networking">
-      <UniqueIdentifier>{404f3690-9376-41af-abdf-421d6b46ba6e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\scenes\rocket game">
       <UniqueIdentifier>{2a72a701-7e33-47e5-828c-303298795db0}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\scenes\Rocket game">
       <UniqueIdentifier>{44eacc49-2b9f-421c-9395-ee64340b89f8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\scripts\networking\game_status">
-      <UniqueIdentifier>{2a0b2406-5b76-4e1d-8a39-89e76673cc8b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\scripts\networking\match_making">
-      <UniqueIdentifier>{ab6773b6-8bee-4bbf-9892-7941082bb104}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\scripts\networking\shooter">
-      <UniqueIdentifier>{84cff0b3-c0b8-4950-b101-d3150aa771e8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\scripts\networking\target">
-      <UniqueIdentifier>{f5bc1b3f-1350-41ea-9a04-7ab73a9e93ad}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\listeners\network">
-      <UniqueIdentifier>{5b609baa-930f-486b-84b4-490a30d42745}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\listeners\network">
-      <UniqueIdentifier>{f38a5327-4746-4250-9974-f602b85fa03d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\objects\network">
-      <UniqueIdentifier>{88e35a29-d5f8-4018-a076-64fa632bc1eb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\objects\network">
-      <UniqueIdentifier>{5172ea00-b0cf-4503-bfe5-687e77c6caa7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\scripts\network">
+    <Filter Include="Source Files\scripts\Rocket game">
       <UniqueIdentifier>{bbfb6ff0-626a-4493-b657-6596e0db45d5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\scripts\network\game_status">
+    <Filter Include="Source Files\scripts\Rocket game\game_status">
       <UniqueIdentifier>{dcce1192-4d17-4a27-bb42-de15b00a44d1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\scripts\network\shooter">
+    <Filter Include="Source Files\scripts\Rocket game\shooter">
       <UniqueIdentifier>{410e76e9-62ad-4254-bd43-db6768ee72f4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\scripts\network\target">
+    <Filter Include="Source Files\scripts\Rocket game\target">
       <UniqueIdentifier>{265799e7-f22a-4c7d-80b9-9616dab7ceb7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\scripts\network\match_making">
+    <Filter Include="Source Files\scripts\Rocket game\match_making">
       <UniqueIdentifier>{b8cbd115-2076-4d5f-b1a4-910733816d3a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\scripts\Rocket game">
+      <UniqueIdentifier>{404f3690-9376-41af-abdf-421d6b46ba6e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\scripts\Rocket game\game_status">
+      <UniqueIdentifier>{2a0b2406-5b76-4e1d-8a39-89e76673cc8b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\scripts\Rocket game\match_making">
+      <UniqueIdentifier>{ab6773b6-8bee-4bbf-9892-7941082bb104}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\scripts\Rocket game\shooter">
+      <UniqueIdentifier>{84cff0b3-c0b8-4950-b101-d3150aa771e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\scripts\Rocket game\target">
+      <UniqueIdentifier>{f5bc1b3f-1350-41ea-9a04-7ab73a9e93ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\scripts\General">
+      <UniqueIdentifier>{1572a614-1a70-4e8e-a9c0-f8498a30418e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\scripts\Jenga game">
+      <UniqueIdentifier>{7f7a8b68-93c5-4b43-8499-cdbe9c886c0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\scripts\Flocking demo">
+      <UniqueIdentifier>{7e45ffe5-32be-41e7-a6d9-e1e1d5cf59f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\scripts\General">
+      <UniqueIdentifier>{d18dc32d-a61e-4070-8057-27cdb015d2ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\scripts\Jenga game">
+      <UniqueIdentifier>{425f72d1-9a9d-44e8-bf18-1d8481297dc4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\scripts\Flocking demo">
+      <UniqueIdentifier>{2fd32e64-9e80-4b19-8b5e-d1922e1f6a8e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\objects\Rocket game">
+      <UniqueIdentifier>{5172ea00-b0cf-4503-bfe5-687e77c6caa7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\objects\Jenga game">
+      <UniqueIdentifier>{cf3fb5af-1711-430f-857f-7d2536aa01e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\objects\Flocking demo">
+      <UniqueIdentifier>{2ca96fc0-3b96-478e-ad30-50747e790907}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\objects\Rocket game">
+      <UniqueIdentifier>{88e35a29-d5f8-4018-a076-64fa632bc1eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\objects\Jenga game">
+      <UniqueIdentifier>{c4745750-fff4-4517-87e9-6713b31ec026}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\objects\Flocking demo">
+      <UniqueIdentifier>{236fc10d-def9-4de0-b356-f32a8a44cb71}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\listeners\Rocket game">
+      <UniqueIdentifier>{f38a5327-4746-4250-9974-f602b85fa03d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\listeners\Flocking demo">
+      <UniqueIdentifier>{81d4588b-a2c4-4c03-af10-77d3ba9b4fc4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\listeners\Rocket game">
+      <UniqueIdentifier>{5b609baa-930f-486b-84b4-490a30d42745}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\listeners\Flocking demo">
+      <UniqueIdentifier>{b4de98e8-702f-4f6f-aee3-e103f0a65c5d}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\scenes\settings">
       <UniqueIdentifier>{411054aa-4221-476b-8685-e23d6923b345}</UniqueIdentifier>
@@ -91,22 +127,10 @@
     <Filter Include="Header Files\scenes\settings">
       <UniqueIdentifier>{2e65c5f4-e41a-425f-ad24-bf3be44f5921}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\objects\flock/steering">
-      <UniqueIdentifier>{c006279b-8a50-4812-a920-aec5c4864359}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\objects\flock/steering">
-      <UniqueIdentifier>{23771b13-f0e1-41c5-8f61-5317f7d2e01b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\scripts\flock/steering">
-      <UniqueIdentifier>{c137f0e0-2a17-4d3a-9671-587bb7e43911}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="KeyListener.cpp">
       <Filter>Source Files\listeners</Filter>
-    </ClCompile>
-    <ClCompile Include="CameraMovementScript.cpp">
-      <Filter>Source Files\scripts</Filter>
     </ClCompile>
     <ClCompile Include="MenuScene.cpp">
       <Filter>Source Files\scenes</Filter>
@@ -117,12 +141,6 @@
     <ClCompile Include="Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerMovementScript.cpp">
-      <Filter>Source Files\scripts</Filter>
-    </ClCompile>
-    <ClCompile Include="Ball.cpp">
-      <Filter>Source Files\objects</Filter>
-    </ClCompile>
     <ClCompile Include="CreditsScene.cpp">
       <Filter>Source Files\scenes</Filter>
     </ClCompile>
@@ -132,11 +150,11 @@
     <ClCompile Include="BoxPersistable.cpp">
       <Filter>Source Files\objects</Filter>
     </ClCompile>
+    <ClCompile Include="SettingsScene.cpp">
+      <Filter>Source Files\scenes</Filter>
+    </ClCompile>
     <ClCompile Include="CircleObstacle.cpp">
       <Filter>Source Files\objects</Filter>
-    </ClCompile>
-    <ClCompile Include="BackScript.cpp">
-      <Filter>Source Files\scripts</Filter>
     </ClCompile>
     <ClCompile Include="NetworkScene.cpp">
       <Filter>Source Files\scenes\Rocket game</Filter>
@@ -148,70 +166,73 @@
       <Filter>Source Files\scenes\Rocket game</Filter>
     </ClCompile>
     <ClCompile Include="GameStatusSendScript.cpp">
-      <Filter>Source Files\scripts\network\game_status</Filter>
+      <Filter>Source Files\scripts\Rocket game\game_status</Filter>
     </ClCompile>
     <ClCompile Include="ShooterReceiveScript.cpp">
-      <Filter>Source Files\scripts\network\shooter</Filter>
+      <Filter>Source Files\scripts\Rocket game\shooter</Filter>
     </ClCompile>
     <ClCompile Include="ShooterSendScript.cpp">
-      <Filter>Source Files\scripts\network\shooter</Filter>
+      <Filter>Source Files\scripts\Rocket game\shooter</Filter>
     </ClCompile>
     <ClCompile Include="TargetReceiveScript.cpp">
-      <Filter>Source Files\scripts\network\target</Filter>
+      <Filter>Source Files\scripts\Rocket game\target</Filter>
     </ClCompile>
     <ClCompile Include="TargetSendScript.cpp">
-      <Filter>Source Files\scripts\network\target</Filter>
+      <Filter>Source Files\scripts\Rocket game\target</Filter>
     </ClCompile>
     <ClCompile Include="RocketReceiveScript.cpp">
-      <Filter>Source Files\scripts\network\shooter</Filter>
+      <Filter>Source Files\scripts\Rocket game\shooter</Filter>
     </ClCompile>
     <ClCompile Include="RocketSendScript.cpp">
-      <Filter>Source Files\scripts\network\shooter</Filter>
+      <Filter>Source Files\scripts\Rocket game\shooter</Filter>
     </ClCompile>
     <ClCompile Include="SyncScript.cpp">
-      <Filter>Source Files\scripts\network\match_making</Filter>
+      <Filter>Source Files\scripts\Rocket game\match_making</Filter>
     </ClCompile>
     <ClCompile Include="GameStatusReceiveScript.cpp">
-      <Filter>Source Files\scripts\network\game_status</Filter>
-    </ClCompile>
-    <ClCompile Include="BoxSpawnerScript.cpp">
-      <Filter>Source Files\scripts</Filter>
-    </ClCompile>
-    <ClCompile Include="BoxNotPersistable.cpp">
-      <Filter>Source Files\objects</Filter>
+      <Filter>Source Files\scripts\Rocket game\game_status</Filter>
     </ClCompile>
     <ClCompile Include="SteeringScene.cpp">
       <Filter>Source Files\scenes</Filter>
     </ClCompile>
     <ClCompile Include="NetAimListener.cpp">
-      <Filter>Source Files\listeners\network</Filter>
+      <Filter>Source Files\listeners\Rocket game</Filter>
     </ClCompile>
     <ClCompile Include="NetFollowMouseListener.cpp">
-      <Filter>Source Files\listeners\network</Filter>
+      <Filter>Source Files\listeners\Rocket game</Filter>
     </ClCompile>
     <ClCompile Include="SeekingRocket.cpp">
-      <Filter>Source Files\objects\network</Filter>
+      <Filter>Source Files\objects\Rocket game</Filter>
     </ClCompile>
     <ClCompile Include="Rocket.cpp">
-      <Filter>Source Files\objects\network</Filter>
+      <Filter>Source Files\objects\Rocket game</Filter>
     </ClCompile>
     <ClCompile Include="Shooter.cpp">
-      <Filter>Source Files\objects\network</Filter>
+      <Filter>Source Files\objects\Rocket game</Filter>
     </ClCompile>
     <ClCompile Include="Target.cpp">
-      <Filter>Source Files\objects\network</Filter>
+      <Filter>Source Files\objects\Rocket game</Filter>
     </ClCompile>
-    <ClCompile Include="AimListener.cpp">
-      <Filter>Source Files\listeners</Filter>
-    </ClCompile>
-    <ClCompile Include="FollowMouseListener.cpp">
-      <Filter>Source Files\listeners</Filter>
+    <ClCompile Include="BackScript.cpp">
+      <Filter>Source Files\scripts\General</Filter>
     </ClCompile>
     <ClCompile Include="NetCollisionDetectionScript.cpp">
       <Filter>Source Files\scripts\network\shooter</Filter>
     </ClCompile>
+    <ClCompile Include="CameraMovementScript.cpp">
+      <Filter>Source Files\scripts\General</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerMovementScript.cpp">
+      <Filter>Source Files\scripts\General</Filter>
+    </ClCompile>
+    <ClCompile Include="BoxSpawnerScript.cpp">
+      <Filter>Source Files\scripts\Jenga game</Filter>
+    </ClCompile>
+    <ClCompile Include="TimerScript.cpp">
+      <Filter>Source Files\scripts\Jenga game</Filter>
+    </ClCompile>
     <ClCompile Include="CollisionDetectionScript.cpp">
-      <Filter>Source Files\scripts</Filter>
+      <Filter>Source Files\scripts\Flocking demo</Filter>
     </ClCompile>
     <ClCompile Include="SettingsScene.cpp">
       <Filter>Source Files\scenes\settings</Filter>
@@ -228,40 +249,46 @@
     <ClCompile Include="InputTypeListener.cpp">
       <Filter>Source Files\listeners</Filter>
     </ClCompile>
-    <ClCompile Include="NetworkBackScript.cpp">
-      <Filter>Source Files\scripts\network\match_making</Filter>
+    <ClCompile Include="BoxNotPersistable.cpp">
+      <Filter>Source Files\objects\Jenga game</Filter>
     </ClCompile>
-    <ClCompile Include="LoadingAnimation.cpp">
-      <Filter>Source Files\objects\network</Filter>
+    <ClCompile Include="BoxPersistable.cpp">
+      <Filter>Source Files\objects\Jenga game</Filter>
+    </ClCompile>
+    <ClCompile Include="Ball.cpp">
+      <Filter>Source Files\objects\Jenga game</Filter>
     </ClCompile>
     <ClCompile Include="SteeringRocket.cpp">
-      <Filter>Source Files\objects\flock/steering</Filter>
+      <Filter>Source Files\objects\Flocking demo</Filter>
+    </ClCompile>
+    <ClCompile Include="FollowMouseListener.cpp">
+      <Filter>Source Files\listeners\Flocking demo</Filter>
+    </ClCompile>
+    <ClCompile Include="AimListener.cpp">
+      <Filter>Source Files\listeners\Flocking demo</Filter>
     </ClCompile>
     <ClCompile Include="Alien.cpp">
-      <Filter>Source Files\objects\flock/steering</Filter>
+      <Filter>Source Files\objects\Flocking demo</Filter>
+    </ClCompile>
+    <ClCompile Include="NetworkBackScript.cpp">
+      <Filter>Source Files\scripts\Rocket game\match_making</Filter>
+    </ClCompile>
+    <ClCompile Include="LoadingAnimation.cpp">
+      <Filter>Source Files\objects\Rocket game</Filter>
+    </ClCompile>
+    <ClCompile Include="NetCollisionDetectionScript.cpp">
+      <Filter>Source Files\scripts\Rocket game\shooter</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KeyListener.h">
       <Filter>Header Files\listeners</Filter>
     </ClInclude>
-    <ClInclude Include="BoxPersistable.h">
-      <Filter>Header Files\objects</Filter>
-    </ClInclude>
-    <ClInclude Include="CameraMovementScript.h">
-      <Filter>Header Files\scripts</Filter>
-    </ClInclude>
     <ClInclude Include="MenuScene.h">
       <Filter>Header Files\scenes</Filter>
     </ClInclude>
     <ClInclude Include="GameScene.h">
       <Filter>Header Files\scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerMovementScript.h">
-      <Filter>Header Files\scripts</Filter>
-    </ClInclude>
-    <ClInclude Include="Ball.h">
-      <Filter>Header Files\objects</Filter>
     </ClInclude>
     <ClInclude Include="CreditsScene.h">
       <Filter>Header Files\scenes</Filter>
@@ -271,9 +298,6 @@
     </ClInclude>
     <ClInclude Include="CircleObstacle.h">
       <Filter>Header Files\objects</Filter>
-    </ClInclude>
-    <ClInclude Include="BackScript.h">
-      <Filter>Header Files\scripts</Filter>
     </ClInclude>
     <ClInclude Include="NetworkScene.h">
       <Filter>Header Files\scenes\rocket game</Filter>
@@ -285,67 +309,52 @@
       <Filter>Header Files\scenes\rocket game</Filter>
     </ClInclude>
     <ClInclude Include="GameStatusSendScript.h">
-      <Filter>Header Files\scripts\networking\game_status</Filter>
+      <Filter>Header Files\scripts\Rocket game\game_status</Filter>
     </ClInclude>
     <ClInclude Include="SyncScript.h">
-      <Filter>Header Files\scripts\networking\match_making</Filter>
+      <Filter>Header Files\scripts\Rocket game\match_making</Filter>
     </ClInclude>
     <ClInclude Include="GameStatusReceiveScript.h">
-      <Filter>Header Files\scripts\networking\game_status</Filter>
+      <Filter>Header Files\scripts\Rocket game\game_status</Filter>
     </ClInclude>
     <ClInclude Include="ShooterReceiveScript.h">
-      <Filter>Header Files\scripts\networking\shooter</Filter>
+      <Filter>Header Files\scripts\Rocket game\shooter</Filter>
     </ClInclude>
     <ClInclude Include="RocketReceiveScript.h">
-      <Filter>Header Files\scripts\networking\shooter</Filter>
+      <Filter>Header Files\scripts\Rocket game\shooter</Filter>
     </ClInclude>
     <ClInclude Include="RocketSendScript.h">
-      <Filter>Header Files\scripts\networking\shooter</Filter>
+      <Filter>Header Files\scripts\Rocket game\shooter</Filter>
     </ClInclude>
     <ClInclude Include="ShooterSendScript.h">
-      <Filter>Header Files\scripts\networking\shooter</Filter>
+      <Filter>Header Files\scripts\Rocket game\shooter</Filter>
     </ClInclude>
     <ClInclude Include="TargetReceiveScript.h">
-      <Filter>Header Files\scripts\networking\target</Filter>
+      <Filter>Header Files\scripts\Rocket game\target</Filter>
     </ClInclude>
     <ClInclude Include="TargetSendScript.h">
-      <Filter>Header Files\scripts\networking\target</Filter>
-    </ClInclude>
-    <ClInclude Include="BoxSpawnerScript.h">
-      <Filter>Header Files\scripts</Filter>
-    </ClInclude>
-    <ClInclude Include="BoxNotPersistable.h">
-      <Filter>Header Files\objects</Filter>
+      <Filter>Header Files\scripts\Rocket game\target</Filter>
     </ClInclude>
     <ClInclude Include="SteeringScene.h">
       <Filter>Header Files\scenes</Filter>
     </ClInclude>
     <ClInclude Include="NetAimListener.h">
-      <Filter>Header Files\listeners\network</Filter>
+      <Filter>Header Files\listeners\Rocket game</Filter>
     </ClInclude>
     <ClInclude Include="NetFollowMouseListener.h">
-      <Filter>Header Files\listeners\network</Filter>
-    </ClInclude>
-    <ClInclude Include="AimListener.h">
-      <Filter>Header Files\listeners</Filter>
-    </ClInclude>
-    <ClInclude Include="FollowMouseListener.h">
-      <Filter>Header Files\listeners</Filter>
+      <Filter>Header Files\listeners\Rocket game</Filter>
     </ClInclude>
     <ClInclude Include="Rocket.h">
-      <Filter>Header Files\objects\network</Filter>
+      <Filter>Header Files\objects\Rocket game</Filter>
     </ClInclude>
     <ClInclude Include="SeekingRocket.h">
-      <Filter>Header Files\objects\network</Filter>
+      <Filter>Header Files\objects\Rocket game</Filter>
     </ClInclude>
     <ClInclude Include="Shooter.h">
-      <Filter>Header Files\objects\network</Filter>
+      <Filter>Header Files\objects\Rocket game</Filter>
     </ClInclude>
     <ClInclude Include="Target.h">
-      <Filter>Header Files\objects\network</Filter>
-    </ClInclude>
-    <ClInclude Include="NetCollisionDetectionScript.h">
-      <Filter>Header Files\scripts\networking\shooter</Filter>
+      <Filter>Header Files\objects\Rocket game</Filter>
     </ClInclude>
     <ClInclude Include="SettingsScene.h">
       <Filter>Header Files\scenes\settings</Filter>
@@ -359,23 +368,56 @@
     <ClInclude Include="FlockSettingsScene.h">
       <Filter>Header Files\scenes\settings</Filter>
     </ClInclude>
+    <ClInclude Include="BackScript.h">
+      <Filter>Header Files\scripts\General</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraMovementScript.h">
+      <Filter>Header Files\scripts\General</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerMovementScript.h">
+      <Filter>Header Files\scripts\General</Filter>
+    </ClInclude>
+    <ClInclude Include="BoxSpawnerScript.h">
+      <Filter>Header Files\scripts\Jenga game</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionDetectionScript.h">
+      <Filter>Header Files\scripts\Flocking demo</Filter>
+    </ClInclude>
+    <ClInclude Include="BoxNotPersistable.h">
+      <Filter>Header Files\objects\Jenga game</Filter>
+    </ClInclude>
+    <ClInclude Include="BoxPersistable.h">
+      <Filter>Header Files\objects\Jenga game</Filter>
+    </ClInclude>
+    <ClInclude Include="Ball.h">
+      <Filter>Header Files\objects\Jenga game</Filter>
+    </ClInclude>
+    <ClInclude Include="SteeringRocket.h">
+      <Filter>Header Files\objects\Flocking demo</Filter>
+    </ClInclude>
+    <ClInclude Include="FollowMouseListener.h">
+      <Filter>Header Files\listeners\Flocking demo</Filter>
+    </ClInclude>
+    <ClInclude Include="AimListener.h">
+      <Filter>Header Files\listeners\Flocking demo</Filter>
+    </ClInclude>
+    <ClInclude Include="TimerScript.h">
+      <Filter>Header Files\scripts\Jenga game</Filter>
+    </ClInclude>
+    <ClInclude Include="Alien.h">
+      <Filter>Header Files\objects\Flocking demo</Filter>
+    </ClInclude>
     <ClInclude Include="InputTypeListener.h">
       <Filter>Header Files\listeners</Filter>
     </ClInclude>
     <ClInclude Include="NetworkBackScript.h">
-      <Filter>Header Files\scripts\networking\match_making</Filter>
+      <Filter>Header Files\scripts\Rocket game\match_making</Filter>
     </ClInclude>
     <ClInclude Include="LoadingAnimation.h">
-      <Filter>Header Files\objects\network</Filter>
+      <Filter>Header Files\objects\Rocket game</Filter>
     </ClInclude>
-    <ClInclude Include="SteeringRocket.h">
-      <Filter>Header Files\objects\flock/steering</Filter>
-    </ClInclude>
-    <ClInclude Include="CollisionDetectionScript.h">
-      <Filter>Header Files\scripts\flock/steering</Filter>
-    </ClInclude>
-    <ClInclude Include="Alien.h">
-      <Filter>Header Files\objects\flock/steering</Filter>
+    <ClInclude Include="NetCollisionDetectionScript.h">
+      <Filter>Header Files\scripts\Rocket game\shooter</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -51,7 +51,6 @@ void Sample::Play(const int times, float volume)
     mutex_.unlock();
 
     SetVolume(volume);
-
     running = true;
 }
 
