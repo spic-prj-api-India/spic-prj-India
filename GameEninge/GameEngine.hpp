@@ -53,35 +53,30 @@ namespace spic {
 		 * @brief Adds extensions to engine.
 		 * @param extension A IEngineExtension is used by the engine to
 		 *        configure the base functionality of the engine
-	 	 * @spicapi
 		*/
 		template <typename T>
 		void AddExtension(std::shared_ptr<T> extension);
 
 		/**
 		 * @brief Gets extension of type IEngineExtension.
-		 * @spicapi
 		*/
 		template <typename T>
 		std::weak_ptr<T> GetExtension();
 
 		/**
 		 * @brief Gets extensions of type IEngineExtension.
-		 * @spicapi
 		*/
 		template <typename T>
 		std::vector<std::weak_ptr<T>> GetExtensions();
 
 		/**
 		 * @brief Checks if extension exists.
-		 * @spicapi
 		*/
 		template <typename T>
 		bool HasExtension();
 
 		/**
 		 * @brief removes extension from engine.
-		 * @spicapi
 		*/
 		template <typename T>
 		void RemoveExtension();
@@ -155,13 +150,11 @@ namespace spic {
 
 		/*
 		 * @brief Start game loop
-		 * @spicapi
 		*/
 		void Start();
 
 		/*
 		 * @brief Stop game loop
-		 * @spicapi
 		*/
 		void Quit();
 	};
