@@ -47,7 +47,8 @@ namespace spic::helper_functions
 		 * @return Random value
 		*/
 		template <typename R, typename T>
-		R Between(T min, T max) {
+		R Between(T min, T max) 
+		{
 			using uniform_distribution_type = typename uniform_distribution_selector<std::is_integral<T>::value, T>::type;
 			uniform_distribution_type distribution(min, max);
 			return static_cast<R>(distribution(engine));
@@ -61,7 +62,8 @@ namespace spic::helper_functions
 		 * @return Iterator of random value
 		*/
 		template<typename Iter>
-		Iter SelectRandom(Iter start, Iter end) {
+		Iter SelectRandom(Iter start, Iter end) 
+		{
 			std::uniform_int_distribution<> dis(0, std::distance(start, end) - 1);
 			std::advance(start, dis(engine));
 			return start;
