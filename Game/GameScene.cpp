@@ -55,7 +55,6 @@ void GameScene::SetContents()
 		football->AddComponent(music);
 	}
 
-
 	//UI test
 	std::shared_ptr<spic::Button> button = std::make_shared<spic::Button>(200.0f, 100.0f, "Save scene");
 	button->Transform(std::make_shared<spic::Transform>(spic::Point(20.0f, 20.0f), 0.0f, 1.0f));
