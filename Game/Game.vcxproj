@@ -185,6 +185,7 @@
     <ClCompile Include="Target.cpp" />
     <ClCompile Include="TargetReceiveScript.cpp" />
     <ClCompile Include="TargetSendScript.cpp" />
+    <ClCompile Include="TimerScript.cpp" />
     <ClCompile Include="WinScene.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -225,6 +226,7 @@
     <ClInclude Include="Target.h" />
     <ClInclude Include="TargetReceiveScript.h" />
     <ClInclude Include="TargetSendScript.h" />
+    <ClInclude Include="TimerScript.h" />
     <ClInclude Include="WinScene.h" />
   </ItemGroup>
   <ItemGroup>

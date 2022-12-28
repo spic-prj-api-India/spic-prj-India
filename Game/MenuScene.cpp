@@ -27,8 +27,7 @@ void MenuScene::SetContents()
 		spic::GameEngine::GetInstance()->LoadSceneByName("game");
 		}, 0.0f);
 	AddButton("Load save demo", []() {
-		std::shared_ptr<GameScene> sceneToLoad = std::make_shared<GameScene>();
-		spic::GameEngine::GetInstance()->LoadSceneBySaveFile(sceneToLoad, "game");
+	spic::GameEngine::GetInstance()->LoadSceneBySaveFile("game", "game");
 		}, 100.0f);
 	AddButton("Network Demo", []() {
 		spic::GameEngine::GetInstance()->LoadSceneByName("network");

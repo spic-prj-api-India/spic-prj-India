@@ -60,9 +60,9 @@ namespace spic
 		dataHandler.Save();
 	}
 
-	void GameEngine::LoadSceneBySaveFile(std::shared_ptr<Scene> scene, const std::string& fileName)
+	void GameEngine::LoadSceneBySaveFile(const std::string& sceneName, const std::string& fileName)
 	{
-		spic::internal::EntityManager::GetInstance()->SetScene(scene);
+		spic::internal::EntityManager::GetInstance()->SetScene(sceneName);
 		DataHandler dataHandler = DataHandler(fileName);
 		dataHandler.LoadScene(spic::internal::EntityManager::GetInstance()->GetEntities());
 	}
