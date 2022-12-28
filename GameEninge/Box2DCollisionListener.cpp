@@ -6,7 +6,7 @@ namespace spic::internal::extensions
 	{
 	}
 
-	Box2DCollisionListener::Box2DCollisionListener(CollisionCallback enterCallback, CollisionCallback exitCallback, CollisionCallback stayCallback)
+	Box2DCollisionListener::Box2DCollisionListener(spic::extensions::CollisionCallback enterCallback, spic::extensions::CollisionCallback exitCallback, spic::extensions::CollisionCallback stayCallback)
 		: onEnterCallback{ enterCallback }, onExitCallback{ exitCallback }, onStayCallback{ stayCallback }
 	{
 	}
