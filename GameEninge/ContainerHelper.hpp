@@ -16,6 +16,14 @@ namespace spic::helper_functions
 	*/
 	namespace container
 	{
+        /**
+         * @brief Function that is used for finding object in container. 
+         *          Format: [](std::shared_ptr<T>){return true}
+         * @tparam T 
+        */
+        template <typename T>
+        using FindFunction = std::function<bool(std::shared_ptr<T>)>;
+
 		/**
 		* @brief Converts map to vector with keys.
 		* @tparam K Can be any value.
@@ -52,11 +60,14 @@ namespace spic::helper_functions
          * @brief Finds element in vector with find function
          * @param vector Vector to search in
          * @param findFunction Lambda function that checks if element is right element
+         *          Format: [](std::shared_ptr<T>){return true}
          * @return shared_ptr or nullptr
         */
         template <typename T>
-        std::shared_ptr<T> Find(const std::vector<std::shared_ptr<T>>& vector, std::function<bool(std::shared_ptr<T>)> findFunction) {
-            auto it = find_if(vector.begin(), vector.end(), [&findFunction](std::shared_ptr<T> element) {
+        std::shared_ptr<T> Find(const std::vector<std::shared_ptr<T>>& vector, FindFunction<T> findFunction) 
+        {
+            auto it = find_if(vector.begin(), vector.end(), [&findFunction](std::shared_ptr<T> element) 
+            {
                 return findFunction(element);
                 });
 
@@ -71,11 +82,14 @@ namespace spic::helper_functions
          * @brief Finds element in vector with find function and converts element to given type
          * @param vector Vector to search in
          * @param findFunction Lambda function that checks if element is right element
+         *          Format: [](std::shared_ptr<T>){return true}
          * @return shared_ptr or nullptr
         */
         template <typename T, typename C>
-        std::shared_ptr<C> FindAndConvert(const std::vector<std::shared_ptr<T>>& vector, std::function<bool(std::shared_ptr<T>)> findFunction) {
-            auto it = find_if(vector.begin(), vector.end(), [&findFunction](std::shared_ptr<T> element) {
+        std::shared_ptr<C> FindAndConvert(const std::vector<std::shared_ptr<T>>& vector, FindFunction<T> findFunction) 
+        {
+            auto it = find_if(vector.begin(), vector.end(), [&findFunction](std::shared_ptr<T> element) 
+            {
                 return findFunction(element);
                 });
 

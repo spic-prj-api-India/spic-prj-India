@@ -27,13 +27,16 @@ namespace spic::extensions
 
 		/**
 		 * @brief Resets all physic bodies
-		 * @param enterCallback Callback that runs OnTriggerEnter2D in behaviour scripts of entity
-		 * @param exitCallback Callback that runs OnTriggerExit2D in behaviour scripts of entity
-		 * @param stayCallback  Callback that runs OnTriggerStay2D in behaviour scripts of entity
+		 * @param enterCallback Callback that runs OnTriggerEnter2D in behaviour scripts of entity if entity enters collision.
+		 *			Format: [](const std::shared_ptr<spic::GameObject>&, const std::shared_ptr<spic::Collider>&){}
+		 * @param exitCallback Callback that runs OnTriggerExit2D in behaviour scripts of entity if entity exits collision.
+		 *			Format: [](const std::shared_ptr<spic::GameObject>&, const std::shared_ptr<spic::Collider>&){}
+		 * @param stayCallback  Callback that runs OnTriggerStay2D in behaviour scripts of entity if entity stays collision.
+		 *			Format: [](const std::shared_ptr<spic::GameObject>&, const std::shared_ptr<spic::Collider>&){}
 		*/
-		void Reset(std::function<void(const std::shared_ptr<spic::GameObject>&, const std::shared_ptr<spic::Collider>&)> enterCallback,
-			std::function<void(const std::shared_ptr<spic::GameObject>&, const std::shared_ptr<spic::Collider>&)> exitCallback,
-			std::function<void(const std::shared_ptr<spic::GameObject>&, const std::shared_ptr<spic::Collider>&)> stayCallback) override;
+		void Reset(CollisionCallback enterCallback,
+			CollisionCallback exitCallback,
+			CollisionCallback stayCallback) override;
 
 		/**
 		 * @brief Add collision layer to physic world

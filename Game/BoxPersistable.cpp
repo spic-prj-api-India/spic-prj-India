@@ -23,14 +23,14 @@ void BoxPersistable::SetAttributes(const spic::Point& position)
 	AddComponent<spic::RigidBody>(std::make_shared<spic::RigidBody>(10.0f, 1.0f, spic::BodyType::dynamicBody));
 }
 
-std::map<std::string, std::function<std::string()>> BoxPersistable::SaveProperties()
+std::map<std::string, spic::SaveFunction> BoxPersistable::SaveProperties()
 {
 	auto saveProperties = Persistable::SaveProperties();
 	saveProperties["feelerLength"] = [this]() { return std::to_string(this->feelerLength); };
 	return saveProperties;
 }
 
-std::map<std::string, std::function<void(const std::string&)>> BoxPersistable::LoadProperties()
+std::map<std::string, spic::LoadFunction> BoxPersistable::LoadProperties()
 {
 	auto loadProperties = Persistable::LoadProperties();
 	loadProperties["feelerLength"] = [this](const std::string& feelerLength) { this->feelerLength = std::stof(feelerLength); };
