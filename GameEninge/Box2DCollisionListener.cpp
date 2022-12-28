@@ -6,10 +6,7 @@ namespace spic::internal::extensions
 	{
 	}
 
-	Box2DCollisionListener::Box2DCollisionListener(
-		std::function<void(const std::shared_ptr<spic::GameObject>, const std::shared_ptr<spic::Collider>)> enterCallback,
-		std::function<void(const std::shared_ptr<spic::GameObject>, const std::shared_ptr<spic::Collider>)> exitCallback,
-		std::function<void(const std::shared_ptr<spic::GameObject>, const std::shared_ptr<spic::Collider>)> stayCallback)
+	Box2DCollisionListener::Box2DCollisionListener(CollisionCallback enterCallback, CollisionCallback exitCallback, CollisionCallback stayCallback)
 		: onEnterCallback{ enterCallback }, onExitCallback{ exitCallback }, onStayCallback{ stayCallback }
 	{
 	}

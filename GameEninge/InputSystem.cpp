@@ -57,19 +57,17 @@ namespace spic::internal::systems
 			scripts.emplace_back(script);
 		}
 
+		for (auto& script : scripts)
+		{
+			script->OnUpdate();
+		}
 		while (spic::internal::input::impl::Poll())
 		{
-			InputManager::GetInstance()->Listen();
-
 			for (auto& script : scripts)
 			{
 				script->OnInput();
 			}
-		}
-
-		for (auto& script : scripts)
-		{
-			script->OnUpdate();
+			InputManager::GetInstance()->Listen(); 
 		}
 	}
 

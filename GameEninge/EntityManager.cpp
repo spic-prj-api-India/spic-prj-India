@@ -106,7 +106,7 @@ void EntityManager::RemoveEntity(const std::string& name)
 	removeEntities.emplace_back(name);
 }
 
-void EntityManager::RegisterScene(const std::string& sceneName, std::function<spic::Scene* ()> scene)
+void EntityManager::RegisterScene(const std::string& sceneName, CreateSceneFunction scene)
 {
 	if (scenes.count(sceneName))
 		throw std::exception("Scene with this name already exists.");

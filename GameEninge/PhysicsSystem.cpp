@@ -24,7 +24,7 @@ namespace spic::internal::systems
 		for (const auto& extension : physicsExtensions) {
 			if (const auto& physicsExtension = extension.lock()) 
 			{
-				std::function<void(const std::shared_ptr<spic::GameObject>&, const std::shared_ptr<spic::Collider>&)> enterCallback 
+				spic::extensions::CollisionCallback enterCallback
 					= [this](const std::shared_ptr<spic::GameObject>& entity, const std::shared_ptr<spic::Collider>& collider) { OnEnter(entity, collider); };
 				std::function<void(const std::shared_ptr<spic::GameObject>&, const std::shared_ptr<spic::Collider>&)> exitCallback 
 					= [this](const std::shared_ptr<spic::GameObject>& entity, const std::shared_ptr<spic::Collider>& collider) { OnExit(entity, collider); };
