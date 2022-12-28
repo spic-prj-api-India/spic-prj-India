@@ -16,6 +16,9 @@
 #include "MenuScene.h"
 #include "CreditsScene.h"
 #include "SettingsScene.h"
+#include "FlockSettingsScene.h"
+#include "SoundSettingsScene.h"
+#include "NetworkSettingsScene.h"
 #include "LoseScene.h"
 #include "WinScene.h"
 #include "SteeringScene.h"
@@ -32,13 +35,13 @@ void InitGame()
 
 	// Creates a SocketUDPExtension and adds it to the extension list
 	const std::string& ownIp = spic::helper_functions::networking_helper::GetParsedIPConfigData("IPv4 Address");
-	spic::DataHandler dataHandler = spic::DataHandler("networking");
+	spic::DataHandler dataHandler = spic::DataHandler("network_settings");
 	std::map<std::string, std::string> networkSettings;
 	dataHandler.LoadSettings(networkSettings);
-	const std::string& opponentIp = (networkSettings["opponent"]);
+	const std::string& opponentIp = (networkSettings["opponent_ip"]);
 
 	auto socket = std::make_shared<spic::extensions::SocketUDPExtension>();
-	socket->InitListener(13252);
+	socket->InitListener(13251);
 	socket->InitSender(opponentIp, 13252);
 	engine->AddExtension(std::move(socket));
 
@@ -54,6 +57,9 @@ void InitGame()
 	engine->RegisterScene("won", std::function<spic::Scene* ()>(WinScene::Start));
 	engine->RegisterScene("lost", std::function<spic::Scene* ()>(LoseScene::Start));
 	engine->RegisterScene("settings", std::function<spic::Scene* ()>(SettingsScene::Start));
+	engine->RegisterScene("flockSettings", std::function<spic::Scene* ()>(FlockSettingsScene::Start));
+	engine->RegisterScene("soundSettings", std::function<spic::Scene* ()>(SoundSettingsScene::Start));
+	engine->RegisterScene("networkSettings", std::function<spic::Scene* ()>(NetworkSettingsScene::Start));
 }
 
 void StartGame()

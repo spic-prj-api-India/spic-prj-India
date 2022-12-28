@@ -6,7 +6,7 @@ Persistable::Persistable(GameObject* gameObject, std::string typeName) : gameObj
 {
 }
 
-std::map<std::string, std::function<std::string()>> Persistable::SaveProperties()
+std::map<std::string, SaveFunction> Persistable::SaveProperties()
 {
 	if (gameObject == nullptr)
 		return {};
@@ -24,7 +24,7 @@ std::map<std::string, std::function<std::string()>> Persistable::SaveProperties(
 	};
 }
 
-std::map<std::string, std::function<void(const std::string&)>> Persistable::LoadProperties()
+std::map<std::string, LoadFunction> Persistable::LoadProperties()
 {
 	if (gameObject == nullptr)
 		return {};

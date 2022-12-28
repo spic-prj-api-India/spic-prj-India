@@ -131,6 +131,13 @@ namespace spic {
 		std::shared_ptr<Transform> Transform() const;
 
 		/**
+		 * @brief Adds x and y of parent to transform of GameObject.
+		 * @return Transform used for rendering
+		 * @sharedapi
+		 */
+		spic::Transform RealTransform() const;
+
+		/**
 		 * @brief Sets tranform of GameObject.
 		 * @param transform Desired value.
 		 * @spicapi

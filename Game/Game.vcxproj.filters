@@ -121,6 +121,12 @@
     <Filter Include="Header Files\listeners\Flocking demo">
       <UniqueIdentifier>{b4de98e8-702f-4f6f-aee3-e103f0a65c5d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\scenes\settings">
+      <UniqueIdentifier>{411054aa-4221-476b-8685-e23d6923b345}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\scenes\settings">
+      <UniqueIdentifier>{2e65c5f4-e41a-425f-ad24-bf3be44f5921}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="KeyListener.cpp">
@@ -140,6 +146,9 @@
     </ClCompile>
     <ClCompile Include="CreditsSceneScript.cpp">
       <Filter>Source Files\scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="BoxPersistable.cpp">
+      <Filter>Source Files\objects</Filter>
     </ClCompile>
     <ClCompile Include="SettingsScene.cpp">
       <Filter>Source Files\scenes</Filter>
@@ -204,11 +213,11 @@
     <ClCompile Include="Target.cpp">
       <Filter>Source Files\objects\Rocket game</Filter>
     </ClCompile>
-    <ClCompile Include="NetCollisionDetectionScript.cpp">
-      <Filter>Source Files\scripts\Rocket game\shooter</Filter>
-    </ClCompile>
     <ClCompile Include="BackScript.cpp">
       <Filter>Source Files\scripts\General</Filter>
+    </ClCompile>
+    <ClCompile Include="NetCollisionDetectionScript.cpp">
+      <Filter>Source Files\scripts\network\shooter</Filter>
     </ClCompile>
     <ClCompile Include="CameraMovementScript.cpp">
       <Filter>Source Files\scripts\General</Filter>
@@ -224,6 +233,21 @@
     </ClCompile>
     <ClCompile Include="CollisionDetectionScript.cpp">
       <Filter>Source Files\scripts\Flocking demo</Filter>
+    </ClCompile>
+    <ClCompile Include="SettingsScene.cpp">
+      <Filter>Source Files\scenes\settings</Filter>
+    </ClCompile>
+    <ClCompile Include="NetworkSettingsScene.cpp">
+      <Filter>Source Files\scenes\settings</Filter>
+    </ClCompile>
+    <ClCompile Include="FlockSettingsScene.cpp">
+      <Filter>Source Files\scenes\settings</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundSettingsScene.cpp">
+      <Filter>Source Files\scenes\settings</Filter>
+    </ClCompile>
+    <ClCompile Include="InputTypeListener.cpp">
+      <Filter>Source Files\listeners</Filter>
     </ClCompile>
     <ClCompile Include="BoxNotPersistable.cpp">
       <Filter>Source Files\objects\Jenga game</Filter>
@@ -243,6 +267,18 @@
     <ClCompile Include="AimListener.cpp">
       <Filter>Source Files\listeners\Flocking demo</Filter>
     </ClCompile>
+    <ClCompile Include="Alien.cpp">
+      <Filter>Source Files\objects\Flocking demo</Filter>
+    </ClCompile>
+    <ClCompile Include="NetworkBackScript.cpp">
+      <Filter>Source Files\scripts\Rocket game\match_making</Filter>
+    </ClCompile>
+    <ClCompile Include="LoadingAnimation.cpp">
+      <Filter>Source Files\objects\Rocket game</Filter>
+    </ClCompile>
+    <ClCompile Include="NetCollisionDetectionScript.cpp">
+      <Filter>Source Files\scripts\Rocket game\shooter</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KeyListener.h">
@@ -259,9 +295,6 @@
     </ClInclude>
     <ClInclude Include="CreditsSceneScript.h">
       <Filter>Header Files\scripts</Filter>
-    </ClInclude>
-    <ClInclude Include="SettingsScene.h">
-      <Filter>Header Files\scenes</Filter>
     </ClInclude>
     <ClInclude Include="CircleObstacle.h">
       <Filter>Header Files\objects</Filter>
@@ -323,8 +356,17 @@
     <ClInclude Include="Target.h">
       <Filter>Header Files\objects\Rocket game</Filter>
     </ClInclude>
-    <ClInclude Include="NetCollisionDetectionScript.h">
-      <Filter>Header Files\scripts\Rocket game\shooter</Filter>
+    <ClInclude Include="SettingsScene.h">
+      <Filter>Header Files\scenes\settings</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundSettingsScene.h">
+      <Filter>Header Files\scenes\settings</Filter>
+    </ClInclude>
+    <ClInclude Include="NetworkSettingsScene.h">
+      <Filter>Header Files\scenes\settings</Filter>
+    </ClInclude>
+    <ClInclude Include="FlockSettingsScene.h">
+      <Filter>Header Files\scenes\settings</Filter>
     </ClInclude>
     <ClInclude Include="BackScript.h">
       <Filter>Header Files\scripts\General</Filter>
@@ -361,6 +403,21 @@
     </ClInclude>
     <ClInclude Include="TimerScript.h">
       <Filter>Header Files\scripts\Jenga game</Filter>
+    </ClInclude>
+    <ClInclude Include="Alien.h">
+      <Filter>Header Files\objects\Flocking demo</Filter>
+    </ClInclude>
+    <ClInclude Include="InputTypeListener.h">
+      <Filter>Header Files\listeners</Filter>
+    </ClInclude>
+    <ClInclude Include="NetworkBackScript.h">
+      <Filter>Header Files\scripts\Rocket game\match_making</Filter>
+    </ClInclude>
+    <ClInclude Include="LoadingAnimation.h">
+      <Filter>Header Files\objects\Rocket game</Filter>
+    </ClInclude>
+    <ClInclude Include="NetCollisionDetectionScript.h">
+      <Filter>Header Files\scripts\Rocket game\shooter</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

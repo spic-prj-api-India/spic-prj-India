@@ -444,6 +444,9 @@
     <ClInclude Include="Steering.hpp">
       <Filter>Header Files\components\ai</Filter>
     </ClInclude>
+    <ClInclude Include="RandomHelper.hpp">
+      <Filter>Header Files\helpers</Filter>
+    </ClInclude>
     <ClInclude Include="InternalTime.hpp">
       <Filter>Header Files\models\time</Filter>
     </ClInclude>
@@ -673,6 +676,9 @@
     </ClCompile>
     <ClCompile Include="Obstacle.cpp">
       <Filter>Source Files\objects</Filter>
+    </ClCompile>
+    <ClCompile Include="RandomHelper.cpp">
+      <Filter>Source Files\helpers</Filter>
     </ClCompile>
     <ClCompile Include="Time.cpp">
       <Filter>Source Files\models\time</Filter>

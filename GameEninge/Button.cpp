@@ -39,7 +39,7 @@ namespace spic
 			onClick();
 	}
 
-	void Button::OnClick(std::function<void()> callback)
+	void Button::OnClick(ClickCallback callback)
 	{
 		onClick = callback;
 	}

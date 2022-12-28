@@ -4,13 +4,14 @@
 #include "RigidBody.hpp"
 #include "GeneralHelper.hpp"
 
-namespace spic 
+namespace spic
 {
-	ForceDriven::ForceDriven(SumMethod sumMethod, const float maxSteeringForce, 
+	ForceDriven::ForceDriven(SumMethod sumMethod, const float maxSteeringForce,
 		const float maxSpeed, const float maxTurnRate, const float boundingRadius) : GameObject(),
 		sumMethod{ sumMethod }, maxSteeringForce{ maxSteeringForce }, maxSpeed{ maxSpeed },
 		maxTurnRate{ maxTurnRate }, boundingRadius{ boundingRadius }, paused{ true }
 	{
+		heading = { sinf(Transform()->rotation), -cosf(Transform()->rotation) };
 	}
 
 	Point ForceDriven::Velocity() const
@@ -120,8 +121,8 @@ namespace spic
 		this->GetComponent<RigidBody>()->AddForce(force / Mass());
 		const float rotationInDeg = Velocity().Rotation();
 		const float desiredRotation = spic::helper_functions::general_helper::DEG2RAD<float>(rotationInDeg);
-		const float angle = abs(this->Transform()->rotation - desiredRotation);
-		heading = { sin(desiredRotation), -cosf(desiredRotation) };
+		const float angle = fabs(this->Transform()->rotation - desiredRotation);
+		heading = { sinf(desiredRotation), -cosf(desiredRotation) };
 		if (angle >= this->maxTurnRate) {
 			Transform()->rotation = desiredRotation;
 		}

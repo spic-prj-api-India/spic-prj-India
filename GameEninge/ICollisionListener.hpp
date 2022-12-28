@@ -7,6 +7,11 @@
 
 namespace spic::extensions {
 	/**
+	 * @brief Format: [](const std::shared_ptr<spic::GameObject>&, const std::shared_ptr<spic::Collider>&){}
+	*/
+	typedef std::function<void(const std::shared_ptr<spic::GameObject>&, const std::shared_ptr<spic::Collider>&)> CollisionCallback;
+
+	/**
 	* @brief An interface for physic collision listeners
 	*/
 	class ICollisionListener {
@@ -15,14 +20,17 @@ namespace spic::extensions {
 
 		/**
 		* @brief Constructor for all callback methods
-		* @param enterCallback Callback that is called when collider enters collision
-		* @param exitCallback Callback that is called when collider exits collision
-		* @param stayCallback Callback that is called when collider stays in collision
+		 * @param enterCallback Callback that runs OnTriggerEnter2D in behaviour scripts of entity if entity enters collision.
+		 *			Format: [](const std::shared_ptr<spic::GameObject>&, const std::shared_ptr<spic::Collider>&){}
+		 * @param exitCallback Callback that runs OnTriggerExit2D in behaviour scripts of entity if entity exits collision.
+		 *			Format: [](const std::shared_ptr<spic::GameObject>&, const std::shared_ptr<spic::Collider>&){}
+		 * @param stayCallback  Callback that runs OnTriggerStay2D in behaviour scripts of entity if entity stays collision.
+		 *			Format: [](const std::shared_ptr<spic::GameObject>&, const std::shared_ptr<spic::Collider>&){}
 		* @spicapi
 		*/
-		ICollisionListener(std::function<void(const std::shared_ptr<spic::GameObject>&, const std::shared_ptr<spic::Collider>&)> enterCallback,
-			std::function<void(const std::shared_ptr<spic::GameObject>&, const std::shared_ptr<spic::Collider>&)> exitCallback,
-			std::function<void(const std::shared_ptr<spic::GameObject>&, const std::shared_ptr<spic::Collider>&)> stayCallback);
+		ICollisionListener(CollisionCallback enterCallback,
+			CollisionCallback exitCallback,
+			CollisionCallback stayCallback);
 		virtual ~ICollisionListener() = default;
 		ICollisionListener(const ICollisionListener& other) = delete;
 		ICollisionListener(ICollisionListener&& other) = delete;

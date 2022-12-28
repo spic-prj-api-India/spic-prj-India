@@ -148,16 +148,21 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AimListener.cpp" />
+    <ClCompile Include="Alien.cpp" />
     <ClCompile Include="BoxPersistable.cpp" />
     <ClCompile Include="BackScript.cpp" />
     <ClCompile Include="BoxNotPersistable.cpp" />
     <ClCompile Include="BoxSpawnerScript.cpp" />
     <ClCompile Include="CameraMovementScript.cpp" />
     <ClCompile Include="CollisionDetectionScript.cpp" />
+    <ClCompile Include="FlockSettingsScene.cpp" />
     <ClCompile Include="FollowMouseListener.cpp" />
+    <ClCompile Include="InputTypeListener.cpp" />
+    <ClCompile Include="LoadingAnimation.cpp" />
     <ClCompile Include="NetAimListener.cpp" />
     <ClCompile Include="CircleObstacle.cpp" />
     <ClCompile Include="NetCollisionDetectionScript.cpp" />
+    <ClCompile Include="NetworkBackScript.cpp" />
     <ClCompile Include="NetworkScene.cpp" />
     <ClCompile Include="Ball.cpp" />
     <ClCompile Include="CreditsScene.cpp" />
@@ -170,6 +175,7 @@
     <ClCompile Include="LoseScene.cpp" />
     <ClCompile Include="MenuScene.cpp" />
     <ClCompile Include="NetFollowMouseListener.cpp" />
+    <ClCompile Include="NetworkSettingsScene.cpp" />
     <ClCompile Include="RocketReceiveScript.cpp" />
     <ClCompile Include="RocketSendScript.cpp" />
     <ClCompile Include="SeekingRocket.cpp" />
@@ -179,6 +185,7 @@
     <ClCompile Include="SettingsScene.cpp" />
     <ClCompile Include="ShooterReceiveScript.cpp" />
     <ClCompile Include="ShooterSendScript.cpp" />
+    <ClCompile Include="SoundSettingsScene.cpp" />
     <ClCompile Include="SteeringRocket.cpp" />
     <ClCompile Include="SteeringScene.cpp" />
     <ClCompile Include="SyncScript.cpp" />
@@ -190,8 +197,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AimListener.h" />
+    <ClInclude Include="Alien.h" />
     <ClInclude Include="CollisionDetectionScript.h" />
+    <ClInclude Include="FlockSettingsScene.h" />
     <ClInclude Include="FollowMouseListener.h" />
+    <ClInclude Include="InputTypeListener.h" />
+    <ClInclude Include="LoadingAnimation.h" />
     <ClInclude Include="NetAimListener.h" />
     <ClInclude Include="BackScript.h" />
     <ClInclude Include="BoxPersistable.h" />
@@ -199,6 +210,7 @@
     <ClInclude Include="BoxSpawnerScript.h" />
     <ClInclude Include="CameraMovementScript.h" />
     <ClInclude Include="NetCollisionDetectionScript.h" />
+    <ClInclude Include="NetworkBackScript.h" />
     <ClInclude Include="NetworkScene.h" />
     <ClInclude Include="Ball.h" />
     <ClInclude Include="CreditsScene.h" />
@@ -210,6 +222,7 @@
     <ClInclude Include="NetFollowMouseListener.h" />
     <ClInclude Include="CircleObstacle.h" />
     <ClInclude Include="LoseScene.h" />
+    <ClInclude Include="NetworkSettingsScene.h" />
     <ClInclude Include="RocketReceiveScript.h" />
     <ClInclude Include="RocketSendScript.h" />
     <ClInclude Include="SeekingRocket.h" />
@@ -220,6 +233,7 @@
     <ClInclude Include="SettingsScene.h" />
     <ClInclude Include="ShooterReceiveScript.h" />
     <ClInclude Include="ShooterSendScript.h" />
+    <ClInclude Include="SoundSettingsScene.h" />
     <ClInclude Include="SteeringRocket.h" />
     <ClInclude Include="SteeringScene.h" />
     <ClInclude Include="SyncScript.h" />

@@ -3,7 +3,6 @@
 #include <Sprite.hpp>
 #include <Flocking.hpp>
 #include <Steering.hpp>
-#include <DataHandler.hpp>
 
 SeekingRocket::SeekingRocket(const std::string& name, const spic::Point& position, const float angle) : ForceDriven(spic::SumMethod::WEIGHTED_AVERAGE, 0.5f, 1.5f, 0.122173048f, 40.0f)
 {
@@ -29,13 +28,7 @@ void SeekingRocket::SetSteeringBehaviours()
 {
 	std::shared_ptr<spic::Steering> steering = std::make_shared<spic::Steering>(this);
 
-	std::map<std::string, std::string> settings;
-	spic::DataHandler dataHandler = spic::DataHandler("settings");
-	dataHandler.LoadSettings(settings);
-	if (std::stoi(settings["use_arrival"]))
-		steering->SetDeceleration(spic::Deceleration::SLOW);
-	if (std::stoi(settings["use_arrival"]))
-		steering->WanderOn(.5f, 1.1f, 6.0f, 60.0f);
+	steering->SetDeceleration(spic::Deceleration::SLOW);
 	steering->WallAvoidanceOn(3.0f, 80.0f, spic::Point(1200.0f, 800.0f));
 	steering->ObstacleAvoidanceOn(3.0f, 120.0f);
 	AddComponent<spic::Steering>(steering);
