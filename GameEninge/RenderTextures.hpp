@@ -26,7 +26,7 @@ namespace spic::internal::rendering::impl
 		TexturePtr missingTexture;
 
 		/**
-		 * @brief The curent renderer object
+		 * @brief The current renderer object
 		*/
 		RendererPtrWeak renderer;
 

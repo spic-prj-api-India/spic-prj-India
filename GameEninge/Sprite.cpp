@@ -156,7 +156,7 @@ const float spic::Sprite::DisplayWidth() const
 	return this->displayWidth;
 }
 
-const void spic::Sprite::DisplayWidth(float newWidt)
+const void spic::Sprite::DisplayWidth(float newWidth)
 {
-	this->displayWidth = newWidt;
+	this->displayWidth = newWidth;
 }

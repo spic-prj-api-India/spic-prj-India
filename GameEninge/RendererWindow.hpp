@@ -92,7 +92,7 @@ namespace spic::internal::rendering::impl
 		void Clean();
 
 		/**
-		 * @brief Draws everythin in the renderer's buffer to the window
+		 * @brief Draws everything in the renderer's buffer to the window
 		*/
 		void Render();
 
@@ -130,14 +130,14 @@ namespace spic::internal::rendering::impl
 		/**
 		 * @brief If the Point object has intersection with the windowCamera
 		 * @param point An random Point
-		 * @return If it has intersaction, it returns true
+		 * @return If it has intersection, it returns true
 		*/
 		bool PointHasIntersectionWithWindow(const Point& point) const;
 
 		/**
 		 * @brief If the Point object has intersection with the camera
 		 * @param point An random Point
-		 * @return If it has intersaction, it returns true
+		 * @return If it has intersection, it returns true
 		*/
 		bool PointHasIntersectionWithCamera(const Point& point) const;
 
