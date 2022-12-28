@@ -51,7 +51,7 @@ void spic::internal::Rendering::DrawDebugShapes()
 	impl->DrawDebugShapes();
 }
 
-void spic::internal::Rendering::DrawSprite(const Transform* position, Sprite* sprite)
+void spic::internal::Rendering::DrawSprite(const Transform& position, Sprite* sprite)
 {
 	impl->DrawSprite(sprite, position);
 }

@@ -43,6 +43,8 @@ namespace spic
 
 	float Point::Rotation() const
 	{
+		if (y == 0 && x == 0)
+			return 0.0f;
 		if (y <= 0) 
 			return asinf(x / sqrtf(x * x + y * y)) * 180.f / spic::internal::defaults::PI;
 		

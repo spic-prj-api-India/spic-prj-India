@@ -33,7 +33,7 @@ void CreditsScene::SetContents()
 
 
 	std::map<std::string, std::string> settings;
-	spic::DataHandler dataHandler = spic::DataHandler("settings");
+	spic::DataHandler dataHandler = spic::DataHandler("sound_settings");
 	dataHandler.LoadSettings(settings);
 	bool backgroundMusic = std::stoi(settings["background_music"]);
 	if (backgroundMusic)

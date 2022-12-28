@@ -140,7 +140,7 @@ namespace spic::internal::rendering {
 		 * @param dstRect Coordinates of sprite in texture
 		 * @param sourceRect Coordinates of sprite in window
 		*/
-		void DrawSprite(const Sprite* sprite, const Transform* transform, SDL_Texture* texture,
+		void DrawSprite(const Sprite* sprite, const Transform& transform, SDL_Texture* texture,
 			SDL_FRect* dstRect, SDL_Rect* sourceRect = NULL);
 
 		/**
@@ -187,7 +187,7 @@ namespace spic::internal::rendering {
 		 * @param isUiObject
 		 * @param transform Contains position and rotation
 		*/
-		void DrawAnimator(Animator* animator, const Transform* transform, const bool isUiObject);
+		void DrawAnimator(Animator* animator, const Transform& transform, const bool isUiObject);
 
 		/**
 		 * @brief Draws text on window space
@@ -317,14 +317,14 @@ namespace spic::internal::rendering {
 		 * @param sprite The sprite to draw
 		 * @param transform Contains position and rotation
 		*/
-		void DrawUISprite(const float width, const float height, const Sprite* sprite, const Transform* transform);
+		void DrawUISprite(const float width, const float height, const Sprite* sprite, const Transform& transform);
 
 		/**
 		 * @brief Draws an sprite
 		 * @param sprite The sprite to draw
 		 * @param transform Contains position and rotation
 		*/
-		void DrawSprite(const Sprite* sprite, const Transform* transform, bool isUiOject = false);
+		void DrawSprite(const Sprite* sprite, const Transform& transform, bool isUiOject = false);
 
 		/**
 		 * @brief Renders the fps counter
