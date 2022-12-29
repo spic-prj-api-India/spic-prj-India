@@ -45,7 +45,7 @@ namespace spic::internal::rendering::impl
 		/**
 		 * @brief Draws uiobject 
 		 * @details only text supported at the moment
-		 * @param gameObject
+		 * @param gameObject The UIObject that will be drawn
 		*/
 		void DrawUI(UIObject* gameObject);
 

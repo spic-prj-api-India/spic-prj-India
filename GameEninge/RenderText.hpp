@@ -38,7 +38,7 @@ namespace spic::internal::rendering::impl
 
 		/**
 		 * @brief Constructor
-		 * @param A reference to the current renderer ptr
+		 * @param render A reference to the current renderer ptr
 		*/
 		RenderingText(RendererPtrWeak render) noexcept(false);
 
@@ -55,12 +55,12 @@ namespace spic::internal::rendering::impl
 		 * @param pFont                     The font to render the text with
 		 * @param rText                     The text to render
 		 * @param rTextColor                The text color
-		 * @param XPosition                 The horizontal position of the text lines (defaults to 0)
-		 * @param YPosition                 The vertical position of the first line of text
-		 * @param Width                     The width of a textbox
-		 * @param Height                    The vertical position of the first line of text
-		 * @param DistanceBetweenLines      The distance between each line of text
-		 * @param Align                     An enum specifying how the text has to be alligned
+		 * @param xPosition                 The horizontal position of the text lines (defaults to 0)
+		 * @param yPosition                 The vertical position of the first line of text
+		 * @param width                     The width of a textbox
+		 * @param height                    The vertical position of the first line of text
+		 * @param distanceBetweenLines      The distance between each line of text
+		 * @param align                     An enum specifying how the text has to be alligned
 		*/
 		void RenderMultiLineText(const TTF_Font* pFont, std::string& rText
 			, const SDL_Color& rTextColor, float xPosition, float yPosition, const float width
