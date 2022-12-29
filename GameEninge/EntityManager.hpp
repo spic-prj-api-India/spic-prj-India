@@ -16,7 +16,7 @@ namespace spic::internal
 	/**
 	 * @brief Format: [](){return new Scene()}
 	*/
-	typedef std::function<spic::Scene*()> CreateSceneFunction;
+	typedef std::function<spic::Scene*(void)> CreateSceneFunction;
 
 	/**
 	 * @brief Manages all entities and scenes

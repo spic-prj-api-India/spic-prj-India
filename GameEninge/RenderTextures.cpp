@@ -2,6 +2,21 @@
 #include "Defaults.hpp"
 #include "GeneralHelper.hpp"
 #include "Settings.hpp"
+#include "Debug.hpp"
+
+spic::internal::rendering::impl::RenderTextures::RenderTextures(RendererPtrWeak renderer)
+{
+	auto tmp_sprites = SurfacePtr(IMG_Load(spic::internal::defaults::MISSING_TEXTURE.c_str()));
+	if (!tmp_sprites.get())
+	{
+		spic::debug::LogError("Failed to create RenderTextures class");
+		exit(-1);
+	}
+
+	missingTexture = TexturePtr(SDL_CreateTextureFromSurface(renderer.lock().get(), tmp_sprites.get()));
+
+	this->renderer = renderer;
+}
 
 SDL_Texture* spic::internal::rendering::impl::RenderTextures::LoadTexture(const std::string& sprite)
 {
@@ -19,9 +34,9 @@ SDL_Texture* spic::internal::rendering::impl::RenderTextures::LoadTexture(const 
 	auto a = this->renderer.lock().get();
 
 	auto texture = TexturePtr(SDL_CreateTextureFromSurface(a, tmp_sprites.get()));
-	auto returnPntr = texture.get();
+	auto returnPtr = texture.get();
 	textures.emplace(sprite, std::move(texture));
-	return returnPntr;
+	return returnPtr;
 }
 
 spic::Point spic::internal::rendering::impl::RenderTextures::GetTextureSize(SDL_Texture* texture) const
@@ -78,15 +93,4 @@ SDL_Color spic::internal::rendering::impl::RenderTextures::ConvertsColor(const s
 	, static_cast<unsigned char>(PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, color.G())))
 	, static_cast<unsigned char>(PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, color.B()))) 
 	, static_cast<unsigned char>(PrecisionRoundingoInt(std::lerp(UINT_8_BEGIN, UINT_8_END, color.A())))};
-}
-
-spic::internal::rendering::impl::RenderTextures::RenderTextures(RendererPtrWeak renderer)
-{
-	//auto tmp_sprites = SurfacePtr(IMG_Load(spic::internal::defaults::MISSING_TEXTURE.c_str()));
-	//if (!tmp_sprites.get())
-	//	return;
-
-	//missingTexture = TexturePtr(SDL_CreateTextureFromSurface(renderer.lock().get(), tmp_sprites.get()));
-
-	this->renderer = renderer;
 }

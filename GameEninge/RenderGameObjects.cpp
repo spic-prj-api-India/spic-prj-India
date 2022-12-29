@@ -21,6 +21,13 @@ using namespace spic::internal::rendering;
 
 namespace spic::internal::rendering::impl
 {
+	RendererGameObjects::RendererGameObjects(std::weak_ptr<RenderTextures> textures, std::weak_ptr<RenderingWindow> window, std::weak_ptr<RenderingText> text)
+	{
+		this->text = std::move(text);
+		this->window = std::move(window);
+		this->textures = std::move(textures);
+	}
+
 	void RendererGameObjects::DrawGameObject(GameObject* gameObject, bool isUiOject)
 	{
 		// Only draws game object if it's active
@@ -28,7 +35,6 @@ namespace spic::internal::rendering::impl
 		{
 			auto* castedUiObject = dynamic_cast<UIObject*>(gameObject);
 			const bool thisIsUIObject = castedUiObject != nullptr;
-
 
 			if (!isUiOject && thisIsUIObject)
 			{
@@ -53,7 +59,6 @@ namespace spic::internal::rendering::impl
 	{
 		using namespace spic::helper_functions::general_helper;
 
-		const auto transform = gameObject->Transform();
 		auto _sprites = gameObject->GetComponents<Sprite>();
 
 		std::sort(_sprites.begin(), _sprites.end(), SpriteSorting);
@@ -63,22 +68,25 @@ namespace spic::internal::rendering::impl
 		if (isUIObject)
 			uiObject = spic::helper_functions::type_helper::CastPtrToType<UIObject>(gameObject);
 
+		auto transform = gameObject->RealTransform();
+
 		for (auto& sprite : _sprites)
 		{
 			if (isUIObject)
-				DrawUISprite(uiObject->Width(), uiObject->Height(), sprite.get(), transform.get());
+				DrawUISprite(uiObject->Width(), uiObject->Height(), sprite.get(), &transform);
 			else
-				DrawSprite(sprite.get(), transform.get());
+				DrawSprite(sprite.get(), &transform);
 		}
 	}
 
 	void RendererGameObjects::DrawAnimators(GameObject* gameObject, const bool isUiObject)
 	{
 		auto _animator = gameObject->GetComponents<Animator>();
+		auto transform = gameObject->RealTransform();
 
 		for (auto& animator : _animator)
 		{
-			DrawAnimator(animator.get(), gameObject->Transform().get(), isUiObject);
+			DrawAnimator(animator.get(), &transform, isUiObject);
 		}
 	}
 
@@ -107,7 +115,7 @@ namespace spic::internal::rendering::impl
 			animator->LastUpdate(current);
 		}
 
-		DrawSprite(sprites[animator->Index() - 1].get(), transform, isUIObject);
+		DrawSprite(sprites[animator->Index() - 1].get(), transform);
 	}
 
 	void RendererGameObjects::DrawUISprite(const float width, const float height, const Sprite* sprite, const Transform* transform)
@@ -115,26 +123,42 @@ namespace spic::internal::rendering::impl
 		if (transform == nullptr)
 			return;
 
+		auto func = [this](SDL_FRect& dstRect) {
 
-		SDL_Texture* texture = textures.lock()->LoadTexture(sprite->_Sprite());
+			if (this->window.lock()->RectHasIntersectionWithWindow(dstRect))
+				return false;
 
-		using namespace spic::helper_functions::general_helper;
+			return true;
+		};
 
-
-		SDL_FRect dstRect = { transform->position.x
-			, transform->position.y
-			, width * transform->scale
-			, height * transform->scale };
-
-		
-		if (!this->window.lock()->RectHasIntersectionWithWindow(dstRect))
-			return;
-
-
-		DrawSprite(sprite, transform, texture, &dstRect, NULL);
+		DrawSprite(sprite, height, width, transform, func);
 	}
 
-	void RendererGameObjects::DrawSprite(const Sprite* sprite, const Transform* transform, bool isUiOject)
+	void RendererGameObjects::DrawSprite(const Sprite* sprite, const Transform* transform)
+	{
+		if (transform == nullptr)
+			return;
+
+		auto func = [this](SDL_FRect& dstRect) {
+
+			if (!this->window.lock()->RectHasIntersectionWithCamera(dstRect))
+				return false;
+
+			auto camera = this->window.lock()->GetCamera();
+
+			dstRect = { dstRect.x - camera.x
+					, dstRect.y - camera.y
+					, dstRect.w
+					, dstRect.h };
+
+			return true;
+		};
+
+		DrawSprite(sprite, sprite->DisplayWidth(), sprite->DisplayHeight(), transform, func);
+	}
+
+
+	void RendererGameObjects::DrawSprite(const Sprite* sprite, const float displayHeight, const float displayWidth, const Transform* transform, std::function<bool(SDL_FRect&)> func)
 	{
 		if (transform == nullptr)
 			return;
@@ -142,13 +166,14 @@ namespace spic::internal::rendering::impl
 		SDL_Texture* texture = textures.lock()->LoadTexture(sprite->_Sprite());
 		auto textureSize = textures.lock()->GetTextureSize(texture);
 
-		const float displayWidth = (sprite->DisplayWidth() == 0) ? textureSize.x : sprite->Width();
-		const float displayHeight = (sprite->DisplayHeight() == 0) ? textureSize.y : sprite->Height();
 
 		SDL_FRect dstRect = { transform->position.x
 			, transform->position.y
 			, displayWidth* transform->scale * window.lock()->GetScaling()
 			, displayHeight* transform->scale * window.lock()->GetScaling() };
+
+		if (func(dstRect))
+			return;
 
 		using namespace spic::helper_functions::general_helper;
 
@@ -162,38 +187,18 @@ namespace spic::internal::rendering::impl
 
 		auto camera = this->window.lock()->GetWindowCamera();
 
-		if (!isUiOject)
-		{
-			if (this->window.lock()->RectHasIntersectionWithCamera(dstRect))
-				dstRect = { dstRect.x - camera.x
-					, dstRect.y - camera.y
-					, dstRect.w
-					, dstRect.h };
-			else
-				return;
-		}
-		else if (isUiOject)
-		{
-			if (!this->window.lock()->RectHasIntersectionWithWindow(dstRect))
-				return;
-		}
-		else
-			return;
+		double angle = RAD2DEG<double>(transform->rotation);
 
-		DrawSprite(sprite, transform, texture, &dstRect, &sourceRect);
+		DrawSprite(sprite, angle, texture, &dstRect, &sourceRect);
 	}
 
-	void RendererGameObjects::DrawSprite(const Sprite* sprite, const Transform* transform, SDL_Texture* texture, SDL_FRect* dstRect, SDL_Rect* sourceRect) 
+	void RendererGameObjects::DrawSprite(const Sprite* sprite, const double angle, SDL_Texture* texture, SDL_FRect* dstRect, SDL_Rect* sourceRect) 
 	{
 		const auto color = sprite->Color();
 
 		this->textures.lock()->SetTextureColor(texture, color);
 
 		SDL_RendererFlip flip = this->textures.lock()->GetFlip(sprite->FlipX(), sprite->FlipY());
-
-		using namespace spic::helper_functions::general_helper;
-
-		double angle = RAD2DEG<double>(transform->rotation);
 
 		if (texture == nullptr) 
 		{
@@ -220,22 +225,15 @@ namespace spic::internal::rendering::impl
 		if (std::filesystem::exists(filePath))
 		{
 			auto font = this->text.lock()->LoadFont(fontPath, text->Size());
-			auto transform = text->Transform().get();
+			auto transform = text->RealTransform();;
 			auto colour = this->textures.lock()->ConvertsColor(text->Color());
 			std::string texts{ text->_Text() };
 			text->Alignment();
 
-			const spic::GameObject* parent = text->GetParent();
-			const float x = transform->position.x + (parent != nullptr ? parent->Transform()->position.x : 0);
-			const float y = transform->position.y + (parent != nullptr ? parent->Transform()->position.y : 0);
+			const auto x = transform.position.x;
+			const auto y = transform.position.y;
+
 			this->text.lock()->RenderMultiLineText(font, texts, colour, x, y, text->Width(), text->Height(), 2, text->Alignment());
 		}
-	}
-
-	RendererGameObjects::RendererGameObjects(std::weak_ptr<RenderTextures> textures, std::weak_ptr<RenderingWindow> window, std::weak_ptr<RenderingText> text)
-	{
-		this->text = std::move(text);
-		this->window = std::move(window);
-		this->textures = std::move(textures);
 	}
 }

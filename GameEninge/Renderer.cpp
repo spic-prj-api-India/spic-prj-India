@@ -70,11 +70,11 @@ namespace spic::internal
 		debugRects.emplace_back(debugRect);
 	}
 
-void spic::internal::Rendering::DrawSprite(const Transform& position, Sprite* sprite)
-{
-		std::pair<std::pair<spic::Circle, float>, spic::Color> debugCircle = { { circle, pixelGap }, color };
-		debugCircles.emplace_back(debugCircle);
-}
+	void spic::internal::Rendering::AddDebugCircle(const spic::Circle& circle, const spic::Color& color, const float pixelGap)
+	{
+			std::pair<std::pair<spic::Circle, float>, spic::Color> debugCircle = { { circle, pixelGap }, color };
+			debugCircles.emplace_back(debugCircle);
+	}
 
 	void Rendering::AddDebugPoint(const spic::Point& point, const spic::Color& color)
 	{
@@ -123,10 +123,10 @@ void spic::internal::Rendering::DrawSprite(const Transform& position, Sprite* sp
 		debugPoints.clear();
 	}
 
-	void Rendering::DrawSprite(const Transform* position, Sprite* sprite)
+	void Rendering::DrawSprite(const Transform& position, const Sprite* sprite)
 	{
 		if (auto ob = objects.get(); ob != nullptr)
-			ob->DrawSprite(sprite, position);
+			ob->DrawSprite(sprite, &position);
 	}
 
 	void Rendering::Clean()

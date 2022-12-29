@@ -65,7 +65,9 @@ void spic::internal::rendering::impl::RenderingText::Wrap(const TTF_Font* pFont,
 	std::swap(output, input);
 }
 
-void spic::internal::rendering::impl::RenderingText::RenderMultiLineText(const TTF_Font* pFont, std::string& rText, const SDL_Color& rTextColor, float xPosition, float yPosition, const float width, const float height, const int distanceBetweenLines, const Alignment align)
+void spic::internal::rendering::impl::RenderingText::RenderMultiLineText(const TTF_Font* pFont, std::string& rText
+	, const SDL_Color& rTextColor, float xPosition, float yPosition, const float width
+	, const float height, const int distanceBetweenLines, const Alignment align)
 {
 	// Make sure that the string contains at least 1 character
 	if (rText.empty())
@@ -102,8 +104,10 @@ void spic::internal::rendering::impl::RenderingText::RenderMultiLineText(const T
 			// Time for a new line
 			++currentLine;
 
+			// 
 			if (!pSurface.get())
 				continue;
+
 			pTexture.reset(SDL_CreateTextureFromSurface(this->renderer.lock().get(), pSurface.get()));
 
 			if (pTexture.get())
@@ -124,7 +128,9 @@ void spic::internal::rendering::impl::RenderingText::RenderMultiLineText(const T
 
 				switch (align) {
 				case Alignment::CENTER: // Position the quad centered (horizontal) in the window
-					PositionQuad.x = (width / 2) - (textWidth / 2) + xPosition;
+					{
+						PositionQuad.x = (width / 2) - (textWidth / 2) + xPosition;
+					}
 					break;
 				case Alignment::RIGHT:
 					PositionQuad.x = width - textWidth + xPosition;
@@ -172,13 +178,13 @@ void spic::internal::rendering::impl::RenderingText::DrawFps()
 
 void spic::internal::rendering::impl::RenderingText::Reset()
 {
-	//this->fonts.clear();
+	this->fonts.clear();
 }
 
 spic::internal::rendering::impl::RenderingText::RenderingText(RendererPtrWeak render) noexcept(false)
 {
 	if (TTF_Init() == -1) {
-		printf("Failed to TTF: %s", SDL_GetError());
+		spic::debug::LogError(SDL_GetError());
 		exit(-1);
 	}
 

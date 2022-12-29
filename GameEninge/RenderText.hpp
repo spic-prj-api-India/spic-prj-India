@@ -46,7 +46,7 @@ namespace spic::internal::rendering::impl
 		 * @brief A font file
 		 * @param font font The font name
 		 * @param size The size of the font
-		 * @return
+		 * @return A TTF_Font pointer which is managed in a RAI object in this class
 		*/
 		TTF_Font* LoadFont(const std::string& font, const int size);
 

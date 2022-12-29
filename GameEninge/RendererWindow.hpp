@@ -73,7 +73,7 @@ namespace spic::internal::rendering::impl
 		RenderingWindow();
 
 		/**
-		 * @brief Als calls exit.
+		 * @brief Also calls exit.
 		*/
 		~RenderingWindow();
 		RenderingWindow(const RenderingWindow& other) = delete; // copy constructor

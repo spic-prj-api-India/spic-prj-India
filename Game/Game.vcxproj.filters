@@ -216,9 +216,6 @@
     <ClCompile Include="BackScript.cpp">
       <Filter>Source Files\scripts\General</Filter>
     </ClCompile>
-    <ClCompile Include="NetCollisionDetectionScript.cpp">
-      <Filter>Source Files\scripts\network\shooter</Filter>
-    </ClCompile>
     <ClCompile Include="CameraMovementScript.cpp">
       <Filter>Source Files\scripts\General</Filter>
     </ClCompile>
@@ -278,6 +275,9 @@
     </ClCompile>
     <ClCompile Include="NetCollisionDetectionScript.cpp">
       <Filter>Source Files\scripts\Rocket game\shooter</Filter>
+    </ClCompile>
+    <ClCompile Include="NetCollisionDetectionScript.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

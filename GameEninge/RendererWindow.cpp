@@ -90,7 +90,7 @@ namespace spic::internal::rendering::impl
 		SDL_SetWindowAlwaysOnTop(settings.get(),
 			(SDL_bool)spic::settings::SET_ON_TOP);
 
-		// TODO: creates renderer
+		// creates renderer
 		SDL_RendererFlags rendererFlags = (SDL_RendererFlags)(SDL_RENDERER_ACCELERATED);
 		this->renderer = RendererPtr(SDL_CreateRenderer(settings.get(), -1, rendererFlags), SDL_Deleter());
 		if (this->renderer.get() == nullptr) {
@@ -98,6 +98,7 @@ namespace spic::internal::rendering::impl
 			exit(-1);
 		}
 
+		// updates the window rectangle
 		UpdateWindow();
 
 		return this->renderer;
@@ -109,13 +110,13 @@ namespace spic::internal::rendering::impl
 
 		switch (spic::settings::SELECTOR)
 		{
-		case spic::settings::FULLSCREENTYPE::BORDERLESS:
+		case spic::settings::FullScreenType::BORDERLESS:
 			window_flags = SDL_WINDOW_FULLSCREEN_DESKTOP;
 			break;
-		case spic::settings::FULLSCREENTYPE::FULLSCREEN:
+		case spic::settings::FullScreenType::FULLSCREEN:
 			window_flags = SDL_WINDOW_FULLSCREEN;
 			break;
-		case spic::settings::FULLSCREENTYPE::WINDOWED:
+		case spic::settings::FullScreenType::WINDOWED:
 			window_flags = 0;
 			break;
 		}
@@ -248,31 +249,6 @@ namespace spic::internal::rendering::impl
 		}
 	}
 
-	void RenderingWindow::SetRenderTextures(std::shared_ptr<RenderTextures> textures)
-	{
-		this->renderTextures = std::move(textures);
-	}
-
-	SDL_FRect RenderingWindow::GetWindowCamera() const
-	{
-		return this->windowCamera;
-	}
-
-	SDL_FRect RenderingWindow::GetCamera() const
-	{
-		return this->camera;
-	}
-
-	float RenderingWindow::GetScaling() const
-	{
-		return this->scaling;
-	}
-
-	void RenderingWindow::AddTexture(std::weak_ptr<RenderTextures> renderTextures)
-	{
-		this->renderTextures = std::move(renderTextures);
-	}
-
 	void RenderingWindow::DrawCircle(const spic::Circle& circle, const float pixelGap, const spic::Color& color) const
 	{
 		const float diameter = circle.radius * 2.0f;
@@ -319,5 +295,30 @@ namespace spic::internal::rendering::impl
 				decisionOver2 += (-diameter) + dx;
 			}
 		}
+	}
+
+	void RenderingWindow::SetRenderTextures(std::shared_ptr<RenderTextures> textures)
+	{
+		this->renderTextures = std::move(textures);
+	}
+
+	SDL_FRect RenderingWindow::GetWindowCamera() const
+	{
+		return this->windowCamera;
+	}
+
+	SDL_FRect RenderingWindow::GetCamera() const
+	{
+		return this->camera;
+	}
+
+	float RenderingWindow::GetScaling() const
+	{
+		return this->scaling;
+	}
+
+	void RenderingWindow::AddTexture(std::weak_ptr<RenderTextures> renderTextures)
+	{
+		this->renderTextures = std::move(renderTextures);
 	}
 }
