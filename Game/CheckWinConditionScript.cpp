@@ -13,7 +13,7 @@ CheckWinConditionScript::CheckWinConditionScript(std::shared_ptr<spic::Text> tex
 {
 	this->text = std::move(text);
 	timer = std::make_shared<spic::Timer>();
-	counter = 5;
+	counter = 10;
 }
 
 void CheckWinConditionScript::OnStart() {

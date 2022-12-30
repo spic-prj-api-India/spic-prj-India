@@ -4,9 +4,9 @@
 #include <Text.hpp>
 
 enum class WinCondition{
-	EASY = 1000,
-	NORMAL = 750,
-	HARD = 500
+	EASY = 400,
+	NORMAL = 250,
+	HARD = 100
 };
 
 class CheckWinConditionScript :

@@ -64,8 +64,18 @@ void SaveScene::SetContents()
 	timerText->Transform(std::make_shared<spic::Transform>(spic::Point(0.0f, 100.0f), 0.0f, 1.0f));
 	timerText->AddComponent(std::make_shared<CheckWinConditionScript>(timerText));
 
+	// Win line
+	int yCondition = static_cast<int>(WinCondition::EASY);
+	float lineHeight = 5.0f;
+	spic::Point position = { 0.0f, static_cast<float>(yCondition) - lineHeight };
+	auto line = std::make_shared<spic::UIObject>(static_cast<float>(spic::settings::WINDOW_WIDTH), lineHeight);
+	line->Name("WinLine");
+	line->Transform(std::make_shared<spic::Transform>(position, 0.0f, 1.0f));
+	line->AddComponent<spic::Sprite>(std::make_shared<spic::Sprite>("defaults/textures/Filled_rectangle.png", 1, 0, spic::Color::red()));
+
 	AddContent(football);
 	AddContent(timerText);
+	AddContent(line);
 }
 
 spic::Scene* SaveScene::Start()
