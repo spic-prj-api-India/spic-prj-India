@@ -154,6 +154,7 @@
     <ClCompile Include="BoxNotPersistable.cpp" />
     <ClCompile Include="BoxSpawnerScript.cpp" />
     <ClCompile Include="CameraMovementScript.cpp" />
+    <ClCompile Include="CheckWinConditionScript.cpp" />
     <ClCompile Include="CollisionDetectionScript.cpp" />
     <ClCompile Include="FlockSettingsScene.cpp" />
     <ClCompile Include="FollowMouseListener.cpp" />
@@ -178,6 +179,7 @@
     <ClCompile Include="NetworkSettingsScene.cpp" />
     <ClCompile Include="RocketReceiveScript.cpp" />
     <ClCompile Include="RocketSendScript.cpp" />
+    <ClCompile Include="SaveScene.cpp" />
     <ClCompile Include="SeekingRocket.cpp" />
     <ClCompile Include="Shooter.cpp" />
     <ClCompile Include="PlayerMovementScript.cpp" />
@@ -198,6 +200,7 @@
   <ItemGroup>
     <ClInclude Include="AimListener.h" />
     <ClInclude Include="Alien.h" />
+    <ClInclude Include="CheckWinConditionScript.h" />
     <ClInclude Include="CollisionDetectionScript.h" />
     <ClInclude Include="FlockSettingsScene.h" />
     <ClInclude Include="FollowMouseListener.h" />
@@ -225,6 +228,7 @@
     <ClInclude Include="NetworkSettingsScene.h" />
     <ClInclude Include="RocketReceiveScript.h" />
     <ClInclude Include="RocketSendScript.h" />
+    <ClInclude Include="SaveScene.h" />
     <ClInclude Include="SeekingRocket.h" />
     <ClInclude Include="Shooter.h" />
     <ClInclude Include="PlayerMovementScript.h" />

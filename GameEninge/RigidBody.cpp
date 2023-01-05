@@ -29,7 +29,7 @@ namespace spic
 
 		std::weak_ptr<extensions::IPhysicsExtension> extension = engine->GetExtension<extensions::IPhysicsExtension>();
 		if (const auto& physicsExtension = extension.lock())
-			return physicsExtension->GetLinearVelocity(this->gameObject->Name());
+			return physicsExtension->GetLinearVelocity(this->Parent()->Name());
 
 		return { 0.0f, 0.0f };
 	}
@@ -66,7 +66,7 @@ namespace spic
 
 		std::weak_ptr<extensions::IPhysicsExtension> extension = engine->GetExtension<extensions::IPhysicsExtension>();
 		if (const auto& physicsExtension = extension.lock()) {
-			const auto& existingGameObject = GameObject::Find(this->gameObject->Name());
+			const auto& existingGameObject = GameObject::Find(this->Parent()->Name());
 			if (existingGameObject == nullptr)
 				return;
 			physicsExtension->AddForce(existingGameObject, forceDirection);

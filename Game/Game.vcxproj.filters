@@ -274,10 +274,10 @@
       <Filter>Source Files\objects\Rocket game</Filter>
     </ClCompile>
     <ClCompile Include="NetCollisionDetectionScript.cpp">
-      <Filter>Source Files\scripts\Rocket game\shooter</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="NetCollisionDetectionScript.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\scripts\Flocking demo</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

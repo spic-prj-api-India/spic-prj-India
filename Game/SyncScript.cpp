@@ -92,7 +92,7 @@ void SyncScript::NotifyExit()
 	if (!isTarget && !isShooter)
 		return;
 	spic::NetworkPacket networkPacket = spic::NetworkPacket();
-	networkPacket.name = gameObject->Name();
+	networkPacket.name = Parent()->Name();
 	networkPacket.data["exited"] = "";
 	networkPacket.typeMessage = spic::MessageType::SYNC;
 	SendPacket(networkPacket);
