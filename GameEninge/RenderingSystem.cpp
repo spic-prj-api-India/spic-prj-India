@@ -8,16 +8,13 @@
 #include "GameEngine.hpp"
 #include "IPhysicsExtension.hpp"
 #include "Settings.hpp"
+#include "GeneralHelper.hpp"
 
 namespace spic::internal::systems 
 {
 	using namespace spic::tiled;
 
 	RenderingSystem::RenderingSystem()
-	{
-	}
-
-	RenderingSystem::~RenderingSystem()
 	{
 	}
 
@@ -36,11 +33,19 @@ namespace spic::internal::systems
 
 		if (tileMap != nullptr)
 			tileMap->Render();
+		
+		std::sort(filteredEntities[0].begin()
+			, filteredEntities[0].end()
+			, spic::helper_functions::general_helper::GameObjectSorting);
 
 		for (const auto& entity : filteredEntities[0]) 
 		{
 			spic::internal::Rendering::Draw(entity.get());
 		}
+
+		std::sort(filteredEntities[1].begin()
+			, filteredEntities[1].end()
+			, spic::helper_functions::general_helper::GameObjectSorting);
 
 		for (const auto& entity : filteredEntities[1]) 
 		{
