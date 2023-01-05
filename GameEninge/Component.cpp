@@ -2,8 +2,13 @@
 
 namespace spic 
 {
-	void Component::Parent(spic::GameObject& gameObject)
+	void Component::Parent(spic::GameObject& parent)
 	{
-		this->gameObject = &gameObject;
+		this->parent = &parent;
+	}
+
+	spic::GameObject const* Component::Parent() const
+	{
+		return this->parent;
 	}
 }

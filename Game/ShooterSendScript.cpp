@@ -10,7 +10,7 @@ ShooterSendScript::ShooterSendScript() : SocketScript()
 void ShooterSendScript::SendWin()
 {
 	spic::NetworkPacket networkPacket = spic::NetworkPacket();
-	networkPacket.name = this->gameObject->Name();
+	networkPacket.name = this->Parent()->Name();
 	networkPacket.data["won"] = std::to_string(true);
 	networkPacket.typeMessage = spic::MessageType::SYNC;
 	SendPacket(networkPacket);

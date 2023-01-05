@@ -14,6 +14,11 @@
 namespace spic::internal
 {
 	/**
+	 * @brief Format: [](){return new Scene()}
+	*/
+	typedef std::function<spic::Scene*(void)> CreateSceneFunction;
+
+	/**
 	 * @brief Manages all entities and scenes
 	*/
 	class EntityManager
@@ -40,9 +45,10 @@ namespace spic::internal
 		std::map<int, std::vector<std::unique_ptr<spic::systems::ISystem>>> systems;
 
 		/**
-		 * @brief Registered scenes
+		 * @brief Registered scenes.
+		 *			CreateSceneFunction format: [](){return new Scene()}
 		*/
-		std::map<std::string, std::function<spic::Scene* ()>> scenes;
+		std::map<std::string, CreateSceneFunction> scenes;
 
 		/**
 		 * @brief Current scene
@@ -99,10 +105,11 @@ namespace spic::internal
 
 		/*
 		* @brief Register scene.
-		* @param The sceneName is the key in the scenes list.
-		* @param The scene that will be registered in scenes list.
+		* @param sceneName This is the key in the scenes list.
+		* @param scene Function that creates scene.
+		*			Format: [](){return new Scene()}
 		*/
-		void RegisterScene(const std::string& sceneName, std::function<spic::Scene* ()> scene);
+		void RegisterScene(const std::string& sceneName, CreateSceneFunction scene);
 
 		/*
 		* @brief Gets current scene.

@@ -83,6 +83,14 @@ namespace spic
 		return true;
 	}
 
+	Point Point::MidPoint(const Point& point) const
+	{
+		Point ret;
+		ret.x = (this->x + point.x) / 2;
+		ret.y = (this->y + point.y) / 2;
+		return ret;
+	}
+
 	Point Point::operator +(const Point& point) const
 	{
 		return Point(this->x + point.x, this->y + point.y);

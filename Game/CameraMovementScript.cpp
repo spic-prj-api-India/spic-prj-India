@@ -7,11 +7,11 @@ void CameraMovementScript::OnUpdate() {
 }
 
 void CameraMovementScript::OnInput() {
-	auto transform = gameObject->Transform();
+	auto transform = Parent()->Transform();
 
 	if (spic::input::GetKeyDown(spic::input::KeyCode::RIGHT_ARROW)
 		&& (transform->position.x + 10.0f) <= 2000.0f)
-		gameObject->Transform()->position.x = transform->position.x + 10.0f;
+		Parent()->Transform()->position.x = transform->position.x + 10.0f;
 	if (spic::input::GetKeyDown(spic::input::KeyCode::LEFT_ARROW) 
 		&& (transform->position.x - 10.0f) >= 0.0f)
 		transform->position.x = transform->position.x - 10.0f;

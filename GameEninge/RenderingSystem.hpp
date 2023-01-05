@@ -14,7 +14,7 @@ namespace spic::internal::systems
 	{
 	public:
 		RenderingSystem();
-		~RenderingSystem();
+		~RenderingSystem() = default;
 		RenderingSystem(RenderingSystem& other) = delete;
 		RenderingSystem(RenderingSystem&& other) = delete;
 		void operator=(const RenderingSystem& other) = delete;

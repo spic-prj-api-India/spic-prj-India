@@ -106,7 +106,7 @@ void EntityManager::RemoveEntity(const std::string& name)
 	removeEntities.emplace_back(name);
 }
 
-void EntityManager::RegisterScene(const std::string& sceneName, std::function<spic::Scene* ()> scene)
+void EntityManager::RegisterScene(const std::string& sceneName, CreateSceneFunction scene)
 {
 	if (scenes.count(sceneName))
 		throw std::exception("Scene with this name already exists.");
@@ -133,7 +133,7 @@ void EntityManager::SetScene(const std::string& sceneName)
 	if (!scenes.count(sceneName))
 		throw std::exception("Scene does not exist.");
 
-	auto scene = std::shared_ptr<spic::Scene>(scenes[sceneName]());
+	auto scene = std::shared_ptr<spic::Scene>( scenes[sceneName]());
 	SetScene(std::move(scene));
 }
 

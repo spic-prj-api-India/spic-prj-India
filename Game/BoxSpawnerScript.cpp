@@ -29,7 +29,7 @@ void BoxSpawnerScript::OnUpdate() {
 	if ((rightPressed && switcher) || (leftPressed && !switcher))
 	{
 		spic::Point mousePosition = MousePosition();
-		mousePosition += this->gameObject->Transform()->position;
+		mousePosition += this->Parent()->Transform()->position;
 		mousePosition -= 25.0f;
 		std::shared_ptr<BoxPersistable> boxPresistable = std::make_shared<BoxPersistable>("box-" + general_helper::GetRandomUUID(), mousePosition);
 		spic::GameObject::Create(boxPresistable);
@@ -42,7 +42,7 @@ void BoxSpawnerScript::OnUpdate() {
 	if ((leftPressed && switcher) || (rightPressed && !switcher))
 	{
 		spic::Point mousePosition = MousePosition();
-		mousePosition += this->gameObject->Transform()->position;
+		mousePosition += this->Parent()->Transform()->position;
 		mousePosition -= 25.0f;
 		std::shared_ptr<BoxNotPersistable> boxNotPresistable = std::make_shared<BoxNotPersistable>("box-" + general_helper::GetRandomUUID(), mousePosition);
 		spic::GameObject::Create(boxNotPresistable);

@@ -25,7 +25,8 @@ namespace spic
 
 		AddComponent(sprite);
 
-		if (!text.empty()) {
+		if (!text.empty()) 
+		{
 			const std::shared_ptr<Text> textObject = std::make_shared<Text>(width, height, text);
 			textObject->Transform(std::make_shared<spic::Transform>(spic::Point(0.0f, 0.0f), 0.0f, 1.0f));
 			AddChild(textObject);
@@ -38,7 +39,7 @@ namespace spic
 			onClick();
 	}
 
-	void Button::OnClick(std::function<void()> callback)
+	void Button::OnClick(ClickCallback callback)
 	{
 		onClick = callback;
 	}

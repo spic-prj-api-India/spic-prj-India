@@ -25,14 +25,17 @@ namespace spic::internal::extensions
         Box2DCollisionListener();
 
         /**
-        * @brief Constructor for all callback methods
-        * @param enterCallback Callback that is called when collider enters collision
-        * @param exitCallback Callback that is called when collider exits collision
-        * @param stayCallback Callback that is called when collider stays in collision inside the same frame
+         * @brief Constructor for all callback methods
+         * @param enterCallback Callback that runs OnTriggerEnter2D in behaviour scripts of entity if entity enters collision.
+         *			Format: [](const std::shared_ptr<spic::GameObject>&, const std::shared_ptr<spic::Collider>&){}
+         * @param exitCallback Callback that runs OnTriggerExit2D in behaviour scripts of entity if entity exits collision.
+         *			Format: [](const std::shared_ptr<spic::GameObject>&, const std::shared_ptr<spic::Collider>&){}
+         * @param stayCallback  Callback that runs OnTriggerStay2D in behaviour scripts of entity if entity stays collision.
+         *			Format: [](const std::shared_ptr<spic::GameObject>&, const std::shared_ptr<spic::Collider>&){}
         */
-        Box2DCollisionListener(std::function<void(const std::shared_ptr<spic::GameObject>, const std::shared_ptr<spic::Collider>)> enterCallback,
-            std::function<void(const std::shared_ptr<spic::GameObject>, const std::shared_ptr<spic::Collider>)> exitCallback,
-            std::function<void(const std::shared_ptr<spic::GameObject>, const std::shared_ptr<spic::Collider>)> stayCallback);
+        Box2DCollisionListener(spic::extensions::CollisionCallback enterCallback,
+            spic::extensions::CollisionCallback exitCallback,
+            spic::extensions::CollisionCallback stayCallback);
 
         /**
         * @brief Is called when body collides with another body
@@ -54,9 +57,18 @@ namespace spic::internal::extensions
         */
         virtual void PostSolve(b2Contact* contact, const b2ContactImpulse* impulse);
     private:
-        std::function<void(const std::shared_ptr<spic::GameObject>, const std::shared_ptr<spic::Collider>)> onEnterCallback;
-        std::function<void(const std::shared_ptr<spic::GameObject>, const std::shared_ptr<spic::Collider>)> onExitCallback;
-        std::function<void(const std::shared_ptr<spic::GameObject>, const std::shared_ptr<spic::Collider>)> onStayCallback;
+        /**
+         * @brief Format: [](const std::shared_ptr<spic::GameObject>&, const std::shared_ptr<spic::Collider>&){}
+        */
+        spic::extensions::CollisionCallback onEnterCallback;
+        /**
+         * @brief Format: [](const std::shared_ptr<spic::GameObject>&, const std::shared_ptr<spic::Collider>&){}
+        */
+        spic::extensions::CollisionCallback onExitCallback;
+        /**
+         * @brief Format: [](const std::shared_ptr<spic::GameObject>&, const std::shared_ptr<spic::Collider>&){}
+        */
+        spic::extensions::CollisionCallback onStayCallback;
     };
 }
 

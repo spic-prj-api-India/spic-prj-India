@@ -1,9 +1,9 @@
 #include "CollisionDetectionScript.h"
 
 void CollisionDetectionScript::OnTriggerEnter2D(const spic::Collider& collider) {
-	std::cout << "Collision enter " << collider.gameObject->Tag() << std::endl;
-	if (collider.gameObject->Tag() == "obstacle" || collider.gameObject->Tag() == "alien") {
-		spic::GameObject::Destroy(gameObject->Name());
+	std::cout << "Collision enter " << collider.Parent()->Tag() << std::endl;
+	if (collider.Parent()->Tag() == "obstacle" || collider.Parent()->Tag() == "alien") {
+		spic::GameObject::Destroy(Parent()->Name());
 	}
 }
 

@@ -9,7 +9,7 @@ void NetworkBackScript::OnStart() {
 
 void NetworkBackScript::OnUpdate() {
 	if (pressed) {
-		this->gameObject->GetComponent<SyncScript>()->NotifyExit();
+		this->Parent()->GetComponent<SyncScript>()->NotifyExit();
 		spic::GameEngine::GetInstance()->LoadSceneByName("menu");
 	}
 }
