@@ -49,7 +49,7 @@ namespace spic::extensions{
 		 * @brief Add and updates entities with physics
 		 * @param entities Entities to update
 		*/
-		virtual void Update(std::vector<std::shared_ptr<spic::GameObject>>& entities) = 0;
+		virtual void Update(std::vector<std::shared_ptr<spic::GameObject>>& entities, const int timeToUpdate) = 0;
 
 		/**
 		 * @brief Adds force to an entity
@@ -75,12 +75,6 @@ namespace spic::extensions{
 		 * @brief Draw all colliders
 		*/
 		virtual void DrawColliders() = 0;
-
-		/**
-		 * @brief Amount of times other systems should run
-		 * @return int 
-		*/
-		virtual int RunTimes() = 0;
 
 		/**
 		 * @brief Clears all current forces

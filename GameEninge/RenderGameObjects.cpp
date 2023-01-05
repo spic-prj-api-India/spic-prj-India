@@ -142,7 +142,7 @@ namespace spic::internal::rendering::impl
 		auto func = [this](SDL_FRect& dstRect) {
 
 			if (!this->window.lock()->RectHasIntersectionWithCamera(dstRect))
-				return false;
+				return true;
 
 			auto camera = this->window.lock()->GetCamera();
 
@@ -151,10 +151,10 @@ namespace spic::internal::rendering::impl
 					, dstRect.w
 					, dstRect.h };
 
-			return true;
+			return false;
 		};
 
-		DrawSprite(sprite, sprite->DisplayWidth(), sprite->DisplayHeight(), transform, func);
+		DrawSprite(sprite, sprite->Width(), sprite->Height(), transform, func);
 	}
 
 
@@ -166,11 +166,13 @@ namespace spic::internal::rendering::impl
 		SDL_Texture* texture = textures.lock()->LoadTexture(sprite->_Sprite());
 		auto textureSize = textures.lock()->GetTextureSize(texture);
 
+		const int width_ = static_cast<int>((displayWidth == 0) ? textureSize.x : displayWidth);
+		const int height_ = static_cast<int>((displayHeight == 0) ? textureSize.y : displayHeight);
 
 		SDL_FRect dstRect = { transform->position.x
 			, transform->position.y
-			, displayWidth* transform->scale * window.lock()->GetScaling()
-			, displayHeight* transform->scale * window.lock()->GetScaling() };
+			, width_* transform->scale * window.lock()->GetScaling()
+			, height_* transform->scale * window.lock()->GetScaling() };
 
 		if (func(dstRect))
 			return;

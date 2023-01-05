@@ -14,7 +14,7 @@ namespace spic::internal::systems
      * @brief A system that calls all physics extensions and triggers collision script methods
      */
     class PhysicsSystem :
-        public spic::systems::ISystem
+        public spic::internal::systems::ISystem
     {
     public:
         PhysicsSystem();

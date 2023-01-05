@@ -15,6 +15,7 @@ namespace spic::internal::systems
 	void PhysicsSystem::Start(std::vector<std::shared_ptr<spic::GameObject>>& entities, Scene& currentScene)
 	{
 		Reset();
+		this->RestartTiming();
 	}
 
 	void PhysicsSystem::Reset() const
@@ -38,6 +39,11 @@ namespace spic::internal::systems
 
 	void PhysicsSystem::Update(std::vector<std::shared_ptr<spic::GameObject>>& entities, Scene& currentScene)
 	{ 
+		this->CanUpdate();
+
+		if (this->stepsAmount <= 0)
+			return;
+
 		// Check if Box2D extension exists and update entities
 		spic::GameEngine* engine = spic::GameEngine::GetInstance();
 		std::vector<std::weak_ptr<spic::extensions::IPhysicsExtension>> physicsExtensions = engine->GetExtensions<spic::extensions::IPhysicsExtension>();
@@ -45,9 +51,12 @@ namespace spic::internal::systems
 		{
 			if (const auto& physicsExtension = extension.lock()) 
 			{
-				std::vector<std::shared_ptr<spic::GameObject>> physicsEntities; 
-				GetPhysicsEntities(physicsEntities, entities);
-				physicsExtension->Update(physicsEntities);
+				for (int i = 0; i < this->stepsAmount; ++i)
+				{
+					std::vector<std::shared_ptr<spic::GameObject>> physicsEntities;
+					GetPhysicsEntities(physicsEntities, entities);
+					physicsExtension->Update(physicsEntities, this->stepsAmount);
+				}
 			}
 		}
 	}

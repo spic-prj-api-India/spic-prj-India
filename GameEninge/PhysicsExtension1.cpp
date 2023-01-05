@@ -31,10 +31,10 @@ namespace spic::extensions
 	class PhysicsExtensionImpl1 
 	{
 	public:
-		PhysicsExtensionImpl1(const float pix2Met, const int velocityIterations, const int positionIterations, const float stableUpdateFrameRate) :
+		PhysicsExtensionImpl1(const float pix2Met, const int velocityIterations, const int positionIterations) :
 			PIX2MET{ pix2Met }, MET2PIX{ 1.0f / PIX2MET }, SCALED_WIDTH{ spic::settings::WINDOW_WIDTH * PIX2MET }, 
 			SCALED_HEIGHT{ spic::settings::WINDOW_HEIGHT * PIX2MET }, velocityIterations{velocityIterations}, 
-			positionIterations{positionIterations}, kSecondsPerUpdate { stableUpdateFrameRate }
+			positionIterations{positionIterations}
 		{
 			bodyTypeConvertions = 
 			{
@@ -53,7 +53,7 @@ namespace spic::extensions
 		}
 
 		PhysicsExtensionImpl1(const PhysicsExtensionImpl1& rhs)
-			: PhysicsExtensionImpl1(rhs.PIX2MET, rhs.velocityIterations, rhs.positionIterations, rhs.kSecondsPerUpdate)
+			: PhysicsExtensionImpl1(rhs.PIX2MET, rhs.velocityIterations, rhs.positionIterations)
 		{
 		}
 
@@ -84,8 +84,6 @@ namespace spic::extensions
 			world = std::make_unique<b2World>(b2Vec2(0.0f, spic::settings::GRAVITY));
 			sizes = {};
 			bodies = {};
-			this->accumultator = 0;
-			this->lastTickTime = 0;
 		}
 
 		/**
@@ -117,30 +115,8 @@ namespace spic::extensions
 		 * @brief Add and updates physic bodies in world and entities
 		 * @param entities Entities to update
 		*/
-		void Update(std::vector<std::shared_ptr<spic::GameObject>>& entities)
+		void Update(std::vector<std::shared_ptr<spic::GameObject>>& entities, const int timeToUpdate)
 		{
-			if (entities.size() < 1)
-				return;
-
-			this->stepsAmount = 0;
-
-			// get current time double
-			auto currentTime = spic::internal::time::InternalTime::TickInMilliseconds() / CLOCKS_PER_SEC;
-
-			if (currentTime - this->lastTickTime > 5)
-				this->lastTickTime = currentTime;
-
-			this->accumultator += (currentTime - this->lastTickTime) * spic::Time::TimeScale();
-
-			while (this->accumultator > kSecondsPerUpdate)
-			{
-				this->accumultator -= kSecondsPerUpdate;
-				++this->stepsAmount;
-			}
-
-			this->lastTickTime = currentTime;
-
-
 			for (auto& entity : entities) 
 			{
 				if (spic::GameObject::Find(entity->Name()) == nullptr)
@@ -153,12 +129,10 @@ namespace spic::extensions
 				else
 					CreateEntity(entity);
 			}
-
-			using namespace spic::internal::time;
 			
 			// Update world
-			for (size_t i = 0; i < this->stepsAmount; ++i)
-				world->Step(kSecondsPerUpdate, int32(velocityIterations), int32(positionIterations));
+			for (size_t i = 0; i < timeToUpdate; ++i)
+				world->Step(spic::settings::K_SECONDS_PER_UPDATE, int32(velocityIterations), int32(positionIterations));
 
 			// Update entities
 			for (auto& entity : entities) 
@@ -276,15 +250,6 @@ namespace spic::extensions
 				}
 				currentBody = currentBody->GetNext();
 			}
-		}
-
-		/**
-		 * @brief Returns amount of steps
-		 * @return int
-		*/
-		int CanRun()
-		{
-			return this->stepsAmount;
 		}
 
 		/**
@@ -634,10 +599,6 @@ namespace spic::extensions
 
 		std::map<std::string, b2Body*> bodies;
 		std::map<std::string, Point> sizes;
-		int stepsAmount;
-		double accumultator;
-		double lastTickTime;
-		float kSecondsPerUpdate;
 		/**
 		 * @brief Listener for bodies colliding in physics world.
 		*/
@@ -671,8 +632,8 @@ namespace spic::extensions
 		const float OFFSET = 0.00999999978f;
 	};
 
-	PhysicsExtension1::PhysicsExtension1(const float pix2Met, const int velocityIterations, const int positionIterations, const float kSecondsPerUpdate) :
-		physicsImpl(new PhysicsExtensionImpl1(pix2Met, velocityIterations, positionIterations, kSecondsPerUpdate))
+	PhysicsExtension1::PhysicsExtension1(const float pix2Met, const int velocityIterations, const int positionIterations) :
+		physicsImpl(new PhysicsExtensionImpl1(pix2Met, velocityIterations, positionIterations))
 	{
 	}
 
@@ -708,9 +669,9 @@ namespace spic::extensions
 		physicsImpl->AddCollisionLayer(collisionLayer);
 	}
 
-	void spic::extensions::PhysicsExtension1::Update(std::vector<std::shared_ptr<spic::GameObject>>& entities)
+	void spic::extensions::PhysicsExtension1::Update(std::vector<std::shared_ptr<spic::GameObject>>& entities, const int timeToUpdate)
 	{
-		physicsImpl->Update(entities);
+		physicsImpl->Update(entities, timeToUpdate);
 	}
 
 	void spic::extensions::PhysicsExtension1::AddForce(const std::shared_ptr<GameObject>& entity, const spic::Point& forceDirection)
@@ -731,11 +692,6 @@ namespace spic::extensions
 	void spic::extensions::PhysicsExtension1::DrawColliders()
 	{
 		physicsImpl->DrawColliders();
-	}
-
-	int spic::extensions::PhysicsExtension1::RunTimes()
-	{
-		return physicsImpl->CanRun();
 	}
 
 	void spic::extensions::PhysicsExtension1::ClearForces()

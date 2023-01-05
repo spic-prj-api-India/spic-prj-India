@@ -14,7 +14,7 @@ namespace spic::internal::systems {
 	 * @brief Updates the AI related entities (force driven entities)
 	*/
 	class AISystem :
-		public spic::systems::ISystem
+		public spic::internal::systems::ISystem
 	{
 	public:
 		AISystem();

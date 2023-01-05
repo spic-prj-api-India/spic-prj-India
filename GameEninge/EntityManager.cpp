@@ -23,7 +23,7 @@
 
 using namespace spic;
 using namespace spic::internal;
-using namespace spic::systems;
+using namespace spic::internal::systems;
 using namespace spic::tiled;
 
 EntityManager* EntityManager::pinstance_{ nullptr };
@@ -190,7 +190,7 @@ void EntityManager::DestroyScene(bool forceDelete)
 			}), entities.end());
 }
 
-void EntityManager::AddSystem(std::unique_ptr<spic::systems::ISystem> system)
+void EntityManager::AddSystem(std::unique_ptr<spic::internal::systems::ISystem> system)
 {
 	if (!systems.count(CustomSystemDefaultPriority))
 	{
@@ -211,7 +211,7 @@ bool spic::internal::EntityManager::CheckIfNameExists(const std::string& name) c
 	return false;
 }
 
-void EntityManager::AddInternalSystem(std::unique_ptr<spic::systems::ISystem> system, int priority)
+void EntityManager::AddInternalSystem(std::unique_ptr<spic::internal::systems::ISystem> system, int priority)
 {
 	if (!systems.count(priority))
 		systems[priority];
@@ -225,7 +225,7 @@ void EntityManager::AddInternalSystem(std::unique_ptr<spic::systems::ISystem> sy
  * @param vectorCopy The current active enties.
  * @param scene The current scene.
 */
-void UpdateSave(std::map<int, std::vector<std::unique_ptr<spic::systems::ISystem>>>& systems
+void UpdateSave(std::map<int, std::vector<std::unique_ptr<spic::internal::systems::ISystem>>>& systems
 	, std::vector<std::shared_ptr<spic::GameObject>>& vectorCopy
 	, std::shared_ptr<spic::Scene> scene)
 {

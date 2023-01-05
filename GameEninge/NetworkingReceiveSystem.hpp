@@ -13,7 +13,7 @@ namespace spic::internal::systems {
      * @brief A system that retrieves all info from an socket and processes it
      */
     class NetworkingReceiveSystem :
-        public spic::systems::ISystem
+        public spic::internal::systems::ISystem
     {
     public:
         NetworkingReceiveSystem();

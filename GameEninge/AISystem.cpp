@@ -10,18 +10,24 @@ namespace spic::internal::systems
 
 	void AISystem::Start(std::vector<std::shared_ptr<spic::GameObject>>& entities, Scene& currentScene)
 	{
+		this->RestartTiming();
 	}
 
 	void AISystem::Update(std::vector<std::shared_ptr<spic::GameObject>>& entities, Scene& currentScene)
 	{
+		this->CanUpdate();
+
+		if (this->stepsAmount <= 0)
+			return;
+		
 		std::vector<std::shared_ptr<spic::ForceDriven>> forceDrivenEntities;
 		std::vector<std::shared_ptr<spic::GameObject>> obstacles;
 
 		FilterEntities(forceDrivenEntities, obstacles, entities);
-	
+
 		for (const auto& forceDrivenEntity : forceDrivenEntities) {
 			const auto& steering = forceDrivenEntity->GetComponent<Steering>();
-			if(steering != nullptr)
+			if (steering != nullptr)
 				steering->SetObstacles(obstacles);
 			forceDrivenEntity->UpdateForceDrivenEntity(forceDrivenEntities);
 		}

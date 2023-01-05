@@ -10,7 +10,7 @@ namespace spic::internal::systems
 	 * @brief A system that renders all game entities
 	 */
 	class RenderingSystem :
-		public spic::systems::ISystem
+		public spic::internal::systems::ISystem
 	{
 	public:
 		RenderingSystem();

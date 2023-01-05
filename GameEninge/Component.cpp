@@ -6,4 +6,9 @@ namespace spic
 	{
 		this->gameObject = &gameObject;
 	}
+
+	spic::GameObject* Component::Parent() const
+	{
+		return this->gameObject;
+	}
 }

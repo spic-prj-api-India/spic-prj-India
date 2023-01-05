@@ -18,7 +18,7 @@ namespace spic::extensions
 	*/
 	class PhysicsExtension1 : public IPhysicsExtension {
 	public:
-		PhysicsExtension1(const float pix2Met, const int velocityIterations = 8, const int positionIterations = 3, const float stableUpdateFrameRate = 1.0f / 60.0f);
+		PhysicsExtension1(const float pix2Met, const int velocityIterations = 8, const int positionIterations = 3);
 		~PhysicsExtension1();
 		PhysicsExtension1(PhysicsExtension1&& rhs) noexcept;
 		PhysicsExtension1& operator=(PhysicsExtension1&& rhs) noexcept;
@@ -48,7 +48,7 @@ namespace spic::extensions
 		 * @brief Add and updates entities with physics
 		 * @param entities Entities to update
 		*/
-		void Update(std::vector<std::shared_ptr<spic::GameObject>>& entities) override;
+		void Update(std::vector<std::shared_ptr<spic::GameObject>>& entities, const int timeToUpdate) override;
 
 		/**
 		 * @brief Adds force to an entity
@@ -73,12 +73,6 @@ namespace spic::extensions
 		 * @brief Draw all colliders
 		*/
 		void DrawColliders() override;
-
-		/**
-		 * @brief Amount of times other systems should run
-		 * @return int
-		*/
-		int RunTimes() override;
 
 		/**
 		 * @brief Clears all current forces

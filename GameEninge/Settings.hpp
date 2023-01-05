@@ -104,5 +104,7 @@ namespace spic::settings {
      *      If true it keeps them loaded for the duration of the scene.
     */
     inline bool KEEP_TEXTURES_AND_FONTS_LOADED = true;
+
+    inline float K_SECONDS_PER_UPDATE = 1/60.0f;
 }
 #endif // SETTINGS_H_

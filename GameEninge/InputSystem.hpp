@@ -14,7 +14,7 @@ namespace spic::internal::systems
 	 * @details This system triggers input behaviour 
 	*/
 	class InputSystem :
-		public spic::systems::ISystem
+		public spic::internal::systems::ISystem
 	{
 	public:
 		InputSystem();

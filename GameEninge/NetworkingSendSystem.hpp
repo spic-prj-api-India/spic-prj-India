@@ -13,7 +13,7 @@ namespace spic::internal::systems
      * @brief A system sends all bufferd data
      */
     class NetworkingSendSystem :
-        public spic::systems::ISystem
+        public spic::internal::systems::ISystem
     {
     public:
         NetworkingSendSystem();

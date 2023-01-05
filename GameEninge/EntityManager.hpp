@@ -42,7 +42,9 @@ namespace spic::internal
 		/**
 		 * @brief Systems of engine
 		*/
-		std::map<int, std::vector<std::unique_ptr<spic::systems::ISystem>>> systems;
+		std::map<int, std::vector<std::unique_ptr<spic::internal::systems::ISystem>>> systems;
+
+		std::unique_ptr<spic::internal::systems::ISystem> renderSystem;
 
 		/**
 		 * @brief Registered scenes.
@@ -147,7 +149,7 @@ namespace spic::internal
 		* @brief Use this function to add a (custom) system to the systems list.
 		* @param The (custom) system to be added.
 		*/
-		void AddSystem(std::unique_ptr<spic::systems::ISystem> system);
+		void AddSystem(std::unique_ptr<spic::internal::systems::ISystem> system);
 
 		/**
 		 * @brief Calls an condition relating to the current entities list
@@ -174,7 +176,7 @@ namespace spic::internal
 		* @brief Use this function to add a internal system to the systems list.
 		* @param The (custom) system to be added.
 		*/
-		void AddInternalSystem(std::unique_ptr<spic::systems::ISystem> system, int priority = 0);
+		void AddInternalSystem(std::unique_ptr<spic::internal::systems::ISystem> system, int priority = 0);
 	};
 
 	template <typename T>

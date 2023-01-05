@@ -700,7 +700,10 @@
     </ClCompile>
     <ClCompile Include="RenderTextures.cpp">
       <Filter>Source Files\core\systems\rendering</Filter>
-	</ClCompile>
+    </ClCompile>
+    <ClCompile Include="ISystem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

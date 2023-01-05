@@ -173,34 +173,6 @@ namespace spic {
 		* @spicapi
 		*/
 		const void Width(int newWidth);
-
-		/**
-		 * @brief Gets height of Sprite in texture.
-		 * @return int.
-		 * @sharedapi
-		 */
-		const float DisplayHeight() const;
-
-		/**
-		* @brief Sets height of Sprite in texture. 
-		* @param newHeight Desired value.
-		* @sharedapi
-		*/
-		const void DisplayHeight(float newHeight); 
-
-
-		/*@brief Gets width of Sprite in texture.
-		* @return int.
-		* @sharedapi
-		*/
-		const float DisplayWidth() const; 
-
-		/**
-		* @brief Sets width of Sprite in texture.
-		* @param newWidth Desired value.
-		* @sharedapi
-		*/
-		const void DisplayWidth(float newWidth); 
 	private:
 
 		/**
@@ -252,16 +224,6 @@ namespace spic {
 		 * @brief Width of sprite in sprite sheet
 		*/
 		int width;
-
-		/**
-		 * @brief Display height on window. If not set, height of texture is used for rendering sprite.
-		*/
-		float displayHeight;
-
-		/**
-		 * @brief Display width on window. If not set, width of texture is used for rendering sprite.
-		*/
-		float displayWidth;
 	};
 
 }

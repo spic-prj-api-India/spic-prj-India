@@ -278,6 +278,7 @@
     <ClCompile Include="IncreaseGameSpeedListener.cpp" />
     <ClCompile Include="InternalTime.cpp" />
     <ClCompile Include="IPhysicsExtension.cpp" />
+    <ClCompile Include="ISystem.cpp" />
     <ClCompile Include="MapParser.cpp" />
     <ClCompile Include="ForceDriven.cpp" />
     <ClCompile Include="Matrix.cpp" />

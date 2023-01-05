@@ -432,8 +432,11 @@ namespace spic {
 	template<class T>
 	void GameObject::AddComponent(std::shared_ptr<T> component)
 	{
-		spic::helper_functions::type_helper::CastSharedPtrToType<Component>(component)->Parent(*this);
-		components.emplace_back(component);
+		if (const auto comp = component->Parent(); comp != nullptr)
+		{
+			component->Parent(*this);
+			components.emplace_back(component);
+		}
 	}
 
 	template<class T>
