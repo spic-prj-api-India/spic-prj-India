@@ -29,7 +29,7 @@ void RocketGameInstructionsScene::SetContents()
 	auto instructions = std::make_shared<spic::Text>(
 		1100.0f // width
 		, 900.0f // height
-		, "Rocket game instructions:\n\n\There are two players. Player one controls the rocket launcher. Player two acts as the mouse cursor. \nAs player one, your objective is to shoot a maximum of five rockets, which will try to follow and hit player two.\nYou lose the game when more than five rockets have been launched without hitting player two.\nYou win when one rocket hits player two.\n\nAs player two, your objective is to survive for as long as possible by avoiding player one's rockets until\n they have  used all of their rockets without hitting you.\nYou win when player two has fired all of their five rockets without hitting you."
+		, "Rocket game instructions:\n\n\There are two players. Player one controls the rocket launcher. Player two acts as the mouse cursor. \nAs player one, your objective is to shoot a maximum of five rockets, which will try to \nfollow and hit player two.\nYou lose the game when more than five rockets have been launched without hitting player two.\nYou win when one rocket hits player two.\n\nAs player two, your objective is to survive for as long as possible by avoiding player one's rockets\n until they have  used all of their rockets without hitting you.\nYou win when player two has fired all of their five rockets without hitting you.\n\nThe IP address of your opponent can be set in the settings screen."
 		, "" // font
 		, 25 // size
 		, spic::Alignment::CENTER
@@ -43,7 +43,7 @@ void RocketGameInstructionsScene::SetContents()
 		, spic::Color::white()
 		, "assets/textures/buttons/Button22.png");
 	button->Name("return-button");
-	button->Transform(std::make_shared<spic::Transform>(spic::Point(500.0f, 500.0f), 0.0f, 1.0f));
+	button->Transform(std::make_shared<spic::Transform>(spic::Point(500.0f, 550.0f), 0.0f, 1.0f));
 	auto textTransform = button->GetChild<spic::Text>()->Transform();
 	textTransform->position.y = 35.0f;
 	button->OnClick([]() {
