@@ -156,6 +156,7 @@
     <ClCompile Include="CameraMovementScript.cpp" />
     <ClCompile Include="CheckWinConditionScript.cpp" />
     <ClCompile Include="CollisionDetectionScript.cpp" />
+    <ClCompile Include="DifficultyScene.cpp" />
     <ClCompile Include="FlockSettingsScene.cpp" />
     <ClCompile Include="FollowMouseListener.cpp" />
     <ClCompile Include="InputTypeListener.cpp" />
@@ -202,6 +203,7 @@
     <ClInclude Include="Alien.h" />
     <ClInclude Include="CheckWinConditionScript.h" />
     <ClInclude Include="CollisionDetectionScript.h" />
+    <ClInclude Include="DifficultyScene.h" />
     <ClInclude Include="FlockSettingsScene.h" />
     <ClInclude Include="FollowMouseListener.h" />
     <ClInclude Include="InputTypeListener.h" />

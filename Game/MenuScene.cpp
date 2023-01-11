@@ -24,7 +24,7 @@ void MenuScene::SetCamera()
 void MenuScene::SetContents()
 {
 	AddButton("Jenga game", []() {
-		spic::GameEngine::GetInstance()->LoadSceneByName("jenga");
+		spic::GameEngine::GetInstance()->LoadSceneByName("jenga-settings");
 		}, 0.0f);
 	AddButton("Rocket game", []() {
 		spic::GameEngine::GetInstance()->LoadSceneByName("network");

@@ -52,6 +52,11 @@ void SaveScene::SetContents()
 		spic::input::KeyCode::J, spic::input::KeyCode::L, spic::input::KeyCode::I);
 	football->AddComponent<spic::BehaviourScript>(moveFootballScript);
 
+	spic::DataHandler dataHandler = spic::DataHandler("jenga_settings");
+	std::map<std::string, std::string> settings;
+	dataHandler.LoadSettings(settings);
+	int difficulty = stoi(settings["difficulty"]);
+
 	// Timer
 	auto timerText = std::make_shared<spic::Text>(
 		static_cast<float>(spic::settings::WINDOW_WIDTH)
@@ -62,10 +67,10 @@ void SaveScene::SetContents()
 		, spic::Alignment::CENTER
 		, spic::Color::white());
 	timerText->Transform(std::make_shared<spic::Transform>(spic::Point(0.0f, 100.0f), 0.0f, 1.0f));
-	timerText->AddComponent(std::make_shared<CheckWinConditionScript>(timerText));
+	timerText->AddComponent(std::make_shared<CheckWinConditionScript>(static_cast<WinCondition>(difficulty), timerText));
 
 	// Win line
-	int yCondition = static_cast<int>(WinCondition::EASY);
+	int yCondition = difficulty;
 	float lineHeight = 5.0f;
 	spic::Point position = { 0.0f, static_cast<float>(yCondition) - lineHeight };
 	auto line = std::make_shared<spic::UIObject>(static_cast<float>(spic::settings::WINDOW_WIDTH), lineHeight);
