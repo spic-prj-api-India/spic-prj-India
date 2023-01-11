@@ -24,7 +24,7 @@ void MenuScene::SetCamera()
 void MenuScene::SetContents()
 {
 	AddButton("Jenga game", []() {
-		spic::GameEngine::GetInstance()->LoadSceneByName("jenga");
+		spic::GameEngine::GetInstance()->LoadSceneByName("jenga-settings");
 		}, 0.0f);
 	AddButton("Rocket game", []() {
 		spic::GameEngine::GetInstance()->LoadSceneByName("network");
@@ -38,9 +38,6 @@ void MenuScene::SetContents()
 	AddButton("Settings", []() {
 		spic::GameEngine::GetInstance()->LoadSceneByName("settings");
 		}, 400.0f);
-	AddButton("Load save demo", []() {
-		spic::GameEngine::GetInstance()->LoadSceneBySaveFile("jenga", "jenga");
-		}, 500.0f);
 }
 
 void MenuScene::AddButton(const std::string& text, std::function<void()> callback, const float offset)

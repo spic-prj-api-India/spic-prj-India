@@ -12,12 +12,14 @@ enum class WinCondition{
 class CheckWinConditionScript :
 	public spic::BehaviourScript {
 public:
-	CheckWinConditionScript(std::shared_ptr<spic::Text> text);
+	CheckWinConditionScript(WinCondition difficulty, std::shared_ptr<spic::Text> text);
 	virtual void OnStart() override;
 	virtual void OnUpdate() override;
 	virtual void OnInput() override;
 
+	void Check();
 private:
+	WinCondition difficulty;
 	std::shared_ptr<spic::Text> text;
 	std::shared_ptr<spic::Timer> timer;
 	int counter;
