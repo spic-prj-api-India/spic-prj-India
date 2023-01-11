@@ -16,18 +16,19 @@ using namespace spic::helper_functions;
 
 SteeringScene::SteeringScene() : Scene()
 {
-	SetCamera();
-	SetContents();
 	const bool mapSwitch = RandomHelper::GetInstance()->Between<bool>(0, 1);
-	const std::string& map = mapSwitch ? "assets/maps/map3.tmx" : "assets/maps/map4.tmx";
+	const std::string& map = mapSwitch ? "assets/maps/map3.tmx" : "assets/maps/map5_green_zone.tmx";
+	SetCamera(mapSwitch);
+	SetContents();
 	LoadTileMap(map, 1);
 }
 
-void SteeringScene::SetCamera()
+void SteeringScene::SetCamera(const bool mapSwitch)
 {
 	std::unique_ptr<spic::Camera> camera = std::make_unique<spic::Camera>();
 	camera->Transform(std::make_shared<spic::Transform>(spic::Point(0.0f, 0.0f), 0.0f, 1.0f));
-	camera->BackgroundImage("assets/textures/backgrounds/bg3.png");
+	const std::string& bg = mapSwitch ? "assets/textures/backgrounds/bg3.png" : "assets/textures/backgrounds/map5_background_full.png";
+	camera->BackgroundImage(bg);
 	camera->AddComponent(std::make_shared<CameraMovementScript>());
 	camera->AddComponent<spic::BehaviourScript>(std::make_shared<BackScript>());
 	Camera(std::move(camera));
