@@ -34,7 +34,8 @@ namespace spic::extensions
 		PhysicsExtensionImpl1(const float pix2Met, const int velocityIterations, const int positionIterations, const float stableUpdateFrameRate) :
 			PIX2MET{ pix2Met }, MET2PIX{ 1.0f / PIX2MET }, SCALED_WIDTH{ spic::settings::WINDOW_WIDTH * PIX2MET }, 
 			SCALED_HEIGHT{ spic::settings::WINDOW_HEIGHT * PIX2MET }, velocityIterations{velocityIterations}, 
-			positionIterations{ positionIterations }, kSecondsPerUpdate{ stableUpdateFrameRate }, world{ std::make_unique<b2World>(b2Vec2(0.0f, spic::settings::GRAVITY)) }
+			positionIterations{ positionIterations }, kSecondsPerUpdate{ stableUpdateFrameRate }, 
+			world{ std::make_unique<b2World>(b2Vec2(0.0f, spic::settings::GRAVITY)) }, accumultator{ 0 }, lastTickTime{0}
 		{
 			bodyTypeConvertions = 
 			{
@@ -42,9 +43,6 @@ namespace spic::extensions
 				{spic::BodyType::kinematicBody, b2_kinematicBody},
 				{spic::BodyType::dynamicBody, b2_dynamicBody},
 			};
-
-			this->accumultator = 0;
-			this->lastTickTime = 0;
 		}
 
 		~PhysicsExtensionImpl1()
@@ -87,16 +85,18 @@ namespace spic::extensions
 				world->DestroyBody(body.second);
 			}
 
-			for (auto tile : tileMaps)
+			for (auto tile : tiles)
 			{
 				world->DestroyBody(tile);
 			}
 
 			world->SetGravity(b2Vec2(0.0f, spic::settings::GRAVITY));
 
-			tileMaps = {};
+			tiles = {};
 			sizes = {};
 			bodies = {};
+			accumultator = { 0 };
+			lastTickTime = { 0 };
 		}
 
 		/**
@@ -402,7 +402,7 @@ namespace spic::extensions
 			const b2BodyDef edgeBodyDef = b2BodyDef();
 			b2Body* edgeBody = world->CreateBody(&edgeBodyDef);
 
-			tileMaps.emplace_back(edgeBody);
+			tiles.emplace_back(edgeBody);
 			b2FixtureDef myFixtureDef;
 			b2EdgeShape edgeShape;
 			myFixtureDef.shape = &edgeShape;
@@ -654,7 +654,7 @@ namespace spic::extensions
 
 		std::map<std::string, b2Body*> bodies;
 		std::map<std::string, Point> sizes;
-		std::vector<b2Body*> tileMaps;
+		std::vector<b2Body*> tiles;
 		int stepsAmount;
 		double accumultator;
 		double lastTickTime;
