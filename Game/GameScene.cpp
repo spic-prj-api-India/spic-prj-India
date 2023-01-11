@@ -73,7 +73,10 @@ void GameScene::SetContents()
 	timerText->AddComponent(std::make_shared<TimerScript>(timerText));
 
 	// Win line
-	int yCondition = static_cast<int>(WinCondition::EASY);
+	spic::DataHandler dataHandler = spic::DataHandler("jenga_settings");
+	std::map<std::string, std::string> settings;
+	dataHandler.LoadSettings(settings);
+	int yCondition = stoi(settings["difficulty"]);
 	float lineHeight = 5.0f;
 	spic::Point position = {0.0f, static_cast<float>(yCondition) - lineHeight };
 	auto line = std::make_shared<spic::UIObject>(static_cast<float>(spic::settings::WINDOW_WIDTH), lineHeight);

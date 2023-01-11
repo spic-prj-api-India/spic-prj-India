@@ -22,7 +22,7 @@ void Alien::SetAttributes(const std::string& name, const spic::Point& position, 
 	AddComponent<spic::BoxCollider>(std::move(boxCollider));
 	auto rigidBody = std::make_shared<spic::RigidBody>(3.0f, 0.0f, spic::BodyType::dynamicBody);
 	AddComponent<spic::RigidBody>(rigidBody);
-	AddComponent<spic::Sprite>(std::make_shared<spic::Sprite>("assets/textures/alien.png", 1)); 
+	AddComponent<spic::Sprite>(std::make_shared<spic::Sprite>("assets/textures/alien.png", 1));
 }
 
 void Alien::SetSteeringBehaviours()

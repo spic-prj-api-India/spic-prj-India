@@ -10,7 +10,7 @@
 #include "SocketUdpExtension.hpp"
 #include <NetworkPacket.hpp>
 #include "NetworkingHelper.hpp"
-#include "GameScene.h"
+#include "DifficultyScene.h"
 #include "NetworkScene.h"
 #include "CreditsScene.h"
 #include "MenuScene.h"
@@ -23,6 +23,7 @@
 #include "WinScene.h"
 #include "SteeringScene.h"
 #include "SaveScene.h"
+#include "GameScene.h"
 
 void InitGame()
 {
@@ -51,6 +52,7 @@ void InitGame()
 
 	// Register scenes
 	engine->RegisterScene("menu", std::function<spic::Scene* ()>(MenuScene::Start));
+	engine->RegisterScene("jenga-settings", std::function<spic::Scene* ()>(DifficultyScene::Start));
 	engine->RegisterScene("jenga", std::function<spic::Scene* ()>(GameScene::Start));
 	engine->RegisterScene("jenga-save", std::function<spic::Scene* ()>(SaveScene::Start));
 	engine->RegisterScene("credits", std::function<spic::Scene* ()>(CreditsScene::Start));

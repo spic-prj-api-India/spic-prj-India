@@ -9,7 +9,7 @@
 using namespace spic;
 using namespace spic::helper_functions;
 
-CheckWinConditionScript::CheckWinConditionScript(std::shared_ptr<spic::Text> text)
+CheckWinConditionScript::CheckWinConditionScript(WinCondition difficulty, std::shared_ptr<spic::Text> text) : difficulty{ difficulty }
 {
 	this->text = std::move(text);
 	timer = std::make_shared<spic::Timer>();
@@ -22,19 +22,6 @@ void CheckWinConditionScript::OnStart() {
 		});
 }
 
-void Check()
-{
-	auto boxes = spic::GameObject::FindObjectsOfType<BoxPersistable>();
-	for (const auto& box : boxes) {
-		if (static_cast<int>(WinCondition::EASY) < box->Transform()->position.y)
-			continue;
-
-		spic::GameEngine::GetInstance()->LoadSceneByName("won");
-		return;
-	}
-	spic::GameEngine::GetInstance()->LoadSceneByName("lost");
-}
-
 void CheckWinConditionScript::OnUpdate() {
 	if (counter == 0)
 		return Check();
@@ -43,4 +30,17 @@ void CheckWinConditionScript::OnUpdate() {
 
 void CheckWinConditionScript::OnInput()
 {
+}
+
+void CheckWinConditionScript::Check()
+{
+	auto boxes = spic::GameObject::FindObjectsOfType<BoxPersistable>();
+	for (const auto& box : boxes) {
+		if (static_cast<int>(difficulty) < box->Transform()->position.y)
+			continue;
+
+		spic::GameEngine::GetInstance()->LoadSceneByName("won");
+		return;
+	}
+	spic::GameEngine::GetInstance()->LoadSceneByName("lost");
 }
