@@ -154,7 +154,7 @@ namespace spic::internal::rendering::impl
 			return false;
 		};
 
-		DrawSprite(sprite, sprite->Width(), sprite->Height(), transform, func);
+		DrawSprite(sprite, static_cast<float>(sprite->Width()), static_cast<float>(sprite->Height()), transform, func);
 	}
 
 
