@@ -306,6 +306,9 @@
     <ClCompile Include="InstructionsScene.cpp">
       <Filter>Source Files\scenes\instructions</Filter>
     </ClCompile>
+    <ClCompile Include="JengaInstructionsScene.cpp">
+      <Filter>Source Files\scenes\instructions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KeyListener.h">
@@ -454,6 +457,9 @@
     </ClInclude>
     <ClInclude Include="CheckWinConditionScript.h">
       <Filter>Header Files\scripts\jenga game</Filter>
+    </ClInclude>
+    <ClInclude Include="JengaInstructionsScene.h">
+      <Filter>Header Files\scenes\instructions</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

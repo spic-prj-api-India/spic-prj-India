@@ -5,6 +5,8 @@
 #include "AudioSource.hpp"
 #include <DataHandler.hpp>
 #include <Input.hpp>
+#include <Button.hpp>
+#include <GameEngine.hpp>
 
 InstructionsScene::InstructionsScene()
 {
@@ -24,25 +26,28 @@ void InstructionsScene::SetCamera()
 
 void InstructionsScene::SetContents()
 {
-	auto instructions = std::make_shared<spic::Text>(
-		1200.0f // width
-		, 900.0f // height
-		, "Jenga game instructions:\n"
-		, "" // font
-		, 25 // size
-		, spic::Alignment::CENTER // alignment
-		, spic::Color::white()); // color
-	
-	auto shortcuts = std::make_shared<spic::Text>(
-		1200.0f // width
-		, 900.0f // height
-		, "Keyboard shortcuts\n"
-		, "" // font
-		, 25 // size
-		, spic::Alignment::CENTER // alignment
-		, spic::Color::white()); // color
-	
-	AddContent(instructions);
+	AddButton("Jenga game instructions", []() {
+		spic::GameEngine::GetInstance()->LoadSceneByName("jenga-instructions");
+		}, 0.0f);
+	AddButton("Rocket game instructions", []() {
+		spic::GameEngine::GetInstance()->LoadSceneByName("");
+		}, 100.0f);
+	AddButton("Flock/Steering Demo instructions", []() {
+		spic::GameEngine::GetInstance()->LoadSceneByName("");
+		}, 200.0f);
+	AddButton("Key functions", []() {
+		spic::GameEngine::GetInstance()->LoadSceneByName("");
+		}, 300.0f);
+}
+
+void InstructionsScene::AddButton(const std::string& text, std::function<void()> callback, const float offset)
+{
+	std::shared_ptr<spic::Button> button = std::make_shared<spic::Button>(450.0f, 100.0f, text, spic::Color::white(), "assets/textures/buttons/Button22.png");
+	button->Transform(std::make_shared<spic::Transform>(spic::Point(400.0f, 150.0f + offset), 0.0f, 1.0f));
+	auto textTransform = button->GetChild<spic::Text>()->Transform();
+	textTransform->position.y = 35.0f;
+	button->OnClick(callback);
+	AddContent(button);
 }
 
 spic::Scene* InstructionsScene::Start()

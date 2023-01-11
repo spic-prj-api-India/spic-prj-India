@@ -25,6 +25,7 @@
 #include "SaveScene.h"
 #include "GameScene.h"
 #include "InstructionsScene.h"
+#include "JengaInstructionsScene.h"
 
 void InitGame()
 {
@@ -66,6 +67,7 @@ void InitGame()
 	engine->RegisterScene("soundSettings", std::function<spic::Scene* ()>(SoundSettingsScene::Start));
 	engine->RegisterScene("networkSettings", std::function<spic::Scene* ()>(NetworkSettingsScene::Start));
 	engine->RegisterScene("instructions", std::function<spic::Scene* ()>(InstructionsScene::Start));
+	engine->RegisterScene("jenga-instructions", std::function<spic::Scene* ()>(JengaInstructionsScene::Start));
 }
 
 void StartGame()
