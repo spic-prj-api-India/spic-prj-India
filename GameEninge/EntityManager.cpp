@@ -159,7 +159,9 @@ void EntityManager::SetScene(std::shared_ptr<Scene> newScene)
 		GameEngine* engine = GameEngine::GetInstance();
 		for (const auto& weakExtension : engine->GetExtensions<spic::extensions::IPhysicsExtension>()) {
 			if (const auto& physicsExtension = weakExtension.lock())
+			{
 				physicsExtension->AddCollisionLayer(tileMap->GetCollisionLayer());
+			}
 		}
 	}
 

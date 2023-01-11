@@ -51,7 +51,7 @@ namespace spic::settings {
      * @brief Max audio channels used
      *      To change this value you have to adjust the source code
     */
-    inline constexpr int MAX_CHANNELS = 32;
+    inline constexpr int MAX_CHANNELS = 64;
 
     /*
     * @brief Enables or disables collider visibility. Default false.
