@@ -8,6 +8,7 @@ public:
 
 	static spic::Scene* Start();
 private:
-	void SetCamera();
+	void SetCamera(bool mapSwitch);
 	void SetContents();
+	bool mapSwitch;
 };
