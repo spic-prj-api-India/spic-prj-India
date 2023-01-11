@@ -133,6 +133,12 @@
     <Filter Include="Source Files\objects\rocket game">
       <UniqueIdentifier>{88e35a29-d5f8-4018-a076-64fa632bc1eb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\scenes\instructions">
+      <UniqueIdentifier>{77acf07c-e063-4d4e-b9e8-62b8ab2c4f91}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\scenes\instructions">
+      <UniqueIdentifier>{ff8a8e08-d189-4c09-8598-434a67eae321}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="KeyListener.cpp">
@@ -293,6 +299,12 @@
     </ClCompile>
     <ClCompile Include="CheckWinConditionScript.cpp">
       <Filter>Source Files\scripts\jenga game</Filter>
+    </ClCompile>
+    <ClCompile Include="InstructionsScene.h">
+      <Filter>Header Files\scenes\instructions</Filter>
+    </ClCompile>
+    <ClCompile Include="InstructionsScene.cpp">
+      <Filter>Source Files\scenes\instructions</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

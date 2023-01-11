@@ -160,6 +160,8 @@
     <ClCompile Include="FlockSettingsScene.cpp" />
     <ClCompile Include="FollowMouseListener.cpp" />
     <ClCompile Include="InputTypeListener.cpp" />
+    <ClCompile Include="InstructionsScene.cpp" />
+    <ClCompile Include="InstructionsScene.h" />
     <ClCompile Include="LoadingAnimation.cpp" />
     <ClCompile Include="NetAimListener.cpp" />
     <ClCompile Include="CircleObstacle.cpp" />

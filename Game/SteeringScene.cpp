@@ -1,6 +1,5 @@
 #include "SteeringScene.h"
 #include <Button.hpp>
-#include "CameraMovementScript.h"
 #include "CollisionDetectionScript.h"
 #include <BoxCollider.hpp>
 #include "AudioSource.hpp"
@@ -29,7 +28,6 @@ void SteeringScene::SetCamera(const bool mapSwitch)
 	camera->Transform(std::make_shared<spic::Transform>(spic::Point(0.0f, 0.0f), 0.0f, 1.0f));
 	const std::string& bg = mapSwitch ? "assets/textures/backgrounds/bg3.png" : "assets/textures/backgrounds/map5_background_full.png";
 	camera->BackgroundImage(bg);
-	camera->AddComponent(std::make_shared<CameraMovementScript>());
 	camera->AddComponent<spic::BehaviourScript>(std::make_shared<BackScript>());
 	Camera(std::move(camera));
 }
