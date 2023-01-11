@@ -309,6 +309,15 @@
     <ClCompile Include="JengaInstructionsScene.cpp">
       <Filter>Source Files\scenes\instructions</Filter>
     </ClCompile>
+    <ClCompile Include="RocketGameInstructionsScene.cpp">
+      <Filter>Source Files\scenes\instructions</Filter>
+    </ClCompile>
+    <ClCompile Include="SteeringInstructionsScene.cpp">
+      <Filter>Source Files\scenes\instructions</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyFunctionsScene.cpp">
+      <Filter>Source Files\scenes\instructions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KeyListener.h">
@@ -459,6 +468,15 @@
       <Filter>Header Files\scripts\jenga game</Filter>
     </ClInclude>
     <ClInclude Include="JengaInstructionsScene.h">
+      <Filter>Header Files\scenes\instructions</Filter>
+    </ClInclude>
+    <ClInclude Include="RocketGameInstructionsScene.h">
+      <Filter>Header Files\scenes\instructions</Filter>
+    </ClInclude>
+    <ClInclude Include="SteeringInstructionsScene.h">
+      <Filter>Header Files\scenes\instructions</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyFunctionsScene.h">
       <Filter>Header Files\scenes\instructions</Filter>
     </ClInclude>
   </ItemGroup>

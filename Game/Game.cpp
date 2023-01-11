@@ -26,6 +26,9 @@
 #include "GameScene.h"
 #include "InstructionsScene.h"
 #include "JengaInstructionsScene.h"
+#include "RocketGameInstructionsScene.h"
+#include "SteeringInstructionsScene.h"
+#include "KeyFunctionsScene.h"
 
 void InitGame()
 {
@@ -68,6 +71,9 @@ void InitGame()
 	engine->RegisterScene("networkSettings", std::function<spic::Scene* ()>(NetworkSettingsScene::Start));
 	engine->RegisterScene("instructions", std::function<spic::Scene* ()>(InstructionsScene::Start));
 	engine->RegisterScene("jenga-instructions", std::function<spic::Scene* ()>(JengaInstructionsScene::Start));
+	engine->RegisterScene("rocketgame-instructions", std::function<spic::Scene* ()>(RocketGameInstructionsScene::Start));
+	engine->RegisterScene("steering-instructions", std::function<spic::Scene* ()>(SteeringInstructionsScene::Start));
+	engine->RegisterScene("key-functions", std::function<spic::Scene* ()>(KeyFunctionsScene::Start));
 }
 
 void StartGame()

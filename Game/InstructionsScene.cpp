@@ -30,14 +30,17 @@ void InstructionsScene::SetContents()
 		spic::GameEngine::GetInstance()->LoadSceneByName("jenga-instructions");
 		}, 0.0f);
 	AddButton("Rocket game instructions", []() {
-		spic::GameEngine::GetInstance()->LoadSceneByName("");
+		spic::GameEngine::GetInstance()->LoadSceneByName("rocketgame-instructions");
 		}, 100.0f);
 	AddButton("Flock/Steering Demo instructions", []() {
-		spic::GameEngine::GetInstance()->LoadSceneByName("");
+		spic::GameEngine::GetInstance()->LoadSceneByName("steering-instructions");
 		}, 200.0f);
 	AddButton("Key functions", []() {
-		spic::GameEngine::GetInstance()->LoadSceneByName("");
+		spic::GameEngine::GetInstance()->LoadSceneByName("key-functions");
 		}, 300.0f);
+	AddButton("Back to menu", []() {
+		spic::GameEngine::GetInstance()->LoadSceneByName("menu");
+		}, 400.0f);
 }
 
 void InstructionsScene::AddButton(const std::string& text, std::function<void()> callback, const float offset)
