@@ -232,6 +232,7 @@
     <ClInclude Include="RenderTextures.hpp" />
     <ClInclude Include="ResetGameSpeedListener.hpp" />
     <ClInclude Include="SDLPointers.hpp" />
+    <ClInclude Include="Smoother.hpp" />
     <ClInclude Include="SocketScript.hpp" />
     <ClInclude Include="Steering.hpp" />
     <ClInclude Include="StringHelper.hpp" />
@@ -300,7 +301,6 @@
     <ClCompile Include="RenderText.cpp" />
     <ClCompile Include="RenderTextures.cpp" />
     <ClCompile Include="ResetGameSpeedListener.cpp" />
-    <ClCompile Include="SDLPointers.cpp" />
     <ClCompile Include="SocketScript.cpp" />
     <ClCompile Include="SocketUDPExtension.cpp" />
     <ClCompile Include="Sprite.cpp" />

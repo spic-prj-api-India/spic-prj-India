@@ -47,6 +47,12 @@ namespace spic {
 		float Rotation() const;
 
 		/**
+		 * @brief Truncates a 2D Vector so that its length does not exceed max.
+		 * @param max max lenght of 2D Vector.
+		*/
+		void Truncate(float max);
+
+		/**
 		 * @brief Checks if force can be added. 
 		 *			If force added to current force is higher than maxForce, then only remaining force is added
 		 * @param force Force that needs to be applied
@@ -54,6 +60,13 @@ namespace spic {
 		 * @return bool Is true if force could be added, Is false when force couldn't be added
 		*/
 		bool Accumulate(Point& force, const float maxForce);
+
+		/**
+		 * @brief returns if point is clockwise or anticlockwise.
+		 * @param point Point that will be signed.
+		 * @return positive if point is clockwise of this 2D Vector. minus if anticlockwise.
+		*/
+		int Sign(const Point& point) const;
 
 		/**
 		 * @brief Gets the point in the center between 2 points

@@ -7,14 +7,15 @@
 #include "Settings.hpp"
 #include "Debug.hpp"
 #include "Obstacle.hpp"
+#include "Time.hpp"
 
-namespace spic 
+namespace spic
 {
 	using namespace internal::math;
 	using namespace helper_functions;
 
-	Steering::Steering(ForceDriven* agent) : agent{ agent }, useWallAvoidance { false },
-		useObstacleAvoidance{ false }, useWander{ false }, deceleration{ spic::Deceleration::NORMAL }
+	Steering::Steering(ForceDriven* agent) : agent{ agent }, useWallAvoidance{ false },
+		useObstacleAvoidance{ false }, useWander{ false }, useSmoothing{ false }, deceleration{ spic::Deceleration::NORMAL }
 	{
 	}
 
@@ -73,6 +74,11 @@ namespace spic
 		this->useObstacleAvoidance = true;
 		this->obstacleAvoidanceWeight = obstacleAvoidanceWeight;
 		this->boxLength = boxLength;
+	}
+
+	void Steering::SmoothingOn()
+	{
+		this->useSmoothing = true;
 	}
 
 	void Steering::Calculate(std::function<bool(Point force)> addSteeringForceCallback)
@@ -184,8 +190,13 @@ namespace spic
 		const Point& heading = this->agent->Heading();
 		const Point& side = this->agent->Side();
 
-		target += Point(ClampedRandomFloat() * wanderJitter,
-			ClampedRandomFloat() * wanderJitter);
+		//this behavior is dependent on the update rate, so this line must
+		//be included when using time independent framerate.
+		const double dt = spic::Time::DeltaTime();
+		const float JitterTimeSlice = wanderJitter * static_cast<float>(dt);
+
+		target += Point(ClampedRandomFloat() * JitterTimeSlice,
+			ClampedRandomFloat() * JitterTimeSlice);
 
 		target.Normalize();
 

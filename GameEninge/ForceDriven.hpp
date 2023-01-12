@@ -110,6 +110,10 @@ namespace spic {
          * @param spic::Point Steering force.
         */
         void ApplyForce(Point& force);
+
+        bool RotateHeadingToFacePosition(Point& force);
+
+        bool RotateHeadingByAngle(float angle, Point& force);
     private:
         /**
         * @brief SumMethod is method for summing forces.

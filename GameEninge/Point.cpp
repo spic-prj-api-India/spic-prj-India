@@ -57,6 +57,16 @@ namespace spic
 		return atanf(y / x) * 180.f / spic::internal::defaults::PI - 90.f;
 	}
 
+	void Point::Truncate(float max)
+	{
+		if (this->Length() > max)
+		{
+			this->Normalize();
+
+			*this *= max;
+		}
+	}
+
 	bool Point::Accumulate(Point& force, const float maxForce)
 	{
 		const float forceSoFar = Length();
@@ -81,6 +91,15 @@ namespace spic
 		this->x += force.x;
 		this->y += force.y;
 		return true;
+	}
+
+	enum { clockwise = 1, anticlockwise = -1 };
+
+	int Point::Sign(const Point& point) const
+	{
+		if (this->y * point.x > this->x * point.y)
+			return anticlockwise;
+		return clockwise;
 	}
 
 	Point Point::MidPoint(const Point& point) const

@@ -468,6 +468,9 @@
     <ClInclude Include="RendererWindow.hpp">
       <Filter>Header Files\core\systems\rendering</Filter>
     </ClInclude>
+    <ClInclude Include="Smoother.hpp">
+      <Filter>Header Files\components\ai</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sample.cpp">
@@ -689,9 +692,6 @@
     <ClCompile Include="InternalTime.cpp">
       <Filter>Source Files\models\time</Filter>
     </ClCompile>
-    <ClCompile Include="SDLPointers.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="RendererWindow.cpp">
       <Filter>Source Files\core\systems\rendering</Filter>
     </ClCompile>
@@ -700,7 +700,7 @@
     </ClCompile>
     <ClCompile Include="RenderTextures.cpp">
       <Filter>Source Files\core\systems\rendering</Filter>
-	</ClCompile>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
