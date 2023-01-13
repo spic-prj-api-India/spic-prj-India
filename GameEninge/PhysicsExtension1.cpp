@@ -34,7 +34,8 @@ namespace spic::extensions
 		PhysicsExtensionImpl1(const float pix2Met, const int velocityIterations, const int positionIterations, const float stableUpdateFrameRate) :
 			PIX2MET{ pix2Met }, MET2PIX{ 1.0f / PIX2MET }, SCALED_WIDTH{ spic::settings::WINDOW_WIDTH * PIX2MET }, 
 			SCALED_HEIGHT{ spic::settings::WINDOW_HEIGHT * PIX2MET }, velocityIterations{velocityIterations}, 
-			positionIterations{positionIterations}, kSecondsPerUpdate { stableUpdateFrameRate }
+			positionIterations{ positionIterations }, kSecondsPerUpdate{ stableUpdateFrameRate }, 
+			world{ std::make_unique<b2World>(b2Vec2(0.0f, spic::settings::GRAVITY)) }, accumultator{ 0 }, lastTickTime{0}
 		{
 			bodyTypeConvertions = 
 			{
@@ -42,7 +43,6 @@ namespace spic::extensions
 				{spic::BodyType::kinematicBody, b2_kinematicBody},
 				{spic::BodyType::dynamicBody, b2_dynamicBody},
 			};
-			Reset();
 		}
 
 		~PhysicsExtensionImpl1()
@@ -80,12 +80,23 @@ namespace spic::extensions
 			while (world != nullptr && world->IsLocked()) 
 				std::this_thread::sleep_for(std::chrono::milliseconds(1));
 
-			world.release();
-			world = std::make_unique<b2World>(b2Vec2(0.0f, spic::settings::GRAVITY));
+			for (auto body : bodies)
+			{
+				world->DestroyBody(body.second);
+			}
+
+			for (auto tile : tiles)
+			{
+				world->DestroyBody(tile);
+			}
+
+			world->SetGravity(b2Vec2(0.0f, spic::settings::GRAVITY));
+
+			tiles = {};
 			sizes = {};
 			bodies = {};
-			this->accumultator = 0;
-			this->lastTickTime = 0;
+			accumultator = { 0 };
+			lastTickTime = { 0 };
 		}
 
 		/**
@@ -158,7 +169,12 @@ namespace spic::extensions
 			
 			// Update world
 			for (size_t i = 0; i < this->stepsAmount; ++i)
+			{
+				while (world != nullptr && world->IsLocked())
+					std::this_thread::sleep_for(std::chrono::milliseconds(1));
 				world->Step(kSecondsPerUpdate, int32(velocityIterations), int32(positionIterations));
+			}
+				
 
 			// Update entities
 			for (auto& entity : entities) 
@@ -189,9 +205,12 @@ namespace spic::extensions
 		*/
 		void RegisterListener(std::unique_ptr<ICollisionListener> listener)
 		{
-			this->collisionListener = std::move(listener);
-			b2ContactListener* box2DListener = dynamic_cast<spic::internal::extensions::Box2DCollisionListener*>(this->collisionListener.get());
-			world->SetContactListener(box2DListener);
+			if (this->collisionListener.get() != nullptr)
+			{
+				this->collisionListener = std::move(listener);
+				b2ContactListener* box2DListener = dynamic_cast<spic::internal::extensions::Box2DCollisionListener*>(this->collisionListener.get());
+				world->SetContactListener(box2DListener);
+			}
 		}
 
 		/**
@@ -383,6 +402,7 @@ namespace spic::extensions
 			const b2BodyDef edgeBodyDef = b2BodyDef();
 			b2Body* edgeBody = world->CreateBody(&edgeBodyDef);
 
+			tiles.emplace_back(edgeBody);
 			b2FixtureDef myFixtureDef;
 			b2EdgeShape edgeShape;
 			myFixtureDef.shape = &edgeShape;
@@ -634,6 +654,7 @@ namespace spic::extensions
 
 		std::map<std::string, b2Body*> bodies;
 		std::map<std::string, Point> sizes;
+		std::vector<b2Body*> tiles;
 		int stepsAmount;
 		double accumultator;
 		double lastTickTime;
