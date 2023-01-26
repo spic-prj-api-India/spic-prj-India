@@ -26,7 +26,7 @@ void LoadingAnimation::SetAttributes(const spic::Point& position, const std::str
 	const float x = 600.0f;
 	const float y = _loadingText.size() <= 25 ? 7.5f : 0.0f;
 	animatorObject->Transform(std::make_shared<spic::Transform>(spic::Point(x, y), 0.0f, .25f));
-	auto animator = std::make_shared<spic::Animator>(60);
+	auto animator = std::make_shared<spic::Animator>(3);
 	animator->InitSpriteSheet("assets/textures/load_spritesheet.png", 4, 12, 188, 188);
 	animator->Play(true);
 	animatorObject->AddComponent(animator);
