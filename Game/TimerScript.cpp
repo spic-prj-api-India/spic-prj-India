@@ -21,7 +21,7 @@ void LoadSaveScene()
 }
 
 void TimerScript::OnUpdate() {
-	if (counter == 0)
+	if (counter <= 0)
 		return LoadSaveScene();
 	this->text->_Text(std::to_string(counter));
 }
