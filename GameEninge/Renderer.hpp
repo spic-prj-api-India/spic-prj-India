@@ -84,7 +84,7 @@ namespace spic::internal
          * @param position The coordinates of the UI
          * @param sprite The sprite to Draw
         */
-        static void DrawSprite(const Transform* position, Sprite* sprite);
+        static void DrawSprite(const Transform& position, const Sprite* sprite);
         
         /**
          * @brief Cleans the frame
@@ -103,18 +103,12 @@ namespace spic::internal
 		 * @details Debug shapes will be reset in this function
         */
         static void Render();
-        
-        /**
-         * @brief Gets the aspect values from the window
-         * @details TODO add functionality
-         * @return Width, Height
-        */
-        static std::pair<float, float> GetAspects();
 
         /**
          * @brief Draws the fps counter
         */
         static void DrawFps();
+           
     };
 }
 #endif

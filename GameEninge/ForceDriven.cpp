@@ -3,14 +3,17 @@
 #include "Steering.hpp"
 #include "RigidBody.hpp"
 #include "GeneralHelper.hpp"
+#include "Time.hpp"
+#include "Matrix.hpp"
 
-namespace spic 
+namespace spic
 {
-	ForceDriven::ForceDriven(SumMethod sumMethod, const float maxSteeringForce, 
+	ForceDriven::ForceDriven(SumMethod sumMethod, const float maxSteeringForce,
 		const float maxSpeed, const float maxTurnRate, const float boundingRadius) : GameObject(),
 		sumMethod{ sumMethod }, maxSteeringForce{ maxSteeringForce }, maxSpeed{ maxSpeed },
 		maxTurnRate{ maxTurnRate }, boundingRadius{ boundingRadius }, paused{ true }
 	{
+		heading = { sinf(Transform()->rotation), -cosf(Transform()->rotation) };
 	}
 
 	Point ForceDriven::Velocity() const
@@ -117,13 +120,64 @@ namespace spic
 	}
 
 	void ForceDriven::ApplyForce(Point& force) {
+		/*const double dt = spic::Time::DeltaTime();
+		force *= static_cast<float>(dt);
+		force.Truncate(maxSpeed);*/
+		//RotateHeadingToFacePosition(force);
 		this->GetComponent<RigidBody>()->AddForce(force / Mass());
+
 		const float rotationInDeg = Velocity().Rotation();
 		const float desiredRotation = spic::helper_functions::general_helper::DEG2RAD<float>(rotationInDeg);
-		const float angle = abs(this->Transform()->rotation - desiredRotation);
-		heading = { sin(desiredRotation), -cosf(desiredRotation) };
-		if (angle >= this->maxTurnRate) {
+		const float angle = fabs(this->Transform()->rotation - desiredRotation);
+		heading = { sinf(desiredRotation), -cosf(desiredRotation) };
+		/*if (angle >= this->maxTurnRate) {*/
 			Transform()->rotation = desiredRotation;
-		}
+		//}
+		/*const float currentAngle = Transform()->rotation;
+		const float rotationInDeg = Velocity().Rotation();
+		const float desiredAngle = spic::helper_functions::general_helper::DEG2RAD<float>(rotationInDeg);
+		float desiredRotation = desiredAngle - currentAngle;
+		float newAngle = currentAngle + fmin(this->maxTurnRate, fmax(-this->maxTurnRate, desiredRotation));
+		Transform()->rotation = newAngle;
+		heading = { sinf(newAngle), -cosf(newAngle) };
+		if (newAngle >= this->maxTurnRate) {
+			Transform()->rotation = desiredRotation;
+		}*/
+	}
+
+	bool ForceDriven::RotateHeadingToFacePosition(Point& force)
+	{
+		Point toTarget = force - Transform()->position;
+		toTarget.Normalize();
+
+		//first determine the angle between the heading vector and the target
+		float angle = acos(heading.Dot(toTarget));
+
+		//return true if the player is facing the target
+		if (angle < 0.00001f) return true;
+
+		//clamp the amount to turn to the max turn rate
+		if (fabs(angle) > maxTurnRate) angle = maxTurnRate;
+
+		return RotateHeadingByAngle(angle * heading.Sign(toTarget), force);
+	}
+
+	//----------------------------- RotateHeadingByAngle --------------------------
+	//
+	// This method rotates the entity's heading and side vectors by an amount
+	//
+	//  returns true when the heading is facing in the desired direction
+	//-----------------------------------------------------------------------------
+	bool ForceDriven::RotateHeadingByAngle(float angle, Point& force)
+	{
+		//The next few lines use a rotation matrix to rotate the player's heading
+		//vector accordingly
+		spic::internal::math::S2DMatrix RotationMatrix;
+		RotationMatrix.Rotate(angle);
+		RotationMatrix.TransformPoints(heading);
+		RotationMatrix.TransformPoints(force);
+
+		return false;
+
 	}
 }

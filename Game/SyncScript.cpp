@@ -36,6 +36,7 @@ void SyncScript::DestroyEntity(const spic::NetworkPacket* packet, std::shared_pt
 
 void SyncScript::SyncEntity(const spic::NetworkPacket* packet, std::shared_ptr<spic::GameObject> entity)
 {
+	/* Check if you are the shooter */
 	if (packet->data.count("isShooter") != 0 && !isTarget && !isShooter) {
 		isShooter = true;
 		entity->AddComponent<spic::SocketScript>(std::make_shared<ShooterSendScript>());
@@ -43,7 +44,11 @@ void SyncScript::SyncEntity(const spic::NetworkPacket* packet, std::shared_ptr<s
 		auto target = spic::GameObject::Find("Target");
 		target->AddComponent<spic::SocketScript>(std::make_shared<TargetReceiveScript>());
 		spic::helper_functions::type_helper::CastSharedPtrToType<Shooter>(entity)->Init();
+		spic::GameObject::Find("loadingAnimation")->Active(false);
+		spic::GameObject::Find("exitAnimation")->Active(false);
 	}
+
+	/* Send ping to ip to check if opponent is there */
 	if (packet->data.count("ping") != 0 && isTarget)
 	{
 		spic::NetworkPacket networkPacket = spic::NetworkPacket();
@@ -52,6 +57,8 @@ void SyncScript::SyncEntity(const spic::NetworkPacket* packet, std::shared_ptr<s
 		networkPacket.typeMessage = spic::MessageType::SYNC;
 		SendPacket(networkPacket);
 	}
+
+	/* Check if player is pinged, if so player is target and sends back to opponent that he is shooter */
 	if (packet->data.count("ping") != 0 && !isShooter && !isTarget) {
 		isTarget = true;
 		spic::NetworkPacket networkPacket = spic::NetworkPacket();
@@ -64,9 +71,29 @@ void SyncScript::SyncEntity(const spic::NetworkPacket* packet, std::shared_ptr<s
 		auto target = spic::GameObject::Find("Target");
 		target->AddComponent<spic::SocketScript>(std::make_shared<TargetSendScript>());
 		spic::helper_functions::type_helper::CastSharedPtrToType<Target>(target)->Init();
+		spic::GameObject::Find("loadingAnimation")->Active(false);
+		spic::GameObject::Find("exitAnimation")->Active(false);
+	}
+
+	/* Check if opponent left the game */
+	if (packet->data.count("exited") != 0 && (isShooter || isTarget)) {
+		spic::GameObject::Find("exitAnimation")->Active(true);
+		isShooter = false;
+		isTarget = false;
 	}
 }
 
 void SyncScript::UpdateEntity(const spic::NetworkPacket* packet, std::shared_ptr<spic::GameObject> entity)
 {
+}
+
+void SyncScript::NotifyExit()
+{
+	if (!isTarget && !isShooter)
+		return;
+	spic::NetworkPacket networkPacket = spic::NetworkPacket();
+	networkPacket.name = Parent()->Name();
+	networkPacket.data["exited"] = "";
+	networkPacket.typeMessage = spic::MessageType::SYNC;
+	SendPacket(networkPacket);
 }

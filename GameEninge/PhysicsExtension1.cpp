@@ -2,6 +2,7 @@
 #include <memory>
 #include <mutex>
 #include <map>
+#include <math.h>
 // Use to remove box2d warnings from error list
 #include <codeanalysis\warnings.h>
 #pragma warning( push )
@@ -21,6 +22,7 @@
 #include "InternalTime.hpp"
 #include "Settings.hpp"
 #include "Time.hpp"
+#include "GeneralHelper.hpp"
 
 namespace spic::extensions 
 {
@@ -180,6 +182,21 @@ namespace spic::extensions
 				entity->Transform()->position.y = position.y;
 				if (!spic::helper_functions::type_helper::SharedPtrIsOfType<ForceDriven>(entity))
 					entity->Transform()->rotation = rotation;
+
+
+				//const float rotationInDeg = this->GetLinearVelocity(entity->Name()).Rotation();
+				//const float desiredAngle = spic::helper_functions::general_helper::DEG2RAD<float>(rotationInDeg);
+				//float nextAngle = body->GetAngle() + body->GetAngularVelocity() / MET2PIX;
+				//float totalRotation = desiredAngle - nextAngle;
+				//while (totalRotation < spic::helper_functions::general_helper::DEG2RAD<float>(-180)) totalRotation += spic::helper_functions::general_helper::DEG2RAD<float>(360);
+				//while (totalRotation > spic::helper_functions::general_helper::DEG2RAD<float>(180)) totalRotation -= spic::helper_functions::general_helper::DEG2RAD<float>(360);
+				//float desiredAngularVelocity = totalRotation * MET2PIX;
+				//float change = spic::helper_functions::general_helper::DEG2RAD<float>(1); //allow 1 degree rotation per time step
+				//if (desiredAngularVelocity != 0 && (desiredAngularVelocity > -change || desiredAngularVelocity < change))
+				//	std::cout << std::to_string(desiredAngularVelocity) << std::endl;
+				//desiredAngularVelocity = fmin(change, fmax(-change, desiredAngularVelocity));
+				//float impulse = body->GetInertia() * desiredAngularVelocity;
+				//body->ApplyAngularImpulse(20.0f, true);
 			}
 		}
 
@@ -206,9 +223,11 @@ namespace spic::extensions
 				CreateEntity(entity);
 
 			b2Body* body = bodies[name];
-			const b2Vec2 force = { forceDirection.x * MET2PIX, forceDirection.y * MET2PIX };
+			b2Vec2 force = { forceDirection.x * MET2PIX, forceDirection.y * MET2PIX };
+		
+			body->ApplyForceToCenter(force, true);
 
-			body->ApplyForce(force, body->GetWorldCenter(), true);
+			body->SetAngularVelocity(spic::helper_functions::general_helper::DEG2RAD<float>(1.0f));
 		}
 
 		/**
@@ -695,10 +714,7 @@ namespace spic::extensions
 		return *this;
 	}
 
-	void spic::extensions::PhysicsExtension1::Reset(
-		std::function<void(const std::shared_ptr<spic::GameObject>&, const std::shared_ptr<spic::Collider>&)> enterCallback,
-		std::function<void(const std::shared_ptr<spic::GameObject>&, const std::shared_ptr<spic::Collider>&)> exitCallback,
-		std::function<void(const std::shared_ptr<spic::GameObject>&, const std::shared_ptr<spic::Collider>&)> stayCallback)
+	void spic::extensions::PhysicsExtension1::Reset(CollisionCallback enterCallback, CollisionCallback exitCallback, CollisionCallback stayCallback)
 	{
 		physicsImpl->Reset();
 		std::unique_ptr<ICollisionListener> listener 

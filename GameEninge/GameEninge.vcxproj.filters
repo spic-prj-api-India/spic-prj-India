@@ -196,6 +196,12 @@
     <Filter Include="Header Files\components\ai">
       <UniqueIdentifier>{c42afdc9-063b-486a-9745-e94117bd7230}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\models\time">
+      <UniqueIdentifier>{cf75e80a-8ef2-49c6-8c0d-acef2a791cdb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\models\time">
+      <UniqueIdentifier>{8735e711-1f08-4218-a142-9bd84ce6bd6a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AudioSource.hpp">
@@ -270,7 +276,7 @@
     <ClInclude Include="TileMap.hpp">
       <Filter>Header Files\core\tilemap</Filter>
     </ClInclude>
-    <ClInclude Include="RendererImpl.hpp">
+    <ClInclude Include="RendererGameObjects.hpp">
       <Filter>Header Files\core\systems\rendering</Filter>
     </ClInclude>
     <ClInclude Include="ContainerHelper.hpp">
@@ -327,9 +333,6 @@
     <ClInclude Include="InputImpl.hpp">
       <Filter>Header Files\core\models</Filter>
     </ClInclude>
-    <ClInclude Include="Time.hpp">
-      <Filter>Header Files\models</Filter>
-    </ClInclude>
     <ClInclude Include="Debug.hpp">
       <Filter>Header Files\models</Filter>
     </ClInclude>
@@ -371,9 +374,6 @@
     </ClInclude>
     <ClInclude Include="NetworkingHelper.hpp">
       <Filter>Header Files\helpers</Filter>
-    </ClInclude>
-    <ClInclude Include="InternalTime.hpp">
-      <Filter>Header Files\models</Filter>
     </ClInclude>
     <ClInclude Include="FPSlistener.hpp">
       <Filter>Header Files\core\systems\rendering</Filter>
@@ -444,6 +444,33 @@
     <ClInclude Include="Steering.hpp">
       <Filter>Header Files\components\ai</Filter>
     </ClInclude>
+    <ClInclude Include="RandomHelper.hpp">
+      <Filter>Header Files\helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="InternalTime.hpp">
+      <Filter>Header Files\models\time</Filter>
+    </ClInclude>
+    <ClInclude Include="Time.hpp">
+      <Filter>Header Files\models\time</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.hpp">
+      <Filter>Header Files\models\time</Filter>
+    </ClInclude>
+    <ClInclude Include="SDLPointers.hpp">
+      <Filter>Header Files\core\systems\rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderText.hpp">
+      <Filter>Header Files\core\systems\rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderTextures.hpp">
+      <Filter>Header Files\core\systems\rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="RendererWindow.hpp">
+      <Filter>Header Files\core\systems\rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Smoother.hpp">
+      <Filter>Header Files\components\ai</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sample.cpp">
@@ -479,7 +506,7 @@
     <ClCompile Include="PhysicsSystem.cpp">
       <Filter>Source Files\core\systems\physics</Filter>
     </ClCompile>
-    <ClCompile Include="RendererImpl.cpp">
+    <ClCompile Include="RenderGameObjects.cpp">
       <Filter>Source Files\core\systems\rendering</Filter>
     </ClCompile>
     <ClCompile Include="Sprite.cpp">
@@ -519,9 +546,6 @@
       <Filter>Source Files\models</Filter>
     </ClCompile>
     <ClCompile Include="Point.cpp">
-      <Filter>Source Files\models</Filter>
-    </ClCompile>
-    <ClCompile Include="Time.cpp">
       <Filter>Source Files\models</Filter>
     </ClCompile>
     <ClCompile Include="Camera.cpp">
@@ -629,9 +653,6 @@
     <ClCompile Include="ResetGameSpeedListener.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="InternalTime.cpp">
-      <Filter>Source Files\models</Filter>
-    </ClCompile>
     <ClCompile Include="FPSlistener.cpp">
       <Filter>Source Files\core\systems\rendering</Filter>
     </ClCompile>
@@ -658,6 +679,27 @@
     </ClCompile>
     <ClCompile Include="Obstacle.cpp">
       <Filter>Source Files\objects</Filter>
+    </ClCompile>
+    <ClCompile Include="RandomHelper.cpp">
+      <Filter>Source Files\helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="Time.cpp">
+      <Filter>Source Files\models\time</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>Source Files\models\time</Filter>
+    </ClCompile>
+    <ClCompile Include="InternalTime.cpp">
+      <Filter>Source Files\models\time</Filter>
+    </ClCompile>
+    <ClCompile Include="RendererWindow.cpp">
+      <Filter>Source Files\core\systems\rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderText.cpp">
+      <Filter>Source Files\core\systems\rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderTextures.cpp">
+      <Filter>Source Files\core\systems\rendering</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -47,6 +47,14 @@ namespace spic::helper_functions
 		bool SpriteSorting(const std::shared_ptr<Sprite> a, const std::shared_ptr<Sprite> b);
 
 		/**
+		 * @brief Sorts gameobject based on layer
+		 * @param a Gameobject A
+		 * @param b Gameobject B
+		 * @return If Gameobject need to be swapped
+		*/
+		bool GameObjectSorting(const std::shared_ptr<spic::GameObject> a, const std::shared_ptr<spic::GameObject> b);
+
+		/**
 		 * @brief Sorts network packages based on timing
 		 * @param a NetworkPacket a
 		 * @param b NetworkPacket b

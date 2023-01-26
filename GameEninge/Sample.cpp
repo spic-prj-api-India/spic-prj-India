@@ -26,13 +26,14 @@ void Sample::Play(const bool looping, float volume)
     }
     else
     {
-        while (bool locked = !mutex_.try_lock())
-            std::this_thread::sleep_for(std::chrono::milliseconds(1));
 
         const auto temp = Mix_PlayChannel(-1, chunk->GetChunk(), 0);
+
+        if (temp == -1)
+            return;
+
         channels.push_back(std::make_tuple(temp, false));
         handlers[temp] = this;
-        mutex_.unlock();
 
         SetVolume(volume);
         running = true;
@@ -41,17 +42,15 @@ void Sample::Play(const bool looping, float volume)
 
 void Sample::Play(const int times, float volume)
 {
-    while (bool locked = !mutex_.try_lock())
-        std::this_thread::sleep_for(std::chrono::milliseconds(1));
-
     const auto temp = Mix_PlayChannel(-1, chunk.get()->GetChunk(), times);
+
+    if (temp == -1)
+        return;
+
     channels.push_back(std::make_tuple(temp, true));
     handlers[temp] = this;
-    
-    mutex_.unlock();
 
     SetVolume(volume);
-
     running = true;
 }
 
@@ -78,15 +77,11 @@ void Sample::StopPlaying()
 {
     std::vector<int> tempArray;
 
-    while (bool locked = !mutex_.try_lock())
-        std::this_thread::sleep_for(std::chrono::milliseconds(1));
-
     for (const auto tuple : channels)
     {
         tempArray.push_back(std::get<0>(tuple));
     }
     running = false;
-    mutex_.unlock();
 
     for (const auto& intValue : tempArray)
     {
@@ -96,17 +91,12 @@ void Sample::StopPlaying()
 
 void Sample::StopPlayingLast()
 {
-    while (bool locked = !mutex_.try_lock())
-        std::this_thread::sleep_for(std::chrono::milliseconds(1));
-
     Mix_HaltChannel(std::get<0>(channels.back()));
 
     static_cast<void>(channels.pop_back());
 
     if (channels.size() == 0)
         running = false;
-
-    mutex_.unlock();
 }
 
 const bool Sample::IsRunning()
@@ -135,7 +125,6 @@ void Sample::OnDone(const int chan)
 
 void Sample::CatchChannelDone(int chan)
 {
-    
     handlers[chan]->OnDone(chan);
 }
 

@@ -16,7 +16,7 @@ void PlayerMovementScript::OnUpdate() {
 }
 
 void PlayerMovementScript::OnInput() {
-	const auto& rigidBody = this->gameObject->GetComponent<spic::RigidBody>();
+	const auto& rigidBody = this->Parent()->GetComponent<spic::RigidBody>();
 	if (spic::input::GetKeyDown(left))
 	{
 		std::cout << "Pressed left" << std::endl;

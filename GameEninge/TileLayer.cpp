@@ -50,7 +50,7 @@ namespace spic::tiled
 				const float x = static_cast<float>(colIndex * tileSize);
 				const float y = static_cast<float>(rowIndex * tileSize);
 				Transform transform = Transform(Point(x, y), 0.0f, 1.0f);
-				spic::internal::Rendering::DrawSprite(&transform, sprite.get());
+				spic::internal::Rendering::DrawSprite(transform, sprite.get());
 			}
 		}
 	}

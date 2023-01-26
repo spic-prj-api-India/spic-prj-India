@@ -14,9 +14,19 @@
 
 namespace spic {
 	/**
+	 * @brief Format: [](){return new Scene()}	
+	*/
+	typedef std::function<spic::Scene*()> CreateSceneFunction;
+
+	/**
+	 * @brief Format: [](){return std::shared_ptr<spic::GameObject>}	
+	*/
+	typedef std::function<std::shared_ptr<spic::GameObject>()> CreateGameObjectFunction;
+
+	/**
 	 * @brief The main class of the engine, has multiple functions to configure engine and load scenes.
 	 *				The GameEngine class implements a singleton pattern.
-	 */
+	*/
 	class GameEngine {
 	private:
 		static GameEngine* pinstance_;
@@ -26,7 +36,11 @@ namespace spic {
 		~GameEngine();
 
 		std::vector<std::shared_ptr<extensions::IEngineExtension>> _extensions;
-		std::map<std::string, std::function<std::shared_ptr<spic::GameObject>()>> _types;
+
+		/**
+		 * @brief CreateGameObjectFunction format: [](){return std::shared_ptr<spic::GameObject>}	
+		*/
+		std::map<std::string, CreateGameObjectFunction> _types;
 		bool quit;
 	public:
 		GameEngine(GameEngine& other) = delete;
@@ -36,117 +50,111 @@ namespace spic {
 		static GameEngine* GetInstance();
 
 		/**
-		* @brief Adds extensions to engine.
-		* @param extension A IEngineExtension is used by the engine to
-		*        configure the base functionality of the engine
-		* @spicapi
+		 * @brief Adds extensions to engine.
+		 * @param extension A IEngineExtension is used by the engine to
+		 *        configure the base functionality of the engine
 		*/
 		template <typename T>
 		void AddExtension(std::shared_ptr<T> extension);
 
 		/**
-		* @brief Gets extension of type IEngineExtension.
-		* @spicapi
+		 * @brief Gets extension of type IEngineExtension.
 		*/
 		template <typename T>
 		std::weak_ptr<T> GetExtension();
 
 		/**
-		* @brief Gets extensions of type IEngineExtension.
-		* @spicapi
+		 * @brief Gets extensions of type IEngineExtension.
 		*/
 		template <typename T>
 		std::vector<std::weak_ptr<T>> GetExtensions();
 
 		/**
-		* @brief Checks if extension exists.
-		* @spicapi
+		 * @brief Checks if extension exists.
 		*/
 		template <typename T>
 		bool HasExtension();
 
 		/**
-		* @brief removes extension from engine.
-		* @spicapi
+		 * @brief removes extension from engine.
 		*/
 		template <typename T>
 		void RemoveExtension();
 
 		/*
-		@brief Registers GameObject type in engine.
+		 * @brief Registers GameObject type in engine.
 		*/
 		template<typename T>
 		void RegisterType();
 
 		/*
-		@brief Creates GameObject of type.s
-		@param The typeName is the key in the types list.
-		@return A newly created GameObject if the type does not exist. Otherwise, the GameObject of the specified type will be returned.
+		 * @brief Creates GameObject of type.s
+		 * @param The typeName is the key in the types list.
+		 * @return A newly created GameObject if the type does not exist. Otherwise, the GameObject of the specified type will be returned.
 		*/
 		std::shared_ptr<spic::GameObject> CreateType(const std::string& typeName);
 
 		/*
-		@brief Register scene.
-		@param The sceneName is the key in the scenes list.
-		@param The scene that will be registered in scenes list.
+		 * @brief Register scene.
+		 * @param sceneName The key in the scenes list.
+		 * @param scene Function that creates scene.
+		 *			Format: [](){return new Scene()}		
 		*/
-		void RegisterScene(const std::string& sceneName, std::function<spic::Scene* ()> scene);
+		void RegisterScene(const std::string& sceneName, CreateSceneFunction scene);
 
 		/*
-		@brief Load the specified scene.
-		@details Destoys the current scene and sets it to this one even if this scene is already loaded
-		@param scene The scene you want to load.
-		@param sceneName Name of the scene
+		 * @brief Load the specified scene.
+		 * @details Destoys the current scene and sets it to this one even if this scene is already loaded
+		 * @param scene The scene you want to load.
+		 * @param sceneName Name of the scene
 		*/
 		void LoadScene(std::shared_ptr<Scene> scene);
 
 		/*
-		@brief Load the specified scene.
-		@param sceneName: The name of the scene you want to load.
+		 * @brief Load the specified scene.
+		 * @param sceneName: The name of the scene you want to load.
 		*/
 		void LoadSceneByName(const std::string& sceneName);
 
 		/*
-		@brief Save the current scene.
-		@param fileName: The file name.
+		 * @brief Save the current scene.
+		 * @param fileName: The file name.
 		*/
 		void SaveScene(const std::string& fileName);
 
 		/*
 		@brief Load the specified scene.
-		@param scene: The scene you want to load.
+		@param sceneName: The name of the scene you want to load.
 		@param fileName: The file name.
 		*/
-		void LoadSceneBySaveFile(std::shared_ptr<Scene> scene, const std::string& fileName);
+		void LoadSceneBySaveFile(const std::string& sceneName, const std::string& fileName);
 
 		/*
-		@brief Destroy the current scene.
-		@param forceDelete: Whether you also want to delete all GameObjects in the scene which are set to not be destroyed on load.
+		 * @brief Destroy the current scene.
+		 * @param forceDelete: Whether you also want to delete all GameObjects in the scene which are set to not be destroyed on load.
 		*/
 		void DestroyScene(bool forceDelete);
 
 		/*
-		@brief Gets active scene.
-		@returns The current scene.
+		 * @brief Gets active scene.
+		 * @returns The current scene.
 		*/
 		std::shared_ptr<Scene> GetActiveScene();
 
 		/*
-		@brief Gets scene with name.
-		@param The sceneName of the scene.
-		@returns The scene with the given sceneName.
+		 * @brief Gets scene with name.
+		 * @param The sceneName of the scene.
+		 * @returns The scene with the given sceneName.
 		*/
 		std::shared_ptr<Scene> GetSceneByName(const std::string& sceneName);
 
 		/*
-		* @brief Start game loop
-		* @spicapi
+		 * @brief Start game loop
 		*/
 		void Start();
 
 		/*
-		* @brief Stop game loop
-		* @spicapi
+		 * @brief Stop game loop
 		*/
 		void Quit();
 	};

@@ -13,7 +13,7 @@ void GameStatusSendScript::Send(std::shared_ptr<spic::GameObject> entity)
 		return;
 
 	spic::NetworkPacket networkPacket = spic::NetworkPacket();
-	networkPacket.name = this->gameObject->Name();
+	networkPacket.name = this->Parent()->Name();
 
 	if (gameStatus == GameStatus::LOST)
 		networkPacket.data["game_status"] = std::to_string(GameStatus::WON);

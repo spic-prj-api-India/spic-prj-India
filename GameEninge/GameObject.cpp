@@ -237,6 +237,17 @@ namespace spic
 		return transform;
 	}
 
+	Transform GameObject::RealTransform() const
+	{
+		auto parent = this->parent;
+		spic::Transform transform = {this->transform->position,this->transform->rotation, this->transform->scale };
+		while (parent != nullptr) {
+			transform.position += parent->Transform()->position;
+			parent = parent->parent;
+		}
+		return transform;
+	}
+
 	void GameObject::Transform(std::shared_ptr<spic::Transform> _transform)
 	{
 		transform = _transform;

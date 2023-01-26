@@ -10,7 +10,7 @@ namespace spic::settings {
     /**
      * @brief Which type a window should be (currently only windowed supported)
     */
-    enum class FULLSCREENTYPE
+    enum class FullScreenType
     {
         WINDOWED = 0,
         FULLSCREEN = 1,
@@ -40,7 +40,7 @@ namespace spic::settings {
     /**
      * @brief Which mode the window is
     */
-    inline FULLSCREENTYPE SELECTOR = FULLSCREENTYPE::WINDOWED;
+    inline FullScreenType SELECTOR = FullScreenType::WINDOWED;
 
     /**
      * @brief gravity used in physics world
@@ -51,7 +51,7 @@ namespace spic::settings {
      * @brief Max audio channels used
      *      To change this value you have to adjust the source code
     */
-    inline constexpr int MAX_CHANNELS = 32;
+    inline constexpr int MAX_CHANNELS = 64;
 
     /*
     * @brief Enables or disables collider visibility. Default false.

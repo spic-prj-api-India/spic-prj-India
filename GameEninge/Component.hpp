@@ -23,16 +23,16 @@ namespace spic {
 		virtual Component& operator=(const Component& other) = default; // copy assignment
 		virtual Component& operator=(Component&& other) noexcept = default;// move assignment
 
-		void Parent(spic::GameObject& gameObject);
-
+		void Parent(spic::GameObject& parent);
+		spic::GameObject const* Parent() const;
 
 		bool IsChanged() const;
-	public:
+	private:
 		/**
 		* @brief Parent of component
 		* @spicapi
 		*/
-		spic::GameObject* gameObject;
+		spic::GameObject* parent{nullptr};
 	};
 }
 

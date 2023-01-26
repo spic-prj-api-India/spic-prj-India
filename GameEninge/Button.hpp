@@ -13,6 +13,11 @@ namespace spic {
     class Button : public UIObject {
         public:
             /**
+             * @brief Format: [](){}
+            */
+            typedef std::function<void()> ClickCallback;
+
+            /**
              * @brief Default constructor
             */
             Button();
@@ -37,11 +42,11 @@ namespace spic {
 
             /**
              * @brief Register the onClick handler to be used when the button is clicked.
-             * @param callback The function to register, usually a lambda. But this can be
-             *        any kind of callable.
+             * @param callback The function to register, usually a lambda. But this can be any kind of callable.
+		     *			Format: [](){}
              * @spicapi
              */
-            void OnClick(std::function<void()> callback);
+            void OnClick(ClickCallback callback);
 
         private:
             /**
@@ -51,10 +56,10 @@ namespace spic {
             bool interactable;
 
             /**
-             * @brief The registered click handler.
+             * @brief The registered click handler. Format: [](){}
              * @spicapi
              */
-            std::function<void()> onClick;
+            ClickCallback onClick;
     };
 }
 #endif // BUTTON_H_

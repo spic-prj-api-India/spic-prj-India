@@ -80,6 +80,8 @@ namespace spic
 		*/
 		void ObstacleAvoidanceOn(const float obstacleAvoidanceWeight, const  float boxLength);
 
+		void SmoothingOn();
+
 		/**
 		* @brief Calculates steering force.
 		* @param addSteeringForceCallback Callback that adds forces to steering force.
@@ -164,6 +166,8 @@ namespace spic
 		float wanderRadius;
 		float wanderDistance;
 		float wanderJitter;
+
+		bool useSmoothing;
 
 		/**
 		* @brief Arrival properties.
