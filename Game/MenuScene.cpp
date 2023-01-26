@@ -37,7 +37,10 @@ void MenuScene::SetContents()
 		}, 300.0f);
 	AddButton("Settings", []() {
 		spic::GameEngine::GetInstance()->LoadSceneByName("settings");
-		}, 400.0f);
+		}, 400.0f);	
+	AddButton("Instructions", []() {
+		spic::GameEngine::GetInstance()->LoadSceneByName("instructions");
+		}, 500.0f);
 }
 
 void MenuScene::AddButton(const std::string& text, std::function<void()> callback, const float offset)
