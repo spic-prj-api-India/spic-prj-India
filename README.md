@@ -1,14 +1,20 @@
+
+
 # spic-prj-api
+
 Engine API for the SPiC minor's project.
 
 Copyright (c) 2021 Avans Hogeschool, 's-Hertogenbosch.
 
-Install guide for VCPKG
+## [Documentation](https://spic-prj-api-india.github.io/documentation/)
+
+## Install guide for VCPKG
+
 1) Run "Set-ExecutionPolicy -ExecutionPolicy Unrestricted" in powershell with elevated privileges(remove quotes)
 2) Right click on "installing_vcpkg.ps1" and click on "run with powershell"
 3) If it asks for input press y
 
-# Installation
+## Installation
 The game engine is a static library, so this library must be statically linked to your project. Furthermore it is not out of the box compatible with CMake. Instead, it uses a Visual studio solution file.
 
 Follow these steps to install the libraries used by the game engine (using the package manager VCPKG):
